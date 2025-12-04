@@ -1,0 +1,17 @@
+{
+  "code": 200,
+  "message": "登录成功",
+  "data": {
+    "id": "123",
+    "email": "cow@example.com",
+    "user_name": "牛逼Ｒ",
+    "house_id": 1,
+    "role_type": 1,
+    "preferences": {
+      "language_code": "zh_TW",
+      "theme": 0
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.refresh_token_example"
+  }
+}
