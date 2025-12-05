@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/scaffold.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_cabinet_page_controller.dart';
@@ -17,9 +16,7 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
     return GetBuilder<WarehouseCabinetPageController>(
       init: WarehouseCabinetPageController(),
       builder: (controller) {
-        return CustScaffold(
-          child: _Body(),
-        );
+        return _Body();
       },
     );
   }

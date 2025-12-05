@@ -5,6 +5,7 @@ class AppSplashPageController extends BasePageController {
 
   AppSplashPageController() {
     super.init(isCallApiWhenInit: false);
+    AppService.register();
     Timer(const Duration(seconds: 2), () {
       routerHandle(EnumAppSplashPageRoute.goToLogin);
     });

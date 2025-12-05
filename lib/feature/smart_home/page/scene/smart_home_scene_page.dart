@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 

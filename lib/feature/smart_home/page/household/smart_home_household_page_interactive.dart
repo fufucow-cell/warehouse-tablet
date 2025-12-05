@@ -1,15 +1,18 @@
 part of 'smart_home_household_page.dart';
 
 enum EnumSmartHomeHouseholdPageInteractive {
-  tapSomeWidget,
+  tapHomeItem,
+  createHome,
 }
 
 extension SmartHomeHouseholdPageUserEventExtension
     on SmartHomeHouseholdPageController {
-  void interactive(EnumSmartHomeHouseholdPageInteractive type,
-      {dynamic data}) {
+  void interactive(
+    EnumSmartHomeHouseholdPageInteractive type, {
+    dynamic data,
+  }) {
     switch (type) {
-      case EnumSmartHomeHouseholdPageInteractive.tapSomeWidget:
+      default:
         break;
     }
   }

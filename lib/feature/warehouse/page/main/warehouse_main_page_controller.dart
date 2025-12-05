@@ -1,48 +1,49 @@
 part of 'warehouse_main_page.dart';
 
-class WarehouseMainPageController extends BasePageController {
+class WarehouseMainPageController extends BasePageController
+    with SingleGetTickerProviderMixin {
   // MARK: - Properties
 
   final _model = WarehouseMainPageModel();
-  final navigatorKey = GlobalKey<NavigatorState>();
+  late final TabController tabController;
 
-  EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
+  EnumWarehouseTabItem get selectedItem =>
+      _model.selectedItem.value;
+  List<Tab> get tabs => EnumWarehouseTabItem.values
+      .map((item) => Tab(text: item.title))
+      .toList();
+  List<Widget> get tabViews => EnumWarehouseTabItem.values
+      .map((item) => item.page)
+      .toList();
 
   // MARK: - Init
 
   WarehouseMainPageController(
     WarehouseMainPageRouterData routerData,
   ) {
-    UserData.register().updateData(routerData);
+    WarehouseService.register().updateData(routerData);
+    tabController = TabController(
+      length: EnumWarehouseTabItem.values.length,
+      vsync: this,
+      initialIndex: EnumWarehouseTabItem.values
+          .indexOf(_model.selectedItem.value),
+    );
+    tabController.addListener(_onTabChanged);
     super.init(isCallApiWhenInit: false);
-    _registerWarehousePages();
   }
 
   @override
   void onClose() {
-    UserData.unregister();
+    tabController.removeListener(_onTabChanged);
+    tabController.dispose();
+    WarehouseService.unregister();
     super.onClose();
   }
 
-  // MARK: - Private Method
-
-  void _registerWarehousePages() {
-    final warehousePages = AppRouter.getWarehousePages();
-    Get.addPages(warehousePages);
-  }
-
-  /// 检查最近的 Navigator 是否是 root Navigator
-  bool isRootNavigator(BuildContext context) {
-    try {
-      final rootNavigator =
-          Navigator.of(context, rootNavigator: true);
-      final currentNavigator =
-          Navigator.of(context, rootNavigator: false);
-      // 如果 root 和 current 是同一个实例，说明当前是 root Navigator
-      return identical(rootNavigator, currentNavigator);
-    } catch (e) {
-      // 如果无法获取 Navigator，默认创建新的
-      return true;
-    }
+  void _onTabChanged() {
+    interactive(
+      EnumWarehouseMainPageInteractive.selectTabItem,
+      data: tabController.index,
+    );
   }
 }

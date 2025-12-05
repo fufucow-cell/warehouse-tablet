@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_page_controller.dart';
 import 'package:get/get.dart';
 

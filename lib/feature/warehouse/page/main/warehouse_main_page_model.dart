@@ -35,8 +35,8 @@ class WarehouseMainPageRouterData {
   final int theme;
   final String accessToken;
   final String refreshToken;
-  final WarehouseMainRouterHousehold household;
-  final List<WarehouseMainRouterRoom> rooms;
+  final WarehouseHomeRouterData household;
+  final List<WarehouseHomeRouterData> rooms;
   final int userRoleType;
 
   const WarehouseMainPageRouterData({
@@ -52,23 +52,11 @@ class WarehouseMainPageRouterData {
   });
 }
 
-/// WarehouseMainPage Router 传递的房屋数据
-class WarehouseMainRouterHousehold {
+class WarehouseHomeRouterData {
   final String id;
   final String name;
 
-  const WarehouseMainRouterHousehold({
-    required this.id,
-    required this.name,
-  });
-}
-
-/// WarehouseMainPage Router 传递的房间数据
-class WarehouseMainRouterRoom {
-  final String id;
-  final String name;
-
-  const WarehouseMainRouterRoom({
+  const WarehouseHomeRouterData({
     required this.id,
     required this.name,
   });

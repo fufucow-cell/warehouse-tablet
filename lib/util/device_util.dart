@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/constant/device_constant.dart';
-import 'package:flutter_smart_home_tablet/inherit/double_extension.dart';
+import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
 import 'package:get/get.dart';
 
 class DeviceUtil extends GetxService {
@@ -13,8 +13,7 @@ class DeviceUtil extends GetxService {
   bool get isIOS => Platform.isIOS;
   bool get isAndroid => Platform.isAndroid;
   bool get isWeb => kIsWeb;
-  bool get isDesktop =>
-      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  bool get isDesktop => Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   /// 取得設備語言
   Locale? get deviceLocale => Get.deviceLocale;
@@ -154,8 +153,7 @@ class DeviceUtil extends GetxService {
     }
 
     // 計算最小比例
-    _minScale =
-        _scaleWidth < _scaleHeight ? _scaleWidth : _scaleHeight;
+    _minScale = _scaleWidth < _scaleHeight ? _scaleWidth : _scaleHeight;
 
     // 確認產品是否支援該裝置
     _isSupportedDevice = (isTablet || isMobile) && _minScale != 0.0;

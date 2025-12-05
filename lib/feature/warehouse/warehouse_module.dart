@@ -9,8 +9,8 @@
 /// ```
 library warehouse_module;
 
-// Export router
-export 'router.dart';
+// Export router (已移除，因为使用 TabBar/TabBarView 不再需要路由)
+// export 'router.dart';
 
 // Export pages (可选，如果需要外部直接访问)
 // export 'page/item/warehouse_item_page.dart';

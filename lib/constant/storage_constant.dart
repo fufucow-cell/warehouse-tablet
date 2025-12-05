@@ -1,4 +1,4 @@
-import 'package:flutter_smart_home_tablet/inherit/string_extension.dart';
+import 'package:flutter_smart_home_tablet/inherit/extension_string.dart';
 
 enum EnumStorageKey {
   locale,

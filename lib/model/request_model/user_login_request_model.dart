@@ -1,4 +1,4 @@
-import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_api_model.dart';
+import 'package:flutter_smart_home_tablet/inherit/base_api_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user_login_request_model.g.dart';

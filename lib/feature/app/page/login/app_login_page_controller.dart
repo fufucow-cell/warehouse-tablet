@@ -6,7 +6,8 @@ class AppLoginPageController extends BasePageController {
   final _model = AppLoginPageModel();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool get isPasswordVisible => _model.isPasswordVisible.value;
+  bool get isPasswordVisible =>
+      _model.isPasswordVisible.value;
   bool get isButtonEnabled => _model.isButtonEnabled.value;
 
   // MARK: - Init
@@ -35,7 +36,8 @@ class AppLoginPageController extends BasePageController {
     UserLoginResponseModel? response;
 
     if (_model.isLoginProcess) {
-      response = await ApiUtil.sendRequest<UserLoginResponseModel>(
+      response =
+          await ApiUtil.sendRequest<UserLoginResponseModel>(
         EnumApiInfo.userLogin,
         requestModel: UserLoginRequestModel(
           email: emailController.text,
@@ -44,7 +46,8 @@ class AppLoginPageController extends BasePageController {
         fromJson: UserLoginResponseModel.fromJson,
       );
     } else {
-      response = await ApiUtil.sendRequest<UserLoginResponseModel>(
+      response =
+          await ApiUtil.sendRequest<UserLoginResponseModel>(
         EnumApiInfo.userRegister,
         requestModel: UserLoginRequestModel(
           email: emailController.text,
@@ -54,20 +57,16 @@ class AppLoginPageController extends BasePageController {
       );
     }
 
-    _registerUserData(response);
-    _model.isLoginSuccess = true;
+    AppService.instance.updateUserLoginData(response);
   }
 
   @override
   Future<void> apiProcessDone() async {
-    if (_model.isLoginSuccess) {
-      await routerHandle(EnumAppLoginPageRoute.goToMainPage);
+    if (AppService.instance.getUserData != null) {
+      await routerHandle(
+        EnumAppLoginPageRoute.goToMainPage,
+      );
     }
-    // else {
-    //   await routerHandle(EnumAppLoginPageRoute.showLoginFail,
-    //     data: '登入失敗',
-    //   );
-    // }
   }
 
   @override
@@ -98,7 +97,8 @@ class AppLoginPageController extends BasePageController {
   }
 
   void _togglePasswordVisibility() {
-    _model.isPasswordVisible.value = !_model.isPasswordVisible.value;
+    _model.isPasswordVisible.value =
+        !_model.isPasswordVisible.value;
     update();
   }
 
@@ -111,17 +111,5 @@ class AppLoginPageController extends BasePageController {
     final isValid = emailController.text.isNotEmpty &&
         passwordController.text.isNotEmpty;
     _model.isButtonEnabled.value = isValid;
-  }
-
-  void _registerUserData(UserLoginResponseModel userRes) {
-    final userData = UserData.register();
-    userData.updateUserId(userRes.id ?? '');
-    userData.updateUserName(userRes.userName ?? '');
-    userData
-        .updateLanguage(userRes.preferences?.languageCode ?? 'zh_TW');
-    userData.updateTheme(userRes.preferences?.theme ?? 0);
-    userData.updateAccessToken(userRes.accessToken ?? '');
-    userData.updateRefreshToken(userRes.refreshToken ?? '');
-    userData.updateUserRoleType(userRes.roleType ?? 0);
   }
 }

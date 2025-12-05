@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/ui/button.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/ui/text_field.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/constant/api_path.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/data/user_data.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_api_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
+import 'package:flutter_smart_home_tablet/inherit/base_api_model.dart';
+import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/model/request_model/user_login_request_model.dart';
 import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
@@ -35,7 +34,9 @@ class AppLoginPage extends GetView<AppLoginPageController> {
                 end: Alignment.bottomRight,
                 colors: [
                   Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.primaryContainer,
+                  Theme.of(context)
+                      .colorScheme
+                      .primaryContainer,
                 ],
               ),
             ),
@@ -43,9 +44,11 @@ class AppLoginPage extends GetView<AppLoginPageController> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24.0),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400),
+                  constraints:
+                      const BoxConstraints(maxWidth: 400),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.home,

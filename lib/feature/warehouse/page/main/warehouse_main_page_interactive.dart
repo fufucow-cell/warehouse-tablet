@@ -8,14 +8,16 @@ enum EnumWarehouseMainPageInteractive {
 extension WarehouseMainPageUserEventExtension
     on WarehouseMainPageController {
   /// 处理用户事件
-  void interactive(EnumWarehouseMainPageInteractive type,
-      {dynamic data}) {
+  void interactive(
+    EnumWarehouseMainPageInteractive type, {
+    dynamic data,
+  }) {
     switch (type) {
       case EnumWarehouseMainPageInteractive.selectTabItem:
-        if (data is EnumWarehouseTabItem) {
-          _model.selectedItem.value = data;
+        if (data is int && !tabController.indexIsChanging) {
+          final newItem = EnumWarehouseTabItem.values[data];
+          _model.selectedItem.value = newItem;
         }
-        break;
     }
   }
 }
