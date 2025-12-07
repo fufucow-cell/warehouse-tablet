@@ -1,0 +1,32 @@
+{
+  "code": 200,
+  "message": "login success",
+  "data": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "email": "cow@example.com",
+    "user_name": "cow boy",
+    "household": [
+      {
+        "home_id": "660e8400-e29b-41d4-a716-446655440001",
+        "home_name": "My Home",
+        "role_type": 1
+      },
+      {
+        "home_id": "770e8400-e29b-41d4-a716-446655440002",
+        "home_name": "Summer House",
+        "role_type": 2
+      },
+      {
+        "home_id": "880e8400-e29b-41d4-a716-446655440003",
+        "home_name": "Office",
+        "role_type": 1
+      }
+    ],
+    "preferences": {
+      "language_code": "zh_TW",
+      "theme": 0
+    },
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.refresh_token_example"
+  }
+}

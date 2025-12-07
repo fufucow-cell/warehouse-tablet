@@ -6,8 +6,7 @@ class EnvironmentUtil extends GetxService {
   // MARK: - Properties
 
   /// 運行環境
-  final Rx<EnumEnvironment> _currentEnvironment =
-      EnumEnvironment.prd.obs;
+  final Rx<EnumEnvironment> _currentEnvironment = EnumEnvironment.prd.obs;
   EnumEnvironment get currentEnvironment => _currentEnvironment.value;
   String get apiBaseUrl => _currentEnvironment.value.apiBaseUrl;
   String get environmentName => _currentEnvironment.value.displayName;

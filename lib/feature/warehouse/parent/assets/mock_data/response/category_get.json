@@ -1,0 +1,65 @@
+{
+  "code": 200,
+  "message": "Success",
+  "data": [
+    {
+      "category_id": "330e8400-e29b-41d4-a716-446655440030",
+      "name": "Electronics",
+      "parent_id": null,
+      "level": 1,
+      "children": {
+        "category_id": "331e8400-e29b-41d4-a716-446655440031",
+        "name": "Mobile Phones",
+        "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+        "level": 2,
+        "children": null
+      }
+    },
+    {
+      "category_id": "331e8400-e29b-41d4-a716-446655440031",
+      "name": "Food",
+      "parent_id": null,
+      "level": 1,
+      "children": {
+        "category_id": "332e8400-e29b-41d4-a716-446655440032",
+        "name": "Beverages",
+        "parent_id": "331e8400-e29b-41d4-a716-446655440031",
+        "level": 2,
+        "children": null
+      }
+    },
+    {
+      "category_id": "332e8400-e29b-41d4-a716-446655440032",
+      "name": "Daily Necessities",
+      "parent_id": null,
+      "level": 1,
+      "children": null
+    },
+    {
+      "category_id": "333e8400-e29b-41d4-a716-446655440033",
+      "name": "Tools",
+      "parent_id": null,
+      "level": 1,
+      "children": {
+        "category_id": "334e8400-e29b-41d4-a716-446655440034",
+        "name": "Power Tools",
+        "parent_id": "333e8400-e29b-41d4-a716-446655440033",
+        "level": 2,
+        "children": {
+          "category_id": "335e8400-e29b-41d4-a716-446655440035",
+          "name": "Drills",
+          "parent_id": "334e8400-e29b-41d4-a716-446655440034",
+          "level": 3,
+          "children": null
+        }
+      }
+    },
+    {
+      "category_id": "334e8400-e29b-41d4-a716-446655440034",
+      "name": "Books",
+      "parent_id": null,
+      "level": 1,
+      "children": null
+    }
+  ]
+}

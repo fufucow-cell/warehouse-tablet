@@ -33,5 +33,6 @@ enum EnumLocale {
 
   String? get languageCode => locale?.languageCode;
   String? get countryCode => locale?.countryCode;
-  static List<EnumLocale> get availableLocales => EnumLocale.values.where((e) => e != EnumLocale.system).toList();
+  static List<EnumLocale> get availableLocales =>
+      EnumLocale.values.where((e) => e != EnumLocale.system).toList();
 }

@@ -69,8 +69,7 @@ class ThemeUtil extends GetxService {
 
   void _loadTheme() {
     try {
-      final savedTheme =
-          StorageUtil.read<String>(EnumStorageKey.theme.key);
+      final savedTheme = StorageUtil.read<String>(EnumStorageKey.theme.key);
       final themeMode = EnumThemeMode.values.firstWhereOrNull(
             (e) => e.name == savedTheme,
           ) ??

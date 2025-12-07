@@ -4,6 +4,7 @@ class WarehouseCabinetPageController extends BasePageController {
   // MARK: - Properties
 
   final _model = WarehouseCabinetPageModel();
+  List<Cabinet>? get cabinets => _model.cabinets;
 
   // MARK: - Init
 
@@ -14,5 +15,14 @@ class WarehouseCabinetPageController extends BasePageController {
   // MARK: - Methods
 
   @override
-  Future<void> apiProcessing() async {}
+  Future<void> apiProcessing() async {
+    final response = await ApiUtil.sendRequest<WarehouseCabinetResponseModel>(
+      EnumApiInfo.cabinetFetch,
+      requestModel: WarehouseCabinetRequestModel(),
+      fromJson: WarehouseCabinetResponseModel.fromJson,
+    );
+
+    _model.cabinets = response.data;
+    update();
+  }
 }

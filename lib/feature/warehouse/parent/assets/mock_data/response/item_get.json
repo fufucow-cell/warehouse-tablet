@@ -1,0 +1,294 @@
+{
+  "code": 200,
+  "message": "Success",
+  "data": [
+    {
+      "item_id": "110e8400-e29b-41d4-a716-446655440010",
+      "name": "iPhone 15 Pro",
+      "description": "Apple's latest smartphone, 256GB storage",
+      "quantity": 3,
+      "min_stock_alert": 2,
+      "photo": null,
+      "rooms": [
+        {
+          "room_id": "990e8400-e29b-41d4-a716-446655440004",
+          "room_name": "Living Room",
+          "quantity": 2,
+          "cabinets": [
+            {
+              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
+              "name": "Left Cabinet A",
+              "quantity": 1
+            },
+            {
+              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
+              "name": "Right Cabinet B",
+              "quantity": 1
+            }
+          ]
+        },
+        {
+          "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
+          "room_name": "Master Bedroom",
+          "quantity": 1,
+          "cabinets": [
+            {
+              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
+              "name": "Master Bedroom Cabinet",
+              "quantity": 1
+            }
+          ]
+        }
+      ],
+      "category": {
+        "category_id": "330e8400-e29b-41d4-a716-446655440030",
+        "name": "Electronics",
+        "level": 1,
+        "children": {
+          "category_id": "331e8400-e29b-41d4-a716-446655440031",
+          "name": "Mobile Phones",
+          "level": 2,
+          "children": null
+        }
+      }
+    },
+    {
+      "item_id": "111e8400-e29b-41d4-a716-446655440011",
+      "name": "MacBook Pro 14-inch",
+      "description": "M3 chip, 16GB RAM, 512GB SSD",
+      "quantity": 2,
+      "min_stock_alert": 1,
+      "photo": null,
+      "category": {
+        "category_id": "330e8400-e29b-41d4-a716-446655440030",
+        "name": "Electronics",
+        "level": 1,
+        "children": {
+          "category_id": "331e8400-e29b-41d4-a716-446655440031",
+          "name": "Mobile Phones",
+          "level": 2,
+          "children": null
+        }
+      },
+      "rooms": [
+        {
+          "room_id": "990e8400-e29b-41d4-a716-446655440004",
+          "room_name": "Living Room",
+          "quantity": 1,
+          "cabinets": [
+            {
+              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
+              "name": "Living Room Cabinet B",
+              "quantity": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "112e8400-e29b-41d4-a716-446655440012",
+      "name": "AirPods Pro",
+      "description": "Active noise cancellation wireless earbuds, 2nd generation",
+      "quantity": 5,
+      "min_stock_alert": 3,
+      "photo": null,
+      "category": {
+        "category_id": "330e8400-e29b-41d4-a716-446655440030",
+        "name": "Electronics",
+        "level": 1,
+        "children": {
+          "category_id": "331e8400-e29b-41d4-a716-446655440031",
+          "name": "Mobile Phones",
+          "level": 2,
+          "children": null
+        }
+      },
+      "rooms": [
+        {
+          "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
+          "room_name": "Master Bedroom",
+          "quantity": 2,
+          "cabinets": [
+            {
+              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
+              "name": "Master Bedroom Cabinet",
+              "quantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "113e8400-e29b-41d4-a716-446655440013",
+      "name": "Cooking Oil",
+      "description": "5L, non-GMO",
+      "quantity": 8,
+      "min_stock_alert": 5,
+      "photo": null,
+      "category": {
+        "category_id": "331e8400-e29b-41d4-a716-446655440031",
+        "name": "Food",
+        "level": 1,
+        "children": {
+          "category_id": "332e8400-e29b-41d4-a716-446655440032",
+          "name": "Beverages",
+          "level": 2,
+          "children": null
+        }
+      },
+      "rooms": [
+        {
+          "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
+          "room_name": "Kitchen",
+          "quantity": 4,
+          "cabinets": [
+            {
+              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
+              "name": "Living Room Cabinet A",
+              "quantity": 4
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "114e8400-e29b-41d4-a716-446655440014",
+      "name": "Premium Rice",
+      "description": "10kg bag, high-quality rice",
+      "quantity": 6,
+      "min_stock_alert": 4,
+      "photo": null,
+      "category": {
+        "category_id": "331e8400-e29b-41d4-a716-446655440031",
+        "name": "Food",
+        "level": 1,
+        "children": {
+          "category_id": "332e8400-e29b-41d4-a716-446655440032",
+          "name": "Beverages",
+          "level": 2,
+          "children": null
+        }
+      },
+      "rooms": [
+        {
+          "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
+          "room_name": "Kitchen",
+          "quantity": 3,
+          "cabinets": [
+            {
+              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
+              "name": "Living Room Cabinet B",
+              "quantity": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "115e8400-e29b-41d4-a716-446655440015",
+      "name": "Antibacterial Soap",
+      "description": "3-pack, antibacterial",
+      "quantity": 12,
+      "min_stock_alert": 6,
+      "photo": null,
+      "category": {
+        "category_id": "332e8400-e29b-41d4-a716-446655440032",
+        "name": "Daily Necessities",
+        "level": 1,
+        "children": null
+      },
+      "rooms": [
+        {
+          "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
+          "room_name": "Bathroom",
+          "quantity": 6,
+          "cabinets": [
+            {
+              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
+              "name": "Master Bedroom Cabinet",
+              "quantity": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "116e8400-e29b-41d4-a716-446655440016",
+      "name": "Anti-Dandruff Shampoo",
+      "description": "750ml, dandruff control",
+      "quantity": 4,
+      "min_stock_alert": 2,
+      "photo": null,
+      "category": {
+        "category_id": "332e8400-e29b-41d4-a716-446655440032",
+        "name": "Daily Necessities",
+        "level": 1,
+        "children": null
+      },
+      "rooms": [
+        {
+          "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
+          "room_name": "Bathroom",
+          "quantity": 2,
+          "cabinets": [
+            {
+              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
+              "name": "Living Room Cabinet A",
+              "quantity": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "item_id": "117e8400-e29b-41d4-a716-446655440017",
+      "name": "Tissue Paper",
+      "description": "3-ply, 130 sheets × 12 packs",
+      "quantity": 26,
+      "min_stock_alert": 8,
+      "photo": null,
+      "category": {
+        "category_id": "332e8400-e29b-41d4-a716-446655440032",
+        "name": "Daily Necessities",
+        "level": 1,
+        "children": null
+      },
+      "rooms": [
+        {
+          "room_id": "990e8400-e29b-41d4-a716-446655440004",
+          "room_name": "Living Room",
+          "quantity": 7,
+          "cabinets": [
+            {
+              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
+              "name": "Living Room Cabinet B",
+              "quantity": 7
+            }
+          ]
+        },
+        {
+          "room_id": null,
+          "room_name": null,
+          "quantity": 11,
+          "cabinets": [
+            {
+              "cabinet_id": "223e8400-e29b-41d4-a716-446655440023",
+              "name": "Unbound Cabinet A",
+              "quantity": 4
+            },
+            {
+              "cabinet_id": "224e8400-e29b-41d4-a716-446655440024",
+              "name": "Unbound Cabinet B",
+              "quantity": 4
+            },
+            {
+              "cabinet_id": null,
+              "name": null,
+              "quantity": 3
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

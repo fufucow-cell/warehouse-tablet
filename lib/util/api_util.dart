@@ -8,6 +8,7 @@ import 'package:get/get.dart' hide Response;
 class ApiUtil extends GetxService {
   // Properties
 
+  static const String _tagName = 'root_api_util';
   final Dio _dio;
 
   // Init
@@ -25,23 +26,31 @@ class ApiUtil extends GetxService {
   }
 
   static ApiUtil register(String baseUrl) {
-    if (Get.isRegistered<ApiUtil>()) {
-      return Get.find<ApiUtil>();
+    if (Get.isRegistered<ApiUtil>(tag: _tagName)) {
+      return _instance;
     }
     final ApiUtil service = ApiUtil._internal(baseUrl);
-    Get.put<ApiUtil>(service, permanent: true);
+    Get.put<ApiUtil>(
+      service,
+      tag: _tagName,
+      permanent: true,
+    );
     return service;
   }
 
   static void unregister() {
-    if (Get.isRegistered<ApiUtil>()) {
-      Get.delete<ApiUtil>(); // 自動觸發該實例的 onClose() 方法
+    if (Get.isRegistered<ApiUtil>(tag: _tagName)) {
+      Get.delete<ApiUtil>(
+        tag: _tagName,
+      ); // 自動觸發該實例的 onClose() 方法
     }
   }
 
+  static ApiUtil get _instance => Get.find<ApiUtil>(tag: _tagName);
+
   static Future<T> sendRequest<T>(
     EnumApiInfo apiInfo, {
-    BaseApiRequestModel? requestModel,
+    dynamic requestModel,
     T Function(Map<String, dynamic> json)? fromJson,
   }) async {
     return _executeRequest<T>(
@@ -51,18 +60,22 @@ class ApiUtil extends GetxService {
     );
   }
 
+  // MARK: - Private Method
+
   static Future<T> _executeRequest<T>({
     required EnumApiInfo apiInfo,
-    BaseApiRequestModel? requestModel,
+    dynamic requestModel,
     T Function(Map<String, dynamic> json)? fromJson,
   }) async {
     try {
-      final dio = Get.find<ApiUtil>()._dio;
+      final dio = _instance._dio;
       final isGet = apiInfo.method == EnumApiMethod.get;
-      final reqData = requestModel?.toJson();
+      final reqData = _convertRequestModelToJson(requestModel);
       final options = Options(
         method: apiInfo.method.value,
-        extra: {ApiEmptyResponse.name: T == ApiEmptyResponse},
+        extra: {
+          ApiEmptyResponse.name: T == ApiEmptyResponse,
+        },
       );
 
       final response = await dio.request<dynamic>(
@@ -77,60 +90,113 @@ class ApiUtil extends GetxService {
         fromJson,
       );
 
-      // 錯誤處理
-      if (resModel.code != EnumErrorMap.code200.code) {
-        await _errorHandler<T>(
-          apiInfo: apiInfo,
-          requestModel: requestModel,
-          fromJson: fromJson,
-          responseModel: resModel,
-        );
-        // _errorHandler 會 throw，這裡不會執行到
-        return _getDefaultResponse<T>();
-      }
-
-      // 成功回傳
-      if (resModel.data != null) {
+      if (resModel.code == EnumErrorMap.code200.code) {
         return resModel.data as T;
       } else {
-        // data 為 null 時，如果 fromJson 為 null 或 T 是 ApiEmptyResponse，返回 ApiEmptyResponse
-        if (fromJson == null || T == ApiEmptyResponse) {
-          return const ApiEmptyResponse() as T;
-        }
-        // 否則拋出異常，因為期望有數據但沒有
-        throw ApiException(
-          code: EnumErrorMap.code201.code,
-          message: 'Response data is null but type $T expects data',
+        throw BaseApiResponseModel<T>(
+          code: resModel.code,
+          message: resModel.message,
         );
       }
-    } on DioException catch (e) {
-      await _errorHandler<T>(
-        apiInfo: apiInfo,
-        requestModel: requestModel,
-        fromJson: fromJson,
-        dioException: e,
-      );
-      // _errorHandler 會 throw，這裡不會執行到
-      return _getDefaultResponse<T>();
     } on Object catch (e) {
-      await _errorHandler<T>(
+      _errorHandler<T>(
         apiInfo: apiInfo,
         requestModel: requestModel,
         fromJson: fromJson,
         exception: e,
       );
-      // _errorHandler 會 throw，這裡不會執行到
-      return _getDefaultResponse<T>();
     }
   }
 
-  /// 獲取默認響應值
-  /// 當錯誤處理路徑中需要返回值時使用（實際上不會執行到）
-  static T _getDefaultResponse<T>() {
-    return const ApiEmptyResponse() as T;
+  static Map<String, dynamic>? _convertRequestModelToJson(
+    dynamic requestModel,
+  ) {
+    if (requestModel is Map<String, dynamic>) {
+      return requestModel;
+    }
+
+    final result = (requestModel as dynamic).toJson();
+
+    if (result is Map<String, dynamic>) {
+      return result;
+    }
+
+    return null;
   }
 
-  // Private Method
+  static BaseApiResponseModel<T> _responseParser<T>(
+    dynamic raw,
+    T Function(Map<String, dynamic> json)? fromJson,
+  ) {
+    // 回應格式錯誤
+    if (raw is! Map<String, dynamic>) {
+      throw BaseApiResponseModel<T>(
+        code: EnumErrorMap.code202.code,
+        message: '${EnumErrorMap.code202.message}: ${raw.toString()}',
+      );
+    }
+
+    int? code = raw['code'] as int?;
+    String? message = raw['message'] as String?;
+    final rawData = raw['data'];
+    final finalCode = code ?? EnumErrorMap.code201.code;
+    final finalMessage = message ?? EnumErrorMap.code201.message;
+
+    if (finalCode == EnumErrorMap.code200.code) {
+      if (rawData == null && T == ApiEmptyResponse) {
+        return BaseApiResponseModel<T>.emptySuccess();
+      } else if (fromJson != null) {
+        if (rawData is Map<String, dynamic>) {
+          final parsed = fromJson(rawData);
+          return BaseApiResponseModel<T>(
+            code: finalCode,
+            message: finalMessage,
+            data: parsed,
+          );
+        } else if (rawData is List) {
+          final parsed = fromJson(raw);
+          return BaseApiResponseModel<T>(
+            code: finalCode,
+            message: finalMessage,
+            data: parsed,
+          );
+        }
+      }
+    }
+
+    throw BaseApiResponseModel<T>(
+      code: code ?? EnumErrorMap.code201.code,
+      message: message ?? EnumErrorMap.code201.message,
+    );
+  }
+
+  static Never _errorHandler<T>({
+    required EnumApiInfo apiInfo,
+    dynamic requestModel,
+    T Function(Map<String, dynamic> json)? fromJson,
+    Object? exception,
+  }) {
+    final err = BaseApiResponseModel<T>.unknowError();
+    int code = err.code;
+    String message = err.message!;
+
+    if (exception is EnumErrorMap) {
+      code = exception.code;
+      message = exception.message;
+    } else if (exception is DioException) {
+      final convertInfo = _convertDioExceptionToErrorCode(exception);
+      code = convertInfo.code;
+      message = convertInfo.message;
+    } else if (exception is BaseApiResponseModel<T>) {
+      code = exception.code;
+      message = exception.message!;
+    }
+
+    throw BaseApiResponseModel(
+      code: code,
+      message: message,
+    );
+  }
 
   static EnumErrorMap _convertDioExceptionToErrorCode(
     DioException e,
@@ -154,76 +220,5 @@ class ApiUtil extends GetxService {
       default:
         return EnumErrorMap.code108;
     }
-  }
-
-  static BaseApiResponseModel<T> _responseParser<T>(
-    dynamic raw,
-    T Function(Map<String, dynamic> json)? fromJson,
-  ) {
-    int? code = raw['code'] as int?;
-    String? message = raw['message'] as String?;
-    final rawData = raw['data'];
-    T? resData;
-
-    if (raw is! Map<String, dynamic>) {
-      const errorInfo = EnumErrorMap.code202;
-      code = errorInfo.code;
-      message = '${errorInfo.message}: ${raw.toString()}';
-    }
-
-    if (code == EnumErrorMap.code200.code && fromJson != null) {
-      try {
-        if (rawData == null) {
-          const errorInfo = EnumErrorMap.code203;
-          code = errorInfo.code;
-          message = '${errorInfo.message}: data is null';
-        } else if (rawData is! Map<String, dynamic>) {
-          const errorInfo = EnumErrorMap.code203;
-          code = errorInfo.code;
-          message = '${errorInfo.message}: data is not Map<String, dynamic>, got ${rawData.runtimeType}';
-        } else {
-          final mapData = rawData;
-          resData = fromJson(mapData) as T?;
-        }
-      } on Object catch (e) {
-        const errorInfo = EnumErrorMap.code203;
-        code = errorInfo.code;
-        message = '${errorInfo.message}: ${e.toString()}';
-      }
-    }
-
-    return BaseApiResponseModel<T>(
-      code: code ?? EnumErrorMap.code200.code,
-      message: message ?? EnumErrorMap.code200.message,
-      data: resData,
-    );
-  }
-
-  /// 處理錯誤狀態
-  static Future<void> _errorHandler<T>({
-    required EnumApiInfo apiInfo,
-    BaseApiRequestModel? requestModel,
-    T Function(Map<String, dynamic> json)? fromJson,
-    BaseApiResponseModel<T>? responseModel,
-    DioException? dioException,
-    Object? exception,
-  }) async {
-    const defaultError = EnumErrorMap.code201;
-    int code = defaultError.code;
-    String message = defaultError.message;
-
-    if (responseModel != null) {
-      code = responseModel.code;
-      message = responseModel.message ?? defaultError.message;
-    } else if (dioException != null) {
-      final errorInfo = _convertDioExceptionToErrorCode(dioException);
-      code = errorInfo.code;
-      message = errorInfo.message;
-    } else if (exception != null) {
-      message = exception.toString();
-    }
-
-    // 直接拋出錯誤
-    throw ApiException(code: code, message: message);
   }
 }

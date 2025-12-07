@@ -32,7 +32,9 @@ class CustScaffold extends StatelessWidget {
         centerTitle: true,
         title: Text(
           title ?? 'Title',
-          style: Theme.of(context).textTheme.titleLarge,
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Colors.white,
+              ),
         ),
         actions: actions,
       ),

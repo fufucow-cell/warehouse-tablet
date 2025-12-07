@@ -1,7 +1,6 @@
 part of 'smart_home_warehouse_page.dart';
 
-class SmartHomeWarehousePageController
-    extends BasePageController {
+class SmartHomeWarehousePageController extends BasePageController {
   // MARK: - Init
 
   SmartHomeWarehousePageController() {
@@ -13,8 +12,7 @@ class SmartHomeWarehousePageController
   @override
   Future<void> apiProcessing() async {}
 
-  WarehouseMainPageRouterData
-      getWarehouseMainPageRouterData() {
+  WarehouseMainPageRouterData getWarehouseMainPageRouterData() {
     final service = SmartHomeService.instance;
     final userData = service.getUserData;
     final houseData = service.getHouseholdData;
@@ -38,7 +36,7 @@ class SmartHomeWarehousePageController
               )
               .toList() ??
           [],
-      userRoleType: userData?.roleType ?? 0,
+      userRoleType: userData?.household?.first.roleType ?? 0,
     );
   }
 }

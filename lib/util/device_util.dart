@@ -13,7 +13,8 @@ class DeviceUtil extends GetxService {
   bool get isIOS => Platform.isIOS;
   bool get isAndroid => Platform.isAndroid;
   bool get isWeb => kIsWeb;
-  bool get isDesktop => Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  bool get isDesktop =>
+      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   /// 取得設備語言
   Locale? get deviceLocale => Get.deviceLocale;

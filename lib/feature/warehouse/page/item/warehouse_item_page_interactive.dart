@@ -4,10 +4,8 @@ enum EnumWarehouseItemPageInteractive {
   tapSomeWidget,
 }
 
-extension WarehouseItemPageUserEventExtension
-    on WarehouseItemPageController {
-  void interactive(EnumWarehouseItemPageInteractive type,
-      {dynamic data}) {
+extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
+  void interactive(EnumWarehouseItemPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseItemPageInteractive.tapSomeWidget:
         break;

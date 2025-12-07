@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/inherit/base_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/warehouse_cabinet_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 part 'warehouse_cabinet_page_controller.dart';
 part 'warehouse_cabinet_page_interactive.dart';
@@ -16,7 +21,14 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
     return GetBuilder<WarehouseCabinetPageController>(
       init: WarehouseCabinetPageController(),
       builder: (controller) {
-        return _Body();
+        return Obx(
+          () {
+            return Skeletonizer(
+              enabled: controller.isLoadingRx.value,
+              child: _Body(),
+            );
+          },
+        );
       },
     );
   }
@@ -25,10 +37,85 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
 class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.find<WarehouseCabinetPageController>();
+    return GetBuilder<WarehouseCabinetPageController>(
+      builder: (controller) {
+        final cabinets = controller.cabinets;
 
-    return Center(
-      child: Text(EnumWarehouseTabItem.cabinet.title),
+        if (cabinets?.isEmpty ?? true) {
+          return const Center(
+            child: Text('暂无橱柜'),
+          );
+        }
+
+        return ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: cabinets!.length,
+          itemBuilder: (context, index) {
+            final cabinet = cabinets[index];
+            return _CabinetItem(cabinet: cabinet);
+          },
+        );
+      },
+    );
+  }
+}
+
+class _CabinetItem extends StatelessWidget {
+  final Cabinet cabinet;
+
+  const _CabinetItem({
+    required this.cabinet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          children: [
+            Icon(
+              Icons.warehouse_outlined,
+              size: 48,
+              color: Colors.blue[700],
+            ),
+            const SizedBox(width: 16.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    cabinet.name ?? '未命名',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 4.0),
+                  Text(
+                    '房間：${cabinet.roomName ?? '未設定'}',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  if (cabinet.description != null) ...[
+                    const SizedBox(height: 4.0),
+                    Text(
+                      '描述：${cabinet.description}',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

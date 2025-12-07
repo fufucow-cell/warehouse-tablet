@@ -4,7 +4,8 @@ enum EnumWarehouseCategoryPageRoute {
   showSomeDialog,
 }
 
-extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController {
+extension WarehouseCategoryPageRouteExtension
+    on WarehouseCategoryPageController {
   void routerHandle(EnumWarehouseCategoryPageRoute type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseCategoryPageRoute.showSomeDialog:

@@ -9,8 +9,7 @@ part 'smart_home_warehouse_page_interactive.dart';
 part 'smart_home_warehouse_page_model.dart';
 part 'smart_home_warehouse_page_route.dart';
 
-class SmartHomeWarehousePage
-    extends GetView<SmartHomeWarehousePageController> {
+class SmartHomeWarehousePage extends GetView<SmartHomeWarehousePageController> {
   const SmartHomeWarehousePage({super.key});
 
   @override
@@ -19,8 +18,7 @@ class SmartHomeWarehousePage
       init: SmartHomeWarehousePageController(),
       builder: (controller) {
         return WarehouseMainPage(
-          routerData:
-              controller.getWarehouseMainPageRouterData(),
+          routerData: controller.getWarehouseMainPageRouterData(),
         );
       },
     );

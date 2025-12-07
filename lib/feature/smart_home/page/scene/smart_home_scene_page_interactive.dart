@@ -4,10 +4,8 @@ enum EnumSmartHomeScenePageInteractive {
   tapSomeWidget,
 }
 
-extension SmartHomeScenePageUserEventExtension
-    on SmartHomeScenePageController {
-  void interactive(EnumSmartHomeScenePageInteractive type,
-      {dynamic data}) {
+extension SmartHomeScenePageUserEventExtension on SmartHomeScenePageController {
+  void interactive(EnumSmartHomeScenePageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumSmartHomeScenePageInteractive.tapSomeWidget:
         break;

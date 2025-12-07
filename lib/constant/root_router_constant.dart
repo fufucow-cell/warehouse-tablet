@@ -26,5 +26,6 @@ enum EnumRootRouter {
         },
       );
 
-  static List<GetPage<dynamic>> get pages => EnumRootRouter.values.map((e) => e.page).toList();
+  static List<GetPage<dynamic>> get pages =>
+      EnumRootRouter.values.map((e) => e.page).toList();
 }

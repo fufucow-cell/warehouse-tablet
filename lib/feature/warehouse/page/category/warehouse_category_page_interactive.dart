@@ -6,8 +6,7 @@ enum EnumWarehouseCategoryPageInteractive {
 
 extension WarehouseCategoryPageUserEventExtension
     on WarehouseCategoryPageController {
-  void interactive(EnumWarehouseCategoryPageInteractive type,
-      {dynamic data}) {
+  void interactive(EnumWarehouseCategoryPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseCategoryPageInteractive.tapSomeWidget:
         break;

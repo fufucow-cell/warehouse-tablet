@@ -11,7 +11,8 @@ class LocaleUtil extends GetxService {
   // MARK: - Properties
 
   static const EnumLocale defaultEnumLocale = EnumLocale.zhTW;
-  List<Locale> get supportedLocales => EnumLocale.availableLocales.map((e) => e.locale!).toList();
+  List<Locale> get supportedLocales =>
+      EnumLocale.availableLocales.map((e) => e.locale!).toList();
   final Rx<EnumLocale> _enumLocale = defaultEnumLocale.obs;
   EnumLocale get enumLocale => _enumLocale.value;
 
@@ -104,7 +105,8 @@ class LocaleUtil extends GetxService {
 
     // 先比對 locale code（例如：zh_TW, zh_CN, en_US）
     final matchedByFullCode = locales.firstWhereOrNull(
-      (e) => e.code == '${deviceLocale.languageCode}_${deviceLocale.countryCode}',
+      (e) =>
+          e.code == '${deviceLocale.languageCode}_${deviceLocale.countryCode}',
     );
 
     if (matchedByFullCode != null) {

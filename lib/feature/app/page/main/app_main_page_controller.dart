@@ -4,14 +4,11 @@ class AppMainPageController extends BasePageController {
   // MARK: - Properties
 
   final _model = AppMainPageModel();
-  EnumAppMainTabItem get getSelectedItem =>
-      _model.selectedItem.value;
-  String get getInitRoutePath =>
-      AppMainRouterUtil.rootRouter.path;
+  EnumAppMainTabItem get getSelectedItem => _model.selectedItem.value;
+  String get getInitRoutePath => AppMainRouterUtil.rootRouter.path;
   GlobalKey<NavigatorState> get getNavigatorKey =>
       AppMainRouterUtil.instance.nestedNavigatorKey;
-  AppMainRouterUtil get getRouterUtil =>
-      AppMainRouterUtil.instance;
+  AppMainRouterUtil get getRouterUtil => AppMainRouterUtil.instance;
 
   // MARK: - Init
 

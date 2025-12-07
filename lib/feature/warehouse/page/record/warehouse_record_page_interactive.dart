@@ -6,8 +6,7 @@ enum EnumWarehouseRecordPageInteractive {
 
 extension WarehouseRecordPageUserEventExtension
     on WarehouseRecordPageController {
-  void interactive(EnumWarehouseRecordPageInteractive type,
-      {dynamic data}) {
+  void interactive(EnumWarehouseRecordPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseRecordPageInteractive.tapSomeWidget:
         break;

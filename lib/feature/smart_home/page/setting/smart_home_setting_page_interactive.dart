@@ -6,8 +6,7 @@ enum EnumSmartHomeSettingPageInteractive {
 
 extension SmartHomeSettingPageUserEventExtension
     on SmartHomeSettingPageController {
-  void interactive(EnumSmartHomeSettingPageInteractive type,
-      {dynamic data}) {
+  void interactive(EnumSmartHomeSettingPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumSmartHomeSettingPageInteractive.tapSomeWidget:
         break;

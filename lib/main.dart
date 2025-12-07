@@ -49,8 +49,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       initialRoute: routerUtil.initRouterPath,
@@ -75,15 +74,13 @@ class _UnsupportedDevicePage extends StatelessWidget {
       title: '智管家',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: Scaffold(
         appBar: AppBar(
           title: const Text('智管家'),
-          backgroundColor:
-              Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         body: Center(
           child: Padding(
@@ -94,24 +91,19 @@ class _UnsupportedDevicePage extends StatelessWidget {
                 Icon(
                   Icons.error_outline,
                   size: 80.0.scale,
-                  color:
-                      Theme.of(context).colorScheme.error,
+                  color: Theme.of(context).colorScheme.error,
                 ),
                 SizedBox(height: 24.0.scale),
                 Text(
                   '不支援的設備',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 SizedBox(height: 16.0.scale),
                 Text(
                   '此應用程式僅支援手機和平板裝置',
-                  style:
-                      Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
               ],

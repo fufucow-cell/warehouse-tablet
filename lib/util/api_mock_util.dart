@@ -17,7 +17,10 @@ class ApiMockUtil {
   static InterceptorsWrapper createInterceptor() {
     return InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final apiInfo = _getApiInfoFromPathAndMethod(options.path, options.method);
+        final apiInfo = _getApiInfoFromPathAndMethod(
+          options.path,
+          options.method,
+        );
 
         if (apiInfo != null && _isMock(apiInfo)) {
           await _interceptorMock(options, handler, apiInfo);
@@ -38,7 +41,10 @@ class ApiMockUtil {
     return mockApiList.contains(apiInfo);
   }
 
-  static EnumApiInfo? _getApiInfoFromPathAndMethod(String path, String method) {
+  static EnumApiInfo? _getApiInfoFromPathAndMethod(
+    String path,
+    String method,
+  ) {
     // 移除所有開頭的斜線
     final cleanPath = path.replaceAll(RegExp(r'^/+'), '');
     // 將 HTTP method 轉換為小寫，與 EnumApiMethod 對應
@@ -58,7 +64,8 @@ class ApiMockUtil {
     RequestInterceptorHandler handler,
     EnumApiInfo apiInfo,
   ) async {
-    final isApiEmptyResponse = options.extra[ApiEmptyResponse.name] as bool? ?? false;
+    final isApiEmptyResponse =
+        options.extra[ApiEmptyResponse.name] as bool? ?? false;
 
     if (isApiEmptyResponse) {
       final successResponse = Response<dynamic>(
@@ -77,7 +84,9 @@ class ApiMockUtil {
 
     try {
       final mockFileName = _getMockFileName(options, apiInfo);
-      final jsonString = await rootBundle.loadString('assets/mock_data/$mockFileName');
+      final jsonString = await rootBundle.loadString(
+        'assets/mock_data/response/$mockFileName',
+      );
       final mockData = jsonDecode(jsonString) as Map<String, dynamic>;
       final mockResponse = Response<dynamic>(
         requestOptions: options,
@@ -87,12 +96,12 @@ class ApiMockUtil {
       );
 
       handler.resolve(mockResponse);
-    } on Object {
+    } on Object catch (error) {
       final errorResponse = Response<dynamic>(
         requestOptions: options,
         data: {
           'code': EnumErrorMap.code203.code,
-          'message': EnumErrorMap.code203.message,
+          'message': '${EnumErrorMap.code203.message} - $error',
           'data': null,
         },
         statusCode: EnumErrorMap.code200.code,
@@ -102,7 +111,10 @@ class ApiMockUtil {
     }
   }
 
-  static String _getMockFileName(RequestOptions options, EnumApiInfo apiInfo) {
+  static String _getMockFileName(
+    RequestOptions options,
+    EnumApiInfo apiInfo,
+  ) {
     final cleanPath = options.path.replaceAll(RegExp(r'^/+'), '');
     final methodName = apiInfo.method.name.toLowerCase();
     String baseFileName = cleanPath.replaceAll('/', '_');

@@ -6,8 +6,7 @@ class AppLoginPageController extends BasePageController {
   final _model = AppLoginPageModel();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool get isPasswordVisible =>
-      _model.isPasswordVisible.value;
+  bool get isPasswordVisible => _model.isPasswordVisible.value;
   bool get isButtonEnabled => _model.isButtonEnabled.value;
 
   // MARK: - Init
@@ -36,8 +35,7 @@ class AppLoginPageController extends BasePageController {
     UserLoginResponseModel? response;
 
     if (_model.isLoginProcess) {
-      response =
-          await ApiUtil.sendRequest<UserLoginResponseModel>(
+      response = await ApiUtil.sendRequest<UserLoginResponseModel>(
         EnumApiInfo.userLogin,
         requestModel: UserLoginRequestModel(
           email: emailController.text,
@@ -46,8 +44,7 @@ class AppLoginPageController extends BasePageController {
         fromJson: UserLoginResponseModel.fromJson,
       );
     } else {
-      response =
-          await ApiUtil.sendRequest<UserLoginResponseModel>(
+      response = await ApiUtil.sendRequest<UserLoginResponseModel>(
         EnumApiInfo.userRegister,
         requestModel: UserLoginRequestModel(
           email: emailController.text,
@@ -71,7 +68,7 @@ class AppLoginPageController extends BasePageController {
 
   @override
   Future<void> apiProcessFail(
-    ApiException error, {
+    BaseApiResponseModel<dynamic> error, {
     bool isFirstLoad = false,
   }) async {
     if (_model.isLoginProcess) {
@@ -97,8 +94,7 @@ class AppLoginPageController extends BasePageController {
   }
 
   void _togglePasswordVisibility() {
-    _model.isPasswordVisible.value =
-        !_model.isPasswordVisible.value;
+    _model.isPasswordVisible.value = !_model.isPasswordVisible.value;
     update();
   }
 
@@ -108,8 +104,8 @@ class AppLoginPageController extends BasePageController {
   }
 
   void _updateButtonStates() {
-    final isValid = emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
+    final isValid =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     _model.isButtonEnabled.value = isValid;
   }
 }

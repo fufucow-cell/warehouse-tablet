@@ -1,3 +1,5 @@
 part of 'warehouse_cabinet_page.dart';
 
-class WarehouseCabinetPageModel {}
+class WarehouseCabinetPageModel {
+  List<Cabinet>? cabinets;
+}

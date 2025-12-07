@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 class AppMainRouterUtil extends GetxService implements NavigatorObserver {
   // MARK: - Properties
 
-  final GlobalKey<NavigatorState> nestedNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> nestedNavigatorKey =
+      GlobalKey<NavigatorState>();
   BuildContext? get nestedContext => nestedNavigatorKey.currentContext;
   NavigatorState? get nestedNavigator => nestedNavigatorKey.currentState;
   static EnumAppMainRouter get rootRouter => EnumAppMainRouter.defaultRouter;

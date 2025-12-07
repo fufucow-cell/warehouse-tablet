@@ -6,8 +6,7 @@ enum EnumSmartHomeMessagePageInteractive {
 
 extension SmartHomeMessagePageUserEventExtension
     on SmartHomeMessagePageController {
-  void interactive(EnumSmartHomeMessagePageInteractive type,
-      {dynamic data}) {
+  void interactive(EnumSmartHomeMessagePageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumSmartHomeMessagePageInteractive.tapSomeWidget:
         break;

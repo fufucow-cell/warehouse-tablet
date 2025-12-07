@@ -1,3 +1,5 @@
 part of 'warehouse_alarm_page.dart';
 
-class WarehouseAlarmPageModel {}
+class WarehouseAlarmPageModel {
+  List<Log>? alarmLogs;
+}

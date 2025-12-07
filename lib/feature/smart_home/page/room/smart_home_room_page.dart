@@ -17,7 +17,10 @@ class SmartHomeRoomPage extends GetView<SmartHomeRoomPageController> {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('房間'),
+            title: const Text(
+              '房間',
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           body: _Body(),
         );

@@ -6,8 +6,7 @@ enum EnumSmartHomeHouseholdPageRoute {
 
 extension SmartHomeHouseholdPageRouteExtension
     on SmartHomeHouseholdPageController {
-  void routerHandle(EnumSmartHomeHouseholdPageRoute type,
-      {dynamic data}) {
+  void routerHandle(EnumSmartHomeHouseholdPageRoute type, {dynamic data}) {
     switch (type) {
       case EnumSmartHomeHouseholdPageRoute.showSomeDialog:
         break;

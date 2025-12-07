@@ -20,4 +20,3 @@ enum EnumSupportedDevice {
         EnumSupportedDevice.tablet => 1200.0,
       };
 }
-

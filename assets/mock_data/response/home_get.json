@@ -1,0 +1,45 @@
+{
+  "code": 200,
+  "message": "Success",
+  "data": {
+    "home_id": "550e8400-e29b-41d4-a716-446655440000",
+    "home_name": "My Home",
+    "users": [
+      {
+        "id": "770e8400-e29b-41d4-a716-446655440002",
+        "user_name": "John Doe"
+      },
+      {
+        "id": "880e8400-e29b-41d4-a716-446655440003",
+        "user_name": "Jane Smith"
+      }
+    ],
+    "rooms": [
+      {
+        "room_id": "990e8400-e29b-41d4-a716-446655440004",
+        "home_id": "550e8400-e29b-41d4-a716-446655440000",
+        "room_name": "Living Room"
+      },
+      {
+        "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
+        "home_id": "550e8400-e29b-41d4-a716-446655440000",
+        "room_name": "Master Bedroom"
+      },
+      {
+        "room_id": "bb0e8400-e29b-41d4-a716-446655440006",
+        "home_id": "550e8400-e29b-41d4-a716-446655440000",
+        "room_name": "Guest Bedroom"
+      },
+      {
+        "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
+        "home_id": "550e8400-e29b-41d4-a716-446655440000",
+        "room_name": "Kitchen"
+      },
+      {
+        "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
+        "home_id": "550e8400-e29b-41d4-a716-446655440000",
+        "room_name": "Bathroom"
+      }
+    ]
+  }
+}

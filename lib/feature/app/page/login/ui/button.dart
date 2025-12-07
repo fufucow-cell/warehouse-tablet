@@ -20,8 +20,7 @@ class LoginUIButton extends StatelessWidget {
     return Obx(
       () {
         final controller = Get.find<AppLoginPageController>();
-        final isDisabled =
-            controller.isLoading || !controller.isButtonEnabled;
+        final isDisabled = controller.isLoading || !controller.isButtonEnabled;
         final onPressed = isDisabled
             ? null
             : () => controller.interactive(
@@ -45,8 +44,7 @@ class LoginUIButton extends StatelessWidget {
                   ? const SizedBox(
                       height: 20,
                       width: 20,
-                      child:
-                          CircularProgressIndicator(strokeWidth: 2),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : const Text(
                       '登入',

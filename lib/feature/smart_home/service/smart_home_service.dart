@@ -1,6 +1,6 @@
 import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/home_household_response_model.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model.dart';
+import 'package:flutter_smart_home_tablet/model/response_model/home_household_response_model/home_household_response_model.dart';
+import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model/user_login_response_model.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_service_model.dart';
@@ -9,10 +9,8 @@ class SmartHomeService {
   // MARK: - Properties
 
   final _model = SmartHomeServiceModel();
-  UserLoginResponseModel? get getUserData =>
-      AppService.instance.getUserData;
-  HomeHouseholdResponseModel? get getHouseholdData =>
-      _model.homeHouseholdData;
+  UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
+  HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
 
   // MARK: - Init
 
