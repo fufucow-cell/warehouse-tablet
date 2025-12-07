@@ -2,6 +2,13 @@ part of 'warehouse_record_page.dart';
 
 class WarehouseRecordPageModel {
   List<Log>? logs;
+  List<Log>? allLogs; // 保存所有原始日志数据
+  final isEditMode = false.obs;
+  final selectedLogIds = <String>{}.obs;
+  DateTime? startDate;
+  DateTime? endDate;
+  EnumOperateType? filterOperateType;
+  EnumEntityType? filterEntityType;
 }
 
 enum EnumLogType {

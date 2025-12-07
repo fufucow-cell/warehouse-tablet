@@ -35,6 +35,23 @@ class WarehouseRecordPage extends GetView<WarehouseRecordPageController> {
 }
 
 class _Body extends StatelessWidget {
+  // 格式化日期显示
+  String _formatDate(DateTime date) {
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
+  // 获取日期删除按钮的文字
+  String _getDateDeleteButtonText(DateTime? startDate, DateTime? endDate) {
+    if (startDate != null && endDate != null) {
+      return '刪除日期區間的所有日誌';
+    } else if (startDate != null) {
+      return '刪除此日期之後的所有日誌';
+    } else if (endDate != null) {
+      return '刪除此日期之前的所有日誌';
+    }
+    return '按日期删除';
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseRecordPageController>(
@@ -47,13 +64,158 @@ class _Body extends StatelessWidget {
           );
         }
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: logs!.length,
-          itemBuilder: (context, index) {
-            final log = logs[index];
-            return _LogItem(log: log);
-          },
+        return Column(
+          children: [
+            // 编辑模式下的工具栏（全选和批次删除）
+            Obx(
+              () {
+                final isEditMode = controller.isEditModeRx.value;
+                if (!isEditMode) {
+                  return const SizedBox.shrink();
+                }
+
+                final selectedCount = controller.selectedLogIdsRx.length;
+                final isAllSelected = controller.isAllSelected;
+
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  color: Colors.grey[200],
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: isAllSelected
+                                ? () => controller.deselectAll()
+                                : () => controller.selectAll(),
+                            icon: Icon(
+                              isAllSelected
+                                  ? Icons.check_box
+                                  : Icons.check_box_outline_blank,
+                            ),
+                            label: Text(isAllSelected ? '取消全选' : '全选'),
+                          ),
+                          const SizedBox(width: 16.0),
+                          // 起始日期选择器
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton.icon(
+                                onPressed: () async {
+                                  final pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: controller.startDate ?? DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                  );
+                                  if (pickedDate != null) {
+                                    controller.setStartDate(pickedDate);
+                                  }
+                                },
+                                icon: const Icon(Icons.calendar_today),
+                                label: Text(
+                                  controller.startDate != null
+                                      ? '起始：${_formatDate(controller.startDate!)}'
+                                      : '起始日期',
+                                ),
+                              ),
+                              if (controller.startDate != null)
+                                IconButton(
+                                  icon: const Icon(Icons.close, size: 20),
+                                  onPressed: () {
+                                    controller.setStartDate(null);
+                                  },
+                                  tooltip: '清除起始日期',
+                                ),
+                            ],
+                          ),
+                          const SizedBox(width: 8.0),
+                          // 结束日期选择器
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextButton.icon(
+                                onPressed: () async {
+                                  final pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: controller.endDate ?? DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
+                                  );
+                                  if (pickedDate != null) {
+                                    controller.setEndDate(pickedDate);
+                                  }
+                                },
+                                icon: const Icon(Icons.calendar_today),
+                                label: Text(
+                                  controller.endDate != null
+                                      ? '结束：${_formatDate(controller.endDate!)}'
+                                      : '结束日期',
+                                ),
+                              ),
+                              if (controller.endDate != null)
+                                IconButton(
+                                  icon: const Icon(Icons.close, size: 20),
+                                  onPressed: () {
+                                    controller.setEndDate(null);
+                                  },
+                                  tooltip: '清除结束日期',
+                                ),
+                            ],
+                          ),
+                          const Spacer(),
+                          // 日期删除提示文字（在删除按钮左边）
+                          if (controller.startDate != null || controller.endDate != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                _getDateDeleteButtonText(
+                                  controller.startDate,
+                                  controller.endDate,
+                                ),
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          // 批次删除按钮（基于选中项）
+                          if (selectedCount > 0)
+                            TextButton.icon(
+                              onPressed: () => controller.batchDelete(),
+                              icon: const Icon(Icons.delete),
+                              label: const Text('删除'),
+                            ),
+                          // 按日期删除按钮
+                          if (controller.startDate != null || controller.endDate != null)
+                            TextButton.icon(
+                              onPressed: () => controller.deleteByDate(),
+                              icon: const Icon(Icons.delete),
+                              label: const Text('删除'),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+            // 日志列表
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16.0),
+                itemCount: logs!.length,
+                itemBuilder: (context, index) {
+                  final log = logs[index];
+                  return _LogItem(log: log);
+                },
+              ),
+            ),
+          ],
         );
       },
     );
@@ -69,6 +231,8 @@ class _LogItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseRecordPageController>();
+
     return Card(
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Padding(
@@ -76,10 +240,30 @@ class _LogItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(
-              _getIconForOperateType(log.operateType),
-              color: _getColorForOperateType(log.operateType),
-              size: 24,
+            // 编辑模式下的复选框
+            Obx(
+              () {
+                final isEditMode = controller.isEditModeRx.value;
+                if (!isEditMode) {
+                  return Icon(
+                    _getIconForOperateType(log.operateType),
+                    color: _getColorForOperateType(log.operateType),
+                    size: 24,
+                  );
+                }
+
+                final isSelected = log.logId != null &&
+                    controller.selectedLogIdsRx.contains(log.logId!);
+
+                return Checkbox(
+                  value: isSelected,
+                  onChanged: log.logId != null
+                      ? (value) {
+                          controller.toggleLogSelection(log.logId!);
+                        }
+                      : null,
+                );
+              },
             ),
             const SizedBox(width: 16.0),
             Expanded(

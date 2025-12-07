@@ -5,6 +5,11 @@ enum EnumWarehouseMainPageRoute {
   showCreateItemDialog,
   showCreateCabinetDialog,
   showCreateCategoryDialog,
+  showSearchLogDialog,
+  showSearchAlarmDialog,
+  showSearchCategoryDialog,
+  showSearchCabinetDialog,
+  showSearchItemDialog,
 }
 
 extension WarehouseMainPageRouteExtension
@@ -27,61 +32,120 @@ extension WarehouseMainPageRouteExtension
             .showCreateCategoryDialog:
         _showCreateCategoryDialog();
         break;
+      case EnumWarehouseMainPageRoute.showSearchLogDialog:
+        _showSearchLogDialog();
+        break;
+      case EnumWarehouseMainPageRoute.showSearchAlarmDialog:
+        _showSearchAlarmDialog();
+        break;
+      case EnumWarehouseMainPageRoute
+            .showSearchCategoryDialog:
+        _showSearchCategoryDialog();
+        break;
+      case EnumWarehouseMainPageRoute
+            .showSearchCabinetDialog:
+        _showSearchCabinetDialog();
+        break;
+      case EnumWarehouseMainPageRoute.showSearchItemDialog:
+        _showSearchItemDialog();
+        break;
     }
   }
 
-  void _showCreateItemDialog() {
-    final context = Get.context;
-    if (context == null) return;
+  Future<void> _showCreateItemDialog() async {
+    try {
+      // 获取分类数据和橱柜数据
+      final categoryResponse = await ApiUtil.sendRequest<
+          WarehouseCategoryResponseModel>(
+        EnumApiInfo.categoryFetch,
+        requestModel: WarehouseCategoryRequestModel(),
+        fromJson: WarehouseCategoryResponseModel.fromJson,
+      );
 
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => AlertDialog(
-        title: const Text('新增物品'),
-        content: const Text('新增物品功能開發中...'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
+      final cabinetResponse = await ApiUtil.sendRequest<
+          WarehouseCabinetResponseModel>(
+        EnumApiInfo.cabinetFetch,
+        requestModel: WarehouseCabinetRequestModel(),
+        fromJson: WarehouseCabinetResponseModel.fromJson,
+      );
+
+      final categories = categoryResponse.data ?? [];
+      final cabinets = cabinetResponse.data ?? [];
+
+      // 显示创建物品 dialog
+      DialogCreateItem.show(
+        categories: categories,
+        cabinets: cabinets,
+        onConfirm: (
+          name,
+          description,
+          categoryId,
+          quantity,
+          minStockAlert,
+          roomId,
+          cabinetId,
+        ) {
+          // TODO: 实现新增物品逻辑
+          // 可以在这里调用 API 创建物品
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } on Exception catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('获取数据失败：$e'),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // TODO: 实现新增物品逻辑
-            },
-            child: const Text('確認'),
-          ),
-        ],
-      ),
-    );
+        );
+      }
+    }
   }
 
   void _showCreateCabinetDialog() {
-    final context = Get.context;
-    if (context == null) return;
+    try {
+      final service = WarehouseService.instance;
 
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) => AlertDialog(
-        title: const Text('新增櫥櫃'),
-        content: const Text('新增櫥櫃功能開發中...'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('取消'),
+      // 构建房间数据
+      final household = WarehouseHomeRouterData(
+        id: service.house?.id ?? '',
+        name: service.house?.name ?? '',
+      );
+      final rooms = service.rooms
+          .map(
+            (room) => WarehouseHomeRouterData(
+              id: room.id ?? '',
+              name: room.name ?? '',
+            ),
+          )
+          .toList();
+
+      // 显示创建橱柜 dialog
+      DialogCreateCabinet.show(
+        household: household,
+        rooms: rooms,
+        onConfirm: (name, roomId, description) {
+          // TODO: 实现新增櫥櫃逻辑
+          // 可以在这里调用 API 创建橱柜
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('获取数据失败：$e'),
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // TODO: 实现新增櫥櫃逻辑
-            },
-            child: const Text('確認'),
-          ),
-        ],
-      ),
-    );
+        );
+      }
+    }
   }
 
   Future<void> _showCreateCategoryDialog() async {
@@ -114,6 +178,260 @@ extension WarehouseMainPageRouteExtension
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('获取分类数据失败：$e'),
+          ),
+        );
+      }
+    }
+  }
+
+  void _showSearchLogDialog() {
+    try {
+      // 获取当前记录页面的 controller（如果存在）
+      WarehouseRecordPageController? recordController;
+      try {
+        recordController =
+            Get.find<WarehouseRecordPageController>();
+      } catch (e) {
+        // Controller 可能还未初始化
+      }
+
+      // 显示搜索日志对话框
+      DialogSearchLog.show(
+        initialStartDate: recordController?.startDate,
+        initialEndDate: recordController?.endDate,
+        initialOperateType:
+            recordController?.filterOperateType,
+        initialEntityType:
+            recordController?.filterEntityType,
+        onConfirm: ({
+          DateTime? startDate,
+          DateTime? endDate,
+          EnumOperateType? operateType,
+          EnumEntityType? entityType,
+        }) {
+          // 应用筛选条件
+          if (recordController != null) {
+            recordController.applyFilters(
+              startDate: startDate,
+              endDate: endDate,
+              operateType: operateType,
+              entityType: entityType,
+            );
+          }
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('打开搜索对话框失败：$e'),
+          ),
+        );
+      }
+    }
+  }
+
+  void _showSearchAlarmDialog() {
+    try {
+      // 获取当前告警页面的 controller（如果存在）
+      WarehouseAlarmPageController? alarmController;
+      try {
+        alarmController =
+            Get.find<WarehouseAlarmPageController>();
+      } catch (e) {
+        // Controller 可能还未初始化
+      }
+
+      // 显示搜索告警对话框
+      DialogSearchAlarm.show(
+        initialStartDate: alarmController?.startDate,
+        initialEndDate: alarmController?.endDate,
+        onConfirm: ({
+          DateTime? startDate,
+          DateTime? endDate,
+        }) {
+          // 应用筛选条件
+          if (alarmController != null) {
+            alarmController.applyFilters(
+              startDate: startDate,
+              endDate: endDate,
+            );
+          }
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('打开搜索对话框失败：$e'),
+          ),
+        );
+      }
+    }
+  }
+
+  void _showSearchCategoryDialog() {
+    try {
+      // 获取当前分类页面的 controller（如果存在）
+      WarehouseCategoryPageController? categoryController;
+      try {
+        categoryController =
+            Get.find<WarehouseCategoryPageController>();
+      } catch (e) {
+        // Controller 可能还未初始化
+      }
+
+      // 显示搜索分类对话框
+      DialogSearchCategory.show(
+        initialName: categoryController?.filterName,
+        initialLevel: categoryController?.filterLevel,
+        onConfirm: ({
+          String? name,
+          int? level,
+        }) {
+          // 应用筛选条件
+          if (categoryController != null) {
+            categoryController.applyFilters(
+              name: name,
+              level: level,
+            );
+          }
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('打开搜索对话框失败：$e'),
+          ),
+        );
+      }
+    }
+  }
+
+  void _showSearchCabinetDialog() {
+    try {
+      // 获取当前櫥櫃页面的 controller（如果存在）
+      WarehouseCabinetPageController? cabinetController;
+      try {
+        cabinetController =
+            Get.find<WarehouseCabinetPageController>();
+      } catch (e) {
+        // Controller 可能还未初始化
+      }
+
+      // 显示搜索櫥櫃对话框
+      DialogSearchCabinet.show(
+        initialName: cabinetController?.filterName,
+        initialRoomId: cabinetController?.filterRoomId,
+        onConfirm: ({
+          String? name,
+          String? roomId,
+        }) {
+          // 应用筛选条件
+          if (cabinetController != null) {
+            cabinetController.applyFilters(
+              name: name,
+              roomId: roomId,
+            );
+          }
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('打开搜索对话框失败：$e'),
+          ),
+        );
+      }
+    }
+  }
+
+  Future<void> _showSearchItemDialog() async {
+    try {
+      // 获取分类数据
+      final categoryResponse = await ApiUtil.sendRequest<
+          WarehouseCategoryResponseModel>(
+        EnumApiInfo.categoryFetch,
+        requestModel: WarehouseCategoryRequestModel(),
+        fromJson: WarehouseCategoryResponseModel.fromJson,
+      );
+      final categories = categoryResponse.data ?? [];
+
+      // 获取橱柜数据
+      final cabinetResponse = await ApiUtil.sendRequest<
+          WarehouseCabinetResponseModel>(
+        EnumApiInfo.cabinetFetch,
+        requestModel: WarehouseCabinetRequestModel(),
+        fromJson: WarehouseCabinetResponseModel.fromJson,
+      );
+      final cabinets = cabinetResponse.data ?? [];
+
+      // 获取当前物品页面的 controller（如果存在）
+      WarehouseItemPageController? itemController;
+      try {
+        itemController =
+            Get.find<WarehouseItemPageController>();
+      } catch (e) {
+        // Controller 可能还未初始化
+      }
+
+      // 显示搜索物品对话框
+      DialogSearchItem.show(
+        categories: categories,
+        cabinets: cabinets,
+        initialName: itemController?.filterName,
+        initialCategoryId: itemController?.filterCategoryId,
+        initialRoomId: itemController?.filterRoomId,
+        initialCabinetId: itemController?.filterCabinetId,
+        onConfirm: ({
+          String? name,
+          String? categoryId,
+          String? roomId,
+          String? cabinetId,
+        }) {
+          // 应用筛选条件
+          if (itemController != null) {
+            itemController.applyFilters(
+              name: name,
+              categoryId: categoryId,
+              roomId: roomId,
+              cabinetId: cabinetId,
+            );
+          }
+        },
+        onCancel: () {
+          // 取消操作
+        },
+      );
+    } catch (e) {
+      // 错误处理
+      final context = Get.context;
+      if (context != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('打开搜索对话框失败：$e'),
           ),
         );
       }

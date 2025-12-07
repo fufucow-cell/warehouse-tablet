@@ -69,6 +69,8 @@ class _CabinetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseCabinetPageController>();
+
     return Card(
       margin: const EdgeInsets.only(bottom: 8.0),
       child: Padding(
@@ -112,6 +114,24 @@ class _CabinetItem extends StatelessWidget {
                   ],
                 ],
               ),
+            ),
+            // 编辑模式下显示删除按钮
+            Obx(
+              () {
+                final isEditMode = controller.isEditModeRx.value;
+                if (isEditMode) {
+                  return IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      controller.deleteCabinet(cabinet);
+                    },
+                  );
+                }
+                return const SizedBox.shrink();
+              },
             ),
           ],
         ),

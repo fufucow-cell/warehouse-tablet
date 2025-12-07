@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_category.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_alarm.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_category.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_log.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/warehouse_cabinet_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -56,26 +65,13 @@ class _WarehouseMainPageState
           appBar: AppBar(
             backgroundColor:
                 Theme.of(context).colorScheme.primary,
+            automaticallyImplyLeading: false,
             centerTitle: true,
             title: const Text(
               '智能倉庫',
               style: TextStyle(color: Colors.white),
             ),
             actions: [
-              // 搜索图标（所有页面都显示）
-              IconButton(
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.white,
-                  size: 28,
-                ),
-                onPressed: () {
-                  controller.interactive(
-                    EnumWarehouseMainPageInteractive
-                        .tapSearch,
-                  );
-                },
-              ),
               // 根据当前 tab 显示新增或编辑图标
               Obx(() {
                 final selectedItem =
@@ -88,6 +84,10 @@ class _WarehouseMainPageState
                         EnumWarehouseTabItem.category;
                 final isCategoryPage = selectedItem ==
                     EnumWarehouseTabItem.category;
+                final isCabinetPage = selectedItem ==
+                    EnumWarehouseTabItem.cabinet;
+                final isItemPage = selectedItem ==
+                    EnumWarehouseTabItem.item;
 
                 if (isCreatePage) {
                   return Row(
@@ -128,8 +128,10 @@ class _WarehouseMainPageState
                           }
                         },
                       ),
-                      // Category 页面额外显示编辑图标
-                      if (isCategoryPage)
+                      // Item, Category 或 Cabinet 页面额外显示编辑图标
+                      if (isItemPage ||
+                          isCategoryPage ||
+                          isCabinetPage)
                         IconButton(
                           icon: const Icon(
                             Icons.edit,
@@ -141,21 +143,52 @@ class _WarehouseMainPageState
                               EnumWarehouseMainPageInteractive
                                   .tapEdit,
                             );
+                            // 切换物品页面的编辑模式
+                            if (isItemPage) {
+                              try {
+                                final itemController = Get.find<
+                                    WarehouseItemPageController>();
+                                itemController
+                                    .toggleEditMode();
+                              } catch (e) {
+                                // Controller 可能还未初始化，忽略错误
+                              }
+                            }
                             // 切换分类页面的编辑模式
-                            try {
-                              final categoryController =
-                                  Get.find<
-                                      WarehouseCategoryPageController>();
-                              categoryController
-                                  .toggleEditMode();
-                            } catch (e) {
-                              // Controller 可能还未初始化，忽略错误
+                            if (isCategoryPage) {
+                              try {
+                                final categoryController =
+                                    Get.find<
+                                        WarehouseCategoryPageController>();
+                                categoryController
+                                    .toggleEditMode();
+                              } catch (e) {
+                                // Controller 可能还未初始化，忽略错误
+                              }
+                            }
+                            // 切换橱柜页面的编辑模式
+                            if (isCabinetPage) {
+                              try {
+                                final cabinetController =
+                                    Get.find<
+                                        WarehouseCabinetPageController>();
+                                cabinetController
+                                    .toggleEditMode();
+                              } catch (e) {
+                                // Controller 可能还未初始化，忽略错误
+                              }
                             }
                           },
                         ),
                     ],
                   );
                 } else {
+                  // Record 或 Alarm 页面
+                  final isRecordPage = selectedItem ==
+                      EnumWarehouseTabItem.record;
+                  final isAlarmPage = selectedItem ==
+                      EnumWarehouseTabItem.alarm;
+
                   return IconButton(
                     icon: const Icon(
                       Icons.edit,
@@ -167,11 +200,44 @@ class _WarehouseMainPageState
                         EnumWarehouseMainPageInteractive
                             .tapEdit,
                       );
-                      // TODO: 实现编辑功能
+                      // 切换记录页面的编辑模式
+                      if (isRecordPage) {
+                        try {
+                          final recordController = Get.find<
+                              WarehouseRecordPageController>();
+                          recordController.toggleEditMode();
+                        } catch (e) {
+                          // Controller 可能还未初始化，忽略错误
+                        }
+                      }
+                      // 切换告警页面的编辑模式
+                      if (isAlarmPage) {
+                        try {
+                          final alarmController = Get.find<
+                              WarehouseAlarmPageController>();
+                          alarmController.toggleEditMode();
+                        } catch (e) {
+                          // Controller 可能还未初始化，忽略错误
+                        }
+                      }
                     },
                   );
                 }
               }),
+              // 搜索图标（所有页面都显示，移到右边）
+              IconButton(
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.white,
+                  size: 28,
+                ),
+                onPressed: () {
+                  controller.interactive(
+                    EnumWarehouseMainPageInteractive
+                        .tapSearch,
+                  );
+                },
+              ),
             ],
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(48.0),

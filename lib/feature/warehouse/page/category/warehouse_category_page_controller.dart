@@ -6,6 +6,8 @@ class WarehouseCategoryPageController extends BasePageController {
   final _model = WarehouseCategoryPageModel();
   List<Category>? get categories => _model.categories;
   Rx<bool> get isEditModeRx => _model.isEditMode;
+  String? get filterName => _model.filterName;
+  int? get filterLevel => _model.filterLevel;
 
   // MARK: - Init
 
@@ -23,8 +25,137 @@ class WarehouseCategoryPageController extends BasePageController {
       fromJson: WarehouseCategoryResponseModel.fromJson,
     );
 
-    _model.categories = response.data;
+    _model.allCategories = response.data;
+    _applyFilters();
     update();
+  }
+
+  // 应用筛选条件
+  void applyFilters({
+    String? name,
+    int? level,
+  }) {
+    _model.filterName = name;
+    _model.filterLevel = level;
+    _applyFilters();
+    update();
+  }
+
+  // 内部筛选方法
+  void _applyFilters() {
+    if (_model.allCategories == null) {
+      _model.categories = null;
+      return;
+    }
+
+    List<Category> filteredCategories = List.from(_model.allCategories!);
+
+    // 按名称筛选（递归搜索所有分类及其子分类）
+    if (_model.filterName != null && _model.filterName!.isNotEmpty) {
+      final searchName = _model.filterName!.toLowerCase();
+      filteredCategories = _filterByName(filteredCategories, searchName);
+    }
+
+    // 按階層筛选
+    if (_model.filterLevel != null) {
+      filteredCategories = _filterByLevel(filteredCategories, _model.filterLevel!);
+    }
+
+    _model.categories = filteredCategories;
+  }
+
+  // 按名称筛选（递归搜索）
+  List<Category> _filterByName(List<Category> categories, String searchName) {
+    final List<Category> result = [];
+
+    bool matchesName(Category category) {
+      final categoryName = category.name?.toLowerCase() ?? '';
+      return categoryName.contains(searchName);
+    }
+
+    Category? childrenToCategory(Children? children) {
+      if (children == null) return null;
+      return Category(
+        categoryId: children.categoryId,
+        name: children.name,
+        parentId: children.parentId,
+        level: children.level,
+        children: children.children is Map<String, dynamic>
+            ? Children.fromJson(
+                children.children as Map<String, dynamic>,
+              )
+            : null,
+      );
+    }
+
+    void traverse(Category category, bool parentMatches) {
+      final currentMatches = matchesName(category);
+      final shouldInclude = currentMatches || parentMatches;
+
+      if (shouldInclude) {
+        result.add(category);
+      }
+
+      // 遍历子分类
+      final childCategory = childrenToCategory(category.children);
+      if (childCategory != null) {
+        traverse(childCategory, shouldInclude);
+      }
+    }
+
+    for (final category in categories) {
+      traverse(category, false);
+    }
+
+    return result;
+  }
+
+  // 按階層筛选
+  List<Category> _filterByLevel(List<Category> categories, int targetLevel) {
+    final List<Category> result = [];
+
+    Category? childrenToCategory(Children? children) {
+      if (children == null) return null;
+      return Category(
+        categoryId: children.categoryId,
+        name: children.name,
+        parentId: children.parentId,
+        level: children.level,
+        children: children.children is Map<String, dynamic>
+            ? Children.fromJson(
+                children.children as Map<String, dynamic>,
+              )
+            : null,
+      );
+    }
+
+    void traverse(Category category, int currentLevel) {
+      // 只添加目标階層的分类
+      if (currentLevel == targetLevel) {
+        result.add(category);
+        // 如果匹配，还需要包含其子分类以保持层级关系
+        final childCategory = childrenToCategory(category.children);
+        if (childCategory != null) {
+          traverse(childCategory, currentLevel + 1);
+        }
+      } else if (currentLevel < targetLevel) {
+        // 当前階層小于目标階層，继续向下搜索
+        final childCategory = childrenToCategory(category.children);
+        if (childCategory != null) {
+          traverse(childCategory, currentLevel + 1);
+        }
+      }
+      // 如果 currentLevel > targetLevel，不再向下搜索
+    }
+
+    // 从 level 1 开始遍历
+    for (final category in categories) {
+      if (category.level == 1) {
+        traverse(category, 1);
+      }
+    }
+
+    return result;
   }
 
   @override
@@ -79,6 +210,7 @@ class WarehouseCategoryPageController extends BasePageController {
       }
     }
 
+    // 使用筛选后的分类列表
     if (_model.categories != null) {
       for (final category in _model.categories!) {
         traverse(category);

@@ -92,8 +92,21 @@ class SmartHomeHouseholdPageController extends BasePageController {
     }
 
     _model.currentHouseholdIndex = index;
-    _model.homeId = households[index].homeId;
-    update();
-    await startApiProcess();
+    final newHomeId = households[index].homeId;
+    _model.homeId = newHomeId;
+
+    // 先从已保存的数据中查找该家庭的数据
+    final cachedData = _homeService.getHouseholdDataByHomeId(newHomeId);
+    if (cachedData != null) {
+      // 如果已有缓存数据，直接使用，不需要调用 API
+      _model.householdData = cachedData;
+      _homeService.updateHomeHouseholdData(cachedData);
+      update();
+    } else {
+      // 如果没有缓存，才调用 API 加载数据
+      _model.householdData = null;
+      update();
+      await startApiProcess();
+    }
   }
 }

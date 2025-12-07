@@ -15,7 +15,8 @@ part 'warehouse_item_page_interactive.dart';
 part 'warehouse_item_page_model.dart';
 part 'warehouse_item_page_route.dart';
 
-class WarehouseItemPage extends GetView<WarehouseItemPageController> {
+class WarehouseItemPage
+    extends GetView<WarehouseItemPageController> {
   const WarehouseItemPage({super.key});
 
   @override
@@ -49,7 +50,8 @@ class _Body extends StatelessWidget {
 
         return GridView.builder(
           padding: const EdgeInsets.all(16.0),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate:
+              const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             crossAxisSpacing: 16.0,
             mainAxisSpacing: 16.0,
@@ -78,19 +80,23 @@ class _ItemCard extends StatelessWidget {
     final List<String> parts = [];
 
     // Level 1
-    if (category.name != null && category.name!.isNotEmpty) {
+    if (category.name != null &&
+        category.name!.isNotEmpty) {
       parts.add(category.name!);
     }
 
     // Level 2
     final level2 = category.children;
-    if (level2 != null && level2.name != null && level2.name!.isNotEmpty) {
+    if (level2 != null &&
+        level2.name != null &&
+        level2.name!.isNotEmpty) {
       parts.add(level2.name!);
 
       // Level 3
       final level3 = level2.children;
       if (level3 != null && level3 is Children) {
-        if (level3.name != null && level3.name!.isNotEmpty) {
+        if (level3.name != null &&
+            level3.name!.isNotEmpty) {
           parts.add(level3.name!);
         }
       }
@@ -122,7 +128,8 @@ class _ItemCard extends StatelessWidget {
 
         // 如果有 room name，显示 room name > cabinet name (数量)
         // 如果没有 room name，直接显示 cabinet name (数量)
-        if (room.roomName != null && room.roomName!.isNotEmpty) {
+        if (room.roomName != null &&
+            room.roomName!.isNotEmpty) {
           locations.add('${room.roomName} > $cabinetText');
         } else {
           locations.add(cabinetText);
@@ -135,133 +142,191 @@ class _ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller =
+        Get.find<WarehouseItemPageController>();
     final categoryPath = _buildCategoryPath(item.category);
     final locations = _buildLocations();
 
     return Card(
       elevation: 2,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // 图片区域
-            Expanded(
-              flex: 3,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: item.photo != null && item.photo!.isNotEmpty
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Image.network(
-                          item.photo!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(
-                              Icons.image_not_supported,
-                              size: 48,
-                              color: Colors.grey,
-                            );
-                          },
-                        ),
-                      )
-                    : const Icon(
-                        Icons.inventory_2_outlined,
-                        size: 48,
-                        color: Colors.grey,
-                      ),
-              ),
-            ),
-            const SizedBox(height: 8),
-            // 名称
-            Text(
-              item.name ?? '未命名',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            // 数量
-            Row(
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '数量: ',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                Text(
-                  '${item.quantity ?? 0}',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: (item.quantity ?? 0) <= (item.minStockAlert ?? 0)
-                            ? Colors.red
-                            : null,
-                      ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-            // Category: level1 name > level2 name > level3 name
-            Text(
-              categoryPath.isNotEmpty
-                  ? 'Category: $categoryPath'
-                  : 'Category: 暂无分类',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey[600],
-                  ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            // Locations: room name > cabinet name
-            if (locations.isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Text(
-                'Locations:',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
+                // 图片区域
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      borderRadius:
+                          BorderRadius.circular(8),
                     ),
-              ),
-              ...locations.take(3).map(
-                    (location) => Padding(
+                    child: item.photo != null &&
+                            item.photo!.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(8),
+                            child: Image.network(
+                              item.photo!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (
+                                context,
+                                error,
+                                stackTrace,
+                              ) {
+                                return const Icon(
+                                  Icons.image_not_supported,
+                                  size: 48,
+                                  color: Colors.grey,
+                                );
+                              },
+                            ),
+                          )
+                        : const Icon(
+                            Icons.inventory_2_outlined,
+                            size: 48,
+                            color: Colors.grey,
+                          ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                // 名称
+                Text(
+                  item.name ?? '未命名',
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                // 数量
+                Row(
+                  children: [
+                    Text(
+                      '数量: ',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall,
+                    ),
+                    Text(
+                      '${item.quantity ?? 0}',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: (item.quantity ?? 0) <=
+                                    (item.minStockAlert ??
+                                        0)
+                                ? Colors.red
+                                : null,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                // Category: level1 name > level2 name > level3 name
+                Text(
+                  categoryPath.isNotEmpty
+                      ? 'Category: $categoryPath'
+                      : 'Category: 暂无分类',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(
+                        color: Colors.grey[600],
+                      ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                // Locations: room name > cabinet name
+                if (locations.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    'Locations:',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
+                  ),
+                  ...locations.take(3).map(
+                        (location) => Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                            top: 2.0,
+                          ),
+                          child: Text(
+                            location,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                  color: Colors.grey[600],
+                                ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                  if (locations.length > 3)
+                    Padding(
                       padding: const EdgeInsets.only(
                         left: 8.0,
                         top: 2.0,
                       ),
                       child: Text(
-                        location,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.grey[600],
+                        '... 还有 ${locations.length - 3} 个位置',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(
+                              color: Colors.grey[500],
+                              fontStyle: FontStyle.italic,
                             ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                ],
+              ],
+            ),
+          ),
+          // 编辑模式下显示删除按钮
+          Obx(
+            () {
+              final isEditMode =
+                  controller.isEditModeRx.value;
+              if (isEditMode) {
+                return Positioned(
+                  top: 4,
+                  right: 4,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {
+                      controller.deleteItem(item);
+                    },
                   ),
-              if (locations.length > 3)
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 8.0,
-                    top: 2.0,
-                  ),
-                  child: Text(
-                    '... 还有 ${locations.length - 3} 个位置',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[500],
-                          fontStyle: FontStyle.italic,
-                        ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-            ],
-          ],
-        ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
       ),
     );
   }

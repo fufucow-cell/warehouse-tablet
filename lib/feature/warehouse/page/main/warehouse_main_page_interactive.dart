@@ -22,7 +22,37 @@ extension WarehouseMainPageUserEventExtension
           _model.selectedItem.value = newItem;
         }
       case EnumWarehouseMainPageInteractive.tapSearch:
-        // TODO: 实现搜索功能
+        // 根据当前选中的 tab 显示对应的搜索对话框
+        final selectedItem = _model.selectedItem.value;
+        if (selectedItem == EnumWarehouseTabItem.record) {
+          routerHandle(
+            EnumWarehouseMainPageRoute.showSearchLogDialog,
+          );
+        } else if (selectedItem ==
+            EnumWarehouseTabItem.alarm) {
+          routerHandle(
+            EnumWarehouseMainPageRoute
+                .showSearchAlarmDialog,
+          );
+        } else if (selectedItem ==
+            EnumWarehouseTabItem.category) {
+          routerHandle(
+            EnumWarehouseMainPageRoute
+                .showSearchCategoryDialog,
+          );
+        } else if (selectedItem ==
+            EnumWarehouseTabItem.cabinet) {
+          routerHandle(
+            EnumWarehouseMainPageRoute
+                .showSearchCabinetDialog,
+          );
+        } else if (selectedItem ==
+            EnumWarehouseTabItem.item) {
+          routerHandle(
+            EnumWarehouseMainPageRoute.showSearchItemDialog,
+          );
+        }
+        // TODO: 其他页面的搜索功能
         break;
       case EnumWarehouseMainPageInteractive.tapCreate:
         // TODO: 实现新增功能

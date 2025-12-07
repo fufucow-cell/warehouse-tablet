@@ -66,9 +66,11 @@ class _TitleWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.0.scale),
         child: Icon(
-          Icons.apps,
+          Icons.support_agent,
           size: 200.0.scale,
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
+          color: Theme.of(context)
+              .colorScheme
+              .onPrimaryContainer,
         ),
       ),
     );
@@ -85,7 +87,8 @@ class _TabListWidget extends StatelessWidget {
       return ListView(
         padding: EdgeInsets.zero,
         children: EnumAppMainTabItem.values.map((item) {
-          final isSelected = controller.getSelectedItem == item;
+          final isSelected =
+              controller.getSelectedItem == item;
           return ListTile(
             selected: isSelected,
             leading: Icon(
@@ -97,10 +100,14 @@ class _TabListWidget extends StatelessWidget {
             title: Text(
               item.title,
               style: TextStyle(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontWeight: isSelected
+                    ? FontWeight.bold
+                    : FontWeight.normal,
                 color: isSelected
                     ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface,
+                    : Theme.of(context)
+                        .colorScheme
+                        .onSurface,
               ),
             ),
             onTap: () => controller.interactive(

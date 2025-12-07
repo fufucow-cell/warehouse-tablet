@@ -109,9 +109,6 @@ class _CategoryItem extends StatelessWidget {
                       : FontWeight.normal,
                 ),
               ),
-              subtitle: category.categoryId != null
-                  ? Text('ID: ${category.categoryId}')
-                  : null,
               trailing: _buildTrailing(
                 isEditMode: isEditMode,
                 hasChildren: hasChildren,

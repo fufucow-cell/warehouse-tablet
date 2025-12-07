@@ -15,7 +15,8 @@ part 'smart_home_household_page_interactive.dart';
 part 'smart_home_household_page_model.dart';
 part 'smart_home_household_page_route.dart';
 
-class SmartHomeHouseholdPage extends GetView<SmartHomeHouseholdPageController> {
+class SmartHomeHouseholdPage
+    extends GetView<SmartHomeHouseholdPageController> {
   const SmartHomeHouseholdPage({super.key});
 
   @override
@@ -81,12 +82,15 @@ class _HouseholdContent extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.home,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary,
                         ),
                         const SizedBox(width: 12),
                         Expanded(
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
                             children: [
                               Text(
                                 '切换家庭',
@@ -96,41 +100,50 @@ class _HouseholdContent extends StatelessWidget {
                                     ?.copyWith(
                                       color: Theme.of(
                                         context,
-                                      ).colorScheme.onSurfaceVariant,
+                                      )
+                                          .colorScheme
+                                          .onSurfaceVariant,
                                     ),
                               ),
                               const SizedBox(height: 8),
-                              GetBuilder<SmartHomeHouseholdPageController>(
+                              GetBuilder<
+                                  SmartHomeHouseholdPageController>(
                                 builder: (controller) =>
-                                    DropdownButton<Household>(
-                                  value: controller.currentHousehold,
+                                    DropdownButton<
+                                        Household>(
+                                  value: controller
+                                      .currentHousehold,
                                   isExpanded: true,
                                   underline: Container(),
-                                  items: controller.householdList!
+                                  items: controller
+                                      .householdList!
                                       .map((household) {
-                                    return DropdownMenuItem<Household>(
+                                    return DropdownMenuItem<
+                                        Household>(
                                       value: household,
                                       child: Text(
-                                        household.homeName ?? '未命名家庭',
+                                        household
+                                                .homeName ??
+                                            '未命名家庭',
                                         style: Theme.of(
                                           context,
-                                        ).textTheme.titleMedium,
+                                        )
+                                            .textTheme
+                                            .titleMedium,
                                       ),
                                     );
                                   }).toList(),
                                   onChanged: (
                                     Household? newHousehold,
                                   ) {
-                                    if (newHousehold != null) {
-                                      final index =
-                                          controller.householdList!.indexOf(
-                                        newHousehold,
+                                    if (newHousehold !=
+                                        null) {
+                                      controller
+                                          .interactive(
+                                        EnumSmartHomeHouseholdPageInteractive
+                                            .tapHomeItem,
+                                        data: newHousehold,
                                       );
-                                      if (index >= 0) {
-                                        controller.switchHousehold(
-                                          index,
-                                        );
-                                      }
                                     }
                                   },
                                 ),
@@ -148,18 +161,23 @@ class _HouseholdContent extends StatelessWidget {
               // 家庭名称
               Text(
                 '家庭名称: ${householdData.homeName ?? '未命名'}',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall,
               ),
               const SizedBox(height: 24),
               // 房间列表
               if (householdData.rooms != null &&
                   householdData.rooms!.isNotEmpty)
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Text(
                       '房间列表:',
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge,
                     ),
                     const SizedBox(height: 12),
                     ...householdData.rooms!.map(
@@ -172,9 +190,6 @@ class _HouseholdContent extends StatelessWidget {
                             title: Text(
                               room.roomName ?? '未命名房间',
                             ),
-                            subtitle: Text(
-                              '房间 ID: ${room.roomId ?? 'N/A'}',
-                            ),
                           ),
                         ),
                       ),
@@ -184,8 +199,13 @@ class _HouseholdContent extends StatelessWidget {
               else
                 Text(
                   '暂无房间',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurfaceVariant,
                       ),
                 ),
             ],
@@ -199,7 +219,8 @@ class _HouseholdContent extends StatelessWidget {
 class _EmptyHouseholdContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SmartHomeHouseholdPageController>();
+    final controller =
+        Get.find<SmartHomeHouseholdPageController>();
 
     return Center(
       child: Padding(
@@ -210,12 +231,15 @@ class _EmptyHouseholdContent extends StatelessWidget {
             Icon(
               Icons.home_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurfaceVariant,
             ),
             const SizedBox(height: 24),
             Text(
               '目前尚未建立家庭',
-              style: Theme.of(context).textTheme.headlineSmall,
+              style:
+                  Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 32),
             // 家庭名称输入框
@@ -230,8 +254,9 @@ class _EmptyHouseholdContent extends StatelessWidget {
             const SizedBox(height: 24),
             // 建立家庭按钮
             ElevatedButton(
-              onPressed:
-                  controller.isLoading ? null : () => controller.createHome(),
+              onPressed: controller.isLoading
+                  ? null
+                  : () => controller.createHome(),
               child: controller.isLoading
                   ? const SizedBox(
                       width: 20,
