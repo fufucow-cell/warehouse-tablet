@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/util/root_router_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
 /// 创建橱柜对话框
 class DialogCreateCabinet {
@@ -9,11 +9,15 @@ class DialogCreateCabinet {
   static void show({
     required WarehouseHomeRouterData household,
     required List<WarehouseHomeRouterData> rooms,
-    Function(String name, String? roomId, String? description)? onConfirm,
+    Function(
+      String name,
+      String? roomId,
+      String? description,
+    )? onConfirm,
     VoidCallback? onCancel,
     bool barrierDismissible = true,
   }) {
-    final context = RootRouterUtil.instance.rootContext;
+    final context = TempRouterUtil.getRootContext();
     if (context == null) {
       return;
     }
@@ -35,7 +39,11 @@ class DialogCreateCabinet {
 class _CreateCabinetDialogWidget extends StatefulWidget {
   final WarehouseHomeRouterData household;
   final List<WarehouseHomeRouterData> rooms;
-  final Function(String name, String? roomId, String? description)? onConfirm;
+  final Function(
+    String name,
+    String? roomId,
+    String? description,
+  )? onConfirm;
   final VoidCallback? onCancel;
 
   const _CreateCabinetDialogWidget({
@@ -52,8 +60,10 @@ class _CreateCabinetDialogWidget extends StatefulWidget {
 
 class _CreateCabinetDialogWidgetState
     extends State<_CreateCabinetDialogWidget> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _nameController =
+      TextEditingController();
+  final TextEditingController _descriptionController =
+      TextEditingController();
   String? _selectedRoomId;
 
   @override
@@ -79,108 +89,167 @@ class _CreateCabinetDialogWidgetState
       }),
     ];
 
-    return Material(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
-          padding: EdgeInsets.all(24.0.scale),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-          constraints: BoxConstraints(
-            maxWidth: 600.0.scale,
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Title 居中
-              Center(
-                child: Text(
-                  '新增櫥櫃',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              // 橱柜名称输入框
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: '櫥櫃名稱',
-                  hintText: '請輸入櫥櫃名稱',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16.0.scale),
-              // 房间选择下拉选单
-              DropdownButtonFormField<String?>(
-                value: _selectedRoomId,
-                decoration: const InputDecoration(
-                  labelText: '房間',
-                  border: OutlineInputBorder(),
-                ),
-                items: roomOptions,
-                onChanged: (value) {
-                  setState(() {
-                    _selectedRoomId = value;
-                  });
-                },
-              ),
-              SizedBox(height: 16.0.scale),
-              // 描述输入框
-              TextField(
-                controller: _descriptionController,
-                maxLines: 3,
-                decoration: const InputDecoration(
-                  labelText: '描述',
-                  hintText: '請輸入描述（選填）',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+    final dialogInsetPadding =
+        30.0.scale > 0 ? 30.0.scale : 30.0;
+    return Dialog(
+      insetPadding: EdgeInsets.all(dialogInsetPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final screenWidth =
+              MediaQuery.of(context).size.width;
+          final scale600 = 600.0.scale;
+          final scale60 = 60.0.scale;
+          final scale40 = 40.0.scale;
+          final scale8 = 8.0.scale;
+          final dialogMaxWidth =
+              scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue =
+              scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue =
+              scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue =
+              scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding =
+              screenWidth - (insetPaddingValue * 2);
+          final dialogWidth =
+              (dialogMaxWidth < screenMinusPadding)
+                  ? dialogMaxWidth
+                  : screenMinusPadding;
+          final maxHeight =
+              MediaQuery.of(context).size.height * 0.8;
+          return Container(
+            width: dialogWidth,
+            padding: EdgeInsets.all(containerPaddingValue),
+            constraints: BoxConstraints(
+              maxWidth: dialogWidth,
+              maxHeight: maxHeight,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.stretch,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onCancel?.call();
-                    },
-                    child: const Text('取消'),
-                  ),
-                  SizedBox(width: 12.0.scale),
-                  ElevatedButton(
-                    onPressed: () {
-                      final name = _nameController.text.trim();
-                      if (name.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('請輸入櫥櫃名稱'),
+                  // Title 居中
+                  Center(
+                    child: Text(
+                      '新增櫥櫃',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                        return;
-                      }
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  // 橱柜名称输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: '櫥櫃名稱',
+                        hintText: '請輸入櫥櫃名稱',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 房间选择下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<String?>(
+                      value: _selectedRoomId,
+                      decoration: const InputDecoration(
+                        labelText: '房間',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: roomOptions,
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRoomId = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 描述输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _descriptionController,
+                      maxLines: 3,
+                      decoration: const InputDecoration(
+                        labelText: '描述',
+                        hintText: '請輸入描述（選填）',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onCancel?.call();
+                          },
+                          child: const Text('取消'),
+                        ),
+                        const SizedBox(width: 12.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            final name =
+                                _nameController.text.trim();
+                            if (name.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content: Text('請輸入櫥櫃名稱'),
+                                ),
+                              );
+                              return;
+                            }
 
-                      final description = _descriptionController.text.trim();
-                      Navigator.of(context).pop();
-                      widget.onConfirm?.call(
-                        name,
-                        _selectedRoomId,
-                        description.isEmpty ? null : description,
-                      );
-                    },
-                    child: const Text('確認'),
+                            final description =
+                                _descriptionController.text
+                                    .trim();
+                            Navigator.of(context).pop();
+                            widget.onConfirm?.call(
+                              name,
+                              _selectedRoomId,
+                              description.isEmpty
+                                  ? null
+                                  : description,
+                            );
+                          },
+                          child: const Text('確認'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

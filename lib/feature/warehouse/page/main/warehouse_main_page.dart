@@ -15,8 +15,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/warehouse_cabinet_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
-import 'package:flutter_smart_home_tablet/util/environment_util.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_main_page_controller.dart';
@@ -58,6 +59,8 @@ class _WarehouseMainPageState
 
   @override
   Widget build(BuildContext context) {
+    TempRouterUtil.getRootContext(context);
+
     return GetBuilder<WarehouseMainPageController>(
       init: _controller,
       builder: (controller) {

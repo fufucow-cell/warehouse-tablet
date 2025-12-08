@@ -1,17 +1,22 @@
 part of 'warehouse_main_page.dart';
 
-class WarehouseMainPageController extends BasePageController {
+class WarehouseMainPageController
+    extends BasePageController {
   // MARK: - Properties
 
   final _model = WarehouseMainPageModel();
   late final TabController tabController;
 
-  EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
-  Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
-  List<Tab> get tabs =>
-      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews =>
-      EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  EnumWarehouseTabItem get selectedItem =>
+      _model.selectedItem.value;
+  Rx<EnumWarehouseTabItem> get selectedItemRx =>
+      _model.selectedItem;
+  List<Tab> get tabs => EnumWarehouseTabItem.values
+      .map((item) => Tab(text: item.title))
+      .toList();
+  List<Widget> get tabViews => EnumWarehouseTabItem.values
+      .map((item) => item.page)
+      .toList();
 
   // MARK: - Init
 
@@ -27,8 +32,8 @@ class WarehouseMainPageController extends BasePageController {
     tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex:
-          EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
+      initialIndex: EnumWarehouseTabItem.values
+          .indexOf(_model.selectedItem.value),
     );
     tabController.addListener(_onTabChanged);
   }
@@ -39,6 +44,7 @@ class WarehouseMainPageController extends BasePageController {
     tabController.dispose();
     WarehouseService.unregister();
     _unregisterWarehouseApiUtil();
+    TempRouterUtil.clear();
     super.onClose();
   }
 

@@ -1,15 +1,14 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter_smart_home_tablet/constant/environment_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/environment_constant.dart';
 import 'package:get/get.dart';
 
 class EnvironmentUtil extends GetxService {
   // MARK: - Properties
 
-  static const String _tagName = 'smart_home';
+  static const String tagName = 'warehouse';
 
   /// 運行環境
-  final Rx<EnumEnvironment> _currentEnvironment =
-      EnumEnvironment.prd.obs;
+  final Rx<EnumEnvironment> _currentEnvironment;
   EnumEnvironment get currentEnvironment =>
       _currentEnvironment.value;
   String get apiBaseUrl =>
@@ -35,7 +34,9 @@ class EnvironmentUtil extends GetxService {
 
   // MARK: - Init
 
-  EnvironmentUtil._internal();
+  EnvironmentUtil._internal({EnumEnvironment? environment})
+      : _currentEnvironment =
+            (environment ?? EnumEnvironment.prd).obs;
 
   // MARK: - Public Method
 
@@ -48,28 +49,28 @@ class EnvironmentUtil extends GetxService {
 
   /// 註冊
   static EnvironmentUtil register([EnumEnvironment? env]) {
-    if (Get.isRegistered<EnvironmentUtil>(tag: _tagName)) {
-      return Get.find<EnvironmentUtil>(tag: _tagName);
+    if (Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
+      return Get.find<EnvironmentUtil>(tag: tagName);
     }
 
     final EnvironmentUtil service =
-        EnvironmentUtil._internal();
-    service
-        .switchEnvironment(env ?? _getLaunchEnvironment());
+        EnvironmentUtil._internal(
+      environment: env ?? _getLaunchEnvironment(),
+    );
 
     Get.put<EnvironmentUtil>(
       service,
       permanent: true,
-      tag: _tagName,
+      tag: tagName,
     );
     return service;
   }
 
   /// 註銷
   static void unregister() {
-    if (Get.isRegistered<EnvironmentUtil>(tag: _tagName)) {
+    if (Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
       Get.delete<EnvironmentUtil>(
-        tag: _tagName,
+        tag: tagName,
         force: true,
       );
     }
@@ -77,10 +78,10 @@ class EnvironmentUtil extends GetxService {
 
   /// 單例
   static EnvironmentUtil get instance {
-    if (!Get.isRegistered<EnvironmentUtil>(tag: _tagName)) {
+    if (!Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
       register(EnumEnvironment.prd);
     }
-    return Get.find<EnvironmentUtil>(tag: _tagName);
+    return Get.find<EnvironmentUtil>(tag: tagName);
   }
 
   // MARK: - Private Method

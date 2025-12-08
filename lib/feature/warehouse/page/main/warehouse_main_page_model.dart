@@ -50,6 +50,47 @@ class WarehouseMainPageRouterData {
     this.rooms = const [],
     required this.userRoleType,
   });
+
+  /// Factory method to create mock data from mock_data files
+  /// Uses data from assets/mock_data/response/home_get.json
+  factory WarehouseMainPageRouterData.mock() {
+    // Mock data based on home_get.json
+    return const WarehouseMainPageRouterData(
+      userId: '770e8400-e29b-41d4-a716-446655440002',
+      userName: 'John Doe',
+      language: 'zh_TW',
+      theme: 0,
+      accessToken: 'mock_access_token_1234567890',
+      refreshToken: 'mock_refresh_token_1234567890',
+      household: WarehouseHomeRouterData(
+        id: '550e8400-e29b-41d4-a716-446655440000',
+        name: 'My Home',
+      ),
+      rooms: [
+        WarehouseHomeRouterData(
+          id: '990e8400-e29b-41d4-a716-446655440004',
+          name: 'Living Room',
+        ),
+        WarehouseHomeRouterData(
+          id: 'aa0e8400-e29b-41d4-a716-446655440005',
+          name: 'Master Bedroom',
+        ),
+        WarehouseHomeRouterData(
+          id: 'bb0e8400-e29b-41d4-a716-446655440006',
+          name: 'Guest Bedroom',
+        ),
+        WarehouseHomeRouterData(
+          id: 'cc0e8400-e29b-41d4-a716-446655440007',
+          name: 'Kitchen',
+        ),
+        WarehouseHomeRouterData(
+          id: 'dd0e8400-e29b-41d4-a716-446655440008',
+          name: 'Bathroom',
+        ),
+      ],
+      userRoleType: 1,
+    );
+  }
 }
 
 class WarehouseHomeRouterData {

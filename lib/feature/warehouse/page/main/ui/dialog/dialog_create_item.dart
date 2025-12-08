@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/children.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/util/root_router_util.dart';
 
 /// 创建物品对话框
 class DialogCreateItem {
@@ -25,7 +25,7 @@ class DialogCreateItem {
     VoidCallback? onCancel,
     bool barrierDismissible = true,
   }) {
-    final context = RootRouterUtil.instance.rootContext;
+    final context = TempRouterUtil.getRootContext();
     if (context == null) {
       return;
     }
@@ -72,9 +72,12 @@ class _CreateItemDialogWidget extends StatefulWidget {
 
 class _CreateItemDialogWidgetState
     extends State<_CreateItemDialogWidget> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _nameController =
+      TextEditingController();
+  final TextEditingController _descriptionController =
+      TextEditingController();
+  final TextEditingController _quantityController =
+      TextEditingController();
   final TextEditingController _minStockAlertController =
       TextEditingController();
 
@@ -94,8 +97,9 @@ class _CreateItemDialogWidgetState
   void initState() {
     super.initState();
     // 默认选中第一个 level1 分类（如果有）
-    final level1Categories =
-        widget.categories.where((c) => c.level == 1).toList();
+    final level1Categories = widget.categories
+        .where((c) => c.level == 1)
+        .toList();
     if (level1Categories.isNotEmpty) {
       _selectedLevel1 = level1Categories.first;
       _updateLevel2FromLevel1();
@@ -140,7 +144,8 @@ class _CreateItemDialogWidgetState
     }
 
     if (_selectedLevel1!.children != null) {
-      _selectedLevel2 = childrenToCategory(_selectedLevel1!.children);
+      _selectedLevel2 =
+          childrenToCategory(_selectedLevel1!.children);
       _updateLevel3FromLevel2();
     } else {
       _selectedLevel2 = null;
@@ -156,7 +161,8 @@ class _CreateItemDialogWidgetState
     }
 
     if (_selectedLevel2!.children != null) {
-      _selectedLevel3 = childrenToCategory(_selectedLevel2!.children);
+      _selectedLevel3 =
+          childrenToCategory(_selectedLevel2!.children);
     } else {
       _selectedLevel3 = null;
     }
@@ -171,8 +177,10 @@ class _CreateItemDialogWidgetState
       ),
     ];
 
-    if (_selectedLevel1 != null && _selectedLevel1!.children != null) {
-      final level2Category = childrenToCategory(_selectedLevel1!.children);
+    if (_selectedLevel1 != null &&
+        _selectedLevel1!.children != null) {
+      final level2Category =
+          childrenToCategory(_selectedLevel1!.children);
       if (level2Category != null) {
         items.add(
           DropdownMenuItem<Category?>(
@@ -195,8 +203,10 @@ class _CreateItemDialogWidgetState
       ),
     ];
 
-    if (_selectedLevel2 != null && _selectedLevel2!.children != null) {
-      final level3Category = childrenToCategory(_selectedLevel2!.children);
+    if (_selectedLevel2 != null &&
+        _selectedLevel2!.children != null) {
+      final level3Category =
+          childrenToCategory(_selectedLevel2!.children);
       if (level3Category != null) {
         items.add(
           DropdownMenuItem<Category?>(
@@ -224,7 +234,9 @@ class _CreateItemDialogWidgetState
     if (_selectedRoomId != null) {
       // 如果选择了房间，显示该房间下的橱柜
       filteredCabinets = widget.cabinets
-          .where((cabinet) => cabinet.roomId == _selectedRoomId)
+          .where(
+            (cabinet) => cabinet.roomId == _selectedRoomId,
+          )
           .toList();
     } else {
       // 如果房间选择"未設定"，显示未绑定房间的橱柜（room_id 为 null）
@@ -234,7 +246,8 @@ class _CreateItemDialogWidgetState
     }
 
     for (final cabinet in filteredCabinets) {
-      if (cabinet.cabinetId != null && cabinet.name != null) {
+      if (cabinet.cabinetId != null &&
+          cabinet.name != null) {
         items.add(
           DropdownMenuItem<String?>(
             value: cabinet.cabinetId,
@@ -285,8 +298,9 @@ class _CreateItemDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final level1Categories =
-        widget.categories.where((c) => c.level == 1).toList();
+    final level1Categories = widget.categories
+        .where((c) => c.level == 1)
+        .toList();
     final service = WarehouseService.instance;
     final rooms = service.rooms
         .map(
@@ -297,297 +311,421 @@ class _CreateItemDialogWidgetState
         )
         .toList();
 
-    return Material(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
-          padding: EdgeInsets.all(24.0.scale),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-          constraints: BoxConstraints(
-            maxWidth: 600.0.scale,
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                // Title 居中
-                Center(
-                  child: Text(
-                    '新增物品',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                SizedBox(height: 24.0.scale),
-                // 智能新增按钮
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: 实现智能新增功能（拍照识别物品）
-                  },
-                  icon: const Icon(Icons.camera_alt),
-                  label: const Text('智能新增'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12.0,
-                      horizontal: 24.0,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 图片上传区域
-                GestureDetector(
-                  onTap: () {
-                    // TODO: 实现图片上传功能
-                    // 可以选择从相册或拍照
-                  },
-                  child: Container(
-                    height: 120.0,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
-                        width: 2,
-                        style: BorderStyle.solid,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: _uploadedImagePath != null
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(
-                              _uploadedImagePath!,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return _buildImageUploadPlaceholder();
-                              },
-                            ),
-                          )
-                        : _buildImageUploadPlaceholder(),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 物品名称输入框
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: '物品名稱',
-                    hintText: '請輸入物品名稱',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 描述输入框
-                TextField(
-                  controller: _descriptionController,
-                  maxLines: 2,
-                  decoration: const InputDecoration(
-                    labelText: '描述',
-                    hintText: '請輸入描述（選填）',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 數量输入框
-                TextField(
-                  controller: _quantityController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: '數量',
-                    hintText: '請輸入數量',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 最小庫存警报输入框
-                TextField(
-                  controller: _minStockAlertController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    labelText: '最小庫存警报',
-                    hintText: '請輸入最小庫存警报（選填）',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                SizedBox(height: 16.0.scale),
-                // 階層1 下拉选单
-                DropdownButtonFormField<Category?>(
-                  value: _selectedLevel1,
-                  decoration: const InputDecoration(
-                    labelText: '階層1',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: [
-                    const DropdownMenuItem<Category?>(
-                      value: null,
-                      child: Text('未設定'),
-                    ),
-                    ...level1Categories.map((category) {
-                      return DropdownMenuItem<Category?>(
-                        value: category,
-                        child: Text(category.name ?? ''),
-                      );
-                    }),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedLevel1 = value;
-                      _updateLevel2FromLevel1();
-                    });
-                  },
-                ),
-                SizedBox(height: 16.0.scale),
-                // 階層2 下拉选单
-                DropdownButtonFormField<Category?>(
-                  value: _selectedLevel2,
-                  decoration: const InputDecoration(
-                    labelText: '階層2',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: _getLevel2Items(),
-                  onChanged: _selectedLevel1 != null
-                      ? (value) {
-                          setState(() {
-                            _selectedLevel2 = value;
-                            _updateLevel3FromLevel2();
-                          });
-                        }
-                      : null,
-                ),
-                SizedBox(height: 16.0.scale),
-                // 階層3 下拉选单
-                DropdownButtonFormField<Category?>(
-                  value: _selectedLevel3,
-                  decoration: const InputDecoration(
-                    labelText: '階層3',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: _getLevel3Items(),
-                  onChanged: _selectedLevel2 != null
-                      ? (value) {
-                          setState(() {
-                            _selectedLevel3 = value;
-                          });
-                        }
-                      : null,
-                ),
-                SizedBox(height: 16.0.scale),
-                // 房间选择下拉选单
-                DropdownButtonFormField<String?>(
-                  value: _selectedRoomId,
-                  decoration: const InputDecoration(
-                    labelText: '房間',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: [
-                    const DropdownMenuItem<String?>(
-                      value: null,
-                      child: Text('未設定'),
-                    ),
-                    ...rooms.map((room) {
-                      return DropdownMenuItem<String?>(
-                        value: room.id,
-                        child: Text(room.name),
-                      );
-                    }),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedRoomId = value;
-                      _selectedCabinetId = null; // 切换房间时重置橱柜选择
-                    });
-                  },
-                ),
-                SizedBox(height: 16.0.scale),
-                // 橱柜选择下拉选单
-                DropdownButtonFormField<String?>(
-                  value: _selectedCabinetId,
-                  decoration: const InputDecoration(
-                    labelText: '櫥櫃',
-                    border: OutlineInputBorder(),
-                  ),
-                  items: _getCabinetItems(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedCabinetId = value;
-                    });
-                  },
-                ),
-                SizedBox(height: 24.0.scale),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        widget.onCancel?.call();
-                      },
-                      child: const Text('取消'),
-                    ),
-                    SizedBox(width: 12.0.scale),
-                    ElevatedButton(
-                      onPressed: () {
-                        final name = _nameController.text.trim();
-                        if (name.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入物品名稱'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        final quantityText = _quantityController.text.trim();
-                        if (quantityText.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入數量'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        final quantity = int.tryParse(quantityText);
-                        if (quantity == null || quantity < 0) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入有效的數量'),
-                            ),
-                          );
-                          return;
-                        }
-
-                        final description = _descriptionController.text.trim();
-                        final minStockAlertText =
-                            _minStockAlertController.text.trim();
-                        final minStockAlert = minStockAlertText.isNotEmpty
-                            ? int.tryParse(minStockAlertText)
-                            : null;
-
-                        Navigator.of(context).pop();
-                        widget.onConfirm?.call(
-                          name,
-                          description.isEmpty ? null : description,
-                          _getSelectedCategoryId(),
-                          quantity,
-                          minStockAlert,
-                          _selectedRoomId,
-                          _selectedCabinetId,
-                        );
-                      },
-                      child: const Text('確認'),
-                    ),
-                  ],
-                ),
-              ],
+    // Calculate inset padding - use direct value if scale is 0
+    final dialogInsetPadding =
+        30.0.scale > 0 ? 30.0.scale : 30.0;
+    return Dialog(
+      insetPadding: EdgeInsets.all(dialogInsetPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final screenWidth =
+              MediaQuery.of(context).size.width;
+          // If scale is 0 (not initialized), use direct values
+          final scale600 = 600.0.scale;
+          final scale60 = 60.0.scale;
+          final scale40 = 40.0.scale;
+          final scale8 = 8.0.scale;
+          final dialogMaxWidth =
+              scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue =
+              scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue =
+              scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue =
+              scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding =
+              screenWidth - (insetPaddingValue * 2);
+          final dialogWidth =
+              (dialogMaxWidth < screenMinusPadding)
+                  ? dialogMaxWidth
+                  : screenMinusPadding;
+          final maxHeight =
+              MediaQuery.of(context).size.height * 0.8;
+          return Container(
+            width: dialogWidth,
+            padding: EdgeInsets.all(containerPaddingValue),
+            constraints: BoxConstraints(
+              maxWidth: dialogWidth,
+              maxHeight: maxHeight,
             ),
-          ),
-        ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.stretch,
+                children: [
+                  // Title 居中
+                  Center(
+                    child: Text(
+                      '新增物品',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  // 智能新增按钮
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // TODO: 实现智能新增功能（拍照识别物品）
+                      },
+                      icon: const Icon(Icons.camera_alt),
+                      label: const Text('智能新增'),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 24.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 图片上传区域
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        // TODO: 实现图片上传功能
+                        // 可以选择从相册或拍照
+                      },
+                      child: Container(
+                        height: 120.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 2,
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius:
+                              BorderRadius.circular(8.0),
+                        ),
+                        child: _uploadedImagePath != null
+                            ? ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(
+                                  8.0,
+                                ),
+                                child: Image.network(
+                                  _uploadedImagePath!,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (
+                                    context,
+                                    error,
+                                    stackTrace,
+                                  ) {
+                                    return _buildImageUploadPlaceholder();
+                                  },
+                                ),
+                              )
+                            : _buildImageUploadPlaceholder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 物品名称输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: '物品名稱',
+                        hintText: '請輸入物品名稱',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 描述输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _descriptionController,
+                      maxLines: 2,
+                      decoration: const InputDecoration(
+                        labelText: '描述',
+                        hintText: '請輸入描述（選填）',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 數量输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _quantityController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: '數量',
+                        hintText: '請輸入數量',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 最小庫存警报输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _minStockAlertController,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        labelText: '最小庫存警报',
+                        hintText: '請輸入最小庫存警报（選填）',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 階層1 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel1,
+                      decoration: const InputDecoration(
+                        labelText: '階層1',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<Category?>(
+                          value: null,
+                          child: Text('未設定'),
+                        ),
+                        ...level1Categories.map((category) {
+                          return DropdownMenuItem<
+                              Category?>(
+                            value: category,
+                            child:
+                                Text(category.name ?? ''),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedLevel1 = value;
+                          _updateLevel2FromLevel1();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 階層2 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel2,
+                      decoration: const InputDecoration(
+                        labelText: '階層2',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: _getLevel2Items(),
+                      onChanged: _selectedLevel1 != null
+                          ? (value) {
+                              setState(() {
+                                _selectedLevel2 = value;
+                                _updateLevel3FromLevel2();
+                              });
+                            }
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 階層3 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel3,
+                      decoration: const InputDecoration(
+                        labelText: '階層3',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: _getLevel3Items(),
+                      onChanged: _selectedLevel2 != null
+                          ? (value) {
+                              setState(() {
+                                _selectedLevel3 = value;
+                              });
+                            }
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 房间选择下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<String?>(
+                      value: _selectedRoomId,
+                      decoration: const InputDecoration(
+                        labelText: '房間',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<String?>(
+                          value: null,
+                          child: Text('未設定'),
+                        ),
+                        ...rooms.map((room) {
+                          return DropdownMenuItem<String?>(
+                            value: room.id,
+                            child: Text(room.name),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRoomId = value;
+                          _selectedCabinetId =
+                              null; // 切换房间时重置橱柜选择
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 橱柜选择下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<String?>(
+                      value: _selectedCabinetId,
+                      decoration: const InputDecoration(
+                        labelText: '櫥櫃',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: _getCabinetItems(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCabinetId = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onCancel?.call();
+                          },
+                          child: const Text('取消'),
+                        ),
+                        const SizedBox(width: 12.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            final name =
+                                _nameController.text.trim();
+                            if (name.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content: Text('請輸入物品名稱'),
+                                ),
+                              );
+                              return;
+                            }
+
+                            final quantityText =
+                                _quantityController.text
+                                    .trim();
+                            if (quantityText.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content: Text('請輸入數量'),
+                                ),
+                              );
+                              return;
+                            }
+
+                            final quantity =
+                                int.tryParse(quantityText);
+                            if (quantity == null ||
+                                quantity < 0) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content: Text('請輸入有效的數量'),
+                                ),
+                              );
+                              return;
+                            }
+
+                            final description =
+                                _descriptionController.text
+                                    .trim();
+                            final minStockAlertText =
+                                _minStockAlertController
+                                    .text
+                                    .trim();
+                            final minStockAlert =
+                                minStockAlertText.isNotEmpty
+                                    ? int.tryParse(
+                                        minStockAlertText,
+                                      )
+                                    : null;
+
+                            Navigator.of(context).pop();
+                            widget.onConfirm?.call(
+                              name,
+                              description.isEmpty
+                                  ? null
+                                  : description,
+                              _getSelectedCategoryId(),
+                              quantity,
+                              minStockAlert,
+                              _selectedRoomId,
+                              _selectedCabinetId,
+                            );
+                          },
+                          child: const Text('確認'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
       ),
     );
   }

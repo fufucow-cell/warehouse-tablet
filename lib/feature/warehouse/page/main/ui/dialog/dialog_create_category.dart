@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/children.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/util/root_router_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
 /// 创建分类对话框
 class DialogCreateCategory {
@@ -13,7 +13,7 @@ class DialogCreateCategory {
     VoidCallback? onCancel,
     bool barrierDismissible = true,
   }) {
-    final context = RootRouterUtil.instance.rootContext;
+    final context = TempRouterUtil.getRootContext();
     if (context == null) {
       return;
     }
@@ -49,9 +49,12 @@ class _CreateCategoryDialogWidget extends StatefulWidget {
 
 class _CreateCategoryDialogWidgetState
     extends State<_CreateCategoryDialogWidget> {
-  final TextEditingController _level1NameController = TextEditingController();
-  final TextEditingController _level2NameController = TextEditingController();
-  final TextEditingController _level3NameController = TextEditingController();
+  final TextEditingController _level1NameController =
+      TextEditingController();
+  final TextEditingController _level2NameController =
+      TextEditingController();
+  final TextEditingController _level3NameController =
+      TextEditingController();
 
   // 选中的分类
   Category? _selectedLevel1;
@@ -62,8 +65,9 @@ class _CreateCategoryDialogWidgetState
   void initState() {
     super.initState();
     // 默认选中 Level 1 的第一个既有分类
-    final level1Categories =
-        widget.categories.where((c) => c.level == 1).toList();
+    final level1Categories = widget.categories
+        .where((c) => c.level == 1)
+        .toList();
     if (level1Categories.isNotEmpty) {
       _selectedLevel1 = level1Categories.first;
       _updateLevel2FromLevel1();
@@ -106,7 +110,8 @@ class _CreateCategoryDialogWidgetState
 
     // 如果选择的是 level1 的既有分类，自动选到 level1 children 的第一项分类
     if (_selectedLevel1!.children != null) {
-      _selectedLevel2 = childrenToCategory(_selectedLevel1!.children);
+      _selectedLevel2 =
+          childrenToCategory(_selectedLevel1!.children);
       _updateLevel3FromLevel2();
     } else {
       // children 为 null，显示"新增分類"并自动选中
@@ -124,7 +129,8 @@ class _CreateCategoryDialogWidgetState
 
     // 获取 level 2 的第一个子分类（level 3）
     if (_selectedLevel2!.children != null) {
-      _selectedLevel3 = childrenToCategory(_selectedLevel2!.children);
+      _selectedLevel3 =
+          childrenToCategory(_selectedLevel2!.children);
     } else {
       _selectedLevel3 = null;
     }
@@ -140,8 +146,10 @@ class _CreateCategoryDialogWidgetState
     ];
 
     // 如果选择了 level1 的既有分类且有 children，添加既有分类选项
-    if (_selectedLevel1 != null && _selectedLevel1!.children != null) {
-      final level2Category = childrenToCategory(_selectedLevel1!.children);
+    if (_selectedLevel1 != null &&
+        _selectedLevel1!.children != null) {
+      final level2Category =
+          childrenToCategory(_selectedLevel1!.children);
       if (level2Category != null) {
         items.add(
           DropdownMenuItem<Category?>(
@@ -165,8 +173,10 @@ class _CreateCategoryDialogWidgetState
     ];
 
     // 如果选择了 level2 的既有分类且有 children，添加既有分类选项
-    if (_selectedLevel2 != null && _selectedLevel2!.children != null) {
-      final level3Category = childrenToCategory(_selectedLevel2!.children);
+    if (_selectedLevel2 != null &&
+        _selectedLevel2!.children != null) {
+      final level3Category =
+          childrenToCategory(_selectedLevel2!.children);
       if (level3Category != null) {
         items.add(
           DropdownMenuItem<Category?>(
@@ -185,19 +195,22 @@ class _CreateCategoryDialogWidgetState
     setState(() {
       // Level 1: 如果选择的是既有分类，显示名称；如果选择"新增分類"，保留用户输入或清空
       if (_selectedLevel1 != null) {
-        _level1NameController.text = _selectedLevel1!.name ?? '';
+        _level1NameController.text =
+            _selectedLevel1!.name ?? '';
       }
       // 当选择"新增分類"时，如果输入框内容匹配之前选择的既有分类名称，则清空
       // 否则保留用户已输入的内容
 
       // Level 2: 如果选择的是既有分类，显示名称；如果选择"新增分類"，保留用户输入或清空
       if (_selectedLevel2 != null) {
-        _level2NameController.text = _selectedLevel2!.name ?? '';
+        _level2NameController.text =
+            _selectedLevel2!.name ?? '';
       }
 
       // Level 3: 如果选择的是既有分类，显示名称；如果选择"新增分類"，保留用户输入或清空
       if (_selectedLevel3 != null) {
-        _level3NameController.text = _selectedLevel3!.name ?? '';
+        _level3NameController.text =
+            _selectedLevel3!.name ?? '';
       }
     });
   }
@@ -205,215 +218,320 @@ class _CreateCategoryDialogWidgetState
   @override
   Widget build(BuildContext context) {
     // 获取所有一级分类
-    final level1Categories =
-        widget.categories.where((c) => c.level == 1).toList();
+    final level1Categories = widget.categories
+        .where((c) => c.level == 1)
+        .toList();
 
-    return Material(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
-          padding: EdgeInsets.all(24.0.scale),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-          constraints: BoxConstraints(
-            maxWidth: 600.0.scale,
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Title 居中
-              Center(
-                child: Text(
-                  '新增分類',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              // Level 1 下拉选单
-              DropdownButtonFormField<Category?>(
-                value: _selectedLevel1,
-                decoration: const InputDecoration(
-                  labelText: '階層1',
-                  border: OutlineInputBorder(),
-                ),
-                items: [
-                  const DropdownMenuItem<Category?>(
-                    value: null,
-                    child: Text('新增分類'),
-                  ),
-                  ...level1Categories.map((category) {
-                    return DropdownMenuItem<Category?>(
-                      value: category,
-                      child: Text(category.name ?? ''),
-                    );
-                  }),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedLevel1 = value;
-                    _updateLevel2FromLevel1();
-                    _updateInputFields();
-                  });
-                },
-              ),
-              SizedBox(height: 8.0.scale),
-              // Level 1 输入框
-              TextField(
-                controller: _level1NameController,
-                enabled: _selectedLevel1 == null,
-                decoration: InputDecoration(
-                  labelText: '階層1 新增名稱',
-                  hintText: _selectedLevel1 == null
-                      ? '請輸入新增名稱'
-                      : '已選擇既有分類',
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 32.0.scale),
-              // Level 2 下拉选单
-              DropdownButtonFormField<Category?>(
-                value: _selectedLevel2,
-                decoration: const InputDecoration(
-                  labelText: '階層2',
-                  border: OutlineInputBorder(),
-                ),
-                items: _getLevel2Items(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedLevel2 = value;
-                    _updateLevel3FromLevel2();
-                    _updateInputFields();
-                  });
-                },
-              ),
-              SizedBox(height: 8.0.scale),
-              // Level 2 输入框
-              TextField(
-                controller: _level2NameController,
-                enabled: _selectedLevel2 == null && _selectedLevel1 != null,
-                decoration: InputDecoration(
-                  labelText: '階層2 新增名稱',
-                  hintText: _selectedLevel2 == null && _selectedLevel1 != null
-                      ? '請輸入新增名稱'
-                      : (_selectedLevel2 != null
-                          ? '已選擇既有分類'
-                          : '請先選擇 階層1'),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 32.0.scale),
-              // Level 3 下拉选单
-              DropdownButtonFormField<Category?>(
-                value: _selectedLevel3,
-                decoration: const InputDecoration(
-                  labelText: '階層3',
-                  border: OutlineInputBorder(),
-                ),
-                items: _getLevel3Items(),
-                onChanged: (value) {
-                  setState(() {
-                    _selectedLevel3 = value;
-                    _updateInputFields();
-                  });
-                },
-              ),
-              SizedBox(height: 8.0.scale),
-              // Level 3 输入框
-              TextField(
-                controller: _level3NameController,
-                enabled: _selectedLevel3 == null && _selectedLevel2 != null,
-                decoration: InputDecoration(
-                  labelText: '階層3 新增名稱',
-                  hintText: _selectedLevel3 == null && _selectedLevel2 != null
-                      ? '請輸入新增名稱'
-                      : (_selectedLevel3 != null
-                          ? '已選擇既有分類'
-                          : '請先選擇 階層2'),
-                  border: const OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+    final dialogInsetPadding =
+        30.0.scale > 0 ? 30.0.scale : 30.0;
+    return Dialog(
+      insetPadding: EdgeInsets.all(dialogInsetPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final screenWidth =
+              MediaQuery.of(context).size.width;
+          final scale600 = 600.0.scale;
+          final scale60 = 60.0.scale;
+          final scale40 = 40.0.scale;
+          final scale8 = 8.0.scale;
+          final dialogMaxWidth =
+              scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue =
+              scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue =
+              scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue =
+              scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding =
+              screenWidth - (insetPaddingValue * 2);
+          final dialogWidth =
+              (dialogMaxWidth < screenMinusPadding)
+                  ? dialogMaxWidth
+                  : screenMinusPadding;
+          final maxHeight =
+              MediaQuery.of(context).size.height * 0.8;
+          return Container(
+            width: dialogWidth,
+            padding: EdgeInsets.all(containerPaddingValue),
+            constraints: BoxConstraints(
+              maxWidth: dialogWidth,
+              maxHeight: maxHeight,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.stretch,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onCancel?.call();
-                    },
-                    child: const Text('取消'),
-                  ),
-                  SizedBox(width: 12.0.scale),
-                  ElevatedButton(
-                    onPressed: () {
-                      String? name;
-                      String? parentId;
-
-                      // 确定要创建的分类级别和名称
-                      if (_selectedLevel3 == null && _selectedLevel2 != null) {
-                        // 创建 Level 3 分类
-                        name = _level3NameController.text.trim();
-                        if (name.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入 階層3 新增名稱'),
-                            ),
-                          );
-                          return;
-                        }
-                        parentId = _selectedLevel2!.categoryId;
-                      } else if (_selectedLevel2 == null &&
-                          _selectedLevel1 != null) {
-                        // 创建 Level 2 分类
-                        name = _level2NameController.text.trim();
-                        if (name.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入 階層2 新增名稱'),
-                            ),
-                          );
-                          return;
-                        }
-                        parentId = _selectedLevel1!.categoryId;
-                      } else if (_selectedLevel1 == null) {
-                        // 创建 Level 1 分类
-                        name = _level1NameController.text.trim();
-                        if (name.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('請輸入 階層1 新增名稱'),
-                            ),
-                          );
-                          return;
-                        }
-                        parentId = null;
-                      } else {
-                        // 选择了既有分类，不创建新分类
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('請選擇「新增分類」以創建新分類'),
+                  // Title 居中
+                  Center(
+                    child: Text(
+                      '新增分類',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
-                        );
-                        return;
-                      }
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  // Level 1 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel1,
+                      decoration: const InputDecoration(
+                        labelText: '階層1',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<Category?>(
+                          value: null,
+                          child: Text('新增分類'),
+                        ),
+                        ...level1Categories.map((category) {
+                          return DropdownMenuItem<
+                              Category?>(
+                            value: category,
+                            child:
+                                Text(category.name ?? ''),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedLevel1 = value;
+                          _updateLevel2FromLevel1();
+                          _updateInputFields();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  // Level 1 输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _level1NameController,
+                      enabled: _selectedLevel1 == null,
+                      decoration: InputDecoration(
+                        labelText: '階層1 新增名稱',
+                        hintText: _selectedLevel1 == null
+                            ? '請輸入新增名稱'
+                            : '已選擇既有分類',
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32.0),
+                  // Level 2 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel2,
+                      decoration: const InputDecoration(
+                        labelText: '階層2',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: _getLevel2Items(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedLevel2 = value;
+                          _updateLevel3FromLevel2();
+                          _updateInputFields();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  // Level 2 输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _level2NameController,
+                      enabled: _selectedLevel2 == null &&
+                          _selectedLevel1 != null,
+                      decoration: InputDecoration(
+                        labelText: '階層2 新增名稱',
+                        hintText: _selectedLevel2 == null &&
+                                _selectedLevel1 != null
+                            ? '請輸入新增名稱'
+                            : (_selectedLevel2 != null
+                                ? '已選擇既有分類'
+                                : '請先選擇 階層1'),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32.0),
+                  // Level 3 下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child:
+                        DropdownButtonFormField<Category?>(
+                      value: _selectedLevel3,
+                      decoration: const InputDecoration(
+                        labelText: '階層3',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: _getLevel3Items(),
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedLevel3 = value;
+                          _updateInputFields();
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  // Level 3 输入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _level3NameController,
+                      enabled: _selectedLevel3 == null &&
+                          _selectedLevel2 != null,
+                      decoration: InputDecoration(
+                        labelText: '階層3 新增名稱',
+                        hintText: _selectedLevel3 == null &&
+                                _selectedLevel2 != null
+                            ? '請輸入新增名稱'
+                            : (_selectedLevel3 != null
+                                ? '已選擇既有分類'
+                                : '請先選擇 階層2'),
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onCancel?.call();
+                          },
+                          child: const Text('取消'),
+                        ),
+                        const SizedBox(width: 12.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            String? name;
+                            String? parentId;
 
-                      Navigator.of(context).pop();
-                      widget.onConfirm?.call(name, parentId);
-                    },
-                    child: const Text('確認'),
+                            // 确定要创建的分类级别和名称
+                            if (_selectedLevel3 == null &&
+                                _selectedLevel2 != null) {
+                              // 创建 Level 3 分类
+                              name = _level3NameController
+                                  .text
+                                  .trim();
+                              if (name.isEmpty) {
+                                ScaffoldMessenger.of(
+                                  context,
+                                ).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      '請輸入 階層3 新增名稱',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              parentId = _selectedLevel2!
+                                  .categoryId;
+                            } else if (_selectedLevel2 ==
+                                    null &&
+                                _selectedLevel1 != null) {
+                              // 创建 Level 2 分类
+                              name = _level2NameController
+                                  .text
+                                  .trim();
+                              if (name.isEmpty) {
+                                ScaffoldMessenger.of(
+                                  context,
+                                ).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      '請輸入 階層2 新增名稱',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              parentId = _selectedLevel1!
+                                  .categoryId;
+                            } else if (_selectedLevel1 ==
+                                null) {
+                              // 创建 Level 1 分类
+                              name = _level1NameController
+                                  .text
+                                  .trim();
+                              if (name.isEmpty) {
+                                ScaffoldMessenger.of(
+                                  context,
+                                ).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      '請輸入 階層1 新增名稱',
+                                    ),
+                                  ),
+                                );
+                                return;
+                              }
+                              parentId = null;
+                            } else {
+                              // 选择了既有分类，不创建新分类
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    '請選擇「新增分類」以創建新分類',
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+
+                            Navigator.of(context).pop();
+                            widget.onConfirm
+                                ?.call(name, parentId);
+                          },
+                          child: const Text('確認'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

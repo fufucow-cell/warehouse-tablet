@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/util/root_router_util.dart';
 
 /// 櫥櫃搜索对话框
 class DialogSearchCabinet {
@@ -17,7 +17,7 @@ class DialogSearchCabinet {
     VoidCallback? onCancel,
     bool barrierDismissible = true,
   }) {
-    final context = RootRouterUtil.instance.rootContext;
+    final context = TempRouterUtil.getRootContext();
     if (context == null) {
       return;
     }
@@ -59,7 +59,8 @@ class _SearchCabinetDialogWidget extends StatefulWidget {
 
 class _SearchCabinetDialogWidgetState
     extends State<_SearchCabinetDialogWidget> {
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _nameController =
+      TextEditingController();
   String? _selectedRoomId;
 
   @override
@@ -88,104 +89,155 @@ class _SearchCabinetDialogWidgetState
         )
         .toList();
 
-    return Material(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
-          padding: EdgeInsets.all(24.0.scale),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-          constraints: BoxConstraints(
-            maxWidth: 600.0.scale,
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Title 居中
-              Center(
-                child: Text(
-                  '搜尋',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              // 名稱輸入框
-              TextField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: '名稱',
-                  hintText: '請輸入櫥櫃名稱',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16.0.scale),
-              // 所屬房間下拉選單
-              DropdownButtonFormField<String?>(
-                value: _selectedRoomId,
-                decoration: const InputDecoration(
-                  labelText: '所屬房間',
-                  border: OutlineInputBorder(),
-                ),
-                items: [
-                  const DropdownMenuItem<String?>(
-                    value: null,
-                    child: Text('全部'),
-                  ),
-                  // 未設定選項（用特殊值標記）
-                  const DropdownMenuItem<String?>(
-                    value: '__UNSET__',
-                    child: Text('未設定'),
-                  ),
-                  // 其他房间选项
-                  ...rooms.map((room) {
-                    return DropdownMenuItem<String?>(
-                      value: room.id,
-                      child: Text(room.name),
-                    );
-                  }),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedRoomId = value;
-                  });
-                },
-              ),
-              SizedBox(height: 24.0.scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+    final dialogInsetPadding =
+        30.0.scale > 0 ? 30.0.scale : 30.0;
+    return Dialog(
+      insetPadding: EdgeInsets.all(dialogInsetPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final screenWidth =
+              MediaQuery.of(context).size.width;
+          final scale600 = 600.0.scale;
+          final scale60 = 60.0.scale;
+          final scale40 = 40.0.scale;
+          final scale8 = 8.0.scale;
+          final dialogMaxWidth =
+              scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue =
+              scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue =
+              scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue =
+              scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding =
+              screenWidth - (insetPaddingValue * 2);
+          final dialogWidth =
+              (dialogMaxWidth < screenMinusPadding)
+                  ? dialogMaxWidth
+                  : screenMinusPadding;
+          final maxHeight =
+              MediaQuery.of(context).size.height * 0.8;
+          return Container(
+            width: dialogWidth,
+            padding: EdgeInsets.all(containerPaddingValue),
+            constraints: BoxConstraints(
+              maxWidth: dialogWidth,
+              maxHeight: maxHeight,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.stretch,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onCancel?.call();
-                    },
-                    child: const Text('取消'),
+                  // Title 居中
+                  Center(
+                    child: Text(
+                      '搜尋',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                    ),
                   ),
-                  SizedBox(width: 12.0.scale),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onConfirm?.call(
-                        name: _nameController.text.trim().isEmpty
-                            ? null
-                            : _nameController.text.trim(),
-                        roomId: _selectedRoomId,
-                      );
-                    },
-                    child: const Text('確認'),
+                  const SizedBox(height: 24.0),
+                  // 名稱輸入框
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: '名稱',
+                        hintText: '請輸入櫥櫃名稱',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 所屬房間下拉選單
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<String?>(
+                      value: _selectedRoomId,
+                      decoration: const InputDecoration(
+                        labelText: '所屬房間',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<String?>(
+                          value: null,
+                          child: Text('全部'),
+                        ),
+                        // 未設定選項（用特殊值標記）
+                        const DropdownMenuItem<String?>(
+                          value: '__UNSET__',
+                          child: Text('未設定'),
+                        ),
+                        // 其他房间选项
+                        ...rooms.map((room) {
+                          return DropdownMenuItem<String?>(
+                            value: room.id,
+                            child: Text(room.name),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedRoomId = value;
+                        });
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onCancel?.call();
+                          },
+                          child: const Text('取消'),
+                        ),
+                        const SizedBox(width: 12.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onConfirm?.call(
+                              name: _nameController.text
+                                      .trim()
+                                      .isEmpty
+                                  ? null
+                                  : _nameController.text
+                                      .trim(),
+                              roomId: _selectedRoomId,
+                            );
+                          },
+                          child: const Text('確認'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

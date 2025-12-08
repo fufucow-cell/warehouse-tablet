@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/util/root_router_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
 /// 日志搜索对话框
 class DialogSearchLog {
@@ -20,7 +20,7 @@ class DialogSearchLog {
     VoidCallback? onCancel,
     bool barrierDismissible = true,
   }) {
-    final context = RootRouterUtil.instance.rootContext;
+    final context = TempRouterUtil.getRootContext();
     if (context == null) {
       return;
     }
@@ -91,198 +91,284 @@ class _SearchLogDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.black.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
-          padding: EdgeInsets.all(24.0.scale),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-          constraints: BoxConstraints(
-            maxWidth: 600.0.scale,
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Title 居中
-              Center(
-                child: Text(
-                  '搜尋',
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-              ),
-              SizedBox(height: 24.0.scale),
-              // 起始日期选择器
-              Row(
+    final dialogInsetPadding =
+        30.0.scale > 0 ? 30.0.scale : 30.0;
+    return Dialog(
+      insetPadding: EdgeInsets.all(dialogInsetPadding),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final screenWidth =
+              MediaQuery.of(context).size.width;
+          final scale600 = 600.0.scale;
+          final scale60 = 60.0.scale;
+          final scale40 = 40.0.scale;
+          final scale8 = 8.0.scale;
+          final dialogMaxWidth =
+              scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue =
+              scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue =
+              scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue =
+              scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding =
+              screenWidth - (insetPaddingValue * 2);
+          final dialogWidth =
+              (dialogMaxWidth < screenMinusPadding)
+                  ? dialogMaxWidth
+                  : screenMinusPadding;
+          final maxHeight =
+              MediaQuery.of(context).size.height * 0.8;
+          return Container(
+            width: dialogWidth,
+            padding: EdgeInsets.all(containerPaddingValue),
+            constraints: BoxConstraints(
+              maxWidth: dialogWidth,
+              maxHeight: maxHeight,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment:
+                    CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    child: TextButton.icon(
-                      onPressed: () async {
-                        final pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: _startDate ?? DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        if (pickedDate != null) {
-                          setState(() {
-                            _startDate = pickedDate;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.calendar_today),
-                      label: Text(
-                        _startDate != null
-                            ? '起始：${_formatDate(_startDate!)}'
-                            : '起始日期',
-                      ),
+                  // Title 居中
+                  Center(
+                    child: Text(
+                      '搜尋',
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ),
-                  if (_startDate != null)
-                    IconButton(
-                      icon: const Icon(Icons.close, size: 20),
-                      onPressed: () {
+                  const SizedBox(height: 24.0),
+                  // 起始日期选择器
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: () async {
+                              final pickedDate =
+                                  await showDatePicker(
+                                context: context,
+                                initialDate: _startDate ??
+                                    DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+                              if (pickedDate != null) {
+                                setState(() {
+                                  _startDate = pickedDate;
+                                });
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.calendar_today,
+                            ),
+                            label: Text(
+                              _startDate != null
+                                  ? '起始：${_formatDate(_startDate!)}'
+                                  : '起始日期',
+                            ),
+                          ),
+                        ),
+                        if (_startDate != null)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _startDate = null;
+                              });
+                            },
+                            tooltip: '清除起始日期',
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 结束日期选择器
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Expanded(
+                          child: TextButton.icon(
+                            onPressed: () async {
+                              final pickedDate =
+                                  await showDatePicker(
+                                context: context,
+                                initialDate: _endDate ??
+                                    DateTime.now(),
+                                firstDate: DateTime(2000),
+                                lastDate: DateTime(2100),
+                              );
+                              if (pickedDate != null) {
+                                setState(() {
+                                  _endDate = pickedDate;
+                                });
+                              }
+                            },
+                            icon: const Icon(
+                              Icons.calendar_today,
+                            ),
+                            label: Text(
+                              _endDate != null
+                                  ? '结束：${_formatDate(_endDate!)}'
+                                  : '结束日期',
+                            ),
+                          ),
+                        ),
+                        if (_endDate != null)
+                          IconButton(
+                            icon: const Icon(
+                              Icons.close,
+                              size: 20,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _endDate = null;
+                              });
+                            },
+                            tooltip: '清除结束日期',
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  // 操作类型下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<
+                        EnumOperateType?>(
+                      value: _selectedOperateType,
+                      decoration: const InputDecoration(
+                        labelText: '操作類型',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<
+                            EnumOperateType?>(
+                          value: null,
+                          child: Text('全部'),
+                        ),
+                        ...EnumOperateType.values
+                            .where(
+                          (e) =>
+                              e != EnumOperateType.unknown,
+                        )
+                            .map((type) {
+                          return DropdownMenuItem<
+                              EnumOperateType?>(
+                            value: type,
+                            child: Text(type.title),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
                         setState(() {
-                          _startDate = null;
+                          _selectedOperateType = value;
                         });
                       },
-                      tooltip: '清除起始日期',
-                    ),
-                ],
-              ),
-              SizedBox(height: 16.0.scale),
-              // 结束日期选择器
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Expanded(
-                    child: TextButton.icon(
-                      onPressed: () async {
-                        final pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: _endDate ?? DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2100),
-                        );
-                        if (pickedDate != null) {
-                          setState(() {
-                            _endDate = pickedDate;
-                          });
-                        }
-                      },
-                      icon: const Icon(Icons.calendar_today),
-                      label: Text(
-                        _endDate != null
-                            ? '结束：${_formatDate(_endDate!)}'
-                            : '结束日期',
-                      ),
                     ),
                   ),
-                  if (_endDate != null)
-                    IconButton(
-                      icon: const Icon(Icons.close, size: 20),
-                      onPressed: () {
+                  const SizedBox(height: 16.0),
+                  // 实体类型下拉选单
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: DropdownButtonFormField<
+                        EnumEntityType?>(
+                      value: _selectedEntityType,
+                      decoration: const InputDecoration(
+                        labelText: '實體類型',
+                        border: OutlineInputBorder(),
+                      ),
+                      items: [
+                        const DropdownMenuItem<
+                            EnumEntityType?>(
+                          value: null,
+                          child: Text('全部'),
+                        ),
+                        ...EnumEntityType.values
+                            .where(
+                          (e) =>
+                              e != EnumEntityType.unknown,
+                        )
+                            .map((type) {
+                          return DropdownMenuItem<
+                              EnumEntityType?>(
+                            value: type,
+                            child: Text(type.title),
+                          );
+                        }),
+                      ],
+                      onChanged: (value) {
                         setState(() {
-                          _endDate = null;
+                          _selectedEntityType = value;
                         });
                       },
-                      tooltip: '清除结束日期',
                     ),
-                ],
-              ),
-              SizedBox(height: 16.0.scale),
-              // 操作类型下拉选单
-              DropdownButtonFormField<EnumOperateType?>(
-                value: _selectedOperateType,
-                decoration: const InputDecoration(
-                  labelText: '操作類型',
-                  border: OutlineInputBorder(),
-                ),
-                items: [
-                  const DropdownMenuItem<EnumOperateType?>(
-                    value: null,
-                    child: Text('全部'),
                   ),
-                  ...EnumOperateType.values
-                      .where((e) => e != EnumOperateType.unknown)
-                      .map((type) {
-                    return DropdownMenuItem<EnumOperateType?>(
-                      value: type,
-                      child: Text(type.title),
-                    );
-                  }),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedOperateType = value;
-                  });
-                },
-              ),
-              SizedBox(height: 16.0.scale),
-              // 实体类型下拉选单
-              DropdownButtonFormField<EnumEntityType?>(
-                value: _selectedEntityType,
-                decoration: const InputDecoration(
-                  labelText: '實體類型',
-                  border: OutlineInputBorder(),
-                ),
-                items: [
-                  const DropdownMenuItem<EnumEntityType?>(
-                    value: null,
-                    child: Text('全部'),
-                  ),
-                  ...EnumEntityType.values
-                      .where((e) => e != EnumEntityType.unknown)
-                      .map((type) {
-                    return DropdownMenuItem<EnumEntityType?>(
-                      value: type,
-                      child: Text(type.title),
-                    );
-                  }),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    _selectedEntityType = value;
-                  });
-                },
-              ),
-              SizedBox(height: 24.0.scale),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onCancel?.call();
-                    },
-                    child: const Text('取消'),
-                  ),
-                  SizedBox(width: 12.0.scale),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      widget.onConfirm?.call(
-                        startDate: _startDate,
-                        endDate: _endDate,
-                        operateType: _selectedOperateType,
-                        entityType: _selectedEntityType,
-                      );
-                    },
-                    child: const Text('確認'),
+                  const SizedBox(height: 24.0),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPaddingValue,
+                    ),
+                    child: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.end,
+                      children: [
+                        OutlinedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onCancel?.call();
+                          },
+                          child: const Text('取消'),
+                        ),
+                        const SizedBox(width: 12.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            widget.onConfirm?.call(
+                              startDate: _startDate,
+                              endDate: _endDate,
+                              operateType:
+                                  _selectedOperateType,
+                              entityType:
+                                  _selectedEntityType,
+                            );
+                          },
+                          child: const Text('確認'),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
