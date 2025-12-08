@@ -1,4 +1,4 @@
-package com.arsbank.flutter_smart_home_tablet
+package com.smart_home.warehouse_tablet
 
 import io.flutter.embedding.android.FlutterActivity
 
