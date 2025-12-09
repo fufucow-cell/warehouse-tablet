@@ -1,4 +1,5 @@
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_service_model.dart';
@@ -7,9 +8,9 @@ class WarehouseService {
   // MARK: - Properties
 
   final _model = WarehouseServiceModel();
+  final _localeUtil = LocaleUtil.instance;
   String? get userId => _model.userId;
   String? get userName => _model.userName;
-  String? get language => _model.language;
   int? get theme => _model.theme;
   String? get accessToken => _model.accessToken;
   String? get refreshToken => _model.refreshToken;
@@ -42,9 +43,8 @@ class WarehouseService {
   static WarehouseService get instance => register();
 
   void updateData(WarehouseMainPageRouterData data) {
-    _model.userId = data.userId;
+    _localeUtil.switchFromCode(data.language);
     _model.userName = data.userName;
-    _model.language = data.language;
     _model.theme = data.theme;
     _model.accessToken = data.accessToken;
     _model.refreshToken = data.refreshToken;

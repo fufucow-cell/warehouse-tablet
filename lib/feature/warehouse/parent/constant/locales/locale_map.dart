@@ -3,8 +3,8 @@
 /// 生成时间: 2025-12-09T14:45:40.610527
 library;
 
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';
-import 'package:get/get.dart';
 
 enum EnumLocale {
   appTitle,
@@ -184,5 +184,21 @@ enum EnumLocale {
   warehouseUnnamedItem;
 
   String get key => name.toSnakeCase();
-  String get tr => key.tr;
+
+  String get tr {
+    final currentLocale =
+        _currentLocale ?? LocaleConstant.defaultLocale;
+    return currentLocale.translationMap[key] ?? key;
+  }
+
+  static void setCurrentLocale(LocaleConstant locale) {
+    _currentLocale = locale;
+  }
+
+  /// 获取当前设置的 locale
+  static LocaleConstant? get currentLocale =>
+      _currentLocale;
+
+  /// 当前 locale（内部使用）
+  static LocaleConstant? _currentLocale;
 }

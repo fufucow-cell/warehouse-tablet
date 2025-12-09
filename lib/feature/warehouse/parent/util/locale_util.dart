@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
@@ -67,19 +68,32 @@ class LocaleUtil extends GetxService {
     return Get.find<LocaleUtil>();
   }
 
-  /// 切換語系
-  Future<bool> switchLocale(
+  Future<bool> switchFromLocale(
     LocaleConstant newLocale,
   ) async {
     try {
       await _saveToStorage(newLocale);
       _currentLocale = newLocale;
+      // 更新 locale_map.dart 的 currentLocale
+      final actualLocale =
+          (_currentLocale == LocaleConstant.system)
+              ? _systemLocale
+              : _currentLocale;
+      EnumLocale.setCurrentLocale(actualLocale);
       await Get.updateLocale(getCurrentLocale);
       return true;
     } on Exception catch (e) {
       LogUtil.e('切換語系失敗', e);
       return false;
     }
+  }
+
+  Future<bool> switchFromCode(
+    String code,
+  ) async {
+    LocaleConstant newLocale =
+        LocaleConstant.fromCode(code);
+    return switchFromLocale(newLocale);
   }
 
   Locale get getCurrentLocale {
@@ -93,6 +107,16 @@ class LocaleUtil extends GetxService {
             localeConstant.countryCode,
           )
         : Locale(localeConstant.languageCode);
+  }
+
+  String get getCurrentLocaleCode {
+    final locale = getCurrentLocale;
+
+    if (locale.countryCode != null) {
+      return '${locale.languageCode}_${locale.countryCode}';
+    }
+
+    return locale.languageCode;
   }
 
   // MARK: - Private Method
@@ -125,6 +149,12 @@ class LocaleUtil extends GetxService {
           _currentLocale =
               LocaleConstant.fromCode(savedCode);
         }
+        // 更新 locale_map.dart 的 currentLocale
+        final actualLocale =
+            (_currentLocale == LocaleConstant.system)
+                ? _systemLocale
+                : _currentLocale;
+        EnumLocale.setCurrentLocale(actualLocale);
         LogUtil.i(
           EnumLogType.storage,
           '載入用戶語系: ${_currentLocale.displayName}',
@@ -137,6 +167,12 @@ class LocaleUtil extends GetxService {
 
     // 如果沒有保存的 code 或載入失敗，使用系統語系
     _currentLocale = LocaleConstant.system;
+    // 更新 locale_map.dart 的 currentLocale
+    final actualLocale =
+        (_currentLocale == LocaleConstant.system)
+            ? _systemLocale
+            : _currentLocale;
+    EnumLocale.setCurrentLocale(actualLocale);
     LogUtil.i(
       EnumLogType.storage,
       '使用系統語系: ${_currentLocale.displayName}',

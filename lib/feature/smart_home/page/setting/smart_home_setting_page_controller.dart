@@ -25,7 +25,8 @@ class SmartHomeSettingPageController
 
   /// 切換語言
   Future<void> switchLocale(LocaleConstant locale) async {
-    final success = await _localeUtil.switchLocale(locale);
+    final success =
+        await _localeUtil.switchFromLocale(locale);
     if (success) {
       update(); // 更新 UI
       Get.snackbar(
