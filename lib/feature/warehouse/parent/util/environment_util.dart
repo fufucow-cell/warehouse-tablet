@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 class EnvironmentUtil extends GetxService {
   // MARK: - Properties
 
-  static const String tagName = 'warehouse';
-
   /// 運行環境
   final Rx<EnumEnvironment> _currentEnvironment;
   EnumEnvironment get currentEnvironment =>
@@ -49,8 +47,8 @@ class EnvironmentUtil extends GetxService {
 
   /// 註冊
   static EnvironmentUtil register([EnumEnvironment? env]) {
-    if (Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
-      return Get.find<EnvironmentUtil>(tag: tagName);
+    if (Get.isRegistered<EnvironmentUtil>()) {
+      return Get.find<EnvironmentUtil>();
     }
 
     final EnvironmentUtil service =
@@ -61,16 +59,14 @@ class EnvironmentUtil extends GetxService {
     Get.put<EnvironmentUtil>(
       service,
       permanent: true,
-      tag: tagName,
     );
     return service;
   }
 
   /// 註銷
   static void unregister() {
-    if (Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
+    if (Get.isRegistered<EnvironmentUtil>()) {
       Get.delete<EnvironmentUtil>(
-        tag: tagName,
         force: true,
       );
     }
@@ -78,10 +74,10 @@ class EnvironmentUtil extends GetxService {
 
   /// 單例
   static EnvironmentUtil get instance {
-    if (!Get.isRegistered<EnvironmentUtil>(tag: tagName)) {
+    if (!Get.isRegistered<EnvironmentUtil>()) {
       register(EnumEnvironment.prd);
     }
-    return Get.find<EnvironmentUtil>(tag: tagName);
+    return Get.find<EnvironmentUtil>();
   }
 
   // MARK: - Private Method

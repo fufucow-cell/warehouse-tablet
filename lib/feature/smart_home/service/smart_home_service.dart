@@ -1,6 +1,6 @@
 import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/home_household_response_model/home_household_response_model.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model/user_login_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_service_model.dart';
@@ -9,10 +9,12 @@ class SmartHomeService {
   // MARK: - Properties
 
   final _model = SmartHomeServiceModel();
-  UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
-  HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
-  Map<String, HomeHouseholdResponseModel> get allHouseholdDataMap =>
-      _model.allHouseholdDataMap;
+  UserLoginResponseModel? get getUserData =>
+      AppService.instance.getUserData;
+  HomeHouseholdResponseModel? get getHouseholdData =>
+      _model.homeHouseholdData;
+  Map<String, HomeHouseholdResponseModel>
+      get allHouseholdDataMap => _model.allHouseholdDataMap;
 
   // MARK: - Init
 
@@ -49,7 +51,8 @@ class SmartHomeService {
   }
 
   // 根据 homeId 获取已保存的家庭数据
-  HomeHouseholdResponseModel? getHouseholdDataByHomeId(String? homeId) {
+  HomeHouseholdResponseModel? getHouseholdDataByHomeId(
+      String? homeId) {
     if (homeId == null) return null;
     return _model.allHouseholdDataMap[homeId];
   }

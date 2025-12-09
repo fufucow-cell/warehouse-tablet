@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_item.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_log.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';

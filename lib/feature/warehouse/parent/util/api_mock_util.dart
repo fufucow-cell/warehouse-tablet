@@ -49,7 +49,8 @@ class ApiMockUtil {
     final methodLower = method.toLowerCase();
 
     for (final apiInfo in EnumApiInfo.values) {
-      if (apiInfo.path == cleanPath && apiInfo.method.name == methodLower) {
+      if (apiInfo.path == cleanPath &&
+          apiInfo.method.name == methodLower) {
         return apiInfo;
       }
     }
@@ -63,7 +64,8 @@ class ApiMockUtil {
     EnumApiInfo apiInfo,
   ) async {
     final isApiEmptyResponse =
-        options.extra[ApiEmptyResponse.name] as bool? ?? false;
+        options.extra[ApiEmptyResponse.name] as bool? ??
+            false;
 
     if (isApiEmptyResponse) {
       final successResponse = Response<dynamic>(
@@ -81,11 +83,13 @@ class ApiMockUtil {
     }
 
     try {
-      final mockFileName = _getMockFileName(options, apiInfo);
+      final mockFileName =
+          _getMockFileName(options, apiInfo);
       final jsonString = await rootBundle.loadString(
         'lib/feature/warehouse/parent/assets/mock_data/response/$mockFileName',
       );
-      final mockData = jsonDecode(jsonString) as Map<String, dynamic>;
+      final mockData =
+          jsonDecode(jsonString) as Map<String, dynamic>;
       final mockResponse = Response<dynamic>(
         requestOptions: options,
         data: mockData,
@@ -113,11 +117,13 @@ class ApiMockUtil {
     RequestOptions options,
     EnumApiInfo apiInfo,
   ) {
-    final cleanPath = options.path.replaceAll(RegExp(r'^/+'), '');
+    final cleanPath =
+        options.path.replaceAll(RegExp(r'^/+'), '');
     final methodName = apiInfo.method.name.toLowerCase();
     String baseFileName = cleanPath.replaceAll('/', '_');
 
-    if (cleanPath == EnumApiInfo.itemFetch.path ||
+    if (cleanPath == EnumApiInfo.homeFetch.path ||
+        cleanPath == EnumApiInfo.itemFetch.path ||
         cleanPath == EnumApiInfo.categoryFetch.path ||
         cleanPath == EnumApiInfo.cabinetFetch.path ||
         cleanPath == EnumApiInfo.logFetch.path) {

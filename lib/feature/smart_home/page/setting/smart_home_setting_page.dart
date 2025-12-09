@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 

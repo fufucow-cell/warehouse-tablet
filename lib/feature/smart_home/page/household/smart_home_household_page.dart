@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
-import 'package:flutter_smart_home_tablet/model/request_model/home_household_request_model/home_household_request_model.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/home_household_response_model/home_household_response_model.dart';
-import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model/household.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/home_household_request_model/home_household_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/household.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:flutter_smart_home_tablet/util/api_util.dart';
 import 'package:get/get.dart';
@@ -275,8 +275,10 @@ class _EmptyHouseholdContent extends StatelessWidget {
                         strokeWidth: 2,
                       ),
                     )
-                  : Text(EnumLocale
-                      .smartHomeCreateHousehold.tr),
+                  : Text(
+                      EnumLocale
+                          .smartHomeCreateHousehold.tr,
+                    ),
             ),
           ],
         ),

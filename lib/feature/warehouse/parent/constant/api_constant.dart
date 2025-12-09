@@ -1,4 +1,23 @@
 enum EnumApiInfo {
+  // Auth APIs
+  userLogin('auth/login', EnumApiMethod.post),
+  userRegister('auth/register', EnumApiMethod.post),
+  userLogout('auth/logout', EnumApiMethod.post),
+  tokenRefresh('auth/refresh', EnumApiMethod.post),
+  forgotPassword(
+      'auth/forgot-password', EnumApiMethod.post),
+  resetPassword('auth/reset-password', EnumApiMethod.post),
+  // Home APIs
+  homeCreate('home', EnumApiMethod.post),
+  homeFetch('home', EnumApiMethod.get),
+  homeModify('home', EnumApiMethod.put),
+  homeDelete('home', EnumApiMethod.delete),
+  // Room APIs
+  roomCreate('room', EnumApiMethod.post),
+  roomFetch('room', EnumApiMethod.get),
+  roomModify('room', EnumApiMethod.put),
+  roomDelete('room', EnumApiMethod.delete),
+  // Warehouse APIs
   itemCreate('item', EnumApiMethod.post),
   itemFetch('item', EnumApiMethod.get),
   itemModify('item', EnumApiMethod.put),

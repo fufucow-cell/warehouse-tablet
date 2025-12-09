@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/util/router_util.dart';
 
 /// 全屏遮罩对话框

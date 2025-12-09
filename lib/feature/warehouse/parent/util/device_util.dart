@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/constant/device_constant.dart';
-import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/device_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:get/get.dart';
 
 class DeviceUtil extends GetxService {
@@ -14,16 +14,20 @@ class DeviceUtil extends GetxService {
   bool get isAndroid => Platform.isAndroid;
   bool get isWeb => kIsWeb;
   bool get isDesktop =>
-      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+      Platform.isMacOS ||
+      Platform.isWindows ||
+      Platform.isLinux;
 
   /// 取得設備語言
   Locale? get deviceLocale => Get.deviceLocale;
 
   /// 取得設備語言代碼
-  String? get deviceLanguageCode => Get.deviceLocale?.languageCode;
+  String? get deviceLanguageCode =>
+      Get.deviceLocale?.languageCode;
 
   /// 取得國家代碼
-  String? get deviceCountryCode => Get.deviceLocale?.countryCode;
+  String? get deviceCountryCode =>
+      Get.deviceLocale?.countryCode;
 
   /// 取得系統版本資訊
   String get systemVersion {
@@ -130,7 +134,8 @@ class DeviceUtil extends GetxService {
     _bottomSafeAreaHeight = mediaQuery.padding.bottom;
 
     // 存儲螢幕方向
-    _isPortrait = mediaQuery.orientation == Orientation.portrait;
+    _isPortrait =
+        mediaQuery.orientation == Orientation.portrait;
 
     // 判斷是否為平板或手機設備（平板通常最短邊 >= 600）
     if (!isWeb && !isDesktop && (isIOS || isAndroid)) {
@@ -145,19 +150,26 @@ class DeviceUtil extends GetxService {
     // 計算設計與實機寬高比（先判斷平板，再判斷手機）
     if (isTablet) {
       const deviceType = EnumSupportedDevice.tablet;
-      _scaleWidth = _screenSize.width / deviceType.designWidth;
-      _scaleHeight = _screenSize.height / deviceType.designHeight;
+      _scaleWidth =
+          _screenSize.width / deviceType.designWidth;
+      _scaleHeight =
+          _screenSize.height / deviceType.designHeight;
     } else if (isMobile) {
       const deviceType = EnumSupportedDevice.mobile;
-      _scaleWidth = _screenSize.width / deviceType.designWidth;
-      _scaleHeight = _screenSize.height / deviceType.designHeight;
+      _scaleWidth =
+          _screenSize.width / deviceType.designWidth;
+      _scaleHeight =
+          _screenSize.height / deviceType.designHeight;
     }
 
     // 計算最小比例
-    _minScale = _scaleWidth < _scaleHeight ? _scaleWidth : _scaleHeight;
+    _minScale = _scaleWidth < _scaleHeight
+        ? _scaleWidth
+        : _scaleHeight;
 
     // 確認產品是否支援該裝置
-    _isSupportedDevice = (isTablet || isMobile) && _minScale != 0.0;
+    _isSupportedDevice =
+        (isTablet || isMobile) && _minScale != 0.0;
 
     // double_extension.dart 參數設置
     scaleMin = _minScale;

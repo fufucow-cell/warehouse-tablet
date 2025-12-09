@@ -11,7 +11,8 @@ part 'app_splash_page_interactive.dart';
 part 'app_splash_page_model.dart';
 part 'app_splash_page_route.dart';
 
-class AppSplashPage extends GetView<AppSplashPageController> {
+class AppSplashPage
+    extends GetView<AppSplashPageController> {
   const AppSplashPage({super.key});
 
   @override

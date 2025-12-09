@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_smart_home_tablet/constant/api_constant.dart';
-import 'package:flutter_smart_home_tablet/constant/error_map_constant.dart';
-import 'package:flutter_smart_home_tablet/inherit/base_api_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/error_map_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/util/api_mock_util.dart';
 import 'package:get/get.dart' hide Response;
 

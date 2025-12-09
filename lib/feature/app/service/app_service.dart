@@ -1,4 +1,4 @@
-import 'package:flutter_smart_home_tablet/model/response_model/user_login_response_model/user_login_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
 import 'package:get/get.dart';
 
 part 'app_service_model.dart';
@@ -7,7 +7,8 @@ class AppService {
   // MARK: - Properties
 
   final _model = AppServiceModel();
-  UserLoginResponseModel? get getUserData => _model.userLoginData;
+  UserLoginResponseModel? get getUserData =>
+      _model.userLoginData;
 
   // MARK: - Init
 
