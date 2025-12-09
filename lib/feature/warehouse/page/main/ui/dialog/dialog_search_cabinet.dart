@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -137,7 +138,7 @@ class _SearchCabinetDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '搜尋',
+                      EnumLocale.searchTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -154,10 +155,11 @@ class _SearchCabinetDialogWidgetState
                     ),
                     child: TextField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: '名稱',
-                        hintText: '請輸入櫥櫃名稱',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.searchName.tr,
+                        hintText: EnumLocale
+                            .searchNameHintCabinet.tr,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -169,19 +171,22 @@ class _SearchCabinetDialogWidgetState
                     ),
                     child: DropdownButtonFormField<String?>(
                       value: _selectedRoomId,
-                      decoration: const InputDecoration(
-                        labelText: '所屬房間',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.searchRoom.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<String?>(
+                        DropdownMenuItem<String?>(
                           value: null,
-                          child: Text('全部'),
+                          child:
+                              Text(EnumLocale.optionAll.tr),
                         ),
                         // 未設定選項（用特殊值標記）
-                        const DropdownMenuItem<String?>(
+                        DropdownMenuItem<String?>(
                           value: '__UNSET__',
-                          child: Text('未設定'),
+                          child: Text(
+                            EnumLocale.optionNotSet.tr,
+                          ),
                         ),
                         // 其他房间选项
                         ...rooms.map((room) {
@@ -212,7 +217,9 @@ class _SearchCabinetDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -228,7 +235,9 @@ class _SearchCabinetDialogWidgetState
                               roomId: _selectedRoomId,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

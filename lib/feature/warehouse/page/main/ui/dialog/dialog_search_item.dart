@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -204,9 +205,9 @@ class _SearchItemDialogWidgetState
   // 获取 Level 2 选项列表
   List<DropdownMenuItem<Category?>> _getLevel2Items() {
     final items = <DropdownMenuItem<Category?>>[
-      const DropdownMenuItem<Category?>(
+      DropdownMenuItem<Category?>(
         value: null,
-        child: Text('全部'),
+        child: Text(EnumLocale.optionAll.tr),
       ),
     ];
 
@@ -231,9 +232,9 @@ class _SearchItemDialogWidgetState
   // 获取 Level 3 选项列表
   List<DropdownMenuItem<Category?>> _getLevel3Items() {
     final items = <DropdownMenuItem<Category?>>[
-      const DropdownMenuItem<Category?>(
+      DropdownMenuItem<Category?>(
         value: null,
-        child: Text('全部'),
+        child: Text(EnumLocale.optionAll.tr),
       ),
     ];
 
@@ -258,14 +259,14 @@ class _SearchItemDialogWidgetState
   // 获取橱柜列表（根据选中的房间）
   List<DropdownMenuItem<String?>> _getCabinetItems() {
     final items = <DropdownMenuItem<String?>>[
-      const DropdownMenuItem<String?>(
+      DropdownMenuItem<String?>(
         value: null,
-        child: Text('全部'),
+        child: Text(EnumLocale.optionAll.tr),
       ),
       // 未設定選項
-      const DropdownMenuItem<String?>(
+      DropdownMenuItem<String?>(
         value: '__UNSET__',
-        child: Text('未設定'),
+        child: Text(EnumLocale.optionNotSet.tr),
       ),
     ];
 
@@ -369,7 +370,7 @@ class _SearchItemDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '搜尋',
+                      EnumLocale.searchTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -386,10 +387,11 @@ class _SearchItemDialogWidgetState
                     ),
                     child: TextField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: '名稱',
-                        hintText: '請輸入物品名稱',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.searchName.tr,
+                        hintText: EnumLocale
+                            .searchNameHintItem.tr,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -402,14 +404,16 @@ class _SearchItemDialogWidgetState
                     child:
                         DropdownButtonFormField<Category?>(
                       value: _selectedLevel1,
-                      decoration: const InputDecoration(
-                        labelText: '分類',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.searchCategory.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<Category?>(
+                        DropdownMenuItem<Category?>(
                           value: null,
-                          child: Text('全部'),
+                          child:
+                              Text(EnumLocale.optionAll.tr),
                         ),
                         ...level1Categories.map((category) {
                           return DropdownMenuItem<
@@ -438,9 +442,11 @@ class _SearchItemDialogWidgetState
                       child: DropdownButtonFormField<
                           Category?>(
                         value: _selectedLevel2,
-                        decoration: const InputDecoration(
-                          labelText: '分類（階層2）',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: EnumLocale
+                              .searchCategoryLevel2.tr,
+                          border:
+                              const OutlineInputBorder(),
                         ),
                         items: _getLevel2Items(),
                         onChanged: (value) {
@@ -462,9 +468,11 @@ class _SearchItemDialogWidgetState
                       child: DropdownButtonFormField<
                           Category?>(
                         value: _selectedLevel3,
-                        decoration: const InputDecoration(
-                          labelText: '分類（階層3）',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: EnumLocale
+                              .searchCategoryLevel3.tr,
+                          border:
+                              const OutlineInputBorder(),
                         ),
                         items: _getLevel3Items(),
                         onChanged: (value) {
@@ -484,19 +492,22 @@ class _SearchItemDialogWidgetState
                     ),
                     child: DropdownButtonFormField<String?>(
                       value: _selectedRoomId,
-                      decoration: const InputDecoration(
-                        labelText: '所屬房間',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.searchRoom.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<String?>(
+                        DropdownMenuItem<String?>(
                           value: null,
-                          child: Text('全部'),
+                          child:
+                              Text(EnumLocale.optionAll.tr),
                         ),
                         // 未設定選項
-                        const DropdownMenuItem<String?>(
+                        DropdownMenuItem<String?>(
                           value: '__UNSET__',
-                          child: Text('未設定'),
+                          child: Text(
+                            EnumLocale.optionNotSet.tr,
+                          ),
                         ),
                         ...rooms.map((room) {
                           return DropdownMenuItem<String?>(
@@ -522,9 +533,10 @@ class _SearchItemDialogWidgetState
                     ),
                     child: DropdownButtonFormField<String?>(
                       value: _selectedCabinetId,
-                      decoration: const InputDecoration(
-                        labelText: '所屬櫥櫃',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.searchCabinet.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _getCabinetItems(),
                       onChanged: (value) {
@@ -548,7 +560,9 @@ class _SearchItemDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -567,7 +581,9 @@ class _SearchItemDialogWidgetState
                               cabinetId: _selectedCabinetId,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/app_login_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:get/get.dart';
 
 enum LoginTextFieldType {
@@ -31,7 +32,7 @@ class LoginUITextField extends StatelessWidget {
         controller: textController,
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: '郵箱',
+          labelText: EnumLocale.loginEmail.tr,
           prefixIcon: const Icon(Icons.email),
           filled: true,
           fillColor: Colors.white,
@@ -43,20 +44,25 @@ class LoginUITextField extends StatelessWidget {
     } else {
       return Obx(
         () {
-          final controller = Get.find<AppLoginPageController>();
-          final isPasswordVisible = controller.isPasswordVisible;
+          final controller =
+              Get.find<AppLoginPageController>();
+          final isPasswordVisible =
+              controller.isPasswordVisible;
           return TextField(
             controller: controller.passwordController,
             obscureText: !isPasswordVisible,
             decoration: InputDecoration(
-              labelText: '密碼',
+              labelText: EnumLocale.loginPassword.tr,
               prefixIcon: const Icon(Icons.lock),
               suffixIcon: IconButton(
                 icon: Icon(
-                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  isPasswordVisible
+                      ? Icons.visibility
+                      : Icons.visibility_off,
                 ),
                 onPressed: () => controller.interactive(
-                  EnumAppLoginPageInteractive.tapPasswordVisibility,
+                  EnumAppLoginPageInteractive
+                      .tapPasswordVisibility,
                 ),
               ),
               filled: true,

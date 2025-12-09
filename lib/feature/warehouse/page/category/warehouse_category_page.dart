@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
@@ -46,8 +47,8 @@ class _Body extends StatelessWidget {
             controller.getFlattenedCategories();
 
         if (categories.isEmpty) {
-          return const Center(
-            child: Text('暂无分类'),
+          return Center(
+            child: Text(EnumLocale.warehouseNoCategory.tr),
           );
         }
 
@@ -102,7 +103,8 @@ class _CategoryItem extends StatelessWidget {
                 color: _getColorForLevel(level),
               ),
               title: Text(
-                category.name ?? '未命名分类',
+                category.name ??
+                    EnumLocale.warehouseUnnamedCategory.tr,
                 style: TextStyle(
                   fontWeight: level == 0
                       ? FontWeight.bold

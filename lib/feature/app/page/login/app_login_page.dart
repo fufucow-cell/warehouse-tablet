@@ -4,6 +4,7 @@ import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/ui/button.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/ui/text_field.dart';
 import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/model/request_model/user_login_request_model/user_login_request_model.dart';
@@ -26,7 +27,7 @@ class AppLoginPage extends GetView<AppLoginPageController> {
       init: AppLoginPageController(),
       builder: (controller) {
         return CustScaffold(
-          title: '登入',
+          title: EnumLocale.loginTitle.tr,
           child: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -34,7 +35,9 @@ class AppLoginPage extends GetView<AppLoginPageController> {
                 end: Alignment.bottomRight,
                 colors: [
                   Theme.of(context).colorScheme.primary,
-                  Theme.of(context).colorScheme.primaryContainer,
+                  Theme.of(context)
+                      .colorScheme
+                      .primaryContainer,
                 ],
               ),
             ),
@@ -42,9 +45,11 @@ class AppLoginPage extends GetView<AppLoginPageController> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24.0),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400),
+                  constraints:
+                      const BoxConstraints(maxWidth: 400),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Icons.home,
@@ -52,7 +57,7 @@ class AppLoginPage extends GetView<AppLoginPageController> {
                         color: Colors.white,
                       ),
                       const SizedBox(height: 32),
-                      const Text('智管家'),
+                      Text(EnumLocale.appTitle.tr),
                       const SizedBox(height: 48),
                       _LoginForms(controller: controller),
                       const _LoginButtons(),

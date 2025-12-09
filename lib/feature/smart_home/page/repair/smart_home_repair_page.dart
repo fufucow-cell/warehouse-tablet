@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,8 @@ part 'smart_home_repair_page_interactive.dart';
 part 'smart_home_repair_page_model.dart';
 part 'smart_home_repair_page_route.dart';
 
-class SmartHomeRepairPage extends GetView<SmartHomeRepairPageController> {
+class SmartHomeRepairPage
+    extends GetView<SmartHomeRepairPageController> {
   const SmartHomeRepairPage({super.key});
 
   @override
@@ -17,7 +19,7 @@ class SmartHomeRepairPage extends GetView<SmartHomeRepairPageController> {
       init: SmartHomeRepairPageController(),
       builder: (controller) {
         return CustScaffold(
-          title: '報修',
+          title: EnumLocale.smartHomeTabRepair.tr,
           showBackButton: false,
           child: _Body(),
         );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/model/request_model/home_household_request_model/home_household_request_model.dart';
 import 'package:flutter_smart_home_tablet/model/response_model/home_household_response_model/home_household_response_model.dart';
@@ -25,7 +26,7 @@ class SmartHomeHouseholdPage
       init: SmartHomeHouseholdPageController(),
       builder: (controller) {
         return CustScaffold(
-          title: '家庭',
+          title: EnumLocale.smartHomeTabHousehold.tr,
           showBackButton: false,
           child: Obx(
             () {
@@ -93,7 +94,9 @@ class _HouseholdContent extends StatelessWidget {
                                 CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '切换家庭',
+                                EnumLocale
+                                    .smartHomeSwitchHousehold
+                                    .tr,
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelMedium
@@ -124,7 +127,9 @@ class _HouseholdContent extends StatelessWidget {
                                       child: Text(
                                         household
                                                 .homeName ??
-                                            '未命名家庭',
+                                            EnumLocale
+                                                .smartHomeUnnamedHousehold
+                                                .tr,
                                         style: Theme.of(
                                           context,
                                         )
@@ -160,7 +165,7 @@ class _HouseholdContent extends StatelessWidget {
                 const SizedBox(height: 16),
               // 家庭名称
               Text(
-                '家庭名称: ${householdData.homeName ?? '未命名'}',
+                '${EnumLocale.smartHomeHouseholdName.tr}: ${householdData.homeName ?? EnumLocale.smartHomeUnnamed.tr}',
                 style: Theme.of(context)
                     .textTheme
                     .headlineSmall,
@@ -174,7 +179,7 @@ class _HouseholdContent extends StatelessWidget {
                       CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '房间列表:',
+                      EnumLocale.smartHomeRoomList.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge,
@@ -188,7 +193,10 @@ class _HouseholdContent extends StatelessWidget {
                         child: Card(
                           child: ListTile(
                             title: Text(
-                              room.roomName ?? '未命名房间',
+                              room.roomName ??
+                                  EnumLocale
+                                      .smartHomeUnnamedRoom
+                                      .tr,
                             ),
                           ),
                         ),
@@ -198,7 +206,7 @@ class _HouseholdContent extends StatelessWidget {
                 )
               else
                 Text(
-                  '暂无房间',
+                  EnumLocale.smartHomeNoRoom.tr,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
@@ -237,7 +245,7 @@ class _EmptyHouseholdContent extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              '目前尚未建立家庭',
+              EnumLocale.smartHomeNoHouseholdYet.tr,
               style:
                   Theme.of(context).textTheme.headlineSmall,
             ),
@@ -245,10 +253,12 @@ class _EmptyHouseholdContent extends StatelessWidget {
             // 家庭名称输入框
             TextField(
               controller: controller.homeNameController,
-              decoration: const InputDecoration(
-                labelText: '家庭名称',
-                hintText: '请输入家庭名称',
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                labelText:
+                    EnumLocale.smartHomeHouseholdName.tr,
+                hintText: EnumLocale
+                    .smartHomeHouseholdNameHint.tr,
+                border: const OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 24),
@@ -265,7 +275,8 @@ class _EmptyHouseholdContent extends StatelessWidget {
                         strokeWidth: 2,
                       ),
                     )
-                  : const Text('建立家庭'),
+                  : Text(EnumLocale
+                      .smartHomeCreateHousehold.tr),
             ),
           ],
         ),

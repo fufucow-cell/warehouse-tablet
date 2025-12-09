@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/category.dart';
@@ -43,8 +44,8 @@ class _Body extends StatelessWidget {
     return GetBuilder<WarehouseItemPageController>(
       builder: (controller) {
         if (controller.items?.isEmpty ?? true) {
-          return const Center(
-            child: Text('暂无物品'),
+          return Center(
+            child: Text(EnumLocale.warehouseNoItem.tr),
           );
         }
 
@@ -197,7 +198,8 @@ class _ItemCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 // 名称
                 Text(
-                  item.name ?? '未命名',
+                  item.name ??
+                      EnumLocale.warehouseUnnamedItem.tr,
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
@@ -212,7 +214,7 @@ class _ItemCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '数量: ',
+                      EnumLocale.warehouseQuantityLabel.tr,
                       style: Theme.of(context)
                           .textTheme
                           .bodySmall,
@@ -237,8 +239,8 @@ class _ItemCard extends StatelessWidget {
                 // Category: level1 name > level2 name > level3 name
                 Text(
                   categoryPath.isNotEmpty
-                      ? 'Category: $categoryPath'
-                      : 'Category: 暂无分类',
+                      ? '${EnumLocale.warehouseCategoryLabel.tr}$categoryPath'
+                      : '${EnumLocale.warehouseCategoryLabel.tr}${EnumLocale.warehouseNoCategoryText.tr}',
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall
@@ -252,7 +254,7 @@ class _ItemCard extends StatelessWidget {
                 if (locations.isNotEmpty) ...[
                   const SizedBox(height: 4),
                   Text(
-                    'Locations:',
+                    EnumLocale.warehouseLocationsLabel.tr,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall
@@ -287,7 +289,9 @@ class _ItemCard extends StatelessWidget {
                         top: 2.0,
                       ),
                       child: Text(
-                        '... 还有 ${locations.length - 3} 个位置',
+                        EnumLocale.warehouseMoreLocations.tr
+                            .replaceAll('{count}',
+                                '${locations.length - 3}'),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_item.dart';
@@ -70,9 +71,9 @@ class _WarehouseMainPageState
                 Theme.of(context).colorScheme.primary,
             automaticallyImplyLeading: false,
             centerTitle: true,
-            title: const Text(
-              '智能倉庫',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              EnumLocale.warehouseMainTitle.tr,
+              style: const TextStyle(color: Colors.white),
             ),
             actions: [
               // 根据当前 tab 显示新增或编辑图标

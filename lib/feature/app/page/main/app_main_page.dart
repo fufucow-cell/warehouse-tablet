@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
+import 'package:flutter_smart_home_tablet/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_dialog.dart';
+import 'package:flutter_smart_home_tablet/util/api_util.dart';
 import 'package:get/get.dart';
 
 part 'app_main_page_controller.dart';
@@ -46,6 +53,7 @@ class _LeftMenuWidget extends StatelessWidget {
         children: [
           _TitleWidget(),
           Expanded(child: _TabListWidget()),
+          _LogoutButton(),
         ],
       ),
     );
@@ -118,6 +126,34 @@ class _TabListWidget extends StatelessWidget {
         }).toList(),
       );
     });
+  }
+}
+
+class _LogoutButton extends StatelessWidget {
+  const _LogoutButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<AppMainPageController>();
+
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      child: ListTile(
+        leading: Icon(
+          Icons.logout,
+          color: Theme.of(context).colorScheme.error,
+        ),
+        title: Text(
+          EnumLocale.logoutButton.tr,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+        onTap: () => controller.interactive(
+          EnumAppMainPageInteractive.tapLogout,
+        ),
+      ),
+    );
   }
 }
 

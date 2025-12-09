@@ -16,11 +16,16 @@ enum EnumLogType {
   general,
   alarm;
 
-  String get title => switch (this) {
-        EnumLogType.unknown => '未知',
-        EnumLogType.general => '一般',
-        EnumLogType.alarm => '告警',
+  EnumLocale get titleLocale => switch (this) {
+        EnumLogType.unknown =>
+          EnumLocale.warehouseLogTypeUnknown,
+        EnumLogType.general =>
+          EnumLocale.warehouseLogTypeGeneral,
+        EnumLogType.alarm =>
+          EnumLocale.warehouseLogTypeAlarm,
       };
+
+  String get title => titleLocale.tr;
 
   static EnumLogType fromInt(int? value) {
     if (value == null) return EnumLogType.unknown;
@@ -38,12 +43,18 @@ enum EnumOperateType {
   update,
   delete;
 
-  String get title => switch (this) {
-        EnumOperateType.unknown => '未知',
-        EnumOperateType.create => '創建',
-        EnumOperateType.update => '更新',
-        EnumOperateType.delete => '刪除',
+  EnumLocale get titleLocale => switch (this) {
+        EnumOperateType.unknown =>
+          EnumLocale.warehouseOperateTypeUnknown,
+        EnumOperateType.create =>
+          EnumLocale.warehouseOperateTypeCreate,
+        EnumOperateType.update =>
+          EnumLocale.warehouseOperateTypeUpdate,
+        EnumOperateType.delete =>
+          EnumLocale.warehouseOperateTypeDelete,
       };
+
+  String get title => titleLocale.tr;
 
   static EnumOperateType fromInt(int? value) {
     if (value == null) {
@@ -63,11 +74,16 @@ enum EnumEntityType {
   cabinet,
   item;
 
-  String get title => switch (this) {
-        EnumEntityType.unknown => '未知',
-        EnumEntityType.cabinet => '櫃子',
-        EnumEntityType.item => '物品',
+  EnumLocale get titleLocale => switch (this) {
+        EnumEntityType.unknown =>
+          EnumLocale.warehouseEntityTypeUnknown,
+        EnumEntityType.cabinet =>
+          EnumLocale.warehouseEntityTypeCabinet,
+        EnumEntityType.item =>
+          EnumLocale.warehouseEntityTypeItem,
       };
+
+  String get title => titleLocale.tr;
 
   static EnumEntityType fromInt(int? value) {
     if (value == null) {

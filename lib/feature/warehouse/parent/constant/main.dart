@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
 import 'package:flutter_smart_home_tablet/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/util/device_util.dart';
@@ -12,14 +11,13 @@ import 'package:get/get.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await _registerServices();
+  _registerServices();
   runApp(const MyApp());
 }
 
-Future<void> _registerServices() async {
+void _registerServices() {
   final envUtil = EnvironmentUtil.register();
   ApiUtil.register(envUtil.apiBaseUrl);
-  await StorageUtil.register();
   LocaleUtil.register();
   RouterUtil.register();
 }
@@ -41,7 +39,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       navigatorKey: routerUtil.rootNavigatorKey,
       navigatorObservers: [routerUtil],
-      title: '智管家',
+      title: EnumLocale.appTitle.tr,
       debugShowCheckedModeBanner: false,
       translations: localeUtil.getDefaultTranslations,
       locale: localeUtil.getCurrentLocale,
@@ -76,7 +74,7 @@ class _UnsupportedDevicePage extends StatelessWidget {
     scaleHeight = deviceUtil.scaleWidgetHeight;
 
     return MaterialApp(
-      title: '智管家',
+      title: EnumLocale.appTitle.tr,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme:

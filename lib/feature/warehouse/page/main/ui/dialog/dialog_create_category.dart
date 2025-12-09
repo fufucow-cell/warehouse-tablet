@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/children.dart';
@@ -139,9 +140,9 @@ class _CreateCategoryDialogWidgetState
   /// 获取 Level 2 选项列表
   List<DropdownMenuItem<Category?>> _getLevel2Items() {
     final items = <DropdownMenuItem<Category?>>[
-      const DropdownMenuItem<Category?>(
+      DropdownMenuItem<Category?>(
         value: null,
-        child: Text('新增分類'),
+        child: Text(EnumLocale.optionNewCategory.tr),
       ),
     ];
 
@@ -166,9 +167,9 @@ class _CreateCategoryDialogWidgetState
   /// 获取 Level 3 选项列表
   List<DropdownMenuItem<Category?>> _getLevel3Items() {
     final items = <DropdownMenuItem<Category?>>[
-      const DropdownMenuItem<Category?>(
+      DropdownMenuItem<Category?>(
         value: null,
-        child: Text('新增分類'),
+        child: Text(EnumLocale.optionNewCategory.tr),
       ),
     ];
 
@@ -270,7 +271,7 @@ class _CreateCategoryDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '新增分類',
+                      EnumLocale.createCategoryTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -288,14 +289,17 @@ class _CreateCategoryDialogWidgetState
                     child:
                         DropdownButtonFormField<Category?>(
                       value: _selectedLevel1,
-                      decoration: const InputDecoration(
-                        labelText: '階層1',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.createLevel1.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<Category?>(
+                        DropdownMenuItem<Category?>(
                           value: null,
-                          child: Text('新增分類'),
+                          child: Text(
+                            EnumLocale.optionNewCategory.tr,
+                          ),
                         ),
                         ...level1Categories.map((category) {
                           return DropdownMenuItem<
@@ -325,10 +329,13 @@ class _CreateCategoryDialogWidgetState
                       controller: _level1NameController,
                       enabled: _selectedLevel1 == null,
                       decoration: InputDecoration(
-                        labelText: '階層1 新增名稱',
+                        labelText: EnumLocale
+                            .createCategoryNameLevel1.tr,
                         hintText: _selectedLevel1 == null
-                            ? '請輸入新增名稱'
-                            : '已選擇既有分類',
+                            ? EnumLocale
+                                .createCategoryNameHint.tr
+                            : EnumLocale
+                                .createCategorySelected.tr,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -342,9 +349,10 @@ class _CreateCategoryDialogWidgetState
                     child:
                         DropdownButtonFormField<Category?>(
                       value: _selectedLevel2,
-                      decoration: const InputDecoration(
-                        labelText: '階層2',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.createLevel2.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _getLevel2Items(),
                       onChanged: (value) {
@@ -367,13 +375,19 @@ class _CreateCategoryDialogWidgetState
                       enabled: _selectedLevel2 == null &&
                           _selectedLevel1 != null,
                       decoration: InputDecoration(
-                        labelText: '階層2 新增名稱',
+                        labelText: EnumLocale
+                            .createCategoryNameLevel2.tr,
                         hintText: _selectedLevel2 == null &&
                                 _selectedLevel1 != null
-                            ? '請輸入新增名稱'
+                            ? EnumLocale
+                                .createCategoryNameHint.tr
                             : (_selectedLevel2 != null
-                                ? '已選擇既有分類'
-                                : '請先選擇 階層1'),
+                                ? EnumLocale
+                                    .createCategorySelected
+                                    .tr
+                                : EnumLocale
+                                    .createCategorySelectLevel1First
+                                    .tr),
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -387,9 +401,10 @@ class _CreateCategoryDialogWidgetState
                     child:
                         DropdownButtonFormField<Category?>(
                       value: _selectedLevel3,
-                      decoration: const InputDecoration(
-                        labelText: '階層3',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.createLevel3.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _getLevel3Items(),
                       onChanged: (value) {
@@ -411,13 +426,19 @@ class _CreateCategoryDialogWidgetState
                       enabled: _selectedLevel3 == null &&
                           _selectedLevel2 != null,
                       decoration: InputDecoration(
-                        labelText: '階層3 新增名稱',
+                        labelText: EnumLocale
+                            .createCategoryNameLevel3.tr,
                         hintText: _selectedLevel3 == null &&
                                 _selectedLevel2 != null
-                            ? '請輸入新增名稱'
+                            ? EnumLocale
+                                .createCategoryNameHint.tr
                             : (_selectedLevel3 != null
-                                ? '已選擇既有分類'
-                                : '請先選擇 階層2'),
+                                ? EnumLocale
+                                    .createCategorySelected
+                                    .tr
+                                : EnumLocale
+                                    .createCategorySelectLevel2First
+                                    .tr),
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -436,7 +457,9 @@ class _CreateCategoryDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -455,9 +478,11 @@ class _CreateCategoryDialogWidgetState
                                 ScaffoldMessenger.of(
                                   context,
                                 ).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
-                                      '請輸入 階層3 新增名稱',
+                                      EnumLocale
+                                          .createCategoryInputLevel3Name
+                                          .tr,
                                     ),
                                   ),
                                 );
@@ -476,9 +501,11 @@ class _CreateCategoryDialogWidgetState
                                 ScaffoldMessenger.of(
                                   context,
                                 ).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
-                                      '請輸入 階層2 新增名稱',
+                                      EnumLocale
+                                          .createCategoryInputLevel2Name
+                                          .tr,
                                     ),
                                   ),
                                 );
@@ -496,9 +523,11 @@ class _CreateCategoryDialogWidgetState
                                 ScaffoldMessenger.of(
                                   context,
                                 ).showSnackBar(
-                                  const SnackBar(
+                                  SnackBar(
                                     content: Text(
-                                      '請輸入 階層1 新增名稱',
+                                      EnumLocale
+                                          .createCategoryInputLevel1Name
+                                          .tr,
                                     ),
                                   ),
                                 );
@@ -509,9 +538,11 @@ class _CreateCategoryDialogWidgetState
                               // 选择了既有分类，不创建新分类
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                   content: Text(
-                                    '請選擇「新增分類」以創建新分類',
+                                    EnumLocale
+                                        .createCategorySelectNewToCreate
+                                        .tr,
                                   ),
                                 ),
                               );
@@ -522,7 +553,9 @@ class _CreateCategoryDialogWidgetState
                             widget.onConfirm
                                 ?.call(name, parentId);
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

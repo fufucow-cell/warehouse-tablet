@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/constant/log_constant.dart';
-import 'package:flutter_smart_home_tablet/constant/storage_constant.dart';
 import 'package:flutter_smart_home_tablet/constant/theme_constant.dart';
-import 'package:flutter_smart_home_tablet/util/log_util.dart';
-import 'package:flutter_smart_home_tablet/util/storage_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
 import 'package:get/get.dart';
 
 /// 主題管理工具類
 class ThemeUtil extends GetxService {
   // MARK: - Properties
 
-  static const EnumThemeMode defaultMode = EnumThemeMode.system;
-  final Rx<EnumThemeMode> _currentThemeMode = defaultMode.obs;
-  EnumThemeMode get currentThemeMode => _currentThemeMode.value;
+  static const EnumThemeMode defaultMode =
+      EnumThemeMode.system;
+  final Rx<EnumThemeMode> _currentThemeMode =
+      defaultMode.obs;
+  EnumThemeMode get currentThemeMode =>
+      _currentThemeMode.value;
   ThemeMode get themeMode => currentThemeMode.themeMode;
 
   // MARK: - Init
@@ -69,11 +72,14 @@ class ThemeUtil extends GetxService {
 
   void _loadTheme() {
     try {
-      final savedTheme = StorageUtil.read<String>(EnumStorageKey.theme.key);
-      final themeMode = EnumThemeMode.values.firstWhereOrNull(
-            (e) => e.name == savedTheme,
-          ) ??
-          defaultMode;
+      final savedTheme = StorageUtil.read<String>(
+        EnumStorageKey.theme.key,
+      );
+      final themeMode =
+          EnumThemeMode.values.firstWhereOrNull(
+                (e) => e.name == savedTheme,
+              ) ??
+              defaultMode;
       _currentThemeMode.value = themeMode;
       LogUtil.i(
         EnumLogType.storage,

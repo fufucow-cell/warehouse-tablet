@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
@@ -77,9 +78,9 @@ class _CreateCabinetDialogWidgetState
   Widget build(BuildContext context) {
     // 创建房间选项列表（第一个选项是"未設定"，然后是所有房间）
     final roomOptions = [
-      const DropdownMenuItem<String?>(
+      DropdownMenuItem<String?>(
         value: null,
-        child: Text('未設定'),
+        child: Text(EnumLocale.optionNotSet.tr),
       ),
       ...widget.rooms.map((room) {
         return DropdownMenuItem<String?>(
@@ -137,7 +138,7 @@ class _CreateCabinetDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '新增櫥櫃',
+                      EnumLocale.createCabinetTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -154,10 +155,12 @@ class _CreateCabinetDialogWidgetState
                     ),
                     child: TextField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: '櫥櫃名稱',
-                        hintText: '請輸入櫥櫃名稱',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.createCabinetName.tr,
+                        hintText: EnumLocale
+                            .createCabinetNameHint.tr,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -169,9 +172,9 @@ class _CreateCabinetDialogWidgetState
                     ),
                     child: DropdownButtonFormField<String?>(
                       value: _selectedRoomId,
-                      decoration: const InputDecoration(
-                        labelText: '房間',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.createRoom.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: roomOptions,
                       onChanged: (value) {
@@ -190,10 +193,12 @@ class _CreateCabinetDialogWidgetState
                     child: TextField(
                       controller: _descriptionController,
                       maxLines: 3,
-                      decoration: const InputDecoration(
-                        labelText: '描述',
-                        hintText: '請輸入描述（選填）',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.createDescription.tr,
+                        hintText: EnumLocale
+                            .createDescriptionHint.tr,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -211,7 +216,9 @@ class _CreateCabinetDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -221,8 +228,12 @@ class _CreateCabinetDialogWidgetState
                             if (name.isEmpty) {
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(
-                                const SnackBar(
-                                  content: Text('請輸入櫥櫃名稱'),
+                                SnackBar(
+                                  content: Text(
+                                    EnumLocale
+                                        .createCabinetInputName
+                                        .tr,
+                                  ),
                                 ),
                               );
                               return;
@@ -240,7 +251,9 @@ class _CreateCabinetDialogWidgetState
                                   : description,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

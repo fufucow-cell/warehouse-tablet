@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
@@ -139,7 +140,7 @@ class _SearchLogDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '搜尋',
+                      EnumLocale.searchTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -179,8 +180,9 @@ class _SearchLogDialogWidgetState
                             ),
                             label: Text(
                               _startDate != null
-                                  ? '起始：${_formatDate(_startDate!)}'
-                                  : '起始日期',
+                                  ? '${EnumLocale.searchStartDateLabel.tr}：${_formatDate(_startDate!)}'
+                                  : EnumLocale
+                                      .searchStartDate.tr,
                             ),
                           ),
                         ),
@@ -195,7 +197,8 @@ class _SearchLogDialogWidgetState
                                 _startDate = null;
                               });
                             },
-                            tooltip: '清除起始日期',
+                            tooltip: EnumLocale
+                                .searchClearStartDate.tr,
                           ),
                       ],
                     ),
@@ -231,8 +234,9 @@ class _SearchLogDialogWidgetState
                             ),
                             label: Text(
                               _endDate != null
-                                  ? '结束：${_formatDate(_endDate!)}'
-                                  : '结束日期',
+                                  ? '${EnumLocale.searchEndDateLabel.tr}：${_formatDate(_endDate!)}'
+                                  : EnumLocale
+                                      .searchEndDate.tr,
                             ),
                           ),
                         ),
@@ -247,7 +251,8 @@ class _SearchLogDialogWidgetState
                                 _endDate = null;
                               });
                             },
-                            tooltip: '清除结束日期',
+                            tooltip: EnumLocale
+                                .searchClearEndDate.tr,
                           ),
                       ],
                     ),
@@ -261,15 +266,16 @@ class _SearchLogDialogWidgetState
                     child: DropdownButtonFormField<
                         EnumOperateType?>(
                       value: _selectedOperateType,
-                      decoration: const InputDecoration(
-                        labelText: '操作類型',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale
+                            .searchOperationType.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<
-                            EnumOperateType?>(
+                        DropdownMenuItem<EnumOperateType?>(
                           value: null,
-                          child: Text('全部'),
+                          child:
+                              Text(EnumLocale.optionAll.tr),
                         ),
                         ...EnumOperateType.values
                             .where(
@@ -300,15 +306,16 @@ class _SearchLogDialogWidgetState
                     child: DropdownButtonFormField<
                         EnumEntityType?>(
                       value: _selectedEntityType,
-                      decoration: const InputDecoration(
-                        labelText: '實體類型',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            EnumLocale.searchEntityType.tr,
+                        border: const OutlineInputBorder(),
                       ),
                       items: [
-                        const DropdownMenuItem<
-                            EnumEntityType?>(
+                        DropdownMenuItem<EnumEntityType?>(
                           value: null,
-                          child: Text('全部'),
+                          child:
+                              Text(EnumLocale.optionAll.tr),
                         ),
                         ...EnumEntityType.values
                             .where(
@@ -344,7 +351,9 @@ class _SearchLogDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -359,7 +368,9 @@ class _SearchLogDialogWidgetState
                                   _selectedEntityType,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

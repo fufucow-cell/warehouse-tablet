@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/inherit/base_page_controller.dart';
 import 'package:get/get.dart';
 
@@ -7,7 +8,8 @@ part 'smart_home_room_page_interactive.dart';
 part 'smart_home_room_page_model.dart';
 part 'smart_home_room_page_route.dart';
 
-class SmartHomeRoomPage extends GetView<SmartHomeRoomPageController> {
+class SmartHomeRoomPage
+    extends GetView<SmartHomeRoomPageController> {
   const SmartHomeRoomPage({super.key});
 
   @override
@@ -17,9 +19,9 @@ class SmartHomeRoomPage extends GetView<SmartHomeRoomPageController> {
       builder: (controller) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text(
-              '房間',
-              style: TextStyle(color: Colors.white),
+            title: Text(
+              EnumLocale.smartHomeTabRoom.tr,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
           body: _Body(),

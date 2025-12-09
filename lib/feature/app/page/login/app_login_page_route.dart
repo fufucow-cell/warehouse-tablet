@@ -6,7 +6,8 @@ enum EnumAppLoginPageRoute {
   showRegisterFail,
 }
 
-extension AppLoginPageRouteExtension on AppLoginPageController {
+extension AppLoginPageRouteExtension
+    on AppLoginPageController {
   Future<void> routerHandle(
     EnumAppLoginPageRoute type, {
     dynamic data,
@@ -17,14 +18,14 @@ extension AppLoginPageRouteExtension on AppLoginPageController {
       case EnumAppLoginPageRoute.showLoginFail:
         final message = data is String ? data : '';
         Get.snackbar(
-          '登入失敗',
+          EnumLocale.loginFailed.tr,
           message,
           snackPosition: SnackPosition.BOTTOM,
         );
       case EnumAppLoginPageRoute.showRegisterFail:
         final message = data is String ? data : '';
         Get.snackbar(
-          '註冊失敗',
+          EnumLocale.registerFailed.tr,
           message,
           snackPosition: SnackPosition.BOTTOM,
         );

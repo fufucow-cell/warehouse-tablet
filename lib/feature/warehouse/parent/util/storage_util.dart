@@ -1,5 +1,5 @@
-import 'package:flutter_smart_home_tablet/constant/log_constant.dart';
-import 'package:flutter_smart_home_tablet/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -19,10 +19,11 @@ class StorageUtil extends GetxService {
   // MARK: - Public Method
 
   /// 註冊
-  static void register() {
+  static Future<void> register() async {
     if (Get.isRegistered<StorageUtil>()) {
       return;
     }
+    await GetStorage.init();
     final StorageUtil service = StorageUtil._internal();
     Get.put<StorageUtil>(service, permanent: true);
   }
@@ -50,7 +51,10 @@ class StorageUtil extends GetxService {
   }
 
   /// 寫入數據
-  static Future<void> write(String key, dynamic value) async {
+  static Future<void> write(
+    String key,
+    dynamic value,
+  ) async {
     try {
       await _instance._storage.write(key, value);
       LogUtil.i(
@@ -80,7 +84,11 @@ class StorageUtil extends GetxService {
   /// 單例
   static StorageUtil get _instance {
     if (!Get.isRegistered<StorageUtil>()) {
-      register();
+      // 如果 StorageUtil 未註冊，應該在 main 中先調用 register()
+      // 這裡不應該調用 register()，因為它是 async 的
+      throw Exception(
+        'StorageUtil 未初始化，請在 main() 中先調用 StorageUtil.register()',
+      );
     }
     return Get.find<StorageUtil>();
   }

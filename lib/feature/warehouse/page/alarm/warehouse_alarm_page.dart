@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_log_response_model/log.dart';
@@ -47,13 +48,13 @@ class _Body extends StatelessWidget {
     DateTime? endDate,
   ) {
     if (startDate != null && endDate != null) {
-      return '刪除日期區間的所有日誌';
+      return EnumLocale.warehouseDeleteDateRange.tr;
     } else if (startDate != null) {
-      return '刪除此日期之後的所有日誌';
+      return EnumLocale.warehouseDeleteAfterDate.tr;
     } else if (endDate != null) {
-      return '刪除此日期之前的所有日誌';
+      return EnumLocale.warehouseDeleteBeforeDate.tr;
     }
-    return '按日期删除';
+    return EnumLocale.warehouseDeleteByDate.tr;
   }
 
   @override
@@ -63,8 +64,8 @@ class _Body extends StatelessWidget {
         final alarmLogs = controller.alarmLogs;
 
         if (alarmLogs?.isEmpty ?? true) {
-          return const Center(
-            child: Text('暂无告警记录'),
+          return Center(
+            child: Text(EnumLocale.warehouseNoAlarm.tr),
           );
         }
 
@@ -108,7 +109,13 @@ class _Body extends StatelessWidget {
                                       .check_box_outline_blank,
                             ),
                             label: Text(
-                              isAllSelected ? '取消全选' : '全选',
+                              isAllSelected
+                                  ? EnumLocale
+                                      .warehouseDeselectAll
+                                      .tr
+                                  : EnumLocale
+                                      .warehouseSelectAll
+                                      .tr,
                             ),
                           ),
                           const SizedBox(width: 16.0),
@@ -141,8 +148,10 @@ class _Body extends StatelessWidget {
                                 label: Text(
                                   controller.startDate !=
                                           null
-                                      ? '起始：${_formatDate(controller.startDate!)}'
-                                      : '起始日期',
+                                      ? '${EnumLocale.warehouseStartDateLabel.tr}${_formatDate(controller.startDate!)}'
+                                      : EnumLocale
+                                          .warehouseStartDate
+                                          .tr,
                                 ),
                               ),
                               if (controller.startDate !=
@@ -156,7 +165,9 @@ class _Body extends StatelessWidget {
                                     controller
                                         .setStartDate(null);
                                   },
-                                  tooltip: '清除起始日期',
+                                  tooltip: EnumLocale
+                                      .warehouseClearStartDate
+                                      .tr,
                                 ),
                             ],
                           ),
@@ -189,8 +200,10 @@ class _Body extends StatelessWidget {
                                 ),
                                 label: Text(
                                   controller.endDate != null
-                                      ? '结束：${_formatDate(controller.endDate!)}'
-                                      : '结束日期',
+                                      ? '${EnumLocale.warehouseEndDateLabel.tr}${_formatDate(controller.endDate!)}'
+                                      : EnumLocale
+                                          .warehouseEndDate
+                                          .tr,
                                 ),
                               ),
                               if (controller.endDate !=
@@ -204,7 +217,9 @@ class _Body extends StatelessWidget {
                                     controller
                                         .setEndDate(null);
                                   },
-                                  tooltip: '清除结束日期',
+                                  tooltip: EnumLocale
+                                      .warehouseClearEndDate
+                                      .tr,
                                 ),
                             ],
                           ),
@@ -236,7 +251,9 @@ class _Body extends StatelessWidget {
                                   controller.batchDelete(),
                               icon:
                                   const Icon(Icons.delete),
-                              label: const Text('删除'),
+                              label: Text(EnumLocale
+                                  .warehouseDeleteButton
+                                  .tr),
                             ),
                           // 按日期删除按钮
                           if (controller.startDate !=
@@ -247,7 +264,9 @@ class _Body extends StatelessWidget {
                                   controller.deleteByDate(),
                               icon:
                                   const Icon(Icons.delete),
-                              label: const Text('删除'),
+                              label: Text(EnumLocale
+                                  .warehouseDeleteButton
+                                  .tr),
                             ),
                         ],
                       ),
@@ -366,7 +385,7 @@ class _AlarmItem extends StatelessWidget {
         return entityNameList[0]!;
       }
     }
-    return '未知物品';
+    return EnumLocale.warehouseUnknownItem.tr;
   }
 
   List<Widget> _getChangeContent() {
@@ -375,9 +394,9 @@ class _AlarmItem extends StatelessWidget {
     // 如果是创建操作，显示"新增物品"
     if (operateType == 1) {
       return [
-        const Text(
-          '新增物品',
-          style: TextStyle(
+        Text(
+          EnumLocale.warehouseCreateItem.tr,
+          style: const TextStyle(
             fontSize: 14,
             color: Colors.black87,
           ),
@@ -394,7 +413,11 @@ class _AlarmItem extends StatelessWidget {
       if (quantityCountList.length >= 2) {
         contents.add(
           Text(
-            '數量：${_formatIntValue(quantityCountList[0])} → ${_formatIntValue(quantityCountList[1])}',
+            EnumLocale.warehouseQuantityChange.tr
+                .replaceAll('{from}',
+                    _formatIntValue(quantityCountList[0]))
+                .replaceAll('{to}',
+                    _formatIntValue(quantityCountList[1])),
             style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -411,7 +434,11 @@ class _AlarmItem extends StatelessWidget {
       if (minStockCountList.length >= 2) {
         contents.add(
           Text(
-            '庫存警報：${_formatIntValue(minStockCountList[0])} → ${_formatIntValue(minStockCountList[1])}',
+            EnumLocale.warehouseStockAlertChange.tr
+                .replaceAll('{from}',
+                    _formatIntValue(minStockCountList[0]))
+                .replaceAll('{to}',
+                    _formatIntValue(minStockCountList[1])),
             style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -463,7 +490,9 @@ class _AlarmItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.0),
         ),
         child: Text(
-          '當前數量：$currentQuantity，低於庫存數量：$minStockCount',
+          EnumLocale.warehouseCurrentQuantity.tr
+              .replaceAll('{quantity}', '$currentQuantity')
+              .replaceAll('{minStock}', '$minStockCount'),
           style: TextStyle(
             fontSize: 14,
             color: Colors.red.shade900,
@@ -477,5 +506,5 @@ class _AlarmItem extends StatelessWidget {
   }
 
   String _formatIntValue(int? value) =>
-      value?.toString() ?? '未設定';
+      value?.toString() ?? EnumLocale.optionNotSet.tr;
 }

@@ -98,7 +98,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('获取数据失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorFetchData.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -141,7 +143,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('获取数据失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorFetchData.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -177,7 +181,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('获取分类数据失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorFetchData.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -229,7 +235,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('打开搜索对话框失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorOpenDialog.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -273,7 +281,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('打开搜索对话框失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorOpenDialog.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -317,7 +327,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('打开搜索对话框失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorOpenDialog.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -361,7 +373,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('打开搜索对话框失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorOpenDialog.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }
@@ -431,7 +445,9 @@ extension WarehouseMainPageRouteExtension
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('打开搜索对话框失败：$e'),
+            content: Text(EnumLocale
+                .warehouseErrorOpenDialog.tr
+                .replaceAll('{error}', e.toString())),
           ),
         );
       }

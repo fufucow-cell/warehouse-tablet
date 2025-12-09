@@ -11,13 +11,15 @@ enum EnumWarehouseTabItem {
   record,
   alarm;
 
-  String get title => switch (this) {
-        item => '物品',
-        cabinet => '櫥櫃',
-        category => '分類',
-        record => '記錄',
-        alarm => '告警',
+  EnumLocale get titleLocale => switch (this) {
+        item => EnumLocale.warehouseTabItem,
+        cabinet => EnumLocale.warehouseTabCabinet,
+        category => EnumLocale.warehouseTabCategory,
+        record => EnumLocale.warehouseTabRecord,
+        alarm => EnumLocale.warehouseTabAlarm,
       };
+
+  String get title => titleLocale.tr;
 
   Widget get page => switch (this) {
         item => const WarehouseItemPage(),

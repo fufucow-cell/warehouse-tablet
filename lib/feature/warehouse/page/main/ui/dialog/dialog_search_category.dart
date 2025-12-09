@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
@@ -124,7 +125,7 @@ class _SearchCategoryDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '搜尋',
+                      EnumLocale.searchTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -141,10 +142,11 @@ class _SearchCategoryDialogWidgetState
                     ),
                     child: TextField(
                       controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: '名稱',
-                        hintText: '請輸入分類名稱',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: EnumLocale.searchName.tr,
+                        hintText: EnumLocale
+                            .searchNameHintCategory.tr,
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                   ),
@@ -155,7 +157,7 @@ class _SearchCategoryDialogWidgetState
                       horizontal: horizontalPaddingValue,
                     ),
                     child: Text(
-                      '階層',
+                      EnumLocale.searchLevel.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium,
@@ -206,7 +208,9 @@ class _SearchCategoryDialogWidgetState
                                   vertical: 12.0,
                                 ),
                               ),
-                              child: const Text('階層1'),
+                              child: Text(
+                                EnumLocale.searchLevel1.tr,
+                              ),
                             ),
                           ),
                         ),
@@ -248,7 +252,9 @@ class _SearchCategoryDialogWidgetState
                                   vertical: 12.0,
                                 ),
                               ),
-                              child: const Text('階層2'),
+                              child: Text(
+                                EnumLocale.searchLevel2.tr,
+                              ),
                             ),
                           ),
                         ),
@@ -289,7 +295,9 @@ class _SearchCategoryDialogWidgetState
                                   vertical: 12.0,
                                 ),
                               ),
-                              child: const Text('階層3'),
+                              child: Text(
+                                EnumLocale.searchLevel3.tr,
+                              ),
                             ),
                           ),
                         ),
@@ -310,7 +318,9 @@ class _SearchCategoryDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -326,7 +336,9 @@ class _SearchCategoryDialogWidgetState
                               level: _selectedLevel,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),

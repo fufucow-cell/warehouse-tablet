@@ -1,0 +1,229 @@
+/// English translations
+const Map<String, String> enUS = {
+  // Common
+  'app_title': 'Smart Home',
+  'common_confirm': 'Confirm',
+  'common_cancel': 'Cancel',
+  'common_save': 'Save',
+  'common_delete': 'Delete',
+  'common_edit': 'Edit',
+  'common_add': 'Add',
+  'common_search': 'Search',
+  'common_loading': 'Loading...',
+  'common_error': 'Error',
+  'common_success': 'Success',
+  'common_retry': 'Retry',
+  'common_back': 'Back',
+  'common_next': 'Next',
+  'common_finish': 'Finish',
+
+  // Language
+  'language_title': 'Language Settings',
+  'language_system': 'Follow System',
+  'language_zhTW': 'Traditional Chinese',
+  'language_zhCN': 'Simplified Chinese',
+  'language_enUS': 'English',
+  'language_jaJP': 'Japanese',
+  'language_koKR': 'Korean',
+
+  // Device
+  'device_unsupported': 'Unsupported Device',
+  'device_unsupported_message':
+      'This application only supports mobile and tablet devices',
+
+  // Warehouse
+  'warehouse_title': 'Warehouse',
+  'warehouse_item': 'Item',
+  'warehouse_category': 'Category',
+  'warehouse_room': 'Room',
+  'warehouse_cabinet': 'Cabinet',
+  'warehouse_record': 'Record',
+  'warehouse_alarm': 'Alarm',
+
+  // Error messages
+  'error_network': 'Network connection error',
+  'error_unknown': 'An unknown error occurred',
+  'error_load_failed': 'Failed to load',
+
+  // Success messages
+  'success_save': 'Saved successfully',
+  'success_delete': 'Deleted successfully',
+  'success_update': 'Updated successfully',
+
+  // Settings
+  'setting_title': 'Settings',
+
+  // Warehouse main page
+  'warehouse_main_title': 'Smart Warehouse',
+  'warehouse_tab_item': 'Item',
+  'warehouse_tab_cabinet': 'Cabinet',
+  'warehouse_tab_category': 'Category',
+  'warehouse_tab_record': 'Record',
+  'warehouse_tab_alarm': 'Alarm',
+
+  // Common options
+  'option_all': 'All',
+  'option_not_set': 'Not Set',
+  'option_new_category': 'New Category',
+
+  // Search related
+  'search_title': 'Search',
+  'search_name': 'Name',
+  'search_name_hint_item': 'Enter item name',
+  'search_name_hint_cabinet': 'Enter cabinet name',
+  'search_name_hint_category': 'Enter category name',
+  'search_category': 'Category',
+  'search_category_level2': 'Category (Level 2)',
+  'search_category_level3': 'Category (Level 3)',
+  'search_room': 'Room',
+  'search_cabinet': 'Cabinet',
+  'search_start_date': 'Start Date',
+  'search_end_date': 'End Date',
+  'search_start_date_label': 'Start',
+  'search_end_date_label': 'End',
+  'search_clear_start_date': 'Clear start date',
+  'search_clear_end_date': 'Clear end date',
+  'search_operation_type': 'Operation Type',
+  'search_entity_type': 'Entity Type',
+  'search_level': 'Level',
+  'search_level1': 'Level 1',
+  'search_level2': 'Level 2',
+  'search_level3': 'Level 3',
+
+  // Create related
+  'create_item_title': 'Add Item',
+  'create_cabinet_title': 'Add Cabinet',
+  'create_category_title': 'Add Category',
+  'create_item_name': 'Item Name',
+  'create_item_name_hint': 'Enter item name',
+  'create_cabinet_name': 'Cabinet Name',
+  'create_cabinet_name_hint': 'Enter cabinet name',
+  'create_category_name_level1': 'Level 1 New Name',
+  'create_category_name_level2': 'Level 2 New Name',
+  'create_category_name_level3': 'Level 3 New Name',
+  'create_category_name_hint': 'Enter new name',
+  'create_category_selected': 'Existing category selected',
+  'create_category_select_level1_first':
+      'Please select Level 1 first',
+  'create_category_select_level2_first':
+      'Please select Level 2 first',
+  'create_category_select_new_to_create':
+      'Please select "New Category" to create a new category',
+  'create_category_input_level1_name':
+      'Please enter Level 1 new name',
+  'create_category_input_level2_name':
+      'Please enter Level 2 new name',
+  'create_category_input_level3_name':
+      'Please enter Level 3 new name',
+  'create_item_input_name': 'Please enter item name',
+  'create_item_input_quantity': 'Please enter quantity',
+  'create_item_input_valid_quantity':
+      'Please enter a valid quantity',
+  'create_cabinet_input_name': 'Please enter cabinet name',
+  'create_description': 'Description',
+  'create_description_hint': 'Enter description (optional)',
+  'create_quantity': 'Quantity',
+  'create_quantity_hint': 'Enter quantity',
+  'create_min_stock_alert': 'Min Stock Alert',
+  'create_min_stock_alert_hint':
+      'Enter min stock alert (optional)',
+  'create_level1': 'Level 1',
+  'create_level2': 'Level 2',
+  'create_level3': 'Level 3',
+  'create_room': 'Room',
+  'create_cabinet': 'Cabinet',
+  'create_smart_add': 'Smart Add',
+  'create_upload_image': 'Tap to upload image',
+
+  // Smart Home related
+  'smart_home_tab_household': 'Household',
+  'smart_home_tab_scene': 'Scene',
+  'smart_home_tab_message': 'Message',
+  'smart_home_tab_repair': 'Repair',
+  'smart_home_tab_warehouse': 'Smart Warehouse',
+  'smart_home_tab_setting': 'Settings',
+  'smart_home_tab_room': 'Room',
+  'smart_home_switch_household': 'Switch Household',
+  'smart_home_unnamed_household': 'Unnamed Household',
+  'smart_home_household_name': 'Household Name',
+  'smart_home_unnamed': 'Unnamed',
+  'smart_home_room_list': 'Room List:',
+  'smart_home_unnamed_room': 'Unnamed Room',
+  'smart_home_no_room': 'No Rooms',
+  'smart_home_no_household_yet': 'No household created yet',
+  'smart_home_household_name_hint': 'Enter household name',
+  'smart_home_create_household': 'Create Household',
+
+  // Login related
+  'login_title': 'Login',
+  'login_email': 'Email',
+  'login_password': 'Password',
+  'login_button': 'Login',
+  'register_button': 'Register',
+  'login_failed': 'Login Failed',
+  'register_failed': 'Register Failed',
+
+  // Logout related
+  'logout_button': 'Logout',
+
+  // Warehouse page related
+  'warehouse_no_category': 'No Categories',
+  'warehouse_unnamed_category': 'Unnamed Category',
+  'warehouse_no_item': 'No Items',
+  'warehouse_unnamed_item': 'Unnamed',
+  'warehouse_no_cabinet': 'No Cabinets',
+  'warehouse_unnamed_cabinet': 'Unnamed',
+  'warehouse_no_alarm': 'No Alarm Records',
+  'warehouse_no_record': 'No Records',
+  'warehouse_quantity_label': 'Quantity: ',
+  'warehouse_category_label': 'Category: ',
+  'warehouse_no_category_text': 'No Category',
+  'warehouse_locations_label': 'Locations:',
+  'warehouse_more_locations': '... {count} more locations',
+  'warehouse_room_label': 'Room: ',
+  'warehouse_description_label': 'Description: ',
+  'warehouse_error_fetch_data':
+      'Failed to fetch data: {error}',
+  'warehouse_error_open_dialog':
+      'Failed to open search dialog: {error}',
+  'warehouse_delete_date_range':
+      'Delete all logs in date range',
+  'warehouse_delete_after_date':
+      'Delete all logs after this date',
+  'warehouse_delete_before_date':
+      'Delete all logs before this date',
+  'warehouse_delete_by_date': 'Delete by Date',
+  'warehouse_select_all': 'Select All',
+  'warehouse_deselect_all': 'Deselect All',
+  'warehouse_start_date_label': 'Start: ',
+  'warehouse_start_date': 'Start Date',
+  'warehouse_end_date_label': 'End: ',
+  'warehouse_end_date': 'End Date',
+  'warehouse_clear_start_date': 'Clear start date',
+  'warehouse_clear_end_date': 'Clear end date',
+  'warehouse_delete_button': 'Delete',
+  'warehouse_unknown_item': 'Unknown Item',
+  'warehouse_create_item': 'Add Item',
+  'warehouse_quantity_change': 'Quantity: {from} → {to}',
+  'warehouse_stock_alert_change':
+      'Stock Alert: {from} → {to}',
+  'warehouse_current_quantity':
+      'Current Quantity: {quantity}, Below Stock: {minStock}',
+  'warehouse_name_label': 'Name: ',
+  'warehouse_description_change':
+      'Description: {from} → {to}',
+  'warehouse_category_change': 'Category: {from} → {to}',
+  'warehouse_room_change': 'Room: {from} → {to}',
+  'warehouse_photo_label': 'Photo',
+  'warehouse_no_changes': 'No Changes',
+  'warehouse_log_type_unknown': 'Unknown',
+  'warehouse_log_type_general': 'General',
+  'warehouse_log_type_alarm': 'Alarm',
+  'warehouse_operate_type_unknown': 'Unknown',
+  'warehouse_operate_type_create': 'Create',
+  'warehouse_operate_type_update': 'Update',
+  'warehouse_operate_type_delete': 'Delete',
+  'warehouse_entity_type_unknown': 'Unknown',
+  'warehouse_entity_type_cabinet': 'Cabinet',
+  'warehouse_entity_type_item': 'Item',
+};

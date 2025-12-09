@@ -2,21 +2,32 @@ part of 'app_main_page.dart';
 
 class AppMainPageModel {
   final selectedItem = EnumAppMainTabItem.household.obs;
-  static const EnumAppMainRouter rootRouter = EnumAppMainRouter.household;
+  static const EnumAppMainRouter rootRouter =
+      EnumAppMainRouter.household;
 }
 
 enum EnumAppMainTabItem {
-  household(Icons.home, '家庭'),
-  scene(Icons.auto_awesome, '場景'),
-  message(Icons.message, '訊息'),
-  repair(Icons.build, '報修'),
-  warehouse(Icons.warehouse, '智能倉儲'),
-  setting(Icons.settings, '設置');
+  household(Icons.home),
+  scene(Icons.auto_awesome),
+  message(Icons.message),
+  repair(Icons.build),
+  warehouse(Icons.warehouse),
+  setting(Icons.settings);
 
-  const EnumAppMainTabItem(this.icon, this.title);
+  const EnumAppMainTabItem(this.icon);
 
   final IconData icon;
-  final String title;
+
+  EnumLocale get titleLocale => switch (this) {
+        household => EnumLocale.smartHomeTabHousehold,
+        scene => EnumLocale.smartHomeTabScene,
+        message => EnumLocale.smartHomeTabMessage,
+        repair => EnumLocale.smartHomeTabRepair,
+        warehouse => EnumLocale.smartHomeTabWarehouse,
+        setting => EnumLocale.smartHomeTabSetting,
+      };
+
+  String get title => titleLocale.tr;
 
   EnumAppMainRouter get router => switch (this) {
         household => EnumAppMainRouter.household,

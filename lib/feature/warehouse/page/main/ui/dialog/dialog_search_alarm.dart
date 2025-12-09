@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/temp_router_util.dart';
 
@@ -122,7 +123,7 @@ class _SearchAlarmDialogWidgetState
                   // Title 居中
                   Center(
                     child: Text(
-                      '搜尋',
+                      EnumLocale.searchTitle.tr,
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge
@@ -162,8 +163,9 @@ class _SearchAlarmDialogWidgetState
                             ),
                             label: Text(
                               _startDate != null
-                                  ? '起始：${_formatDate(_startDate!)}'
-                                  : '起始日期',
+                                  ? '${EnumLocale.searchStartDateLabel.tr}：${_formatDate(_startDate!)}'
+                                  : EnumLocale
+                                      .searchStartDate.tr,
                             ),
                           ),
                         ),
@@ -178,7 +180,8 @@ class _SearchAlarmDialogWidgetState
                                 _startDate = null;
                               });
                             },
-                            tooltip: '清除起始日期',
+                            tooltip: EnumLocale
+                                .searchClearStartDate.tr,
                           ),
                       ],
                     ),
@@ -214,8 +217,9 @@ class _SearchAlarmDialogWidgetState
                             ),
                             label: Text(
                               _endDate != null
-                                  ? '结束：${_formatDate(_endDate!)}'
-                                  : '结束日期',
+                                  ? '${EnumLocale.searchEndDateLabel.tr}：${_formatDate(_endDate!)}'
+                                  : EnumLocale
+                                      .searchEndDate.tr,
                             ),
                           ),
                         ),
@@ -230,7 +234,8 @@ class _SearchAlarmDialogWidgetState
                                 _endDate = null;
                               });
                             },
-                            tooltip: '清除结束日期',
+                            tooltip: EnumLocale
+                                .searchClearEndDate.tr,
                           ),
                       ],
                     ),
@@ -249,7 +254,9 @@ class _SearchAlarmDialogWidgetState
                             Navigator.of(context).pop();
                             widget.onCancel?.call();
                           },
-                          child: const Text('取消'),
+                          child: Text(
+                            EnumLocale.commonCancel.tr,
+                          ),
                         ),
                         const SizedBox(width: 12.0),
                         ElevatedButton(
@@ -260,7 +267,9 @@ class _SearchAlarmDialogWidgetState
                               endDate: _endDate,
                             );
                           },
-                          child: const Text('確認'),
+                          child: Text(
+                            EnumLocale.commonConfirm.tr,
+                          ),
                         ),
                       ],
                     ),
