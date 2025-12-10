@@ -6,6 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -73,13 +74,11 @@ class _TitleWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.0.scale),
-        child: Icon(
-          Icons.support_agent,
-          size: 200.0.scale,
-          color: Theme.of(context)
-              .colorScheme
-              .onPrimaryContainer,
-        ),
+        child: EnumImage.tCow.image(
+            size: Size.square(200.0.scale),
+            color: Theme.of(context)
+                .colorScheme
+                .onPrimaryContainer),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -36,46 +37,46 @@ class StorageUtil extends GetxService {
   }
 
   /// 讀取數據
-  static T? read<T>(String key) {
+  static T? read<T>(EnumStorageKey key) {
     try {
-      final value = _instance._storage.read<T>(key);
+      final value = _instance._storage.read<T>(key.key);
       LogUtil.i(
         EnumLogType.storage,
-        '讀取: $key = $value',
+        '讀取: ${key.key} = $value',
       );
       return value;
     } on Exception catch (e) {
-      LogUtil.e('讀取失敗: $key', e);
+      LogUtil.e('讀取失敗: ${key.key}', e);
       return null;
     }
   }
 
   /// 寫入數據
   static Future<void> write(
-    String key,
+    EnumStorageKey key,
     dynamic value,
   ) async {
     try {
-      await _instance._storage.write(key, value);
+      await _instance._storage.write(key.key, value);
       LogUtil.i(
         EnumLogType.storage,
-        '寫入: $key = $value',
+        '寫入: ${key.key} = $value',
       );
     } on Exception catch (e) {
-      LogUtil.e('寫入失敗: $key = $value', e);
+      LogUtil.e('寫入失敗: ${key.key} = $value', e);
     }
   }
 
   /// 刪除數據
-  static Future<void> remove(String key) async {
+  static Future<void> remove(EnumStorageKey key) async {
     try {
-      await _instance._storage.remove(key);
+      await _instance._storage.remove(key.key);
       LogUtil.i(
         EnumLogType.storage,
-        '刪除: $key',
+        '刪除: ${key.key}',
       );
     } on Exception catch (e) {
-      LogUtil.e('刪除失敗: $key', e);
+      LogUtil.e('刪除失敗: ${key.key}', e);
     }
   }
 

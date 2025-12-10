@@ -5,7 +5,10 @@ class WarehouseMainPageController
   // MARK: - Properties
 
   final _model = WarehouseMainPageModel();
-  late final TabController tabController;
+  TabController? _tabController;
+
+  TabController? get tabController => _tabController;
+  bool get isTabControllerReady => _tabController != null;
 
   EnumWarehouseTabItem get selectedItem =>
       _model.selectedItem.value;
@@ -29,19 +32,22 @@ class WarehouseMainPageController
   }
 
   void initTabController(TickerProvider vsync) {
-    tabController = TabController(
+    // 如果已经初始化，先清理
+    _disposeTabController();
+
+    _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
       initialIndex: EnumWarehouseTabItem.values
           .indexOf(_model.selectedItem.value),
     );
-    tabController.addListener(_onTabChanged);
+    _tabController!.addListener(_onTabChanged);
+    update();
   }
 
   @override
   void onClose() {
-    tabController.removeListener(_onTabChanged);
-    tabController.dispose();
+    _disposeTabController();
     WarehouseService.unregister();
     _unregisterWarehouseApiUtil();
     TempRouterUtil.clear();
@@ -59,10 +65,24 @@ class WarehouseMainPageController
     ApiUtil.unregister();
   }
 
+  void _disposeTabController() {
+    if (_tabController != null) {
+      try {
+        _tabController!.removeListener(_onTabChanged);
+        _tabController!.dispose();
+      } catch (e) {
+        // TabController 可能已经被 dispose，忽略错误
+      }
+      _tabController = null;
+    }
+  }
+
   void _onTabChanged() {
-    interactive(
-      EnumWarehouseMainPageInteractive.selectTabItem,
-      data: tabController.index,
-    );
+    if (_tabController != null) {
+      interactive(
+        EnumWarehouseMainPageInteractive.selectTabItem,
+        data: _tabController!.index,
+      );
+    }
   }
 }

@@ -17,7 +17,9 @@ extension WarehouseMainPageUserEventExtension
   }) {
     switch (type) {
       case EnumWarehouseMainPageInteractive.selectTabItem:
-        if (data is int && !tabController.indexIsChanging) {
+        if (data is int &&
+            isTabControllerReady &&
+            !tabController!.indexIsChanging) {
           final newItem = EnumWarehouseTabItem.values[data];
           _model.selectedItem.value = newItem;
         }

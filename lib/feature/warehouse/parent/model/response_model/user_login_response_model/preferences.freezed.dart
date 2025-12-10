@@ -22,7 +22,7 @@ Preferences _$PreferencesFromJson(Map<String, dynamic> json) {
 mixin _$Preferences {
   @JsonKey(name: 'language_code')
   String? get languageCode => throw _privateConstructorUsedError;
-  int? get theme => throw _privateConstructorUsedError;
+  String? get theme => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,8 @@ abstract class $PreferencesCopyWith<$Res> {
           Preferences value, $Res Function(Preferences) then) =
       _$PreferencesCopyWithImpl<$Res, Preferences>;
   @useResult
-  $Res call({@JsonKey(name: 'language_code') String? languageCode, int? theme});
+  $Res call(
+      {@JsonKey(name: 'language_code') String? languageCode, String? theme});
 }
 
 /// @nodoc
@@ -63,7 +64,7 @@ class _$PreferencesCopyWithImpl<$Res, $Val extends Preferences>
       theme: freezed == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ) as $Val);
   }
 }
@@ -76,7 +77,8 @@ abstract class _$$PreferencesImplCopyWith<$Res>
       __$$PreferencesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: 'language_code') String? languageCode, int? theme});
+  $Res call(
+      {@JsonKey(name: 'language_code') String? languageCode, String? theme});
 }
 
 /// @nodoc
@@ -101,7 +103,7 @@ class __$$PreferencesImplCopyWithImpl<$Res>
       theme: freezed == theme
           ? _value.theme
           : theme // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
     ));
   }
 }
@@ -119,7 +121,7 @@ class _$PreferencesImpl implements _Preferences {
   @JsonKey(name: 'language_code')
   final String? languageCode;
   @override
-  final int? theme;
+  final String? theme;
 
   @override
   String toString() {
@@ -157,7 +159,7 @@ class _$PreferencesImpl implements _Preferences {
 abstract class _Preferences implements Preferences {
   factory _Preferences(
       {@JsonKey(name: 'language_code') final String? languageCode,
-      final int? theme}) = _$PreferencesImpl;
+      final String? theme}) = _$PreferencesImpl;
 
   factory _Preferences.fromJson(Map<String, dynamic> json) =
       _$PreferencesImpl.fromJson;
@@ -166,7 +168,7 @@ abstract class _Preferences implements Preferences {
   @JsonKey(name: 'language_code')
   String? get languageCode;
   @override
-  int? get theme;
+  String? get theme;
   @override
   @JsonKey(ignore: true)
   _$$PreferencesImplCopyWith<_$PreferencesImpl> get copyWith =>

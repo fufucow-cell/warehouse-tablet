@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/theme_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 
@@ -42,6 +44,9 @@ class _Body extends StatelessWidget {
       children: [
         // 語言設置區塊
         _buildLanguageSection(controller, localeUtil),
+        const SizedBox(height: 16),
+        // 主題設置區塊
+        _buildThemeSection(controller),
       ],
     );
   }
@@ -72,11 +77,11 @@ class _Body extends StatelessWidget {
           _buildLanguageTile(
             controller,
             localeUtil,
-            LocaleConstant.system,
+            LocaleTranslation.system,
             EnumLocale.languageSystem.tr,
           ),
           // 所有可用語言
-          ...LocaleConstant.getAvalibleLocales.map(
+          ...LocaleTranslation.getAvalibleLocales.map(
             (locale) => _buildLanguageTile(
               controller,
               localeUtil,
@@ -93,7 +98,7 @@ class _Body extends StatelessWidget {
   Widget _buildLanguageTile(
     SmartHomeSettingPageController controller,
     LocaleUtil localeUtil,
-    LocaleConstant locale,
+    LocaleTranslation locale,
     String displayName,
   ) {
     return GetBuilder<SmartHomeSettingPageController>(
@@ -111,6 +116,63 @@ class _Body extends StatelessWidget {
                 )
               : null,
           onTap: () => controller.switchLocale(locale),
+        );
+      },
+    );
+  }
+
+  /// 主題設置區塊
+  Widget _buildThemeSection(
+    SmartHomeSettingPageController controller,
+  ) {
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              '主題設定',
+              style: Theme.of(Get.context!)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          const Divider(height: 1),
+          // 所有可用主題模式
+          ...EnumThemeMode.values.map(
+            (theme) => _buildThemeTile(
+              controller,
+              theme,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 主題選項 Tile
+  Widget _buildThemeTile(
+    SmartHomeSettingPageController controller,
+    EnumThemeMode theme,
+  ) {
+    return GetBuilder<SmartHomeSettingPageController>(
+      builder: (_) {
+        final isSelected = controller.isCurrentTheme(theme);
+        return ListTile(
+          title: Text(theme.displayName),
+          trailing: isSelected
+              ? Icon(
+                  Icons.check,
+                  color: Theme.of(Get.context!)
+                      .colorScheme
+                      .primary,
+                )
+              : null,
+          onTap: () => controller.switchTheme(theme),
         );
       },
     );

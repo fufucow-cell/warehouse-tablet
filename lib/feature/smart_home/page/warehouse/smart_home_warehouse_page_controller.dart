@@ -25,8 +25,8 @@ class SmartHomeWarehousePageController
     return WarehouseMainPageRouterData(
       userId: userData?.id ?? '',
       userName: userData?.userName ?? '',
-      language: _service.getCurrentLocaleCode,
-      theme: userData?.preferences?.theme ?? 0,
+      language: userData?.preferences?.languageCode ?? '',
+      theme: userData?.preferences?.theme ?? '',
       accessToken: userData?.accessToken ?? '',
       refreshToken: userData?.refreshToken ?? '',
       household: WarehouseHomeRouterData(

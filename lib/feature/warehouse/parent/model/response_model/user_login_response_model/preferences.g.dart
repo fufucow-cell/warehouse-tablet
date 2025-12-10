@@ -9,7 +9,7 @@ part of 'preferences.dart';
 _$PreferencesImpl _$$PreferencesImplFromJson(Map<String, dynamic> json) =>
     _$PreferencesImpl(
       languageCode: json['language_code'] as String?,
-      theme: (json['theme'] as num?)?.toInt(),
+      theme: json['theme'] as String?,
     );
 
 Map<String, dynamic> _$$PreferencesImplToJson(_$PreferencesImpl instance) =>

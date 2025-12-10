@@ -38,34 +38,43 @@ extension AppMainPageRouteExtension
 
       // 清除本地存储的认证信息
       await StorageUtil.remove(
-          EnumStorageKey.accessToken.key);
+        EnumStorageKey.accessToken,
+      );
       await StorageUtil.remove(
-          EnumStorageKey.refreshToken.key);
-      await StorageUtil.remove(EnumStorageKey.account.key);
+        EnumStorageKey.refreshToken,
+      );
+      await StorageUtil.remove(EnumStorageKey.account);
       await StorageUtil.remove(
-          EnumStorageKey.isRememberLogin.key);
+        EnumStorageKey.isRememberLogin,
+      );
 
       // 跳转到登录页
       Get.offAllNamed(EnumRootRouter.login.path);
     } on BaseApiResponseModel catch (e) {
       // API 调用失败，仍然清除本地存储并跳转
       await StorageUtil.remove(
-          EnumStorageKey.accessToken.key);
+        EnumStorageKey.accessToken,
+      );
       await StorageUtil.remove(
-          EnumStorageKey.refreshToken.key);
-      await StorageUtil.remove(EnumStorageKey.account.key);
+        EnumStorageKey.refreshToken,
+      );
+      await StorageUtil.remove(EnumStorageKey.account);
       await StorageUtil.remove(
-          EnumStorageKey.isRememberLogin.key);
+        EnumStorageKey.isRememberLogin,
+      );
       Get.offAllNamed(EnumRootRouter.login.path);
     } catch (e) {
       // 其他错误，仍然清除本地存储并跳转
       await StorageUtil.remove(
-          EnumStorageKey.accessToken.key);
+        EnumStorageKey.accessToken,
+      );
       await StorageUtil.remove(
-          EnumStorageKey.refreshToken.key);
-      await StorageUtil.remove(EnumStorageKey.account.key);
+        EnumStorageKey.refreshToken,
+      );
+      await StorageUtil.remove(EnumStorageKey.account);
       await StorageUtil.remove(
-          EnumStorageKey.isRememberLogin.key);
+        EnumStorageKey.isRememberLogin,
+      );
       Get.offAllNamed(EnumRootRouter.login.path);
     }
   }

@@ -5,9 +5,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/util/router_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 import 'package:flutter_smart_home_tablet/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/util/router_util.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -20,7 +21,8 @@ Future<void> _registerServices() async {
   final envUtil = EnvironmentUtil.register();
   ApiUtil.register(envUtil.apiBaseUrl);
   await StorageUtil.register();
-  LocaleUtil.register();
+  await LocaleUtil.register();
+  ThemeUtil.register();
   RouterUtil.register();
 }
 
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final routerUtil = RouterUtil.instance;
     final localeUtil = LocaleUtil.instance;
+    final themeUtil = ThemeUtil.instance;
     final deviceUtil = DeviceUtil.register(context);
 
     // 如果設備不支援，顯示不支援頁面
@@ -43,7 +46,7 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [routerUtil],
       title: '智管家',
       debugShowCheckedModeBanner: false,
-      translations: localeUtil.getDefaultTranslations,
+      translations: localeUtil.getDefaultTranslation,
       locale: localeUtil.getCurrentLocale,
       fallbackLocale: localeUtil.getDefaultLocale,
       supportedLocales: localeUtil.getSupportedLocales,
@@ -52,9 +55,17 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      themeMode: themeUtil.getCurrentThemeMode,
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: themeUtil.getLightSeedColor,
+        ),
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: themeUtil.getDarkSeedColor,
+        ),
         useMaterial3: true,
       ),
       initialRoute: routerUtil.initRouterPath,

@@ -32,6 +32,9 @@ find lib/feature/warehouse -type f -name "*.dart" -exec sed -i '' 's/flutter_sma
 ```yaml
   assets:
     - lib/feature/warehouse/parent/assets/images/
+    - lib/feature/warehouse/parent/assets/images/common/
+    - lib/feature/warehouse/parent/assets/images/light/
+    - lib/feature/warehouse/parent/assets/images/dark/
     - lib/feature/warehouse/parent/assets/mock_data/response/
 ```
 

@@ -247,29 +247,38 @@ class _WarehouseMainPageState
               preferredSize: const Size.fromHeight(48.0),
               child: Container(
                 color: Colors.white,
-                child: TabBar(
-                  controller: controller.tabController,
-                  tabs: controller.tabs,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.black54,
-                  labelStyle: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  unselectedLabelStyle: const TextStyle(
-                    fontSize: 18,
-                  ),
-                  indicatorColor: Colors.black,
-                ),
+                child: controller.isTabControllerReady
+                    ? TabBar(
+                        controller:
+                            controller.tabController,
+                        tabs: controller.tabs,
+                        labelColor: Colors.black,
+                        unselectedLabelColor:
+                            Colors.black54,
+                        labelStyle: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        unselectedLabelStyle:
+                            const TextStyle(
+                          fontSize: 18,
+                        ),
+                        indicatorColor: Colors.black,
+                      )
+                    : const SizedBox.shrink(),
               ),
             ),
           ),
           body: Container(
             color: Colors.white,
-            child: TabBarView(
-              controller: controller.tabController,
-              children: controller.tabViews,
-            ),
+            child: controller.isTabControllerReady
+                ? TabBarView(
+                    controller: controller.tabController,
+                    children: controller.tabViews,
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
           ),
         );
       },

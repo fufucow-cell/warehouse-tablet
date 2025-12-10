@@ -34,7 +34,7 @@ class WarehouseMainPageRouterData {
   final String userId;
   final String userName;
   final String language;
-  final int theme;
+  final String theme;
   final String accessToken;
   final String refreshToken;
   final WarehouseHomeRouterData household;
@@ -61,7 +61,7 @@ class WarehouseMainPageRouterData {
       userId: '770e8400-e29b-41d4-a716-446655440002',
       userName: 'John Doe',
       language: 'zh_TW',
-      theme: 0,
+      theme: 'system',
       accessToken: 'mock_access_token_1234567890',
       refreshToken: 'mock_refresh_token_1234567890',
       household: WarehouseHomeRouterData(

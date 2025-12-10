@@ -5,8 +5,10 @@ import 'package:flutter_smart_home_tablet/feature/app/page/login/ui/text_field.d
 import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/user_login_request_model/user_login_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
@@ -51,10 +53,10 @@ class AppLoginPage extends GetView<AppLoginPageController> {
                     mainAxisAlignment:
                         MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.home,
-                        size: 80,
-                        color: Colors.white,
+                      EnumImage.cHouse.image(
+                        size: Size.square(150.0.scale),
+                        color:
+                            Theme.of(context).dividerColor,
                       ),
                       const SizedBox(height: 32),
                       Text(EnumLocale.appTitle.tr),

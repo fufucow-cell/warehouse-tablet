@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/category.dart';
@@ -167,32 +168,7 @@ class _ItemCard extends StatelessWidget {
                       borderRadius:
                           BorderRadius.circular(8),
                     ),
-                    child: item.photo != null &&
-                            item.photo!.isNotEmpty
-                        ? ClipRRect(
-                            borderRadius:
-                                BorderRadius.circular(8),
-                            child: Image.network(
-                              item.photo!,
-                              fit: BoxFit.cover,
-                              errorBuilder: (
-                                context,
-                                error,
-                                stackTrace,
-                              ) {
-                                return const Icon(
-                                  Icons.image_not_supported,
-                                  size: 48,
-                                  color: Colors.grey,
-                                );
-                              },
-                            ),
-                          )
-                        : const Icon(
-                            Icons.inventory_2_outlined,
-                            size: 48,
-                            color: Colors.grey,
-                          ),
+                    child: EnumImage.cCow.image(),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -290,8 +266,10 @@ class _ItemCard extends StatelessWidget {
                       ),
                       child: Text(
                         EnumLocale.warehouseMoreLocations.tr
-                            .replaceAll('{count}',
-                                '${locations.length - 3}'),
+                            .replaceAll(
+                          '{count}',
+                          '${locations.length - 3}',
+                        ),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall

@@ -7,7 +7,7 @@ part 'preferences.g.dart';
 class Preferences with _$Preferences {
   factory Preferences({
     @JsonKey(name: 'language_code') String? languageCode,
-    int? theme,
+    String? theme,
   }) = _Preferences;
 
   factory Preferences.fromJson(Map<String, dynamic> json) =>

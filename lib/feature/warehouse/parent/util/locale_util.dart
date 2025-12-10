@@ -11,56 +11,44 @@ class LocaleUtil extends GetxService {
   // MARK: - Properties
 
   final localeVersion = '1.0.0';
-  LocaleConstant get getDefaultTranslations =>
-      LocaleConstant.defaultLocale;
-  LocaleConstant _currentLocale =
-      LocaleConstant.defaultLocale;
-  LocaleConstant _systemLocale =
-      LocaleConstant.defaultLocale;
-  List<Locale> get getSupportedLocales =>
-      LocaleConstant.getAvalibleLocales
-          .map(
-            (e) => e.countryCode != null
-                ? Locale(e.languageCode, e.countryCode)
-                : Locale(e.languageCode),
-          )
-          .toList();
-  Locale get getDefaultLocale {
-    final defaultLocale = LocaleConstant.defaultLocale;
-    return defaultLocale.countryCode != null
-        ? Locale(
-            defaultLocale.languageCode,
-            defaultLocale.countryCode,
-          )
-        : Locale(defaultLocale.languageCode);
-  }
+  LocaleTranslation _currentTranslation =
+      LocaleTranslation.system;
+  LocaleTranslation get currentTranslation =>
+      _currentTranslation;
+  LocaleTranslation _systemTranslation =
+      LocaleTranslation.defaultTranslation;
+  LocaleTranslation get getDefaultTranslation =>
+      LocaleTranslation.defaultTranslation;
+  Locale get getCurrentLocale =>
+      _convertLocaleFromTranslation(currentTranslation);
+  String get getCurrentLocaleCode =>
+      _convertCodeFromLocale(getCurrentLocale);
+  Locale get getDefaultLocale =>
+      _convertLocaleFromTranslation(
+        LocaleTranslation.defaultTranslation,
+      );
 
   // MARK: - Init
 
   LocaleUtil._internal();
 
-  // MARK: - Public Method
-
-  /// 註冊
-  static LocaleUtil register() {
+  static Future<LocaleUtil> register() async {
     if (Get.isRegistered<LocaleUtil>()) {
       return Get.find<LocaleUtil>();
     }
     final LocaleUtil service = LocaleUtil._internal();
     Get.put<LocaleUtil>(service, permanent: true);
     service._genSystemLocale();
-    service._readFromStorage();
+    await service._readFromStorage();
     return service;
   }
 
-  /// 註銷
   static void unregister() {
     if (Get.isRegistered<LocaleUtil>()) {
       Get.delete<LocaleUtil>(force: true);
     }
   }
 
-  /// 單例
   static LocaleUtil get instance {
     if (!Get.isRegistered<LocaleUtil>()) {
       register();
@@ -68,55 +56,48 @@ class LocaleUtil extends GetxService {
     return Get.find<LocaleUtil>();
   }
 
-  Future<bool> switchFromLocale(
-    LocaleConstant newLocale,
+  // MARK: - Public Method
+
+  Future<bool> switchFromTranslation(
+    LocaleTranslation newTranslation,
   ) async {
     try {
-      await _saveToStorage(newLocale);
-      _currentLocale = newLocale;
-      // 更新 locale_map.dart 的 currentLocale
-      final actualLocale =
-          (_currentLocale == LocaleConstant.system)
-              ? _systemLocale
-              : _currentLocale;
-      EnumLocale.setCurrentLocale(actualLocale);
-      await Get.updateLocale(getCurrentLocale);
+      await _saveToStorage(newTranslation);
+      _currentTranslation = newTranslation;
+      final locale = getCurrentLocale;
+      EnumLocale.setCurrentTranslation(
+          _convertTranslationFromLocale(locale));
+      await Get.updateLocale(locale);
       return true;
     } on Exception catch (e) {
       LogUtil.e('切換語系失敗', e);
-      return false;
     }
+
+    return false;
   }
 
   Future<bool> switchFromCode(
     String code,
-  ) async {
-    LocaleConstant newLocale =
-        LocaleConstant.fromCode(code);
-    return switchFromLocale(newLocale);
-  }
+  ) async =>
+      switchFromTranslation(
+        _convertTranslationfromCode(code),
+      );
 
-  Locale get getCurrentLocale {
-    final localeConstant =
-        (_currentLocale == LocaleConstant.system)
-            ? _systemLocale
-            : _currentLocale;
-    return localeConstant.countryCode != null
-        ? Locale(
-            localeConstant.languageCode,
-            localeConstant.countryCode,
-          )
-        : Locale(localeConstant.languageCode);
-  }
+  Future<bool> switchFromLocale(
+    Locale locale,
+  ) async =>
+      switchFromTranslation(
+        _convertTranslationFromLocale(locale),
+      );
 
-  String get getCurrentLocaleCode {
-    final locale = getCurrentLocale;
-
-    if (locale.countryCode != null) {
-      return '${locale.languageCode}_${locale.countryCode}';
-    }
-
-    return locale.languageCode;
+  List<Locale> get getSupportedLocales {
+    return LocaleTranslation.getAvalibleLocales
+        .map(
+          (e) => e.countryCode != null
+              ? Locale(e.languageCode, e.countryCode)
+              : Locale(e.languageCode),
+        )
+        .toList();
   }
 
   // MARK: - Private Method
@@ -126,76 +107,126 @@ class LocaleUtil extends GetxService {
     final deviceLocale = Get.deviceLocale;
 
     if (deviceLocale == null) {
-      _systemLocale = LocaleConstant.defaultLocale;
+      _systemTranslation =
+          LocaleTranslation.defaultTranslation;
     } else {
-      final deviceCode = deviceLocale.countryCode != null
-          ? '${deviceLocale.languageCode}_${deviceLocale.countryCode}'
-          : deviceLocale.languageCode;
+      final translation =
+          _convertTranslationFromLocale(deviceLocale);
 
-      _systemLocale = LocaleConstant.fromCode(deviceCode);
+      if (translation == LocaleTranslation.system) {
+        _systemTranslation =
+            LocaleTranslation.defaultTranslation;
+      } else {
+        _systemTranslation = translation;
+      }
     }
   }
 
-  void _readFromStorage() {
-    try {
-      final savedCode = StorageUtil.read<String>(
-        EnumStorageKey.locale.key,
+  String _convertCodeFromLocale(Locale locale) {
+    if (locale.countryCode != null) {
+      return '${locale.languageCode}_${locale.countryCode}';
+    }
+    return locale.languageCode;
+  }
+
+  Locale _convertLocaleFromTranslation(
+    LocaleTranslation translation,
+  ) {
+    if (translation == LocaleTranslation.system) {
+      return _systemTranslation.countryCode != null
+          ? Locale(
+              _systemTranslation.languageCode,
+              _systemTranslation.countryCode,
+            )
+          : Locale(_systemTranslation.languageCode);
+    }
+
+    return translation.countryCode != null
+        ? Locale(
+            translation.languageCode,
+            translation.countryCode,
+          )
+        : Locale(translation.languageCode);
+  }
+
+  LocaleTranslation _convertTranslationFromLocale(
+    Locale locale,
+  ) {
+    final code = _convertCodeFromLocale(locale);
+    return _convertTranslationfromCode(code);
+  }
+
+  LocaleTranslation _convertTranslationfromCode(
+    String? code,
+  ) {
+    if (code == null || code.isEmpty) {
+      return LocaleTranslation.system;
+    }
+
+    // 處理 system 特殊值
+    if (code == 'system') {
+      return LocaleTranslation.system;
+    }
+
+    final parts = code.split('_');
+    final language = parts[0];
+    final country = parts.length > 1 ? parts[1] : null;
+    final sameLanguage = LocaleTranslation
+        .getAvalibleLocales
+        .where((e) => e.languageCode == language)
+        .toList();
+
+    if (sameLanguage.isEmpty) {
+      return LocaleTranslation.defaultTranslation;
+    }
+
+    if (country != null) {
+      final matchedByCountry =
+          sameLanguage.firstWhereOrNull(
+        (e) => e.countryCode == country,
       );
 
-      if (savedCode != null && savedCode.isNotEmpty) {
-        if (savedCode == 'system') {
-          _currentLocale = LocaleConstant.system;
-        } else {
-          _currentLocale =
-              LocaleConstant.fromCode(savedCode);
-        }
-        // 更新 locale_map.dart 的 currentLocale
-        final actualLocale =
-            (_currentLocale == LocaleConstant.system)
-                ? _systemLocale
-                : _currentLocale;
-        EnumLocale.setCurrentLocale(actualLocale);
-        LogUtil.i(
-          EnumLogType.storage,
-          '載入用戶語系: ${_currentLocale.displayName}',
-        );
-        return;
+      if (matchedByCountry != null) {
+        return matchedByCountry;
       }
+    }
+
+    return sameLanguage.first;
+  }
+
+  /// 從存儲中讀取語言設置
+  Future<void> _readFromStorage() async {
+    try {
+      final savedCode = StorageUtil.read<String?>(
+        EnumStorageKey.locale,
+      );
+      _currentTranslation =
+          _convertTranslationfromCode(savedCode);
+      final locale = getCurrentLocale;
+      EnumLocale.setCurrentTranslation(
+          _convertTranslationFromLocale(locale));
+      await Get.updateLocale(locale);
+      LogUtil.i(
+        EnumLogType.storage,
+        '載入用戶語系: ${currentTranslation.displayName}',
+      );
     } on Exception catch (e) {
       LogUtil.e('載入語系失敗', e);
     }
-
-    // 如果沒有保存的 code 或載入失敗，使用系統語系
-    _currentLocale = LocaleConstant.system;
-    // 更新 locale_map.dart 的 currentLocale
-    final actualLocale =
-        (_currentLocale == LocaleConstant.system)
-            ? _systemLocale
-            : _currentLocale;
-    EnumLocale.setCurrentLocale(actualLocale);
-    LogUtil.i(
-      EnumLogType.storage,
-      '使用系統語系: ${_currentLocale.displayName}',
-    );
   }
 
   /// 保存語言設置到存儲
-  Future<void> _saveToStorage(LocaleConstant locale) async {
-    // 如果是系統語言，保存 'system'，否則保存完整的 code
-    final codeToSave = locale == LocaleConstant.system
-        ? 'system'
-        : locale.code;
+  Future<void> _saveToStorage(
+    LocaleTranslation newTranslation,
+  ) async {
+    // 保存完整的 languageCode，包括 'system' 特殊值
+    final codeToSave =
+        newTranslation == LocaleTranslation.system
+            ? 'system'
+            : newTranslation.languageCode;
     await StorageUtil.write(
-      EnumStorageKey.locale.key,
+      EnumStorageKey.locale,
       codeToSave,
     );
-    LogUtil.i(
-      EnumLogType.storage,
-      '保存語言成功: ${locale.displayName}',
-    );
   }
-
-  /// 取得當前選擇的語言（不包括系統匹配的結果）
-  LocaleConstant get currentSelectedLocale =>
-      _currentLocale;
 }
