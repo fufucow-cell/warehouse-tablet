@@ -5,7 +5,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/children.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:get/get.dart';
@@ -16,8 +15,7 @@ part 'warehouse_category_page_interactive.dart';
 part 'warehouse_category_page_model.dart';
 part 'warehouse_category_page_route.dart';
 
-class WarehouseCategoryPage
-    extends GetView<WarehouseCategoryPageController> {
+class WarehouseCategoryPage extends GetView<WarehouseCategoryPageController> {
   const WarehouseCategoryPage({super.key});
 
   @override
@@ -43,8 +41,7 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseCategoryPageController>(
       builder: (controller) {
-        final categories =
-            controller.getFlattenedCategories();
+        final categories = controller.getFlattenedCategories();
 
         if (categories.isEmpty) {
           return Center(
@@ -57,10 +54,9 @@ class _Body extends StatelessWidget {
           itemCount: categories.length,
           itemBuilder: (context, index) {
             final category = categories[index];
-            final level = category.level ?? 0;
             return _CategoryItem(
               category: category,
-              level: level,
+              level: 1,
             );
           },
         );
@@ -80,8 +76,7 @@ class _CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.find<WarehouseCategoryPageController>();
+    final controller = Get.find<WarehouseCategoryPageController>();
 
     return Padding(
       padding: EdgeInsets.only(left: level * 24.0),
@@ -89,8 +84,7 @@ class _CategoryItem extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8.0),
         child: Obx(
           () {
-            final isEditMode =
-                controller.isEditModeRx.value;
+            final isEditMode = controller.isEditModeRx.value;
             final hasChildren = category.children != null;
             final isLevel1Or2 = level == 1 || level == 2;
             final isExpanded = isLevel1Or2 && hasChildren
@@ -103,12 +97,9 @@ class _CategoryItem extends StatelessWidget {
                 color: _getColorForLevel(level),
               ),
               title: Text(
-                category.name ??
-                    EnumLocale.warehouseUnnamedCategory.tr,
+                category.name ?? EnumLocale.warehouseUnnamedCategory.tr,
                 style: TextStyle(
-                  fontWeight: level == 0
-                      ? FontWeight.bold
-                      : FontWeight.normal,
+                  fontWeight: level == 0 ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
               trailing: _buildTrailing(
@@ -142,9 +133,7 @@ class _CategoryItem extends StatelessWidget {
       buttons.add(
         IconButton(
           icon: Icon(
-            isExpanded
-                ? Icons.keyboard_arrow_down
-                : Icons.keyboard_arrow_right,
+            isExpanded ? Icons.keyboard_arrow_down : Icons.keyboard_arrow_right,
             size: 24,
             color: Colors.grey,
           ),

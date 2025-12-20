@@ -163,8 +163,7 @@ class _CustDialogWidget extends StatelessWidget {
       color: Colors.black.withOpacity(0.5),
       child: Center(
         child: Container(
-          margin:
-              EdgeInsets.symmetric(horizontal: 32.0.scale),
+          margin: EdgeInsets.symmetric(horizontal: 32.0.scale),
           padding: EdgeInsets.all(24.0.scale),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
@@ -180,18 +179,14 @@ class _CustDialogWidget extends StatelessWidget {
               ],
               Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
               ),
               SizedBox(height: 16.0.scale),
               Text(
                 description,
-                style:
-                    Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 24.0.scale),
@@ -205,8 +200,7 @@ class _CustDialogWidget extends StatelessWidget {
                         onPressed: onCancel,
                         child: Text(cancelText!),
                       ),
-                    if (cancelText != null)
-                      SizedBox(width: 12.0.scale),
+                    if (cancelText != null) SizedBox(width: 12.0.scale),
                     ElevatedButton(
                       onPressed: onConfirm,
                       child: Text(confirmText),

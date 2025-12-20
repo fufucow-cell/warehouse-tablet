@@ -192,8 +192,7 @@ const Map<String, String> zhTW = {
   'warehouse_create_item': '新增物品',
   'warehouse_quantity_change': '數量：{from} → {to}',
   'warehouse_stock_alert_change': '庫存警報：{from} → {to}',
-  'warehouse_current_quantity':
-      '當前數量：{quantity}，低於庫存數量：{minStock}',
+  'warehouse_current_quantity': '當前數量：{quantity}，低於庫存數量：{minStock}',
   'warehouse_name_label': '名稱：',
   'warehouse_description_change': '描述：{from} → {to}',
   'warehouse_category_change': '分類：{from} → {to}',

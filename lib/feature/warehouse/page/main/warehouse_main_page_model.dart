@@ -2,6 +2,7 @@ part of 'warehouse_main_page.dart';
 
 class WarehouseMainPageModel {
   final selectedItem = EnumWarehouseTabItem.item.obs;
+  final isTabControllerReady = false.obs;
 }
 
 enum EnumWarehouseTabItem {
@@ -70,24 +71,24 @@ class WarehouseMainPageRouterData {
       ),
       rooms: [
         WarehouseHomeRouterData(
-          id: '990e8400-e29b-41d4-a716-446655440004',
-          name: 'Living Room',
+          id: '00000001-e29b-41d4-a716-446655440001',
+          name: '辦公室',
         ),
         WarehouseHomeRouterData(
-          id: 'aa0e8400-e29b-41d4-a716-446655440005',
-          name: 'Master Bedroom',
+          id: '00000002-e29b-41d4-a716-446655440002',
+          name: '主臥',
         ),
         WarehouseHomeRouterData(
-          id: 'bb0e8400-e29b-41d4-a716-446655440006',
-          name: 'Guest Bedroom',
+          id: '00000003-e29b-41d4-a716-446655440003',
+          name: '會議室',
         ),
         WarehouseHomeRouterData(
-          id: 'cc0e8400-e29b-41d4-a716-446655440007',
-          name: 'Kitchen',
+          id: '00000004-e29b-41d4-a716-446655440004',
+          name: '廚房',
         ),
         WarehouseHomeRouterData(
-          id: 'dd0e8400-e29b-41d4-a716-446655440008',
-          name: 'Bathroom',
+          id: '00000005-e29b-41d4-a716-446655440005',
+          name: '兒童房',
         ),
       ],
       userRoleType: 1,

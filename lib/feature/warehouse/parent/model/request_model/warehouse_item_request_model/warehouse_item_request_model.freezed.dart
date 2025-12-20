@@ -29,7 +29,7 @@ mixin _$WarehouseItemRequestModel {
   String? get categoryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'room_id')
   String? get roomId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $WarehouseItemRequestModelCopyWith<$Res> {
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'home_id') String? homeId});
+      @JsonKey(name: 'household_id') String? homeId});
 }
 
 /// @nodoc
@@ -111,7 +111,7 @@ abstract class _$$WarehouseItemRequestModelImplCopyWith<$Res>
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'home_id') String? homeId});
+      @JsonKey(name: 'household_id') String? homeId});
 }
 
 /// @nodoc
@@ -166,7 +166,7 @@ class _$WarehouseItemRequestModelImpl implements _WarehouseItemRequestModel {
       @JsonKey(name: 'cabinet_id') this.cabinetId,
       @JsonKey(name: 'category_id') this.categoryId,
       @JsonKey(name: 'room_id') this.roomId,
-      @JsonKey(name: 'home_id') this.homeId});
+      @JsonKey(name: 'household_id') this.homeId});
 
   factory _$WarehouseItemRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$WarehouseItemRequestModelImplFromJson(json);
@@ -184,7 +184,7 @@ class _$WarehouseItemRequestModelImpl implements _WarehouseItemRequestModel {
   @JsonKey(name: 'room_id')
   final String? roomId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   final String? homeId;
 
   @override
@@ -232,7 +232,7 @@ abstract class _WarehouseItemRequestModel implements WarehouseItemRequestModel {
           @JsonKey(name: 'cabinet_id') final String? cabinetId,
           @JsonKey(name: 'category_id') final String? categoryId,
           @JsonKey(name: 'room_id') final String? roomId,
-          @JsonKey(name: 'home_id') final String? homeId}) =
+          @JsonKey(name: 'household_id') final String? homeId}) =
       _$WarehouseItemRequestModelImpl;
 
   factory _WarehouseItemRequestModel.fromJson(Map<String, dynamic> json) =
@@ -251,7 +251,7 @@ abstract class _WarehouseItemRequestModel implements WarehouseItemRequestModel {
   @JsonKey(name: 'room_id')
   String? get roomId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId;
   @override
   @JsonKey(ignore: true)

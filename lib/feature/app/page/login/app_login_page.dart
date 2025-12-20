@@ -37,9 +37,7 @@ class AppLoginPage extends GetView<AppLoginPageController> {
                 end: Alignment.bottomRight,
                 colors: [
                   Theme.of(context).colorScheme.primary,
-                  Theme.of(context)
-                      .colorScheme
-                      .primaryContainer,
+                  Theme.of(context).colorScheme.primaryContainer,
                 ],
               ),
             ),
@@ -47,16 +45,13 @@ class AppLoginPage extends GetView<AppLoginPageController> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24.0),
                 child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints(maxWidth: 400),
+                  constraints: const BoxConstraints(maxWidth: 400),
                   child: Column(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       EnumImage.cHouse.image(
                         size: Size.square(150.0.scale),
-                        color:
-                            Theme.of(context).dividerColor,
+                        color: Theme.of(context).dividerColor,
                       ),
                       const SizedBox(height: 32),
                       Text(EnumLocale.appTitle.tr),

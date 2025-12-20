@@ -10,7 +10,7 @@ _$WarehouseCabinetRequestModelImpl _$$WarehouseCabinetRequestModelImplFromJson(
         Map<String, dynamic> json) =>
     _$WarehouseCabinetRequestModelImpl(
       cabinetId: json['cabinet_id'] as String?,
-      homeId: json['home_id'] as String?,
+      homeId: json['household_id'] as String?,
       roomId: json['room_id'] as String?,
     );
 
@@ -18,6 +18,6 @@ Map<String, dynamic> _$$WarehouseCabinetRequestModelImplToJson(
         _$WarehouseCabinetRequestModelImpl instance) =>
     <String, dynamic>{
       'cabinet_id': instance.cabinetId,
-      'home_id': instance.homeId,
+      'household_id': instance.homeId,
       'room_id': instance.roomId,
     };

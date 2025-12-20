@@ -185,16 +185,13 @@ enum EnumLocale {
 
   String get key => name.toSnakeCase();
 
-  String get tr =>
-      _currentTranslation.translationMap[key] ?? key;
+  String get tr => _currentTranslation.translationMap[key] ?? key;
 
-  static LocaleTranslation? get currentTranslation =>
-      _currentTranslation;
+  static LocaleTranslation? get currentTranslation => _currentTranslation;
 
   static LocaleTranslation _currentTranslation =
       LocaleTranslation.defaultTranslation;
 
-  static void setCurrentTranslation(
-          LocaleTranslation translation) =>
+  static void setCurrentTranslation(LocaleTranslation translation) =>
       _currentTranslation = translation;
 }

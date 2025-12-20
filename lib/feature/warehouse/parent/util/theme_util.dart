@@ -14,16 +14,12 @@ class ThemeUtil extends GetxService {
   // MARK: - Properties
 
   final themeVersion = '1.0.0';
-  static const _imageRootPath =
-      'lib/feature/warehouse/parent/assets/images';
-  static const EnumThemeMode _defaultTheme =
-      EnumThemeMode.system;
+  static const _imageRootPath = 'lib/feature/warehouse/parent/assets/images';
+  static const EnumThemeMode _defaultTheme = EnumThemeMode.system;
   final _currentTheme = _defaultTheme.obs;
   EnumThemeMode get currentTheme => _currentTheme.value;
-  ThemeMode get getCurrentThemeMode =>
-      currentTheme.themeMode;
-  Color get getLightSeedColor =>
-      colorDataMap['brand']!.light;
+  ThemeMode get getCurrentThemeMode => currentTheme.themeMode;
+  Color get getLightSeedColor => colorDataMap['brand']!.light;
   Color get getDarkSeedColor => colorDataMap['brand']!.dark;
 
   // MARK: - Init
@@ -79,8 +75,8 @@ class ThemeUtil extends GetxService {
       switchFromMode(_convertThemeFromString(strMode));
 
   EnumThemeMode get getThemeFromSystem {
-    final platformBrightness = WidgetsBinding
-        .instance.platformDispatcher.platformBrightness;
+    final platformBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
     return platformBrightness == Brightness.dark
         ? EnumThemeMode.dark
         : EnumThemeMode.light;
@@ -135,8 +131,7 @@ class ThemeUtil extends GetxService {
       final savedTheme = StorageUtil.read<String?>(
         EnumStorageKey.theme,
       );
-      _currentTheme.value =
-          _convertThemeFromString(savedTheme);
+      _currentTheme.value = _convertThemeFromString(savedTheme);
       Get.changeThemeMode(getCurrentThemeMode);
       LogUtil.i(
         EnumLogType.storage,

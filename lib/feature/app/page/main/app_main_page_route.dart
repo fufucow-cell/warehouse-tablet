@@ -6,8 +6,7 @@ enum EnumAppMainPageRoute {
   logout,
 }
 
-extension AppMainPageRouteExtension
-    on AppMainPageController {
+extension AppMainPageRouteExtension on AppMainPageController {
   Future<void> routerHandle(
     EnumAppMainPageRoute type, {
     dynamic data,
@@ -16,8 +15,7 @@ extension AppMainPageRouteExtension
       case EnumAppMainPageRoute.switchContentPage:
         if (data is EnumAppMainTabItem) {
           final routePath = data.router.path;
-          AppMainRouterUtil.instance
-              .pushReplacementNamed(routePath);
+          AppMainRouterUtil.instance.pushReplacementNamed(routePath);
         }
       case EnumAppMainPageRoute.showDialog:
         const CustDialog(

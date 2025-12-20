@@ -7,7 +7,7 @@ part 'warehouse_cabinet_request_model.g.dart';
 class WarehouseCabinetRequestModel with _$WarehouseCabinetRequestModel {
   factory WarehouseCabinetRequestModel({
     @JsonKey(name: 'cabinet_id') String? cabinetId,
-    @JsonKey(name: 'home_id') String? homeId,
+    @JsonKey(name: 'household_id') String? homeId,
     @JsonKey(name: 'room_id') String? roomId,
   }) = _WarehouseCabinetRequestModel;
 

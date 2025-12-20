@@ -1,4 +1,3 @@
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/children.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category.freezed.dart';
@@ -7,13 +6,11 @@ part 'category.g.dart';
 @freezed
 class Category with _$Category {
   factory Category({
-    @JsonKey(name: 'category_id') String? categoryId,
+    String? id,
     String? name,
-    @JsonKey(name: 'parent_id') dynamic parentId,
-    int? level,
-    Children? children,
+    @JsonKey(name: 'parent_id') String? parentId,
+    List<Category>? children,
   }) = _Category;
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 }

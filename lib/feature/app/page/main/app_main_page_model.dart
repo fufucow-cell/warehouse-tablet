@@ -2,8 +2,7 @@ part of 'app_main_page.dart';
 
 class AppMainPageModel {
   final selectedItem = EnumAppMainTabItem.household.obs;
-  static const EnumAppMainRouter rootRouter =
-      EnumAppMainRouter.household;
+  static const EnumAppMainRouter rootRouter = EnumAppMainRouter.household;
 }
 
 enum EnumAppMainTabItem {

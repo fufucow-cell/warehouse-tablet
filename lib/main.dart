@@ -90,15 +90,13 @@ class _UnsupportedDevicePage extends StatelessWidget {
       title: '智管家',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Colors.blue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: Scaffold(
         appBar: AppBar(
           title: Text(EnumLocale.appTitle.tr),
-          backgroundColor:
-              Theme.of(context).colorScheme.primary,
+          backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         body: Center(
           child: Padding(
@@ -109,24 +107,19 @@ class _UnsupportedDevicePage extends StatelessWidget {
                 Icon(
                   Icons.error_outline,
                   size: 80.0.scale,
-                  color:
-                      Theme.of(context).colorScheme.error,
+                  color: Theme.of(context).colorScheme.error,
                 ),
                 SizedBox(height: 24.0.scale),
                 Text(
                   EnumLocale.deviceUnsupported.tr,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                 ),
                 SizedBox(height: 16.0.scale),
                 Text(
                   EnumLocale.deviceUnsupportedMessage.tr,
-                  style:
-                      Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
               ],

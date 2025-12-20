@@ -1,7 +1,6 @@
 part of 'smart_home_setting_page.dart';
 
-class SmartHomeSettingPageController
-    extends BasePageController {
+class SmartHomeSettingPageController extends BasePageController {
   // MARK: - Properties
 
   final _pageModel = SmartHomeSettingPageModel();
@@ -27,8 +26,7 @@ class SmartHomeSettingPageController
   Future<void> switchLocale(
     LocaleTranslation translation,
   ) async {
-    final success = await _localeUtil
-        .switchFromTranslation(translation);
+    final success = await _localeUtil.switchFromTranslation(translation);
     if (success) {
       update(); // 更新 UI
       Get.snackbar(
@@ -46,8 +44,7 @@ class SmartHomeSettingPageController
   }
 
   /// 檢查是否為當前主題
-  bool isCurrentTheme(EnumThemeMode theme) =>
-      _themeUtil.currentTheme == theme;
+  bool isCurrentTheme(EnumThemeMode theme) => _themeUtil.currentTheme == theme;
 
   /// 切換主題
   Future<void> switchTheme(

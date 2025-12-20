@@ -20,7 +20,7 @@ HomeRoomRequestModel _$HomeRoomRequestModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$HomeRoomRequestModel {
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId => throw _privateConstructorUsedError;
   @JsonKey(name: 'room_id')
   String? get roomId => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $HomeRoomRequestModelCopyWith<$Res> {
       _$HomeRoomRequestModelCopyWithImpl<$Res, HomeRoomRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'room_id') String? roomId});
 }
 
@@ -81,7 +81,7 @@ abstract class _$$HomeRoomRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'room_id') String? roomId});
 }
 
@@ -116,14 +116,14 @@ class __$$HomeRoomRequestModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HomeRoomRequestModelImpl implements _HomeRoomRequestModel {
   _$HomeRoomRequestModelImpl(
-      {@JsonKey(name: 'home_id') this.homeId,
+      {@JsonKey(name: 'household_id') this.homeId,
       @JsonKey(name: 'room_id') this.roomId});
 
   factory _$HomeRoomRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeRoomRequestModelImplFromJson(json);
 
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   final String? homeId;
   @override
   @JsonKey(name: 'room_id')
@@ -165,7 +165,7 @@ class _$HomeRoomRequestModelImpl implements _HomeRoomRequestModel {
 
 abstract class _HomeRoomRequestModel implements HomeRoomRequestModel {
   factory _HomeRoomRequestModel(
-          {@JsonKey(name: 'home_id') final String? homeId,
+          {@JsonKey(name: 'household_id') final String? homeId,
           @JsonKey(name: 'room_id') final String? roomId}) =
       _$HomeRoomRequestModelImpl;
 
@@ -173,7 +173,7 @@ abstract class _HomeRoomRequestModel implements HomeRoomRequestModel {
       _$HomeRoomRequestModelImpl.fromJson;
 
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId;
   @override
   @JsonKey(name: 'room_id')

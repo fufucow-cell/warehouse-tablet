@@ -36,8 +36,7 @@ class TempRouterUtil {
     }
 
     try {
-      final rootNavigator =
-          Navigator.maybeOf(context, rootNavigator: true);
+      final rootNavigator = Navigator.maybeOf(context, rootNavigator: true);
       if (rootNavigator != null) {
         _cachedRootContext = rootNavigator.context;
         return;
@@ -45,8 +44,8 @@ class TempRouterUtil {
 
       BuildContext? currentContext = context;
       while (currentContext != null) {
-        final materialApp = currentContext
-            .findAncestorWidgetOfExactType<MaterialApp>();
+        final materialApp =
+            currentContext.findAncestorWidgetOfExactType<MaterialApp>();
         if (materialApp != null) {
           final navigator = Navigator.maybeOf(
             currentContext,
@@ -60,8 +59,7 @@ class TempRouterUtil {
           return;
         }
         // 向上查找父 widget
-        final parent =
-            currentContext.findAncestorStateOfType<State>();
+        final parent = currentContext.findAncestorStateOfType<State>();
         if (parent != null && parent.mounted) {
           currentContext = parent.context;
         } else {

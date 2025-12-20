@@ -3,288 +3,509 @@
   "message": "Success",
   "data": [
     {
-      "item_id": "110e8400-e29b-41d4-a716-446655440010",
-      "name": "iPhone 15 Pro",
-      "description": "Apple's latest smartphone, 256GB storage",
-      "quantity": 3,
-      "min_stock_alert": 2,
-      "photo": null,
-      "rooms": [
+      "room_id": "1",
+      "quantity": 19,
+      "cabinets": [
         {
-          "room_id": "990e8400-e29b-41d4-a716-446655440004",
-          "room_name": "Living Room",
-          "quantity": 2,
-          "cabinets": [
+          "id": "220e8400-e29b-41d4-a716-446655440020",
+          "name": "文件櫃",
+          "quantity": 9,
+          "items": [
             {
-              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
-              "name": "Left Cabinet A",
-              "quantity": 1
+              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "name": "iPhone 15 Pro",
+              "description": "蘋果最新智慧型手機，256GB 儲存空間",
+              "quantity": 1,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "330e8400-e29b-41d4-a716-446655440030",
+                "name": "電子產品",
+                "parent_id": null,
+                "children": {
+                  "id": "330e8400-e29b-41d4-a716-446655440040",
+                  "name": "手機",
+                  "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+                  "children": {
+                    "id": "330e8400-e29b-41d4-a716-446655440050",
+                    "name": "iPhone",
+                    "parent_id": "330e8400-e29b-41d4-a716-446655440040",
+                    "children": null
+                  }
+                }
+              }
             },
             {
-              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
-              "name": "Right Cabinet B",
-              "quantity": 1
+              "id": "113e8400-e29b-41d4-a716-446655440013",
+              "name": "橄欖油",
+              "description": "5公升，非基改",
+              "quantity": 6,
+              "min_stock_alert": 5,
+              "photo": null,
+              "category": {
+                "id": "331e8400-e29b-41d4-a716-446655440031",
+                "name": "食品",
+                "parent_id": null,
+                "children": {
+                  "id": "331e8400-e29b-41d4-a716-446655440041",
+                  "name": "調味料",
+                  "parent_id": "331e8400-e29b-41d4-a716-446655440031",
+                  "children": {
+                    "id": "331e8400-e29b-41d4-a716-446655440051",
+                    "name": "食用油",
+                    "parent_id": "331e8400-e29b-41d4-a716-446655440041",
+                    "children": null
+                  }
+                }
+              }
+            },
+            {
+              "id": "116e8400-e29b-41d4-a716-446655440016",
+              "name": "去屑洗髮精",
+              "description": "750毫升，去屑配方",
+              "quantity": 3,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440052",
+                    "name": "洗髮精",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440042",
+                    "children": null
+                  }
+                }
+              }
             }
           ]
         },
         {
-          "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
-          "room_name": "Master Bedroom",
-          "quantity": 1,
-          "cabinets": [
-            {
-              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
-              "name": "Master Bedroom Cabinet",
-              "quantity": 1
-            }
-          ]
-        }
-      ],
-      "category": {
-        "category_id": "330e8400-e29b-41d4-a716-446655440030",
-        "name": "Electronics",
-        "level": 1,
-        "children": {
-          "category_id": "331e8400-e29b-41d4-a716-446655440031",
-          "name": "Mobile Phones",
-          "level": 2,
-          "children": null
-        }
-      }
-    },
-    {
-      "item_id": "111e8400-e29b-41d4-a716-446655440011",
-      "name": "MacBook Pro 14-inch",
-      "description": "M3 chip, 16GB RAM, 512GB SSD",
-      "quantity": 2,
-      "min_stock_alert": 1,
-      "photo": null,
-      "category": {
-        "category_id": "330e8400-e29b-41d4-a716-446655440030",
-        "name": "Electronics",
-        "level": 1,
-        "children": {
-          "category_id": "331e8400-e29b-41d4-a716-446655440031",
-          "name": "Mobile Phones",
-          "level": 2,
-          "children": null
-        }
-      },
-      "rooms": [
-        {
-          "room_id": "990e8400-e29b-41d4-a716-446655440004",
-          "room_name": "Living Room",
-          "quantity": 1,
-          "cabinets": [
-            {
-              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
-              "name": "Living Room Cabinet B",
-              "quantity": 1
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "112e8400-e29b-41d4-a716-446655440012",
-      "name": "AirPods Pro",
-      "description": "Active noise cancellation wireless earbuds, 2nd generation",
-      "quantity": 5,
-      "min_stock_alert": 3,
-      "photo": null,
-      "category": {
-        "category_id": "330e8400-e29b-41d4-a716-446655440030",
-        "name": "Electronics",
-        "level": 1,
-        "children": {
-          "category_id": "331e8400-e29b-41d4-a716-446655440031",
-          "name": "Mobile Phones",
-          "level": 2,
-          "children": null
-        }
-      },
-      "rooms": [
-        {
-          "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
-          "room_name": "Master Bedroom",
-          "quantity": 2,
-          "cabinets": [
-            {
-              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
-              "name": "Master Bedroom Cabinet",
-              "quantity": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "113e8400-e29b-41d4-a716-446655440013",
-      "name": "Cooking Oil",
-      "description": "5L, non-GMO",
-      "quantity": 8,
-      "min_stock_alert": 5,
-      "photo": null,
-      "category": {
-        "category_id": "331e8400-e29b-41d4-a716-446655440031",
-        "name": "Food",
-        "level": 1,
-        "children": {
-          "category_id": "332e8400-e29b-41d4-a716-446655440032",
-          "name": "Beverages",
-          "level": 2,
-          "children": null
-        }
-      },
-      "rooms": [
-        {
-          "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
-          "room_name": "Kitchen",
-          "quantity": 4,
-          "cabinets": [
-            {
-              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
-              "name": "Living Room Cabinet A",
-              "quantity": 4
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "114e8400-e29b-41d4-a716-446655440014",
-      "name": "Premium Rice",
-      "description": "10kg bag, high-quality rice",
-      "quantity": 6,
-      "min_stock_alert": 4,
-      "photo": null,
-      "category": {
-        "category_id": "331e8400-e29b-41d4-a716-446655440031",
-        "name": "Food",
-        "level": 1,
-        "children": {
-          "category_id": "332e8400-e29b-41d4-a716-446655440032",
-          "name": "Beverages",
-          "level": 2,
-          "children": null
-        }
-      },
-      "rooms": [
-        {
-          "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
-          "room_name": "Kitchen",
-          "quantity": 3,
-          "cabinets": [
-            {
-              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
-              "name": "Living Room Cabinet B",
-              "quantity": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "115e8400-e29b-41d4-a716-446655440015",
-      "name": "Antibacterial Soap",
-      "description": "3-pack, antibacterial",
-      "quantity": 12,
-      "min_stock_alert": 6,
-      "photo": null,
-      "category": {
-        "category_id": "332e8400-e29b-41d4-a716-446655440032",
-        "name": "Daily Necessities",
-        "level": 1,
-        "children": null
-      },
-      "rooms": [
-        {
-          "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
-          "room_name": "Bathroom",
-          "quantity": 6,
-          "cabinets": [
-            {
-              "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
-              "name": "Master Bedroom Cabinet",
-              "quantity": 6
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "116e8400-e29b-41d4-a716-446655440016",
-      "name": "Anti-Dandruff Shampoo",
-      "description": "750ml, dandruff control",
-      "quantity": 4,
-      "min_stock_alert": 2,
-      "photo": null,
-      "category": {
-        "category_id": "332e8400-e29b-41d4-a716-446655440032",
-        "name": "Daily Necessities",
-        "level": 1,
-        "children": null
-      },
-      "rooms": [
-        {
-          "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
-          "room_name": "Bathroom",
-          "quantity": 2,
-          "cabinets": [
-            {
-              "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
-              "name": "Living Room Cabinet A",
-              "quantity": 2
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "item_id": "117e8400-e29b-41d4-a716-446655440017",
-      "name": "Tissue Paper",
-      "description": "3-ply, 130 sheets × 12 packs",
-      "quantity": 26,
-      "min_stock_alert": 8,
-      "photo": null,
-      "category": {
-        "category_id": "332e8400-e29b-41d4-a716-446655440032",
-        "name": "Daily Necessities",
-        "level": 1,
-        "children": null
-      },
-      "rooms": [
-        {
-          "room_id": "990e8400-e29b-41d4-a716-446655440004",
-          "room_name": "Living Room",
-          "quantity": 7,
-          "cabinets": [
-            {
-              "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
-              "name": "Living Room Cabinet B",
-              "quantity": 7
-            }
-          ]
-        },
-        {
-          "room_id": null,
-          "room_name": null,
+          "id": "221e8400-e29b-41d4-a716-446655440021",
+          "name": "書櫃",
           "quantity": 11,
-          "cabinets": [
+          "items": [
             {
-              "cabinet_id": "223e8400-e29b-41d4-a716-446655440023",
-              "name": "Unbound Cabinet A",
-              "quantity": 4
+              "id": "111e8400-e29b-41d4-a716-446655440011",
+              "name": "MacBook Pro 14吋",
+              "description": "M3 晶片，16GB 記憶體，512GB 固態硬碟",
+              "quantity": 2,
+              "min_stock_alert": 1,
+              "photo": null,
+              "category": null
             },
             {
-              "cabinet_id": "224e8400-e29b-41d4-a716-446655440024",
-              "name": "Unbound Cabinet B",
-              "quantity": 4
+              "id": "114e8400-e29b-41d4-a716-446655440014",
+              "name": "白米",
+              "description": "10公斤裝，優質米",
+              "quantity": 5,
+              "min_stock_alert": 4,
+              "photo": null,
+              "category": {
+                "id": "331e8400-e29b-41d4-a716-446655440031",
+                "name": "食品",
+                "parent_id": null,
+                "children": {
+                  "id": "331e8400-e29b-41d4-a716-446655440044",
+                  "name": "主食",
+                  "parent_id": "331e8400-e29b-41d4-a716-446655440031",
+                  "children": {
+                    "id": "331e8400-e29b-41d4-a716-446655440054",
+                    "name": "米類",
+                    "parent_id": "331e8400-e29b-41d4-a716-446655440044",
+                    "children": null
+                  }
+                }
+              }
             },
             {
-              "cabinet_id": null,
-              "name": null,
-              "quantity": 3
+              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "name": "抽取式衛生紙",
+              "description": "3層，130張 × 12包",
+              "quantity": 10,
+              "min_stock_alert": 8,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440043",
+                  "name": "衛生用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440053",
+                    "name": "衛生紙",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440043",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "222e8400-e29b-41d4-a716-446655440022",
+          "name": "展示櫃",
+          "quantity": 4,
+          "items": [
+            {
+              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "name": "iPhone 15 Pro",
+              "description": "蘋果最新智慧型手機，256GB 儲存空間",
+              "quantity": 4,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "330e8400-e29b-41d4-a716-446655440030",
+                "name": "電子產品",
+                "parent_id": null,
+                "children": {
+                  "id": "330e8400-e29b-41d4-a716-446655440040",
+                  "name": "手機",
+                  "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+                  "children": {
+                    "id": "330e8400-e29b-41d4-a716-446655440050",
+                    "name": "iPhone",
+                    "parent_id": "330e8400-e29b-41d4-a716-446655440040",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_id": "2",
+      "quantity": 9,
+      "cabinets": [
+        {
+          "id": "222e8400-e29b-41d4-a716-446655440022",
+          "name": "衣櫃",
+          "quantity": 9,
+          "items": [
+            {
+              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "name": "iPhone 15 Pro",
+              "description": "蘋果最新智慧型手機，256GB 儲存空間",
+              "quantity": 3,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "330e8400-e29b-41d4-a716-446655440030",
+                "name": "電子產品",
+                "parent_id": null,
+                "children": {
+                  "id": "330e8400-e29b-41d4-a716-446655440040",
+                  "name": "手機",
+                  "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+                  "children": {
+                    "id": "330e8400-e29b-41d4-a716-446655440050",
+                    "name": "iPhone",
+                    "parent_id": "330e8400-e29b-41d4-a716-446655440040",
+                    "children": null
+                  }
+                }
+              }
+            },
+            {
+              "id": "112e8400-e29b-41d4-a716-446655440012",
+              "name": "AirPods Pro",
+              "description": "主動降噪無線耳機，第二代",
+              "quantity": 4,
+              "min_stock_alert": 3,
+              "photo": null,
+              "category": {
+                "id": "330e8400-e29b-41d4-a716-446655440030",
+                "name": "電子產品",
+                "parent_id": null,
+                "children": {
+                  "id": "330e8400-e29b-41d4-a716-446655440040",
+                  "name": "手機",
+                  "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+                  "children": {
+                    "id": "330e8400-e29b-41d4-a716-446655440050",
+                    "name": "iPhone",
+                    "parent_id": "330e8400-e29b-41d4-a716-446655440040",
+                    "children": null
+                  }
+                }
+              }
+            },
+            {
+              "id": "115e8400-e29b-41d4-a716-446655440015",
+              "name": "香皂",
+              "description": "3入組，抗菌配方",
+              "quantity": 8,
+              "min_stock_alert": 6,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440055",
+                    "name": "香皂",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440042",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_id": "3",
+      "quantity": 7,
+      "cabinets": [
+        {
+          "id": "220e8400-e29b-41d4-a716-446655440020",
+          "name": "儲物櫃",
+          "quantity": 4,
+          "items": [
+            {
+              "id": "113e8400-e29b-41d4-a716-446655440013",
+              "name": "橄欖油",
+              "description": "5公升，非基改",
+              "quantity": 6,
+              "min_stock_alert": 5,
+              "photo": null,
+              "category": {
+                "id": "331e8400-e29b-41d4-a716-446655440031",
+                "name": "食品",
+                "parent_id": null,
+                "children": null
+              }
+            }
+          ]
+        },
+        {
+          "id": "221e8400-e29b-41d4-a716-446655440021",
+          "name": "置物櫃",
+          "quantity": 3,
+          "items": [
+            {
+              "id": "114e8400-e29b-41d4-a716-446655440014",
+              "name": "白米",
+              "description": "10公斤裝，優質米",
+              "quantity": 5,
+              "min_stock_alert": 4,
+              "photo": null,
+              "category": {
+                "id": "331e8400-e29b-41d4-a716-446655440031",
+                "name": "食品",
+                "parent_id": null,
+                "children": {
+                  "id": "331e8400-e29b-41d4-a716-446655440044",
+                  "name": "主食",
+                  "parent_id": "331e8400-e29b-41d4-a716-446655440031",
+                  "children": {
+                    "id": "331e8400-e29b-41d4-a716-446655440054",
+                    "name": "米類",
+                    "parent_id": "331e8400-e29b-41d4-a716-446655440044",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_id": "4",
+      "quantity": 10,
+      "cabinets": [
+        {
+          "id": "222e8400-e29b-41d4-a716-446655440022",
+          "name": "床頭櫃",
+          "quantity": 8,
+          "items": [
+            {
+              "id": "115e8400-e29b-41d4-a716-446655440015",
+              "name": "香皂",
+              "description": "3入組，抗菌配方",
+              "quantity": 8,
+              "min_stock_alert": 6,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440055",
+                    "name": "香皂",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440042",
+                    "children": null
+                  }
+                }
+              }
+            },
+            {
+              "id": "116e8400-e29b-41d4-a716-446655440016",
+              "name": "去屑洗髮精",
+              "description": "750毫升，去屑配方",
+              "quantity": 3,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": null
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "220e8400-e29b-41d4-a716-446655440020",
+          "name": "收納櫃",
+          "quantity": 2,
+          "items": [
+            {
+              "id": "116e8400-e29b-41d4-a716-446655440016",
+              "name": "去屑洗髮精",
+              "description": "750毫升，去屑配方",
+              "quantity": 3,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440052",
+                    "name": "洗髮精",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440042",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room_id": null,
+      "quantity": 11,
+      "cabinets": [
+        {
+          "id": "223e8400-e29b-41d4-a716-446655440023",
+          "name": "臨時儲物櫃",
+          "quantity": 4,
+          "items": [
+            {
+              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "name": "抽取式衛生紙",
+              "description": "3層，130張 × 12包",
+              "quantity": 10,
+              "min_stock_alert": 8,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440043",
+                  "name": "衛生用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440053",
+                    "name": "衛生紙",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440043",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "224e8400-e29b-41d4-a716-446655440024",
+          "name": "備用儲物櫃",
+          "quantity": 4,
+          "items": [
+            {
+              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "name": "抽取式衛生紙",
+              "description": "3層，130張 × 12包",
+              "quantity": 10,
+              "min_stock_alert": 8,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440043",
+                  "name": "衛生用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440053",
+                    "name": "衛生紙",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440043",
+                    "children": null
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": null,
+          "name": "未命名櫥櫃",
+          "quantity": 3,
+          "items": [
+            {
+              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "name": "抽取式衛生紙",
+              "description": "3層，130張 × 12包",
+              "quantity": 9,
+              "min_stock_alert": 8,
+              "photo": null,
+              "category": {
+                "id": "332e8400-e29b-41d4-a716-446655440032",
+                "name": "日用品",
+                "parent_id": null,
+                "children": {
+                  "id": "332e8400-e29b-41d4-a716-446655440042",
+                  "name": "清潔用品",
+                  "parent_id": "332e8400-e29b-41d4-a716-446655440032",
+                  "children": {
+                    "id": "332e8400-e29b-41d4-a716-446655440052",
+                    "name": "洗髮精",
+                    "parent_id": "332e8400-e29b-41d4-a716-446655440042",
+                    "children": null
+                  }
+                }
+              }
             }
           ]
         }

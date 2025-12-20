@@ -4,19 +4,15 @@ import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:get/get.dart';
 
-class RouterUtil extends GetxService
-    implements NavigatorObserver {
+class RouterUtil extends GetxService implements NavigatorObserver {
   // MARK: - Properties
 
   final GlobalKey<NavigatorState> rootNavigatorKey =
       GlobalKey<NavigatorState>();
-  BuildContext? get rootContext =>
-      rootNavigatorKey.currentContext;
-  NavigatorState? get rootNavigator =>
-      rootNavigatorKey.currentState;
+  BuildContext? get rootContext => rootNavigatorKey.currentContext;
+  NavigatorState? get rootNavigator => rootNavigatorKey.currentState;
   String get initRouterPath => EnumRootRouter.splash.path;
-  List<GetPage<dynamic>> get getRouterPages =>
-      EnumRootRouter.pages;
+  List<GetPage<dynamic>> get getRouterPages => EnumRootRouter.pages;
 
   // MARK: - Init
 

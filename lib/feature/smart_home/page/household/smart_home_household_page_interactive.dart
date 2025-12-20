@@ -12,8 +12,7 @@ extension SmartHomeHouseholdPageUserEventExtension
     dynamic data,
   }) {
     switch (type) {
-      case EnumSmartHomeHouseholdPageInteractive
-            .tapHomeItem:
+      case EnumSmartHomeHouseholdPageInteractive.tapHomeItem:
         if (data is int) {
           // data 是家庭索引
           switchHousehold(data);

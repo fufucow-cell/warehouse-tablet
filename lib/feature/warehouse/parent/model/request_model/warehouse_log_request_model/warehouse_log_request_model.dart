@@ -7,7 +7,7 @@ part 'warehouse_log_request_model.g.dart';
 class WarehouseLogRequestModel with _$WarehouseLogRequestModel {
   factory WarehouseLogRequestModel({
     @JsonKey(name: 'log_id') String? logId,
-    @JsonKey(name: 'home_id') String? homeId,
+    @JsonKey(name: 'household_id') String? homeId,
     @JsonKey(name: 'after_time') int? afterTime,
     @JsonKey(name: 'operate_type') int? operateType,
     @JsonKey(name: 'item_type') int? itemType,

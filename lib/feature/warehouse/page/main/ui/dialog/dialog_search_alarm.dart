@@ -56,8 +56,7 @@ class _SearchAlarmDialogWidget extends StatefulWidget {
       _SearchAlarmDialogWidgetState();
 }
 
-class _SearchAlarmDialogWidgetState
-    extends State<_SearchAlarmDialogWidget> {
+class _SearchAlarmDialogWidgetState extends State<_SearchAlarmDialogWidget> {
   DateTime? _startDate;
   DateTime? _endDate;
 
@@ -75,34 +74,25 @@ class _SearchAlarmDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final dialogInsetPadding =
-        30.0.scale > 0 ? 30.0.scale : 30.0;
+    final dialogInsetPadding = 30.0.scale > 0 ? 30.0.scale : 30.0;
     return Dialog(
       insetPadding: EdgeInsets.all(dialogInsetPadding),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final screenWidth =
-              MediaQuery.of(context).size.width;
+          final screenWidth = MediaQuery.of(context).size.width;
           final scale600 = 600.0.scale;
           final scale60 = 60.0.scale;
           final scale40 = 40.0.scale;
           final scale8 = 8.0.scale;
-          final dialogMaxWidth =
-              scale600 > 0 ? scale600 : 600.0;
-          final insetPaddingValue =
-              scale60 > 0 ? scale60 : 60.0;
-          final containerPaddingValue =
-              scale40 > 0 ? scale40 : 40.0;
-          final horizontalPaddingValue =
-              scale8 > 0 ? scale8 : 8.0;
-          final screenMinusPadding =
-              screenWidth - (insetPaddingValue * 2);
-          final dialogWidth =
-              (dialogMaxWidth < screenMinusPadding)
-                  ? dialogMaxWidth
-                  : screenMinusPadding;
-          final maxHeight =
-              MediaQuery.of(context).size.height * 0.8;
+          final dialogMaxWidth = scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue = scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue = scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue = scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding = screenWidth - (insetPaddingValue * 2);
+          final dialogWidth = (dialogMaxWidth < screenMinusPadding)
+              ? dialogMaxWidth
+              : screenMinusPadding;
+          final maxHeight = MediaQuery.of(context).size.height * 0.8;
           return Container(
             width: dialogWidth,
             padding: EdgeInsets.all(containerPaddingValue),
@@ -117,17 +107,13 @@ class _SearchAlarmDialogWidgetState
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                    CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Title 居中
                   Center(
                     child: Text(
                       EnumLocale.searchTitle.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -144,11 +130,9 @@ class _SearchAlarmDialogWidgetState
                         Expanded(
                           child: TextButton.icon(
                             onPressed: () async {
-                              final pickedDate =
-                                  await showDatePicker(
+                              final pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: _startDate ??
-                                    DateTime.now(),
+                                initialDate: _startDate ?? DateTime.now(),
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(2100),
                               );
@@ -164,8 +148,7 @@ class _SearchAlarmDialogWidgetState
                             label: Text(
                               _startDate != null
                                   ? '${EnumLocale.searchStartDateLabel.tr}：${_formatDate(_startDate!)}'
-                                  : EnumLocale
-                                      .searchStartDate.tr,
+                                  : EnumLocale.searchStartDate.tr,
                             ),
                           ),
                         ),
@@ -180,8 +163,7 @@ class _SearchAlarmDialogWidgetState
                                 _startDate = null;
                               });
                             },
-                            tooltip: EnumLocale
-                                .searchClearStartDate.tr,
+                            tooltip: EnumLocale.searchClearStartDate.tr,
                           ),
                       ],
                     ),
@@ -198,11 +180,9 @@ class _SearchAlarmDialogWidgetState
                         Expanded(
                           child: TextButton.icon(
                             onPressed: () async {
-                              final pickedDate =
-                                  await showDatePicker(
+                              final pickedDate = await showDatePicker(
                                 context: context,
-                                initialDate: _endDate ??
-                                    DateTime.now(),
+                                initialDate: _endDate ?? DateTime.now(),
                                 firstDate: DateTime(2000),
                                 lastDate: DateTime(2100),
                               );
@@ -218,8 +198,7 @@ class _SearchAlarmDialogWidgetState
                             label: Text(
                               _endDate != null
                                   ? '${EnumLocale.searchEndDateLabel.tr}：${_formatDate(_endDate!)}'
-                                  : EnumLocale
-                                      .searchEndDate.tr,
+                                  : EnumLocale.searchEndDate.tr,
                             ),
                           ),
                         ),
@@ -234,8 +213,7 @@ class _SearchAlarmDialogWidgetState
                                 _endDate = null;
                               });
                             },
-                            tooltip: EnumLocale
-                                .searchClearEndDate.tr,
+                            tooltip: EnumLocale.searchClearEndDate.tr,
                           ),
                       ],
                     ),
@@ -246,8 +224,7 @@ class _SearchAlarmDialogWidgetState
                       horizontal: horizontalPaddingValue,
                     ),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         OutlinedButton(
                           onPressed: () {

@@ -19,13 +19,13 @@ class WarehouseCabinetPageController extends BasePageController {
 
   @override
   Future<void> apiProcessing() async {
-    final response = await ApiUtil.sendRequest<WarehouseCabinetResponseModel>(
+    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
       EnumApiInfo.cabinetFetch,
       requestModel: WarehouseCabinetRequestModel(),
-      fromJson: WarehouseCabinetResponseModel.fromJson,
+      fromJson: WarehouseItemResponseModel.fromJson,
     );
 
-    _model.allCabinets = response.data;
+    // _model.allCabinets = response?.data;
     _applyFilters();
     update();
   }
@@ -60,17 +60,6 @@ class WarehouseCabinetPageController extends BasePageController {
     }
 
     // 按房間筛选
-    if (_model.filterRoomId != null) {
-      final filterRoomId = _model.filterRoomId;
-      filteredCabinets = filteredCabinets.where((cabinet) {
-        // 如果筛选条件是特殊值 '__UNSET__'，筛选 room_id 为 null 的櫥櫃
-        if (filterRoomId == '__UNSET__') {
-          return cabinet.roomId == null;
-        }
-        // 否则按 room_id 匹配
-        return cabinet.roomId == filterRoomId;
-      }).toList();
-    }
 
     _model.cabinets = filteredCabinets;
   }
@@ -84,6 +73,6 @@ class WarehouseCabinetPageController extends BasePageController {
   // 删除橱柜
   void deleteCabinet(Cabinet cabinet) {
     // TODO: 实现删除橱柜的逻辑
-    print('删除橱柜: ${cabinet.name} (${cabinet.cabinetId})');
+    // print('删除橱柜: ${cabinet.name} (${cabinet.cabinetId})');
   }
 }

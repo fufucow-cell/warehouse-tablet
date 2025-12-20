@@ -20,17 +20,14 @@ class LoginUIButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        final controller =
-            Get.find<AppLoginPageController>();
-        final isDisabled = controller.isLoading ||
-            !controller.isButtonEnabled;
+        final controller = Get.find<AppLoginPageController>();
+        final isDisabled = controller.isLoading || !controller.isButtonEnabled;
         final onPressed = isDisabled
             ? null
             : () => controller.interactive(
                   type == LoginActionButtonType.login
                       ? EnumAppLoginPageInteractive.tapLogin
-                      : EnumAppLoginPageInteractive
-                          .tapRegister,
+                      : EnumAppLoginPageInteractive.tapRegister,
                 );
 
         if (type == LoginActionButtonType.login) {
@@ -39,8 +36,7 @@ class LoginUIButton extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -49,8 +45,7 @@ class LoginUIButton extends StatelessWidget {
                   ? const SizedBox(
                       height: 20,
                       width: 20,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 2),
+                      child: CircularProgressIndicator(strokeWidth: 2),
                     )
                   : Text(
                       EnumLocale.loginButton.tr,
@@ -64,8 +59,7 @@ class LoginUIButton extends StatelessWidget {
             child: OutlinedButton(
               onPressed: onPressed,
               style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16),
+                padding: const EdgeInsets.symmetric(vertical: 16),
                 side: const BorderSide(color: Colors.white),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -73,8 +67,7 @@ class LoginUIButton extends StatelessWidget {
               ),
               child: Text(
                 EnumLocale.registerButton.tr,
-                style: const TextStyle(
-                    fontSize: 16, color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
           );

@@ -6,7 +6,7 @@ part 'household.g.dart';
 @freezed
 class Household with _$Household {
   factory Household({
-    @JsonKey(name: 'home_id') String? homeId,
+    @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'home_name') String? homeName,
     @JsonKey(name: 'role_type') int? roleType,
   }) = _Household;

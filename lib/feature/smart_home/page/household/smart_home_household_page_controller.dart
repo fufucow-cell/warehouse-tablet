@@ -36,7 +36,7 @@ class SmartHomeHouseholdPageController extends BasePageController {
     _model.currentHouseholdIndex = 0;
     final households = _homeService.getUserData?.household;
     if (households != null && households.isNotEmpty) {
-      _model.homeId = households.first.homeId;
+      _model.householdId = households.first.householdId;
     }
   }
 
@@ -55,7 +55,7 @@ class SmartHomeHouseholdPageController extends BasePageController {
     final response = await ApiUtil.sendRequest<HomeHouseholdResponseModel>(
       EnumApiInfo.homeFetch,
       requestModel: HomeHouseholdRequestModel(
-        homeId: _model.homeId?.toString(),
+        householdId: _model.householdId?.toString(),
       ),
       fromJson: HomeHouseholdResponseModel.fromJson,
     );
@@ -92,11 +92,11 @@ class SmartHomeHouseholdPageController extends BasePageController {
     }
 
     _model.currentHouseholdIndex = index;
-    final newHomeId = households[index].homeId;
-    _model.homeId = newHomeId;
+    final newHouseholdId = households[index].householdId;
+    _model.householdId = newHouseholdId;
 
-    // 先从已保存的数据中查找该家庭的数据
-    final cachedData = _homeService.getHouseholdDataByHomeId(newHomeId);
+    // 先從已保存的數據中查找該家庭的數據
+    final cachedData = _homeService.getHouseholdDataById(newHouseholdId);
     if (cachedData != null) {
       // 如果已有缓存数据，直接使用，不需要调用 API
       _model.householdData = cachedData;

@@ -13,8 +13,7 @@ part 'smart_home_setting_page_interactive.dart';
 part 'smart_home_setting_page_model.dart';
 part 'smart_home_setting_page_route.dart';
 
-class SmartHomeSettingPage
-    extends GetView<SmartHomeSettingPageController> {
+class SmartHomeSettingPage extends GetView<SmartHomeSettingPageController> {
   const SmartHomeSettingPage({super.key});
 
   @override
@@ -35,8 +34,7 @@ class SmartHomeSettingPage
 class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.find<SmartHomeSettingPageController>();
+    final controller = Get.find<SmartHomeSettingPageController>();
     final localeUtil = LocaleUtil.instance;
 
     return ListView(
@@ -64,10 +62,7 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               EnumLocale.languageTitle.tr,
-              style: Theme.of(Get.context!)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(
+              style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -103,16 +98,13 @@ class _Body extends StatelessWidget {
   ) {
     return GetBuilder<SmartHomeSettingPageController>(
       builder: (_) {
-        final isSelected =
-            controller.isCurrentLocale(locale);
+        final isSelected = controller.isCurrentLocale(locale);
         return ListTile(
           title: Text(displayName),
           trailing: isSelected
               ? Icon(
                   Icons.check,
-                  color: Theme.of(Get.context!)
-                      .colorScheme
-                      .primary,
+                  color: Theme.of(Get.context!).colorScheme.primary,
                 )
               : null,
           onTap: () => controller.switchLocale(locale),
@@ -133,10 +125,7 @@ class _Body extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               '主題設定',
-              style: Theme.of(Get.context!)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(
+              style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -167,9 +156,7 @@ class _Body extends StatelessWidget {
           trailing: isSelected
               ? Icon(
                   Icons.check,
-                  color: Theme.of(Get.context!)
-                      .colorScheme
-                      .primary,
+                  color: Theme.of(Get.context!).colorScheme.primary,
                 )
               : null,
           onTap: () => controller.switchTheme(theme),

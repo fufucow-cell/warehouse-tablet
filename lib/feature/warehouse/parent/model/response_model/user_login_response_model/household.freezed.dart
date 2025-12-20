@@ -20,8 +20,8 @@ Household _$HouseholdFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Household {
-  @JsonKey(name: 'home_id')
-  String? get homeId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'household_id')
+  String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'home_name')
   String? get homeName => throw _privateConstructorUsedError;
   @JsonKey(name: 'role_type')
@@ -39,7 +39,7 @@ abstract class $HouseholdCopyWith<$Res> {
       _$HouseholdCopyWithImpl<$Res, Household>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'home_name') String? homeName,
       @JsonKey(name: 'role_type') int? roleType});
 }
@@ -57,14 +57,14 @@ class _$HouseholdCopyWithImpl<$Res, $Val extends Household>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? homeName = freezed,
     Object? roleType = freezed,
   }) {
     return _then(_value.copyWith(
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       homeName: freezed == homeName
           ? _value.homeName
@@ -87,7 +87,7 @@ abstract class _$$HouseholdImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'home_name') String? homeName,
       @JsonKey(name: 'role_type') int? roleType});
 }
@@ -103,14 +103,14 @@ class __$$HouseholdImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? homeName = freezed,
     Object? roleType = freezed,
   }) {
     return _then(_$HouseholdImpl(
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       homeName: freezed == homeName
           ? _value.homeName
@@ -128,7 +128,7 @@ class __$$HouseholdImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$HouseholdImpl implements _Household {
   _$HouseholdImpl(
-      {@JsonKey(name: 'home_id') this.homeId,
+      {@JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'home_name') this.homeName,
       @JsonKey(name: 'role_type') this.roleType});
 
@@ -136,8 +136,8 @@ class _$HouseholdImpl implements _Household {
       _$$HouseholdImplFromJson(json);
 
   @override
-  @JsonKey(name: 'home_id')
-  final String? homeId;
+  @JsonKey(name: 'household_id')
+  final String? householdId;
   @override
   @JsonKey(name: 'home_name')
   final String? homeName;
@@ -147,7 +147,7 @@ class _$HouseholdImpl implements _Household {
 
   @override
   String toString() {
-    return 'Household(homeId: $homeId, homeName: $homeName, roleType: $roleType)';
+    return 'Household(householdId: $householdId, homeName: $homeName, roleType: $roleType)';
   }
 
   @override
@@ -155,7 +155,8 @@ class _$HouseholdImpl implements _Household {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HouseholdImpl &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.homeName, homeName) ||
                 other.homeName == homeName) &&
             (identical(other.roleType, roleType) ||
@@ -164,7 +165,7 @@ class _$HouseholdImpl implements _Household {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, homeId, homeName, roleType);
+  int get hashCode => Object.hash(runtimeType, householdId, homeName, roleType);
 
   @JsonKey(ignore: true)
   @override
@@ -182,7 +183,7 @@ class _$HouseholdImpl implements _Household {
 
 abstract class _Household implements Household {
   factory _Household(
-      {@JsonKey(name: 'home_id') final String? homeId,
+      {@JsonKey(name: 'household_id') final String? householdId,
       @JsonKey(name: 'home_name') final String? homeName,
       @JsonKey(name: 'role_type') final int? roleType}) = _$HouseholdImpl;
 
@@ -190,8 +191,8 @@ abstract class _Household implements Household {
       _$HouseholdImpl.fromJson;
 
   @override
-  @JsonKey(name: 'home_id')
-  String? get homeId;
+  @JsonKey(name: 'household_id')
+  String? get householdId;
   @override
   @JsonKey(name: 'home_name')
   String? get homeName;

@@ -7,8 +7,7 @@ class AppService {
   // MARK: - Properties
 
   final _model = AppServiceModel();
-  UserLoginResponseModel? get getUserData =>
-      _model.userLoginData;
+  UserLoginResponseModel? get getUserData => _model.userLoginData;
 
   // MARK: - Init
 

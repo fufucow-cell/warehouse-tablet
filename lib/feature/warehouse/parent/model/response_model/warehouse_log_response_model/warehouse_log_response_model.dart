@@ -5,8 +5,7 @@ part 'warehouse_log_response_model.freezed.dart';
 part 'warehouse_log_response_model.g.dart';
 
 @freezed
-class WarehouseLogResponseModel
-    with _$WarehouseLogResponseModel {
+class WarehouseLogResponseModel with _$WarehouseLogResponseModel {
   factory WarehouseLogResponseModel({
     int? code,
     String? message,

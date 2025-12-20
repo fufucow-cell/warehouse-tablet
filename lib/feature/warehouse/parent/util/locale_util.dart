@@ -11,20 +11,15 @@ class LocaleUtil extends GetxService {
   // MARK: - Properties
 
   final localeVersion = '1.0.0';
-  LocaleTranslation _currentTranslation =
-      LocaleTranslation.system;
-  LocaleTranslation get currentTranslation =>
-      _currentTranslation;
-  LocaleTranslation _systemTranslation =
-      LocaleTranslation.defaultTranslation;
+  LocaleTranslation _currentTranslation = LocaleTranslation.system;
+  LocaleTranslation get currentTranslation => _currentTranslation;
+  LocaleTranslation _systemTranslation = LocaleTranslation.defaultTranslation;
   LocaleTranslation get getDefaultTranslation =>
       LocaleTranslation.defaultTranslation;
   Locale get getCurrentLocale =>
       _convertLocaleFromTranslation(currentTranslation);
-  String get getCurrentLocaleCode =>
-      _convertCodeFromLocale(getCurrentLocale);
-  Locale get getDefaultLocale =>
-      _convertLocaleFromTranslation(
+  String get getCurrentLocaleCode => _convertCodeFromLocale(getCurrentLocale);
+  Locale get getDefaultLocale => _convertLocaleFromTranslation(
         LocaleTranslation.defaultTranslation,
       );
 
@@ -65,8 +60,7 @@ class LocaleUtil extends GetxService {
       await _saveToStorage(newTranslation);
       _currentTranslation = newTranslation;
       final locale = getCurrentLocale;
-      EnumLocale.setCurrentTranslation(
-          _convertTranslationFromLocale(locale));
+      EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
       await Get.updateLocale(locale);
       return true;
     } on Exception catch (e) {
@@ -107,15 +101,12 @@ class LocaleUtil extends GetxService {
     final deviceLocale = Get.deviceLocale;
 
     if (deviceLocale == null) {
-      _systemTranslation =
-          LocaleTranslation.defaultTranslation;
+      _systemTranslation = LocaleTranslation.defaultTranslation;
     } else {
-      final translation =
-          _convertTranslationFromLocale(deviceLocale);
+      final translation = _convertTranslationFromLocale(deviceLocale);
 
       if (translation == LocaleTranslation.system) {
-        _systemTranslation =
-            LocaleTranslation.defaultTranslation;
+        _systemTranslation = LocaleTranslation.defaultTranslation;
       } else {
         _systemTranslation = translation;
       }
@@ -171,8 +162,7 @@ class LocaleUtil extends GetxService {
     final parts = code.split('_');
     final language = parts[0];
     final country = parts.length > 1 ? parts[1] : null;
-    final sameLanguage = LocaleTranslation
-        .getAvalibleLocales
+    final sameLanguage = LocaleTranslation.getAvalibleLocales
         .where((e) => e.languageCode == language)
         .toList();
 
@@ -181,8 +171,7 @@ class LocaleUtil extends GetxService {
     }
 
     if (country != null) {
-      final matchedByCountry =
-          sameLanguage.firstWhereOrNull(
+      final matchedByCountry = sameLanguage.firstWhereOrNull(
         (e) => e.countryCode == country,
       );
 
@@ -200,11 +189,9 @@ class LocaleUtil extends GetxService {
       final savedCode = StorageUtil.read<String?>(
         EnumStorageKey.locale,
       );
-      _currentTranslation =
-          _convertTranslationfromCode(savedCode);
+      _currentTranslation = _convertTranslationfromCode(savedCode);
       final locale = getCurrentLocale;
-      EnumLocale.setCurrentTranslation(
-          _convertTranslationFromLocale(locale));
+      EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
       await Get.updateLocale(locale);
       LogUtil.i(
         EnumLogType.storage,
@@ -220,10 +207,9 @@ class LocaleUtil extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     // 保存完整的 languageCode，包括 'system' 特殊值
-    final codeToSave =
-        newTranslation == LocaleTranslation.system
-            ? 'system'
-            : newTranslation.languageCode;
+    final codeToSave = newTranslation == LocaleTranslation.system
+        ? 'system'
+        : newTranslation.languageCode;
     await StorageUtil.write(
       EnumStorageKey.locale,
       codeToSave,

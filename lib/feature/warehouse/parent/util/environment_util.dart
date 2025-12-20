@@ -7,22 +7,15 @@ class EnvironmentUtil extends GetxService {
 
   /// 運行環境
   final Rx<EnumEnvironment> _currentEnvironment;
-  EnumEnvironment get currentEnvironment =>
-      _currentEnvironment.value;
-  String get apiBaseUrl =>
-      _currentEnvironment.value.apiBaseUrl;
-  String get environmentName =>
-      _currentEnvironment.value.displayName;
+  EnumEnvironment get currentEnvironment => _currentEnvironment.value;
+  String get apiBaseUrl => _currentEnvironment.value.apiBaseUrl;
+  String get environmentName => _currentEnvironment.value.displayName;
 
   /// 環境判斷
-  bool get isDev =>
-      _currentEnvironment.value == EnumEnvironment.dev;
-  bool get isStg =>
-      _currentEnvironment.value == EnumEnvironment.stg;
-  bool get isUat =>
-      _currentEnvironment.value == EnumEnvironment.uat;
-  bool get isPrd =>
-      _currentEnvironment.value == EnumEnvironment.prd;
+  bool get isDev => _currentEnvironment.value == EnumEnvironment.dev;
+  bool get isStg => _currentEnvironment.value == EnumEnvironment.stg;
+  bool get isUat => _currentEnvironment.value == EnumEnvironment.uat;
+  bool get isPrd => _currentEnvironment.value == EnumEnvironment.prd;
 
   /// 調試模式判斷
   bool get isDebugMode => kDebugMode;
@@ -33,8 +26,7 @@ class EnvironmentUtil extends GetxService {
   // MARK: - Init
 
   EnvironmentUtil._internal({EnumEnvironment? environment})
-      : _currentEnvironment =
-            (environment ?? EnumEnvironment.prd).obs;
+      : _currentEnvironment = (environment ?? EnumEnvironment.prd).obs;
 
   // MARK: - Public Method
 
@@ -51,8 +43,7 @@ class EnvironmentUtil extends GetxService {
       return Get.find<EnvironmentUtil>();
     }
 
-    final EnvironmentUtil service =
-        EnvironmentUtil._internal(
+    final EnvironmentUtil service = EnvironmentUtil._internal(
       environment: env ?? _getLaunchEnvironment(),
     );
 

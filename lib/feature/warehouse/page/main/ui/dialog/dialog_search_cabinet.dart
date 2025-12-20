@@ -60,8 +60,7 @@ class _SearchCabinetDialogWidget extends StatefulWidget {
 
 class _SearchCabinetDialogWidgetState
     extends State<_SearchCabinetDialogWidget> {
-  final TextEditingController _nameController =
-      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   String? _selectedRoomId;
 
   @override
@@ -90,34 +89,25 @@ class _SearchCabinetDialogWidgetState
         )
         .toList();
 
-    final dialogInsetPadding =
-        30.0.scale > 0 ? 30.0.scale : 30.0;
+    final dialogInsetPadding = 30.0.scale > 0 ? 30.0.scale : 30.0;
     return Dialog(
       insetPadding: EdgeInsets.all(dialogInsetPadding),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final screenWidth =
-              MediaQuery.of(context).size.width;
+          final screenWidth = MediaQuery.of(context).size.width;
           final scale600 = 600.0.scale;
           final scale60 = 60.0.scale;
           final scale40 = 40.0.scale;
           final scale8 = 8.0.scale;
-          final dialogMaxWidth =
-              scale600 > 0 ? scale600 : 600.0;
-          final insetPaddingValue =
-              scale60 > 0 ? scale60 : 60.0;
-          final containerPaddingValue =
-              scale40 > 0 ? scale40 : 40.0;
-          final horizontalPaddingValue =
-              scale8 > 0 ? scale8 : 8.0;
-          final screenMinusPadding =
-              screenWidth - (insetPaddingValue * 2);
-          final dialogWidth =
-              (dialogMaxWidth < screenMinusPadding)
-                  ? dialogMaxWidth
-                  : screenMinusPadding;
-          final maxHeight =
-              MediaQuery.of(context).size.height * 0.8;
+          final dialogMaxWidth = scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue = scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue = scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue = scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding = screenWidth - (insetPaddingValue * 2);
+          final dialogWidth = (dialogMaxWidth < screenMinusPadding)
+              ? dialogMaxWidth
+              : screenMinusPadding;
+          final maxHeight = MediaQuery.of(context).size.height * 0.8;
           return Container(
             width: dialogWidth,
             padding: EdgeInsets.all(containerPaddingValue),
@@ -132,17 +122,13 @@ class _SearchCabinetDialogWidgetState
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                    CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Title 居中
                   Center(
                     child: Text(
                       EnumLocale.searchTitle.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -157,8 +143,7 @@ class _SearchCabinetDialogWidgetState
                       controller: _nameController,
                       decoration: InputDecoration(
                         labelText: EnumLocale.searchName.tr,
-                        hintText: EnumLocale
-                            .searchNameHintCabinet.tr,
+                        hintText: EnumLocale.searchNameHintCabinet.tr,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -178,8 +163,7 @@ class _SearchCabinetDialogWidgetState
                       items: [
                         DropdownMenuItem<String?>(
                           value: null,
-                          child:
-                              Text(EnumLocale.optionAll.tr),
+                          child: Text(EnumLocale.optionAll.tr),
                         ),
                         // 未設定選項（用特殊值標記）
                         DropdownMenuItem<String?>(
@@ -209,8 +193,7 @@ class _SearchCabinetDialogWidgetState
                       horizontal: horizontalPaddingValue,
                     ),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         OutlinedButton(
                           onPressed: () {
@@ -226,12 +209,9 @@ class _SearchCabinetDialogWidgetState
                           onPressed: () {
                             Navigator.of(context).pop();
                             widget.onConfirm?.call(
-                              name: _nameController.text
-                                      .trim()
-                                      .isEmpty
+                              name: _nameController.text.trim().isEmpty
                                   ? null
-                                  : _nameController.text
-                                      .trim(),
+                                  : _nameController.text.trim(),
                               roomId: _selectedRoomId,
                             );
                           },

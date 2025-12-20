@@ -20,15 +20,13 @@ Item _$ItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Item {
-  @JsonKey(name: 'item_id')
-  String? get itemId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert => throw _privateConstructorUsedError;
-  String? get photo => throw _privateConstructorUsedError;
-  List<Room>? get rooms => throw _privateConstructorUsedError;
+  dynamic get photo => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,13 +40,12 @@ abstract class $ItemCopyWith<$Res> {
       _$ItemCopyWithImpl<$Res, Item>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'item_id') String? itemId,
+      {String? id,
       String? name,
       String? description,
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
-      String? photo,
-      List<Room>? rooms,
+      dynamic photo,
       Category? category});
 
   $CategoryCopyWith<$Res>? get category;
@@ -67,19 +64,18 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itemId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? quantity = freezed,
     Object? minStockAlert = freezed,
     Object? photo = freezed,
-    Object? rooms = freezed,
     Object? category = freezed,
   }) {
     return _then(_value.copyWith(
-      itemId: freezed == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -100,11 +96,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rooms: freezed == rooms
-          ? _value.rooms
-          : rooms // ignore: cast_nullable_to_non_nullable
-              as List<Room>?,
+              as dynamic,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -133,13 +125,12 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'item_id') String? itemId,
+      {String? id,
       String? name,
       String? description,
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
-      String? photo,
-      List<Room>? rooms,
+      dynamic photo,
       Category? category});
 
   @override
@@ -156,19 +147,18 @@ class __$$ItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? itemId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? quantity = freezed,
     Object? minStockAlert = freezed,
     Object? photo = freezed,
-    Object? rooms = freezed,
     Object? category = freezed,
   }) {
     return _then(_$ItemImpl(
-      itemId: freezed == itemId
-          ? _value.itemId
-          : itemId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -189,11 +179,7 @@ class __$$ItemImplCopyWithImpl<$Res>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as String?,
-      rooms: freezed == rooms
-          ? _value._rooms
-          : rooms // ignore: cast_nullable_to_non_nullable
-              as List<Room>?,
+              as dynamic,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -206,22 +192,19 @@ class __$$ItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ItemImpl implements _Item {
   _$ItemImpl(
-      {@JsonKey(name: 'item_id') this.itemId,
+      {this.id,
       this.name,
       this.description,
       this.quantity,
       @JsonKey(name: 'min_stock_alert') this.minStockAlert,
       this.photo,
-      final List<Room>? rooms,
-      this.category})
-      : _rooms = rooms;
+      this.category});
 
   factory _$ItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemImplFromJson(json);
 
   @override
-  @JsonKey(name: 'item_id')
-  final String? itemId;
+  final String? id;
   @override
   final String? name;
   @override
@@ -232,23 +215,13 @@ class _$ItemImpl implements _Item {
   @JsonKey(name: 'min_stock_alert')
   final int? minStockAlert;
   @override
-  final String? photo;
-  final List<Room>? _rooms;
-  @override
-  List<Room>? get rooms {
-    final value = _rooms;
-    if (value == null) return null;
-    if (_rooms is EqualUnmodifiableListView) return _rooms;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final dynamic photo;
   @override
   final Category? category;
 
   @override
   String toString() {
-    return 'Item(itemId: $itemId, name: $name, description: $description, quantity: $quantity, minStockAlert: $minStockAlert, photo: $photo, rooms: $rooms, category: $category)';
+    return 'Item(id: $id, name: $name, description: $description, quantity: $quantity, minStockAlert: $minStockAlert, photo: $photo, category: $category)';
   }
 
   @override
@@ -256,7 +229,7 @@ class _$ItemImpl implements _Item {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ItemImpl &&
-            (identical(other.itemId, itemId) || other.itemId == itemId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -264,24 +237,15 @@ class _$ItemImpl implements _Item {
                 other.quantity == quantity) &&
             (identical(other.minStockAlert, minStockAlert) ||
                 other.minStockAlert == minStockAlert) &&
-            (identical(other.photo, photo) || other.photo == photo) &&
-            const DeepCollectionEquality().equals(other._rooms, _rooms) &&
+            const DeepCollectionEquality().equals(other.photo, photo) &&
             (identical(other.category, category) ||
                 other.category == category));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      itemId,
-      name,
-      description,
-      quantity,
-      minStockAlert,
-      photo,
-      const DeepCollectionEquality().hash(_rooms),
-      category);
+  int get hashCode => Object.hash(runtimeType, id, name, description, quantity,
+      minStockAlert, const DeepCollectionEquality().hash(photo), category);
 
   @JsonKey(ignore: true)
   @override
@@ -299,20 +263,18 @@ class _$ItemImpl implements _Item {
 
 abstract class _Item implements Item {
   factory _Item(
-      {@JsonKey(name: 'item_id') final String? itemId,
+      {final String? id,
       final String? name,
       final String? description,
       final int? quantity,
       @JsonKey(name: 'min_stock_alert') final int? minStockAlert,
-      final String? photo,
-      final List<Room>? rooms,
+      final dynamic photo,
       final Category? category}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
   @override
-  @JsonKey(name: 'item_id')
-  String? get itemId;
+  String? get id;
   @override
   String? get name;
   @override
@@ -323,9 +285,7 @@ abstract class _Item implements Item {
   @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert;
   @override
-  String? get photo;
-  @override
-  List<Room>? get rooms;
+  dynamic get photo;
   @override
   Category? get category;
   @override

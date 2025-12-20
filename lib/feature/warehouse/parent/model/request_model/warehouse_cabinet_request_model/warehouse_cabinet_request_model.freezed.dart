@@ -23,7 +23,7 @@ WarehouseCabinetRequestModel _$WarehouseCabinetRequestModelFromJson(
 mixin _$WarehouseCabinetRequestModel {
   @JsonKey(name: 'cabinet_id')
   String? get cabinetId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId => throw _privateConstructorUsedError;
   @JsonKey(name: 'room_id')
   String? get roomId => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $WarehouseCabinetRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'cabinet_id') String? cabinetId,
-      @JsonKey(name: 'home_id') String? homeId,
+      @JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'room_id') String? roomId});
 }
 
@@ -94,7 +94,7 @@ abstract class _$$WarehouseCabinetRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'cabinet_id') String? cabinetId,
-      @JsonKey(name: 'home_id') String? homeId,
+      @JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'room_id') String? roomId});
 }
 
@@ -138,7 +138,7 @@ class _$WarehouseCabinetRequestModelImpl
     implements _WarehouseCabinetRequestModel {
   _$WarehouseCabinetRequestModelImpl(
       {@JsonKey(name: 'cabinet_id') this.cabinetId,
-      @JsonKey(name: 'home_id') this.homeId,
+      @JsonKey(name: 'household_id') this.homeId,
       @JsonKey(name: 'room_id') this.roomId});
 
   factory _$WarehouseCabinetRequestModelImpl.fromJson(
@@ -149,7 +149,7 @@ class _$WarehouseCabinetRequestModelImpl
   @JsonKey(name: 'cabinet_id')
   final String? cabinetId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   final String? homeId;
   @override
   @JsonKey(name: 'room_id')
@@ -195,7 +195,7 @@ abstract class _WarehouseCabinetRequestModel
     implements WarehouseCabinetRequestModel {
   factory _WarehouseCabinetRequestModel(
           {@JsonKey(name: 'cabinet_id') final String? cabinetId,
-          @JsonKey(name: 'home_id') final String? homeId,
+          @JsonKey(name: 'household_id') final String? homeId,
           @JsonKey(name: 'room_id') final String? roomId}) =
       _$WarehouseCabinetRequestModelImpl;
 
@@ -206,7 +206,7 @@ abstract class _WarehouseCabinetRequestModel
   @JsonKey(name: 'cabinet_id')
   String? get cabinetId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId;
   @override
   @JsonKey(name: 'room_id')

@@ -7,8 +7,7 @@ enum EnumAppMainPageInteractive {
 }
 
 /// AppMainPage 用户事件处理扩展
-extension AppMainPageUserEventExtension
-    on AppMainPageController {
+extension AppMainPageUserEventExtension on AppMainPageController {
   /// 处理用户事件
   void interactive(
     EnumAppMainPageInteractive type, {

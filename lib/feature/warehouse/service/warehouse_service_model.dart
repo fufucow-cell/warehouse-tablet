@@ -5,16 +5,17 @@ class WarehouseServiceModel {
   String? userName;
   String? accessToken;
   String? refreshToken;
-  WarehouseHomeModel? house;
-  List<WarehouseHomeModel> rooms = [];
+  WarehouseNameIdModel? house;
+  List<WarehouseNameIdModel> rooms = [];
   int? userRoleType;
+  List<Room>? allRoomCabinetItems;
 }
 
-class WarehouseHomeModel {
+class WarehouseNameIdModel {
   String? id;
   String? name;
 
-  WarehouseHomeModel({
+  WarehouseNameIdModel({
     required this.id,
     required this.name,
   });

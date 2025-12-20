@@ -6,7 +6,7 @@ part 'home_room_request_model.g.dart';
 @freezed
 class HomeRoomRequestModel with _$HomeRoomRequestModel {
   factory HomeRoomRequestModel({
-    @JsonKey(name: 'home_id') String? homeId,
+    @JsonKey(name: 'household_id') String? homeId,
     @JsonKey(name: 'room_id') String? roomId,
   }) = _HomeRoomRequestModel;
 

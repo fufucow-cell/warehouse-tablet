@@ -4,18 +4,14 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:get/get.dart';
 
-class AppMainRouterUtil extends GetxService
-    implements NavigatorObserver {
+class AppMainRouterUtil extends GetxService implements NavigatorObserver {
   // MARK: - Properties
 
   final GlobalKey<NavigatorState> nestedNavigatorKey =
       GlobalKey<NavigatorState>();
-  BuildContext? get nestedContext =>
-      nestedNavigatorKey.currentContext;
-  NavigatorState? get nestedNavigator =>
-      nestedNavigatorKey.currentState;
-  static EnumAppMainRouter get rootRouter =>
-      EnumAppMainRouter.defaultRouter;
+  BuildContext? get nestedContext => nestedNavigatorKey.currentContext;
+  NavigatorState? get nestedNavigator => nestedNavigatorKey.currentState;
+  static EnumAppMainRouter get rootRouter => EnumAppMainRouter.defaultRouter;
 
   // 維護路由堆疊列表
   final List<String> _routeStack = [];
@@ -30,8 +26,7 @@ class AppMainRouterUtil extends GetxService
     if (Get.isRegistered<AppMainRouterUtil>()) {
       return Get.find<AppMainRouterUtil>();
     }
-    final AppMainRouterUtil service =
-        AppMainRouterUtil._internal();
+    final AppMainRouterUtil service = AppMainRouterUtil._internal();
     Get.put<AppMainRouterUtil>(service, permanent: false);
     return service;
   }
@@ -52,19 +47,15 @@ class AppMainRouterUtil extends GetxService
   }
 
   Route<dynamic> generateRoute(RouteSettings settings) {
-    final router =
-        EnumAppMainRouter.values.firstWhereOrNull(
-              (router) => router.path == settings.name,
-            ) ??
-            rootRouter;
+    final router = EnumAppMainRouter.values.firstWhereOrNull(
+          (router) => router.path == settings.name,
+        ) ??
+        rootRouter;
 
     return PageRouteBuilder(
       settings: settings,
-      pageBuilder:
-          (context, animation, secondaryAnimation) =>
-              router.page(),
-      transitionsBuilder:
-          (context, animation, secondaryAnimation, child) {
+      pageBuilder: (context, animation, secondaryAnimation) => router.page(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,
           child: child,
@@ -132,11 +123,9 @@ class AppMainRouterUtil extends GetxService
     }
 
     final stackInfo = StringBuffer();
-    stackInfo.writeln(
-        '═══════════════════════════════════════════════════');
+    stackInfo.writeln('═══════════════════════════════════════════════════');
     stackInfo.writeln('[Nested Navigator] 路由堆疊狀況');
-    stackInfo.writeln(
-        '═══════════════════════════════════════════════════');
+    stackInfo.writeln('═══════════════════════════════════════════════════');
 
     if (_routeStack.isEmpty) {
       stackInfo.writeln('堆疊為空');
@@ -146,18 +135,14 @@ class AppMainRouterUtil extends GetxService
       for (int i = _routeStack.length - 1; i >= 0; i--) {
         final routeName = _routeStack[i];
         final isTop = i == _routeStack.length - 1;
-        final prefix = isTop
-            ? '👉 [頂部]'
-            : '   [${_routeStack.length - i}]';
+        final prefix = isTop ? '👉 [頂部]' : '   [${_routeStack.length - i}]';
         stackInfo.writeln('$prefix $routeName');
       }
     }
 
     stackInfo.writeln('');
-    stackInfo.writeln(
-        'Navigator.canPop(): ${navigator.canPop()}');
-    stackInfo.writeln(
-        '═══════════════════════════════════════════════════');
+    stackInfo.writeln('Navigator.canPop(): ${navigator.canPop()}');
+    stackInfo.writeln('═══════════════════════════════════════════════════');
 
     LogUtil.i(EnumLogType.navigation, stackInfo.toString());
   }
@@ -168,8 +153,7 @@ class AppMainRouterUtil extends GetxService
   NavigatorState? get navigator => null;
 
   @override
-  void didPush(
-      Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = route.settings.name ?? '未知路由';
     _routeStack.add(routeName);
     LogUtil.i(
@@ -179,11 +163,9 @@ class AppMainRouterUtil extends GetxService
   }
 
   @override
-  void didPop(
-      Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = route.settings.name ?? '未知路由';
-    if (_routeStack.isNotEmpty &&
-        _routeStack.last == routeName) {
+    if (_routeStack.isNotEmpty && _routeStack.last == routeName) {
       _routeStack.removeLast();
     }
     LogUtil.i(
@@ -193,8 +175,7 @@ class AppMainRouterUtil extends GetxService
   }
 
   @override
-  void didRemove(
-      Route<dynamic> route, Route<dynamic>? previousRoute) {
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = route.settings.name ?? '未知路由';
     _routeStack.remove(routeName);
     LogUtil.i(
@@ -204,15 +185,12 @@ class AppMainRouterUtil extends GetxService
   }
 
   @override
-  void didReplace(
-      {Route<dynamic>? newRoute,
-      Route<dynamic>? oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     final oldRouteName = oldRoute?.settings.name ?? '無';
     final newRouteName = newRoute?.settings.name ?? '未知路由';
 
     // 替換堆疊頂部的路由
-    if (_routeStack.isNotEmpty &&
-        _routeStack.last == oldRouteName) {
+    if (_routeStack.isNotEmpty && _routeStack.last == oldRouteName) {
       _routeStack.removeLast();
     }
     _routeStack.add(newRouteName);

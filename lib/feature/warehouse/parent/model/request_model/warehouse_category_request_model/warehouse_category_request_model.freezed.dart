@@ -21,7 +21,7 @@ WarehouseCategoryRequestModel _$WarehouseCategoryRequestModelFromJson(
 
 /// @nodoc
 mixin _$WarehouseCategoryRequestModel {
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   String? get categoryId => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $WarehouseCategoryRequestModelCopyWith<$Res> {
           WarehouseCategoryRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'parent_id') String? parentId,
       int? level});
@@ -100,7 +100,7 @@ abstract class _$$WarehouseCategoryRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'home_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'parent_id') String? parentId,
       int? level});
@@ -150,7 +150,7 @@ class __$$WarehouseCategoryRequestModelImplCopyWithImpl<$Res>
 class _$WarehouseCategoryRequestModelImpl
     implements _WarehouseCategoryRequestModel {
   _$WarehouseCategoryRequestModelImpl(
-      {@JsonKey(name: 'home_id') this.homeId,
+      {@JsonKey(name: 'household_id') this.homeId,
       @JsonKey(name: 'category_id') this.categoryId,
       @JsonKey(name: 'parent_id') this.parentId,
       this.level});
@@ -160,7 +160,7 @@ class _$WarehouseCategoryRequestModelImpl
       _$$WarehouseCategoryRequestModelImplFromJson(json);
 
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   final String? homeId;
   @override
   @JsonKey(name: 'category_id')
@@ -213,7 +213,7 @@ class _$WarehouseCategoryRequestModelImpl
 abstract class _WarehouseCategoryRequestModel
     implements WarehouseCategoryRequestModel {
   factory _WarehouseCategoryRequestModel(
-      {@JsonKey(name: 'home_id') final String? homeId,
+      {@JsonKey(name: 'household_id') final String? homeId,
       @JsonKey(name: 'category_id') final String? categoryId,
       @JsonKey(name: 'parent_id') final String? parentId,
       final int? level}) = _$WarehouseCategoryRequestModelImpl;
@@ -222,7 +222,7 @@ abstract class _WarehouseCategoryRequestModel
       _$WarehouseCategoryRequestModelImpl.fromJson;
 
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId;
   @override
   @JsonKey(name: 'category_id')

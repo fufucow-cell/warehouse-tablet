@@ -13,18 +13,13 @@ class Log with _$Log {
     @JsonKey(name: 'entity_type') int? entityType,
     @JsonKey(name: 'log_type') int? logType,
     @JsonKey(name: 'entity_name') List<String?>? entityName,
-    @JsonKey(name: 'description_name')
-    List<String?>? descriptionName,
-    @JsonKey(name: 'category_name')
-    List<String?>? categoryName,
-    @JsonKey(name: 'quantity_count')
-    List<int?>? quantityCount,
-    @JsonKey(name: 'min_stock_count')
-    List<int?>? minStockCount,
+    @JsonKey(name: 'description_name') List<String?>? descriptionName,
+    @JsonKey(name: 'category_name') List<String?>? categoryName,
+    @JsonKey(name: 'quantity_count') List<int?>? quantityCount,
+    @JsonKey(name: 'min_stock_count') List<int?>? minStockCount,
     @JsonKey(name: 'room_name') List<String?>? roomName,
     @JsonKey(name: 'photo_url') List<String?>? photoUrl,
   }) = _Log;
 
-  factory Log.fromJson(Map<String, dynamic> json) =>
-      _$LogFromJson(json);
+  factory Log.fromJson(Map<String, dynamic> json) => _$LogFromJson(json);
 }

@@ -9,13 +9,13 @@ part of 'home_household_request_model.dart';
 _$HomeHouseholdRequestModelImpl _$$HomeHouseholdRequestModelImplFromJson(
         Map<String, dynamic> json) =>
     _$HomeHouseholdRequestModelImpl(
-      homeId: json['home_id'] as String?,
+      householdId: json['household_id'] as String?,
       homeName: json['home_name'] as String?,
     );
 
 Map<String, dynamic> _$$HomeHouseholdRequestModelImplToJson(
         _$HomeHouseholdRequestModelImpl instance) =>
     <String, dynamic>{
-      'home_id': instance.homeId,
+      'household_id': instance.householdId,
       'home_name': instance.homeName,
     };

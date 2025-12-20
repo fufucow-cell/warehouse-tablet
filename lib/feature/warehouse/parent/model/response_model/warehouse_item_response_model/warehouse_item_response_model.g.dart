@@ -12,7 +12,7 @@ _$WarehouseItemResponseModelImpl _$$WarehouseItemResponseModelImplFromJson(
       code: (json['code'] as num?)?.toInt(),
       message: json['message'] as String?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Room.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

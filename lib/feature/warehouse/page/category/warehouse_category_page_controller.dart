@@ -25,7 +25,7 @@ class WarehouseCategoryPageController extends BasePageController {
       fromJson: WarehouseCategoryResponseModel.fromJson,
     );
 
-    _model.allCategories = response.data;
+    _model.allCategories = response?.data;
     _applyFilters();
     update();
   }
@@ -58,7 +58,8 @@ class WarehouseCategoryPageController extends BasePageController {
 
     // 按階層筛选
     if (_model.filterLevel != null) {
-      filteredCategories = _filterByLevel(filteredCategories, _model.filterLevel!);
+      filteredCategories =
+          _filterByLevel(filteredCategories, _model.filterLevel!);
     }
 
     _model.categories = filteredCategories;
@@ -73,19 +74,19 @@ class WarehouseCategoryPageController extends BasePageController {
       return categoryName.contains(searchName);
     }
 
-    Category? childrenToCategory(Children? children) {
-      if (children == null) return null;
-      return Category(
-        categoryId: children.categoryId,
-        name: children.name,
-        parentId: children.parentId,
-        level: children.level,
-        children: children.children is Map<String, dynamic>
-            ? Children.fromJson(
-                children.children as Map<String, dynamic>,
-              )
-            : null,
-      );
+    Category? childrenToCategory(Category? children) {
+      return null;
+      // if (children == null) return null;
+      // return Category(
+      //   id: children.id,
+      //   name: children.name,
+      //   parentId: children.parentId,
+      //   children: children.children is Map<String, dynamic>
+      //       ? Category.fromJson(
+      //           children.children as Map<String, dynamic>,
+      //         )
+      //       : null,
+      // );
     }
 
     void traverse(Category category, bool parentMatches) {
@@ -97,10 +98,10 @@ class WarehouseCategoryPageController extends BasePageController {
       }
 
       // 遍历子分类
-      final childCategory = childrenToCategory(category.children);
-      if (childCategory != null) {
-        traverse(childCategory, shouldInclude);
-      }
+      // final childCategory = childrenToCategory(category.children);
+      // if (childCategory != null) {
+      //   traverse(childCategory, shouldInclude);
+      // }
     }
 
     for (final category in categories) {
@@ -114,19 +115,19 @@ class WarehouseCategoryPageController extends BasePageController {
   List<Category> _filterByLevel(List<Category> categories, int targetLevel) {
     final List<Category> result = [];
 
-    Category? childrenToCategory(Children? children) {
-      if (children == null) return null;
-      return Category(
-        categoryId: children.categoryId,
-        name: children.name,
-        parentId: children.parentId,
-        level: children.level,
-        children: children.children is Map<String, dynamic>
-            ? Children.fromJson(
-                children.children as Map<String, dynamic>,
-              )
-            : null,
-      );
+    Category? childrenToCategory(Category? children) {
+      return null;
+      // if (children == null) return null;
+      // return Category(
+      //   id: children.id,
+      //   name: children.name,
+      //   parentId: children.parentId,
+      //   children: children.children is Map<String, dynamic>
+      //       ? Category.fromJson(
+      //           children.children as Map<String, dynamic>,
+      //         )
+      //       : null,
+      // );
     }
 
     void traverse(Category category, int currentLevel) {
@@ -134,25 +135,18 @@ class WarehouseCategoryPageController extends BasePageController {
       if (currentLevel == targetLevel) {
         result.add(category);
         // 如果匹配，还需要包含其子分类以保持层级关系
-        final childCategory = childrenToCategory(category.children);
-        if (childCategory != null) {
-          traverse(childCategory, currentLevel + 1);
-        }
+        // final childCategory = childrenToCategory(category.children);
+        // if (childCategory != null) {
+        //   traverse(childCategory, currentLevel + 1);
+        // }
       } else if (currentLevel < targetLevel) {
         // 当前階層小于目标階層，继续向下搜索
-        final childCategory = childrenToCategory(category.children);
-        if (childCategory != null) {
-          traverse(childCategory, currentLevel + 1);
-        }
+        // final childCategory = childrenToCategory(category.children);
+        // if (childCategory != null) {
+        //   traverse(childCategory, currentLevel + 1);
+        // }
       }
       // 如果 currentLevel > targetLevel，不再向下搜索
-    }
-
-    // 从 level 1 开始遍历
-    for (final category in categories) {
-      if (category.level == 1) {
-        traverse(category, 1);
-      }
     }
 
     return result;
@@ -168,85 +162,38 @@ class WarehouseCategoryPageController extends BasePageController {
 
   // 展平树形结构为列表（用于显示）
   List<Category> getFlattenedCategories() {
-    final List<Category> result = [];
-
-    Category? childrenToCategory(
-      Children? children,
-    ) {
-      if (children == null) return null;
-      return Category(
-        categoryId: children.categoryId,
-        name: children.name,
-        parentId: children.parentId,
-        level: children.level,
-        children: children.children is Map<String, dynamic>
-            ? Children.fromJson(
-                children.children as Map<String, dynamic>,
-              )
-            : null,
-      );
-    }
-
-    void traverse(
-      Category? category,
-    ) {
-      if (category == null) return;
-      result.add(category);
-
-      // 如果是 level 1 或 level 2，检查是否展开
-      // 如果未展开，则不遍历子分类（收合状态）
-      final level = category.level ?? 0;
-      if (level == 1 || level == 2) {
-        final isExpanded = _model.expandedCategoryIds.contains(category.categoryId);
-        if (!isExpanded) {
-          return; // 未展开，不显示子分类
-        }
-      }
-
-      // 遍历子分类
-      final childCategory = childrenToCategory(category.children);
-      if (childCategory != null) {
-        traverse(childCategory);
-      }
-    }
-
-    // 使用筛选后的分类列表
-    if (_model.categories != null) {
-      for (final category in _model.categories!) {
-        traverse(category);
-      }
-    }
-    return result;
+    return [];
   }
 
   // 切换分类的展开/收合状态
   void toggleCategoryExpansion(Category category) {
-    final categoryId = category.categoryId;
-    if (categoryId == null) return;
+    // final categoryId = category.categoryId;
+    // if (categoryId == null) return;
 
-    if (_model.expandedCategoryIds.contains(categoryId)) {
-      _model.expandedCategoryIds.remove(categoryId);
-    } else {
-      _model.expandedCategoryIds.add(categoryId);
-    }
-    update();
+    // if (_model.expandedCategoryIds.contains(categoryId)) {
+    //   _model.expandedCategoryIds.remove(categoryId);
+    // } else {
+    //   _model.expandedCategoryIds.add(categoryId);
+    // }
+    // update();
   }
 
   // 检查分类是否展开
   bool isCategoryExpanded(Category category) {
-    return _model.expandedCategoryIds.contains(category.categoryId);
+    // return _model.expandedCategoryIds.contains(category.categoryId);
+    return false;
   }
 
   // 切换编辑模式
   void toggleEditMode() {
-    _model.isEditMode.value = !_model.isEditMode.value;
+    // _model.isEditMode.value = !_model.isEditMode.value;
     // Obx 会自动响应变化，但调用 update() 可以确保其他使用 GetBuilder 的部分也更新
-    update();
+    // update();
   }
 
   // 删除分类
   void deleteCategory(Category category) {
     // TODO: 实现删除分类的逻辑
-    print('删除分类: ${category.name} (${category.categoryId})');
+    // print('删除分类: ${category.name} (${category.categoryId})');
   }
 }

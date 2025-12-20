@@ -23,7 +23,7 @@ WarehouseLogRequestModel _$WarehouseLogRequestModelFromJson(
 mixin _$WarehouseLogRequestModel {
   @JsonKey(name: 'log_id')
   String? get logId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId => throw _privateConstructorUsedError;
   @JsonKey(name: 'after_time')
   int? get afterTime => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $WarehouseLogRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
-      @JsonKey(name: 'home_id') String? homeId,
+      @JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -116,7 +116,7 @@ abstract class _$$WarehouseLogRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
-      @JsonKey(name: 'home_id') String? homeId,
+      @JsonKey(name: 'household_id') String? homeId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -177,7 +177,7 @@ class __$$WarehouseLogRequestModelImplCopyWithImpl<$Res>
 class _$WarehouseLogRequestModelImpl implements _WarehouseLogRequestModel {
   _$WarehouseLogRequestModelImpl(
       {@JsonKey(name: 'log_id') this.logId,
-      @JsonKey(name: 'home_id') this.homeId,
+      @JsonKey(name: 'household_id') this.homeId,
       @JsonKey(name: 'after_time') this.afterTime,
       @JsonKey(name: 'operate_type') this.operateType,
       @JsonKey(name: 'item_type') this.itemType,
@@ -190,7 +190,7 @@ class _$WarehouseLogRequestModelImpl implements _WarehouseLogRequestModel {
   @JsonKey(name: 'log_id')
   final String? logId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   final String? homeId;
   @override
   @JsonKey(name: 'after_time')
@@ -249,7 +249,7 @@ class _$WarehouseLogRequestModelImpl implements _WarehouseLogRequestModel {
 abstract class _WarehouseLogRequestModel implements WarehouseLogRequestModel {
   factory _WarehouseLogRequestModel(
           {@JsonKey(name: 'log_id') final String? logId,
-          @JsonKey(name: 'home_id') final String? homeId,
+          @JsonKey(name: 'household_id') final String? homeId,
           @JsonKey(name: 'after_time') final int? afterTime,
           @JsonKey(name: 'operate_type') final int? operateType,
           @JsonKey(name: 'item_type') final int? itemType,
@@ -263,7 +263,7 @@ abstract class _WarehouseLogRequestModel implements WarehouseLogRequestModel {
   @JsonKey(name: 'log_id')
   String? get logId;
   @override
-  @JsonKey(name: 'home_id')
+  @JsonKey(name: 'household_id')
   String? get homeId;
   @override
   @JsonKey(name: 'after_time')

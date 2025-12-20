@@ -9,8 +9,7 @@ part 'smart_home_scene_page_interactive.dart';
 part 'smart_home_scene_page_model.dart';
 part 'smart_home_scene_page_route.dart';
 
-class SmartHomeScenePage
-    extends GetView<SmartHomeScenePageController> {
+class SmartHomeScenePage extends GetView<SmartHomeScenePageController> {
   const SmartHomeScenePage({super.key});
 
   @override

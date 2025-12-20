@@ -27,9 +27,8 @@ class WarehouseAlarmPageController extends BasePageController {
     );
 
     // 过滤出 log_type = 2 (alarm) 的日志
-    _model.allAlarmLogs = response.data
-        ?.where((log) => log.logType == 2)
-        .toList();
+    _model.allAlarmLogs =
+        response?.data?.where((log) => log.logType == 2).toList();
     _applyFilters();
     update();
   }
@@ -59,7 +58,8 @@ class WarehouseAlarmPageController extends BasePageController {
       filteredLogs = filteredLogs.where((log) {
         if (log.createdAt == null) return false;
 
-        final logDate = DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
+        final logDate =
+            DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
         final logDateOnly = DateTime(logDate.year, logDate.month, logDate.day);
 
         if (_model.startDate != null && _model.endDate != null) {
@@ -201,21 +201,24 @@ class WarehouseAlarmPageController extends BasePageController {
         continue;
       }
 
-      final logDate = DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
+      final logDate =
+          DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
       final logDateOnly = DateTime(logDate.year, logDate.month, logDate.day);
 
       bool shouldDelete = false;
 
       if (startDate != null && endDate != null) {
         // 两个日期都选了：删除范围内的日志（包含起始和结束日期）
-        final startOnly = DateTime(startDate.year, startDate.month, startDate.day);
+        final startOnly =
+            DateTime(startDate.year, startDate.month, startDate.day);
         final endOnly = DateTime(endDate.year, endDate.month, endDate.day);
         shouldDelete = logDateOnly.isAtSameMomentAs(startOnly) ||
             logDateOnly.isAtSameMomentAs(endOnly) ||
             (logDateOnly.isAfter(startOnly) && logDateOnly.isBefore(endOnly));
       } else if (startDate != null) {
         // 只选了起始日期：删除此日期之后的日志
-        final startOnly = DateTime(startDate.year, startDate.month, startDate.day);
+        final startOnly =
+            DateTime(startDate.year, startDate.month, startDate.day);
         shouldDelete = logDateOnly.isAtSameMomentAs(startOnly) ||
             logDateOnly.isAfter(startOnly);
       } else if (endDate != null) {

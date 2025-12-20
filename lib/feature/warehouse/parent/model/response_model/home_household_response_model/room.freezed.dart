@@ -20,10 +20,9 @@ Room _$RoomFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Room {
-  @JsonKey(name: 'room_id')
-  String? get roomId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'home_id')
-  String? get homeId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'household_id')
+  String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'room_name')
   String? get roomName => throw _privateConstructorUsedError;
 
@@ -38,8 +37,8 @@ abstract class $RoomCopyWith<$Res> {
       _$RoomCopyWithImpl<$Res, Room>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'home_id') String? homeId,
+      {String? id,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'room_name') String? roomName});
 }
 
@@ -56,18 +55,18 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? roomId = freezed,
-    Object? homeId = freezed,
+    Object? id = freezed,
+    Object? householdId = freezed,
     Object? roomName = freezed,
   }) {
     return _then(_value.copyWith(
-      roomId: freezed == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       roomName: freezed == roomName
           ? _value.roomName
@@ -85,8 +84,8 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'home_id') String? homeId,
+      {String? id,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'room_name') String? roomName});
 }
 
@@ -100,18 +99,18 @@ class __$$RoomImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? roomId = freezed,
-    Object? homeId = freezed,
+    Object? id = freezed,
+    Object? householdId = freezed,
     Object? roomName = freezed,
   }) {
     return _then(_$RoomImpl(
-      roomId: freezed == roomId
-          ? _value.roomId
-          : roomId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       roomName: freezed == roomName
           ? _value.roomName
@@ -125,26 +124,25 @@ class __$$RoomImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RoomImpl implements _Room {
   _$RoomImpl(
-      {@JsonKey(name: 'room_id') this.roomId,
-      @JsonKey(name: 'home_id') this.homeId,
+      {this.id,
+      @JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'room_name') this.roomName});
 
   factory _$RoomImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoomImplFromJson(json);
 
   @override
-  @JsonKey(name: 'room_id')
-  final String? roomId;
+  final String? id;
   @override
-  @JsonKey(name: 'home_id')
-  final String? homeId;
+  @JsonKey(name: 'household_id')
+  final String? householdId;
   @override
   @JsonKey(name: 'room_name')
   final String? roomName;
 
   @override
   String toString() {
-    return 'Room(roomId: $roomId, homeId: $homeId, roomName: $roomName)';
+    return 'Room(id: $id, householdId: $householdId, roomName: $roomName)';
   }
 
   @override
@@ -152,15 +150,16 @@ class _$RoomImpl implements _Room {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RoomImpl &&
-            (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.roomName, roomName) ||
                 other.roomName == roomName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, homeId, roomName);
+  int get hashCode => Object.hash(runtimeType, id, householdId, roomName);
 
   @JsonKey(ignore: true)
   @override
@@ -178,18 +177,17 @@ class _$RoomImpl implements _Room {
 
 abstract class _Room implements Room {
   factory _Room(
-      {@JsonKey(name: 'room_id') final String? roomId,
-      @JsonKey(name: 'home_id') final String? homeId,
+      {final String? id,
+      @JsonKey(name: 'household_id') final String? householdId,
       @JsonKey(name: 'room_name') final String? roomName}) = _$RoomImpl;
 
   factory _Room.fromJson(Map<String, dynamic> json) = _$RoomImpl.fromJson;
 
   @override
-  @JsonKey(name: 'room_id')
-  String? get roomId;
+  String? get id;
   @override
-  @JsonKey(name: 'home_id')
-  String? get homeId;
+  @JsonKey(name: 'household_id')
+  String? get householdId;
   @override
   @JsonKey(name: 'room_name')
   String? get roomName;

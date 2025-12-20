@@ -20,25 +20,19 @@ class CustScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: leading ??
-            (showBackButton &&
-                    Navigator.of(context).canPop()
+            (showBackButton && Navigator.of(context).canPop()
                 ? IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: () =>
-                        Navigator.of(context).pop(),
+                    onPressed: () => Navigator.of(context).pop(),
                   )
                 : null),
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: Text(
           title ?? 'Title',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge
-              ?.copyWith(
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.white,
               ),
         ),

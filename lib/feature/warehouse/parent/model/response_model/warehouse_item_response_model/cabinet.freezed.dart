@@ -20,10 +20,10 @@ Cabinet _$CabinetFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Cabinet {
-  @JsonKey(name: 'cabinet_id')
-  String? get cabinetId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
+  List<Item>? get items => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,10 +35,7 @@ abstract class $CabinetCopyWith<$Res> {
   factory $CabinetCopyWith(Cabinet value, $Res Function(Cabinet) then) =
       _$CabinetCopyWithImpl<$Res, Cabinet>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'cabinet_id') String? cabinetId,
-      String? name,
-      int? quantity});
+  $Res call({String? id, String? name, int? quantity, List<Item>? items});
 }
 
 /// @nodoc
@@ -54,14 +51,15 @@ class _$CabinetCopyWithImpl<$Res, $Val extends Cabinet>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cabinetId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
     Object? quantity = freezed,
+    Object? items = freezed,
   }) {
     return _then(_value.copyWith(
-      cabinetId: freezed == cabinetId
-          ? _value.cabinetId
-          : cabinetId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -71,6 +69,10 @@ class _$CabinetCopyWithImpl<$Res, $Val extends Cabinet>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      items: freezed == items
+          ? _value.items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<Item>?,
     ) as $Val);
   }
 }
@@ -82,10 +84,7 @@ abstract class _$$CabinetImplCopyWith<$Res> implements $CabinetCopyWith<$Res> {
       __$$CabinetImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'cabinet_id') String? cabinetId,
-      String? name,
-      int? quantity});
+  $Res call({String? id, String? name, int? quantity, List<Item>? items});
 }
 
 /// @nodoc
@@ -99,14 +98,15 @@ class __$$CabinetImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cabinetId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
     Object? quantity = freezed,
+    Object? items = freezed,
   }) {
     return _then(_$CabinetImpl(
-      cabinetId: freezed == cabinetId
-          ? _value.cabinetId
-          : cabinetId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -116,6 +116,10 @@ class __$$CabinetImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      items: freezed == items
+          ? _value._items
+          : items // ignore: cast_nullable_to_non_nullable
+              as List<Item>?,
     ));
   }
 }
@@ -123,23 +127,31 @@ class __$$CabinetImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CabinetImpl implements _Cabinet {
-  _$CabinetImpl(
-      {@JsonKey(name: 'cabinet_id') this.cabinetId, this.name, this.quantity});
+  _$CabinetImpl({this.id, this.name, this.quantity, final List<Item>? items})
+      : _items = items;
 
   factory _$CabinetImpl.fromJson(Map<String, dynamic> json) =>
       _$$CabinetImplFromJson(json);
 
   @override
-  @JsonKey(name: 'cabinet_id')
-  final String? cabinetId;
+  final String? id;
   @override
   final String? name;
   @override
   final int? quantity;
+  final List<Item>? _items;
+  @override
+  List<Item>? get items {
+    final value = _items;
+    if (value == null) return null;
+    if (_items is EqualUnmodifiableListView) return _items;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Cabinet(cabinetId: $cabinetId, name: $name, quantity: $quantity)';
+    return 'Cabinet(id: $id, name: $name, quantity: $quantity, items: $items)';
   }
 
   @override
@@ -147,16 +159,17 @@ class _$CabinetImpl implements _Cabinet {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CabinetImpl &&
-            (identical(other.cabinetId, cabinetId) ||
-                other.cabinetId == cabinetId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.quantity, quantity) ||
-                other.quantity == quantity));
+                other.quantity == quantity) &&
+            const DeepCollectionEquality().equals(other._items, _items));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, cabinetId, name, quantity);
+  int get hashCode => Object.hash(runtimeType, id, name, quantity,
+      const DeepCollectionEquality().hash(_items));
 
   @JsonKey(ignore: true)
   @override
@@ -174,19 +187,21 @@ class _$CabinetImpl implements _Cabinet {
 
 abstract class _Cabinet implements Cabinet {
   factory _Cabinet(
-      {@JsonKey(name: 'cabinet_id') final String? cabinetId,
+      {final String? id,
       final String? name,
-      final int? quantity}) = _$CabinetImpl;
+      final int? quantity,
+      final List<Item>? items}) = _$CabinetImpl;
 
   factory _Cabinet.fromJson(Map<String, dynamic> json) = _$CabinetImpl.fromJson;
 
   @override
-  @JsonKey(name: 'cabinet_id')
-  String? get cabinetId;
+  String? get id;
   @override
   String? get name;
   @override
   int? get quantity;
+  @override
+  List<Item>? get items;
   @override
   @JsonKey(ignore: true)
   _$$CabinetImplCopyWith<_$CabinetImpl> get copyWith =>

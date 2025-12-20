@@ -9,8 +9,7 @@ part 'smart_home_message_page_interactive.dart';
 part 'smart_home_message_page_model.dart';
 part 'smart_home_message_page_route.dart';
 
-class SmartHomeMessagePage
-    extends GetView<SmartHomeMessagePageController> {
+class SmartHomeMessagePage extends GetView<SmartHomeMessagePageController> {
   const SmartHomeMessagePage({super.key});
 
   @override

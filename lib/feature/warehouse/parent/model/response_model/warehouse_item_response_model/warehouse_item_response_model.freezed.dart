@@ -23,7 +23,7 @@ WarehouseItemResponseModel _$WarehouseItemResponseModelFromJson(
 mixin _$WarehouseItemResponseModel {
   int? get code => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  List<Item>? get data => throw _privateConstructorUsedError;
+  List<Room>? get data => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +38,7 @@ abstract class $WarehouseItemResponseModelCopyWith<$Res> {
       _$WarehouseItemResponseModelCopyWithImpl<$Res,
           WarehouseItemResponseModel>;
   @useResult
-  $Res call({int? code, String? message, List<Item>? data});
+  $Res call({int? code, String? message, List<Room>? data});
 }
 
 /// @nodoc
@@ -71,7 +71,7 @@ class _$WarehouseItemResponseModelCopyWithImpl<$Res,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Item>?,
+              as List<Room>?,
     ) as $Val);
   }
 }
@@ -85,7 +85,7 @@ abstract class _$$WarehouseItemResponseModelImplCopyWith<$Res>
       __$$WarehouseItemResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? code, String? message, List<Item>? data});
+  $Res call({int? code, String? message, List<Room>? data});
 }
 
 /// @nodoc
@@ -117,7 +117,7 @@ class __$$WarehouseItemResponseModelImplCopyWithImpl<$Res>
       data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Item>?,
+              as List<Room>?,
     ));
   }
 }
@@ -126,7 +126,7 @@ class __$$WarehouseItemResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$WarehouseItemResponseModelImpl implements _WarehouseItemResponseModel {
   _$WarehouseItemResponseModelImpl(
-      {this.code, this.message, final List<Item>? data})
+      {this.code, this.message, final List<Room>? data})
       : _data = data;
 
   factory _$WarehouseItemResponseModelImpl.fromJson(
@@ -137,9 +137,9 @@ class _$WarehouseItemResponseModelImpl implements _WarehouseItemResponseModel {
   final int? code;
   @override
   final String? message;
-  final List<Item>? _data;
+  final List<Room>? _data;
   @override
-  List<Item>? get data {
+  List<Room>? get data {
     final value = _data;
     if (value == null) return null;
     if (_data is EqualUnmodifiableListView) return _data;
@@ -187,7 +187,7 @@ abstract class _WarehouseItemResponseModel
   factory _WarehouseItemResponseModel(
       {final int? code,
       final String? message,
-      final List<Item>? data}) = _$WarehouseItemResponseModelImpl;
+      final List<Room>? data}) = _$WarehouseItemResponseModelImpl;
 
   factory _WarehouseItemResponseModel.fromJson(Map<String, dynamic> json) =
       _$WarehouseItemResponseModelImpl.fromJson;
@@ -197,7 +197,7 @@ abstract class _WarehouseItemResponseModel
   @override
   String? get message;
   @override
-  List<Item>? get data;
+  List<Room>? get data;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseItemResponseModelImplCopyWith<_$WarehouseItemResponseModelImpl>

@@ -14,8 +14,7 @@ part 'warehouse_alarm_page_interactive.dart';
 part 'warehouse_alarm_page_model.dart';
 part 'warehouse_alarm_page_route.dart';
 
-class WarehouseAlarmPage
-    extends GetView<WarehouseAlarmPageController> {
+class WarehouseAlarmPage extends GetView<WarehouseAlarmPageController> {
   const WarehouseAlarmPage({super.key});
 
   @override
@@ -74,16 +73,13 @@ class _Body extends StatelessWidget {
             // 编辑模式下的工具栏（全选和批次删除）
             Obx(
               () {
-                final isEditMode =
-                    controller.isEditModeRx.value;
+                final isEditMode = controller.isEditModeRx.value;
                 if (!isEditMode) {
                   return const SizedBox.shrink();
                 }
 
-                final selectedCount =
-                    controller.selectedLogIdsRx.length;
-                final isAllSelected =
-                    controller.isAllSelected;
+                final selectedCount = controller.selectedLogIdsRx.length;
+                final isAllSelected = controller.isAllSelected;
 
                 return Container(
                   padding: const EdgeInsets.symmetric(
@@ -98,24 +94,17 @@ class _Body extends StatelessWidget {
                         children: [
                           TextButton.icon(
                             onPressed: isAllSelected
-                                ? () =>
-                                    controller.deselectAll()
-                                : () =>
-                                    controller.selectAll(),
+                                ? () => controller.deselectAll()
+                                : () => controller.selectAll(),
                             icon: Icon(
                               isAllSelected
                                   ? Icons.check_box
-                                  : Icons
-                                      .check_box_outline_blank,
+                                  : Icons.check_box_outline_blank,
                             ),
                             label: Text(
                               isAllSelected
-                                  ? EnumLocale
-                                      .warehouseDeselectAll
-                                      .tr
-                                  : EnumLocale
-                                      .warehouseSelectAll
-                                      .tr,
+                                  ? EnumLocale.warehouseDeselectAll.tr
+                                  : EnumLocale.warehouseSelectAll.tr,
                             ),
                           ),
                           const SizedBox(width: 16.0),
@@ -125,16 +114,12 @@ class _Body extends StatelessWidget {
                             children: [
                               TextButton.icon(
                                 onPressed: () async {
-                                  final pickedDate =
-                                      await showDatePicker(
+                                  final pickedDate = await showDatePicker(
                                     context: context,
-                                    initialDate: controller
-                                            .startDate ??
-                                        DateTime.now(),
-                                    firstDate:
-                                        DateTime(2000),
-                                    lastDate:
-                                        DateTime(2100),
+                                    initialDate:
+                                        controller.startDate ?? DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
                                   );
                                   if (pickedDate != null) {
                                     controller.setStartDate(
@@ -146,28 +131,22 @@ class _Body extends StatelessWidget {
                                   Icons.calendar_today,
                                 ),
                                 label: Text(
-                                  controller.startDate !=
-                                          null
+                                  controller.startDate != null
                                       ? '${EnumLocale.warehouseStartDateLabel.tr}${_formatDate(controller.startDate!)}'
-                                      : EnumLocale
-                                          .warehouseStartDate
-                                          .tr,
+                                      : EnumLocale.warehouseStartDate.tr,
                                 ),
                               ),
-                              if (controller.startDate !=
-                                  null)
+                              if (controller.startDate != null)
                                 IconButton(
                                   icon: const Icon(
                                     Icons.close,
                                     size: 20,
                                   ),
                                   onPressed: () {
-                                    controller
-                                        .setStartDate(null);
+                                    controller.setStartDate(null);
                                   },
-                                  tooltip: EnumLocale
-                                      .warehouseClearStartDate
-                                      .tr,
+                                  tooltip:
+                                      EnumLocale.warehouseClearStartDate.tr,
                                 ),
                             ],
                           ),
@@ -178,16 +157,12 @@ class _Body extends StatelessWidget {
                             children: [
                               TextButton.icon(
                                 onPressed: () async {
-                                  final pickedDate =
-                                      await showDatePicker(
+                                  final pickedDate = await showDatePicker(
                                     context: context,
-                                    initialDate: controller
-                                            .endDate ??
-                                        DateTime.now(),
-                                    firstDate:
-                                        DateTime(2000),
-                                    lastDate:
-                                        DateTime(2100),
+                                    initialDate:
+                                        controller.endDate ?? DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2100),
                                   );
                                   if (pickedDate != null) {
                                     controller.setEndDate(
@@ -201,36 +176,28 @@ class _Body extends StatelessWidget {
                                 label: Text(
                                   controller.endDate != null
                                       ? '${EnumLocale.warehouseEndDateLabel.tr}${_formatDate(controller.endDate!)}'
-                                      : EnumLocale
-                                          .warehouseEndDate
-                                          .tr,
+                                      : EnumLocale.warehouseEndDate.tr,
                                 ),
                               ),
-                              if (controller.endDate !=
-                                  null)
+                              if (controller.endDate != null)
                                 IconButton(
                                   icon: const Icon(
                                     Icons.close,
                                     size: 20,
                                   ),
                                   onPressed: () {
-                                    controller
-                                        .setEndDate(null);
+                                    controller.setEndDate(null);
                                   },
-                                  tooltip: EnumLocale
-                                      .warehouseClearEndDate
-                                      .tr,
+                                  tooltip: EnumLocale.warehouseClearEndDate.tr,
                                 ),
                             ],
                           ),
                           const Spacer(),
                           // 日期删除提示文字（在删除按钮左边）
-                          if (controller.startDate !=
-                                  null ||
+                          if (controller.startDate != null ||
                               controller.endDate != null)
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(
+                              padding: const EdgeInsets.only(
                                 right: 8.0,
                               ),
                               child: Text(
@@ -247,26 +214,17 @@ class _Body extends StatelessWidget {
                           // 批次删除按钮（基于选中项）
                           if (selectedCount > 0)
                             TextButton.icon(
-                              onPressed: () =>
-                                  controller.batchDelete(),
-                              icon:
-                                  const Icon(Icons.delete),
-                              label: Text(EnumLocale
-                                  .warehouseDeleteButton
-                                  .tr),
+                              onPressed: () => controller.batchDelete(),
+                              icon: const Icon(Icons.delete),
+                              label: Text(EnumLocale.warehouseDeleteButton.tr),
                             ),
                           // 按日期删除按钮
-                          if (controller.startDate !=
-                                  null ||
+                          if (controller.startDate != null ||
                               controller.endDate != null)
                             TextButton.icon(
-                              onPressed: () =>
-                                  controller.deleteByDate(),
-                              icon:
-                                  const Icon(Icons.delete),
-                              label: Text(EnumLocale
-                                  .warehouseDeleteButton
-                                  .tr),
+                              onPressed: () => controller.deleteByDate(),
+                              icon: const Icon(Icons.delete),
+                              label: Text(EnumLocale.warehouseDeleteButton.tr),
                             ),
                         ],
                       ),
@@ -302,8 +260,7 @@ class _AlarmItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.find<WarehouseAlarmPageController>();
+    final controller = Get.find<WarehouseAlarmPageController>();
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8.0),
@@ -316,19 +273,16 @@ class _AlarmItem extends StatelessWidget {
             // 编辑模式下的复选框
             Obx(
               () {
-                final isEditMode =
-                    controller.isEditModeRx.value;
+                final isEditMode = controller.isEditModeRx.value;
                 if (!isEditMode) {
                   return const SizedBox.shrink();
                 }
 
                 final isSelected = log.logId != null &&
-                    controller.selectedLogIdsRx
-                        .contains(log.logId!);
+                    controller.selectedLogIdsRx.contains(log.logId!);
 
                 return Padding(
-                  padding:
-                      const EdgeInsets.only(right: 16.0),
+                  padding: const EdgeInsets.only(right: 16.0),
                   child: Checkbox(
                     value: isSelected,
                     onChanged: log.logId != null
@@ -344,8 +298,7 @@ class _AlarmItem extends StatelessWidget {
             ),
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // 物品名称（title）
                   Text(
@@ -373,11 +326,9 @@ class _AlarmItem extends StatelessWidget {
 
   String _getItemName() {
     final entityNameList = log.entityName;
-    if (entityNameList != null &&
-        entityNameList.isNotEmpty) {
+    if (entityNameList != null && entityNameList.isNotEmpty) {
       // 如果是更新操作，优先显示新名称
-      if (entityNameList.length >= 2 &&
-          entityNameList[1] != null) {
+      if (entityNameList.length >= 2 && entityNameList[1] != null) {
         return entityNameList[1]!;
       }
       // 否则显示第一个值
@@ -408,16 +359,13 @@ class _AlarmItem extends StatelessWidget {
 
     // 处理数量变更
     final quantityCountList = log.quantityCount;
-    if (quantityCountList != null &&
-        quantityCountList.isNotEmpty) {
+    if (quantityCountList != null && quantityCountList.isNotEmpty) {
       if (quantityCountList.length >= 2) {
         contents.add(
           Text(
             EnumLocale.warehouseQuantityChange.tr
-                .replaceAll('{from}',
-                    _formatIntValue(quantityCountList[0]))
-                .replaceAll('{to}',
-                    _formatIntValue(quantityCountList[1])),
+                .replaceAll('{from}', _formatIntValue(quantityCountList[0]))
+                .replaceAll('{to}', _formatIntValue(quantityCountList[1])),
             style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -429,16 +377,13 @@ class _AlarmItem extends StatelessWidget {
 
     // 处理库存报警数量变更
     final minStockCountList = log.minStockCount;
-    if (minStockCountList != null &&
-        minStockCountList.isNotEmpty) {
+    if (minStockCountList != null && minStockCountList.isNotEmpty) {
       if (minStockCountList.length >= 2) {
         contents.add(
           Text(
             EnumLocale.warehouseStockAlertChange.tr
-                .replaceAll('{from}',
-                    _formatIntValue(minStockCountList[0]))
-                .replaceAll('{to}',
-                    _formatIntValue(minStockCountList[1])),
+                .replaceAll('{from}', _formatIntValue(minStockCountList[0]))
+                .replaceAll('{to}', _formatIntValue(minStockCountList[1])),
             style: const TextStyle(
               fontSize: 14,
               color: Colors.black87,
@@ -459,8 +404,7 @@ class _AlarmItem extends StatelessWidget {
     int? minStockCount;
 
     // 获取当前数量（新值或当前值）
-    if (quantityCountList != null &&
-        quantityCountList.isNotEmpty) {
+    if (quantityCountList != null && quantityCountList.isNotEmpty) {
       if (quantityCountList.length >= 2) {
         // 更新操作，取新值
         currentQuantity = quantityCountList[1];
@@ -471,8 +415,7 @@ class _AlarmItem extends StatelessWidget {
     }
 
     // 获取库存报警数量（新值或当前值）
-    if (minStockCountList != null &&
-        minStockCountList.isNotEmpty) {
+    if (minStockCountList != null && minStockCountList.isNotEmpty) {
       if (minStockCountList.length >= 2) {
         // 更新操作，取新值
         minStockCount = minStockCountList[1];

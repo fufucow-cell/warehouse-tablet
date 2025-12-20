@@ -28,8 +28,7 @@ const Map<String, String> koKR = {
 
   // 디바이스
   'device_unsupported': '지원되지 않는 디바이스',
-  'device_unsupported_message':
-      '이 애플리케이션은 모바일 및 태블릿 디바이스만 지원합니다',
+  'device_unsupported_message': '이 애플리케이션은 모바일 및 태블릿 디바이스만 지원합니다',
 
   // 창고 관련
   'warehouse_title': '창고',
@@ -105,8 +104,7 @@ const Map<String, String> koKR = {
   'create_category_selected': '기존 카테고리 선택됨',
   'create_category_select_level1_first': '먼저 계층 1을 선택하세요',
   'create_category_select_level2_first': '먼저 계층 2를 선택하세요',
-  'create_category_select_new_to_create':
-      '새 카테고리를 만들려면 "새 카테고리"를 선택하세요',
+  'create_category_select_new_to_create': '새 카테고리를 만들려면 "새 카테고리"를 선택하세요',
   'create_category_input_level1_name': '계층 1 새 이름을 입력하세요',
   'create_category_input_level2_name': '계층 2 새 이름을 입력하세요',
   'create_category_input_level3_name': '계층 3 새 이름을 입력하세요',
@@ -194,8 +192,7 @@ const Map<String, String> koKR = {
   'warehouse_create_item': '항목 추가',
   'warehouse_quantity_change': '수량: {from} → {to}',
   'warehouse_stock_alert_change': '재고 알림: {from} → {to}',
-  'warehouse_current_quantity':
-      '현재 수량: {quantity}, 재고 미만: {minStock}',
+  'warehouse_current_quantity': '현재 수량: {quantity}, 재고 미만: {minStock}',
   'warehouse_name_label': '이름：',
   'warehouse_description_change': '설명: {from} → {to}',
   'warehouse_category_change': '카테고리: {from} → {to}',

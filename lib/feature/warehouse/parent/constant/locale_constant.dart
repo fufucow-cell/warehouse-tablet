@@ -38,8 +38,7 @@ class LocaleTranslation extends Translations {
   });
 
   /// 系統語言（跟隨系統）
-  static final LocaleTranslation system =
-      LocaleTranslation._(
+  static final LocaleTranslation system = LocaleTranslation._(
     languageCode: 'system',
     countryCode: null,
     displayName: '跟隨系統',
@@ -97,8 +96,7 @@ class LocaleTranslation extends Translations {
       String code = locale.languageCode;
 
       if (locale.countryCode != null) {
-        code =
-            '${locale.languageCode}_${locale.countryCode}';
+        code = '${locale.languageCode}_${locale.countryCode}';
       }
 
       result[code] = locale.translationMap;

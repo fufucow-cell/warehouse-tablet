@@ -17,12 +17,9 @@ enum EnumLogType {
   alarm;
 
   EnumLocale get titleLocale => switch (this) {
-        EnumLogType.unknown =>
-          EnumLocale.warehouseLogTypeUnknown,
-        EnumLogType.general =>
-          EnumLocale.warehouseLogTypeGeneral,
-        EnumLogType.alarm =>
-          EnumLocale.warehouseLogTypeAlarm,
+        EnumLogType.unknown => EnumLocale.warehouseLogTypeUnknown,
+        EnumLogType.general => EnumLocale.warehouseLogTypeGeneral,
+        EnumLogType.alarm => EnumLocale.warehouseLogTypeAlarm,
       };
 
   String get title => titleLocale.tr;
@@ -44,14 +41,10 @@ enum EnumOperateType {
   delete;
 
   EnumLocale get titleLocale => switch (this) {
-        EnumOperateType.unknown =>
-          EnumLocale.warehouseOperateTypeUnknown,
-        EnumOperateType.create =>
-          EnumLocale.warehouseOperateTypeCreate,
-        EnumOperateType.update =>
-          EnumLocale.warehouseOperateTypeUpdate,
-        EnumOperateType.delete =>
-          EnumLocale.warehouseOperateTypeDelete,
+        EnumOperateType.unknown => EnumLocale.warehouseOperateTypeUnknown,
+        EnumOperateType.create => EnumLocale.warehouseOperateTypeCreate,
+        EnumOperateType.update => EnumLocale.warehouseOperateTypeUpdate,
+        EnumOperateType.delete => EnumLocale.warehouseOperateTypeDelete,
       };
 
   String get title => titleLocale.tr;
@@ -75,12 +68,9 @@ enum EnumEntityType {
   item;
 
   EnumLocale get titleLocale => switch (this) {
-        EnumEntityType.unknown =>
-          EnumLocale.warehouseEntityTypeUnknown,
-        EnumEntityType.cabinet =>
-          EnumLocale.warehouseEntityTypeCabinet,
-        EnumEntityType.item =>
-          EnumLocale.warehouseEntityTypeItem,
+        EnumEntityType.unknown => EnumLocale.warehouseEntityTypeUnknown,
+        EnumEntityType.cabinet => EnumLocale.warehouseEntityTypeCabinet,
+        EnumEntityType.item => EnumLocale.warehouseEntityTypeItem,
       };
 
   String get title => titleLocale.tr;

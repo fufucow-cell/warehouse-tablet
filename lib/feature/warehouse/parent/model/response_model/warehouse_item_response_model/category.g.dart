@@ -8,18 +8,18 @@ part of 'category.dart';
 
 _$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
     _$CategoryImpl(
-      categoryId: json['category_id'] as String?,
+      id: json['id'] as String?,
       name: json['name'] as String?,
-      level: (json['level'] as num?)?.toInt(),
+      parentId: json['parent_id'] as String?,
       children: json['children'] == null
           ? null
-          : Children.fromJson(json['children'] as Map<String, dynamic>),
+          : Category.fromJson(json['children'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$CategoryImplToJson(_$CategoryImpl instance) =>
     <String, dynamic>{
-      'category_id': instance.categoryId,
+      'id': instance.id,
       'name': instance.name,
-      'level': instance.level,
+      'parent_id': instance.parentId,
       'children': instance.children?.toJson(),
     };

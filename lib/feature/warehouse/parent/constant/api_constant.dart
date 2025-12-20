@@ -4,8 +4,7 @@ enum EnumApiInfo {
   userRegister('auth/register', EnumApiMethod.post),
   userLogout('auth/logout', EnumApiMethod.post),
   tokenRefresh('auth/refresh', EnumApiMethod.post),
-  forgotPassword(
-      'auth/forgot-password', EnumApiMethod.post),
+  forgotPassword('auth/forgot-password', EnumApiMethod.post),
   resetPassword('auth/reset-password', EnumApiMethod.post),
   // Home APIs
   homeCreate('home', EnumApiMethod.post),

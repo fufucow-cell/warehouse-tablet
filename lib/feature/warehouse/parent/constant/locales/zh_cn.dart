@@ -192,8 +192,7 @@ const Map<String, String> zhCN = {
   'warehouse_create_item': '新增物品',
   'warehouse_quantity_change': '数量：{from} → {to}',
   'warehouse_stock_alert_change': '库存警报：{from} → {to}',
-  'warehouse_current_quantity':
-      '当前数量：{quantity}，低于库存数量：{minStock}',
+  'warehouse_current_quantity': '当前数量：{quantity}，低于库存数量：{minStock}',
   'warehouse_name_label': '名称：',
   'warehouse_description_change': '描述：{from} → {to}',
   'warehouse_category_change': '分类：{from} → {to}',

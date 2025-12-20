@@ -22,8 +22,6 @@ Room _$RoomFromJson(Map<String, dynamic> json) {
 mixin _$Room {
   @JsonKey(name: 'room_id')
   String? get roomId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'room_name')
-  String? get roomName => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
   List<Cabinet>? get cabinets => throw _privateConstructorUsedError;
 
@@ -39,7 +37,6 @@ abstract class $RoomCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'room_name') String? roomName,
       int? quantity,
       List<Cabinet>? cabinets});
 }
@@ -58,7 +55,6 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
   @override
   $Res call({
     Object? roomId = freezed,
-    Object? roomName = freezed,
     Object? quantity = freezed,
     Object? cabinets = freezed,
   }) {
@@ -66,10 +62,6 @@ class _$RoomCopyWithImpl<$Res, $Val extends Room>
       roomId: freezed == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      roomName: freezed == roomName
-          ? _value.roomName
-          : roomName // ignore: cast_nullable_to_non_nullable
               as String?,
       quantity: freezed == quantity
           ? _value.quantity
@@ -92,7 +84,6 @@ abstract class _$$RoomImplCopyWith<$Res> implements $RoomCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'room_name') String? roomName,
       int? quantity,
       List<Cabinet>? cabinets});
 }
@@ -108,7 +99,6 @@ class __$$RoomImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? roomId = freezed,
-    Object? roomName = freezed,
     Object? quantity = freezed,
     Object? cabinets = freezed,
   }) {
@@ -116,10 +106,6 @@ class __$$RoomImplCopyWithImpl<$Res>
       roomId: freezed == roomId
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      roomName: freezed == roomName
-          ? _value.roomName
-          : roomName // ignore: cast_nullable_to_non_nullable
               as String?,
       quantity: freezed == quantity
           ? _value.quantity
@@ -138,7 +124,6 @@ class __$$RoomImplCopyWithImpl<$Res>
 class _$RoomImpl implements _Room {
   _$RoomImpl(
       {@JsonKey(name: 'room_id') this.roomId,
-      @JsonKey(name: 'room_name') this.roomName,
       this.quantity,
       final List<Cabinet>? cabinets})
       : _cabinets = cabinets;
@@ -149,9 +134,6 @@ class _$RoomImpl implements _Room {
   @override
   @JsonKey(name: 'room_id')
   final String? roomId;
-  @override
-  @JsonKey(name: 'room_name')
-  final String? roomName;
   @override
   final int? quantity;
   final List<Cabinet>? _cabinets;
@@ -166,7 +148,7 @@ class _$RoomImpl implements _Room {
 
   @override
   String toString() {
-    return 'Room(roomId: $roomId, roomName: $roomName, quantity: $quantity, cabinets: $cabinets)';
+    return 'Room(roomId: $roomId, quantity: $quantity, cabinets: $cabinets)';
   }
 
   @override
@@ -175,8 +157,6 @@ class _$RoomImpl implements _Room {
         (other.runtimeType == runtimeType &&
             other is _$RoomImpl &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.roomName, roomName) ||
-                other.roomName == roomName) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
             const DeepCollectionEquality().equals(other._cabinets, _cabinets));
@@ -184,7 +164,7 @@ class _$RoomImpl implements _Room {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, roomId, roomName, quantity,
+  int get hashCode => Object.hash(runtimeType, roomId, quantity,
       const DeepCollectionEquality().hash(_cabinets));
 
   @JsonKey(ignore: true)
@@ -204,7 +184,6 @@ class _$RoomImpl implements _Room {
 abstract class _Room implements Room {
   factory _Room(
       {@JsonKey(name: 'room_id') final String? roomId,
-      @JsonKey(name: 'room_name') final String? roomName,
       final int? quantity,
       final List<Cabinet>? cabinets}) = _$RoomImpl;
 
@@ -213,9 +192,6 @@ abstract class _Room implements Room {
   @override
   @JsonKey(name: 'room_id')
   String? get roomId;
-  @override
-  @JsonKey(name: 'room_name')
-  String? get roomName;
   @override
   int? get quantity;
   @override

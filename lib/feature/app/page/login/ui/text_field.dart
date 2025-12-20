@@ -44,10 +44,8 @@ class LoginUITextField extends StatelessWidget {
     } else {
       return Obx(
         () {
-          final controller =
-              Get.find<AppLoginPageController>();
-          final isPasswordVisible =
-              controller.isPasswordVisible;
+          final controller = Get.find<AppLoginPageController>();
+          final isPasswordVisible = controller.isPasswordVisible;
           return TextField(
             controller: controller.passwordController,
             obscureText: !isPasswordVisible,
@@ -56,13 +54,10 @@ class LoginUITextField extends StatelessWidget {
               prefixIcon: const Icon(Icons.lock),
               suffixIcon: IconButton(
                 icon: Icon(
-                  isPasswordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off,
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                 ),
                 onPressed: () => controller.interactive(
-                  EnumAppLoginPageInteractive
-                      .tapPasswordVisibility,
+                  EnumAppLoginPageInteractive.tapPasswordVisibility,
                 ),
               ),
               filled: true,

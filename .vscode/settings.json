@@ -3,7 +3,7 @@
   "dart.flutterSdkPath": ".fvm/versions/3.22.2",
 
   // Dart 格式化设置
-  "dart.lineLength": 60,
+  "dart.lineLength": 150,
   "dart.enableSdkFormatter": true,
   "dart.insertArgumentPlaceholders": false,
   "dart.showTodos": true,
@@ -14,7 +14,7 @@
   "[dart]": {
     "editor.formatOnSave": true,
     "editor.formatOnType": true,
-    "editor.rulers": [60],
+    "editor.rulers": [150],
     "editor.selectionHighlight": true,
     "editor.suggest.snippetsPreventQuickSuggestions": false,
     "editor.suggestSelection": "first",

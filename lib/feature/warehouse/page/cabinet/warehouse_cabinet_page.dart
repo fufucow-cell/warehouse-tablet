@@ -3,8 +3,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/cabinet.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_cabinet_response_model/warehouse_cabinet_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/warehouse_item_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -14,8 +14,7 @@ part 'warehouse_cabinet_page_interactive.dart';
 part 'warehouse_cabinet_page_model.dart';
 part 'warehouse_cabinet_page_route.dart';
 
-class WarehouseCabinetPage
-    extends GetView<WarehouseCabinetPageController> {
+class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
   const WarehouseCabinetPage({super.key});
 
   @override
@@ -71,8 +70,7 @@ class _CabinetItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.find<WarehouseCabinetPageController>();
+    final controller = Get.find<WarehouseCabinetPageController>();
 
     return Card(
       margin: const EdgeInsets.only(bottom: 8.0),
@@ -88,44 +86,40 @@ class _CabinetItem extends StatelessWidget {
             const SizedBox(width: 16.0),
             Expanded(
               child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    cabinet.name ??
-                        EnumLocale
-                            .warehouseUnnamedCabinet.tr,
+                    cabinet.name ?? EnumLocale.warehouseUnnamedCabinet.tr,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 4.0),
-                  Text(
-                    '${EnumLocale.warehouseRoomLabel.tr}${cabinet.roomName ?? EnumLocale.optionNotSet.tr}',
-                    style: const TextStyle(
+                  const Text(
+                    '1',
+                    style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey,
                     ),
                   ),
-                  if (cabinet.description != null) ...[
-                    const SizedBox(height: 4.0),
-                    Text(
-                      '${EnumLocale.warehouseDescriptionLabel.tr}${cabinet.description}',
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
+                  // if (cabinet.description != null) ...[
+                  //   const SizedBox(height: 4.0),
+                  //   Text(
+                  //     '${EnumLocale.warehouseDescriptionLabel.tr}${cabinet.description}',
+                  //     style: const TextStyle(
+                  //       fontSize: 14,
+                  //       color: Colors.grey,
+                  //     ),
+                  //   ),
+                  // ],
                 ],
               ),
             ),
             // 编辑模式下显示删除按钮
             Obx(
               () {
-                final isEditMode =
-                    controller.isEditModeRx.value;
+                final isEditMode = controller.isEditModeRx.value;
                 if (isEditMode) {
                   return IconButton(
                     icon: const Icon(

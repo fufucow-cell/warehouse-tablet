@@ -1,25 +1,21 @@
 part of 'warehouse_main_page.dart';
 
-class WarehouseMainPageController
-    extends BasePageController {
+class WarehouseMainPageController extends BasePageController {
   // MARK: - Properties
 
   final _model = WarehouseMainPageModel();
   TabController? _tabController;
 
   TabController? get tabController => _tabController;
-  bool get isTabControllerReady => _tabController != null;
+  bool get isTabControllerReady => _model.isTabControllerReady.value;
+  RxBool get isTabControllerReadyRx => _model.isTabControllerReady;
 
-  EnumWarehouseTabItem get selectedItem =>
-      _model.selectedItem.value;
-  Rx<EnumWarehouseTabItem> get selectedItemRx =>
-      _model.selectedItem;
-  List<Tab> get tabs => EnumWarehouseTabItem.values
-      .map((item) => Tab(text: item.title))
-      .toList();
-  List<Widget> get tabViews => EnumWarehouseTabItem.values
-      .map((item) => item.page)
-      .toList();
+  EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
+  Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
+  List<Tab> get tabs =>
+      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews =>
+      EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
   // MARK: - Init
 
@@ -32,17 +28,15 @@ class WarehouseMainPageController
   }
 
   void initTabController(TickerProvider vsync) {
-    // 如果已经初始化，先清理
     _disposeTabController();
-
     _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex: EnumWarehouseTabItem.values
-          .indexOf(_model.selectedItem.value),
+      initialIndex:
+          EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
     );
     _tabController!.addListener(_onTabChanged);
-    update();
+    isTabControllerReadyRx.value = true;
   }
 
   @override
@@ -74,6 +68,7 @@ class WarehouseMainPageController
         // TabController 可能已经被 dispose，忽略错误
       }
       _tabController = null;
+      _model.isTabControllerReady.value = false;
     }
   }
 

@@ -8,8 +8,7 @@ part 'smart_home_room_page_interactive.dart';
 part 'smart_home_room_page_model.dart';
 part 'smart_home_room_page_route.dart';
 
-class SmartHomeRoomPage
-    extends GetView<SmartHomeRoomPageController> {
+class SmartHomeRoomPage extends GetView<SmartHomeRoomPageController> {
   const SmartHomeRoomPage({super.key});
 
   @override

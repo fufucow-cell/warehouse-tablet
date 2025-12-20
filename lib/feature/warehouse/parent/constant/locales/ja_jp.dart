@@ -28,8 +28,7 @@ const Map<String, String> jaJP = {
 
   // デバイス
   'device_unsupported': 'サポートされていないデバイス',
-  'device_unsupported_message':
-      'このアプリケーションはモバイルとタブレットデバイスのみをサポートしています',
+  'device_unsupported_message': 'このアプリケーションはモバイルとタブレットデバイスのみをサポートしています',
 
   // 倉庫関連
   'warehouse_title': '倉庫',
@@ -105,8 +104,7 @@ const Map<String, String> jaJP = {
   'create_category_selected': '既存カテゴリが選択されました',
   'create_category_select_level1_first': 'まず階層1を選択してください',
   'create_category_select_level2_first': 'まず階層2を選択してください',
-  'create_category_select_new_to_create':
-      '新規カテゴリを作成するには「新規カテゴリ」を選択してください',
+  'create_category_select_new_to_create': '新規カテゴリを作成するには「新規カテゴリ」を選択してください',
   'create_category_input_level1_name': '階層1の新規名前を入力してください',
   'create_category_input_level2_name': '階層2の新規名前を入力してください',
   'create_category_input_level3_name': '階層3の新規名前を入力してください',
@@ -176,8 +174,7 @@ const Map<String, String> jaJP = {
   'warehouse_room_label': '部屋：',
   'warehouse_description_label': '説明：',
   'warehouse_error_fetch_data': 'データの取得に失敗しました：{error}',
-  'warehouse_error_open_dialog':
-      '検索ダイアログを開くのに失敗しました：{error}',
+  'warehouse_error_open_dialog': '検索ダイアログを開くのに失敗しました：{error}',
   'warehouse_delete_date_range': '日付範囲内のすべてのログを削除',
   'warehouse_delete_after_date': 'この日付以降のすべてのログを削除',
   'warehouse_delete_before_date': 'この日付以前のすべてのログを削除',
@@ -195,8 +192,7 @@ const Map<String, String> jaJP = {
   'warehouse_create_item': 'アイテム追加',
   'warehouse_quantity_change': '数量：{from} → {to}',
   'warehouse_stock_alert_change': '在庫アラート：{from} → {to}',
-  'warehouse_current_quantity':
-      '現在の数量：{quantity}、在庫数量以下：{minStock}',
+  'warehouse_current_quantity': '現在の数量：{quantity}、在庫数量以下：{minStock}',
   'warehouse_name_label': '名前：',
   'warehouse_description_change': '説明：{from} → {to}',
   'warehouse_category_change': 'カテゴリ：{from} → {to}',

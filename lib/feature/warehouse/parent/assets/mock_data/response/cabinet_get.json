@@ -3,50 +3,84 @@
   "message": "Success",
   "data": [
     {
-      "cabinet_id": "220e8400-e29b-41d4-a716-446655440020",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": null,
-      "name": "Living Room Cabinet A",
-      "room_name": null
+      "room_id": "00000001-e29b-41d4-a716-446655440001",
+      "cabinets": [
+        {
+          "id": "00000001-e29b-41d4-a716-446655440101",
+          "name": "文件櫃",
+          "item_count": 12
+        },
+        {
+          "id": "00000002-e29b-41d4-a716-446655440102",
+          "name": "書櫃",
+          "item_count": 8
+        }
+      ]
     },
     {
-      "cabinet_id": "221e8400-e29b-41d4-a716-446655440021",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": "990e8400-e29b-41d4-a716-446655440004",
-      "name": "Living Room Cabinet B",
-      "room_name": "Living Room",
-      "description": "Secondary storage cabinet in the living room, used for additional items"
+      "room_id": "00000002-e29b-41d4-a716-446655440002",
+      "cabinets": [
+        {
+          "id": "00000003-e29b-41d4-a716-446655440103",
+          "name": "衣櫃",
+          "item_count": 25
+        },
+        {
+          "id": "00000004-e29b-41d4-a716-446655440104",
+          "name": "床頭櫃",
+          "item_count": 5
+        }
+      ]
     },
     {
-      "cabinet_id": "222e8400-e29b-41d4-a716-446655440022",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": "aa0e8400-e29b-41d4-a716-446655440005",
-      "name": "Master Bedroom Cabinet",
-      "room_name": "Master Bedroom"
+      "room_id": "00000003-e29b-41d4-a716-446655440003",
+      "cabinets": [
+        {
+          "id": "00000005-e29b-41d4-a716-446655440105",
+          "name": "文具櫃",
+          "item_count": 18
+        },
+        {
+          "id": "00000006-e29b-41d4-a716-446655440106",
+          "name": "資料櫃",
+          "item_count": 31
+        }
+      ]
     },
     {
-      "cabinet_id": "223e8400-e29b-41d4-a716-446655440023",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
-      "name": "Kitchen Cabinet Top",
-      "room_name": "Kitchen",
-      "description": "Upper kitchen cabinet for storing dishes and cookware"
-    },
-    {
-      "cabinet_id": "224e8400-e29b-41d4-a716-446655440024",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": "cc0e8400-e29b-41d4-a716-446655440007",
-      "name": "Kitchen Cabinet Bottom",
-      "room_name": "Kitchen",
-      "description": "Lower kitchen cabinet for storing larger kitchen items and appliances"
-    },
-    {
-      "cabinet_id": "225e8400-e29b-41d4-a716-446655440025",
-      "home_id": "550e8400-e29b-41d4-a716-446655440000",
-      "room_id": "dd0e8400-e29b-41d4-a716-446655440008",
-      "name": "Bathroom Cabinet",
-      "room_name": "Bathroom",
-      "description": "Bathroom storage cabinet for toiletries and cleaning supplies"
+      "room_id": "00000004-e29b-41d4-a716-446655440004",
+      "cabinets": [
+        {
+          "id": "00000007-e29b-41d4-a716-446655440107",
+          "name": "櫥上櫃A1",
+          "item_count": 7
+        },
+        {
+          "id": "00000008-e29b-41d4-a716-446655440108",
+          "name": "櫥上櫃A2",
+          "item_count": 14
+        },
+        {
+          "id": "00000009-e29b-41d4-a716-446655440109",
+          "name": "櫥上櫃B1",
+          "item_count": 9
+        },
+        {
+          "id": "00000010-e29b-41d4-a716-446655440110",
+          "name": "櫥上櫃B2",
+          "item_count": 22
+        },
+        {
+          "id": "00000011-e29b-41d4-a716-446655440111",
+          "name": "櫥下櫃A1",
+          "item_count": 16
+        },
+        {
+          "id": "00000012-e29b-41d4-a716-446655440112",
+          "name": "櫥下櫃A2",
+          "item_count": 11
+        }
+      ]
     }
   ]
 }

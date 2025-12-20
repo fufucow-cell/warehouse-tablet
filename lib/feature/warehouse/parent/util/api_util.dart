@@ -13,8 +13,7 @@ class ApiUtil extends GetxService {
 
   // Init
 
-  ApiUtil._internal(String url)
-      : _dio = Dio(BaseOptions(baseUrl: url)) {
+  ApiUtil._internal(String url) : _dio = Dio(BaseOptions(baseUrl: url)) {
     _dio.interceptors.add(ApiMockUtil.createInterceptor());
   }
 
@@ -47,33 +46,18 @@ class ApiUtil extends GetxService {
     }
   }
 
-  static ApiUtil get _instance =>
-      Get.find<ApiUtil>(tag: _tagName);
+  static ApiUtil get _instance => Get.find<ApiUtil>(tag: _tagName);
 
-  static Future<T> sendRequest<T>(
+  static Future<T?> sendRequest<T>(
     EnumApiInfo apiInfo, {
     dynamic requestModel,
     T Function(Map<String, dynamic> json)? fromJson,
-  }) async {
-    return _executeRequest<T>(
-      apiInfo: apiInfo,
-      requestModel: requestModel,
-      fromJson: fromJson,
-    );
-  }
-
-  // MARK: - Private Method
-
-  static Future<T> _executeRequest<T>({
-    required EnumApiInfo apiInfo,
-    dynamic requestModel,
-    T Function(Map<String, dynamic> json)? fromJson,
+    void Function(BaseApiResponseModel<void> error)? onError,
   }) async {
     try {
       final dio = _instance._dio;
       final isGet = apiInfo.method == EnumApiMethod.get;
-      final reqData =
-          _convertRequestModelToJson(requestModel);
+      final reqData = _convertRequestModelToJson(requestModel);
       final options = Options(
         method: apiInfo.method.value,
         extra: {
@@ -102,13 +86,34 @@ class ApiUtil extends GetxService {
         );
       }
     } on Object catch (e) {
-      _errorHandler<T>(
-        apiInfo: apiInfo,
-        requestModel: requestModel,
-        fromJson: fromJson,
-        exception: e,
-      );
+      onError?.call(_errorHandle(e));
+      return null;
     }
+  }
+
+  // MARK: - Private Method
+
+  static BaseApiResponseModel<void> _errorHandle(Object exception) {
+    final err = BaseApiResponseModel<void>.unknowError();
+    int code = err.code;
+    String message = err.message!;
+
+    if (exception is EnumErrorMap) {
+      code = exception.code;
+      message = exception.message;
+    } else if (exception is DioException) {
+      final convertInfo = _convertDioExceptionToErrorCode(exception);
+      code = convertInfo.code;
+      message = convertInfo.message;
+    } else if (exception is BaseApiResponseModel) {
+      code = exception.code;
+      message = exception.message ?? err.message!;
+    }
+
+    return BaseApiResponseModel<void>(
+      code: code,
+      message: message,
+    );
   }
 
   static Map<String, dynamic>? _convertRequestModelToJson(
@@ -135,8 +140,7 @@ class ApiUtil extends GetxService {
     if (raw is! Map<String, dynamic>) {
       throw BaseApiResponseModel<T>(
         code: EnumErrorMap.code202.code,
-        message:
-            '${EnumErrorMap.code202.message}: ${raw.toString()}',
+        message: '${EnumErrorMap.code202.message}: ${raw.toString()}',
       );
     }
 
@@ -145,8 +149,7 @@ class ApiUtil extends GetxService {
     final rawData = raw['data'];
 
     final finalCode = code ?? EnumErrorMap.code201.code;
-    final finalMessage =
-        message ?? EnumErrorMap.code201.message;
+    final finalMessage = message ?? EnumErrorMap.code201.message;
 
     if (finalCode == EnumErrorMap.code200.code) {
       if (rawData == null && T == ApiEmptyResponse) {
@@ -173,35 +176,6 @@ class ApiUtil extends GetxService {
     throw BaseApiResponseModel<T>(
       code: code ?? EnumErrorMap.code201.code,
       message: message ?? EnumErrorMap.code201.message,
-    );
-  }
-
-  static Never _errorHandler<T>({
-    required EnumApiInfo apiInfo,
-    dynamic requestModel,
-    T Function(Map<String, dynamic> json)? fromJson,
-    Object? exception,
-  }) {
-    final err = BaseApiResponseModel<T>.unknowError();
-    int code = err.code;
-    String message = err.message!;
-
-    if (exception is EnumErrorMap) {
-      code = exception.code;
-      message = exception.message;
-    } else if (exception is DioException) {
-      final convertInfo =
-          _convertDioExceptionToErrorCode(exception);
-      code = convertInfo.code;
-      message = convertInfo.message;
-    } else if (exception is BaseApiResponseModel<T>) {
-      code = exception.code;
-      message = exception.message!;
-    }
-
-    throw BaseApiResponseModel(
-      code: code,
-      message: message,
     );
   }
 

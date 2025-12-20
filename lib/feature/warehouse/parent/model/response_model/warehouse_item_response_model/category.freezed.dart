@@ -20,11 +20,11 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Category {
-  @JsonKey(name: 'category_id')
-  String? get categoryId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  int? get level => throw _privateConstructorUsedError;
-  Children? get children => throw _privateConstructorUsedError;
+  @JsonKey(name: 'parent_id')
+  String? get parentId => throw _privateConstructorUsedError;
+  Category? get children => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,12 +38,12 @@ abstract class $CategoryCopyWith<$Res> {
       _$CategoryCopyWithImpl<$Res, Category>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'category_id') String? categoryId,
+      {String? id,
       String? name,
-      int? level,
-      Children? children});
+      @JsonKey(name: 'parent_id') String? parentId,
+      Category? children});
 
-  $ChildrenCopyWith<$Res>? get children;
+  $CategoryCopyWith<$Res>? get children;
 }
 
 /// @nodoc
@@ -59,39 +59,39 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categoryId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
-    Object? level = freezed,
+    Object? parentId = freezed,
     Object? children = freezed,
   }) {
     return _then(_value.copyWith(
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: freezed == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
       children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
-              as Children?,
+              as Category?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ChildrenCopyWith<$Res>? get children {
+  $CategoryCopyWith<$Res>? get children {
     if (_value.children == null) {
       return null;
     }
 
-    return $ChildrenCopyWith<$Res>(_value.children!, (value) {
+    return $CategoryCopyWith<$Res>(_value.children!, (value) {
       return _then(_value.copyWith(children: value) as $Val);
     });
   }
@@ -106,13 +106,13 @@ abstract class _$$CategoryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'category_id') String? categoryId,
+      {String? id,
       String? name,
-      int? level,
-      Children? children});
+      @JsonKey(name: 'parent_id') String? parentId,
+      Category? children});
 
   @override
-  $ChildrenCopyWith<$Res>? get children;
+  $CategoryCopyWith<$Res>? get children;
 }
 
 /// @nodoc
@@ -126,28 +126,28 @@ class __$$CategoryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categoryId = freezed,
+    Object? id = freezed,
     Object? name = freezed,
-    Object? level = freezed,
+    Object? parentId = freezed,
     Object? children = freezed,
   }) {
     return _then(_$CategoryImpl(
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      level: freezed == level
-          ? _value.level
-          : level // ignore: cast_nullable_to_non_nullable
-              as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
       children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
-              as Children?,
+              as Category?,
     ));
   }
 }
@@ -156,27 +156,27 @@ class __$$CategoryImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$CategoryImpl implements _Category {
   _$CategoryImpl(
-      {@JsonKey(name: 'category_id') this.categoryId,
+      {this.id,
       this.name,
-      this.level,
+      @JsonKey(name: 'parent_id') this.parentId,
       this.children});
 
   factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryImplFromJson(json);
 
   @override
-  @JsonKey(name: 'category_id')
-  final String? categoryId;
+  final String? id;
   @override
   final String? name;
   @override
-  final int? level;
+  @JsonKey(name: 'parent_id')
+  final String? parentId;
   @override
-  final Children? children;
+  final Category? children;
 
   @override
   String toString() {
-    return 'Category(categoryId: $categoryId, name: $name, level: $level, children: $children)';
+    return 'Category(id: $id, name: $name, parentId: $parentId, children: $children)';
   }
 
   @override
@@ -184,18 +184,17 @@ class _$CategoryImpl implements _Category {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.level, level) || other.level == level) &&
+            (identical(other.parentId, parentId) ||
+                other.parentId == parentId) &&
             (identical(other.children, children) ||
                 other.children == children));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, categoryId, name, level, children);
+  int get hashCode => Object.hash(runtimeType, id, name, parentId, children);
 
   @JsonKey(ignore: true)
   @override
@@ -213,23 +212,23 @@ class _$CategoryImpl implements _Category {
 
 abstract class _Category implements Category {
   factory _Category(
-      {@JsonKey(name: 'category_id') final String? categoryId,
+      {final String? id,
       final String? name,
-      final int? level,
-      final Children? children}) = _$CategoryImpl;
+      @JsonKey(name: 'parent_id') final String? parentId,
+      final Category? children}) = _$CategoryImpl;
 
   factory _Category.fromJson(Map<String, dynamic> json) =
       _$CategoryImpl.fromJson;
 
   @override
-  @JsonKey(name: 'category_id')
-  String? get categoryId;
+  String? get id;
   @override
   String? get name;
   @override
-  int? get level;
+  @JsonKey(name: 'parent_id')
+  String? get parentId;
   @override
-  Children? get children;
+  Category? get children;
   @override
   @JsonKey(ignore: true)
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>

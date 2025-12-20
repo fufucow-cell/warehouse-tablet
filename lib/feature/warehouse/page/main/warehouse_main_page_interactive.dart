@@ -8,8 +8,7 @@ enum EnumWarehouseMainPageInteractive {
 }
 
 /// WarehouseMainPage 用户事件处理扩展
-extension WarehouseMainPageUserEventExtension
-    on WarehouseMainPageController {
+extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
   /// 处理用户事件
   void interactive(
     EnumWarehouseMainPageInteractive type, {
@@ -30,26 +29,19 @@ extension WarehouseMainPageUserEventExtension
           routerHandle(
             EnumWarehouseMainPageRoute.showSearchLogDialog,
           );
-        } else if (selectedItem ==
-            EnumWarehouseTabItem.alarm) {
+        } else if (selectedItem == EnumWarehouseTabItem.alarm) {
           routerHandle(
-            EnumWarehouseMainPageRoute
-                .showSearchAlarmDialog,
+            EnumWarehouseMainPageRoute.showSearchAlarmDialog,
           );
-        } else if (selectedItem ==
-            EnumWarehouseTabItem.category) {
+        } else if (selectedItem == EnumWarehouseTabItem.category) {
           routerHandle(
-            EnumWarehouseMainPageRoute
-                .showSearchCategoryDialog,
+            EnumWarehouseMainPageRoute.showSearchCategoryDialog,
           );
-        } else if (selectedItem ==
-            EnumWarehouseTabItem.cabinet) {
+        } else if (selectedItem == EnumWarehouseTabItem.cabinet) {
           routerHandle(
-            EnumWarehouseMainPageRoute
-                .showSearchCabinetDialog,
+            EnumWarehouseMainPageRoute.showSearchCabinetDialog,
           );
-        } else if (selectedItem ==
-            EnumWarehouseTabItem.item) {
+        } else if (selectedItem == EnumWarehouseTabItem.item) {
           routerHandle(
             EnumWarehouseMainPageRoute.showSearchItemDialog,
           );

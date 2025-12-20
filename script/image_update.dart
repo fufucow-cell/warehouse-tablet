@@ -6,10 +6,8 @@ import 'dart:io';
 /// - common/ 目录下的文件：c + 文件名（PascalCase），例如 cCow, cHouse
 /// - light/ 或 dark/ 目录下的文件：t + 文件名（PascalCase），例如 tCow
 void main() {
-  final imagesDir = Directory(
-      'lib/feature/warehouse/parent/assets/images');
-  final outputFile = File(
-      'lib/feature/warehouse/parent/constant/theme/image_map.dart');
+  final imagesDir = Directory('lib/feature/warehouse/parent/assets/images');
+  final outputFile = File('lib/feature/warehouse/parent/constant/theme/image_map.dart');
 
   if (!imagesDir.existsSync()) {
     print('Error: images directory not found');
@@ -20,8 +18,7 @@ void main() {
   final imageFiles = _scanImageFiles(imagesDir);
 
   if (imageFiles.isEmpty) {
-    print(
-        'Error: No image files found in images directory');
+    print('Error: No image files found in images directory');
     exit(1);
   }
 
@@ -40,14 +37,7 @@ void main() {
 /// 扫描图片文件
 List<File> _scanImageFiles(Directory dir) {
   final files = <File>[];
-  final imageExtensions = [
-    '.png',
-    '.jpg',
-    '.jpeg',
-    '.gif',
-    '.webp',
-    '.svg'
-  ];
+  final imageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg'];
 
   void scan(Directory directory) {
     for (final entity in directory.listSync()) {
@@ -77,8 +67,7 @@ Map<String, _ImageInfo> _processImages(
   final fileGroups = <String, Set<String>>{};
 
   for (final file in files) {
-    final relativePath =
-        file.path.replaceFirst('$basePath/', '');
+    final relativePath = file.path.replaceFirst('$basePath/', '');
     final segments = relativePath.split('/');
 
     if (segments.length < 2) {
@@ -90,9 +79,7 @@ Map<String, _ImageInfo> _processImages(
     final fileNameWithoutExt = fileName.split('.').first;
 
     // 只处理 common, light, dark 目录
-    if (folderName != 'common' &&
-        folderName != 'light' &&
-        folderName != 'dark') {
+    if (folderName != 'common' && folderName != 'light' && folderName != 'dark') {
       continue;
     }
 
@@ -111,8 +98,7 @@ Map<String, _ImageInfo> _processImages(
     final folders = entry.value;
 
     final hasCommon = folders.contains('common');
-    final hasTheme = folders.contains('light') ||
-        folders.contains('dark');
+    final hasTheme = folders.contains('light') || folders.contains('dark');
 
     // 如果文件在 common 目录中，生成 c 前缀的 enum
     if (hasCommon) {
@@ -128,8 +114,7 @@ Map<String, _ImageInfo> _processImages(
       final enumName = 't${_toPascalCase(fileName)}';
       imageMap[enumName] = _ImageInfo(
         fileName: fileName,
-        folder:
-            'light', // 使用 light 作为代表，实际路径由 ThemeUtil 根据主题决定
+        folder: 'light', // 使用 light 作为代表，实际路径由 ThemeUtil 根据主题决定
       );
     }
   }
@@ -155,13 +140,11 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
   // 文件头部
   buffer.writeln('/// 图片 Key 枚举');
   buffer.writeln('/// 自动生成，请勿手动修改');
-  buffer.writeln(
-      '/// 生成时间: ${DateTime.now().toIso8601String()}');
+  buffer.writeln('/// 生成时间: ${DateTime.now().toIso8601String()}');
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln(
-      "import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';");
   buffer.writeln('');
 
   // 收集所有 enum 名称并排序
@@ -176,18 +159,20 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
     buffer.writeln('  $enumName${isLast ? ';' : ','}');
   }
   buffer.writeln('');
-  buffer.writeln(
-      '  ThemeUtil get _themeUtil => ThemeUtil.instance;');
+  buffer.writeln('  ThemeUtil get _themeUtil => ThemeUtil.instance;');
   buffer.writeln('');
   buffer.writeln('  /// 取得圖片路徑');
-  buffer.writeln(
-      '  String get path => _themeUtil.getImagePath(this);');
+  buffer.writeln('  String get path => _themeUtil.getImagePath(this);');
   buffer.writeln('');
   buffer.writeln('  /// 取得圖片 Widget');
-  buffer.writeln(
-      '  Widget image({Size? size, Color? color}) =>');
-  buffer.writeln(
-      '      _themeUtil.getImageWidget(this, size: size, color: color);');
+  buffer.writeln('  Widget image({Size? size, Color? color}) =>');
+  buffer.writeln('      _themeUtil.getImageWidget(this, size: size, color: color);');
+  buffer.writeln('');
+  buffer.writeln('  /// 取得裝飾圖片');
+  buffer.writeln('  DecorationImage get decorationImage => DecorationImage(');
+  buffer.writeln('        image: AssetImage(path),');
+  buffer.writeln('        fit: BoxFit.cover,');
+  buffer.writeln('      );');
   buffer.writeln('}');
 
   return buffer.toString();
@@ -203,8 +188,7 @@ String _toPascalCase(String input) {
     final parts = input.split('_');
     return parts.map((part) {
       if (part.isEmpty) return '';
-      return part[0].toUpperCase() +
-          part.substring(1).toLowerCase();
+      return part[0].toUpperCase() + part.substring(1).toLowerCase();
     }).join('');
   }
 

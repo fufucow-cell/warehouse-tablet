@@ -6,8 +6,8 @@ part 'room.g.dart';
 @freezed
 class Room with _$Room {
   factory Room({
-    @JsonKey(name: 'room_id') String? roomId,
-    @JsonKey(name: 'home_id') String? homeId,
+    String? id,
+    @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'room_name') String? roomName,
   }) = _Room;
 

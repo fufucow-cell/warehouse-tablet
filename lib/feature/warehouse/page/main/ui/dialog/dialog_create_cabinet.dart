@@ -61,10 +61,8 @@ class _CreateCabinetDialogWidget extends StatefulWidget {
 
 class _CreateCabinetDialogWidgetState
     extends State<_CreateCabinetDialogWidget> {
-  final TextEditingController _nameController =
-      TextEditingController();
-  final TextEditingController _descriptionController =
-      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String? _selectedRoomId;
 
   @override
@@ -90,34 +88,25 @@ class _CreateCabinetDialogWidgetState
       }),
     ];
 
-    final dialogInsetPadding =
-        30.0.scale > 0 ? 30.0.scale : 30.0;
+    final dialogInsetPadding = 30.0.scale > 0 ? 30.0.scale : 30.0;
     return Dialog(
       insetPadding: EdgeInsets.all(dialogInsetPadding),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final screenWidth =
-              MediaQuery.of(context).size.width;
+          final screenWidth = MediaQuery.of(context).size.width;
           final scale600 = 600.0.scale;
           final scale60 = 60.0.scale;
           final scale40 = 40.0.scale;
           final scale8 = 8.0.scale;
-          final dialogMaxWidth =
-              scale600 > 0 ? scale600 : 600.0;
-          final insetPaddingValue =
-              scale60 > 0 ? scale60 : 60.0;
-          final containerPaddingValue =
-              scale40 > 0 ? scale40 : 40.0;
-          final horizontalPaddingValue =
-              scale8 > 0 ? scale8 : 8.0;
-          final screenMinusPadding =
-              screenWidth - (insetPaddingValue * 2);
-          final dialogWidth =
-              (dialogMaxWidth < screenMinusPadding)
-                  ? dialogMaxWidth
-                  : screenMinusPadding;
-          final maxHeight =
-              MediaQuery.of(context).size.height * 0.8;
+          final dialogMaxWidth = scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue = scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue = scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue = scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding = screenWidth - (insetPaddingValue * 2);
+          final dialogWidth = (dialogMaxWidth < screenMinusPadding)
+              ? dialogMaxWidth
+              : screenMinusPadding;
+          final maxHeight = MediaQuery.of(context).size.height * 0.8;
           return Container(
             width: dialogWidth,
             padding: EdgeInsets.all(containerPaddingValue),
@@ -132,17 +121,13 @@ class _CreateCabinetDialogWidgetState
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                    CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Title 居中
                   Center(
                     child: Text(
                       EnumLocale.createCabinetTitle.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -156,10 +141,8 @@ class _CreateCabinetDialogWidgetState
                     child: TextField(
                       controller: _nameController,
                       decoration: InputDecoration(
-                        labelText:
-                            EnumLocale.createCabinetName.tr,
-                        hintText: EnumLocale
-                            .createCabinetNameHint.tr,
+                        labelText: EnumLocale.createCabinetName.tr,
+                        hintText: EnumLocale.createCabinetNameHint.tr,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -194,10 +177,8 @@ class _CreateCabinetDialogWidgetState
                       controller: _descriptionController,
                       maxLines: 3,
                       decoration: InputDecoration(
-                        labelText:
-                            EnumLocale.createDescription.tr,
-                        hintText: EnumLocale
-                            .createDescriptionHint.tr,
+                        labelText: EnumLocale.createDescription.tr,
+                        hintText: EnumLocale.createDescriptionHint.tr,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -208,8 +189,7 @@ class _CreateCabinetDialogWidgetState
                       horizontal: horizontalPaddingValue,
                     ),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         OutlinedButton(
                           onPressed: () {
@@ -223,16 +203,12 @@ class _CreateCabinetDialogWidgetState
                         const SizedBox(width: 12.0),
                         ElevatedButton(
                           onPressed: () {
-                            final name =
-                                _nameController.text.trim();
+                            final name = _nameController.text.trim();
                             if (name.isEmpty) {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(
+                              ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    EnumLocale
-                                        .createCabinetInputName
-                                        .tr,
+                                    EnumLocale.createCabinetInputName.tr,
                                   ),
                                 ),
                               );
@@ -240,15 +216,12 @@ class _CreateCabinetDialogWidgetState
                             }
 
                             final description =
-                                _descriptionController.text
-                                    .trim();
+                                _descriptionController.text.trim();
                             Navigator.of(context).pop();
                             widget.onConfirm?.call(
                               name,
                               _selectedRoomId,
-                              description.isEmpty
-                                  ? null
-                                  : description,
+                              description.isEmpty ? null : description,
                             );
                           },
                           child: Text(

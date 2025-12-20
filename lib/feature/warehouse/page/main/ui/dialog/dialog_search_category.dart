@@ -58,8 +58,7 @@ class _SearchCategoryDialogWidget extends StatefulWidget {
 
 class _SearchCategoryDialogWidgetState
     extends State<_SearchCategoryDialogWidget> {
-  final TextEditingController _nameController =
-      TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   int? _selectedLevel;
 
   @override
@@ -77,34 +76,25 @@ class _SearchCategoryDialogWidgetState
 
   @override
   Widget build(BuildContext context) {
-    final dialogInsetPadding =
-        30.0.scale > 0 ? 30.0.scale : 30.0;
+    final dialogInsetPadding = 30.0.scale > 0 ? 30.0.scale : 30.0;
     return Dialog(
       insetPadding: EdgeInsets.all(dialogInsetPadding),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final screenWidth =
-              MediaQuery.of(context).size.width;
+          final screenWidth = MediaQuery.of(context).size.width;
           final scale600 = 600.0.scale;
           final scale60 = 60.0.scale;
           final scale40 = 40.0.scale;
           final scale8 = 8.0.scale;
-          final dialogMaxWidth =
-              scale600 > 0 ? scale600 : 600.0;
-          final insetPaddingValue =
-              scale60 > 0 ? scale60 : 60.0;
-          final containerPaddingValue =
-              scale40 > 0 ? scale40 : 40.0;
-          final horizontalPaddingValue =
-              scale8 > 0 ? scale8 : 8.0;
-          final screenMinusPadding =
-              screenWidth - (insetPaddingValue * 2);
-          final dialogWidth =
-              (dialogMaxWidth < screenMinusPadding)
-                  ? dialogMaxWidth
-                  : screenMinusPadding;
-          final maxHeight =
-              MediaQuery.of(context).size.height * 0.8;
+          final dialogMaxWidth = scale600 > 0 ? scale600 : 600.0;
+          final insetPaddingValue = scale60 > 0 ? scale60 : 60.0;
+          final containerPaddingValue = scale40 > 0 ? scale40 : 40.0;
+          final horizontalPaddingValue = scale8 > 0 ? scale8 : 8.0;
+          final screenMinusPadding = screenWidth - (insetPaddingValue * 2);
+          final dialogWidth = (dialogMaxWidth < screenMinusPadding)
+              ? dialogMaxWidth
+              : screenMinusPadding;
+          final maxHeight = MediaQuery.of(context).size.height * 0.8;
           return Container(
             width: dialogWidth,
             padding: EdgeInsets.all(containerPaddingValue),
@@ -119,17 +109,13 @@ class _SearchCategoryDialogWidgetState
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment:
-                    CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // Title 居中
                   Center(
                     child: Text(
                       EnumLocale.searchTitle.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
                     ),
@@ -144,8 +130,7 @@ class _SearchCategoryDialogWidgetState
                       controller: _nameController,
                       decoration: InputDecoration(
                         labelText: EnumLocale.searchName.tr,
-                        hintText: EnumLocale
-                            .searchNameHintCategory.tr,
+                        hintText: EnumLocale.searchNameHintCategory.tr,
                         border: const OutlineInputBorder(),
                       ),
                     ),
@@ -158,9 +143,7 @@ class _SearchCategoryDialogWidgetState
                     ),
                     child: Text(
                       EnumLocale.searchLevel.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                   const SizedBox(height: 8.0),
@@ -187,24 +170,14 @@ class _SearchCategoryDialogWidgetState
                                   }
                                 });
                               },
-                              style:
-                                  ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _selectedLevel == 1
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                foregroundColor:
-                                    _selectedLevel == 1
-                                        ? Colors.white
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .onSurface,
-                                padding: const EdgeInsets
-                                    .symmetric(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _selectedLevel == 1
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.surface,
+                                foregroundColor: _selectedLevel == 1
+                                    ? Colors.white
+                                    : Theme.of(context).colorScheme.onSurface,
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 12.0,
                                 ),
                               ),
@@ -216,8 +189,7 @@ class _SearchCategoryDialogWidgetState
                         ),
                         Expanded(
                           child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                               horizontal: 4.0,
                             ),
                             child: ElevatedButton(
@@ -231,24 +203,14 @@ class _SearchCategoryDialogWidgetState
                                   }
                                 });
                               },
-                              style:
-                                  ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _selectedLevel == 2
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                foregroundColor:
-                                    _selectedLevel == 2
-                                        ? Colors.white
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .onSurface,
-                                padding: const EdgeInsets
-                                    .symmetric(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _selectedLevel == 2
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.surface,
+                                foregroundColor: _selectedLevel == 2
+                                    ? Colors.white
+                                    : Theme.of(context).colorScheme.onSurface,
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 12.0,
                                 ),
                               ),
@@ -274,24 +236,14 @@ class _SearchCategoryDialogWidgetState
                                   }
                                 });
                               },
-                              style:
-                                  ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    _selectedLevel == 3
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .primary
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .surface,
-                                foregroundColor:
-                                    _selectedLevel == 3
-                                        ? Colors.white
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .onSurface,
-                                padding: const EdgeInsets
-                                    .symmetric(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _selectedLevel == 3
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.surface,
+                                foregroundColor: _selectedLevel == 3
+                                    ? Colors.white
+                                    : Theme.of(context).colorScheme.onSurface,
+                                padding: const EdgeInsets.symmetric(
                                   vertical: 12.0,
                                 ),
                               ),
@@ -310,8 +262,7 @@ class _SearchCategoryDialogWidgetState
                       horizontal: horizontalPaddingValue,
                     ),
                     child: Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         OutlinedButton(
                           onPressed: () {
@@ -327,12 +278,9 @@ class _SearchCategoryDialogWidgetState
                           onPressed: () {
                             Navigator.of(context).pop();
                             widget.onConfirm?.call(
-                              name: _nameController.text
-                                      .trim()
-                                      .isEmpty
+                              name: _nameController.text.trim().isEmpty
                                   ? null
-                                  : _nameController.text
-                                      .trim(),
+                                  : _nameController.text.trim(),
                               level: _selectedLevel,
                             );
                           },

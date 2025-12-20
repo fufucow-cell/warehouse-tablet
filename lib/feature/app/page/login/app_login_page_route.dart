@@ -6,8 +6,7 @@ enum EnumAppLoginPageRoute {
   showRegisterFail,
 }
 
-extension AppLoginPageRouteExtension
-    on AppLoginPageController {
+extension AppLoginPageRouteExtension on AppLoginPageController {
   Future<void> routerHandle(
     EnumAppLoginPageRoute type, {
     dynamic data,

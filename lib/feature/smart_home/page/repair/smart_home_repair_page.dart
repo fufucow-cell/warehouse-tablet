@@ -9,8 +9,7 @@ part 'smart_home_repair_page_interactive.dart';
 part 'smart_home_repair_page_model.dart';
 part 'smart_home_repair_page_route.dart';
 
-class SmartHomeRepairPage
-    extends GetView<SmartHomeRepairPageController> {
+class SmartHomeRepairPage extends GetView<SmartHomeRepairPageController> {
   const SmartHomeRepairPage({super.key});
 
   @override

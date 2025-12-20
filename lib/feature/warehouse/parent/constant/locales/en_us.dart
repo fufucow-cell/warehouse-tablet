@@ -103,30 +103,23 @@ const Map<String, String> enUS = {
   'create_category_name_level3': 'Level 3 New Name',
   'create_category_name_hint': 'Enter new name',
   'create_category_selected': 'Existing category selected',
-  'create_category_select_level1_first':
-      'Please select Level 1 first',
-  'create_category_select_level2_first':
-      'Please select Level 2 first',
+  'create_category_select_level1_first': 'Please select Level 1 first',
+  'create_category_select_level2_first': 'Please select Level 2 first',
   'create_category_select_new_to_create':
       'Please select "New Category" to create a new category',
-  'create_category_input_level1_name':
-      'Please enter Level 1 new name',
-  'create_category_input_level2_name':
-      'Please enter Level 2 new name',
-  'create_category_input_level3_name':
-      'Please enter Level 3 new name',
+  'create_category_input_level1_name': 'Please enter Level 1 new name',
+  'create_category_input_level2_name': 'Please enter Level 2 new name',
+  'create_category_input_level3_name': 'Please enter Level 3 new name',
   'create_item_input_name': 'Please enter item name',
   'create_item_input_quantity': 'Please enter quantity',
-  'create_item_input_valid_quantity':
-      'Please enter a valid quantity',
+  'create_item_input_valid_quantity': 'Please enter a valid quantity',
   'create_cabinet_input_name': 'Please enter cabinet name',
   'create_description': 'Description',
   'create_description_hint': 'Enter description (optional)',
   'create_quantity': 'Quantity',
   'create_quantity_hint': 'Enter quantity',
   'create_min_stock_alert': 'Min Stock Alert',
-  'create_min_stock_alert_hint':
-      'Enter min stock alert (optional)',
+  'create_min_stock_alert_hint': 'Enter min stock alert (optional)',
   'create_level1': 'Level 1',
   'create_level2': 'Level 2',
   'create_level3': 'Level 3',
@@ -182,16 +175,11 @@ const Map<String, String> enUS = {
   'warehouse_more_locations': '... {count} more locations',
   'warehouse_room_label': 'Room: ',
   'warehouse_description_label': 'Description: ',
-  'warehouse_error_fetch_data':
-      'Failed to fetch data: {error}',
-  'warehouse_error_open_dialog':
-      'Failed to open search dialog: {error}',
-  'warehouse_delete_date_range':
-      'Delete all logs in date range',
-  'warehouse_delete_after_date':
-      'Delete all logs after this date',
-  'warehouse_delete_before_date':
-      'Delete all logs before this date',
+  'warehouse_error_fetch_data': 'Failed to fetch data: {error}',
+  'warehouse_error_open_dialog': 'Failed to open search dialog: {error}',
+  'warehouse_delete_date_range': 'Delete all logs in date range',
+  'warehouse_delete_after_date': 'Delete all logs after this date',
+  'warehouse_delete_before_date': 'Delete all logs before this date',
   'warehouse_delete_by_date': 'Delete by Date',
   'warehouse_select_all': 'Select All',
   'warehouse_deselect_all': 'Deselect All',
@@ -205,13 +193,11 @@ const Map<String, String> enUS = {
   'warehouse_unknown_item': 'Unknown Item',
   'warehouse_create_item': 'Add Item',
   'warehouse_quantity_change': 'Quantity: {from} → {to}',
-  'warehouse_stock_alert_change':
-      'Stock Alert: {from} → {to}',
+  'warehouse_stock_alert_change': 'Stock Alert: {from} → {to}',
   'warehouse_current_quantity':
       'Current Quantity: {quantity}, Below Stock: {minStock}',
   'warehouse_name_label': 'Name: ',
-  'warehouse_description_change':
-      'Description: {from} → {to}',
+  'warehouse_description_change': 'Description: {from} → {to}',
   'warehouse_category_change': 'Category: {from} → {to}',
   'warehouse_room_change': 'Room: {from} → {to}',
   'warehouse_photo_label': 'Photo',

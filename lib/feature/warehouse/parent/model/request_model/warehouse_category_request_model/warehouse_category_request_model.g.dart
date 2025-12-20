@@ -9,7 +9,7 @@ part of 'warehouse_category_request_model.dart';
 _$WarehouseCategoryRequestModelImpl
     _$$WarehouseCategoryRequestModelImplFromJson(Map<String, dynamic> json) =>
         _$WarehouseCategoryRequestModelImpl(
-          homeId: json['home_id'] as String?,
+          homeId: json['household_id'] as String?,
           categoryId: json['category_id'] as String?,
           parentId: json['parent_id'] as String?,
           level: (json['level'] as num?)?.toInt(),
@@ -18,7 +18,7 @@ _$WarehouseCategoryRequestModelImpl
 Map<String, dynamic> _$$WarehouseCategoryRequestModelImplToJson(
         _$WarehouseCategoryRequestModelImpl instance) =>
     <String, dynamic>{
-      'home_id': instance.homeId,
+      'household_id': instance.homeId,
       'category_id': instance.categoryId,
       'parent_id': instance.parentId,
       'level': instance.level,

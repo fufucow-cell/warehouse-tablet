@@ -1,7 +1,6 @@
 part of 'smart_home_warehouse_page.dart';
 
-class SmartHomeWarehousePageController
-    extends BasePageController {
+class SmartHomeWarehousePageController extends BasePageController {
   // Properties
 
   final _service = LocaleUtil.instance;
@@ -17,33 +16,33 @@ class SmartHomeWarehousePageController
   @override
   Future<void> apiProcessing() async {}
 
-  WarehouseMainPageRouterData
-      getWarehouseMainPageRouterData() {
+  WarehouseMainPageRouterData getWarehouseMainPageRouterData() {
     final service = SmartHomeService.instance;
     final userData = service.getUserData;
     final houseData = service.getHouseholdData;
     return WarehouseMainPageRouterData(
       userId: userData?.id ?? '',
       userName: userData?.userName ?? '',
-      language: userData?.preferences?.languageCode ?? '',
-      theme: userData?.preferences?.theme ?? '',
+      language: LocaleUtil.instance.getCurrentLocaleCode,
+      theme: ThemeUtil.instance.currentTheme.name,
+      // language: userData?.preferences?.languageCode ?? '',
+      // theme: userData?.preferences?.theme ?? '',
       accessToken: userData?.accessToken ?? '',
       refreshToken: userData?.refreshToken ?? '',
       household: WarehouseHomeRouterData(
-        id: houseData?.homeId?.toString() ?? '',
+        id: houseData?.householdId?.toString() ?? '',
         name: houseData?.homeName ?? '',
       ),
       rooms: houseData?.rooms
               ?.map(
                 (room) => WarehouseHomeRouterData(
-                  id: room.roomId?.toString() ?? '',
+                  id: room.id?.toString() ?? '',
                   name: room.roomName ?? '',
                 ),
               )
               .toList() ??
           [],
-      userRoleType:
-          userData?.household?.first.roleType ?? 0,
+      userRoleType: userData?.household?.first.roleType ?? 0,
     );
   }
 }
