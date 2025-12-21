@@ -286,18 +286,18 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 
       // 显示搜索櫥櫃对话框
       DialogSearchCabinet.show(
-        initialName: cabinetController?.filterName,
-        initialRoomId: cabinetController?.filterRoomId,
+        initialName: 'cabinetController?.filterName',
+        initialRoomId: 'cabinetController?.filterRoomId',
         onConfirm: ({
           String? name,
           String? roomId,
         }) {
           // 应用筛选条件
           if (cabinetController != null) {
-            cabinetController.applyFilters(
-              name: name,
-              roomId: roomId,
-            );
+            // cabinetController.applyFilters(
+            //   name: name,
+            //   roomId: roomId,
+            // );
           }
         },
         onCancel: () {

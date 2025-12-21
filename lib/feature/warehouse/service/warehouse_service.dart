@@ -31,6 +31,7 @@ class WarehouseService {
   WarehouseNameIdModel? get house => _model.house;
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   int? get userRoleType => _model.userRoleType;
+  List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems;
 
   // MARK: - Init
 

@@ -7,12 +7,13 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/tab_bar.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/top_tool.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
@@ -70,6 +71,11 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
             );
           }
 
+          final tabBarView = TabBarView(
+            controller: controller.tabController,
+            children: controller.tabViews,
+          );
+
           return Scaffold(
             appBar: AppBar(
               toolbarHeight: 0,
@@ -98,16 +104,50 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
                 ),
               ),
             ),
-            body: Container(
-              color: EnumColor.backgroundPrimary.color,
-              child: TabBarView(
-                controller: controller.tabController,
-                children: controller.tabViews,
-              ),
+            body: Stack(
+              children: [
+                Positioned.fill(
+                  child: ColoredBox(
+                    color: EnumColor.backgroundPrimary.color,
+                  ),
+                ),
+                _FirstBackgroundCard(
+                  child: (_controller.selectedItem == EnumWarehouseTabItem.item) ? tabBarView : SecondBackgroundCard(child: tabBarView),
+                ),
+              ],
             ),
           );
         });
       },
+    );
+  }
+}
+
+class _FirstBackgroundCard extends StatelessWidget {
+  final Widget child;
+
+  const _FirstBackgroundCard({
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      clipBehavior: Clip.hardEdge,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(32.0.scale),
+        topRight: Radius.circular(32.0.scale),
+      ),
+      child: Container(
+        color: EnumColor.backgroundPrimary.color,
+        child: Container(
+          padding: EdgeInsets.only(left: 32.0.scale, right: 32.0.scale, top: 32.0.scale),
+          decoration: BoxDecoration(
+            image: EnumImage.tBgContent.decorationImage,
+          ),
+          child: child,
+        ),
+      ),
     );
   }
 }

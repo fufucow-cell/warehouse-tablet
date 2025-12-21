@@ -12,25 +12,19 @@ class FilterInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WarehouseItemPageController>(
-      builder: (controller) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.scale),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Expanded(child: _FilterLists()),
-              SizedBox(width: 16.0.scale),
-              Obx(
-                () => _ExpandButton(
-                  isExpanded: controller.isFilterExpandedRx.value,
-                  onPressed: () => controller.interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
-                ),
-              ),
-            ],
+    final controller = Get.find<WarehouseItemPageController>();
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Expanded(child: _FilterLists()),
+        SizedBox(width: 16.0.scale),
+        Obx(
+          () => _ExpandButton(
+            isExpanded: controller.isFilterExpandedRx.value,
+            onPressed: () => controller.interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
           ),
-        );
-      },
+        ),
+      ],
     );
   }
 }
@@ -130,7 +124,7 @@ class _ExpandButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            isExpanded ? '收起' : '更多',
+            isExpanded ? '收起' : '更多選項',
             style: TextStyle(
               color: EnumColor.textSecondary.color,
             ),

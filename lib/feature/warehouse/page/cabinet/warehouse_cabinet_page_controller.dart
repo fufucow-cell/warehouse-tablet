@@ -1,78 +1,53 @@
 part of 'warehouse_cabinet_page.dart';
 
-class WarehouseCabinetPageController extends BasePageController {
+class WarehouseCabinetPageController extends GetxController {
   // MARK: - Properties
 
   final _model = WarehouseCabinetPageModel();
-  List<Cabinet>? get cabinets => _model.cabinets;
-  Rx<bool> get isEditModeRx => _model.isEditMode;
-  String? get filterName => _model.filterName;
-  String? get filterRoomId => _model.filterRoomId;
+  final _service = WarehouseService.instance;
+  RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
+  List<WarehouseNameIdModel> get getRoomsInfo => _service.rooms;
 
   // MARK: - Init
 
-  WarehouseCabinetPageController() {
-    super.init();
-  }
-
-  // MARK: - Methods
-
   @override
-  Future<void> apiProcessing() async {
-    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
-      EnumApiInfo.cabinetFetch,
-      requestModel: WarehouseCabinetRequestModel(),
-      fromJson: WarehouseItemResponseModel.fromJson,
-    );
-
-    // _model.allCabinets = response?.data;
-    _applyFilters();
-    update();
+  void onInit() {
+    super.onInit();
+    _checkData();
   }
 
-  // 应用筛选条件
-  void applyFilters({
-    String? name,
-    String? roomId,
-  }) {
-    _model.filterName = name;
-    _model.filterRoomId = roomId;
-    _applyFilters();
-    update();
+  // MARK: - Public Method
+
+  Room? getRoom(WarehouseNameIdModel roomNameId) {
+    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
+    return allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
   }
 
-  // 内部筛选方法
-  void _applyFilters() {
-    if (_model.allCabinets == null) {
-      _model.cabinets = null;
+  List<Cabinet> getCabinets(WarehouseNameIdModel roomNameId) {
+    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
+    final room = allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
+    return room?.cabinets ?? <Cabinet>[];
+  }
+
+  // MARK: - Private Method
+
+  void _checkData() {
+    final allRoomCabinetItems = _service.getAllRoomCabinetItems;
+
+    if (allRoomCabinetItems == null) {
+      _queryApiData();
+    } else {
+      _model.allRoomCabinetItems.value = allRoomCabinetItems;
+    }
+  }
+
+  Future<void> _queryApiData() async {
+    final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
+
+    if (response == null) {
       return;
     }
 
-    List<Cabinet> filteredCabinets = List.from(_model.allCabinets!);
-
-    // 按名称筛选
-    if (_model.filterName != null && _model.filterName!.isNotEmpty) {
-      final searchName = _model.filterName!.toLowerCase();
-      filteredCabinets = filteredCabinets.where((cabinet) {
-        final cabinetName = cabinet.name?.toLowerCase() ?? '';
-        return cabinetName.contains(searchName);
-      }).toList();
-    }
-
-    // 按房間筛选
-
-    _model.cabinets = filteredCabinets;
-  }
-
-  // 切换编辑模式
-  void toggleEditMode() {
-    _model.isEditMode.value = !_model.isEditMode.value;
-    update();
-  }
-
-  // 删除橱柜
-  void deleteCabinet(Cabinet cabinet) {
-    // TODO: 实现删除橱柜的逻辑
-    // print('删除橱柜: ${cabinet.name} (${cabinet.cabinetId})');
+    _model.allRoomCabinetItems.value = response;
   }
 }

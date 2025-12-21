@@ -5,17 +5,14 @@ class WarehouseMainPageController extends BasePageController {
 
   final _model = WarehouseMainPageModel();
   TabController? _tabController;
-
   TabController? get tabController => _tabController;
   bool get isTabControllerReady => _model.isTabControllerReady.value;
   RxBool get isTabControllerReadyRx => _model.isTabControllerReady;
 
   EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
   Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
-  List<Tab> get tabs =>
-      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews =>
-      EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
   // MARK: - Init
 
@@ -32,8 +29,7 @@ class WarehouseMainPageController extends BasePageController {
     _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex:
-          EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
+      initialIndex: EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
     );
     _tabController!.addListener(_onTabChanged);
     isTabControllerReadyRx.value = true;

@@ -17,41 +17,38 @@ class TopInfo extends StatelessWidget {
       builder: (controller) {
         return Obx(() {
           final isLoading = controller.allItemsRx.value == null;
-          return Padding(
-            padding: EdgeInsets.all(32.0.scale),
-            child: GridView.count(
-              padding: EdgeInsets.zero,
-              crossAxisCount: 4,
-              crossAxisSpacing: 32.0.scale,
-              mainAxisSpacing: 0,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 393 / 112,
-              children: [
-                TopInfoItem(
-                  icon: EnumImage.cItem.image(),
-                  title: '總物品數',
-                  count: '${controller.getTotalItemCount()}',
-                  isLoading: isLoading,
-                ),
-                TopInfoItem(
-                  icon: EnumImage.cMember.image(),
-                  title: '物品分類',
-                  count: '${controller.getTotalCategoryCount()}',
-                ),
-                TopInfoItem(
-                  icon: EnumImage.cRoom.image(),
-                  title: '房間',
-                  count: '${controller.getfilterRuleForRooms.length - 1}',
-                ),
-                TopInfoItem(
-                  icon: EnumImage.cStockItem.image(),
-                  title: '低庫存',
-                  count: '${controller.getTotalLowStockCount()}',
-                  isLoading: isLoading,
-                ),
-              ],
-            ),
+          return GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 4,
+            crossAxisSpacing: 32.0.scale,
+            mainAxisSpacing: 0,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            childAspectRatio: 393 / 112,
+            children: [
+              TopInfoItem(
+                icon: EnumImage.cItem.image(),
+                title: '總物品數',
+                count: '${controller.getTotalItemCount()}',
+                isLoading: isLoading,
+              ),
+              TopInfoItem(
+                icon: EnumImage.cMember.image(),
+                title: '物品分類',
+                count: '${controller.getTotalCategoryCount()}',
+              ),
+              TopInfoItem(
+                icon: EnumImage.cRoom.image(),
+                title: '房間',
+                count: '${controller.getfilterRuleForRooms.length - 1}',
+              ),
+              TopInfoItem(
+                icon: EnumImage.cStockItem.image(),
+                title: '低庫存',
+                count: '${controller.getTotalLowStockCount()}',
+                isLoading: isLoading,
+              ),
+            ],
           );
         });
       },

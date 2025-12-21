@@ -24,13 +24,18 @@ class ItemList extends StatelessWidget {
             }
 
             return GridView.builder(
-              padding: EdgeInsets.all(32.0.scale),
+              padding: EdgeInsets.only(
+                left: 16.0.scale, // blurRadius for shadow
+                right: 16.0.scale, // blurRadius for shadow
+                top: 16.0.scale, // blurRadius for shadow
+                bottom: 40.0.scale,
+              ),
               physics: const ClampingScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 32.0.scale,
                 mainAxisSpacing: 32.0.scale,
-                childAspectRatio: 524 / 664,
+                childAspectRatio: 524 / 830,
               ),
               itemCount: items.length,
               itemBuilder: (context, index) {
@@ -53,25 +58,30 @@ class _ItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32.0.scale),
-        color: EnumColor.backgroundPrimary.color,
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x29000000),
-            blurRadius: 16.0.scale,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _ItemPhotoWidget(item: item),
-          _ItemInfo(item: item),
-          SizedBox(height: 10.0.scale),
-          const _ItemTools(),
-        ],
+    return Material(
+      color: Colors.transparent,
+      child: Container(
+        padding: EdgeInsets.all(24.0.scale),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(32.0.scale),
+          color: EnumColor.backgroundPrimary.color,
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0x29000000),
+              blurRadius: 16.0.scale,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _ItemPhotoWidget(item: item),
+            SizedBox(height: 24.0.scale),
+            _ItemInfo(item: item),
+            SizedBox(height: 24.0.scale),
+            const _ItemTools(),
+          ],
+        ),
       ),
     );
   }
@@ -88,49 +98,41 @@ class _ItemPhotoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseItemPageController>();
     final hasWarning = controller.isShowStockWarningTag(item);
-
+    final photoHeight = 348.0.scale;
     return SizedBox(
       height: 335.0.scale,
       child: Stack(
         children: [
-          Container(
-            margin: EdgeInsets.all(24.0.scale),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28.0.scale),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(28.0.scale),
-              child: Image.network(
-                item.photo?.toString() ?? '',
-                width: double.infinity,
-                height: 335.0.scale,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    width: double.infinity,
-                    height: 335.0.scale,
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.image_not_supported),
-                  );
-                },
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(28.0.scale),
+            child: Image.network(
+              item.photo?.toString() ?? '',
+              width: double.infinity,
+              height: photoHeight,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: double.infinity,
+                  height: photoHeight,
+                  color: Colors.grey[300],
+                  child: const Icon(Icons.image_not_supported),
+                );
+              },
             ),
           ),
           // leftTopWarningTagWidget
           if (hasWarning)
             Positioned(
-              top: 40.0.scale,
+              top: 16.0.scale,
+              left: 11.0.scale,
               child: Container(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 16.0.scale,
-                  vertical: 8.0.scale,
+                  horizontal: 24.0.scale,
+                  vertical: 11.0.scale,
                 ),
                 decoration: BoxDecoration(
                   color: EnumColor.accentRed.color,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30.0.scale),
-                    bottomRight: Radius.circular(30.0.scale),
-                  ),
+                  borderRadius: BorderRadius.circular(100.0.scale),
                 ),
                 child: WidgetUtil.textWidget(
                   '庫存不足',
@@ -139,26 +141,6 @@ class _ItemPhotoWidget extends StatelessWidget {
                 ),
               ),
             ),
-          // rightBottomQuantityTagWidget
-          Positioned(
-            bottom: 39.0.scale,
-            right: 39.0.scale,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 16.0.scale,
-                vertical: 8.0.scale,
-              ),
-              decoration: BoxDecoration(
-                color: EnumColor.backgroundPrimary.color,
-                borderRadius: BorderRadius.circular(30.0.scale),
-              ),
-              child: WidgetUtil.textWidget(
-                '數量: ${item.quantity ?? 0}',
-                size: 22.0.scale,
-                color: EnumColor.textPrimary.color,
-              ),
-            ),
-          ),
         ],
       ),
     );
@@ -176,37 +158,65 @@ class _ItemInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseItemPageController>();
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: WidgetUtil.textWidget(
-                  item.name ?? '',
-                  weightType: EnumFontWeightType.bold,
-                  color: EnumColor.textPrimary.color,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: WidgetUtil.textWidget(
+                item.name ?? '',
+                weightType: EnumFontWeightType.bold,
+                color: EnumColor.textPrimary.color,
               ),
-              SizedBox(width: 16.0.scale),
-              EnumImage.cInfo.image(size: Size.square(40.0.scale)),
-            ],
-          ),
-          SizedBox(height: 16.0.scale),
+            ),
+            SizedBox(width: 16.0.scale),
+            quantityWidget,
+          ],
+        ),
+        SizedBox(height: 16.0.scale),
+        WidgetUtil.textWidget(
+          item.description ?? '',
+          size: 22.0.scale,
+          color: EnumColor.textSecondary.color,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: 16.0.scale),
+        WidgetUtil.textWidget(
+          controller.getItemCategoriesName(item),
+          size: 26.0.scale,
+          color: EnumColor.textLink.color,
+        ),
+      ],
+    );
+  }
+
+  Widget get quantityWidget {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.0.scale,
+        vertical: 8.0.scale,
+      ),
+      decoration: BoxDecoration(
+        color: const Color(0x1F366FB6),
+        borderRadius: BorderRadius.circular(30.0.scale),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
           WidgetUtil.textWidget(
-            item.description ?? '',
+            '數量:',
             size: 22.0.scale,
-            color: EnumColor.textSecondary.color,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            color: EnumColor.accentBlue.color,
           ),
-          SizedBox(height: 16.0.scale),
+          SizedBox(width: 12.0.scale),
           WidgetUtil.textWidget(
-            controller.getItemCategoriesName(item),
-            size: 26.0.scale,
-            color: EnumColor.textLink.color,
+            item.quantity?.toString() ?? '',
+            size: 28.0.scale,
+            weightType: EnumFontWeightType.bold,
+            color: EnumColor.accentBlue.color,
           ),
         ],
       ),
@@ -219,28 +229,45 @@ class _ItemTools extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final spacing = 8.0.scale;
-          const iconCount = 4;
-          final availableWidth = constraints.maxWidth;
-          final totalSpacing = spacing * (iconCount - 1);
-          final iconWidth = (availableWidth - totalSpacing) / iconCount;
-          final iconSize = Size(iconWidth, 64.0.scale);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: _toolWidget(EnumImage.cEdit, '編輯'),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(EnumImage.cQuantity, '異動'),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(EnumImage.cInfo, '資訊'),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(EnumImage.cHistory, '記錄'),
+        ),
+      ],
+    );
+  }
 
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              EnumImage.cEdit.image(size: iconSize),
-              EnumImage.cQuantity.image(size: iconSize),
-              EnumImage.cMove.image(size: iconSize),
-              EnumImage.cHistory.image(size: iconSize),
-            ],
-          );
-        },
+  Widget _toolWidget(EnumImage eImg, String title) {
+    return Container(
+      decoration: BoxDecoration(
+        color: EnumColor.backgroundSecondary.color,
+        borderRadius: BorderRadius.circular(20.0.scale),
+      ),
+      padding: EdgeInsets.all(16.0.scale),
+      child: Column(
+        children: [
+          eImg.image(size: Size.square(40.0.scale)),
+          SizedBox(height: 8.0.scale),
+          WidgetUtil.textWidget(
+            title,
+            size: 18.0.scale,
+            color: EnumColor.textSecondary.color,
+          ),
+        ],
       ),
     );
   }
