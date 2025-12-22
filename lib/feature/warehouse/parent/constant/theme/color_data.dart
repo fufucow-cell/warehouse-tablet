@@ -79,6 +79,22 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x00FBBB84),
     dark: Color(0x00FBBB84),
   ),
+  'background_accent_green': ColorData(
+    light: Color(0x1F41CF5F),
+    dark: Color(0x3D41CF5F),
+  ),
+  'background_accent_blue': ColorData(
+    light: Color(0x1F366FB6),
+    dark: Color(0x3D96B7E3),
+  ),
+  'background_accent_red': ColorData(
+    light: Color(0x1FF04526),
+    dark: Color(0x3DF04526),
+  ),
+  'background_accent_yellow': ColorData(
+    light: Color(0x1FFFCF21),
+    dark: Color(0x3DFFCF21),
+  ),
   'line_divider': ColorData(
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),

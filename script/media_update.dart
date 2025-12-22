@@ -1,6 +1,13 @@
 import 'dart:io';
 
-import 'package:flutter_ars_bank/utils/logger.dart';
+// Simple logger replacement
+class _Logger {
+  void i(String message) => print('[INFO] $message');
+  void e(String message) => print('[ERROR] $message');
+  void d(String message) => print('[DEBUG] $message');
+}
+
+final logger = _Logger();
 
 final _assetsThemePath = 'assets/theme';
 final _assetsL10nPath = 'assets/l10n';

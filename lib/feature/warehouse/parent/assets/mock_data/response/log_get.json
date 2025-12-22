@@ -3,124 +3,338 @@
   "message": "Success",
   "data": [
     {
-      "log_id": "440e8400-e29b-41d4-a716-446655440040",
-      "user_name": "John Doe",
-      "created_at": 1704067200,
-      "operate_type": 1,
-      "entity_type": 1,
-      "log_type": 2,
-      "entity_name": ["iPhone 15 Pro"],
-      "description_name": ["Apple's latest smartphone, 256GB storage"],
-      "category_name": ["Electronics > Mobile Phones"],
-      "quantity_count": [3],
-      "min_stock_count": [4],
-      "room_name": ["Living Room"],
-      "photo_url": ["url"]
+      "id": "455e8400-e29b-41d4-a716-446655440055",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "陳十五",
+      "created_at": 1766391564,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "氣泡機",
+        "咖啡機"
+      ],
+      "item_description": [
+        "氣泡機，可製作多種氣泡飲品",
+        "全自動義式咖啡機，可製作多種咖啡飲品"
+      ],
+      "item_photo": [
+        "",
+        "https://example.com/coffee_maker.jpg"
+      ],
+      "item_min_stock_count": [
+        3,
+        7
+      ],
+      "category_name": [
+        "廚房用品 > 氣泡飲品",
+        "廚房用品 > 家電"
+      ]
     },
     {
-      "log_id": "441e8400-e29b-41d4-a716-446655440041",
-      "user_name": "Jane Smith",
-      "created_at": 1704070800,
+      "id": "455e8400-e29b-41d4-a716-446655440055",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "陳十五",
+      "created_at": 1766391564,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "氣泡機"
+      ],
+      "item_photo": [
+        "https://abc.com/photo1.jpg",
+        "https://cba.com/photo2.jpg"
+      ],
+      "item_min_stock_count": [
+        3,
+        0
+      ],
+      "cabinet_name": [
+        "",
+        "廚房櫥櫃"
+      ],
+      "category_name": [
+        "廚房用品 > 氣泡飲品",
+        ""
+      ]
+    },
+    {
+      "id": "455e8400-e29b-41d4-a716-446655440055",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "陳十五",
+      "created_at": 1766391564,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "氣泡機"
+      ],
+      "item_photo": [
+        "https://abc.com/photo1.jpg",
+        ""
+      ],
+      "item_min_stock_count": [
+        0,
+        7
+      ],
+      "cabinet_name": [
+        "陽台地板",
+        ""
+      ],
+      "category_name": [
+        "",
+        "大型家電"
+      ]
+    },
+    {
+      "id": "455e8400-e29b-41d4-a716-446655440055",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "陳十五",
+      "created_at": 1766391564,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "咖啡機"
+      ],
+      "item_min_stock_count": [
+        0,
+        7
+      ],
+      "cabinet_name": [
+        "陽台地板",
+        ""
+      ],
+      "category_name": [
+        "",
+        "大型家電"
+      ]
+    },
+    {
+      "id": "454e8400-e29b-41d4-a716-446655440054",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "劉十四",
+      "created_at": 1766218764,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "咖啡機"
+      ],
+      "item_position": {
+        "cabinets": [
+          {
+            "cabinet_name": [
+              "主臥室櫥櫃",
+              "客廳櫥櫃"
+            ],
+            "count": 2
+          },
+          {
+            "cabinet_name": [
+              "浴室鏡櫃",
+              "廚房碗櫃"
+            ],
+            "count": 11
+          }
+        ]
+      }
+    },
+    {
+      "id": "453e8400-e29b-41d4-a716-446655440053",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "黃十三",
+      "created_at": 1766045964,
+      "operate_type": 2,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "餐具組"
+      ],
+      "item_quantity": {
+        "total_count": [
+          11,
+          9
+        ],
+        "cabinets": [
+          {
+            "cabinet_name": "書房櫥櫃A",
+            "count": [
+              3,
+              4
+            ]
+          },
+          {
+            "cabinet_name": "書房櫥櫃B",
+            "count": [
+              4,
+              2
+            ]
+          },
+          {
+            "cabinet_name": "辦公室櫥櫃A",
+            "count": [
+              0,
+              3
+            ]
+          },
+          {
+            "cabinet_name": "浴室上櫃",
+            "count": [
+              4,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "452e8400-e29b-41d4-a716-446655440052",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "林十二",
+      "created_at": 1765873164,
+      "operate_type": 3,
+      "entity_type": 2,
+      "record_type": 1,
+      "cabinet_room_name": [
+        "陽台",
+        ""
+      ],
+      "cabinet_name": [
+        "陽台櫥櫃",
+        ""
+      ],
+      "category_name": [
+        "衣物 > 下身 > 褲子",
+        ""
+      ]
+    },
+    {
+      "id": "451e8400-e29b-41d4-a716-446655440051",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "陳十一",
+      "created_at": 1765700364,
+      "operate_type": 1,
+      "entity_type": 3,
+      "record_type": 1,
+      "item_name": [
+        "",
+        "不鏽鋼餐具組"
+      ],
+      "category_name": [
+        "",
+        "廚房用品 > 餐具"
+      ]
+    },
+    {
+      "id": "447e8400-e29b-41d4-a716-446655440047",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "孫七",
+      "created_at": 1765009164,
+      "operate_type": 2,
+      "entity_type": 2,
+      "record_type": 1,
+      "cabinet_room_name": [
+        "廚房",
+        "餐廳"
+      ],
+      "cabinet_name": [
+        "客廳櫥櫃A",
+        "客廳櫥櫃B"
+      ],
+      "category_name": [
+        "衣物 > 下身 > 褲子",
+        "衣物 > 上衣 > 襯衫"
+      ]
+    },
+    {
+      "id": "446e8400-e29b-41d4-a716-446655440046",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "趙六",
+      "created_at": 1764836364,
+      "operate_type": 1,
+      "entity_type": 2,
+      "record_type": 1,
+      "cabinet_room_name": [
+        "",
+        "儲藏室"
+      ],
+      "cabinet_name": [
+        "",
+        "儲藏室櫥櫃"
+      ],
+      "category_name": [
+        "",
+        "衣物 > 上衣 > 襯衫"
+      ]
+    },
+    {
+      "id": "441e8400-e29b-41d4-a716-446655440041",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "李四",
+      "created_at": 1763972364,
       "operate_type": 2,
       "entity_type": 1,
-      "log_type": 1,
-      "entity_name": ["MacBook Pro 14-inch", "MacBook Pro 16-inch"],
-      "description_name": [null, "M3 Pro chip, 32GB RAM, 1TB SSD"],
-      "category_name": ["Electronics > Computers", null],
-      "quantity_count": [5, 8],
-      "min_stock_count": [3, 5],
-      "room_name": ["Living Room", "Master Bedroom"],
-      "photo_url": []
+      "record_type": 1,
+      "cabinet_room_name": [
+        "客廳",
+        "主臥室"
+      ],
+      "cabinet_name": [
+        "客廳櫥櫃A",
+        "主臥室櫥櫃A"
+      ]
     },
     {
-      "log_id": "445e8400-e29b-41d4-a716-446655440045",
-      "user_name": "David Lee",
-      "created_at": 1704085200,
+      "id": "441e8400-e29b-41d4-a716-446655440041",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "李四",
+      "created_at": 1763972364,
+      "operate_type": 2,
+      "entity_type": 1,
+      "record_type": 1,
+      "cabinet_name": [
+        "主臥室櫥櫃A"
+      ],
+      "cabinet_room_name": [
+        "客廳",
+        ""
+      ]
+    },
+    {
+      "id": "441e8400-e29b-41d4-a716-446655440041",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "李四",
+      "created_at": 1763972364,
       "operate_type": 3,
       "entity_type": 1,
-      "log_type": 1,
-      "entity_name": ["Antibacterial Soap"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [],
-      "min_stock_count": [],
-      "room_name": [],
-      "photo_url": []
+      "record_type": 1,
+      "cabinet_name": [
+        "客廳系統櫃",
+        ""
+      ]
     },
     {
-      "log_id": "446e8400-e29b-41d4-a716-446655440046",
-      "user_name": "Emma Watson",
-      "created_at": 1704088800,
+      "id": "440e8400-e29b-41d4-a716-446655440040",
+      "household_id": "550e8400-e29b-41d4-a716-446655440000",
+      "user_name": "張三",
+      "created_at": 1763799564,
       "operate_type": 1,
-      "entity_type": 2,
-      "log_type": 1,
-      "entity_name": ["Storage Room Cabinet"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [],
-      "min_stock_count": [],
-      "room_name": ["Storage Room"],
-      "photo_url": []
-    },
-    {
-      "log_id": "447e8400-e29b-41d4-a716-446655440047",
-      "user_name": "Frank Miller",
-      "created_at": 1704092400,
-      "operate_type": 2,
-      "entity_type": 2,
-      "log_type": 1,
-      "entity_name": ["Living Room Cabinet A", "Living Room Cabinet B"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [],
-      "min_stock_count": [],
-      "room_name": ["Kitchen", "Dining Room"],
-      "photo_url": []
-    },
-    {
-      "log_id": "448e8400-e29b-41d4-a716-446655440048",
-      "user_name": "Alice Brown",
-      "created_at": 1704096000,
-      "operate_type": 2,
       "entity_type": 1,
-      "log_type": 2,
-      "entity_name": ["iPad Air"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [10, 3],
-      "min_stock_count": [5],
-      "room_name": [],
-      "photo_url": []
-    },
-    {
-      "log_id": "449e8400-e29b-41d4-a716-446655440049",
-      "user_name": "Bob Johnson",
-      "created_at": 1704099600,
-      "operate_type": 2,
-      "entity_type": 1,
-      "log_type": 2,
-      "entity_name": ["MacBook Air"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [6],
-      "min_stock_count": [5, 8],
-      "room_name": [],
-      "photo_url": []
-    },
-    {
-      "log_id": "450e8400-e29b-41d4-a716-446655440050",
-      "user_name": "Charlie Wilson",
-      "created_at": 1704103200,
-      "operate_type": 2,
-      "entity_type": 1,
-      "log_type": 2,
-      "entity_name": ["AirPods Max"],
-      "description_name": [],
-      "category_name": [],
-      "quantity_count": [15, 4],
-      "min_stock_count": [3, 7],
-      "room_name": [],
-      "photo_url": []
+      "record_type": 1,
+      "cabinet_room_name": [
+        "",
+        "客廳"
+      ],
+      "cabinet_name": [
+        "",
+        "客廳櫥櫃A"
+      ],
+      "category_name": [
+        "",
+        "電子產品 > 手機"
+      ]
     }
   ]
 }

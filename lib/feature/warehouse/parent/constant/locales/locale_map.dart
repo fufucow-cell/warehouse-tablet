@@ -1,10 +1,11 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-09T14:45:40.610527
+/// 生成时间: 2025-12-22T16:12:48.967885
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';
+import 'package:get/get.dart';
 
 enum EnumLocale {
   appTitle,
@@ -120,9 +121,11 @@ enum EnumLocale {
   successUpdate,
   warehouseAlarm,
   warehouseCabinet,
+  warehouseCabinetQuantityChange,
   warehouseCategory,
   warehouseCategoryChange,
   warehouseCategoryLabel,
+  warehouseCategoryUpdate,
   warehouseClearEndDate,
   warehouseClearStartDate,
   warehouseCreateItem,
@@ -134,22 +137,34 @@ enum EnumLocale {
   warehouseDeleteDateRange,
   warehouseDescriptionChange,
   warehouseDescriptionLabel,
+  warehouseDescriptionUpdate,
   warehouseDeselectAll,
   warehouseEndDate,
   warehouseEndDateLabel,
   warehouseEntityTypeCabinet,
   warehouseEntityTypeItem,
+  warehouseEntityTypePosition,
+  warehouseEntityTypeQuantity,
   warehouseEntityTypeUnknown,
   warehouseErrorFetchData,
   warehouseErrorOpenDialog,
+  warehouseFilterDateAll,
+  warehouseFilterDateLastWeek,
+  warehouseFilterDateToday,
+  warehouseFilterDateUnknown,
+  warehouseFilterDateWeek,
   warehouseItem,
+  warehouseItemTotalQuantityChange,
   warehouseLocationsLabel,
   warehouseLogTypeAlarm,
   warehouseLogTypeGeneral,
   warehouseLogTypeUnknown,
   warehouseMainTitle,
+  warehouseMinStockUpdate,
   warehouseMoreLocations,
+  warehouseMoveFromTo,
   warehouseNameLabel,
+  warehouseNameUpdate,
   warehouseNoAlarm,
   warehouseNoCabinet,
   warehouseNoCategory,
@@ -161,13 +176,17 @@ enum EnumLocale {
   warehouseOperateTypeDelete,
   warehouseOperateTypeUnknown,
   warehouseOperateTypeUpdate,
+  warehousePhotoAdd,
+  warehousePhotoDelete,
   warehousePhotoLabel,
+  warehousePhotoUpdate,
   warehouseQuantityChange,
   warehouseQuantityLabel,
   warehouseRecord,
   warehouseRoom,
   warehouseRoomChange,
   warehouseRoomLabel,
+  warehouseRoomUpdate,
   warehouseSelectAll,
   warehouseStartDate,
   warehouseStartDateLabel,
@@ -177,15 +196,29 @@ enum EnumLocale {
   warehouseTabCategory,
   warehouseTabItem,
   warehouseTabRecord,
+  warehouseTagTypeCreateCabinet,
+  warehouseTagTypeCreateCategory,
+  warehouseTagTypeCreateItem,
+  warehouseTagTypeDeleteCabinet,
+  warehouseTagTypeDeleteCategory,
+  warehouseTagTypeDeleteItem,
+  warehouseTagTypeUnknown,
+  warehouseTagTypeUpdateCabinet,
+  warehouseTagTypeUpdateCategory,
+  warehouseTagTypeUpdateItem,
+  warehouseTagTypeUpdatePosition,
+  warehouseTagTypeUpdateQuantity,
   warehouseTitle,
+  warehouseUncategorized,
+  warehouseUndescribed,
   warehouseUnknownItem,
+  warehouseUnnamed,
   warehouseUnnamedCabinet,
   warehouseUnnamedCategory,
   warehouseUnnamedItem;
 
   String get key => name.toSnakeCase();
-
-  String get tr => _currentTranslation.translationMap[key] ?? key;
+  String get tr => key.tr;
 
   static LocaleTranslation? get currentTranslation => _currentTranslation;
 

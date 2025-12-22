@@ -151,10 +151,10 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 
       // 显示搜索日志对话框
       DialogSearchLog.show(
-        initialStartDate: recordController?.startDate,
-        initialEndDate: recordController?.endDate,
-        initialOperateType: recordController?.filterOperateType,
-        initialEntityType: recordController?.filterEntityType,
+        // initialStartDate: recordController?.startDate,
+        // initialEndDate: recordController?.endDate,
+        // initialOperateType: recordController?.filterOperateType,
+        // initialEntityType: recordController?.filterEntityType,
         onConfirm: ({
           DateTime? startDate,
           DateTime? endDate,
@@ -163,12 +163,12 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
         }) {
           // 应用筛选条件
           if (recordController != null) {
-            recordController.applyFilters(
-              startDate: startDate,
-              endDate: endDate,
-              operateType: operateType,
-              entityType: entityType,
-            );
+            // recordController.applyFilters(
+            //   startDate: startDate,
+            //   endDate: endDate,
+            //   operateType: operateType,
+            //   entityType: entityType,
+            // );
           }
         },
         onCancel: () {

@@ -48,7 +48,7 @@ class _LeftMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 280,
+      width: 267.0.scale,
       color: Theme.of(context).colorScheme.surface,
       child: const Column(
         children: [
@@ -75,8 +75,9 @@ class _TitleWidget extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 20.0.scale),
         child: EnumImage.tCow.image(
-            size: Size.square(200.0.scale),
-            color: Theme.of(context).colorScheme.onPrimaryContainer),
+          size: Size.square(200.0.scale),
+          color: Theme.of(context).colorScheme.onPrimaryContainer,
+        ),
       ),
     );
   }
@@ -97,17 +98,13 @@ class _TabListWidget extends StatelessWidget {
             selected: isSelected,
             leading: Icon(
               item.icon,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurface,
+              color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               item.title,
               style: TextStyle(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface,
+                color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
               ),
             ),
             onTap: () => controller.interactive(

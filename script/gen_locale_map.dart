@@ -62,6 +62,8 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln(
+      "import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';");
+  buffer.writeln(
       "import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';");
   buffer.writeln("import 'package:get/get.dart';");
   buffer.writeln('');
@@ -78,6 +80,14 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('');
   buffer.writeln('  String get key => name.toSnakeCase();');
   buffer.writeln('  String get tr => key.tr;');
+  buffer.writeln('');
+  buffer.writeln('  static LocaleTranslation? get currentTranslation => _currentTranslation;');
+  buffer.writeln('');
+  buffer.writeln('  static LocaleTranslation _currentTranslation =');
+  buffer.writeln('      LocaleTranslation.defaultTranslation;');
+  buffer.writeln('');
+  buffer.writeln('  static void setCurrentTranslation(LocaleTranslation translation) =>');
+  buffer.writeln('      _currentTranslation = translation;');
   buffer.writeln('}');
 
   return buffer.toString();

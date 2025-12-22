@@ -26,9 +26,9 @@ class WarehouseAlarmPageController extends BasePageController {
       fromJson: WarehouseLogResponseModel.fromJson,
     );
 
-    // 过滤出 log_type = 2 (alarm) 的日志
+    // 过滤出 record_type = 2 (alarm) 的日志
     _model.allAlarmLogs =
-        response?.data?.where((log) => log.logType == 2).toList();
+        response?.data?.where((log) => log.recordType == 2).toList();
     _applyFilters();
     update();
   }
@@ -142,8 +142,8 @@ class WarehouseAlarmPageController extends BasePageController {
   void selectAll() {
     if (_model.alarmLogs != null) {
       for (final log in _model.alarmLogs!) {
-        if (log.logId != null) {
-          _model.selectedLogIds.add(log.logId!);
+        if (log.id != null) {
+          _model.selectedLogIds.add(log.id!);
         }
       }
     }
@@ -160,8 +160,8 @@ class WarehouseAlarmPageController extends BasePageController {
   bool get isAllSelected {
     if (_model.alarmLogs == null || _model.alarmLogs!.isEmpty) return false;
     final validLogIds = _model.alarmLogs!
-        .where((log) => log.logId != null)
-        .map((log) => log.logId!)
+        .where((log) => log.id != null)
+        .map((log) => log.id!)
         .toSet();
     return validLogIds.isNotEmpty &&
         _model.selectedLogIds.containsAll(validLogIds);
@@ -197,7 +197,7 @@ class WarehouseAlarmPageController extends BasePageController {
     final List<String> idsToDelete = [];
 
     for (final log in _model.alarmLogs!) {
-      if (log.logId == null || log.createdAt == null) {
+      if (log.id == null || log.createdAt == null) {
         continue;
       }
 
@@ -229,7 +229,7 @@ class WarehouseAlarmPageController extends BasePageController {
       }
 
       if (shouldDelete) {
-        idsToDelete.add(log.logId!);
+        idsToDelete.add(log.id!);
       }
     }
 

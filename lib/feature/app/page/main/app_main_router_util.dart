@@ -7,8 +7,7 @@ import 'package:get/get.dart';
 class AppMainRouterUtil extends GetxService implements NavigatorObserver {
   // MARK: - Properties
 
-  final GlobalKey<NavigatorState> nestedNavigatorKey =
-      GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> nestedNavigatorKey = GlobalKey<NavigatorState>();
   BuildContext? get nestedContext => nestedNavigatorKey.currentContext;
   NavigatorState? get nestedNavigator => nestedNavigatorKey.currentState;
   static EnumAppMainRouter get rootRouter => EnumAppMainRouter.defaultRouter;
@@ -19,8 +18,6 @@ class AppMainRouterUtil extends GetxService implements NavigatorObserver {
   // MARK: - Init
 
   AppMainRouterUtil._internal();
-
-  // MARK: - Public Method
 
   static AppMainRouterUtil register() {
     if (Get.isRegistered<AppMainRouterUtil>()) {
@@ -45,6 +42,8 @@ class AppMainRouterUtil extends GetxService implements NavigatorObserver {
     }
     return Get.find<AppMainRouterUtil>();
   }
+
+  // MARK: - Public Method
 
   Route<dynamic> generateRoute(RouteSettings settings) {
     final router = EnumAppMainRouter.values.firstWhereOrNull(

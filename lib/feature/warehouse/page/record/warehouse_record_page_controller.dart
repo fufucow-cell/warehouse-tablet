@@ -1,267 +1,302 @@
 part of 'warehouse_record_page.dart';
 
-class WarehouseRecordPageController extends BasePageController {
+class WarehouseRecordPageController extends GetxController {
   // MARK: - Properties
 
   final _model = WarehouseRecordPageModel();
-  List<Log>? get logs => _model.logs;
-  Rx<bool> get isEditModeRx => _model.isEditMode;
-  RxSet<String> get selectedLogIdsRx => _model.selectedLogIds;
-  DateTime? get startDate => _model.startDate;
-  DateTime? get endDate => _model.endDate;
-  EnumOperateType? get filterOperateType => _model.filterOperateType;
-  EnumEntityType? get filterEntityType => _model.filterEntityType;
+  final _service = WarehouseService.instance;
+  final scrollController = ScrollController();
+  List<int> get columnRatioRx => _model.columnRatio;
+  String get avatarUrl => _model.avatarUrl;
+  RxReadonly<List<Log>?> get allLogsRx => _model.allLogs.readonly;
+  RxReadonly<List<Log>> get visibleLogsRx => _model.visibleLogs.readonly;
+  RxReadonly<bool> get isShowFilterMenuRx => _model.isShowFilterMenu.readonly;
+  RxReadonly<EnumFilterType> get filterTypeRx => _model.filterType.readonly;
+  RxReadonly<EnumRecordType?> get selectedLogTypeRx => _model.selectedLogType.readonly;
 
   // MARK: - Init
 
-  WarehouseRecordPageController() {
-    super.init();
+  @override
+  void onInit() {
+    super.onInit();
+    _checkData();
   }
-
-  // MARK: - Methods
 
   @override
-  Future<void> apiProcessing() async {
-    final response = await ApiUtil.sendRequest<WarehouseLogResponseModel>(
-      EnumApiInfo.logFetch,
-      requestModel: WarehouseLogRequestModel(),
-      fromJson: WarehouseLogResponseModel.fromJson,
-    );
-
-    _model.allLogs = response?.data;
-    _applyFilters();
-    update();
+  void onClose() {
+    scrollController.dispose();
+    super.onClose();
   }
 
-  // 应用筛选条件
-  void applyFilters({
-    DateTime? startDate,
-    DateTime? endDate,
-    EnumOperateType? operateType,
-    EnumEntityType? entityType,
-  }) {
-    _model.startDate = startDate;
-    _model.endDate = endDate;
-    _model.filterOperateType = operateType;
-    _model.filterEntityType = entityType;
-    _applyFilters();
-    update();
-  }
+  // MARK: - Public Method
 
-  // 内部筛选方法
-  void _applyFilters() {
-    if (_model.allLogs == null) {
-      _model.logs = null;
-      return;
-    }
+  EnumTagType genTagType(Log log) {
+    final operateType = EnumOperateType.fromInt(log.operateType);
+    final entityType = EnumEntityType.fromInt(log.entityType);
 
-    List<Log> filteredLogs = List.from(_model.allLogs!);
-
-    // 按日期筛选
-    if (_model.startDate != null || _model.endDate != null) {
-      filteredLogs = filteredLogs.where((log) {
-        if (log.createdAt == null) return false;
-
-        final logDate =
-            DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
-        final logDateOnly = DateTime(logDate.year, logDate.month, logDate.day);
-
-        if (_model.startDate != null && _model.endDate != null) {
-          // 两个日期都选了：筛选范围内的日志
-          final startOnly = DateTime(
-            _model.startDate!.year,
-            _model.startDate!.month,
-            _model.startDate!.day,
-          );
-          final endOnly = DateTime(
-            _model.endDate!.year,
-            _model.endDate!.month,
-            _model.endDate!.day,
-          );
-          return logDateOnly.isAtSameMomentAs(startOnly) ||
-              logDateOnly.isAtSameMomentAs(endOnly) ||
-              (logDateOnly.isAfter(startOnly) && logDateOnly.isBefore(endOnly));
-        } else if (_model.startDate != null) {
-          // 只选了起始日期：筛选此日期之后的日志
-          final startOnly = DateTime(
-            _model.startDate!.year,
-            _model.startDate!.month,
-            _model.startDate!.day,
-          );
-          return logDateOnly.isAtSameMomentAs(startOnly) ||
-              logDateOnly.isAfter(startOnly);
-        } else if (_model.endDate != null) {
-          // 只选了结束日期：筛选此日期之前的日志
-          final endOnly = DateTime(
-            _model.endDate!.year,
-            _model.endDate!.month,
-            _model.endDate!.day,
-          );
-          return logDateOnly.isAtSameMomentAs(endOnly) ||
-              logDateOnly.isBefore(endOnly);
+    switch (operateType) {
+      case EnumOperateType.create:
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.createItem,
+          EnumEntityType.cabinet => EnumTagType.createCabinet,
+          EnumEntityType.category => EnumTagType.createCategory,
+          _ => EnumTagType.unknown,
+        };
+      case EnumOperateType.update:
+        if (entityType == EnumEntityType.item) {
+          if (log.itemQuantity != null) {
+            return EnumTagType.updateQuantity;
+          } else if (log.itemPosition != null) {
+            return EnumTagType.updatePosition;
+          }
         }
 
-        return true;
-      }).toList();
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.updateItem,
+          EnumEntityType.cabinet => EnumTagType.updateCabinet,
+          EnumEntityType.category => EnumTagType.updateCategory,
+          _ => EnumTagType.unknown,
+        };
+      case EnumOperateType.delete:
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.deleteItem,
+          EnumEntityType.cabinet => EnumTagType.deleteCabinet,
+          EnumEntityType.category => EnumTagType.deleteCategory,
+          _ => EnumTagType.unknown,
+        };
+      default:
+        return EnumTagType.unknown;
     }
-
-    // 按操作类型筛选
-    if (_model.filterOperateType != null) {
-      filteredLogs = filteredLogs.where((log) {
-        final logOperateType = EnumOperateType.fromInt(log.operateType);
-        return logOperateType == _model.filterOperateType;
-      }).toList();
-    }
-
-    // 按实体类型筛选
-    if (_model.filterEntityType != null) {
-      filteredLogs = filteredLogs.where((log) {
-        final logEntityType = EnumEntityType.fromInt(log.entityType);
-        return logEntityType == _model.filterEntityType;
-      }).toList();
-    }
-
-    _model.logs = filteredLogs;
   }
 
-  // 切换编辑模式
-  void toggleEditMode() {
-    _model.isEditMode.value = !_model.isEditMode.value;
-    if (!_model.isEditMode.value) {
-      // 退出编辑模式时清空选择
-      _model.selectedLogIds.clear();
-      _model.startDate = null;
-      _model.endDate = null;
+  String genContent(Log log) {
+    final operateType = EnumOperateType.fromInt(log.operateType);
+    final entityType = EnumEntityType.fromInt(log.entityType);
+
+    switch (operateType) {
+      case EnumOperateType.create:
+        return switch (entityType) {
+          EnumEntityType.item => log.itemName?.lastOrNull ?? '',
+          EnumEntityType.cabinet => log.cabinetName?.lastOrNull ?? '',
+          EnumEntityType.category => log.categoryName?.lastOrNull ?? '',
+          _ => '',
+        };
+      case EnumOperateType.update:
+        if (entityType == EnumEntityType.item) {
+          if (log.itemQuantity != null) {
+            return _genItemQuantityContent(log);
+          } else if (log.itemPosition != null) {
+            return _genItemPositionContent(log);
+          }
+        }
+
+        return switch (entityType) {
+          EnumEntityType.item => _genItemNormalContent(log),
+          EnumEntityType.cabinet => _genCabinetContent(log),
+          EnumEntityType.category => _genCategoryContent(log),
+          _ => '',
+        };
+      case EnumOperateType.delete:
+        return switch (entityType) {
+          EnumEntityType.item => log.itemName?.firstOrNull ?? '',
+          EnumEntityType.cabinet => log.cabinetName?.firstOrNull ?? '',
+          EnumEntityType.category => log.categoryName?.firstOrNull ?? '',
+          _ => '',
+        };
+      default:
+        return '';
     }
-    update();
   }
 
-  // 设置起始日期
-  void setStartDate(DateTime? date) {
-    _model.startDate = date;
-    update();
+  String formatDate(int? timestamp) {
+    if (timestamp == null) {
+      return '-';
+    }
+
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
-  // 设置结束日期
-  void setEndDate(DateTime? date) {
-    _model.endDate = date;
-    update();
-  }
+  // MARK: - Private Method
 
-  // 切换单个日志的选择状态
-  void toggleLogSelection(String logId) {
-    if (_model.selectedLogIds.contains(logId)) {
-      _model.selectedLogIds.remove(logId);
+  void _checkData() {
+    final allLogs = _service.getAllLogs;
+
+    if (allLogs == null) {
+      _queryApiData();
     } else {
-      _model.selectedLogIds.add(logId);
+      _model.allLogs.value = allLogs;
+      _genVisibleLogs();
     }
-    update();
   }
 
-  // 全选
-  void selectAll() {
-    if (_model.logs != null) {
-      for (final log in _model.logs!) {
-        if (log.logId != null) {
-          _model.selectedLogIds.add(log.logId!);
-        }
-      }
-    }
-    update();
+  Future<void> _queryApiData() async {
+    final response = await _service.apiReqFetchLogs(WarehouseLogRequestModel());
+    _model.allLogs.value = response;
+    _genVisibleLogs();
   }
 
-  // 取消全选
-  void deselectAll() {
-    _model.selectedLogIds.clear();
-    update();
-  }
+  void _genVisibleLogs() {
+    final allLogs = _model.allLogs.value;
 
-  // 检查是否全选
-  bool get isAllSelected {
-    if (_model.logs == null || _model.logs!.isEmpty) return false;
-    final validLogIds = _model.logs!
-        .where((log) => log.logId != null)
-        .map((log) => log.logId!)
-        .toSet();
-    return validLogIds.isNotEmpty &&
-        _model.selectedLogIds.containsAll(validLogIds);
-  }
-
-  // 批次删除（基于选中的项）
-  void batchDelete() {
-    final selectedIds = _model.selectedLogIds.toList();
-    if (selectedIds.isEmpty) {
-      return;
-    }
-    // TODO: 实现批次删除逻辑
-    print('批次删除日志: $selectedIds');
-    // 删除后刷新列表
-    _model.selectedLogIds.clear();
-    startApiProcess();
-  }
-
-  // 基于日期删除日志
-  void deleteByDate() {
-    if (_model.logs == null || _model.logs!.isEmpty) {
+    if (allLogs == null) {
       return;
     }
 
-    final startDate = _model.startDate;
-    final endDate = _model.endDate;
+    final startDate = _model.filterType.value.startDate;
 
-    // 如果两个日期都没选，不执行删除
-    if (startDate == null && endDate == null) {
+    if (startDate == null) {
+      _model.visibleLogs.value = allLogs.where((log) => log.createdAt != null).toList();
       return;
     }
 
-    final List<String> idsToDelete = [];
+    final startTimestamp = startDate.millisecondsSinceEpoch ~/ 1000;
 
-    for (final log in _model.logs!) {
-      if (log.logId == null || log.createdAt == null) {
-        continue;
+    final visibleLogs = allLogs.where((log) {
+      if (log.createdAt == null) {
+        return false;
       }
+      return log.createdAt! >= startTimestamp;
+    }).toList();
 
-      final logDate =
-          DateTime.fromMillisecondsSinceEpoch(log.createdAt! * 1000);
-      final logDateOnly = DateTime(logDate.year, logDate.month, logDate.day);
+    _model.visibleLogs.value = visibleLogs;
+  }
 
-      bool shouldDelete = false;
+  String _genItemQuantityContent(Log log) {
+    String result = '';
 
-      if (startDate != null && endDate != null) {
-        // 两个日期都选了：删除范围内的日志（包含起始和结束日期）
-        final startOnly =
-            DateTime(startDate.year, startDate.month, startDate.day);
-        final endOnly = DateTime(endDate.year, endDate.month, endDate.day);
-        shouldDelete = logDateOnly.isAtSameMomentAs(startOnly) ||
-            logDateOnly.isAtSameMomentAs(endOnly) ||
-            (logDateOnly.isAfter(startOnly) && logDateOnly.isBefore(endOnly));
-      } else if (startDate != null) {
-        // 只选了起始日期：删除此日期之后的日志
-        final startOnly =
-            DateTime(startDate.year, startDate.month, startDate.day);
-        shouldDelete = logDateOnly.isAtSameMomentAs(startOnly) ||
-            logDateOnly.isAfter(startOnly);
-      } else if (endDate != null) {
-        // 只选了结束日期：删除此日期之前的日志
-        final endOnly = DateTime(endDate.year, endDate.month, endDate.day);
-        shouldDelete = logDateOnly.isAtSameMomentAs(endOnly) ||
-            logDateOnly.isBefore(endOnly);
-      }
+    if (log.itemQuantity != null) {
+      final quantity = log.itemQuantity!;
+      final oldCount = quantity.totalCount?.firstOrNull ?? '-';
+      final newCount = quantity.totalCount?.lastOrNull ?? '-';
+      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final strTotalCount = EnumLocale.warehouseItemTotalQuantityChange.tr
+          .replaceAll('{itemName}', itemName)
+          .replaceAll('{oldCount}', oldCount.toString())
+          .replaceAll('{newCount}', newCount.toString());
+      result += strTotalCount;
 
-      if (shouldDelete) {
-        idsToDelete.add(log.logId!);
+      for (ItemQuantityCabinet cabinet in quantity.cabinets ?? []) {
+        final oldCount = cabinet.count?.firstOrNull ?? '-';
+        final newCount = cabinet.count?.lastOrNull ?? '-';
+        final cabinetName = cabinet.cabinetName ?? '-';
+        final strCabinet = EnumLocale.warehouseCabinetQuantityChange.tr
+            .replaceAll('{cabinetName}', cabinetName)
+            .replaceAll('{oldCount}', oldCount.toString())
+            .replaceAll('{newCount}', newCount.toString());
+        result += '\n$strCabinet';
       }
     }
 
-    if (idsToDelete.isEmpty) {
-      return;
+    return result;
+  }
+
+  String _genItemPositionContent(Log log) {
+    final position = log.itemPosition;
+    String result = '';
+
+    if (log.itemName?.length == 1) {
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      result += oldValue;
     }
 
-    // TODO: 实现基于日期的批次删除逻辑
-    print('基于日期删除日志: $idsToDelete (起始日期: $startDate, 结束日期: $endDate)');
-    // 删除后刷新列表
-    _model.startDate = null;
-    _model.endDate = null;
-    startApiProcess();
+    if (position != null) {
+      for (ItemPositionCabinet cabinet in position.cabinets ?? []) {
+        final oldName = (cabinet.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : cabinet.cabinetName!.firstOrNull!;
+        final newName = (cabinet.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : cabinet.cabinetName!.lastOrNull!;
+        final count = cabinet.count ?? '-';
+        final strCabinet = EnumLocale.warehouseMoveFromTo.tr
+            .replaceAll('{oldName}', oldName)
+            .replaceAll('{newName}', newName)
+            .replaceAll('{count}', count.toString());
+        result += '\n$strCabinet';
+      }
+    }
+
+    return result;
+  }
+
+  String _genItemNormalContent(Log log) {
+    String result = '';
+
+    if (log.itemName?.length == 1) {
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      result += oldValue;
+    } else if (log.itemName?.length == 2) {
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final newValue = (log.itemName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.lastOrNull!;
+      final str = EnumLocale.warehouseNameUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue);
+      result += str;
+    }
+
+    if (log.itemDescription?.length == 2) {
+      final oldValue = (log.itemDescription?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.firstOrNull!;
+      final newValue = (log.itemDescription?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseDescriptionUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue)}';
+    }
+
+    if (log.categoryName?.length == 2) {
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseCategoryUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue)}';
+    }
+
+    if (log.itemPhoto?.length == 2) {
+      final oldPhoto = (log.itemPhoto?.firstOrNull?.isEmpty ?? true);
+      final newPhoto = (log.itemPhoto?.lastOrNull?.isEmpty ?? true);
+
+      if (!oldPhoto && !newPhoto) {
+        result += '\n${EnumLocale.warehousePhotoUpdate.tr}';
+      } else if (oldPhoto && !newPhoto) {
+        result += '\n${EnumLocale.warehousePhotoAdd.tr}';
+      } else if (!oldPhoto && newPhoto) {
+        result += '\n${EnumLocale.warehousePhotoDelete.tr}';
+      }
+    }
+
+    if (log.itemMinStockCount?.length == 2) {
+      final oldValue = log.itemMinStockCount?.firstOrNull ?? -1;
+      final newValue = log.itemMinStockCount?.lastOrNull ?? -1;
+
+      if (oldValue >= 0 && newValue >= 0 && oldValue != newValue) {
+        result +=
+            '\n${EnumLocale.warehouseMinStockUpdate.tr.replaceAll('{oldValue}', oldValue.toString()).replaceAll('{newValue}', newValue.toString())}';
+      }
+    }
+
+    return result;
+  }
+
+  String _genCabinetContent(Log log) {
+    String result = '';
+
+    if (log.cabinetName?.length == 1) {
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
+      result += oldValue;
+    } else if (log.cabinetName?.length == 2) {
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
+      final newValue = (log.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.lastOrNull!;
+      result += EnumLocale.warehouseNameUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue);
+    }
+
+    if (log.cabinetRoomName?.length == 2) {
+      final oldValue = (log.cabinetRoomName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.cabinetRoomName!.firstOrNull!;
+      final newValue = (log.cabinetRoomName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.cabinetRoomName!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseRoomUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue)}';
+    }
+
+    return result;
+  }
+
+  String _genCategoryContent(Log log) {
+    String result = '';
+
+    if (log.categoryName?.length == 2) {
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
+      result += EnumLocale.warehouseCategoryUpdate.tr.replaceAll('{oldValue}', oldValue).replaceAll('{newValue}', newValue);
+    }
+
+    return result;
   }
 }

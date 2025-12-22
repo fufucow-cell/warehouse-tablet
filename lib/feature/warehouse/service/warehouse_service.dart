@@ -32,6 +32,7 @@ class WarehouseService {
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   int? get userRoleType => _model.userRoleType;
   List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems;
+  List<Log>? get getAllLogs => _model.allLogs;
 
   // MARK: - Init
 
@@ -237,6 +238,7 @@ class WarehouseService {
       fromJson: WarehouseLogResponseModel.fromJson,
       onError: onError,
     );
+    _model.allLogs = response?.data;
     return response?.data;
   }
 

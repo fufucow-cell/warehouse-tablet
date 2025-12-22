@@ -20,8 +20,9 @@ Log _$LogFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Log {
-  @JsonKey(name: 'log_id')
-  String? get logId => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'household_id')
+  String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
   String? get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -30,22 +31,26 @@ mixin _$Log {
   int? get operateType => throw _privateConstructorUsedError;
   @JsonKey(name: 'entity_type')
   int? get entityType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'log_type')
-  int? get logType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'entity_name')
-  List<String?>? get entityName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'description_name')
-  List<String?>? get descriptionName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'record_type')
+  int? get recordType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_name')
+  List<String?>? get itemName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_description')
+  List<String?>? get itemDescription => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_photo')
+  List<String?>? get itemPhoto => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_min_stock_count')
+  List<int?>? get itemMinStockCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_quantity')
+  ItemQuantity? get itemQuantity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_position')
+  ItemPosition? get itemPosition => throw _privateConstructorUsedError;
+  @JsonKey(name: 'cabinet_room_name')
+  List<String?>? get cabinetRoomName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_name')
   List<String?>? get categoryName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quantity_count')
-  List<int?>? get quantityCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'min_stock_count')
-  List<int?>? get minStockCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'room_name')
-  List<String?>? get roomName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'photo_url')
-  List<String?>? get photoUrl => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -58,19 +63,25 @@ abstract class $LogCopyWith<$Res> {
       _$LogCopyWithImpl<$Res, Log>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'log_id') String? logId,
+      {String? id,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'entity_type') int? entityType,
-      @JsonKey(name: 'log_type') int? logType,
-      @JsonKey(name: 'entity_name') List<String?>? entityName,
-      @JsonKey(name: 'description_name') List<String?>? descriptionName,
-      @JsonKey(name: 'category_name') List<String?>? categoryName,
-      @JsonKey(name: 'quantity_count') List<int?>? quantityCount,
-      @JsonKey(name: 'min_stock_count') List<int?>? minStockCount,
-      @JsonKey(name: 'room_name') List<String?>? roomName,
-      @JsonKey(name: 'photo_url') List<String?>? photoUrl});
+      @JsonKey(name: 'record_type') int? recordType,
+      @JsonKey(name: 'item_name') List<String?>? itemName,
+      @JsonKey(name: 'item_description') List<String?>? itemDescription,
+      @JsonKey(name: 'item_photo') List<String?>? itemPhoto,
+      @JsonKey(name: 'item_min_stock_count') List<int?>? itemMinStockCount,
+      @JsonKey(name: 'item_quantity') ItemQuantity? itemQuantity,
+      @JsonKey(name: 'item_position') ItemPosition? itemPosition,
+      @JsonKey(name: 'cabinet_room_name') List<String?>? cabinetRoomName,
+      @JsonKey(name: 'cabinet_name') List<String?>? cabinetName,
+      @JsonKey(name: 'category_name') List<String?>? categoryName});
+
+  $ItemQuantityCopyWith<$Res>? get itemQuantity;
+  $ItemPositionCopyWith<$Res>? get itemPosition;
 }
 
 /// @nodoc
@@ -85,24 +96,31 @@ class _$LogCopyWithImpl<$Res, $Val extends Log> implements $LogCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? logId = freezed,
+    Object? id = freezed,
+    Object? householdId = freezed,
     Object? userName = freezed,
     Object? createdAt = freezed,
     Object? operateType = freezed,
     Object? entityType = freezed,
-    Object? logType = freezed,
-    Object? entityName = freezed,
-    Object? descriptionName = freezed,
+    Object? recordType = freezed,
+    Object? itemName = freezed,
+    Object? itemDescription = freezed,
+    Object? itemPhoto = freezed,
+    Object? itemMinStockCount = freezed,
+    Object? itemQuantity = freezed,
+    Object? itemPosition = freezed,
+    Object? cabinetRoomName = freezed,
+    Object? cabinetName = freezed,
     Object? categoryName = freezed,
-    Object? quantityCount = freezed,
-    Object? minStockCount = freezed,
-    Object? roomName = freezed,
-    Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      logId: freezed == logId
-          ? _value.logId
-          : logId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       userName: freezed == userName
           ? _value.userName
@@ -120,39 +138,71 @@ class _$LogCopyWithImpl<$Res, $Val extends Log> implements $LogCopyWith<$Res> {
           ? _value.entityType
           : entityType // ignore: cast_nullable_to_non_nullable
               as int?,
-      logType: freezed == logType
-          ? _value.logType
-          : logType // ignore: cast_nullable_to_non_nullable
+      recordType: freezed == recordType
+          ? _value.recordType
+          : recordType // ignore: cast_nullable_to_non_nullable
               as int?,
-      entityName: freezed == entityName
-          ? _value.entityName
-          : entityName // ignore: cast_nullable_to_non_nullable
+      itemName: freezed == itemName
+          ? _value.itemName
+          : itemName // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
-      descriptionName: freezed == descriptionName
-          ? _value.descriptionName
-          : descriptionName // ignore: cast_nullable_to_non_nullable
+      itemDescription: freezed == itemDescription
+          ? _value.itemDescription
+          : itemDescription // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      itemPhoto: freezed == itemPhoto
+          ? _value.itemPhoto
+          : itemPhoto // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      itemMinStockCount: freezed == itemMinStockCount
+          ? _value.itemMinStockCount
+          : itemMinStockCount // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      itemQuantity: freezed == itemQuantity
+          ? _value.itemQuantity
+          : itemQuantity // ignore: cast_nullable_to_non_nullable
+              as ItemQuantity?,
+      itemPosition: freezed == itemPosition
+          ? _value.itemPosition
+          : itemPosition // ignore: cast_nullable_to_non_nullable
+              as ItemPosition?,
+      cabinetRoomName: freezed == cabinetRoomName
+          ? _value.cabinetRoomName
+          : cabinetRoomName // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      cabinetName: freezed == cabinetName
+          ? _value.cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
       categoryName: freezed == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
-      quantityCount: freezed == quantityCount
-          ? _value.quantityCount
-          : quantityCount // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
-      minStockCount: freezed == minStockCount
-          ? _value.minStockCount
-          : minStockCount // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
-      roomName: freezed == roomName
-          ? _value.roomName
-          : roomName // ignore: cast_nullable_to_non_nullable
-              as List<String?>?,
-      photoUrl: freezed == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as List<String?>?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ItemQuantityCopyWith<$Res>? get itemQuantity {
+    if (_value.itemQuantity == null) {
+      return null;
+    }
+
+    return $ItemQuantityCopyWith<$Res>(_value.itemQuantity!, (value) {
+      return _then(_value.copyWith(itemQuantity: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ItemPositionCopyWith<$Res>? get itemPosition {
+    if (_value.itemPosition == null) {
+      return null;
+    }
+
+    return $ItemPositionCopyWith<$Res>(_value.itemPosition!, (value) {
+      return _then(_value.copyWith(itemPosition: value) as $Val);
+    });
   }
 }
 
@@ -163,19 +213,27 @@ abstract class _$$LogImplCopyWith<$Res> implements $LogCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'log_id') String? logId,
+      {String? id,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'entity_type') int? entityType,
-      @JsonKey(name: 'log_type') int? logType,
-      @JsonKey(name: 'entity_name') List<String?>? entityName,
-      @JsonKey(name: 'description_name') List<String?>? descriptionName,
-      @JsonKey(name: 'category_name') List<String?>? categoryName,
-      @JsonKey(name: 'quantity_count') List<int?>? quantityCount,
-      @JsonKey(name: 'min_stock_count') List<int?>? minStockCount,
-      @JsonKey(name: 'room_name') List<String?>? roomName,
-      @JsonKey(name: 'photo_url') List<String?>? photoUrl});
+      @JsonKey(name: 'record_type') int? recordType,
+      @JsonKey(name: 'item_name') List<String?>? itemName,
+      @JsonKey(name: 'item_description') List<String?>? itemDescription,
+      @JsonKey(name: 'item_photo') List<String?>? itemPhoto,
+      @JsonKey(name: 'item_min_stock_count') List<int?>? itemMinStockCount,
+      @JsonKey(name: 'item_quantity') ItemQuantity? itemQuantity,
+      @JsonKey(name: 'item_position') ItemPosition? itemPosition,
+      @JsonKey(name: 'cabinet_room_name') List<String?>? cabinetRoomName,
+      @JsonKey(name: 'cabinet_name') List<String?>? cabinetName,
+      @JsonKey(name: 'category_name') List<String?>? categoryName});
+
+  @override
+  $ItemQuantityCopyWith<$Res>? get itemQuantity;
+  @override
+  $ItemPositionCopyWith<$Res>? get itemPosition;
 }
 
 /// @nodoc
@@ -187,24 +245,31 @@ class __$$LogImplCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$LogImpl>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? logId = freezed,
+    Object? id = freezed,
+    Object? householdId = freezed,
     Object? userName = freezed,
     Object? createdAt = freezed,
     Object? operateType = freezed,
     Object? entityType = freezed,
-    Object? logType = freezed,
-    Object? entityName = freezed,
-    Object? descriptionName = freezed,
+    Object? recordType = freezed,
+    Object? itemName = freezed,
+    Object? itemDescription = freezed,
+    Object? itemPhoto = freezed,
+    Object? itemMinStockCount = freezed,
+    Object? itemQuantity = freezed,
+    Object? itemPosition = freezed,
+    Object? cabinetRoomName = freezed,
+    Object? cabinetName = freezed,
     Object? categoryName = freezed,
-    Object? quantityCount = freezed,
-    Object? minStockCount = freezed,
-    Object? roomName = freezed,
-    Object? photoUrl = freezed,
   }) {
     return _then(_$LogImpl(
-      logId: freezed == logId
-          ? _value.logId
-          : logId // ignore: cast_nullable_to_non_nullable
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       userName: freezed == userName
           ? _value.userName
@@ -222,37 +287,45 @@ class __$$LogImplCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$LogImpl>
           ? _value.entityType
           : entityType // ignore: cast_nullable_to_non_nullable
               as int?,
-      logType: freezed == logType
-          ? _value.logType
-          : logType // ignore: cast_nullable_to_non_nullable
+      recordType: freezed == recordType
+          ? _value.recordType
+          : recordType // ignore: cast_nullable_to_non_nullable
               as int?,
-      entityName: freezed == entityName
-          ? _value._entityName
-          : entityName // ignore: cast_nullable_to_non_nullable
+      itemName: freezed == itemName
+          ? _value._itemName
+          : itemName // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
-      descriptionName: freezed == descriptionName
-          ? _value._descriptionName
-          : descriptionName // ignore: cast_nullable_to_non_nullable
+      itemDescription: freezed == itemDescription
+          ? _value._itemDescription
+          : itemDescription // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      itemPhoto: freezed == itemPhoto
+          ? _value._itemPhoto
+          : itemPhoto // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      itemMinStockCount: freezed == itemMinStockCount
+          ? _value._itemMinStockCount
+          : itemMinStockCount // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      itemQuantity: freezed == itemQuantity
+          ? _value.itemQuantity
+          : itemQuantity // ignore: cast_nullable_to_non_nullable
+              as ItemQuantity?,
+      itemPosition: freezed == itemPosition
+          ? _value.itemPosition
+          : itemPosition // ignore: cast_nullable_to_non_nullable
+              as ItemPosition?,
+      cabinetRoomName: freezed == cabinetRoomName
+          ? _value._cabinetRoomName
+          : cabinetRoomName // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      cabinetName: freezed == cabinetName
+          ? _value._cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
       categoryName: freezed == categoryName
           ? _value._categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
-              as List<String?>?,
-      quantityCount: freezed == quantityCount
-          ? _value._quantityCount
-          : quantityCount // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
-      minStockCount: freezed == minStockCount
-          ? _value._minStockCount
-          : minStockCount // ignore: cast_nullable_to_non_nullable
-              as List<int?>?,
-      roomName: freezed == roomName
-          ? _value._roomName
-          : roomName // ignore: cast_nullable_to_non_nullable
-              as List<String?>?,
-      photoUrl: freezed == photoUrl
-          ? _value._photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
               as List<String?>?,
     ));
   }
@@ -262,33 +335,39 @@ class __$$LogImplCopyWithImpl<$Res> extends _$LogCopyWithImpl<$Res, _$LogImpl>
 @JsonSerializable()
 class _$LogImpl implements _Log {
   _$LogImpl(
-      {@JsonKey(name: 'log_id') this.logId,
+      {this.id,
+      @JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'user_name') this.userName,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'operate_type') this.operateType,
       @JsonKey(name: 'entity_type') this.entityType,
-      @JsonKey(name: 'log_type') this.logType,
-      @JsonKey(name: 'entity_name') final List<String?>? entityName,
-      @JsonKey(name: 'description_name') final List<String?>? descriptionName,
-      @JsonKey(name: 'category_name') final List<String?>? categoryName,
-      @JsonKey(name: 'quantity_count') final List<int?>? quantityCount,
-      @JsonKey(name: 'min_stock_count') final List<int?>? minStockCount,
-      @JsonKey(name: 'room_name') final List<String?>? roomName,
-      @JsonKey(name: 'photo_url') final List<String?>? photoUrl})
-      : _entityName = entityName,
-        _descriptionName = descriptionName,
-        _categoryName = categoryName,
-        _quantityCount = quantityCount,
-        _minStockCount = minStockCount,
-        _roomName = roomName,
-        _photoUrl = photoUrl;
+      @JsonKey(name: 'record_type') this.recordType,
+      @JsonKey(name: 'item_name') final List<String?>? itemName,
+      @JsonKey(name: 'item_description') final List<String?>? itemDescription,
+      @JsonKey(name: 'item_photo') final List<String?>? itemPhoto,
+      @JsonKey(name: 'item_min_stock_count')
+      final List<int?>? itemMinStockCount,
+      @JsonKey(name: 'item_quantity') this.itemQuantity,
+      @JsonKey(name: 'item_position') this.itemPosition,
+      @JsonKey(name: 'cabinet_room_name') final List<String?>? cabinetRoomName,
+      @JsonKey(name: 'cabinet_name') final List<String?>? cabinetName,
+      @JsonKey(name: 'category_name') final List<String?>? categoryName})
+      : _itemName = itemName,
+        _itemDescription = itemDescription,
+        _itemPhoto = itemPhoto,
+        _itemMinStockCount = itemMinStockCount,
+        _cabinetRoomName = cabinetRoomName,
+        _cabinetName = cabinetName,
+        _categoryName = categoryName;
 
   factory _$LogImpl.fromJson(Map<String, dynamic> json) =>
       _$$LogImplFromJson(json);
 
   @override
-  @JsonKey(name: 'log_id')
-  final String? logId;
+  final String? id;
+  @override
+  @JsonKey(name: 'household_id')
+  final String? householdId;
   @override
   @JsonKey(name: 'user_name')
   final String? userName;
@@ -302,26 +381,77 @@ class _$LogImpl implements _Log {
   @JsonKey(name: 'entity_type')
   final int? entityType;
   @override
-  @JsonKey(name: 'log_type')
-  final int? logType;
-  final List<String?>? _entityName;
+  @JsonKey(name: 'record_type')
+  final int? recordType;
+  final List<String?>? _itemName;
   @override
-  @JsonKey(name: 'entity_name')
-  List<String?>? get entityName {
-    final value = _entityName;
+  @JsonKey(name: 'item_name')
+  List<String?>? get itemName {
+    final value = _itemName;
     if (value == null) return null;
-    if (_entityName is EqualUnmodifiableListView) return _entityName;
+    if (_itemName is EqualUnmodifiableListView) return _itemName;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
-  final List<String?>? _descriptionName;
+  final List<String?>? _itemDescription;
   @override
-  @JsonKey(name: 'description_name')
-  List<String?>? get descriptionName {
-    final value = _descriptionName;
+  @JsonKey(name: 'item_description')
+  List<String?>? get itemDescription {
+    final value = _itemDescription;
     if (value == null) return null;
-    if (_descriptionName is EqualUnmodifiableListView) return _descriptionName;
+    if (_itemDescription is EqualUnmodifiableListView) return _itemDescription;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String?>? _itemPhoto;
+  @override
+  @JsonKey(name: 'item_photo')
+  List<String?>? get itemPhoto {
+    final value = _itemPhoto;
+    if (value == null) return null;
+    if (_itemPhoto is EqualUnmodifiableListView) return _itemPhoto;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<int?>? _itemMinStockCount;
+  @override
+  @JsonKey(name: 'item_min_stock_count')
+  List<int?>? get itemMinStockCount {
+    final value = _itemMinStockCount;
+    if (value == null) return null;
+    if (_itemMinStockCount is EqualUnmodifiableListView)
+      return _itemMinStockCount;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'item_quantity')
+  final ItemQuantity? itemQuantity;
+  @override
+  @JsonKey(name: 'item_position')
+  final ItemPosition? itemPosition;
+  final List<String?>? _cabinetRoomName;
+  @override
+  @JsonKey(name: 'cabinet_room_name')
+  List<String?>? get cabinetRoomName {
+    final value = _cabinetRoomName;
+    if (value == null) return null;
+    if (_cabinetRoomName is EqualUnmodifiableListView) return _cabinetRoomName;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String?>? _cabinetName;
+  @override
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName {
+    final value = _cabinetName;
+    if (value == null) return null;
+    if (_cabinetName is EqualUnmodifiableListView) return _cabinetName;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -337,53 +467,9 @@ class _$LogImpl implements _Log {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<int?>? _quantityCount;
-  @override
-  @JsonKey(name: 'quantity_count')
-  List<int?>? get quantityCount {
-    final value = _quantityCount;
-    if (value == null) return null;
-    if (_quantityCount is EqualUnmodifiableListView) return _quantityCount;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<int?>? _minStockCount;
-  @override
-  @JsonKey(name: 'min_stock_count')
-  List<int?>? get minStockCount {
-    final value = _minStockCount;
-    if (value == null) return null;
-    if (_minStockCount is EqualUnmodifiableListView) return _minStockCount;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String?>? _roomName;
-  @override
-  @JsonKey(name: 'room_name')
-  List<String?>? get roomName {
-    final value = _roomName;
-    if (value == null) return null;
-    if (_roomName is EqualUnmodifiableListView) return _roomName;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  final List<String?>? _photoUrl;
-  @override
-  @JsonKey(name: 'photo_url')
-  List<String?>? get photoUrl {
-    final value = _photoUrl;
-    if (value == null) return null;
-    if (_photoUrl is EqualUnmodifiableListView) return _photoUrl;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
   @override
   String toString() {
-    return 'Log(logId: $logId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, logType: $logType, entityName: $entityName, descriptionName: $descriptionName, categoryName: $categoryName, quantityCount: $quantityCount, minStockCount: $minStockCount, roomName: $roomName, photoUrl: $photoUrl)';
+    return 'Log(id: $id, householdId: $householdId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, recordType: $recordType, itemName: $itemName, itemDescription: $itemDescription, itemPhoto: $itemPhoto, itemMinStockCount: $itemMinStockCount, itemQuantity: $itemQuantity, itemPosition: $itemPosition, cabinetRoomName: $cabinetRoomName, cabinetName: $cabinetName, categoryName: $categoryName)';
   }
 
   @override
@@ -391,7 +477,9 @@ class _$LogImpl implements _Log {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LogImpl &&
-            (identical(other.logId, logId) || other.logId == logId) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.createdAt, createdAt) ||
@@ -400,38 +488,47 @@ class _$LogImpl implements _Log {
                 other.operateType == operateType) &&
             (identical(other.entityType, entityType) ||
                 other.entityType == entityType) &&
-            (identical(other.logType, logType) || other.logType == logType) &&
+            (identical(other.recordType, recordType) ||
+                other.recordType == recordType) &&
+            const DeepCollectionEquality().equals(other._itemName, _itemName) &&
             const DeepCollectionEquality()
-                .equals(other._entityName, _entityName) &&
+                .equals(other._itemDescription, _itemDescription) &&
             const DeepCollectionEquality()
-                .equals(other._descriptionName, _descriptionName) &&
+                .equals(other._itemPhoto, _itemPhoto) &&
             const DeepCollectionEquality()
-                .equals(other._categoryName, _categoryName) &&
+                .equals(other._itemMinStockCount, _itemMinStockCount) &&
+            (identical(other.itemQuantity, itemQuantity) ||
+                other.itemQuantity == itemQuantity) &&
+            (identical(other.itemPosition, itemPosition) ||
+                other.itemPosition == itemPosition) &&
             const DeepCollectionEquality()
-                .equals(other._quantityCount, _quantityCount) &&
+                .equals(other._cabinetRoomName, _cabinetRoomName) &&
             const DeepCollectionEquality()
-                .equals(other._minStockCount, _minStockCount) &&
-            const DeepCollectionEquality().equals(other._roomName, _roomName) &&
-            const DeepCollectionEquality().equals(other._photoUrl, _photoUrl));
+                .equals(other._cabinetName, _cabinetName) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryName, _categoryName));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      logId,
+      id,
+      householdId,
       userName,
       createdAt,
       operateType,
       entityType,
-      logType,
-      const DeepCollectionEquality().hash(_entityName),
-      const DeepCollectionEquality().hash(_descriptionName),
-      const DeepCollectionEquality().hash(_categoryName),
-      const DeepCollectionEquality().hash(_quantityCount),
-      const DeepCollectionEquality().hash(_minStockCount),
-      const DeepCollectionEquality().hash(_roomName),
-      const DeepCollectionEquality().hash(_photoUrl));
+      recordType,
+      const DeepCollectionEquality().hash(_itemName),
+      const DeepCollectionEquality().hash(_itemDescription),
+      const DeepCollectionEquality().hash(_itemPhoto),
+      const DeepCollectionEquality().hash(_itemMinStockCount),
+      itemQuantity,
+      itemPosition,
+      const DeepCollectionEquality().hash(_cabinetRoomName),
+      const DeepCollectionEquality().hash(_cabinetName),
+      const DeepCollectionEquality().hash(_categoryName));
 
   @JsonKey(ignore: true)
   @override
@@ -449,25 +546,32 @@ class _$LogImpl implements _Log {
 
 abstract class _Log implements Log {
   factory _Log(
-      {@JsonKey(name: 'log_id') final String? logId,
+      {final String? id,
+      @JsonKey(name: 'household_id') final String? householdId,
       @JsonKey(name: 'user_name') final String? userName,
       @JsonKey(name: 'created_at') final int? createdAt,
       @JsonKey(name: 'operate_type') final int? operateType,
       @JsonKey(name: 'entity_type') final int? entityType,
-      @JsonKey(name: 'log_type') final int? logType,
-      @JsonKey(name: 'entity_name') final List<String?>? entityName,
-      @JsonKey(name: 'description_name') final List<String?>? descriptionName,
-      @JsonKey(name: 'category_name') final List<String?>? categoryName,
-      @JsonKey(name: 'quantity_count') final List<int?>? quantityCount,
-      @JsonKey(name: 'min_stock_count') final List<int?>? minStockCount,
-      @JsonKey(name: 'room_name') final List<String?>? roomName,
-      @JsonKey(name: 'photo_url') final List<String?>? photoUrl}) = _$LogImpl;
+      @JsonKey(name: 'record_type') final int? recordType,
+      @JsonKey(name: 'item_name') final List<String?>? itemName,
+      @JsonKey(name: 'item_description') final List<String?>? itemDescription,
+      @JsonKey(name: 'item_photo') final List<String?>? itemPhoto,
+      @JsonKey(name: 'item_min_stock_count')
+      final List<int?>? itemMinStockCount,
+      @JsonKey(name: 'item_quantity') final ItemQuantity? itemQuantity,
+      @JsonKey(name: 'item_position') final ItemPosition? itemPosition,
+      @JsonKey(name: 'cabinet_room_name') final List<String?>? cabinetRoomName,
+      @JsonKey(name: 'cabinet_name') final List<String?>? cabinetName,
+      @JsonKey(name: 'category_name')
+      final List<String?>? categoryName}) = _$LogImpl;
 
   factory _Log.fromJson(Map<String, dynamic> json) = _$LogImpl.fromJson;
 
   @override
-  @JsonKey(name: 'log_id')
-  String? get logId;
+  String? get id;
+  @override
+  @JsonKey(name: 'household_id')
+  String? get householdId;
   @override
   @JsonKey(name: 'user_name')
   String? get userName;
@@ -481,31 +585,712 @@ abstract class _Log implements Log {
   @JsonKey(name: 'entity_type')
   int? get entityType;
   @override
-  @JsonKey(name: 'log_type')
-  int? get logType;
+  @JsonKey(name: 'record_type')
+  int? get recordType;
   @override
-  @JsonKey(name: 'entity_name')
-  List<String?>? get entityName;
+  @JsonKey(name: 'item_name')
+  List<String?>? get itemName;
   @override
-  @JsonKey(name: 'description_name')
-  List<String?>? get descriptionName;
+  @JsonKey(name: 'item_description')
+  List<String?>? get itemDescription;
+  @override
+  @JsonKey(name: 'item_photo')
+  List<String?>? get itemPhoto;
+  @override
+  @JsonKey(name: 'item_min_stock_count')
+  List<int?>? get itemMinStockCount;
+  @override
+  @JsonKey(name: 'item_quantity')
+  ItemQuantity? get itemQuantity;
+  @override
+  @JsonKey(name: 'item_position')
+  ItemPosition? get itemPosition;
+  @override
+  @JsonKey(name: 'cabinet_room_name')
+  List<String?>? get cabinetRoomName;
+  @override
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName;
   @override
   @JsonKey(name: 'category_name')
   List<String?>? get categoryName;
   @override
-  @JsonKey(name: 'quantity_count')
-  List<int?>? get quantityCount;
-  @override
-  @JsonKey(name: 'min_stock_count')
-  List<int?>? get minStockCount;
-  @override
-  @JsonKey(name: 'room_name')
-  List<String?>? get roomName;
-  @override
-  @JsonKey(name: 'photo_url')
-  List<String?>? get photoUrl;
-  @override
   @JsonKey(ignore: true)
   _$$LogImplCopyWith<_$LogImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ItemQuantity _$ItemQuantityFromJson(Map<String, dynamic> json) {
+  return _ItemQuantity.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemQuantity {
+  @JsonKey(name: 'total_count')
+  List<int?>? get totalCount => throw _privateConstructorUsedError;
+  List<ItemQuantityCabinet>? get cabinets => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemQuantityCopyWith<ItemQuantity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemQuantityCopyWith<$Res> {
+  factory $ItemQuantityCopyWith(
+          ItemQuantity value, $Res Function(ItemQuantity) then) =
+      _$ItemQuantityCopyWithImpl<$Res, ItemQuantity>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'total_count') List<int?>? totalCount,
+      List<ItemQuantityCabinet>? cabinets});
+}
+
+/// @nodoc
+class _$ItemQuantityCopyWithImpl<$Res, $Val extends ItemQuantity>
+    implements $ItemQuantityCopyWith<$Res> {
+  _$ItemQuantityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalCount = freezed,
+    Object? cabinets = freezed,
+  }) {
+    return _then(_value.copyWith(
+      totalCount: freezed == totalCount
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      cabinets: freezed == cabinets
+          ? _value.cabinets
+          : cabinets // ignore: cast_nullable_to_non_nullable
+              as List<ItemQuantityCabinet>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemQuantityImplCopyWith<$Res>
+    implements $ItemQuantityCopyWith<$Res> {
+  factory _$$ItemQuantityImplCopyWith(
+          _$ItemQuantityImpl value, $Res Function(_$ItemQuantityImpl) then) =
+      __$$ItemQuantityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'total_count') List<int?>? totalCount,
+      List<ItemQuantityCabinet>? cabinets});
+}
+
+/// @nodoc
+class __$$ItemQuantityImplCopyWithImpl<$Res>
+    extends _$ItemQuantityCopyWithImpl<$Res, _$ItemQuantityImpl>
+    implements _$$ItemQuantityImplCopyWith<$Res> {
+  __$$ItemQuantityImplCopyWithImpl(
+      _$ItemQuantityImpl _value, $Res Function(_$ItemQuantityImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalCount = freezed,
+    Object? cabinets = freezed,
+  }) {
+    return _then(_$ItemQuantityImpl(
+      totalCount: freezed == totalCount
+          ? _value._totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+      cabinets: freezed == cabinets
+          ? _value._cabinets
+          : cabinets // ignore: cast_nullable_to_non_nullable
+              as List<ItemQuantityCabinet>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemQuantityImpl implements _ItemQuantity {
+  _$ItemQuantityImpl(
+      {@JsonKey(name: 'total_count') final List<int?>? totalCount,
+      final List<ItemQuantityCabinet>? cabinets})
+      : _totalCount = totalCount,
+        _cabinets = cabinets;
+
+  factory _$ItemQuantityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemQuantityImplFromJson(json);
+
+  final List<int?>? _totalCount;
+  @override
+  @JsonKey(name: 'total_count')
+  List<int?>? get totalCount {
+    final value = _totalCount;
+    if (value == null) return null;
+    if (_totalCount is EqualUnmodifiableListView) return _totalCount;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<ItemQuantityCabinet>? _cabinets;
+  @override
+  List<ItemQuantityCabinet>? get cabinets {
+    final value = _cabinets;
+    if (value == null) return null;
+    if (_cabinets is EqualUnmodifiableListView) return _cabinets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ItemQuantity(totalCount: $totalCount, cabinets: $cabinets)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemQuantityImpl &&
+            const DeepCollectionEquality()
+                .equals(other._totalCount, _totalCount) &&
+            const DeepCollectionEquality().equals(other._cabinets, _cabinets));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_totalCount),
+      const DeepCollectionEquality().hash(_cabinets));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemQuantityImplCopyWith<_$ItemQuantityImpl> get copyWith =>
+      __$$ItemQuantityImplCopyWithImpl<_$ItemQuantityImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemQuantityImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemQuantity implements ItemQuantity {
+  factory _ItemQuantity(
+      {@JsonKey(name: 'total_count') final List<int?>? totalCount,
+      final List<ItemQuantityCabinet>? cabinets}) = _$ItemQuantityImpl;
+
+  factory _ItemQuantity.fromJson(Map<String, dynamic> json) =
+      _$ItemQuantityImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'total_count')
+  List<int?>? get totalCount;
+  @override
+  List<ItemQuantityCabinet>? get cabinets;
+  @override
+  @JsonKey(ignore: true)
+  _$$ItemQuantityImplCopyWith<_$ItemQuantityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ItemQuantityCabinet _$ItemQuantityCabinetFromJson(Map<String, dynamic> json) {
+  return _ItemQuantityCabinet.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemQuantityCabinet {
+  @JsonKey(name: 'cabinet_name')
+  String? get cabinetName => throw _privateConstructorUsedError;
+  List<int?>? get count => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemQuantityCabinetCopyWith<ItemQuantityCabinet> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemQuantityCabinetCopyWith<$Res> {
+  factory $ItemQuantityCabinetCopyWith(
+          ItemQuantityCabinet value, $Res Function(ItemQuantityCabinet) then) =
+      _$ItemQuantityCabinetCopyWithImpl<$Res, ItemQuantityCabinet>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'cabinet_name') String? cabinetName, List<int?>? count});
+}
+
+/// @nodoc
+class _$ItemQuantityCabinetCopyWithImpl<$Res, $Val extends ItemQuantityCabinet>
+    implements $ItemQuantityCabinetCopyWith<$Res> {
+  _$ItemQuantityCabinetCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinetName = freezed,
+    Object? count = freezed,
+  }) {
+    return _then(_value.copyWith(
+      cabinetName: freezed == cabinetName
+          ? _value.cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemQuantityCabinetImplCopyWith<$Res>
+    implements $ItemQuantityCabinetCopyWith<$Res> {
+  factory _$$ItemQuantityCabinetImplCopyWith(_$ItemQuantityCabinetImpl value,
+          $Res Function(_$ItemQuantityCabinetImpl) then) =
+      __$$ItemQuantityCabinetImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'cabinet_name') String? cabinetName, List<int?>? count});
+}
+
+/// @nodoc
+class __$$ItemQuantityCabinetImplCopyWithImpl<$Res>
+    extends _$ItemQuantityCabinetCopyWithImpl<$Res, _$ItemQuantityCabinetImpl>
+    implements _$$ItemQuantityCabinetImplCopyWith<$Res> {
+  __$$ItemQuantityCabinetImplCopyWithImpl(_$ItemQuantityCabinetImpl _value,
+      $Res Function(_$ItemQuantityCabinetImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinetName = freezed,
+    Object? count = freezed,
+  }) {
+    return _then(_$ItemQuantityCabinetImpl(
+      cabinetName: freezed == cabinetName
+          ? _value.cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      count: freezed == count
+          ? _value._count
+          : count // ignore: cast_nullable_to_non_nullable
+              as List<int?>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemQuantityCabinetImpl implements _ItemQuantityCabinet {
+  _$ItemQuantityCabinetImpl(
+      {@JsonKey(name: 'cabinet_name') this.cabinetName,
+      final List<int?>? count})
+      : _count = count;
+
+  factory _$ItemQuantityCabinetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemQuantityCabinetImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'cabinet_name')
+  final String? cabinetName;
+  final List<int?>? _count;
+  @override
+  List<int?>? get count {
+    final value = _count;
+    if (value == null) return null;
+    if (_count is EqualUnmodifiableListView) return _count;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ItemQuantityCabinet(cabinetName: $cabinetName, count: $count)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemQuantityCabinetImpl &&
+            (identical(other.cabinetName, cabinetName) ||
+                other.cabinetName == cabinetName) &&
+            const DeepCollectionEquality().equals(other._count, _count));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, cabinetName, const DeepCollectionEquality().hash(_count));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemQuantityCabinetImplCopyWith<_$ItemQuantityCabinetImpl> get copyWith =>
+      __$$ItemQuantityCabinetImplCopyWithImpl<_$ItemQuantityCabinetImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemQuantityCabinetImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemQuantityCabinet implements ItemQuantityCabinet {
+  factory _ItemQuantityCabinet(
+      {@JsonKey(name: 'cabinet_name') final String? cabinetName,
+      final List<int?>? count}) = _$ItemQuantityCabinetImpl;
+
+  factory _ItemQuantityCabinet.fromJson(Map<String, dynamic> json) =
+      _$ItemQuantityCabinetImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'cabinet_name')
+  String? get cabinetName;
+  @override
+  List<int?>? get count;
+  @override
+  @JsonKey(ignore: true)
+  _$$ItemQuantityCabinetImplCopyWith<_$ItemQuantityCabinetImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ItemPosition _$ItemPositionFromJson(Map<String, dynamic> json) {
+  return _ItemPosition.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemPosition {
+  List<ItemPositionCabinet>? get cabinets => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemPositionCopyWith<ItemPosition> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemPositionCopyWith<$Res> {
+  factory $ItemPositionCopyWith(
+          ItemPosition value, $Res Function(ItemPosition) then) =
+      _$ItemPositionCopyWithImpl<$Res, ItemPosition>;
+  @useResult
+  $Res call({List<ItemPositionCabinet>? cabinets});
+}
+
+/// @nodoc
+class _$ItemPositionCopyWithImpl<$Res, $Val extends ItemPosition>
+    implements $ItemPositionCopyWith<$Res> {
+  _$ItemPositionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinets = freezed,
+  }) {
+    return _then(_value.copyWith(
+      cabinets: freezed == cabinets
+          ? _value.cabinets
+          : cabinets // ignore: cast_nullable_to_non_nullable
+              as List<ItemPositionCabinet>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemPositionImplCopyWith<$Res>
+    implements $ItemPositionCopyWith<$Res> {
+  factory _$$ItemPositionImplCopyWith(
+          _$ItemPositionImpl value, $Res Function(_$ItemPositionImpl) then) =
+      __$$ItemPositionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ItemPositionCabinet>? cabinets});
+}
+
+/// @nodoc
+class __$$ItemPositionImplCopyWithImpl<$Res>
+    extends _$ItemPositionCopyWithImpl<$Res, _$ItemPositionImpl>
+    implements _$$ItemPositionImplCopyWith<$Res> {
+  __$$ItemPositionImplCopyWithImpl(
+      _$ItemPositionImpl _value, $Res Function(_$ItemPositionImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinets = freezed,
+  }) {
+    return _then(_$ItemPositionImpl(
+      cabinets: freezed == cabinets
+          ? _value._cabinets
+          : cabinets // ignore: cast_nullable_to_non_nullable
+              as List<ItemPositionCabinet>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemPositionImpl implements _ItemPosition {
+  _$ItemPositionImpl({final List<ItemPositionCabinet>? cabinets})
+      : _cabinets = cabinets;
+
+  factory _$ItemPositionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemPositionImplFromJson(json);
+
+  final List<ItemPositionCabinet>? _cabinets;
+  @override
+  List<ItemPositionCabinet>? get cabinets {
+    final value = _cabinets;
+    if (value == null) return null;
+    if (_cabinets is EqualUnmodifiableListView) return _cabinets;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ItemPosition(cabinets: $cabinets)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemPositionImpl &&
+            const DeepCollectionEquality().equals(other._cabinets, _cabinets));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_cabinets));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemPositionImplCopyWith<_$ItemPositionImpl> get copyWith =>
+      __$$ItemPositionImplCopyWithImpl<_$ItemPositionImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemPositionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemPosition implements ItemPosition {
+  factory _ItemPosition({final List<ItemPositionCabinet>? cabinets}) =
+      _$ItemPositionImpl;
+
+  factory _ItemPosition.fromJson(Map<String, dynamic> json) =
+      _$ItemPositionImpl.fromJson;
+
+  @override
+  List<ItemPositionCabinet>? get cabinets;
+  @override
+  @JsonKey(ignore: true)
+  _$$ItemPositionImplCopyWith<_$ItemPositionImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ItemPositionCabinet _$ItemPositionCabinetFromJson(Map<String, dynamic> json) {
+  return _ItemPositionCabinet.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ItemPositionCabinet {
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName => throw _privateConstructorUsedError;
+  int? get count => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ItemPositionCabinetCopyWith<ItemPositionCabinet> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ItemPositionCabinetCopyWith<$Res> {
+  factory $ItemPositionCabinetCopyWith(
+          ItemPositionCabinet value, $Res Function(ItemPositionCabinet) then) =
+      _$ItemPositionCabinetCopyWithImpl<$Res, ItemPositionCabinet>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'cabinet_name') List<String?>? cabinetName, int? count});
+}
+
+/// @nodoc
+class _$ItemPositionCabinetCopyWithImpl<$Res, $Val extends ItemPositionCabinet>
+    implements $ItemPositionCabinetCopyWith<$Res> {
+  _$ItemPositionCabinetCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinetName = freezed,
+    Object? count = freezed,
+  }) {
+    return _then(_value.copyWith(
+      cabinetName: freezed == cabinetName
+          ? _value.cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ItemPositionCabinetImplCopyWith<$Res>
+    implements $ItemPositionCabinetCopyWith<$Res> {
+  factory _$$ItemPositionCabinetImplCopyWith(_$ItemPositionCabinetImpl value,
+          $Res Function(_$ItemPositionCabinetImpl) then) =
+      __$$ItemPositionCabinetImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'cabinet_name') List<String?>? cabinetName, int? count});
+}
+
+/// @nodoc
+class __$$ItemPositionCabinetImplCopyWithImpl<$Res>
+    extends _$ItemPositionCabinetCopyWithImpl<$Res, _$ItemPositionCabinetImpl>
+    implements _$$ItemPositionCabinetImplCopyWith<$Res> {
+  __$$ItemPositionCabinetImplCopyWithImpl(_$ItemPositionCabinetImpl _value,
+      $Res Function(_$ItemPositionCabinetImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? cabinetName = freezed,
+    Object? count = freezed,
+  }) {
+    return _then(_$ItemPositionCabinetImpl(
+      cabinetName: freezed == cabinetName
+          ? _value._cabinetName
+          : cabinetName // ignore: cast_nullable_to_non_nullable
+              as List<String?>?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ItemPositionCabinetImpl implements _ItemPositionCabinet {
+  _$ItemPositionCabinetImpl(
+      {@JsonKey(name: 'cabinet_name') final List<String?>? cabinetName,
+      this.count})
+      : _cabinetName = cabinetName;
+
+  factory _$ItemPositionCabinetImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemPositionCabinetImplFromJson(json);
+
+  final List<String?>? _cabinetName;
+  @override
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName {
+    final value = _cabinetName;
+    if (value == null) return null;
+    if (_cabinetName is EqualUnmodifiableListView) return _cabinetName;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  final int? count;
+
+  @override
+  String toString() {
+    return 'ItemPositionCabinet(cabinetName: $cabinetName, count: $count)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ItemPositionCabinetImpl &&
+            const DeepCollectionEquality()
+                .equals(other._cabinetName, _cabinetName) &&
+            (identical(other.count, count) || other.count == count));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_cabinetName), count);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ItemPositionCabinetImplCopyWith<_$ItemPositionCabinetImpl> get copyWith =>
+      __$$ItemPositionCabinetImplCopyWithImpl<_$ItemPositionCabinetImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ItemPositionCabinetImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ItemPositionCabinet implements ItemPositionCabinet {
+  factory _ItemPositionCabinet(
+      {@JsonKey(name: 'cabinet_name') final List<String?>? cabinetName,
+      final int? count}) = _$ItemPositionCabinetImpl;
+
+  factory _ItemPositionCabinet.fromJson(Map<String, dynamic> json) =
+      _$ItemPositionCabinetImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'cabinet_name')
+  List<String?>? get cabinetName;
+  @override
+  int? get count;
+  @override
+  @JsonKey(ignore: true)
+  _$$ItemPositionCabinetImplCopyWith<_$ItemPositionCabinetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

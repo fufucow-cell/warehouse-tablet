@@ -278,17 +278,17 @@ class _AlarmItem extends StatelessWidget {
                   return const SizedBox.shrink();
                 }
 
-                final isSelected = log.logId != null &&
-                    controller.selectedLogIdsRx.contains(log.logId!);
+                final isSelected = log.id != null &&
+                    controller.selectedLogIdsRx.contains(log.id!);
 
                 return Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: Checkbox(
                     value: isSelected,
-                    onChanged: log.logId != null
+                    onChanged: log.id != null
                         ? (value) {
                             controller.toggleLogSelection(
-                              log.logId!,
+                              log.id!,
                             );
                           }
                         : null,
@@ -325,15 +325,15 @@ class _AlarmItem extends StatelessWidget {
   }
 
   String _getItemName() {
-    final entityNameList = log.entityName;
-    if (entityNameList != null && entityNameList.isNotEmpty) {
+    final itemNameList = log.itemName;
+    if (itemNameList != null && itemNameList.isNotEmpty) {
       // 如果是更新操作，优先显示新名称
-      if (entityNameList.length >= 2 && entityNameList[1] != null) {
-        return entityNameList[1]!;
+      if (itemNameList.length >= 2 && itemNameList[1] != null && itemNameList[1]!.isNotEmpty) {
+        return itemNameList[1]!;
       }
       // 否则显示第一个值
-      if (entityNameList[0] != null) {
-        return entityNameList[0]!;
+      if (itemNameList[0] != null && itemNameList[0]!.isNotEmpty) {
+        return itemNameList[0]!;
       }
     }
     return EnumLocale.warehouseUnknownItem.tr;
@@ -358,7 +358,7 @@ class _AlarmItem extends StatelessWidget {
     final contents = <Widget>[];
 
     // 处理数量变更
-    final quantityCountList = log.quantityCount;
+    final quantityCountList = log.itemQuantity?.totalCount;
     if (quantityCountList != null && quantityCountList.isNotEmpty) {
       if (quantityCountList.length >= 2) {
         contents.add(
@@ -376,7 +376,7 @@ class _AlarmItem extends StatelessWidget {
     }
 
     // 处理库存报警数量变更
-    final minStockCountList = log.minStockCount;
+    final minStockCountList = log.itemMinStockCount;
     if (minStockCountList != null && minStockCountList.isNotEmpty) {
       if (minStockCountList.length >= 2) {
         contents.add(
@@ -397,8 +397,8 @@ class _AlarmItem extends StatelessWidget {
   }
 
   Widget _getStockAlarmInfo() {
-    final quantityCountList = log.quantityCount;
-    final minStockCountList = log.minStockCount;
+    final quantityCountList = log.itemQuantity?.totalCount;
+    final minStockCountList = log.itemMinStockCount;
 
     int? currentQuantity;
     int? minStockCount;

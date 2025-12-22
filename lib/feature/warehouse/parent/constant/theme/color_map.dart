@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-10T15:32:12.910145
+/// 生成时间: 2025-12-22T14:34:47.549944
 library;
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,10 @@ enum EnumColor {
   accentGreen,
   accentRed,
   accentYellow,
+  backgroundAccentBlue,
+  backgroundAccentGreen,
+  backgroundAccentRed,
+  backgroundAccentYellow,
   backgroundGhost,
   backgroundItemGradient,
   backgroundPrimary,
@@ -31,14 +35,11 @@ enum EnumColor {
   menuBgFocused,
   menuIconDefault,
   menuIconFocused,
-  testGradient,
   textLink,
   textPrimary,
   textProduct,
   textSecondary,
   textWhite;
-
-  ThemeUtil get _themeUtil => ThemeUtil.instance;
 
   String get key => name.toSnakeCase();
 
@@ -65,11 +66,12 @@ enum EnumColor {
       return Colors.transparent;
     }
 
-    return switch (_themeUtil.currentTheme) {
+    final themeUtil = ThemeUtil.instance;
+    return switch (themeUtil.currentTheme) {
       EnumThemeMode.light => data.light,
       EnumThemeMode.dark => data.dark,
       EnumThemeMode.system =>
-        _themeUtil.getThemeFromSystem == EnumThemeMode.light
+        themeUtil.getThemeFromSystem == EnumThemeMode.light
             ? data.light
             : data.dark,
     };
