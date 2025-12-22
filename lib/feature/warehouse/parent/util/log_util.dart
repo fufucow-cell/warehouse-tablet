@@ -87,13 +87,13 @@ class LogUtil extends GetxService {
     if (error != null) {
       if (stackTrace != null) {
         debugPrint(
-          '[$timestamp] [$type.displayName] $message\n$error\n$stackTrace',
+          '[$timestamp] [${type.displayName}] $message\n$error\n$stackTrace',
         );
       } else {
-        debugPrint('[$timestamp] [$type.displayName] $message\n$error');
+        debugPrint('[$timestamp] [${type.displayName}] $message\n$error');
       }
     } else {
-      debugPrint('[$timestamp] [$type.displayName] $message');
+      debugPrint('[$timestamp] [${type.displayName}] $message');
     }
   }
 }

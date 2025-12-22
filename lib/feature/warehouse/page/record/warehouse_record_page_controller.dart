@@ -19,11 +19,13 @@ class WarehouseRecordPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseRecordPageController] onInit - $hashCode');
     _checkData();
   }
 
   @override
   void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseRecordPageController] onClose - $hashCode');
     scrollController.dispose();
     super.onClose();
   }

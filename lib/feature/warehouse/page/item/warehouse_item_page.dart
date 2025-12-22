@@ -9,6 +9,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -22,26 +24,25 @@ class WarehouseItemPage extends GetView<WarehouseItemPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WarehouseItemPageController>(
-      init: WarehouseItemPageController(),
-      builder: (controller) {
-        return Column(
-          children: [
-            const TopInfo(),
-            SizedBox(height: 32.0.scale),
-            const Expanded(
-              child: SecondBackgroundCard(
-                child: Column(
-                  children: [
-                    FilterInfo(),
-                    Expanded(child: ItemList()),
-                  ],
-                ),
-              ),
+    if (!Get.isRegistered<WarehouseItemPageController>()) {
+      Get.put(WarehouseItemPageController(), permanent: false);
+    }
+
+    return Column(
+      children: [
+        const TopInfo(),
+        SizedBox(height: 32.0.scale),
+        const Expanded(
+          child: SecondBackgroundCard(
+            child: Column(
+              children: [
+                FilterInfo(),
+                Expanded(child: ItemList()),
+              ],
             ),
-          ],
-        );
-      },
+          ),
+        ),
+      ],
     );
   }
 }

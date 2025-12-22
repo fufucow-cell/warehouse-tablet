@@ -13,7 +13,14 @@ class WarehouseCabinetPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onInit - $hashCode');
     _checkData();
+  }
+
+  @override
+  void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onClose - $hashCode');
+    super.onClose();
   }
 
   // MARK: - Public Method

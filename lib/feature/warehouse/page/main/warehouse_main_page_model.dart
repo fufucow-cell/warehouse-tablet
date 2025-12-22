@@ -12,15 +12,13 @@ enum EnumWarehouseTabItem {
   record,
   alarm;
 
-  EnumLocale get titleLocale => switch (this) {
-        item => EnumLocale.warehouseTabItem,
-        cabinet => EnumLocale.warehouseTabCabinet,
-        category => EnumLocale.warehouseTabCategory,
-        record => EnumLocale.warehouseTabRecord,
-        alarm => EnumLocale.warehouseTabAlarm,
+  String get title => switch (this) {
+        item => EnumLocale.warehouseTabItem.tr,
+        cabinet => EnumLocale.warehouseTabCabinet.tr,
+        category => EnumLocale.warehouseTabCategory.tr,
+        record => EnumLocale.warehouseTabRecord.tr,
+        alarm => EnumLocale.warehouseTabAlarm.tr,
       };
-
-  String get title => titleLocale.tr;
 
   Widget get page => switch (this) {
         item => const WarehouseItemPage(),

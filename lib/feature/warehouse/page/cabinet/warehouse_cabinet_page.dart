@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_mix_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
@@ -24,28 +25,28 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WarehouseCabinetPageController>(
-      init: WarehouseCabinetPageController(),
-      builder: (controller) {
-        final rooms = controller.getRoomsInfo;
+    if (!Get.isRegistered<WarehouseCabinetPageController>()) {
+      Get.put(WarehouseCabinetPageController(), permanent: false);
+    }
 
-        return LayoutBuilder(
-          builder: (context, constraints) {
-            return GridView.builder(
-              padding: EdgeInsets.all(12.0.scale), // Add padding for shadow (blurRadius + spreadRadius)
-              physics: const ClampingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 32.0.scale,
-                mainAxisSpacing: 32.0.scale,
-                childAspectRatio: 514.0 / 420.0,
-              ),
-              itemCount: rooms.length,
-              itemBuilder: (context, index) {
-                return _RoomCard(
-                  roomNameId: rooms[index],
-                );
-              },
+    final controller = Get.find<WarehouseCabinetPageController>();
+    final rooms = controller.getRoomsInfo;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return GridView.builder(
+          padding: EdgeInsets.all(12.0.scale), // Add padding for shadow (blurRadius + spreadRadius)
+          physics: const ClampingScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 32.0.scale,
+            mainAxisSpacing: 32.0.scale,
+            childAspectRatio: 514.0 / 420.0,
+          ),
+          itemCount: rooms.length,
+          itemBuilder: (context, index) {
+            return _RoomCard(
+              roomNameId: rooms[index],
             );
           },
         );

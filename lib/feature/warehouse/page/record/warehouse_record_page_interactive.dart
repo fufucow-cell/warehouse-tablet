@@ -11,7 +11,10 @@ extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController
         if (data is EnumFilterType) {
           _model.filterType.value = data;
           scrollController.jumpTo(0);
-          _genVisibleLogs();
+
+          if (_model.allLogs.value != null) {
+            _genVisibleLogs();
+          }
         }
 
         _model.isShowFilterMenu.value = !_model.isShowFilterMenu.value;

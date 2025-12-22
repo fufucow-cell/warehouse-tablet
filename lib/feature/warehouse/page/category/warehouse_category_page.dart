@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -20,16 +22,17 @@ class WarehouseCategoryPage extends GetView<WarehouseCategoryPageController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<WarehouseCategoryPageController>(
-      init: WarehouseCategoryPageController(),
-      builder: (controller) {
-        return Obx(
-          () {
-            return Skeletonizer(
-              enabled: controller.isLoadingRx.value,
-              child: _Body(),
-            );
-          },
+    if (!Get.isRegistered<WarehouseCategoryPageController>()) {
+      Get.put(WarehouseCategoryPageController(), permanent: false);
+    }
+
+    final controller = Get.find<WarehouseCategoryPageController>();
+
+    return Obx(
+      () {
+        return Skeletonizer(
+          enabled: controller.isLoadingRx.value,
+          child: _Body(),
         );
       },
     );
@@ -87,9 +90,7 @@ class _CategoryItem extends StatelessWidget {
             final isEditMode = controller.isEditModeRx.value;
             final hasChildren = category.children != null;
             final isLevel1Or2 = level == 1 || level == 2;
-            final isExpanded = isLevel1Or2 && hasChildren
-                ? controller.isCategoryExpanded(category)
-                : false;
+            final isExpanded = isLevel1Or2 && hasChildren ? controller.isCategoryExpanded(category) : false;
 
             return ListTile(
               leading: Icon(

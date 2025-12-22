@@ -16,6 +16,18 @@ class WarehouseAlarmPageController extends BasePageController {
     super.init();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
+  }
+
+  @override
+  void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onClose - $hashCode');
+    super.onClose();
+  }
+
   // MARK: - Methods
 
   @override

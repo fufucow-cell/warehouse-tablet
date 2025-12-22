@@ -28,10 +28,11 @@ class RecordList extends StatelessWidget {
                   child: SingleChildScrollView(
                     controller: controller.scrollController,
                     child: Column(
-                      children: logs.map((log) {
-                        print('Log createdAt: ${log.createdAt}');
-                        return _RecordItem(log: log);
-                      }).toList(),
+                      children: logs
+                          .map(
+                            (log) => _RecordItem(log: log),
+                          )
+                          .toList(),
                     ),
                   ),
                 ),
@@ -205,8 +206,8 @@ class _RecordItem extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                         color: log.itemPhoto == null ||
-                                log.itemPhoto!.isEmpty ||
-                                (log.itemPhoto!.isNotEmpty && (log.itemPhoto![0] == null || log.itemPhoto![0]!.isEmpty))
+                                (log.itemPhoto != null && log.itemPhoto!.isEmpty) ||
+                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0] == null || log.itemPhoto![0]!.isEmpty))
                             ? EnumColor.backgroundSecondary.color
                             : null,
                         shape: RoundedRectangleBorder(

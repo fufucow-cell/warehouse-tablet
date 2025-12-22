@@ -15,6 +15,18 @@ class WarehouseCategoryPageController extends BasePageController {
     super.init();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onInit - $hashCode');
+  }
+
+  @override
+  void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onClose - $hashCode');
+    super.onClose();
+  }
+
   // MARK: - Methods
 
   @override

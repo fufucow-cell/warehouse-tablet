@@ -18,8 +18,15 @@ class WarehouseItemPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
     _genFilterRuleForRoom();
     _queryApiData();
+  }
+
+  @override
+  void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
+    super.onClose();
   }
 
   // MARK: - Public Methods

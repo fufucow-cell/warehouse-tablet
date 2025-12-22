@@ -24,6 +24,12 @@ class WarehouseMainPageController extends BasePageController {
     super.init(isCallApiWhenInit: false);
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    LogUtil.i(EnumLogType.debug, '[WarehouseMainPageController] onInit - $hashCode');
+  }
+
   void initTabController(TickerProvider vsync) {
     _disposeTabController();
     _tabController = TabController(
@@ -37,7 +43,11 @@ class WarehouseMainPageController extends BasePageController {
 
   @override
   void onClose() {
+    LogUtil.i(EnumLogType.debug, '[WarehouseMainPageController] onClose - $hashCode');
+    // 先清理 TabController，这会触发 TabBarView 的 dispose
     _disposeTabController();
+    // 然后清理所有子页面的 controller
+    _disposeTabPageControllers();
     WarehouseService.unregister();
     _unregisterWarehouseApiUtil();
     TempRouterUtil.clear();
@@ -60,8 +70,8 @@ class WarehouseMainPageController extends BasePageController {
       try {
         _tabController!.removeListener(_onTabChanged);
         _tabController!.dispose();
-      } catch (e) {
-        // TabController 可能已经被 dispose，忽略错误
+      } on Object catch (e) {
+        LogUtil.d('[WarehouseMainPageController] Error disposing TabController: $e');
       }
       _tabController = null;
       _model.isTabControllerReady.value = false;
@@ -74,6 +84,24 @@ class WarehouseMainPageController extends BasePageController {
         EnumWarehouseMainPageInteractive.selectTabItem,
         data: _tabController!.index,
       );
+    }
+  }
+
+  void _disposeTabPageControllers() {
+    if (Get.isRegistered<WarehouseItemPageController>()) {
+      Get.delete<WarehouseItemPageController>(force: true);
+    }
+    if (Get.isRegistered<WarehouseCabinetPageController>()) {
+      Get.delete<WarehouseCabinetPageController>(force: true);
+    }
+    if (Get.isRegistered<WarehouseCategoryPageController>()) {
+      Get.delete<WarehouseCategoryPageController>(force: true);
+    }
+    if (Get.isRegistered<WarehouseRecordPageController>()) {
+      Get.delete<WarehouseRecordPageController>(force: true);
+    }
+    if (Get.isRegistered<WarehouseAlarmPageController>()) {
+      Get.delete<WarehouseAlarmPageController>(force: true);
     }
   }
 }
