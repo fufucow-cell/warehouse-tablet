@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_log_response_model/log.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
@@ -29,10 +30,18 @@ class RecordList extends StatelessWidget {
                     controller: controller.scrollController,
                     child: Column(
                       children: logs
-                          .map(
-                            (log) => _RecordItem(log: log),
+                          .expand(
+                            (log) => [
+                              _RecordItem(log: log),
+                              Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: EnumColor.lineDividerLight.color,
+                              ),
+                            ],
                           )
-                          .toList(),
+                          .toList()
+                        ..removeLast(), // 移除最后一个 divider
                     ),
                   ),
                 ),
@@ -55,7 +64,10 @@ class _RecordHeader extends StatelessWidget {
         final columnRatio = controller.columnRatioRx;
 
         return Container(
-          padding: EdgeInsets.symmetric(horizontal: 24.0.scale, vertical: 23.0.scale),
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.0.scale,
+            vertical: 23.0.scale,
+          ),
           decoration: ShapeDecoration(
             color: EnumColor.backgroundSecondary.color,
             shape: RoundedRectangleBorder(
@@ -72,7 +84,7 @@ class _RecordHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 42.0.scale,
                   child: WidgetUtil.textWidget(
-                    '類型',
+                    EnumLocale.warehouseRecordColumnType.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
                   ),
@@ -84,7 +96,7 @@ class _RecordHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 42.0.scale,
                   child: WidgetUtil.textWidget(
-                    '內容',
+                    EnumLocale.warehouseRecordColumnContent.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
                   ),
@@ -96,7 +108,7 @@ class _RecordHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 42.0.scale,
                   child: WidgetUtil.textWidget(
-                    '時間',
+                    EnumLocale.warehouseRecordColumnTime.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
                   ),
@@ -108,7 +120,7 @@ class _RecordHeader extends StatelessWidget {
                 child: SizedBox(
                   height: 42.0.scale,
                   child: WidgetUtil.textWidget(
-                    '人員',
+                    EnumLocale.warehouseRecordColumnPerson.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
                   ),
@@ -123,7 +135,7 @@ class _RecordHeader extends StatelessWidget {
 }
 
 class _RecordItem extends StatelessWidget {
-  final Log log;
+  final ItemRecord log;
 
   const _RecordItem({required this.log});
 
@@ -147,24 +159,21 @@ class _RecordItem extends StatelessWidget {
               Expanded(
                 flex: columnRatio[0],
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 24.0.scale, vertical: 12.0.scale),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.0.scale,
+                    vertical: 12.0.scale,
+                  ),
                   decoration: ShapeDecoration(
                     color: operateType.tagBgColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(100.0.scale),
                     ),
                   ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      WidgetUtil.textWidget(
-                        tagType.title,
-                        size: 28.0.scale,
-                        color: operateType.tagTextColor,
-                      ),
-                    ],
+                  child: WidgetUtil.textWidget(
+                    tagType.title,
+                    size: 28.0.scale,
+                    color: operateType.tagTextColor,
+                    align: TextAlign.center,
                   ),
                 ),
               ),
@@ -207,7 +216,7 @@ class _RecordItem extends StatelessWidget {
                         ),
                         color: log.itemPhoto == null ||
                                 (log.itemPhoto != null && log.itemPhoto!.isEmpty) ||
-                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0] == null || log.itemPhoto![0]!.isEmpty))
+                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0].isEmpty))
                             ? EnumColor.backgroundSecondary.color
                             : null,
                         shape: RoundedRectangleBorder(

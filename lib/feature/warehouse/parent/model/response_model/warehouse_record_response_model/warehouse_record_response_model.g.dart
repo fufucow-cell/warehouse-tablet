@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'warehouse_log_response_model.dart';
+part of 'warehouse_record_response_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WarehouseLogResponseModelImpl _$$WarehouseLogResponseModelImplFromJson(
+_$WarehouseRecordResponseModelImpl _$$WarehouseRecordResponseModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$WarehouseLogResponseModelImpl(
+    _$WarehouseRecordResponseModelImpl(
       code: (json['code'] as num?)?.toInt(),
       message: json['message'] as String?,
       data: (json['data'] as List<dynamic>?)
-          ?.map((e) => Log.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ItemRecord.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$$WarehouseLogResponseModelImplToJson(
-        _$WarehouseLogResponseModelImpl instance) =>
+Map<String, dynamic> _$$WarehouseRecordResponseModelImplToJson(
+        _$WarehouseRecordResponseModelImpl instance) =>
     <String, dynamic>{
       'code': instance.code,
       'message': instance.message,

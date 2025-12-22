@@ -7,12 +7,11 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/tab_bar.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/top_tool.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/first_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
@@ -41,7 +40,8 @@ class WarehouseMainPage extends StatefulWidget {
   State<WarehouseMainPage> createState() => _WarehouseMainPageState();
 }
 
-class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTickerProviderStateMixin {
+class _WarehouseMainPageState extends State<WarehouseMainPage>
+    with SingleTickerProviderStateMixin {
   late final WarehouseMainPageController _controller;
 
   @override
@@ -92,7 +92,8 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: (20.0 - (CustomTabBar.itemSpacing / 2)).scale,
-                            right: (32.0 - (CustomTabBar.itemSpacing / 2)).scale,
+                            right:
+                                (32.0 - (CustomTabBar.itemSpacing / 2)).scale,
                           ),
                           child: CustomTabBar(
                             controller: controller.tabController!,
@@ -113,43 +114,14 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
                     color: EnumColor.backgroundPrimary.color,
                   ),
                 ),
-                _FirstBackgroundCard(
-                  child: (_controller.selectedItem == EnumWarehouseTabItem.item) ? tabBarView : SecondBackgroundCard(child: tabBarView),
+                FirstBackgroundCard(
+                  child: tabBarView,
                 ),
               ],
             ),
           );
         });
       },
-    );
-  }
-}
-
-class _FirstBackgroundCard extends StatelessWidget {
-  final Widget child;
-
-  const _FirstBackgroundCard({
-    required this.child,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      clipBehavior: Clip.hardEdge,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(32.0.scale),
-        topRight: Radius.circular(32.0.scale),
-      ),
-      child: Container(
-        color: EnumColor.backgroundPrimary.color,
-        child: Container(
-          padding: EdgeInsets.only(left: 32.0.scale, right: 32.0.scale, top: 32.0.scale),
-          decoration: BoxDecoration(
-            image: EnumImage.tBgContent.decorationImage,
-          ),
-          child: child,
-        ),
-      ),
     );
   }
 }

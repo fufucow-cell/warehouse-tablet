@@ -9,8 +9,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/warehouse_item_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_log_response_model/log.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_log_response_model/warehouse_log_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
@@ -32,7 +32,8 @@ class WarehouseService {
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   int? get userRoleType => _model.userRoleType;
   List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems;
-  List<Log>? get getAllLogs => _model.allLogs;
+  List<ItemRecord>? get getAllRecords => _model.allRecords;
+  List<Category>? get getAllCategories => _model.allCategories;
 
   // MARK: - Init
 
@@ -228,22 +229,22 @@ class WarehouseService {
 
   // MARK: - Log APIs
 
-  Future<List<Log>?> apiReqFetchLogs(
-    WarehouseLogRequestModel request, {
+  Future<List<ItemRecord>?> apiReqFetchLogs(
+    WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiUtil.sendRequest<WarehouseLogResponseModel>(
+    final response = await ApiUtil.sendRequest<WarehouseRecordResponseModel>(
       EnumApiInfo.logFetch,
       requestModel: request,
-      fromJson: WarehouseLogResponseModel.fromJson,
+      fromJson: WarehouseRecordResponseModel.fromJson,
       onError: onError,
     );
-    _model.allLogs = response?.data;
-    return response?.data;
+    _model.allRecords = response?.data;
+    return response?.data ?? [];
   }
 
   Future<ApiEmptyResponse?> apiReqCreateLog(
-    WarehouseLogRequestModel request, {
+    WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) {
     return ApiUtil.sendRequest<ApiEmptyResponse>(
@@ -254,7 +255,7 @@ class WarehouseService {
   }
 
   Future<ApiEmptyResponse?> apiReqDeleteLog(
-    WarehouseLogRequestModel request, {
+    WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) {
     return ApiUtil.sendRequest<ApiEmptyResponse>(

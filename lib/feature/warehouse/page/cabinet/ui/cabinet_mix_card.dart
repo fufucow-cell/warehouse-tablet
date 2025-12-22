@@ -78,7 +78,7 @@ class CabinetMixCard extends StatelessWidget {
               horizontal: 18.0.scale,
             ),
             decoration: BoxDecoration(
-              color: const Color(0x1F366FB6),
+              color: EnumColor.backgroundAccentBlue.color,
               borderRadius: BorderRadius.circular(12.0.scale),
             ),
             child: WidgetUtil.textWidget(

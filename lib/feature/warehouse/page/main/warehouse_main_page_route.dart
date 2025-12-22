@@ -50,7 +50,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
   Future<void> _showCreateItemDialog() async {
     try {
       // 获取分类数据和橱柜数据
-      final categoryResponse = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
+      final categoryResponse =
+          await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
         EnumApiInfo.categoryFetch,
         requestModel: WarehouseCategoryRequestModel(),
         fromJson: WarehouseCategoryResponseModel.fromJson,
@@ -64,7 +65,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.tr.replaceAll('{error}', e.toString())),
+            content:
+                Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
           ),
         );
       }
@@ -107,7 +109,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.tr.replaceAll('{error}', e.toString())),
+            content:
+                Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
           ),
         );
       }
@@ -117,7 +120,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
   Future<void> _showCreateCategoryDialog() async {
     try {
       // 获取分类数据
-      final response = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
+      final response =
+          await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
         EnumApiInfo.categoryFetch,
         requestModel: WarehouseCategoryRequestModel(),
         fromJson: WarehouseCategoryResponseModel.fromJson,
@@ -132,7 +136,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.tr.replaceAll('{error}', e.toString())),
+            content:
+                Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
           ),
         );
       }
@@ -181,7 +186,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorOpenDialog.tr.replaceAll('{error}', e.toString())),
+            content: Text(
+                EnumLocale.warehouseErrorOpenDialog.trArgs([e.toString()])),
           ),
         );
       }
@@ -200,18 +206,18 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 
       // 显示搜索告警对话框
       DialogSearchAlarm.show(
-        initialStartDate: alarmController?.startDate,
-        initialEndDate: alarmController?.endDate,
+        initialStartDate: null,
+        initialEndDate: null,
         onConfirm: ({
           DateTime? startDate,
           DateTime? endDate,
         }) {
           // 应用筛选条件
           if (alarmController != null) {
-            alarmController.applyFilters(
-              startDate: startDate,
-              endDate: endDate,
-            );
+            // alarmController.applyFilters(
+            //   startDate: startDate,
+            //   endDate: endDate,
+            // );
           }
         },
         onCancel: () {
@@ -224,7 +230,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorOpenDialog.tr.replaceAll('{error}', e.toString())),
+            content: Text(
+                EnumLocale.warehouseErrorOpenDialog.trArgs([e.toString()])),
           ),
         );
       }
@@ -243,18 +250,18 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 
       // 显示搜索分类对话框
       DialogSearchCategory.show(
-        initialName: categoryController?.filterName,
-        initialLevel: categoryController?.filterLevel,
+        // initialName: categoryController?.filterName,
+        // initialLevel: categoryController?.filterLevel,
         onConfirm: ({
           String? name,
           int? level,
         }) {
           // 应用筛选条件
           if (categoryController != null) {
-            categoryController.applyFilters(
-              name: name,
-              level: level,
-            );
+            // categoryController.applyFilters(
+            //   name: name,
+            //   level: level,
+            // );
           }
         },
         onCancel: () {
@@ -267,7 +274,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorOpenDialog.tr.replaceAll('{error}', e.toString())),
+            content: Text(
+                EnumLocale.warehouseErrorOpenDialog.trArgs([e.toString()])),
           ),
         );
       }
@@ -310,7 +318,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
       if (context != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(EnumLocale.warehouseErrorOpenDialog.tr.replaceAll('{error}', e.toString())),
+            content: Text(
+                EnumLocale.warehouseErrorOpenDialog.trArgs([e.toString()])),
           ),
         );
       }

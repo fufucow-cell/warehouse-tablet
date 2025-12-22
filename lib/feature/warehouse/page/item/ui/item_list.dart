@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
@@ -35,7 +36,7 @@ class ItemList extends StatelessWidget {
                 crossAxisCount: 3,
                 crossAxisSpacing: 32.0.scale,
                 mainAxisSpacing: 32.0.scale,
-                childAspectRatio: 524 / 830,
+                childAspectRatio: 524 / 724,
               ),
               itemCount: items.length,
               itemBuilder: (context, index) {
@@ -135,7 +136,7 @@ class _ItemPhotoWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100.0.scale),
                 ),
                 child: WidgetUtil.textWidget(
-                  '庫存不足',
+                  EnumLocale.warehouseItemStockInsufficient.tr,
                   size: 22.0.scale,
                   color: EnumColor.textWhite.color,
                 ),
@@ -168,6 +169,8 @@ class _ItemInfo extends StatelessWidget {
                 item.name ?? '',
                 weightType: EnumFontWeightType.bold,
                 color: EnumColor.textPrimary.color,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             SizedBox(width: 16.0.scale),
@@ -199,7 +202,7 @@ class _ItemInfo extends StatelessWidget {
         vertical: 8.0.scale,
       ),
       decoration: BoxDecoration(
-        color: const Color(0x1F366FB6),
+        color: EnumColor.backgroundAccentBlue.color,
         borderRadius: BorderRadius.circular(30.0.scale),
       ),
       child: Row(
@@ -207,7 +210,7 @@ class _ItemInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           WidgetUtil.textWidget(
-            '數量:',
+            EnumLocale.warehouseQuantityLabel.tr,
             size: 22.0.scale,
             color: EnumColor.accentBlue.color,
           ),
@@ -233,19 +236,21 @@ class _ItemTools extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: _toolWidget(EnumImage.cEdit, '編輯'),
+          child: _toolWidget(EnumImage.cEdit, EnumLocale.warehouseItemEdit.tr),
         ),
         SizedBox(width: 12.0.scale),
         Expanded(
-          child: _toolWidget(EnumImage.cQuantity, '異動'),
+          child: _toolWidget(
+              EnumImage.cQuantity, EnumLocale.warehouseItemChange.tr),
         ),
         SizedBox(width: 12.0.scale),
         Expanded(
-          child: _toolWidget(EnumImage.cInfo, '資訊'),
+          child: _toolWidget(EnumImage.cInfo, EnumLocale.warehouseItemInfo.tr),
         ),
         SizedBox(width: 12.0.scale),
         Expanded(
-          child: _toolWidget(EnumImage.cHistory, '記錄'),
+          child: _toolWidget(
+              EnumImage.cHistory, EnumLocale.warehouseItemRecord.tr),
         ),
       ],
     );

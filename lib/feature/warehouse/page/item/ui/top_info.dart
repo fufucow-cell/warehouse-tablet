@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
@@ -28,23 +29,23 @@ class TopInfo extends StatelessWidget {
             children: [
               TopInfoItem(
                 icon: EnumImage.cItem.image(),
-                title: '總物品數',
+                title: EnumLocale.warehouseItemTotal.tr,
                 count: '${controller.getTotalItemCount()}',
                 isLoading: isLoading,
               ),
               TopInfoItem(
                 icon: EnumImage.cMember.image(),
-                title: '物品分類',
+                title: EnumLocale.warehouseItemCategory.tr,
                 count: '${controller.getTotalCategoryCount()}',
               ),
               TopInfoItem(
                 icon: EnumImage.cRoom.image(),
-                title: '房間',
+                title: EnumLocale.warehouseItemRoom.tr,
                 count: '${controller.getfilterRuleForRooms.length - 1}',
               ),
               TopInfoItem(
                 icon: EnumImage.cStockItem.image(),
-                title: '低庫存',
+                title: EnumLocale.warehouseItemLowStock.tr,
                 count: '${controller.getTotalLowStockCount()}',
                 isLoading: isLoading,
               ),
@@ -86,7 +87,8 @@ class TopInfoItem extends StatelessWidget {
             SizedBox(width: 32.0.scale),
             SizedBox(width: 64.0.scale, height: 64.0.scale, child: icon),
             SizedBox(width: 32.0.scale),
-            WidgetUtil.textWidget(title, size: 28.0.scale, color: EnumColor.textSecondary.color),
+            WidgetUtil.textWidget(title,
+                size: 28.0.scale, color: EnumColor.textSecondary.color),
             SizedBox(width: 16.0.scale),
             Skeletonizer(
               enabled: isLoading,

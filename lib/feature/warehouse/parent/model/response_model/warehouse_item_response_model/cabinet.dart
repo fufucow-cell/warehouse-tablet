@@ -13,5 +13,6 @@ class Cabinet with _$Cabinet {
     List<Item>? items,
   }) = _Cabinet;
 
-  factory Cabinet.fromJson(Map<String, dynamic> json) => _$CabinetFromJson(json);
+  factory Cabinet.fromJson(Map<String, dynamic> json) =>
+      _$CabinetFromJson(json);
 }

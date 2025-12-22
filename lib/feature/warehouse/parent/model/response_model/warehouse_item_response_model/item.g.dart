@@ -12,7 +12,7 @@ _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       description: json['description'] as String?,
       quantity: (json['quantity'] as num?)?.toInt(),
       minStockAlert: (json['min_stock_alert'] as num?)?.toInt(),
-      photo: json['photo'],
+      photo: json['photo'] as String?,
       category: json['category'] == null
           ? null
           : Category.fromJson(json['category'] as Map<String, dynamic>),

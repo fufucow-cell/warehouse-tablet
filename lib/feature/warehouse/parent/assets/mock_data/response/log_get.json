@@ -6,10 +6,9 @@
       "id": "455e8400-e29b-41d4-a716-446655440055",
       "household_id": "550e8400-e29b-41d4-a716-446655440000",
       "user_name": "陳十五",
-      "created_at": 1766391564,
+      "created_at": 1766425667,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "氣泡機",
         "咖啡機"
@@ -38,7 +37,6 @@
       "created_at": 1766391564,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "氣泡機"
       ],
@@ -66,7 +64,6 @@
       "created_at": 1766391564,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "氣泡機"
       ],
@@ -94,7 +91,6 @@
       "created_at": 1766391564,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "咖啡機"
       ],
@@ -118,28 +114,25 @@
       "created_at": 1766218764,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "咖啡機"
       ],
-      "item_position": {
-        "cabinets": [
-          {
-            "cabinet_name": [
-              "主臥室櫥櫃",
-              "客廳櫥櫃"
-            ],
-            "count": 2
-          },
-          {
-            "cabinet_name": [
-              "浴室鏡櫃",
-              "廚房碗櫃"
-            ],
-            "count": 11
-          }
-        ]
-      }
+      "item_position": [
+        {
+          "cabinet_name": [
+            "主臥室櫥櫃",
+            "客廳櫥櫃"
+          ],
+          "count": 2
+        },
+        {
+          "cabinet_name": [
+            "浴室鏡櫃",
+            "廚房碗櫃"
+          ],
+          "count": 11
+        }
+      ]
     },
     {
       "id": "453e8400-e29b-41d4-a716-446655440053",
@@ -148,7 +141,6 @@
       "created_at": 1766045964,
       "operate_type": 2,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "餐具組"
       ],
@@ -196,7 +188,6 @@
       "created_at": 1765873164,
       "operate_type": 3,
       "entity_type": 2,
-      "record_type": 1,
       "cabinet_room_name": [
         "陽台",
         ""
@@ -217,7 +208,6 @@
       "created_at": 1765700364,
       "operate_type": 1,
       "entity_type": 3,
-      "record_type": 1,
       "item_name": [
         "",
         "不鏽鋼餐具組"
@@ -234,7 +224,6 @@
       "created_at": 1765009164,
       "operate_type": 2,
       "entity_type": 2,
-      "record_type": 1,
       "cabinet_room_name": [
         "廚房",
         "餐廳"
@@ -255,7 +244,6 @@
       "created_at": 1764836364,
       "operate_type": 1,
       "entity_type": 2,
-      "record_type": 1,
       "cabinet_room_name": [
         "",
         "儲藏室"
@@ -276,7 +264,6 @@
       "created_at": 1763972364,
       "operate_type": 2,
       "entity_type": 1,
-      "record_type": 1,
       "cabinet_room_name": [
         "客廳",
         "主臥室"
@@ -293,7 +280,6 @@
       "created_at": 1763972364,
       "operate_type": 2,
       "entity_type": 1,
-      "record_type": 1,
       "cabinet_name": [
         "主臥室櫥櫃A"
       ],
@@ -309,7 +295,6 @@
       "created_at": 1763972364,
       "operate_type": 3,
       "entity_type": 1,
-      "record_type": 1,
       "cabinet_name": [
         "客廳系統櫃",
         ""
@@ -322,7 +307,6 @@
       "created_at": 1763799564,
       "operate_type": 1,
       "entity_type": 1,
-      "record_type": 1,
       "cabinet_room_name": [
         "",
         "客廳"

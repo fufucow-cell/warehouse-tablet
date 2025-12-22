@@ -5,7 +5,8 @@ enum EnumWarehouseCabinetPageInteractive {
   tapCreateCabinet,
 }
 
-extension WarehouseCabinetPageUserEventExtension on WarehouseCabinetPageController {
+extension WarehouseCabinetPageUserEventExtension
+    on WarehouseCabinetPageController {
   void interactive(EnumWarehouseCabinetPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseCabinetPageInteractive.tapSomeWidget:

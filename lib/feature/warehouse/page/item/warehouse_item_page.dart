@@ -3,6 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/filter_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/item_list.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';

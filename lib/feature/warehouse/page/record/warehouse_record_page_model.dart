@@ -1,11 +1,10 @@
 part of 'warehouse_record_page.dart';
 
 class WarehouseRecordPageModel {
-  final allLogs = Rxn<List<Log>>();
-  final visibleLogs = Rx<List<Log>>([]);
+  final allLogs = Rxn<List<ItemRecord>>();
+  final visibleLogs = Rx<List<ItemRecord>>([]);
   final isShowFilterMenu = false.obs;
   final filterType = Rx<EnumFilterType>(EnumFilterType.all);
-  final selectedLogType = Rx<EnumRecordType?>(null);
   final columnRatio = [170, 705, 280, 280];
   final avatarUrl = 'https://cdn.vectorstock.com/i/500p/29/53/gray-silhouette-avatar-for-male-profile-picture-vector-56412953.jpg';
 }
@@ -30,29 +29,6 @@ enum EnumFilterType {
         EnumFilterType.lastWeek => DateTime.now().subtract(const Duration(days: 7)),
         EnumFilterType.all => null,
       };
-}
-
-enum EnumRecordType {
-  unknown,
-  general,
-  alarm;
-
-  EnumLocale get titleLocale => switch (this) {
-        EnumRecordType.unknown => EnumLocale.warehouseLogTypeUnknown,
-        EnumRecordType.general => EnumLocale.warehouseLogTypeGeneral,
-        EnumRecordType.alarm => EnumLocale.warehouseLogTypeAlarm,
-      };
-
-  String get title => titleLocale.tr;
-
-  static EnumRecordType fromInt(int? value) {
-    if (value == null) return EnumRecordType.unknown;
-    return switch (value) {
-      1 => EnumRecordType.general,
-      2 => EnumRecordType.alarm,
-      _ => EnumRecordType.unknown,
-    };
-  }
 }
 
 enum EnumOperateType {

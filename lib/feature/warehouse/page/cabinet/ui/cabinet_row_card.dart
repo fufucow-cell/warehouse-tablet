@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 
 class CabinetRowCard extends StatelessWidget {
   final List<Cabinet> cabinets;
@@ -48,9 +49,26 @@ class CabinetRowCard extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: Text(cabinet.name ?? ''),
+            child: WidgetUtil.textWidget(
+              cabinet.name ?? '',
+              size: 26.0.scale,
+              color: EnumColor.textSecondary.color,
+            ),
           ),
-          Text('${cabinet.quantity ?? 0}'),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: 18.0.scale,
+            ),
+            decoration: BoxDecoration(
+              color: EnumColor.backgroundAccentBlue.color,
+              borderRadius: BorderRadius.circular(12.0.scale),
+            ),
+            child: WidgetUtil.textWidget(
+              '${cabinet.quantity ?? 0}',
+              size: 28.0.scale,
+              color: EnumColor.accentBlue.color,
+            ),
+          ),
         ],
       ),
     );

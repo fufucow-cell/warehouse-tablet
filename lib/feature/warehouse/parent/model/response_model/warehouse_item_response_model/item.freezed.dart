@@ -26,7 +26,7 @@ mixin _$Item {
   int? get quantity => throw _privateConstructorUsedError;
   @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert => throw _privateConstructorUsedError;
-  dynamic get photo => throw _privateConstructorUsedError;
+  String? get photo => throw _privateConstructorUsedError;
   Category? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -45,7 +45,7 @@ abstract class $ItemCopyWith<$Res> {
       String? description,
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
-      dynamic photo,
+      String? photo,
       Category? category});
 
   $CategoryCopyWith<$Res>? get category;
@@ -96,7 +96,7 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -130,7 +130,7 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
       String? description,
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
-      dynamic photo,
+      String? photo,
       Category? category});
 
   @override
@@ -179,7 +179,7 @@ class __$$ItemImplCopyWithImpl<$Res>
       photo: freezed == photo
           ? _value.photo
           : photo // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as String?,
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -215,7 +215,7 @@ class _$ItemImpl implements _Item {
   @JsonKey(name: 'min_stock_alert')
   final int? minStockAlert;
   @override
-  final dynamic photo;
+  final String? photo;
   @override
   final Category? category;
 
@@ -237,7 +237,7 @@ class _$ItemImpl implements _Item {
                 other.quantity == quantity) &&
             (identical(other.minStockAlert, minStockAlert) ||
                 other.minStockAlert == minStockAlert) &&
-            const DeepCollectionEquality().equals(other.photo, photo) &&
+            (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.category, category) ||
                 other.category == category));
   }
@@ -245,7 +245,7 @@ class _$ItemImpl implements _Item {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, description, quantity,
-      minStockAlert, const DeepCollectionEquality().hash(photo), category);
+      minStockAlert, photo, category);
 
   @JsonKey(ignore: true)
   @override
@@ -268,7 +268,7 @@ abstract class _Item implements Item {
       final String? description,
       final int? quantity,
       @JsonKey(name: 'min_stock_alert') final int? minStockAlert,
-      final dynamic photo,
+      final String? photo,
       final Category? category}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
@@ -285,7 +285,7 @@ abstract class _Item implements Item {
   @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert;
   @override
-  dynamic get photo;
+  String? get photo;
   @override
   Category? get category;
   @override

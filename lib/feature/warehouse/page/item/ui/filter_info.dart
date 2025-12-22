@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/filter_text_list_multi.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/filter_text_list_single.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -21,7 +22,8 @@ class FilterInfo extends StatelessWidget {
         Obx(
           () => _ExpandButton(
             isExpanded: controller.isFilterExpandedRx.value,
-            onPressed: () => controller.interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
+            onPressed: () => controller
+                .interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
           ),
         ),
       ],
@@ -124,7 +126,9 @@ class _ExpandButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            isExpanded ? '收起' : '更多選項',
+            isExpanded
+                ? EnumLocale.warehouseItemCollapse.tr
+                : EnumLocale.warehouseItemMoreOptions.tr,
             style: TextStyle(
               color: EnumColor.textSecondary.color,
             ),
@@ -135,7 +139,8 @@ class _ExpandButton extends StatelessWidget {
             height: 40.0.scale,
             child: isExpanded
                 ? EnumImage.cArrowUp.image(color: EnumColor.textSecondary.color)
-                : EnumImage.cArrowDown.image(color: EnumColor.textSecondary.color),
+                : EnumImage.cArrowDown
+                    .image(color: EnumColor.textSecondary.color),
           ),
         ],
       ),

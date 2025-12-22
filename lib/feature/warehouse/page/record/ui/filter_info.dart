@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -46,11 +47,14 @@ class _FilterDropdown extends StatelessWidget {
         color: EnumColor.backgroundPrimary.color,
         padding: EdgeInsets.all(16.0.scale),
         onOpened: () {
-          controller.interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
+          controller
+              .interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
         },
         onSelected: (value) {
           if (value != null) {
-            controller.interactive(EnumWarehouseRecordPageInteractive.tapFilterButton, data: value);
+            controller.interactive(
+                EnumWarehouseRecordPageInteractive.tapFilterButton,
+                data: value);
           }
         },
         itemBuilder: (context) => EnumFilterType.values.map((type) {
@@ -60,14 +64,18 @@ class _FilterDropdown extends StatelessWidget {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+                color: isSelected
+                    ? EnumColor.menuBgFocused.color
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(12.0.scale),
               ),
               padding: EdgeInsets.all(16.0.scale),
               child: WidgetUtil.textWidget(
                 type.title,
                 size: 32.0.scale,
-                color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+                color: isSelected
+                    ? EnumColor.textPrimary.color
+                    : EnumColor.textSecondary.color,
               ),
             ),
           );
@@ -75,14 +83,17 @@ class _FilterDropdown extends StatelessWidget {
         child: Container(
           width: btnWidth,
           height: btnHeight,
-          padding: EdgeInsets.symmetric(horizontal: 32.0.scale, vertical: 16.0.scale),
+          padding: EdgeInsets.symmetric(
+              horizontal: 32.0.scale, vertical: 16.0.scale),
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
             color: EnumColor.backgroundPrimary.color,
             shape: RoundedRectangleBorder(
               side: BorderSide(
                 width: 1.0.scale,
-                color: controller.isShowFilterMenuRx.value ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
+                color: controller.isShowFilterMenuRx.value
+                    ? EnumColor.lineProduct.color
+                    : EnumColor.lineBorder.color,
               ),
               borderRadius: BorderRadius.circular(16.0.scale),
             ),
@@ -140,7 +151,7 @@ class _RefreshButton extends StatelessWidget {
           ),
           SizedBox(width: 10.0.scale),
           WidgetUtil.textWidget(
-            '刷新',
+            EnumLocale.warehouseRefresh.tr,
             size: 32.0.scale,
             color: EnumColor.accentBlue.color,
             align: TextAlign.center,

@@ -10,7 +10,10 @@ extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController
       case EnumWarehouseRecordPageInteractive.tapFilterButton:
         if (data is EnumFilterType) {
           _model.filterType.value = data;
-          scrollController.jumpTo(0);
+
+          if (scrollController.hasClients && scrollController.offset > 0) {
+            scrollController.jumpTo(0);
+          }
 
           if (_model.allLogs.value != null) {
             _genVisibleLogs();

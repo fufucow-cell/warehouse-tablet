@@ -3,10 +3,8 @@ import 'dart:io';
 /// 生成 locale_map.dart 的脚本
 /// 从多语系文件中提取所有 key，生成 EnumLocale enum 和 tr 方法
 void main() {
-  final localesDir = Directory(
-      'lib/feature/warehouse/parent/constant/locales');
-  final outputFile = File(
-      'lib/feature/warehouse/parent/constant/locales/locale_map.dart');
+  final localesDir = Directory('lib/feature/warehouse/parent/constant/locales');
+  final outputFile = File('lib/feature/warehouse/parent/constant/locales/locale_map.dart');
 
   // 读取 zh_tw.dart 作为基准，提取所有 key
   final zhTWFile = File('${localesDir.path}/zh_tw.dart');
@@ -35,8 +33,7 @@ void main() {
 /// 从文件内容中提取所有 key
 List<String> _extractKeys(String content) {
   final keys = <String>[];
-  final regex =
-      RegExp(r"'([a-z0-9_]+)':\s*'[^']*'", multiLine: true);
+  final regex = RegExp(r"'([a-z][a-zA-Z0-9]*)':\s*'[^']*'", multiLine: true);
 
   for (final match in regex.allMatches(content)) {
     final key = match.group(1);
@@ -57,14 +54,10 @@ String _generateLocaleMap(List<String> keys) {
   // 文件头部
   buffer.writeln('/// 多语系 Key 枚举');
   buffer.writeln('/// 自动生成，请勿手动修改');
-  buffer.writeln(
-      '/// 生成时间: ${DateTime.now().toIso8601String()}');
+  buffer.writeln('/// 生成时间: ${DateTime.now().toIso8601String()}');
   buffer.writeln('library;');
   buffer.writeln('');
-  buffer.writeln(
-      "import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';");
-  buffer.writeln(
-      "import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';");
   buffer.writeln("import 'package:get/get.dart';");
   buffer.writeln('');
 
@@ -72,39 +65,21 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('enum EnumLocale {');
   for (var i = 0; i < keys.length; i++) {
     final key = keys[i];
-    final enumName = _keyToEnumName(key);
     final isLast = i == keys.length - 1;
     // 最后一个使用分号，其他使用逗号
-    buffer.writeln('  $enumName${isLast ? ';' : ','}');
+    buffer.writeln('  $key${isLast ? ';' : ','}');
   }
   buffer.writeln('');
-  buffer.writeln('  String get key => name.toSnakeCase();');
+  buffer.writeln('  String get key => name;');
   buffer.writeln('  String get tr => key.tr;');
+  buffer.writeln('  String trArgs(List<String> params) => key.trArgs(params);');
   buffer.writeln('');
   buffer.writeln('  static LocaleTranslation? get currentTranslation => _currentTranslation;');
   buffer.writeln('');
-  buffer.writeln('  static LocaleTranslation _currentTranslation =');
-  buffer.writeln('      LocaleTranslation.defaultTranslation;');
+  buffer.writeln('  static LocaleTranslation _currentTranslation = LocaleTranslation.defaultTranslation;');
   buffer.writeln('');
-  buffer.writeln('  static void setCurrentTranslation(LocaleTranslation translation) =>');
-  buffer.writeln('      _currentTranslation = translation;');
+  buffer.writeln('  static void setCurrentTranslation(LocaleTranslation translation) => _currentTranslation = translation;');
   buffer.writeln('}');
 
   return buffer.toString();
-}
-
-/// 将 key 转换为 enum 名称
-/// 例如: 'app_title' -> 'appTitle', 'search_name_hint_item' -> 'searchNameHintItem'
-String _keyToEnumName(String key) {
-  final parts = key.split('_');
-  if (parts.isEmpty) return key;
-
-  final camelCase = parts.first +
-      parts.skip(1).map((part) {
-        if (part.isEmpty) return '';
-        return part[0].toUpperCase() + part.substring(1);
-      }).join('');
-
-  // 确保首字母小写
-  return camelCase;
 }

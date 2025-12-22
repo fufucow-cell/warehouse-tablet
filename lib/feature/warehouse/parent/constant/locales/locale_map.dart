@@ -1,10 +1,9 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-22T16:12:48.967885
+/// 生成时间: 2025-12-23T00:30:45.309261
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';
 import 'package:get/get.dart';
 
 enum EnumLocale {
@@ -63,8 +62,13 @@ enum EnumLocale {
   errorLoadFailed,
   errorNetwork,
   errorUnknown,
+  languageEnUS,
+  languageJaJP,
+  languageKoKR,
   languageSystem,
   languageTitle,
+  languageZhCN,
+  languageZhTW,
   loginButton,
   loginEmail,
   loginFailed,
@@ -120,8 +124,13 @@ enum EnumLocale {
   successSave,
   successUpdate,
   warehouseAlarm,
+  warehouseAlarmBelowStockLevel,
+  warehouseAlarmOperation,
+  warehouseAlarmProductName,
+  warehouseAlarmProductPhoto,
   warehouseCabinet,
   warehouseCabinetQuantityChange,
+  warehouseCabinetRoomSummary,
   warehouseCategory,
   warehouseCategoryChange,
   warehouseCategoryLabel,
@@ -154,6 +163,17 @@ enum EnumLocale {
   warehouseFilterDateUnknown,
   warehouseFilterDateWeek,
   warehouseItem,
+  warehouseItemCategory,
+  warehouseItemChange,
+  warehouseItemCollapse,
+  warehouseItemEdit,
+  warehouseItemInfo,
+  warehouseItemLowStock,
+  warehouseItemMoreOptions,
+  warehouseItemRecord,
+  warehouseItemRoom,
+  warehouseItemStockInsufficient,
+  warehouseItemTotal,
   warehouseItemTotalQuantityChange,
   warehouseLocationsLabel,
   warehouseLogTypeAlarm,
@@ -183,6 +203,11 @@ enum EnumLocale {
   warehouseQuantityChange,
   warehouseQuantityLabel,
   warehouseRecord,
+  warehouseRecordColumnContent,
+  warehouseRecordColumnPerson,
+  warehouseRecordColumnTime,
+  warehouseRecordColumnType,
+  warehouseRefresh,
   warehouseRoom,
   warehouseRoomChange,
   warehouseRoomLabel,
@@ -217,8 +242,15 @@ enum EnumLocale {
   warehouseUnnamedCategory,
   warehouseUnnamedItem;
 
-  String get key => name.toSnakeCase();
+  String get key => name;
   String get tr => key.tr;
+  String trArgs(List<String> params) {
+    Map<String, String> namedParams = {};
+    for (int i = 0; i < params.length; i++) {
+      namedParams['para${i + 1}'] = params[i];
+    }
+    return key.trParams(namedParams);
+  }
 
   static LocaleTranslation? get currentTranslation => _currentTranslation;
 

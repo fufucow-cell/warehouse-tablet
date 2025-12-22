@@ -1,5 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/category.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'item.freezed.dart';
 part 'item.g.dart';
@@ -12,7 +12,7 @@ class Item with _$Item {
     String? description,
     int? quantity,
     @JsonKey(name: 'min_stock_alert') int? minStockAlert,
-    dynamic photo,
+    String? photo,
     Category? category,
   }) = _Item;
 

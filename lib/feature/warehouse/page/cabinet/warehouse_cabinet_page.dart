@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_mix_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
@@ -32,25 +34,28 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
     final controller = Get.find<WarehouseCabinetPageController>();
     final rooms = controller.getRoomsInfo;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GridView.builder(
-          padding: EdgeInsets.all(12.0.scale), // Add padding for shadow (blurRadius + spreadRadius)
-          physics: const ClampingScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 32.0.scale,
-            mainAxisSpacing: 32.0.scale,
-            childAspectRatio: 514.0 / 420.0,
-          ),
-          itemCount: rooms.length,
-          itemBuilder: (context, index) {
-            return _RoomCard(
-              roomNameId: rooms[index],
-            );
-          },
-        );
-      },
+    return SecondBackgroundCard(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return GridView.builder(
+            padding: EdgeInsets.all(12.0
+                .scale), // Add padding for shadow (blurRadius + spreadRadius)
+            physics: const ClampingScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 32.0.scale,
+              mainAxisSpacing: 32.0.scale,
+              childAspectRatio: 514.0 / 420.0,
+            ),
+            itemCount: rooms.length,
+            itemBuilder: (context, index) {
+              return _RoomCard(
+                roomNameId: rooms[index],
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -67,7 +72,11 @@ class _RoomCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: Container(
-        padding: EdgeInsets.only(left: 32.0.scale, right: 32.0.scale, top: 32.0.scale, bottom: 32.0.scale),
+        padding: EdgeInsets.only(
+            left: 32.0.scale,
+            right: 32.0.scale,
+            top: 32.0.scale,
+            bottom: 32.0.scale),
         decoration: BoxDecoration(
           color: EnumColor.backgroundPrimary.color,
           borderRadius: BorderRadius.circular(32.0.scale),
@@ -134,9 +143,11 @@ class _RoomItemCountInfo extends StatelessWidget {
 
     final room = controller.getRoom(roomNameId);
     final roomItemQuantity = room?.quantity ?? 0;
+    final cabinetsCount = controller.getCabinets(roomNameId).length;
 
     return WidgetUtil.textWidget(
-      '總共 $roomItemQuantity 項物品',
+      EnumLocale.warehouseCabinetRoomSummary
+          .trArgs(['$cabinetsCount', '$roomItemQuantity']),
       size: 22.0.scale,
     );
   }

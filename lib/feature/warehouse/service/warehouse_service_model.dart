@@ -9,7 +9,8 @@ class WarehouseServiceModel {
   List<WarehouseNameIdModel> rooms = [];
   int? userRoleType;
   List<Room>? allRoomCabinetItems;
-  List<Log>? allLogs;
+  List<ItemRecord>? allRecords;
+  List<Category>? allCategories;
 }
 
 class WarehouseNameIdModel {

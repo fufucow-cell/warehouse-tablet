@@ -11,8 +11,10 @@ class WarehouseMainPageController extends BasePageController {
 
   EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
   Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
-  List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  List<Tab> get tabs =>
+      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews =>
+      EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
   // MARK: - Init
 
@@ -27,7 +29,8 @@ class WarehouseMainPageController extends BasePageController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[WarehouseMainPageController] onInit - $hashCode');
+    LogUtil.i(
+        EnumLogType.debug, '[WarehouseMainPageController] onInit - $hashCode');
   }
 
   void initTabController(TickerProvider vsync) {
@@ -35,7 +38,8 @@ class WarehouseMainPageController extends BasePageController {
     _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex: EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
+      initialIndex:
+          EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
     );
     _tabController!.addListener(_onTabChanged);
     isTabControllerReadyRx.value = true;
@@ -43,7 +47,8 @@ class WarehouseMainPageController extends BasePageController {
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[WarehouseMainPageController] onClose - $hashCode');
+    LogUtil.i(
+        EnumLogType.debug, '[WarehouseMainPageController] onClose - $hashCode');
     // 先清理 TabController，这会触发 TabBarView 的 dispose
     _disposeTabController();
     // 然后清理所有子页面的 controller
@@ -71,7 +76,8 @@ class WarehouseMainPageController extends BasePageController {
         _tabController!.removeListener(_onTabChanged);
         _tabController!.dispose();
       } on Object catch (e) {
-        LogUtil.d('[WarehouseMainPageController] Error disposing TabController: $e');
+        LogUtil.d(
+            '[WarehouseMainPageController] Error disposing TabController: $e');
       }
       _tabController = null;
       _model.isTabControllerReady.value = false;

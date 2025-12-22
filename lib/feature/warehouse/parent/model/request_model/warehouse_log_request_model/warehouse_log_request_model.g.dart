@@ -6,9 +6,9 @@ part of 'warehouse_log_request_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WarehouseLogRequestModelImpl _$$WarehouseLogRequestModelImplFromJson(
+_$WarehouseRecordRequestModelImpl _$$WarehouseRecordRequestModelImplFromJson(
         Map<String, dynamic> json) =>
-    _$WarehouseLogRequestModelImpl(
+    _$WarehouseRecordRequestModelImpl(
       logId: json['log_id'] as String?,
       homeId: json['household_id'] as String?,
       afterTime: (json['after_time'] as num?)?.toInt(),
@@ -17,8 +17,8 @@ _$WarehouseLogRequestModelImpl _$$WarehouseLogRequestModelImplFromJson(
       logType: (json['log_type'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$$WarehouseLogRequestModelImplToJson(
-        _$WarehouseLogRequestModelImpl instance) =>
+Map<String, dynamic> _$$WarehouseRecordRequestModelImplToJson(
+        _$WarehouseRecordRequestModelImpl instance) =>
     <String, dynamic>{
       'log_id': instance.logId,
       'household_id': instance.homeId,

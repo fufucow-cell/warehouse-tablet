@@ -24,7 +24,8 @@ void main() {
   final normalKeys = <String>[];
 
   for (final key in allKeys) {
-    final gradientMatch = RegExp(r'^(.+)_gradient_(\d+)$').firstMatch(key);
+    // 匹配 camelCase 格式的 gradient key，如 'backgroundItemGradient1', 'backgroundItemGradient2'
+    final gradientMatch = RegExp(r'^(.+Gradient)(\d+)$').firstMatch(key);
     if (gradientMatch != null) {
       final baseName = gradientMatch.group(1)!;
       gradientKeys.putIfAbsent(baseName, () => []).add(key);
@@ -36,8 +37,8 @@ void main() {
   // 对每个 gradient 组的键进行排序
   for (final entry in gradientKeys.entries) {
     entry.value.sort((a, b) {
-      final numA = int.tryParse(RegExp(r'_gradient_(\d+)$').firstMatch(a)?.group(1) ?? '0') ?? 0;
-      final numB = int.tryParse(RegExp(r'_gradient_(\d+)$').firstMatch(b)?.group(1) ?? '0') ?? 0;
+      final numA = int.tryParse(RegExp(r'Gradient(\d+)$').firstMatch(a)?.group(1) ?? '0') ?? 0;
+      final numB = int.tryParse(RegExp(r'Gradient(\d+)$').firstMatch(b)?.group(1) ?? '0') ?? 0;
       return numA.compareTo(numB);
     });
   }
@@ -56,12 +57,12 @@ void main() {
 /// 从文件内容中提取所有 color key
 List<String> _extractKeys(String content) {
   final keys = <String>[];
-  // 匹配 'key_name': ColorData(...) 格式，支持 colorDataMap 或 colors
+  // 匹配 'keyName': ColorData(...) 格式，支持 colorDataMap 或 colors
   final regex = RegExp(r"Map<String, ColorData>\s+(?:colorDataMap|colors)\s*=\s*\{([^}]+)\}", multiLine: true);
   final mapMatch = regex.firstMatch(content);
   if (mapMatch != null) {
     final mapContent = mapMatch.group(1)!;
-    final keyRegex = RegExp(r"'([a-z0-9_]+)':\s*ColorData\s*\(", multiLine: true);
+    final keyRegex = RegExp(r"'([a-z][a-zA-Z0-9]*)':\s*ColorData\s*\(", multiLine: true);
     for (final match in keyRegex.allMatches(mapContent)) {
       final key = match.group(1);
       if (key != null && !keys.contains(key)) {
@@ -70,7 +71,7 @@ List<String> _extractKeys(String content) {
     }
   } else {
     // 回退到旧的方式
-    final keyRegex = RegExp(r"'([a-z0-9_]+)':\s*ColorData\s*\(", multiLine: true);
+    final keyRegex = RegExp(r"'([a-z][a-zA-Z0-9]*)':\s*ColorData\s*\(", multiLine: true);
     for (final match in keyRegex.allMatches(content)) {
       final key = match.group(1);
       if (key != null && !keys.contains(key)) {
@@ -100,7 +101,6 @@ String _generateColorMap(
   buffer.writeln("import 'package:flutter/material.dart';");
   buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_data.dart';");
   buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/theme_constant.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_string.dart';");
   buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';");
   buffer.writeln('');
 
@@ -109,14 +109,14 @@ String _generateColorMap(
 
   // 添加普通键
   for (final key in normalKeys) {
-    final enumName = _keyToEnumName(key);
-    enumEntries[enumName] = false;
+    // key 已经是 camelCase 格式，直接使用
+    enumEntries[key] = false;
   }
 
   // 添加 gradient 键
   for (final baseName in gradientKeys.keys) {
-    final enumName = '${_keyToEnumName(baseName)}Gradient';
-    enumEntries[enumName] = true;
+    // baseName 已经是 camelCase 格式（如 'backgroundItemGradient'），直接使用作为 enumName
+    enumEntries[baseName] = true;
   }
 
   // 排序枚举值
@@ -131,7 +131,7 @@ String _generateColorMap(
     buffer.writeln('  $enumName${isLast ? ';' : ','}');
   }
   buffer.writeln('');
-  buffer.writeln('  String get key => name.toSnakeCase();');
+  buffer.writeln('  String get key => name;');
   buffer.writeln('');
   buffer.writeln('  Color get color => _getColor(colorDataMap[key]);');
   buffer.writeln('');
@@ -139,7 +139,7 @@ String _generateColorMap(
   buffer.writeln('    final result = <Color>[];');
   buffer.writeln('');
   buffer.writeln('    for (var num = 1; num <= 100; num++) {');
-  buffer.writeln('      final colorData = colorDataMap[\'\${key}_\$num\'];');
+  buffer.writeln('      final colorData = colorDataMap[\'\${key}\$num\'];');
   buffer.writeln('');
   buffer.writeln('      if (colorData == null) {');
   buffer.writeln('        break;');
@@ -169,20 +169,4 @@ String _generateColorMap(
   buffer.writeln('}');
 
   return buffer.toString();
-}
-
-/// 将 key 转换为 enum 名称
-/// 例如: 'text_primary' -> 'textPrimary', 'background_item_gradient_1' -> 'backgroundItemGradient1'
-String _keyToEnumName(String key) {
-  final parts = key.split('_');
-  if (parts.isEmpty) return key;
-
-  final camelCase = parts.first +
-      parts.skip(1).map((part) {
-        if (part.isEmpty) return '';
-        return part[0].toUpperCase() + part.substring(1);
-      }).join('');
-
-  // 确保首字母小写
-  return camelCase;
 }
