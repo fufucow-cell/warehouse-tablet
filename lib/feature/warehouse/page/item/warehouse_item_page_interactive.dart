@@ -6,6 +6,7 @@ enum EnumWarehouseItemPageInteractive {
   tapRoomFilter,
   tapCabinetFilter,
   tapCategoryFilter,
+  tapInfoButton,
 }
 
 extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
@@ -30,14 +31,16 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
           _model.filterIndexForCabinets.value = data;
           _genAllFilterRuleAndItemForCategory();
         }
-        break;
       case EnumWarehouseItemPageInteractive.tapCategoryFilter:
         if (data is int) {
           // 需按照順序執行以下步驟：
           _changeCategoryMultiCheckbox(data);
           _genVisibleItems();
         }
-        break;
+      case EnumWarehouseItemPageInteractive.tapInfoButton:
+        if (data is Item) {
+          routerHandle(EnumWarehouseItemPageRoute.showInfoDialog, data: data);
+        }
     }
   }
 }

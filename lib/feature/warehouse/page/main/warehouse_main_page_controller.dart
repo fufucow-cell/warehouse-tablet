@@ -11,10 +11,8 @@ class WarehouseMainPageController extends BasePageController {
 
   EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
   Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
-  List<Tab> get tabs =>
-      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews =>
-      EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
   // MARK: - Init
 
@@ -30,7 +28,72 @@ class WarehouseMainPageController extends BasePageController {
   void onInit() {
     super.onInit();
     LogUtil.i(
-        EnumLogType.debug, '[WarehouseMainPageController] onInit - $hashCode');
+      EnumLogType.debug,
+      '[WarehouseMainPageController] onInit - $hashCode',
+    );
+  }
+
+  @override
+  void onClose() {
+    LogUtil.i(
+      EnumLogType.debug,
+      '[WarehouseMainPageController] onClose - $hashCode',
+    );
+    _disposeTabController();
+    _disposeTabPageControllers();
+    WarehouseService.unregister();
+    _unregisterWarehouseApiUtil();
+    super.onClose();
+  }
+
+  // MARK: - Public Method
+
+  void setRootContext(BuildContext context) {
+    BuildContext? rootContext;
+
+    try {
+      final rootNavigator = Navigator.maybeOf(context, rootNavigator: true);
+
+      if (rootNavigator != null) {
+        rootContext = rootNavigator.context;
+      } else {
+        BuildContext? currentContext = context;
+
+        while (currentContext != null) {
+          final materialApp = currentContext.findAncestorWidgetOfExactType<MaterialApp>();
+
+          if (materialApp != null) {
+            final navigator = Navigator.maybeOf(
+              currentContext,
+              rootNavigator: true,
+            );
+
+            if (navigator != null) {
+              rootContext = navigator.context;
+              break;
+            }
+
+            rootContext = currentContext;
+            break;
+          }
+
+          final parent = currentContext.findAncestorStateOfType<State>();
+
+          if (parent != null && parent.mounted) {
+            currentContext = parent.context;
+          } else {
+            break;
+          }
+        }
+      }
+    } on Object catch (e) {
+      LogUtil.e(
+        '[WarehouseMainPageController] Error setting root context: $e',
+      );
+    }
+
+    rootContext ??= context;
+    WarehouseService.instance.setRootContext(rootContext);
   }
 
   void initTabController(TickerProvider vsync) {
@@ -38,25 +101,10 @@ class WarehouseMainPageController extends BasePageController {
     _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex:
-          EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
+      initialIndex: EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
     );
     _tabController!.addListener(_onTabChanged);
     isTabControllerReadyRx.value = true;
-  }
-
-  @override
-  void onClose() {
-    LogUtil.i(
-        EnumLogType.debug, '[WarehouseMainPageController] onClose - $hashCode');
-    // 先清理 TabController，这会触发 TabBarView 的 dispose
-    _disposeTabController();
-    // 然后清理所有子页面的 controller
-    _disposeTabPageControllers();
-    WarehouseService.unregister();
-    _unregisterWarehouseApiUtil();
-    TempRouterUtil.clear();
-    super.onClose();
   }
 
   // MARK: - Private Method
@@ -77,7 +125,8 @@ class WarehouseMainPageController extends BasePageController {
         _tabController!.dispose();
       } on Object catch (e) {
         LogUtil.d(
-            '[WarehouseMainPageController] Error disposing TabController: $e');
+          '[WarehouseMainPageController] Error disposing TabController: $e',
+        );
       }
       _tabController = null;
       _model.isTabControllerReady.value = false;

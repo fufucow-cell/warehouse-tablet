@@ -157,7 +157,7 @@ class _HouseholdContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      EnumLocale.smartHomeRoomList.tr,
+                      '${EnumLocale.smartHomeRoomList.tr}：',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                     const SizedBox(height: 12),

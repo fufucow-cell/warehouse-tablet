@@ -6,23 +6,21 @@ class WarehouseAlarmPageController extends GetxController {
   final _model = WarehouseAlarmPageModel();
   final _service = WarehouseService.instance;
   List<int> get columnRatio => _model.columnRatio;
-  RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
-  RxReadonly<List<Item>> get visibleItemsRx => _model.visibleItems.readonly;
+  RxReadonly<List<Item>?> get lowStockItemsRx => _model.lowStockItems.readonly;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
-        EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
     _checkData();
+    _listenItemsData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseAlarmPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onClose - $hashCode');
     super.onClose();
   }
 
@@ -42,38 +40,14 @@ class WarehouseAlarmPageController extends GetxController {
   // MARK: - Private Method
 
   void _checkData() {
-    final allItems = _service.getAllRoomCabinetItems;
+    final items = _service.allLowStockItemsRx.value;
 
-    if (allItems == null) {
-      _queryApiData();
-    } else {
-      _model.allRoomCabinetItems.value = allItems;
-      _genVisibleItems();
+    if (items != null) {
+      _model.lowStockItems.value = items;
     }
   }
 
-  Future<void> _queryApiData() async {
-    final response =
-        await _service.apiReqFetchItems(WarehouseItemRequestModel());
-    _model.allRoomCabinetItems.value = response;
-    _genVisibleItems();
-  }
-
-  void _genVisibleItems() {
-    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-
-    if (allRoomCabinetItems == null) {
-      _model.visibleItems.value = [];
-      return;
-    }
-
-    final allItems = allRoomCabinetItems
-        .expand((room) => room.cabinets ?? <Cabinet>[])
-        .expand((cabinet) => cabinet.items ?? <Item>[])
-        .toList();
-    final alarmItems = allItems
-        .where((item) => (item.quantity ?? 0) < (item.minStockAlert ?? 0))
-        .toList();
-    _model.visibleItems.value = alarmItems;
+  void _listenItemsData() {
+    ever(_service.allLowStockItemsRx.rx, (_) => _checkData());
   }
 }

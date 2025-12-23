@@ -80,7 +80,7 @@ class _ItemCard extends StatelessWidget {
             SizedBox(height: 24.0.scale),
             _ItemInfo(item: item),
             SizedBox(height: 24.0.scale),
-            const _ItemTools(),
+            _ItemTools(item: item),
           ],
         ),
       ),
@@ -210,7 +210,7 @@ class _ItemInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           WidgetUtil.textWidget(
-            EnumLocale.warehouseQuantityLabel.tr,
+            '${EnumLocale.warehouseQuantityLabel.tr}：',
             size: 22.0.scale,
             color: EnumColor.accentBlue.color,
           ),
@@ -228,51 +228,91 @@ class _ItemInfo extends StatelessWidget {
 }
 
 class _ItemTools extends StatelessWidget {
-  const _ItemTools();
+  const _ItemTools({required this.item});
+
+  final Item item;
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseItemPageController>();
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Expanded(
-          child: _toolWidget(EnumImage.cEdit, EnumLocale.warehouseItemEdit.tr),
+          child: _toolWidget(
+            EnumImage.cEdit,
+            EnumLocale.warehouseItemEdit.tr,
+            onTap: () {
+              // TODO: Implement edit action
+            },
+          ),
         ),
         SizedBox(width: 12.0.scale),
         Expanded(
           child: _toolWidget(
-              EnumImage.cQuantity, EnumLocale.warehouseItemChange.tr),
-        ),
-        SizedBox(width: 12.0.scale),
-        Expanded(
-          child: _toolWidget(EnumImage.cInfo, EnumLocale.warehouseItemInfo.tr),
+            EnumImage.cQuantity,
+            EnumLocale.warehouseItemChange.tr,
+            onTap: () {
+              // TODO: Implement change action
+            },
+          ),
         ),
         SizedBox(width: 12.0.scale),
         Expanded(
           child: _toolWidget(
-              EnumImage.cHistory, EnumLocale.warehouseItemRecord.tr),
+            EnumImage.cInfo,
+            EnumLocale.warehouseItemInfo.tr,
+            onTap: () {
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapInfoButton,
+                data: item,
+              );
+            },
+          ),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(
+            EnumImage.cHistory,
+            EnumLocale.warehouseItemRecord.tr,
+            onTap: () {
+              // TODO: Implement record action
+            },
+          ),
         ),
       ],
     );
   }
 
-  Widget _toolWidget(EnumImage eImg, String title) {
-    return Container(
-      decoration: BoxDecoration(
-        color: EnumColor.backgroundSecondary.color,
+  Widget _toolWidget(
+    EnumImage eImg,
+    String title, {
+    VoidCallback? onTap,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: BorderRadius.circular(20.0.scale),
-      ),
-      padding: EdgeInsets.all(16.0.scale),
-      child: Column(
-        children: [
-          eImg.image(size: Size.square(40.0.scale)),
-          SizedBox(height: 8.0.scale),
-          WidgetUtil.textWidget(
-            title,
-            size: 18.0.scale,
-            color: EnumColor.textSecondary.color,
+        child: Container(
+          decoration: BoxDecoration(
+            color: EnumColor.backgroundSecondary.color,
+            borderRadius: BorderRadius.circular(20.0.scale),
           ),
-        ],
+          padding: EdgeInsets.all(16.0.scale),
+          child: Column(
+            children: [
+              eImg.image(size: Size.square(40.0.scale)),
+              SizedBox(height: 8.0.scale),
+              WidgetUtil.textWidget(
+                title,
+                size: 18.0.scale,
+                color: EnumColor.textSecondary.color,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

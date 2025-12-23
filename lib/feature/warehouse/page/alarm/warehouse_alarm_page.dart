@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_item_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
@@ -7,10 +8,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -52,7 +50,9 @@ class _HeaderWidget extends StatelessWidget {
       builder: (controller) {
         return Container(
           padding: EdgeInsets.symmetric(
-              horizontal: 24.0.scale, vertical: 23.0.scale),
+            horizontal: 24.0.scale,
+            vertical: 23.0.scale,
+          ),
           decoration: ShapeDecoration(
             color: EnumColor.backgroundSecondary.color,
             shape: RoundedRectangleBorder(
@@ -124,15 +124,15 @@ class _AlarmList extends StatelessWidget {
 
     return Obx(
       () {
-        final items = controller.visibleItemsRx.value;
+        final items = controller.lowStockItemsRx.value;
 
-        if (items.isEmpty) {
+        if (items?.isEmpty ?? true) {
           return const SizedBox.shrink();
         }
 
         return SingleChildScrollView(
           child: Column(
-            children: items
+            children: items!
                 .expand(
                   (item) => [
                     _CellWidget(item: item),
@@ -212,7 +212,9 @@ class _CellWidget extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        horizontal: 42.0.scale, vertical: 12.0.scale),
+                      horizontal: 42.0.scale,
+                      vertical: 12.0.scale,
+                    ),
                     decoration: ShapeDecoration(
                       color: EnumColor.backgroundAccentRed.color,
                       shape: RoundedRectangleBorder(
@@ -239,15 +241,17 @@ class _CellWidget extends StatelessWidget {
                     _operateIcon(
                       EnumImage.cEdit,
                       () => controller.interactive(
-                          EnumWarehouseAlarmPageInteractive.tapEdit,
-                          data: item),
+                        EnumWarehouseAlarmPageInteractive.tapEdit,
+                        data: item,
+                      ),
                     ),
                     SizedBox(width: 16.0.scale),
                     _operateIcon(
                       EnumImage.cInfo,
                       () => controller.interactive(
-                          EnumWarehouseAlarmPageInteractive.tapInfo,
-                          data: item),
+                        EnumWarehouseAlarmPageInteractive.tapInfo,
+                        data: item,
+                      ),
                     ),
                   ],
                 ),

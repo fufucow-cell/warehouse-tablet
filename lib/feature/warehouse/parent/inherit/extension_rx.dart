@@ -13,6 +13,10 @@ class RxReadonly<T> {
   /// 獲取 stream（只讀）
   Stream<T> get stream => _rx.stream;
 
+  /// 獲取用於監聽的 RxInterface（用於 ever、worker 等監聽方法）
+  /// ⚠️ 注意：此方法返回的 RxInterface 僅用於監聽，不應該通過此返回值修改值
+  RxInterface<T> get rx => _rx;
+
   @override
   String toString() => value.toString();
 }

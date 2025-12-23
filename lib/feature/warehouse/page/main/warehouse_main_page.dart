@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_create_cabinet.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_alarm.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_cabinet.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog/dialog_search_log.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/tab_bar.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/top_tool.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';
@@ -40,8 +35,7 @@ class WarehouseMainPage extends StatefulWidget {
   State<WarehouseMainPage> createState() => _WarehouseMainPageState();
 }
 
-class _WarehouseMainPageState extends State<WarehouseMainPage>
-    with SingleTickerProviderStateMixin {
+class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTickerProviderStateMixin {
   late final WarehouseMainPageController _controller;
 
   @override
@@ -59,7 +53,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage>
 
   @override
   Widget build(BuildContext context) {
-    TempRouterUtil.getRootContext(context);
+    _controller.setRootContext(context);
 
     return GetBuilder<WarehouseMainPageController>(
       init: _controller,
@@ -92,8 +86,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage>
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: (20.0 - (CustomTabBar.itemSpacing / 2)).scale,
-                            right:
-                                (32.0 - (CustomTabBar.itemSpacing / 2)).scale,
+                            right: (32.0 - (CustomTabBar.itemSpacing / 2)).scale,
                           ),
                           child: CustomTabBar(
                             controller: controller.tabController!,

@@ -46,7 +46,7 @@ class TopInfo extends StatelessWidget {
               TopInfoItem(
                 icon: EnumImage.cStockItem.image(),
                 title: EnumLocale.warehouseItemLowStock.tr,
-                count: '${controller.getTotalLowStockCount()}',
+                count: '${controller.getTotalLowStockCount}',
                 isLoading: isLoading,
               ),
             ],
@@ -87,8 +87,11 @@ class TopInfoItem extends StatelessWidget {
             SizedBox(width: 32.0.scale),
             SizedBox(width: 64.0.scale, height: 64.0.scale, child: icon),
             SizedBox(width: 32.0.scale),
-            WidgetUtil.textWidget(title,
-                size: 28.0.scale, color: EnumColor.textSecondary.color),
+            WidgetUtil.textWidget(
+              title,
+              size: 28.0.scale,
+              color: EnumColor.textSecondary.color,
+            ),
             SizedBox(width: 16.0.scale),
             Skeletonizer(
               enabled: isLoading,

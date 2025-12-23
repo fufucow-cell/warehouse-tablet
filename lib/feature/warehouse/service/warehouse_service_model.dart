@@ -8,9 +8,13 @@ class WarehouseServiceModel {
   WarehouseNameIdModel? house;
   List<WarehouseNameIdModel> rooms = [];
   int? userRoleType;
-  List<Room>? allRoomCabinetItems;
+  final allRoomCabinetItems = Rxn<List<Room>>();
+  final allLowStockItems = Rxn<List<Item>>();
+  List<Item>? allItems;
+  Map<String, List<Item>>? allGroupItems;
   List<ItemRecord>? allRecords;
   List<Category>? allCategories;
+  BuildContext? rootContext;
 }
 
 class WarehouseNameIdModel {

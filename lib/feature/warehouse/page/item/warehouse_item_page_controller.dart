@@ -5,46 +5,40 @@ class WarehouseItemPageController extends GetxController {
 
   final _model = WarehouseItemPageModel();
   final _service = WarehouseService.instance;
-  List<WarehouseNameIdModel> get getfilterRuleForRooms =>
-      _model.filterRuleForRooms;
+  List<WarehouseNameIdModel> get getfilterRuleForRooms => _model.filterRuleForRooms;
+  String getItemCategoriesName(Item item) => _service.convertCategoriesName(item);
+  int get getTotalLowStockCount => _service.getAllLowStockItems.length;
   RxReadonly<List<Item>> get visibleItemsRx => _model.visibleItems.readonly;
   RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
   RxReadonly<bool> get isFilterExpandedRx => _model.isFilterExpanded.readonly;
-  RxReadonly<int> get filterIndexForRoomsRx =>
-      _model.filterIndexForRooms.readonly;
-  RxReadonly<int> get cabinetFilterSelectedIndexRx =>
-      _model.filterIndexForCabinets.readonly;
-  RxReadonly<Set<int>> get categoryFilterSelectedIndicesRx =>
-      _model.filterIndexForCategories.readonly;
+  RxReadonly<int> get filterIndexForRoomsRx => _model.filterIndexForRooms.readonly;
+  RxReadonly<int> get cabinetFilterSelectedIndexRx => _model.filterIndexForCabinets.readonly;
+  RxReadonly<Set<int>> get categoryFilterSelectedIndicesRx => _model.filterIndexForCategories.readonly;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
-        EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
     _genFilterRuleForRoom();
     _queryApiData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(
-        EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
     super.onClose();
   }
 
   // MARK: - Public Methods
 
   int getTotalItemCount() {
-    return _model.allRoomCabinetItems.value
-            ?.fold<int>(0, (sum, room) => sum + (room.quantity ?? 0)) ??
-        0;
+    return _model.allRoomCabinetItems.value?.fold<int>(0, (sum, room) => sum + (room.quantity ?? 0)) ?? 0;
   }
 
   int getTotalCategoryCount() {
-    final allItems = _flattenAllItems();
+    final allItems = _service.getAllItems;
     final Set<String> allCategoryIds = {};
 
     void extractCategories(dynamic category) {
@@ -69,16 +63,6 @@ class WarehouseItemPageController extends GetxController {
     return allCategoryIds.length;
   }
 
-  int getTotalLowStockCount() {
-    final allItems = _flattenAllItems();
-    return allItems
-        .where((item) =>
-            item.minStockAlert != null &&
-            item.quantity != null &&
-            item.quantity! <= item.minStockAlert!)
-        .length;
-  }
-
   List<String> getFilterRoomNameList() {
     return _model.filterRuleForRooms.map((r) => r.name ?? '').toList();
   }
@@ -88,45 +72,18 @@ class WarehouseItemPageController extends GetxController {
   }
 
   List<String> getFilterCategoryNameList() {
-    return _model.filterRuleForCategories.value
-        .map((c) => c.name ?? '')
-        .toList();
+    return _model.filterRuleForCategories.value.map((c) => c.name ?? '').toList();
   }
 
   bool isShowStockWarningTag(Item item) {
-    if (item.minStockAlert != null &&
-        item.minStockAlert! > 0 &&
-        item.quantity != null) {
-      return item.quantity! <= item.minStockAlert!;
-    }
-
-    return false;
-  }
-
-  String getItemCategoriesName(Item item) {
-    List<String> names = [];
-
-    void extractCategories(dynamic category) {
-      if (category != null) {
-        final categoryName = category.name;
-        if (categoryName != null && categoryName is String) {
-          names.add(categoryName);
-        } else if (categoryName != null) {
-          names.add(categoryName.toString());
-        }
-        extractCategories(category.children);
-      }
-    }
-
-    extractCategories(item.category);
-    return names.join(' > ');
+    final lowStockItemIds = _service.getAllLowStockItems.map((item) => item.id).toList();
+    return lowStockItemIds.contains(item.id);
   }
 
   // MARK: - Private Methods
 
   Future<void> _queryApiData() async {
-    final response =
-        await _service.apiReqFetchItems(WarehouseItemRequestModel());
+    final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
 
     if (response == null) {
       return;
@@ -147,26 +104,12 @@ class WarehouseItemPageController extends GetxController {
 
   // 設定分類篩選條件為全部
   void _setFilterIndexForCategoryToAll() {
-    _model.filterIndexForCategories.value = {
-      for (int i = 0; i < _model.filterRuleForCategories.value.length; i++) i
-    };
+    _model.filterIndexForCategories.value = {for (int i = 0; i < _model.filterRuleForCategories.value.length; i++) i};
   }
 
   // 扁平化所有櫥櫃
   List<Cabinet> _flattenAllCabinets() {
-    return _model.allRoomCabinetItems.value
-            ?.expand<Cabinet>((room) => room.cabinets ?? [])
-            .toList() ??
-        [];
-  }
-
-  // 扁平化所有物品
-  List<Item> _flattenAllItems() {
-    return _model.allRoomCabinetItems.value
-            ?.expand<Cabinet>((room) => room.cabinets ?? [])
-            .expand<Item>((cabinet) => cabinet.items ?? [])
-            .toList() ??
-        [];
+    return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
   }
 
   // 生成房間篩選列表
@@ -182,21 +125,16 @@ class WarehouseItemPageController extends GetxController {
   void _genFilterRuleForCabinet() {
     final allRoomsCabinets = _model.allRoomCabinetItems.value ?? [];
     final roomIdx = _model.filterIndexForRooms.value;
-    final List<WarehouseNameIdModel> resultRules = [
-      WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)
-    ];
+    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)];
 
     if (roomIdx == 0) {
       final allCabinets = _flattenAllCabinets();
-      resultRules.addAll(allCabinets.map((cabinet) => WarehouseNameIdModel(
-          id: cabinet.id ?? '', name: cabinet.name ?? '')));
+      resultRules.addAll(allCabinets.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '')));
     } else {
       final roomId = _model.filterRuleForRooms[roomIdx].id;
-      final room =
-          allRoomsCabinets.firstWhereOrNull((room) => room.roomId == roomId);
+      final room = allRoomsCabinets.firstWhereOrNull((room) => room.roomId == roomId);
       final cabinets = room?.cabinets ?? <Cabinet>[];
-      resultRules.addAll(cabinets.map((cabinet) => WarehouseNameIdModel(
-          id: cabinet.id ?? '', name: cabinet.name ?? '')));
+      resultRules.addAll(cabinets.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '')));
     }
 
     _model.filterRuleForCabinets.value = resultRules;
@@ -209,12 +147,10 @@ class WarehouseItemPageController extends GetxController {
     final cabinetIndex = _model.filterIndexForCabinets.value;
     final roomId = _model.filterRuleForRooms[roomIndex].id;
     final cabinetId = _model.filterRuleForCabinets.value[cabinetIndex].id;
-    final List<WarehouseNameIdModel> resultRules = [
-      WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)
-    ];
+    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)];
 
     if (roomIndex == 0 && cabinetIndex == 0) {
-      allItems = _flattenAllItems();
+      allItems = _service.getAllItems;
     } else if (cabinetIndex == 0) {
       allItems = _model.allRoomCabinetItems.value
               ?.where((room) => room.roomId == roomId)
@@ -223,21 +159,17 @@ class WarehouseItemPageController extends GetxController {
               .toList() ??
           [];
     } else {
-      final matchedRoom = _model.allRoomCabinetItems.value
-          ?.firstWhereOrNull((room) => room.roomId == roomId);
-      final matchedCabinet = matchedRoom?.cabinets
-          ?.firstWhereOrNull((cabinet) => cabinet.id == cabinetId);
+      final matchedRoom = _model.allRoomCabinetItems.value?.firstWhereOrNull((room) => room.roomId == roomId);
+      final matchedCabinet = matchedRoom?.cabinets?.firstWhereOrNull((cabinet) => cabinet.id == cabinetId);
       allItems = matchedCabinet?.items ?? [];
     }
 
     final Set<String> matchCategoryIds = {};
 
     for (var item in allItems) {
-      if ((item.category?.id?.isNotEmpty ?? false) &&
-          !matchCategoryIds.contains(item.category!.id)) {
+      if ((item.category?.id?.isNotEmpty ?? false) && !matchCategoryIds.contains(item.category!.id)) {
         matchCategoryIds.add(item.category!.id!);
-        resultRules.add(WarehouseNameIdModel(
-            id: item.category!.id, name: item.category!.name ?? ''));
+        resultRules.add(WarehouseNameIdModel(id: item.category!.id, name: item.category!.name ?? ''));
       }
     }
 
@@ -257,14 +189,10 @@ class WarehouseItemPageController extends GetxController {
       resultItems.addAll(_model.allItemsForCategory);
     } else {
       // 從選中的索引中取得對應的分類 ID
-      final categoryIds = selectedIndexes
-          .map((index) => _model.filterRuleForCategories.value[index].id)
-          .where((id) => id != null && id.isNotEmpty)
-          .toSet();
+      final categoryIds =
+          selectedIndexes.map((index) => _model.filterRuleForCategories.value[index].id).where((id) => id != null && id.isNotEmpty).toSet();
       // 篩選出分類 ID 在選中列表中的物品
-      resultItems.addAll(_model.allItemsForCategory
-          .where((item) => categoryIds.contains(item.category?.id ?? ''))
-          .toList());
+      resultItems.addAll(_model.allItemsForCategory.where((item) => categoryIds.contains(item.category?.id ?? '')).toList());
     }
 
     _model.visibleItems.value = resultItems;
@@ -272,8 +200,7 @@ class WarehouseItemPageController extends GetxController {
 
   // 用戶選擇分類多選框時，重新計算全選狀態
   void _changeCategoryMultiCheckbox(int index) {
-    final currentSelectedIndices =
-        Set<int>.from(_model.filterIndexForCategories.value);
+    final currentSelectedIndices = Set<int>.from(_model.filterIndexForCategories.value);
 
     if (index == 0) {
       if (currentSelectedIndices.contains(index)) {
@@ -289,8 +216,7 @@ class WarehouseItemPageController extends GetxController {
       }
 
       final totalCount = _model.filterRuleForCategories.value.length;
-      final allOthersSelected =
-          currentSelectedIndices.where((i) => i != 0).length == totalCount - 1;
+      final allOthersSelected = currentSelectedIndices.where((i) => i != 0).length == totalCount - 1;
 
       if (allOthersSelected && !currentSelectedIndices.contains(0)) {
         currentSelectedIndices.add(0);
@@ -298,8 +224,7 @@ class WarehouseItemPageController extends GetxController {
         currentSelectedIndices.remove(0);
       }
 
-      _model.filterIndexForCategories.value =
-          Set<int>.from(currentSelectedIndices);
+      _model.filterIndexForCategories.value = Set<int>.from(currentSelectedIndices);
     }
   }
 }

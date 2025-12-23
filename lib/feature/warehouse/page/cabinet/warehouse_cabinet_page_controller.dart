@@ -13,15 +13,13 @@ class WarehouseCabinetPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseCabinetPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onInit - $hashCode');
     _checkData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseCabinetPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onClose - $hashCode');
     super.onClose();
   }
 
@@ -29,14 +27,12 @@ class WarehouseCabinetPageController extends GetxController {
 
   Room? getRoom(WarehouseNameIdModel roomNameId) {
     final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    return allRoomCabinetItems
-        ?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
+    return allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
   }
 
   List<Cabinet> getCabinets(WarehouseNameIdModel roomNameId) {
     final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    final room = allRoomCabinetItems
-        ?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
+    final room = allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
     return room?.cabinets ?? <Cabinet>[];
   }
 
@@ -53,8 +49,7 @@ class WarehouseCabinetPageController extends GetxController {
   }
 
   Future<void> _queryApiData() async {
-    final response =
-        await _service.apiReqFetchItems(WarehouseItemRequestModel());
+    final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
 
     if (response == null) {
       return;

@@ -1,12 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_item_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/warehouse_item_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
@@ -31,7 +37,12 @@ class WarehouseService {
   WarehouseNameIdModel? get house => _model.house;
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   int? get userRoleType => _model.userRoleType;
-  List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems;
+  List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems.value;
+  RxReadonly<List<Room>?> get allRoomCabinetItemsRx => _model.allRoomCabinetItems.readonly;
+  List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
+  RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
+  List<Item> get getAllItems => _model.allItems ?? <Item>[];
+  Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
   List<ItemRecord>? get getAllRecords => _model.allRecords;
   List<Category>? get getAllCategories => _model.allCategories;
 
@@ -59,6 +70,24 @@ class WarehouseService {
 
   // MARK: - Public Method
 
+  void setRootContext(BuildContext context) {
+    _model.rootContext = context;
+  }
+
+  Future<T?> show<T>(Widget dialog) async {
+    final context = _model.rootContext;
+
+    if (context == null) {
+      return null;
+    }
+
+    return showDialog<T>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => dialog,
+    );
+  }
+
   void updateData(WarehouseMainPageRouterData data) {
     _model.userName = data.userName;
     _model.accessToken = data.accessToken;
@@ -80,6 +109,76 @@ class WarehouseService {
     ThemeUtil.instance.switchFromString(data.theme);
   }
 
+  List<DialogItemInfoRoomModel> filterItemFromRooms(Item item) {
+    final allRooms = _model.allRoomCabinetItems.value;
+
+    if (allRooms == null || (item.id?.isEmpty ?? true)) {
+      return [];
+    }
+
+    final result = <DialogItemInfoRoomModel>[];
+    final itemId = item.id!;
+
+    for (final room in allRooms) {
+      if (room.cabinets?.isEmpty ?? true) {
+        continue;
+      }
+
+      final matchingCabinets = <DialogItemInfoCabinetModel>[];
+
+      for (final cabinet in room.cabinets!) {
+        if (cabinet.items?.isEmpty ?? true) {
+          continue;
+        }
+
+        final matchingItem = cabinet.items!.where((i) => i.id == itemId).firstOrNull;
+
+        if (matchingItem != null) {
+          matchingCabinets.add(
+            DialogItemInfoCabinetModel(
+              cabinetId: cabinet.id ?? '',
+              cabinetName: cabinet.name ?? EnumLocale.warehouseUncategorized.tr,
+              quantity: matchingItem.quantity ?? 0,
+            ),
+          );
+        }
+      }
+
+      if (matchingCabinets.isNotEmpty) {
+        final roomInfo = _model.rooms.where((r) => r.id == room.roomId).firstOrNull;
+
+        result.add(
+          DialogItemInfoRoomModel(
+            roomId: roomInfo?.id ?? '',
+            roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
+            cabinets: matchingCabinets,
+          ),
+        );
+      }
+    }
+
+    return result;
+  }
+
+  String convertCategoriesName(Item item) {
+    List<String> names = [];
+
+    void extractCategories(dynamic category) {
+      if (category != null) {
+        final categoryName = category.name;
+        if (categoryName != null && categoryName is String) {
+          names.add(categoryName);
+        } else if (categoryName != null) {
+          names.add(categoryName.toString());
+        }
+        extractCategories(category.children);
+      }
+    }
+
+    extractCategories(item.category);
+    return names.join(' > ');
+  }
+
   // MARK: - Item APIs
 
   Future<List<Room>?> apiReqFetchItems(
@@ -92,7 +191,10 @@ class WarehouseService {
       fromJson: WarehouseItemResponseModel.fromJson,
       onError: onError,
     );
-    _model.allRoomCabinetItems = response?.data;
+    _model.allRoomCabinetItems.value = response?.data;
+    _genAllItems();
+    _genGroupItems();
+    _genAllLowStockItems();
     return response?.data;
   }
 
@@ -263,5 +365,50 @@ class WarehouseService {
       requestModel: request,
       onError: onError,
     );
+  }
+
+  // MARK: - Private Method
+
+  void _genAllItems() {
+    _model.allItems =
+        _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList();
+  }
+
+  void _genGroupItems() {
+    final allItems = _model.allItems;
+
+    if (allItems?.isEmpty ?? true) {
+      return;
+    }
+
+    final Map<String, List<Item>> groupItems = {};
+
+    for (final item in allItems!) {
+      if (item.id?.isEmpty ?? true) {
+        continue;
+      }
+
+      if (groupItems.containsKey(item.id)) {
+        groupItems[item.id]!.add(item);
+      } else {
+        groupItems[item.id!] = [item];
+      }
+    }
+
+    _model.allGroupItems = groupItems;
+  }
+
+  void _genAllLowStockItems() {
+    final List<Item> lowStockItems = <Item>[];
+
+    for (final map in getAllGroupItems.entries) {
+      final items = map.value;
+      final totalQuantity = items.fold(0, (sum, item) => sum + (item.quantity ?? 0));
+      if (totalQuantity < (items.first.minStockAlert ?? 0)) {
+        lowStockItems.add(items.first.copyWith(quantity: totalQuantity));
+      }
+    }
+
+    _model.allLowStockItems.value = lowStockItems;
   }
 }
