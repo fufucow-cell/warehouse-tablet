@@ -7,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -18,7 +19,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 import 'package:get/get.dart';
 
@@ -30,21 +33,33 @@ class WarehouseService {
   // MARK: - Properties
 
   final _model = WarehouseServiceModel();
-  String? get userId => _model.userId;
-  String? get userName => _model.userName;
-  String? get accessToken => _model.accessToken;
-  String? get refreshToken => _model.refreshToken;
-  WarehouseNameIdModel? get house => _model.house;
+  final _logService = LogUtil.instance;
+  final _deviceService = DeviceUtil.instance;
+  final _themeService = ThemeUtil.instance;
+  String get userId => _model.userId ?? '';
+  String get userName => _model.userName ?? '';
+  String get accessToken => _model.accessToken ?? '';
+  String get refreshToken => _model.refreshToken ?? '';
+  int get userRoleType => _model.userRoleType ?? -1;
+  String get getHouseholdId => _model.household?.id ?? '';
+
+  // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
-  int? get userRoleType => _model.userRoleType;
-  List<Room>? get getAllRoomCabinetItems => _model.allRoomCabinetItems.value;
+  List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
   RxReadonly<List<Room>?> get allRoomCabinetItemsRx => _model.allRoomCabinetItems.readonly;
+
+  // 分類
+  RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
+  List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
+
+  // 物品
   List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
   RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
   List<Item> get getAllItems => _model.allItems ?? <Item>[];
   Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
+
+  // 記錄
   List<ItemRecord>? get getAllRecords => _model.allRecords;
-  List<Category>? get getAllCategories => _model.allCategories;
 
   // MARK: - Init
 
@@ -74,7 +89,7 @@ class WarehouseService {
     _model.rootContext = context;
   }
 
-  Future<T?> show<T>(Widget dialog) async {
+  Future<T?> showAlert<T>(Widget dialog) async {
     final context = _model.rootContext;
 
     if (context == null) {
@@ -88,12 +103,36 @@ class WarehouseService {
     );
   }
 
+  void showSnackBar({required String title, String? message}) {
+    _logService.showSnackBar(title: title, message: message ?? '');
+  }
+
+  Future<String?> openCamera() async {
+    return await _deviceService.openCamera();
+  }
+
+  Future<String?> openGallery() async {
+    return await _deviceService.openGallery();
+  }
+
+  Future<String?> compressImage(String imagePath, {int maxSide = 100}) async {
+    return await _themeService.compressImageFile(imagePath, maxSide: maxSide);
+  }
+
+  Widget? convertFileToImage(String imagePath, {double? fitWidth, double? fitHeight}) {
+    return _themeService.convertFileToImage(imagePath, fitWidth: fitWidth, fitHeight: fitHeight);
+  }
+
+  Future<String?> convertFileToBase64(String imagePath) async {
+    return await _themeService.convertFileToBase64(imagePath);
+  }
+
   void updateData(WarehouseMainPageRouterData data) {
     _model.userName = data.userName;
     _model.accessToken = data.accessToken;
     _model.refreshToken = data.refreshToken;
     _model.userRoleType = data.userRoleType;
-    _model.house = WarehouseNameIdModel(
+    _model.household = WarehouseNameIdModel(
       id: data.household.id,
       name: data.household.name,
     );
@@ -185,6 +224,7 @@ class WarehouseService {
     WarehouseItemRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
+    _model.allRoomCabinetItems.value = null;
     final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
       EnumApiInfo.itemFetch,
       requestModel: request,
@@ -199,7 +239,7 @@ class WarehouseService {
   }
 
   Future<ApiEmptyResponse?> apiReqCreateItem(
-    WarehouseItemRequestModel request, {
+    WarehouseItemCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) {
     return ApiUtil.sendRequest<ApiEmptyResponse>(
@@ -289,10 +329,9 @@ class WarehouseService {
       EnumApiInfo.categoryFetch,
       requestModel: request,
       fromJson: WarehouseCategoryResponseModel.fromJson,
-      onError: ((e) {
-        print(e);
-      }),
+      onError: onError,
     );
+    _model.allCategories.value = response?.data;
     return response?.data;
   }
 

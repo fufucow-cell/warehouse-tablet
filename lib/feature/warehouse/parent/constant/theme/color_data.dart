@@ -107,6 +107,10 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFFFFFFF),
     dark: Color(0xFF35384A),
   ),
+  'backgroundButton': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFDB874),
+  ),
   'lineDivider': ColorData(
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),
@@ -150,5 +154,9 @@ const Map<String, ColorData> colorDataMap = {
   'menuBgFocused': ColorData(
     light: Color(0x4DF1D0AD),
     dark: Color(0x4DF1D0AD),
+  ),
+  'shadowCard': ColorData(
+    light: Color(0x1F292929),
+    dark: Color(0x1F292929),
   ),
 };

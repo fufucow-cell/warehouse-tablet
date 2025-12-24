@@ -3,6 +3,7 @@ part of 'warehouse_main_page.dart';
 class WarehouseMainPageModel {
   final selectedItem = EnumWarehouseTabItem.item.obs;
   final isTabControllerReady = false.obs;
+  final isLoading = false.obs;
 }
 
 enum EnumWarehouseTabItem {

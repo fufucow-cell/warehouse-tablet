@@ -1,28 +1,20 @@
 part of 'warehouse_main_page.dart';
 
-class WarehouseMainPageController extends BasePageController {
+class WarehouseMainPageController extends GetxController {
   // MARK: - Properties
 
   final _model = WarehouseMainPageModel();
+  WarehouseService get _service => WarehouseService.instance;
   TabController? _tabController;
   TabController? get tabController => _tabController;
-  bool get isTabControllerReady => _model.isTabControllerReady.value;
-  RxBool get isTabControllerReadyRx => _model.isTabControllerReady;
-
+  RxReadonly<bool> get isTabControllerReadyRx => _model.isTabControllerReady.readonly;
+  RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
   Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
   List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
   List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
   // MARK: - Init
-
-  WarehouseMainPageController(
-    WarehouseMainPageRouterData routerData,
-  ) {
-    WarehouseService.register().updateData(routerData);
-    _registerWarehouseApiUtil();
-    super.init(isCallApiWhenInit: false);
-  }
 
   @override
   void onInit() {
@@ -47,6 +39,12 @@ class WarehouseMainPageController extends BasePageController {
   }
 
   // MARK: - Public Method
+
+  void setRouterData(WarehouseMainPageRouterData routerData) {
+    WarehouseService.register().updateData(routerData);
+    _registerWarehouseApiUtil();
+    _queryApiData();
+  }
 
   void setRootContext(BuildContext context) {
     BuildContext? rootContext;
@@ -93,7 +91,7 @@ class WarehouseMainPageController extends BasePageController {
     }
 
     rootContext ??= context;
-    WarehouseService.instance.setRootContext(rootContext);
+    _service.setRootContext(rootContext);
   }
 
   void initTabController(TickerProvider vsync) {
@@ -104,10 +102,21 @@ class WarehouseMainPageController extends BasePageController {
       initialIndex: EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
     );
     _tabController!.addListener(_onTabChanged);
-    isTabControllerReadyRx.value = true;
+    _model.isTabControllerReady.value = true;
   }
 
   // MARK: - Private Method
+
+  Future<void> _queryApiData() async {
+    final responses = await Future.wait([
+      _service.apiReqFetchItems(WarehouseItemRequestModel()),
+      _service.apiReqFetchCategories(WarehouseCategoryRequestModel()),
+    ]);
+
+    final items = responses[0];
+    final categories = responses[1];
+    _model.isLoading.value = (items == null || categories == null);
+  }
 
   void _registerWarehouseApiUtil() {
     final envUtil = EnvironmentUtil.instance;
@@ -157,6 +166,38 @@ class WarehouseMainPageController extends BasePageController {
     }
     if (Get.isRegistered<WarehouseAlarmPageController>()) {
       Get.delete<WarehouseAlarmPageController>(force: true);
+    }
+  }
+
+  Future<bool> _createItem(DialogItemCreateOutputModel model) async {
+    String errMsg = '';
+    final requestModel = WarehouseItemCreateRequestModel(
+      name: model.name,
+      description: model.description,
+      quantity: model.quantity,
+      minStockAlert: model.minStockAlert,
+      photo: model.photo,
+      cabinetId: model.cabinetId,
+      categoryId: model.categoryId,
+      householdId: _service.getHouseholdId,
+    );
+
+    final response = await _service.apiReqCreateItem(
+      requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
+    );
+
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      _service.showSnackBar(title: '創建物品成功');
+      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
+      return true;
+    } else {
+      _service.showSnackBar(title: '創建物品失敗', message: errMsg);
+      return false;
     }
   }
 }

@@ -5,16 +5,20 @@ class WarehouseServiceModel {
   String? userName;
   String? accessToken;
   String? refreshToken;
-  WarehouseNameIdModel? house;
+  WarehouseNameIdModel? household;
   List<WarehouseNameIdModel> rooms = [];
   int? userRoleType;
+  BuildContext? rootContext;
+  // 房間
   final allRoomCabinetItems = Rxn<List<Room>>();
+  // 分類
+  final allCategories = Rxn<List<Category>>();
+  // 物品
   final allLowStockItems = Rxn<List<Item>>();
   List<Item>? allItems;
   Map<String, List<Item>>? allGroupItems;
+  // 記錄
   List<ItemRecord>? allRecords;
-  List<Category>? allCategories;
-  BuildContext? rootContext;
 }
 
 class WarehouseNameIdModel {

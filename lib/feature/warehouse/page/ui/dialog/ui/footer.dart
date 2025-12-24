@@ -11,12 +11,14 @@ enum DialogFooterType {
 
 class DialogFooter extends StatelessWidget {
   final DialogFooterType type;
+  final bool isLoading;
   final VoidCallback? onConfirm;
   final VoidCallback? onCancel;
 
   const DialogFooter({
     super.key,
     required this.type,
+    this.isLoading = false,
     this.onConfirm,
     this.onCancel,
   });
@@ -42,7 +44,7 @@ class DialogFooter extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           if (type == DialogFooterType.cancelAndConfirm) ...[
-            _button(false, onCancel),
+            _button(false, onCancel ?? () => Navigator.of(context).pop()),
             SizedBox(width: 16.0.scale),
           ],
           _button(true, onConfirm),
@@ -58,10 +60,9 @@ class DialogFooter extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(
-            horizontal: 64.0.scale,
             vertical: 24.0.scale,
           ),
-          backgroundColor: isConfirm ? const Color(0xFFFDB874) : Colors.transparent,
+          backgroundColor: isConfirm ? EnumColor.backgroundButton.color : EnumColor.backgroundPrimary.color,
           side: isConfirm
               ? null
               : BorderSide(
@@ -72,10 +73,18 @@ class DialogFooter extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.0.scale),
           ),
         ),
-        child: WidgetUtil.textWidget(
-          isConfirm ? EnumLocale.commonConfirm.tr : EnumLocale.commonCancel.tr,
-          size: 26.0.scale,
-        ),
+        child: (isConfirm && isLoading)
+            ? WidgetUtil.shimmerWidget(
+                highlightColor: EnumColor.textPrimary.color,
+                child: WidgetUtil.textWidget(
+                  EnumLocale.commonProcessing.tr,
+                  size: 26.0.scale,
+                ),
+              )
+            : WidgetUtil.textWidget(
+                isConfirm ? EnumLocale.commonConfirm.tr : EnumLocale.commonCancel.tr,
+                size: 26.0.scale,
+              ),
       ),
     );
   }

@@ -7,7 +7,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widg
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class TopInfo extends StatelessWidget {
   const TopInfo({super.key});
@@ -93,12 +92,9 @@ class TopInfoItem extends StatelessWidget {
               color: EnumColor.textSecondary.color,
             ),
             SizedBox(width: 16.0.scale),
-            Skeletonizer(
-              enabled: isLoading,
-              child: WidgetUtil.textWidget(
-                isLoading ? '00' : count,
-                weightType: EnumFontWeightType.bold,
-              ),
+            WidgetUtil.textWidget(
+              count,
+              weightType: EnumFontWeightType.bold,
             ),
           ],
         ),

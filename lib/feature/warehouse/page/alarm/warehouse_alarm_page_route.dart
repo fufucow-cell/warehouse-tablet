@@ -13,7 +13,7 @@ extension WarehouseAlarmPageRouteExtension on WarehouseAlarmPageController {
         break;
       case EnumWarehouseAlarmPageRoute.showInfoDialog:
         if (data is Item) {
-          _service.show(
+          _service.showAlert(
             DialogItemInfo(
               DialogItemInfoModel(
                 title: data.name,

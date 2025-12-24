@@ -16,6 +16,7 @@ const Map<String, String> jaJP = {
   'commonBack': '戻る',
   'commonNext': '次へ',
   'commonFinish': '完了',
+  'commonProcessing': '処理中',
 
   // 言語
   'languageTitle': '言語設定',
@@ -27,6 +28,9 @@ const Map<String, String> jaJP = {
   'languageKoKR': '韓国語',
 
   // デバイス
+  'deviceCameraFailed': 'カメラを開くのに失敗しました',
+  'deviceCameraNotAvailable': 'カメラ機能がありません',
+  'deviceGalleryFailed': 'ギャラリーを開くのに失敗しました',
   'deviceUnsupported': 'サポートされていないデバイス',
   'deviceUnsupportedMessage': 'このアプリケーションはモバイルとタブレットデバイスのみをサポートしています',
 
@@ -47,6 +51,7 @@ const Map<String, String> jaJP = {
   'warehouseCategory': 'カテゴリ',
   'warehouseRoom': '部屋',
   'warehouseCabinet': 'キャビネット',
+  'warehouseCabinetPosition': 'キャビネット位置',
   'warehouseCabinetRoomSummary': '合計 @para1 キャビネット、@para2 アイテム',
   'warehouseRecord': '記録',
   'warehouseRecordColumnType': 'タイプ',
@@ -137,14 +142,18 @@ const Map<String, String> jaJP = {
   'createDescriptionHint': '説明を入力（任意）',
   'createQuantity': '数量',
   'createQuantityHint': '数量を入力',
-  'createMinStockAlert': '最小在庫アラート',
-  'createMinStockAlertHint': '最小在庫アラートを入力（任意）',
+  'createMinStockAlert': '最低在庫アラート',
+  'createMinStockAlertHint': '最低在庫アラートを入力（任意）',
   'createLevel1': '階層1',
   'createLevel2': '階層2',
   'createLevel3': '階層3',
+  'createLevel1Category': '一階分類',
+  'createLevel2Category': '二階分類',
+  'createLevel3Category': '三階分類',
   'createRoom': '部屋',
   'createCabinet': 'キャビネット',
   'createSmartAdd': 'スマート追加',
+  'createSmartAddItem': 'スマート追加アイテム',
   'createUploadImage': '画像をアップロード',
 
   // スマートホーム関連

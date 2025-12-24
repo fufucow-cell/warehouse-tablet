@@ -16,6 +16,7 @@ const Map<String, String> zhTW = {
   'commonBack': '返回',
   'commonNext': '下一步',
   'commonFinish': '完成',
+  'commonProcessing': '處理中',
 
   // 語言
   'languageTitle': '語言設定',
@@ -27,6 +28,9 @@ const Map<String, String> zhTW = {
   'languageKoKR': '한국어',
 
   // 設備
+  'deviceCameraFailed': '開啟相機失敗',
+  'deviceCameraNotAvailable': '無相機功能',
+  'deviceGalleryFailed': '開啟相簿失敗',
   'deviceUnsupported': '不支援的設備',
   'deviceUnsupportedMessage': '此應用程式僅支援手機和平板裝置',
 
@@ -47,6 +51,7 @@ const Map<String, String> zhTW = {
   'warehouseCategory': '分類',
   'warehouseRoom': '房間',
   'warehouseCabinet': '櫃子',
+  'warehouseCabinetPosition': '櫃位',
   'warehouseCabinetRoomSummary': '總共 @para1 櫃位, @para2 項物品',
   'warehouseRecord': '記錄',
   'warehouseRecordColumnType': '類型',
@@ -137,14 +142,18 @@ const Map<String, String> zhTW = {
   'createDescriptionHint': '請輸入描述（選填）',
   'createQuantity': '數量',
   'createQuantityHint': '請輸入數量',
-  'createMinStockAlert': '最小庫存警报',
-  'createMinStockAlertHint': '請輸入最小庫存警报（選填）',
+  'createMinStockAlert': '最低庫存警報',
+  'createMinStockAlertHint': '請輸入最低庫存警報（選填）',
   'createLevel1': '階層1',
   'createLevel2': '階層2',
   'createLevel3': '階層3',
+  'createLevel1Category': '一階分類',
+  'createLevel2Category': '二階分類',
+  'createLevel3Category': '三階分類',
   'createRoom': '房間',
   'createCabinet': '櫥櫃',
   'createSmartAdd': '智能新增',
+  'createSmartAddItem': '智能新增物品',
   'createUploadImage': '點擊上傳圖片',
 
   // Smart Home 相關

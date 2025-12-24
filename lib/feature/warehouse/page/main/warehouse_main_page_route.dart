@@ -1,15 +1,8 @@
 part of 'warehouse_main_page.dart';
 
 enum EnumWarehouseMainPageRoute {
-  showSomeDialog,
   showCreateItemDialog,
-  showCreateCabinetDialog,
-  showCreateCategoryDialog,
-  showSearchLogDialog,
-  showSearchAlarmDialog,
-  showSearchCategoryDialog,
-  showSearchCabinetDialog,
-  showSearchItemDialog,
+  showSearchDialog,
 }
 
 extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
@@ -17,47 +10,23 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
     EnumWarehouseMainPageRoute type, {
     dynamic data,
   }) {
-    // switch (type) {
-    //   case EnumWarehouseMainPageRoute.showSomeDialog:
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showCreateItemDialog:
-    //     _showCreateItemDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showCreateCabinetDialog:
-    //     _showCreateCabinetDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showCreateCategoryDialog:
-    //     _showCreateCategoryDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showSearchLogDialog:
-    //     _showSearchLogDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showSearchAlarmDialog:
-    //     _showSearchAlarmDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showSearchCategoryDialog:
-    //     _showSearchCategoryDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showSearchCabinetDialog:
-    //     _showSearchCabinetDialog();
-    //     break;
-    //   case EnumWarehouseMainPageRoute.showSearchItemDialog:
-    //     _showSearchItemDialog();
-    //     break;
-    // }
+    switch (type) {
+      case EnumWarehouseMainPageRoute.showCreateItemDialog:
+        _service.showAlert(
+          DialogItemCreateWidget(
+            onConfirm: (outputModel) async {
+              return await _createItem(outputModel);
+            },
+          ),
+        );
+      case EnumWarehouseMainPageRoute.showSearchDialog:
+        _service.showSnackBar(title: '敬請期待', message: '搜索功能開發中');
+    }
   }
 
   Future<void> _showCreateItemDialog() async {
     try {
-      // 获取分类数据和橱柜数据
-      final categoryResponse = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
-        EnumApiInfo.categoryFetch,
-        requestModel: WarehouseCategoryRequestModel(),
-        fromJson: WarehouseCategoryResponseModel.fromJson,
-      );
-
-      final categories = categoryResponse?.data ?? [];
-      // final cabinets = cabinetResponse?.data ?? [];
+      // TODO: Implement if needed
     } on Exception catch (e) {
       // 错误处理
       final context = Get.context;
@@ -94,7 +63,7 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
   //       household: household,
   //       rooms: rooms,
   //       onConfirm: (name, roomId, description) {
-  //         // TODO: 实现新增櫥櫃逻辑
+  //         // `TODO`: 实现新增櫥櫃逻辑
   //         // 可以在这里调用 API 创建橱柜
   //       },
   //       onCancel: () {

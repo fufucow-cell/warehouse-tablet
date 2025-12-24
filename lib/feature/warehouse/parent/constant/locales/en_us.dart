@@ -16,6 +16,7 @@ const Map<String, String> enUS = {
   'commonBack': 'Back',
   'commonNext': 'Next',
   'commonFinish': 'Finish',
+  'commonProcessing': 'Processing',
 
   // Language
   'languageTitle': 'Language Settings',
@@ -27,6 +28,9 @@ const Map<String, String> enUS = {
   'languageKoKR': 'Korean',
 
   // Device
+  'deviceCameraFailed': 'Failed to open camera',
+  'deviceCameraNotAvailable': 'Camera not available',
+  'deviceGalleryFailed': 'Failed to open gallery',
   'deviceUnsupported': 'Unsupported Device',
   'deviceUnsupportedMessage':
       'This application only supports mobile and tablet devices',
@@ -48,6 +52,7 @@ const Map<String, String> enUS = {
   'warehouseCategory': 'Category',
   'warehouseRoom': 'Room',
   'warehouseCabinet': 'Cabinet',
+  'warehouseCabinetPosition': 'Cabinet Position',
   'warehouseCabinetRoomSummary': 'Total @para1 cabinets, @para2 items',
   'warehouseRecord': 'Record',
   'warehouseRecordColumnType': 'Type',
@@ -139,14 +144,18 @@ const Map<String, String> enUS = {
   'createDescriptionHint': 'Enter description (optional)',
   'createQuantity': 'Quantity',
   'createQuantityHint': 'Enter quantity',
-  'createMinStockAlert': 'Min Stock Alert',
-  'createMinStockAlertHint': 'Enter min stock alert (optional)',
+  'createMinStockAlert': 'Minimum Stock Alert',
+  'createMinStockAlertHint': 'Enter minimum stock alert (optional)',
   'createLevel1': 'Level 1',
   'createLevel2': 'Level 2',
   'createLevel3': 'Level 3',
+  'createLevel1Category': 'Level 1 Category',
+  'createLevel2Category': 'Level 2 Category',
+  'createLevel3Category': 'Level 3 Category',
   'createRoom': 'Room',
   'createCabinet': 'Cabinet',
   'createSmartAdd': 'Smart Add',
+  'createSmartAddItem': 'Smart Add Item',
   'createUploadImage': 'Tap to upload image',
 
   // Smart Home related

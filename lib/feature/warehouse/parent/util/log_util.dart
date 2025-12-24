@@ -1,6 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/time_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
 /// 日誌管理工具類
@@ -15,9 +20,6 @@ class LogUtil extends GetxService {
 
   LogUtil._internal();
 
-  // MARK: - Public Method
-
-  /// 註冊
   static void register() {
     if (Get.isRegistered<LogUtil>()) {
       return;
@@ -26,16 +28,77 @@ class LogUtil extends GetxService {
     Get.put<LogUtil>(service, permanent: true);
   }
 
-  /// 註銷
   static void unregister() {
     if (Get.isRegistered<LogUtil>()) {
       Get.delete<LogUtil>(force: true);
     }
   }
 
-  /// 設置是否啟用日誌
+  static LogUtil get instance {
+    if (!Get.isRegistered<LogUtil>()) {
+      register();
+    }
+    return Get.find<LogUtil>();
+  }
+
+  // MARK: - Public Method
+
+  void showSnackBar({required String title, required String message}) {
+    Get.showSnackbar(
+      GetSnackBar(
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.transparent,
+        margin: const EdgeInsets.all(16.0),
+        isDismissible: true,
+        shouldIconPulse: false,
+        titleText: const SizedBox.shrink(),
+        messageText: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 50.0.scale,
+                vertical: 20.0.scale,
+              ),
+              decoration: BoxDecoration(
+                color: EnumColor.backgroundSecondary.color,
+                borderRadius: BorderRadius.circular(20.0.scale),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10.0.scale,
+                    offset: Offset(0, 10.0.scale),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  WidgetUtil.textWidget(
+                    title,
+                    size: 32.0.scale,
+                    weightType: EnumFontWeightType.bold,
+                  ),
+                  if (message.isNotEmpty) ...[
+                    SizedBox(height: 16.0.scale),
+                    WidgetUtil.textWidget(
+                      message,
+                      size: 28.0.scale,
+                      color: EnumColor.textSecondary.color,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   static void setEnableLog(bool enable) {
-    _instance._enableLog = enable && kDebugMode;
+    instance._enableLog = enable && kDebugMode;
   }
 
   /// 打印調試資訊
@@ -63,14 +126,6 @@ class LogUtil extends GetxService {
 
   // MARK: - Private Method
 
-  /// 實例化
-  static LogUtil get _instance {
-    if (!Get.isRegistered<LogUtil>()) {
-      register();
-    }
-    return Get.find<LogUtil>();
-  }
-
   /// 打印日誌
   static void _log(
     EnumLogType type,
@@ -78,7 +133,7 @@ class LogUtil extends GetxService {
     Object? error,
     StackTrace? stackTrace,
   ]) {
-    if (!_instance.enableLog && !type.enable) {
+    if (!instance.enableLog && !type.enable) {
       return;
     }
 

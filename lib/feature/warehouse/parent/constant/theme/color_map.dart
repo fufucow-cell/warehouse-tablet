@@ -1,12 +1,11 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-22T14:34:47.549944
+/// 生成时间: 2025-12-24T22:28:00.300140
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_data.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/theme_constant.dart';
-
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 
 enum EnumColor {
@@ -18,11 +17,15 @@ enum EnumColor {
   backgroundAccentGreen,
   backgroundAccentRed,
   backgroundAccentYellow,
+  backgroundButton,
+  backgroundDropdown,
   backgroundGhost,
   backgroundItemGradient,
   backgroundPrimary,
   backgroundProduct,
+  backgroundQuaternary,
   backgroundSecondary,
+  backgroundTertiary,
   brand,
   iconPrimary,
   iconSecondary,
@@ -35,6 +38,7 @@ enum EnumColor {
   menuBgFocused,
   menuIconDefault,
   menuIconFocused,
+  shadowCard,
   textLink,
   textPrimary,
   textProduct,

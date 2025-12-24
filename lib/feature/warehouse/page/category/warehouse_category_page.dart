@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/category_list.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/top_info.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_category_edit.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -24,8 +28,17 @@ class WarehouseCategoryPage extends GetView<WarehouseCategoryPageController> {
     }
 
     return SecondBackgroundCard(
-      child: Center(
-        child: Text(EnumLocale.warehouseNoCategory.tr),
+      child: Column(
+        children: [
+          const TopInfo(),
+          SizedBox(height: 32.0.scale),
+          Expanded(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(32.0.scale),
+              child: const CategoryList(),
+            ),
+          ),
+        ],
       ),
     );
   }

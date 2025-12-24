@@ -2,19 +2,26 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/device_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DeviceUtil extends GetxService {
   // MARK: - Properties
+
+  LogUtil get _logService => LogUtil.instance;
+  ThemeUtil get _themeService => ThemeUtil.instance;
 
   /// 系統平台判斷
   bool get isIOS => Platform.isIOS;
   bool get isAndroid => Platform.isAndroid;
   bool get isWeb => kIsWeb;
-  bool get isDesktop =>
-      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  bool get isDesktop => Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   /// 取得設備語言
   Locale? get deviceLocale => Get.deviceLocale;
@@ -62,6 +69,52 @@ class DeviceUtil extends GetxService {
   bool _isAndroidPad = false;
   bool get isAndroidPad => _isAndroidPad;
 
+  /// 是否為模擬器
+  bool? _isSimulatorCache;
+  bool get isSimulator {
+    if (isWeb || isDesktop) {
+      return false;
+    }
+    if (isIOS) {
+      // 如果缓存已初始化，直接返回
+      if (_isSimulatorCache != null) {
+        return _isSimulatorCache!;
+      }
+      // 否则使用回退检测方法（同步）
+      return _checkIOSSimulatorFallback();
+    } else if (isAndroid) {
+      return systemVersion.toLowerCase().contains('sdk') ||
+          systemVersion.toLowerCase().contains('emulator') ||
+          Platform.environment.containsKey('ANDROID_EMULATOR');
+    }
+    return false;
+  }
+
+  /// 初始化模擬器檢測（異步，使用平台通道）
+  Future<void> _initSimulatorCheck() async {
+    if (isIOS && _isSimulatorCache == null) {
+      try {
+        const MethodChannel channel = MethodChannel('device_info');
+        final bool? result = await channel.invokeMethod<bool>('isSimulator');
+        if (result != null) {
+          _isSimulatorCache = result;
+          return;
+        }
+      } on Object catch (_) {}
+
+      _isSimulatorCache = _checkIOSSimulatorFallback();
+    }
+  }
+
+  /// 檢查 iOS 模擬器（回退方法，同步）
+  bool _checkIOSSimulatorFallback() {
+    // 回退检测方法
+    return Platform.environment.containsKey('SIMULATOR_DEVICE_NAME') ||
+        Platform.environment.containsKey('SIMULATOR_ROOT') ||
+        Platform.environment.containsKey('SIMULATOR_UDID') ||
+        systemVersion.toLowerCase().contains('simulator');
+  }
+
   /// 螢幕尺寸資訊
   Size _screenSize = Size.zero;
   Size get screenSize => _screenSize;
@@ -94,9 +147,6 @@ class DeviceUtil extends GetxService {
 
   DeviceUtil._internal();
 
-  // MARK: - Public Method
-
-  /// 註冊
   static DeviceUtil register(BuildContext context) {
     if (Get.isRegistered<DeviceUtil>()) {
       return Get.find<DeviceUtil>();
@@ -104,18 +154,67 @@ class DeviceUtil extends GetxService {
     final DeviceUtil service = DeviceUtil._internal();
     Get.put<DeviceUtil>(service, permanent: true);
     service._initDeviceInfo(context);
+    // 异步初始化模拟器检测
+    service._initSimulatorCheck();
     return service;
   }
 
-  /// 註銷
   static void unregister() {
     if (Get.isRegistered<DeviceUtil>()) {
       Get.delete<DeviceUtil>(force: true);
     }
   }
 
-  /// 取得實例
   static DeviceUtil get instance => Get.find<DeviceUtil>();
+
+  // MARK: - Public Method
+
+  Future<String?> openCamera() async {
+    // 如果是模擬器，顯示提示並返回
+    if (isSimulator) {
+      _logService.showSnackBar(
+        title: EnumLocale.deviceCameraNotAvailable.tr,
+        message: '',
+      );
+      return null;
+    }
+
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(
+        source: ImageSource.camera,
+        imageQuality: 85,
+        maxWidth: 1920,
+        maxHeight: 1920,
+      );
+      return image?.path;
+    } on Object catch (e) {
+      _logService.showSnackBar(
+        title: EnumLocale.deviceCameraFailed.tr,
+        message: e.toString(),
+      );
+      return null;
+    }
+  }
+
+  Future<String?> openGallery() async {
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 85,
+        maxWidth: 1920,
+        maxHeight: 1920,
+      );
+      return image?.path;
+    } on Object catch (e) {
+      _logService.showSnackBar(
+        title: EnumLocale.deviceGalleryFailed.tr,
+        message: e.toString(),
+      );
+      return null;
+    }
+  }
 
   // MARK: - Private Method
 

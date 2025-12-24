@@ -12,6 +12,7 @@ extension WarehouseCabinetPageUserEventExtension
       case EnumWarehouseCabinetPageInteractive.tapSomeWidget:
         break;
       case EnumWarehouseCabinetPageInteractive.tapCreateCabinet:
+        routerHandle(EnumWarehouseCabinetPageRoute.showCreateCabinetDialog);
         break;
     }
   }

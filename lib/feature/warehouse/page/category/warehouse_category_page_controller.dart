@@ -27,6 +27,53 @@ class WarehouseCategoryPageController extends GetxController {
 
   // MARK: - Public Method
 
+  int getTotalCategoryCount() {
+    final categories = _model.allCategories.value;
+    if (categories == null) {
+      return 0;
+    }
+
+    int countRecursive(List<Category> cats) {
+      int count = 0;
+      for (final cat in cats) {
+        count++; // Count current category
+        if (cat.children != null && cat.children!.isNotEmpty) {
+          count += countRecursive(cat.children!);
+        }
+      }
+      return count;
+    }
+
+    return countRecursive(categories);
+  }
+
+  List<Category> getTopLevelCategories() {
+    final categories = _model.allCategories.value;
+    if (categories == null) {
+      return [];
+    }
+    return categories.where((cat) => cat.parentId == null || cat.parentId!.isEmpty).toList();
+  }
+
+  bool isCategoryExpanded(Category category) {
+    if (category.id == null) {
+      return false;
+    }
+    return _model.expandedCategoryIds.contains(category.id);
+  }
+
+  void toggleCategoryExpanded(Category category) {
+    if (category.id == null) {
+      return;
+    }
+    if (_model.expandedCategoryIds.contains(category.id)) {
+      _model.expandedCategoryIds.remove(category.id);
+    } else {
+      _model.expandedCategoryIds.add(category.id!);
+    }
+    update();
+  }
+
   // MARK: - Private Method
 
   void _checkData() {

@@ -4,10 +4,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 
 class CustomTabBar extends StatelessWidget {
-  static const itemSpacing = 40.0;
-  final _itemPaddingHorizontal = 22.0;
-  double get _combinedItemPadding =>
-      (_itemPaddingHorizontal + (itemSpacing / 2)).scale;
+  final itemSpacing = 40.0; // 每個 tab Item 之間的間距
+  final itemPaddingHorizontal = 22.0; // 每個 tab Item 左右內縮的距離 (讓底線寬度能超出文字)
+  double get combinedPadding => (itemPaddingHorizontal + (itemSpacing / 2)); // 將兩個 padding 結合
+  final underlineSpacing = 12.0;
   final TabController controller;
   final List<Widget> tabs;
 
@@ -25,7 +25,7 @@ class CustomTabBar extends StatelessWidget {
       isScrollable: true,
       tabAlignment: TabAlignment.start,
       labelPadding: EdgeInsets.symmetric(
-        horizontal: _combinedItemPadding,
+        horizontal: combinedPadding.scale,
       ),
       labelColor: EnumColor.accentBlue.color,
       unselectedLabelColor: EnumColor.textSecondary.color,
@@ -43,7 +43,7 @@ class CustomTabBar extends StatelessWidget {
       indicatorPadding: EdgeInsets.only(
         left: (itemSpacing / 2).scale,
         right: (itemSpacing / 2).scale,
-        bottom: 8.0.scale,
+        bottom: (20.0 - underlineSpacing).scale,
       ),
       indicatorSize: TabBarIndicatorSize.tab,
     );

@@ -1,23 +1,29 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-22T01:11:46.709433
+/// 生成时间: 2025-12-24T16:54:05.374977
 library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
 
 enum EnumImage {
+  cAdd,
   cArrowDown,
   cArrowUp,
+  cCamera,
+  cChangeImage,
   cCheckboxOff,
   cCheckboxOn,
   cCow,
+  cDeleteImage,
   cEdit,
   cHistory,
   cHouse,
   cInfo,
   cItem,
   cMember,
+  cMinus,
+  cPhoto,
   cPlus,
   cQuantity,
   cRefresh,

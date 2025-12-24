@@ -68,7 +68,7 @@ class _ItemCard extends StatelessWidget {
           color: EnumColor.backgroundPrimary.color,
           boxShadow: [
             BoxShadow(
-              color: const Color(0x29000000),
+              color: EnumColor.shadowCard.color,
               blurRadius: 16.0.scale,
             ),
           ],
@@ -244,7 +244,10 @@ class _ItemTools extends StatelessWidget {
             EnumImage.cEdit,
             EnumLocale.warehouseItemEdit.tr,
             onTap: () {
-              // TODO: Implement edit action
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapEditButton,
+                data: item,
+              );
             },
           ),
         ),
@@ -254,7 +257,10 @@ class _ItemTools extends StatelessWidget {
             EnumImage.cQuantity,
             EnumLocale.warehouseItemChange.tr,
             onTap: () {
-              // TODO: Implement change action
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapChangeButton,
+                data: item,
+              );
             },
           ),
         ),
@@ -277,7 +283,10 @@ class _ItemTools extends StatelessWidget {
             EnumImage.cHistory,
             EnumLocale.warehouseItemRecord.tr,
             onTap: () {
-              // TODO: Implement record action
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapRecordButton,
+                data: item,
+              );
             },
           ),
         ),

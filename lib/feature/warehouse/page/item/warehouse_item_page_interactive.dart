@@ -6,7 +6,10 @@ enum EnumWarehouseItemPageInteractive {
   tapRoomFilter,
   tapCabinetFilter,
   tapCategoryFilter,
+  tapEditButton,
+  tapChangeButton,
   tapInfoButton,
+  tapRecordButton,
 }
 
 extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
@@ -37,10 +40,26 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
           _changeCategoryMultiCheckbox(data);
           _genVisibleItems();
         }
+      case EnumWarehouseItemPageInteractive.tapEditButton:
+        if (data is Item) {
+          routerHandle(EnumWarehouseItemPageRoute.showEditDialog, data: data);
+        }
+        break;
+      case EnumWarehouseItemPageInteractive.tapChangeButton:
+        if (data is Item) {
+          routerHandle(EnumWarehouseItemPageRoute.showChangeDialog, data: data);
+        }
+        break;
       case EnumWarehouseItemPageInteractive.tapInfoButton:
         if (data is Item) {
           routerHandle(EnumWarehouseItemPageRoute.showInfoDialog, data: data);
         }
+        break;
+      case EnumWarehouseItemPageInteractive.tapRecordButton:
+        if (data is Item) {
+          routerHandle(EnumWarehouseItemPageRoute.showRecordDialog, data: data);
+        }
+        break;
     }
   }
 }

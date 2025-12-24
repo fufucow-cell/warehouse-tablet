@@ -36,10 +36,21 @@ class WarehouseCabinetPageController extends GetxController {
     return room?.cabinets ?? <Cabinet>[];
   }
 
+  int getTotalCabinetsCount() {
+    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
+    if (allRoomCabinetItems == null) {
+      return 0;
+    }
+    return allRoomCabinetItems.fold<int>(
+      0,
+      (sum, room) => sum + (room.cabinets?.length ?? 0),
+    );
+  }
+
   // MARK: - Private Method
 
   void _checkData() {
-    final allRoomCabinetItems = _service.getAllRoomCabinetItems;
+    final allRoomCabinetItems = _service.allRoomCabinetItemsRx.value;
 
     if (allRoomCabinetItems == null) {
       _queryApiData();

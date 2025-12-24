@@ -16,6 +16,7 @@ const Map<String, String> koKR = {
   'commonBack': '뒤로',
   'commonNext': '다음',
   'commonFinish': '완료',
+  'commonProcessing': '처리 중',
 
   // 언어
   'languageTitle': '언어 설정',
@@ -27,6 +28,9 @@ const Map<String, String> koKR = {
   'languageKoKR': '한국어',
 
   // 디바이스
+  'deviceCameraFailed': '카메라 열기 실패',
+  'deviceCameraNotAvailable': '카메라 기능이 없습니다',
+  'deviceGalleryFailed': '갤러리 열기 실패',
   'deviceUnsupported': '지원되지 않는 디바이스',
   'deviceUnsupportedMessage': '이 애플리케이션은 모바일 및 태블릿 디바이스만 지원합니다',
 
@@ -47,6 +51,7 @@ const Map<String, String> koKR = {
   'warehouseCategory': '카테고리',
   'warehouseRoom': '방',
   'warehouseCabinet': '캐비닛',
+  'warehouseCabinetPosition': '캐비닛 위치',
   'warehouseCabinetRoomSummary': '총 @para1 캐비닛, @para2 항목',
   'warehouseRecord': '기록',
   'warehouseRecordColumnType': '유형',
@@ -137,14 +142,18 @@ const Map<String, String> koKR = {
   'createDescriptionHint': '설명 입력 (선택사항)',
   'createQuantity': '수량',
   'createQuantityHint': '수량 입력',
-  'createMinStockAlert': '최소 재고 알림',
-  'createMinStockAlertHint': '최소 재고 알림 입력 (선택사항)',
+  'createMinStockAlert': '최저 재고 알림',
+  'createMinStockAlertHint': '최저 재고 알림 입력 (선택사항)',
   'createLevel1': '계층 1',
   'createLevel2': '계층 2',
   'createLevel3': '계층 3',
+  'createLevel1Category': '1단계 분류',
+  'createLevel2Category': '2단계 분류',
+  'createLevel3Category': '3단계 분류',
   'createRoom': '방',
   'createCabinet': '캐비닛',
   'createSmartAdd': '스마트 추가',
+  'createSmartAddItem': '스마트 항목 추가',
   'createUploadImage': '이미지 업로드',
 
   // 스마트 홈 관련

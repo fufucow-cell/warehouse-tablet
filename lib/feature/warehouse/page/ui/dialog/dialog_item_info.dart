@@ -18,10 +18,8 @@ class DialogItemInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // if (dataModel.photo != null && dataModel.photo!.isNotEmpty) ...[
           _PhotoCard(photo: dataModel.photo),
           SizedBox(height: 24.0.scale),
-          // ],
           _InfoCard(dataModel: dataModel),
         ],
       ),
