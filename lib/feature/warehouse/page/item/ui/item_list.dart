@@ -106,19 +106,11 @@ class _ItemPhotoWidget extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(28.0.scale),
-            child: Image.network(
-              item.photo?.toString() ?? '',
+            child: WidgetUtil.networkImage(
+              url: item.photo?.toString() ?? '',
               width: double.infinity,
               height: photoHeight,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: double.infinity,
-                  height: photoHeight,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.image_not_supported),
-                );
-              },
             ),
           ),
           // leftTopWarningTagWidget

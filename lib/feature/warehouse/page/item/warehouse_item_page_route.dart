@@ -14,6 +14,7 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
         if (data is Item) {
           _service.showAlert(
             DialogItemNormalEditWidget(
+              itemId: data.id!,
               onConfirm: (outputModel) async {
                 return await _updateItemNormal(data, outputModel);
               },

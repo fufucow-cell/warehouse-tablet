@@ -186,6 +186,68 @@ class WidgetUtil {
       child: child,
     );
   }
+
+  static Widget emptyImage({double? width = double.infinity, double? height = double.infinity}) {
+    return Container(
+      width: width,
+      height: height,
+      color: Colors.grey[300],
+      child: const Icon(Icons.image_not_supported),
+    );
+  }
+
+  static Widget networkImage({required String url, double? width, double? height, BoxFit? fit}) {
+    final loadingSize = height ?? width ?? double.infinity;
+    Widget imageWidget = Image.network(
+      url,
+      fit: fit ?? BoxFit.contain,
+      loadingBuilder: (context, child, loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return SizedBox(
+          width: loadingSize,
+          height: loadingSize,
+          child: shimmerWidget(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              color: Colors.grey[300],
+            ),
+          ),
+        );
+      },
+      errorBuilder: (context, error, stackTrace) => emptyImage(
+        width: width ?? loadingSize,
+        height: height ?? loadingSize,
+      ),
+    );
+
+    // 如果只设置了 height，使用 ConstrainedBox 限制高度，宽度自适应
+    if (height != null && width == null) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: height,
+          minHeight: height,
+        ),
+        child: imageWidget,
+      );
+    } else if (width != null && height == null) {
+      return ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: width,
+          minWidth: width,
+        ),
+        child: imageWidget,
+      );
+    } else {
+      return SizedBox(
+        width: width,
+        height: height,
+        child: imageWidget,
+      );
+    }
+  }
 }
 
 class _TextDropdownButton extends StatefulWidget {

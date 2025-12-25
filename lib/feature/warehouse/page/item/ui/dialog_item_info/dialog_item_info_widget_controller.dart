@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_se
 import 'package:get/get.dart';
 
 part 'dialog_item_info_widget_interactive.dart';
+part 'dialog_item_info_widget_route.dart';
 
 class DialogItemInfoWidgetController extends GetxController {
   // MARK: - Properties

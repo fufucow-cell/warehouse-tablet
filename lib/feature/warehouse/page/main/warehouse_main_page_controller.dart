@@ -22,6 +22,7 @@ class WarehouseMainPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseMainPageController] onInit - $hashCode',
     );
+    _listen();
   }
 
   @override
@@ -116,6 +117,15 @@ class WarehouseMainPageController extends GetxController {
     final items = responses[0];
     final categories = responses[1];
     _model.isLoading.value = (items == null || categories == null);
+  }
+
+  void _listen() {
+    ever(
+      selectedItemRx.rx,
+      (value) {
+        _tabController?.animateTo(EnumWarehouseTabItem.values.indexOf(value));
+      },
+    );
   }
 
   void _registerWarehouseApiUtil() {

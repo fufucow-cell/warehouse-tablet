@@ -15,17 +15,19 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 import 'package:get/get.dart';
 
 class DialogItemNormalEditWidget extends StatelessWidget {
+  final String itemId;
   final Future<bool> Function(DialogItemNormalEditOutputModel) onConfirm;
 
   const DialogItemNormalEditWidget({
     super.key,
+    required this.itemId,
     required this.onConfirm,
   });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DialogItemNormalEditWidgetController>(
-      init: DialogItemNormalEditWidgetController(),
+      init: DialogItemNormalEditWidgetController(itemId),
       builder: (controller) {
         return Obx(
           () {
@@ -138,18 +140,32 @@ class _PhotoSection extends StatelessWidget {
     final controller = Get.find<DialogItemNormalEditWidgetController>();
     return Obx(
       () {
-        final hasPhoto = controller.filePathRx.value != null;
-        final imageWidget = hasPhoto ? controller.convertFileToImage(controller.filePathRx.value!, fitHeight: 200.0.scale) : null;
+        final filePath = controller.filePathRx.value;
+        final photoUrl = controller.photoUrlRx.value;
+        final hasPhoto = (photoUrl?.isNotEmpty ?? false) || (filePath?.isNotEmpty ?? false);
 
-        if (imageWidget != null) {
-          return DialogWithPhotoWidget(
-            imageWidget: imageWidget,
-            onReplacePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.replacePhoto),
-            onDeletePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.deletePhoto),
-          );
-        } else {
-          return DialogWithoutPhotoWidget(onTap: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapPhoto));
+        if (hasPhoto) {
+          Widget? imageWidget;
+
+          if (filePath?.isNotEmpty ?? false) {
+            imageWidget = controller.convertFileToImage;
+          } else if (photoUrl?.isNotEmpty ?? false) {
+            imageWidget = WidgetUtil.networkImage(
+              url: photoUrl!,
+              height: 200.0.scale,
+            );
+          }
+
+          if (imageWidget != null) {
+            return DialogWithPhotoWidget(
+              imageWidget: imageWidget,
+              onReplacePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.replacePhoto),
+              onDeletePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.deletePhoto),
+            );
+          }
         }
+
+        return DialogWithoutPhotoWidget(onTap: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapPhoto));
       },
     );
   }

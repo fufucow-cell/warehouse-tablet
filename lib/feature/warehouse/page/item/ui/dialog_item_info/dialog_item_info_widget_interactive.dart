@@ -12,8 +12,7 @@ extension DialogItemInfoWidgetUserEventExtension on DialogItemInfoWidgetControll
   }) {
     switch (type) {
       case EnumDialogItemInfoWidgetInteractive.tapRecordButton:
-        // TODO: 实现记录按钮点击逻辑
-        break;
+        routerHandle(EnumDialogItemInfoWidgetRoute.switchMainPageTabItemIndex, data: data);
     }
   }
 }

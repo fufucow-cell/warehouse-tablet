@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
@@ -20,6 +21,8 @@ class DialogItemNormalEditWidgetController extends GetxController {
   final minStockAlertController = TextEditingController(text: '0');
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<String?> get filePathRx => _model.filePath.readonly;
+  RxReadonly<String?> get photoUrlRx => _model.photoUrl.readonly;
+  String get getFilePath => _model.filePath.value ?? '';
   RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel1Rx => _model.selectedCategoryLevel1.readonly;
   RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel2Rx => _model.selectedCategoryLevel2.readonly;
   RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel3Rx => _model.selectedCategoryLevel3.readonly;
@@ -29,11 +32,15 @@ class DialogItemNormalEditWidgetController extends GetxController {
 
   // MARK: - Init
 
+  DialogItemNormalEditWidgetController(String itemId) {
+    _model.itemId = itemId;
+  }
+
   @override
   void onInit() {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[DialogItemNormalEditWidgetController] onInit - $hashCode');
-    _genCategoryLevel1List();
+    _loadData();
   }
 
   @override
@@ -68,9 +75,8 @@ class DialogItemNormalEditWidgetController extends GetxController {
     );
   }
 
-  // 轉換文件為圖片
-  Widget? convertFileToImage(String imagePath, {double? fitWidth, double? fitHeight}) {
-    return _service.convertFileToImage(imagePath, fitWidth: fitWidth, fitHeight: fitHeight);
+  Widget? get convertFileToImage {
+    return _service.convertFileToImage(getFilePath, fitHeight: 200.0.scale);
   }
 
   // MARK: - Private Method
@@ -82,12 +88,22 @@ class DialogItemNormalEditWidgetController extends GetxController {
 
   // 開啟相機
   Future<void> _openCamera() async {
-    _model.filePath.value = await _service.openCamera();
+    final path = await _service.openCamera();
+
+    if (path != null) {
+      _model.filePath.value = path;
+      _model.photoUrl.value = null;
+    }
   }
 
   // 開啟相冊
   Future<void> _openGallery() async {
-    _model.filePath.value = await _service.openGallery();
+    final path = await _service.openGallery();
+
+    if (path != null) {
+      _model.filePath.value = path;
+      _model.photoUrl.value = null;
+    }
   }
 
   // 壓縮圖片
@@ -100,13 +116,41 @@ class DialogItemNormalEditWidgetController extends GetxController {
     return await _service.convertFileToBase64(imagePath);
   }
 
+  void _loadData() {
+    final item = _service.getAllCombineItems.firstWhereOrNull((item) => item.id == _model.itemId);
+
+    if (item == null) {
+      return;
+    }
+
+    nameController.text = item.name ?? '';
+    descriptionController.text = item.description ?? '';
+    minStockAlertController.text = item.minStockAlert?.toString() ?? '0';
+    _model.photoUrl.value = item.photo;
+    _model.combineItem = item;
+    _genCategoryLevel1List();
+  }
+
   void _genCategoryLevel1List() {
-    _model.selectedCategoryLevel1.value = null;
-    _model.selectedCategoryLevel2.value = null;
-    _model.selectedCategoryLevel3.value = null;
-    _model.visibleCategoryLevel1.value = _service.getAllCategories;
-    _model.visibleCategoryLevel2.value = [];
-    _model.visibleCategoryLevel3.value = [];
+    final allCategories = _service.getAllCategories;
+    _model.visibleCategoryLevel1.value = allCategories;
+    final catLv1 = _model.combineItem?.category;
+
+    if (catLv1?.id?.isNotEmpty ?? false) {
+      _model.selectedCategoryLevel1.value = WarehouseNameIdModel(id: catLv1?.id ?? '', name: catLv1?.name ?? '');
+      _genCategoryLevel2List();
+      final catLv2 = catLv1?.children;
+
+      if (catLv2?.id?.isNotEmpty ?? false) {
+        _model.selectedCategoryLevel2.value = WarehouseNameIdModel(id: catLv2?.id ?? '', name: catLv2?.name ?? '');
+        _genCategoryLevel3List();
+        final catLv3 = catLv2?.children;
+
+        if (catLv3?.id?.isNotEmpty ?? false) {
+          _model.selectedCategoryLevel3.value = WarehouseNameIdModel(id: catLv3?.id ?? '', name: catLv3?.name ?? '');
+        }
+      }
+    }
   }
 
   void _genCategoryLevel2List() {

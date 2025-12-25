@@ -27,6 +27,7 @@ extension DialogItemNormalEditWidgetUserEventExtension on DialogItemNormalEditWi
         _routerHandle(EnumDialogItemNormalEditWidgetRoute.openGallery);
       case EnumDialogItemNormalEditWidgetInteractive.deletePhoto:
         _model.filePath.value = null;
+        _model.photoUrl.value = null;
       case EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel1:
         if (data is String) {
           _changeSelectedCategoryLevel1(data);
