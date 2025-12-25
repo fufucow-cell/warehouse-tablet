@@ -17,7 +17,7 @@ extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
       case EnumWarehouseMainPageInteractive.selectTabItem:
         if (data is int && _model.isTabControllerReady.value && !tabController!.indexIsChanging) {
           final newItem = EnumWarehouseTabItem.values[data];
-          _model.selectedItem.value = newItem;
+          _service.changeMainPageSelectedTabItem(newItem);
         }
       case EnumWarehouseMainPageInteractive.tapSearch:
         routerHandle(EnumWarehouseMainPageRoute.showSearchDialog);

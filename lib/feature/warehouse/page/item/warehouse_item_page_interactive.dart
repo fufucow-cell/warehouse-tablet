@@ -6,11 +6,11 @@ enum EnumWarehouseItemPageInteractive {
   tapRoomFilter,
   tapCabinetFilter,
   tapCategoryFilter,
-  tapEditButton,
-  tapChangeButton,
-  tapInfoButton,
-  tapRecordButton,
   tapClearSearch,
+  tapItemNormalEdit,
+  tapItemQuantityEdit,
+  tapItemPositionEdit,
+  tapItemInfo,
 }
 
 extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
@@ -41,24 +41,24 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
           _changeCategoryMultiCheckbox(data);
           _genVisibleItems();
         }
-      case EnumWarehouseItemPageInteractive.tapEditButton:
+      case EnumWarehouseItemPageInteractive.tapItemNormalEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showEditDialog, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemNormalEdit, data: data);
         }
         break;
-      case EnumWarehouseItemPageInteractive.tapChangeButton:
+      case EnumWarehouseItemPageInteractive.tapItemQuantityEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showChangeDialog, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemQuantityEdit, data: data);
         }
         break;
-      case EnumWarehouseItemPageInteractive.tapInfoButton:
+      case EnumWarehouseItemPageInteractive.tapItemPositionEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showInfoDialog, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemPositionEdit, data: data);
         }
         break;
-      case EnumWarehouseItemPageInteractive.tapRecordButton:
+      case EnumWarehouseItemPageInteractive.tapItemInfo:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showRecordDialog, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemInfo, data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapClearSearch:

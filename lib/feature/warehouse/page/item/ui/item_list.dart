@@ -241,11 +241,11 @@ class _ItemTools extends StatelessWidget {
       children: [
         Expanded(
           child: _toolWidget(
-            EnumImage.cEdit,
+            EnumImage.cEditNormal,
             EnumLocale.warehouseItemEdit.tr,
             onTap: () {
               controller.interactive(
-                EnumWarehouseItemPageInteractive.tapEditButton,
+                EnumWarehouseItemPageInteractive.tapItemNormalEdit,
                 data: item,
               );
             },
@@ -254,11 +254,24 @@ class _ItemTools extends StatelessWidget {
         SizedBox(width: 12.0.scale),
         Expanded(
           child: _toolWidget(
-            EnumImage.cQuantity,
-            EnumLocale.warehouseItemChange.tr,
+            EnumImage.cEditQuantity,
+            EnumLocale.warehouseQuantityLabel.tr,
             onTap: () {
               controller.interactive(
-                EnumWarehouseItemPageInteractive.tapChangeButton,
+                EnumWarehouseItemPageInteractive.tapItemQuantityEdit,
+                data: item,
+              );
+            },
+          ),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(
+            EnumImage.cEditPosition,
+            EnumLocale.warehouseEntityTypePosition.tr,
+            onTap: () {
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapItemPositionEdit,
                 data: item,
               );
             },
@@ -271,20 +284,7 @@ class _ItemTools extends StatelessWidget {
             EnumLocale.warehouseItemInfo.tr,
             onTap: () {
               controller.interactive(
-                EnumWarehouseItemPageInteractive.tapInfoButton,
-                data: item,
-              );
-            },
-          ),
-        ),
-        SizedBox(width: 12.0.scale),
-        Expanded(
-          child: _toolWidget(
-            EnumImage.cHistory,
-            EnumLocale.warehouseItemRecord.tr,
-            onTap: () {
-              controller.interactive(
-                EnumWarehouseItemPageInteractive.tapRecordButton,
+                EnumWarehouseItemPageInteractive.tapItemInfo,
                 data: item,
               );
             },

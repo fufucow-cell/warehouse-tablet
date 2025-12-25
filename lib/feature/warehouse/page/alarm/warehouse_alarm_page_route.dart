@@ -12,17 +12,9 @@ extension WarehouseAlarmPageRouteExtension on WarehouseAlarmPageController {
         if (data is Item) {}
         break;
       case EnumWarehouseAlarmPageRoute.showInfoDialog:
-        if (data is Item) {
+        if (data is Item && (data.id?.isNotEmpty ?? false)) {
           _service.showAlert(
-            DialogItemInfo(
-              DialogItemInfoModel(
-                title: data.name,
-                description: data.description,
-                lowStockAlert: data.minStockAlert,
-                category: _service.convertCategoriesName(data),
-                rooms: _service.filterItemFromRooms(data),
-              ),
-            ),
+            DialogItemInfoWidget(data.id!),
           );
         }
     }

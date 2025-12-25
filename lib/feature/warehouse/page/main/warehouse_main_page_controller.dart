@@ -9,8 +9,7 @@ class WarehouseMainPageController extends GetxController {
   TabController? get tabController => _tabController;
   RxReadonly<bool> get isTabControllerReadyRx => _model.isTabControllerReady.readonly;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  EnumWarehouseTabItem get selectedItem => _model.selectedItem.value;
-  Rx<EnumWarehouseTabItem> get selectedItemRx => _model.selectedItem;
+  RxReadonly<EnumWarehouseTabItem> get selectedItemRx => _service.mainPageSelectedTabItemRx;
   List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
   List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
 
@@ -96,10 +95,11 @@ class WarehouseMainPageController extends GetxController {
 
   void initTabController(TickerProvider vsync) {
     _disposeTabController();
+    final selectedTabItem = _service.mainPageSelectedTabItemRx.value;
     _tabController = TabController(
       length: EnumWarehouseTabItem.values.length,
       vsync: vsync,
-      initialIndex: EnumWarehouseTabItem.values.indexOf(_model.selectedItem.value),
+      initialIndex: EnumWarehouseTabItem.values.indexOf(selectedTabItem),
     );
     _tabController!.addListener(_onTabChanged);
     _model.isTabControllerReady.value = true;

@@ -132,7 +132,7 @@ class _RoomTitleInfo extends StatelessWidget {
             weightType: EnumFontWeightType.bold,
           ),
         ),
-        EnumImage.cEdit.image(size: Size.square(32.0.scale)),
+        EnumImage.cEditNormal.image(size: Size.square(32.0.scale)),
       ],
     );
   }

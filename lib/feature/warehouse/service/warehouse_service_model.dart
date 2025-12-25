@@ -16,11 +16,13 @@ class WarehouseServiceModel {
   // 分類
   final allCategories = Rxn<List<Category>>();
   // 物品
-  final allLowStockItems = Rxn<List<Item>>();
-  List<Item>? allItems;
-  Map<String, List<Item>>? allGroupItems;
+  Map<String, List<Item>>? allGroupItems; // 不同櫥櫃的相同物品分組
+  List<Item>? allCombineItems; // 合併分散在不同櫥櫃的相同物品
+  final allLowStockItems = Rxn<List<Item>>(); // 所有低庫存物品
   // 記錄
   List<ItemRecord>? allRecords;
+  // Main Page Tab Item Index
+  final mainPageSelectedTabItem = EnumWarehouseTabItem.item.obs;
 }
 
 class WarehouseNameIdModel {

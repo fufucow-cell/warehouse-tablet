@@ -1,101 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:get/get.dart';
 
-class DialogItemInfo extends StatelessWidget {
-  final DialogItemInfoModel dataModel;
+class DialogItemInfoWidget extends StatelessWidget {
+  final String itemId;
 
-  const DialogItemInfo(this.dataModel, {super.key});
+  const DialogItemInfoWidget(this.itemId, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return DialogFrame(
-      header: DialogHeader(title: EnumLocale.warehouseItemInfo.tr),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _PhotoCard(photo: dataModel.photo),
-          SizedBox(height: 24.0.scale),
-          _InfoCard(dataModel: dataModel),
-        ],
-      ),
+    return GetBuilder<DialogItemInfoWidgetController>(
+      init: DialogItemInfoWidgetController(itemId),
+      builder: (controller) {
+        return DialogFrame(
+          header: DialogHeader(title: EnumLocale.warehouseItemInfo.tr),
+          child: const _Body(),
+        );
+      },
     );
   }
 }
 
-class DialogItemInfoModel {
-  final String? title;
-  final String? description;
-  final String? photo;
-  final int? lowStockAlert;
-  final String? category;
-  final List<DialogItemInfoRoomModel>? rooms;
+class _Body extends StatelessWidget {
+  const _Body();
 
-  DialogItemInfoModel({
-    this.title,
-    this.description,
-    this.photo,
-    this.lowStockAlert,
-    this.category,
-    this.rooms,
-  });
-
-  int get totalQuantity {
-    if (rooms == null) {
-      return 0;
-    }
-
-    return rooms!.fold<int>(
-      0,
-      (total, room) =>
-          total +
-          (room.cabinets).fold<int>(
-            0,
-            (cabinetSum, cabinet) => cabinetSum + cabinet.quantity,
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _PhotoCard(),
+        SizedBox(height: 24.0.scale),
+        _InfoCard(),
+      ],
     );
   }
-}
-
-class DialogItemInfoRoomModel {
-  final String roomId;
-  final String roomName;
-  final List<DialogItemInfoCabinetModel> cabinets;
-
-  DialogItemInfoRoomModel({
-    required this.roomId,
-    required this.roomName,
-    required this.cabinets,
-  });
-}
-
-class DialogItemInfoCabinetModel {
-  final String cabinetId;
-  final String cabinetName;
-  final int quantity;
-
-  DialogItemInfoCabinetModel({
-    required this.cabinetId,
-    required this.cabinetName,
-    required this.quantity,
-  });
 }
 
 class _PhotoCard extends StatelessWidget {
-  final String? photo;
-
-  const _PhotoCard({required this.photo});
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemInfoWidgetController>();
     return ClipRRect(
       borderRadius: BorderRadius.circular(11.0.scale),
       child: Image.network(
-        photo ?? 'https://via.placeholder.com',
+        controller.getPhoto,
         width: 320.0.scale,
         height: 225.0.scale,
         fit: BoxFit.cover,
@@ -117,14 +73,9 @@ class _PhotoCard extends StatelessWidget {
 }
 
 class _InfoCard extends StatelessWidget {
-  final DialogItemInfoModel dataModel;
-
-  const _InfoCard({
-    required this.dataModel,
-  });
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemInfoWidgetController>();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 32.0.scale,
@@ -140,30 +91,30 @@ class _InfoCard extends StatelessWidget {
         children: [
           _InfoRow(
             label: EnumLocale.createItemName.tr,
-            value: dataModel.title ?? '',
+            value: controller.getTitle,
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: '${EnumLocale.warehouseDescriptionLabel.tr}：',
-            value: dataModel.description ?? '',
+            value: controller.getDescription,
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: EnumLocale.warehouseCurrentQuantityLabel.tr,
-            value: dataModel.totalQuantity.toString(),
+            value: controller.combineItem?.quantity.toString() ?? '0',
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: EnumLocale.warehouseAlertQuantityLabel.tr,
-            value: dataModel.lowStockAlert?.toString() ?? '0',
+            value: controller.getMinStockAlert,
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: EnumLocale.warehouseCategory.tr,
-            value: dataModel.category ?? EnumLocale.warehouseUncategorized.tr,
+            value: controller.getCategoryName,
           ),
           SizedBox(height: 24.0.scale),
-          _PositionsInfo(rooms: dataModel.rooms ?? []),
+          _PositionsInfo(rooms: controller.getRooms),
         ],
       ),
     );
@@ -205,7 +156,7 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _PositionsInfo extends StatelessWidget {
-  final List<DialogItemInfoRoomModel> rooms;
+  final List<DialogItemInfopPositionModel> rooms;
 
   const _PositionsInfo({required this.rooms});
 

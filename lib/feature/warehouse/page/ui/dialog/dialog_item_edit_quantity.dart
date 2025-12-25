@@ -7,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 
 class DialogItemEditQuantity extends StatefulWidget {
   final DialogItemEditQuantityModel dataModel;
@@ -17,8 +18,52 @@ class DialogItemEditQuantity extends StatefulWidget {
   State<DialogItemEditQuantity> createState() => _DialogItemEditQuantityState();
 }
 
+class _NewLocationItemModel {
+  String? selectedRoom;
+  String? selectedCabinet;
+  int quantity;
+
+  _NewLocationItemModel({
+    this.selectedRoom,
+    this.selectedCabinet,
+    this.quantity = 1,
+  });
+}
+
 class _DialogItemEditQuantityState extends State<DialogItemEditQuantity> {
   int _selectedTab = 0;
+  final List<_NewLocationItemModel> _newLocations = [];
+
+  void _addNewLocation() {
+    setState(() {
+      _newLocations.add(_NewLocationItemModel());
+    });
+  }
+
+  void _removeNewLocation(int index) {
+    setState(() {
+      _newLocations.removeAt(index);
+    });
+  }
+
+  void _updateNewLocationRoom(int index, String? room) {
+    setState(() {
+      _newLocations[index].selectedRoom = room;
+      _newLocations[index].selectedCabinet = null; // 重置柜位选择
+    });
+  }
+
+  void _updateNewLocationCabinet(int index, String? cabinet) {
+    setState(() {
+      _newLocations[index].selectedCabinet = cabinet;
+    });
+  }
+
+  void _updateNewLocationQuantity(int index, int quantity) {
+    setState(() {
+      _newLocations[index].quantity = quantity;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +89,20 @@ class _DialogItemEditQuantityState extends State<DialogItemEditQuantity> {
           ),
           SizedBox(height: 24.0.scale),
           if (_selectedTab == 0) ...[
-            _AddLocationButton(),
+            _AddLocationButton(onPressed: _addNewLocation),
             SizedBox(height: 24.0.scale),
             _TotalQuantitySection(totalQuantity: widget.dataModel.totalQuantity),
             SizedBox(height: 24.0.scale),
-            _LocationsList(locations: widget.dataModel.locations ?? []),
+            if (_newLocations.isNotEmpty || (widget.dataModel.locations?.isNotEmpty ?? false)) ...[
+              _LocationsList(
+                locations: widget.dataModel.locations ?? [],
+                newLocations: _newLocations,
+                onRemoveNewLocation: _removeNewLocation,
+                onUpdateNewLocationRoom: _updateNewLocationRoom,
+                onUpdateNewLocationCabinet: _updateNewLocationCabinet,
+                onUpdateNewLocationQuantity: _updateNewLocationQuantity,
+              ),
+            ],
           ] else ...[
             _LocationEditContent(locations: widget.dataModel.locations ?? []),
           ],
@@ -233,12 +287,14 @@ class _TabButton extends StatelessWidget {
 }
 
 class _AddLocationButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const _AddLocationButton({required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {
-        // TODO: 实现新增存放位置逻辑
-      },
+      onPressed: onPressed,
       style: OutlinedButton.styleFrom(
         padding: EdgeInsets.symmetric(
           horizontal: 24.0.scale,
@@ -303,13 +359,64 @@ class _TotalQuantitySection extends StatelessWidget {
 
 class _LocationsList extends StatelessWidget {
   final List<DialogItemEditQuantityLocationModel> locations;
+  final List<_NewLocationItemModel> newLocations;
+  final Function(int) onRemoveNewLocation;
+  final Function(int, String?) onUpdateNewLocationRoom;
+  final Function(int, String?) onUpdateNewLocationCabinet;
+  final Function(int, int) onUpdateNewLocationQuantity;
 
-  const _LocationsList({required this.locations});
+  const _LocationsList({
+    required this.locations,
+    required this.newLocations,
+    required this.onRemoveNewLocation,
+    required this.onUpdateNewLocationRoom,
+    required this.onUpdateNewLocationCabinet,
+    required this.onUpdateNewLocationQuantity,
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (locations.isEmpty) {
-      return const SizedBox.shrink();
+    final allItems = <Widget>[];
+
+    // 添加原有的位置
+    for (int i = 0; i < locations.length; i++) {
+      allItems.add(_LocationItem(location: locations[i]));
+      if (i < locations.length - 1 || newLocations.isNotEmpty) {
+        allItems.add(SizedBox(height: 32.0.scale));
+        allItems.add(
+          Divider(
+            height: 1.0.scale,
+            thickness: 1.0.scale,
+            color: EnumColor.lineDividerLight.color,
+          ),
+        );
+        allItems.add(SizedBox(height: 32.0.scale));
+      }
+    }
+
+    // 添加新增的位置
+    for (int i = 0; i < newLocations.length; i++) {
+      allItems.add(
+        _NewLocationItem(
+          model: newLocations[i],
+          index: i,
+          onRemove: () => onRemoveNewLocation(i),
+          onRoomChanged: (room) => onUpdateNewLocationRoom(i, room),
+          onCabinetChanged: (cabinet) => onUpdateNewLocationCabinet(i, cabinet),
+          onQuantityChanged: (quantity) => onUpdateNewLocationQuantity(i, quantity),
+        ),
+      );
+      if (i < newLocations.length - 1) {
+        allItems.add(SizedBox(height: 32.0.scale));
+        allItems.add(
+          Divider(
+            height: 1.0.scale,
+            thickness: 1.0.scale,
+            color: EnumColor.lineDividerLight.color,
+          ),
+        );
+        allItems.add(SizedBox(height: 32.0.scale));
+      }
     }
 
     return Container(
@@ -327,20 +434,7 @@ class _LocationsList extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (int i = 0; i < locations.length; i++) ...[
-            _LocationItem(location: locations[i]),
-            if (i < locations.length - 1) ...[
-              SizedBox(height: 32.0.scale),
-              Divider(
-                height: 1.0.scale,
-                thickness: 1.0.scale,
-                color: EnumColor.lineDividerLight.color,
-              ),
-              SizedBox(height: 32.0.scale),
-            ],
-          ],
-        ],
+        children: allItems,
       ),
     );
   }
@@ -746,6 +840,220 @@ class _ChangeCabinetField extends StatelessWidget {
                 color: EnumColor.textPrimary.color,
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _NewLocationItem extends StatefulWidget {
+  final _NewLocationItemModel model;
+  final int index;
+  final VoidCallback onRemove;
+  final ValueChanged<String?> onRoomChanged;
+  final ValueChanged<String?> onCabinetChanged;
+  final ValueChanged<int> onQuantityChanged;
+
+  const _NewLocationItem({
+    required this.model,
+    required this.index,
+    required this.onRemove,
+    required this.onRoomChanged,
+    required this.onCabinetChanged,
+    required this.onQuantityChanged,
+  });
+
+  @override
+  State<_NewLocationItem> createState() => _NewLocationItemState();
+}
+
+class _NewLocationItemState extends State<_NewLocationItem> {
+  late int _quantity;
+  String? _selectedRoom;
+  String? _selectedCabinet;
+  List<String> _availableCabinets = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _quantity = widget.model.quantity;
+    _selectedRoom = widget.model.selectedRoom;
+    _selectedCabinet = widget.model.selectedCabinet;
+  }
+
+  void _decrement() {
+    if (_quantity > 0) {
+      setState(() {
+        _quantity--;
+        widget.onQuantityChanged(_quantity);
+      });
+    }
+  }
+
+  void _increment() {
+    setState(() {
+      _quantity++;
+      widget.onQuantityChanged(_quantity);
+    });
+  }
+
+  void _onRoomSelected(String? room) {
+    setState(() {
+      _selectedRoom = room;
+      _selectedCabinet = null;
+      _availableCabinets = _getCabinetsForRoom(room);
+    });
+    widget.onRoomChanged(room);
+  }
+
+  @override
+  void didUpdateWidget(_NewLocationItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.model.selectedRoom != _selectedRoom) {
+      _selectedRoom = widget.model.selectedRoom;
+      _availableCabinets = _getCabinetsForRoom(_selectedRoom);
+    }
+    if (widget.model.selectedCabinet != _selectedCabinet) {
+      _selectedCabinet = widget.model.selectedCabinet;
+    }
+    if (widget.model.quantity != _quantity) {
+      _quantity = widget.model.quantity;
+    }
+  }
+
+  void _onCabinetSelected(String? cabinet) {
+    setState(() {
+      _selectedCabinet = cabinet;
+    });
+    widget.onCabinetChanged(cabinet);
+  }
+
+  List<String> _getCabinetsForRoom(String? roomName) {
+    if (roomName == null) return [];
+    final service = WarehouseService.instance;
+    // 通过房间名称找到对应的 roomId
+    final roomModel = service.rooms.where((r) => r.name == roomName).firstOrNull;
+    if (roomModel?.id == null) return [];
+
+    // 通过 roomId 找到对应的 Room 对象
+    final room = service.getAllRoomCabinetItems
+        .where(
+          (room) => room.roomId == roomModel!.id,
+        )
+        .firstOrNull;
+    return room?.cabinets?.map((cabinet) => cabinet.name ?? '').where((name) => name.isNotEmpty).toList() ?? [];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final service = WarehouseService.instance;
+    final rooms = service.rooms.map((room) => room.name ?? '').where((name) => name.isNotEmpty).toList();
+
+    // 如果选择了房间，更新可用柜位列表
+    if (_selectedRoom != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            _availableCabinets = _getCabinetsForRoom(_selectedRoom);
+          });
+        }
+      });
+    }
+
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              WidgetUtil.textWidget(
+                '房間',
+                size: 26.0.scale,
+                color: EnumColor.textSecondary.color,
+              ),
+              SizedBox(height: 12.0.scale),
+              WidgetUtil.textDropdownButton(
+                selectedValue: _selectedRoom,
+                values: rooms,
+                buttonTextColor: _selectedRoom == null ? EnumColor.textSecondary.color : null,
+                onValueSelected: (str, idx) => _onRoomSelected(str),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 32.0.scale),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              WidgetUtil.textWidget(
+                '櫃位',
+                size: 26.0.scale,
+                color: EnumColor.textSecondary.color,
+              ),
+              SizedBox(height: 12.0.scale),
+              WidgetUtil.textDropdownButton(
+                selectedValue: _selectedCabinet,
+                values: _availableCabinets,
+                buttonTextColor: _selectedCabinet == null ? EnumColor.textSecondary.color : null,
+                onValueSelected: (str, idx) => _onCabinetSelected(str),
+              ),
+            ],
+          ),
+        ),
+        SizedBox(width: 32.0.scale),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            WidgetUtil.textWidget(
+              '數量',
+              size: 26.0.scale,
+              color: EnumColor.textSecondary.color,
+            ),
+            SizedBox(height: 12.0.scale),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _QuantityButton(
+                  icon: Icons.remove,
+                  onPressed: _decrement,
+                ),
+                SizedBox(width: 16.0.scale),
+                Container(
+                  width: 180.0.scale,
+                  height: 70.0.scale,
+                  padding: EdgeInsets.all(16.0.scale),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0.scale,
+                      color: EnumColor.lineBorder.color,
+                    ),
+                    borderRadius: BorderRadius.circular(16.0.scale),
+                  ),
+                  child: Center(
+                    child: WidgetUtil.textWidget(
+                      _quantity.toString(),
+                      size: 32.0.scale,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.0.scale),
+                _QuantityButton(
+                  icon: Icons.add,
+                  onPressed: _increment,
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(width: 16.0.scale),
+        IconButton(
+          onPressed: widget.onRemove,
+          icon: Icon(
+            Icons.delete_outline,
+            size: 40.0.scale,
+            color: EnumColor.textSecondary.color,
           ),
         ),
       ],

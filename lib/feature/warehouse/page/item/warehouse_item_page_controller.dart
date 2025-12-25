@@ -40,26 +40,20 @@ class WarehouseItemPageController extends GetxController {
   }
 
   int getTotalCategoryCount() {
-    final allItems = _service.getAllItems;
+    final allItems = _service.getAllCombineItems;
     final Set<String> allCategoryIds = {};
 
-    void extractCategories(dynamic category) {
-      if (category == null) {
+    void extractCategory(Category? category) {
+      if (category?.id?.isEmpty ?? true) {
         return;
       }
 
-      final categoryId = category.id;
-      if (categoryId is String && categoryId.isNotEmpty) {
-        allCategoryIds.add(categoryId);
-      }
-
-      if (category.children != null) {
-        extractCategories(category.children);
-      }
+      allCategoryIds.add(category!.id!);
+      extractCategory(category.children);
     }
 
     for (var item in allItems) {
-      extractCategories(item.category);
+      extractCategory(item.category);
     }
 
     return allCategoryIds.length;
@@ -104,14 +98,62 @@ class WarehouseItemPageController extends GetxController {
     _genVisibleItems();
   }
 
+  Future<bool> _updateItemNormal(Item item, DialogItemNormalEditOutputModel model) async {
+    String errMsg = '';
+
+    final requestModel = WarehouseItemRequestModel(
+      itemId: item.id,
+      categoryId: model.categoryId,
+    );
+
+    final response = await _service.apiReqModifyItem(
+      requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
+    );
+
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      _service.showSnackBar(title: '更新物品成功');
+      _service.apiReqFetchItems(WarehouseItemRequestModel());
+      return true;
+    } else {
+      _service.showSnackBar(title: '更新物品失敗', message: errMsg);
+      return false;
+    }
+  }
+
   // 設定分類篩選條件為全部
   void _setFilterIndexForCategoryToAll() {
     _model.filterIndexForCategories.value = {for (int i = 0; i < _model.filterRuleForCategories.value.length; i++) i};
   }
 
+  // 扁平化所有物品
+  List<Item> _flattenAllItems() {
+    return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).expand<Item>((cabinet) => cabinet.items ?? []).toList() ??
+        [];
+  }
+
   // 扁平化所有櫥櫃
   List<Cabinet> _flattenAllCabinets() {
     return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
+  }
+
+  // 取得第一階分類
+  List<WarehouseNameIdModel> _genFirstLevelCategory(List<Item> items) {
+    final Set<String> matchCategoryIds = {};
+    final List<WarehouseNameIdModel> resultCategory = [];
+
+    for (var item in items) {
+      if ((item.category?.id?.isNotEmpty ?? false) && !matchCategoryIds.contains(item.category!.id)) {
+        matchCategoryIds.add(item.category!.id!);
+        resultCategory.add(WarehouseNameIdModel(id: item.category!.id, name: item.category!.name ?? ''));
+      }
+    }
+
+    return resultCategory;
   }
 
   // 生成房間篩選列表
@@ -152,8 +194,8 @@ class WarehouseItemPageController extends GetxController {
     final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)];
 
     if (roomIndex == 0 && cabinetIndex == 0) {
-      allItems = _service.getAllItems;
-    } else if (cabinetIndex == 0) {
+      allItems = _flattenAllItems();
+    } else if (roomIndex != 0 && cabinetIndex == 0) {
       allItems = _model.allRoomCabinetItems.value
               ?.where((room) => room.roomId == roomId)
               .expand<Cabinet>((room) => room.cabinets ?? [])
@@ -161,20 +203,13 @@ class WarehouseItemPageController extends GetxController {
               .toList() ??
           [];
     } else {
-      final matchedRoom = _model.allRoomCabinetItems.value?.firstWhereOrNull((room) => room.roomId == roomId);
-      final matchedCabinet = matchedRoom?.cabinets?.firstWhereOrNull((cabinet) => cabinet.id == cabinetId);
-      allItems = matchedCabinet?.items ?? [];
+      final allCabinets = _flattenAllCabinets();
+      final matchCabinet = allCabinets.firstWhereOrNull((cabinet) => cabinet.id == cabinetId);
+      allItems = matchCabinet?.items ?? [];
     }
 
-    final Set<String> matchCategoryIds = {};
-
-    for (var item in allItems) {
-      if ((item.category?.id?.isNotEmpty ?? false) && !matchCategoryIds.contains(item.category!.id)) {
-        matchCategoryIds.add(item.category!.id!);
-        resultRules.add(WarehouseNameIdModel(id: item.category!.id, name: item.category!.name ?? ''));
-      }
-    }
-
+    allItems = _service.combineItems(allItems);
+    resultRules.addAll(_genFirstLevelCategory(allItems));
     _model.filterRuleForCategories.value = resultRules;
     _model.allItemsForCategory.clear();
     _model.allItemsForCategory.addAll(allItems);
@@ -201,8 +236,7 @@ class WarehouseItemPageController extends GetxController {
   }
 
   void _genVisibleItemsBySearchCondition() {
-    List<Item> matchItems = [..._service.getAllItems];
-    List<Item> combineItems = [];
+    List<Item> matchItems = [..._service.getAllCombineItems];
     final model = _model.searchCondition.value;
     final lv1Id = model?.categoryLevel1?.id ?? '';
     final lv2Id = model?.categoryLevel2?.id ?? '';
@@ -236,58 +270,31 @@ class WarehouseItemPageController extends GetxController {
       });
     }
 
-    if (matchItems.isNotEmpty) {
-      final Map<String, List<Item>> groupedItems = {};
-      for (var item in matchItems) {
-        final itemId = item.id ?? '';
-        if (itemId.isNotEmpty) {
-          groupedItems.putIfAbsent(itemId, () => []).add(item);
-        }
-      }
-
-      for (var entry in groupedItems.entries) {
-        final items = entry.value;
-
-        if (items.isEmpty) {
-          continue;
-        }
-
-        final baseItem = items.first;
-        final totalQuantity = items.fold<int>(
-          0,
-          (sum, item) => sum + (item.quantity ?? 0),
-        );
-
-        final combinedItem = baseItem.copyWith(quantity: totalQuantity);
-        combineItems.add(combinedItem);
-      }
-    }
-
-    _model.visibleItems.value = combineItems;
+    _model.visibleItems.value = matchItems;
   }
 
   /// 递归收集分类及其所有子分类的 ID
-  void _collectCategoryIds(dynamic category, Set<String> categoryIds) {
-    if (category == null) return;
+  // void _collectCategoryIds(dynamic category, Set<String> categoryIds) {
+  //   if (category == null) return;
 
-    final categoryId = category.id;
-    if (categoryId != null && categoryId is String && categoryId.isNotEmpty) {
-      categoryIds.add(categoryId);
-    }
+  //   final categoryId = category.id;
+  //   if (categoryId != null && categoryId is String && categoryId.isNotEmpty) {
+  //     categoryIds.add(categoryId);
+  //   }
 
-    // 处理子分类（getAllCategories 返回的是 List<Category>，每个 Category 的 children 是 List<Category>）
-    final children = category.children;
-    if (children != null) {
-      if (children is List) {
-        for (var child in children) {
-          _collectCategoryIds(child, categoryIds);
-        }
-      } else {
-        // 如果是单个 Category（Item 的 category.children 是单个 Category）
-        _collectCategoryIds(children, categoryIds);
-      }
-    }
-  }
+  //   // 处理子分类（getAllCategories 返回的是 List<Category>，每个 Category 的 children 是 List<Category>）
+  //   final children = category.children;
+  //   if (children != null) {
+  //     if (children is List) {
+  //       for (var child in children) {
+  //         _collectCategoryIds(child, categoryIds);
+  //       }
+  //     } else {
+  //       // 如果是单个 Category（Item 的 category.children 是单个 Category）
+  //       _collectCategoryIds(children, categoryIds);
+  //     }
+  //   }
+  // }
 
   // 用戶選擇分類多選框時，重新計算全選狀態
   void _changeCategoryMultiCheckbox(int index) {
@@ -327,5 +334,141 @@ class WarehouseItemPageController extends GetxController {
         _genVisibleItemsBySearchCondition();
       }
     });
+  }
+
+  EnumTagType _genTagType(
+    ItemRecord log,
+    EnumOperateType operateType,
+    EnumEntityType entityType,
+  ) {
+    switch (operateType) {
+      case EnumOperateType.create:
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.createItem,
+          EnumEntityType.cabinet => EnumTagType.createCabinet,
+          EnumEntityType.category => EnumTagType.createCategory,
+          _ => EnumTagType.unknown,
+        };
+      case EnumOperateType.update:
+        if (entityType == EnumEntityType.item) {
+          if (log.itemQuantity != null) {
+            return EnumTagType.updateQuantity;
+          } else if (log.itemPosition != null) {
+            return EnumTagType.updatePosition;
+          }
+        }
+
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.updateItem,
+          EnumEntityType.cabinet => EnumTagType.updateCabinet,
+          EnumEntityType.category => EnumTagType.updateCategory,
+          _ => EnumTagType.unknown,
+        };
+      case EnumOperateType.delete:
+        return switch (entityType) {
+          EnumEntityType.item => EnumTagType.deleteItem,
+          EnumEntityType.cabinet => EnumTagType.deleteCabinet,
+          EnumEntityType.category => EnumTagType.deleteCategory,
+          _ => EnumTagType.unknown,
+        };
+      default:
+        return EnumTagType.unknown;
+    }
+  }
+
+  String _genContent(
+    ItemRecord log,
+    EnumOperateType operateType,
+    EnumEntityType entityType,
+  ) {
+    switch (operateType) {
+      case EnumOperateType.create:
+        return switch (entityType) {
+          EnumEntityType.item => log.itemName?.lastOrNull ?? '',
+          EnumEntityType.cabinet => log.cabinetName?.lastOrNull ?? '',
+          EnumEntityType.category => log.categoryName?.lastOrNull ?? '',
+          _ => '',
+        };
+      case EnumOperateType.update:
+        if (entityType == EnumEntityType.item) {
+          if (log.itemQuantity != null) {
+            return _genItemQuantityContent(log);
+          } else if (log.itemPosition != null) {
+            return _genItemPositionContent(log);
+          }
+        }
+
+        return switch (entityType) {
+          EnumEntityType.item => _genItemNormalContent(log),
+          EnumEntityType.cabinet => _genCabinetContent(log),
+          EnumEntityType.category => _genCategoryContent(log),
+          _ => '',
+        };
+      case EnumOperateType.delete:
+        return switch (entityType) {
+          EnumEntityType.item => log.itemName?.firstOrNull ?? '',
+          EnumEntityType.cabinet => log.cabinetName?.firstOrNull ?? '',
+          EnumEntityType.category => log.categoryName?.firstOrNull ?? '',
+          _ => '',
+        };
+      default:
+        return '';
+    }
+  }
+
+  String _formatDate(int? timestamp) {
+    if (timestamp == null) {
+      return '-';
+    }
+
+    final date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  }
+
+  String _genItemQuantityContent(ItemRecord log) {
+    final itemQuantity = log.itemQuantity;
+    if (itemQuantity == null) {
+      return '';
+    }
+
+    final totalCount = itemQuantity.totalCount?.firstOrNull ?? 0;
+    final cabinets = itemQuantity.cabinets ?? [];
+
+    if (cabinets.isEmpty) {
+      return EnumLocale.warehouseItemTotalQuantityChange.trArgs([
+        log.itemName?.firstOrNull ?? '',
+        '0',
+        totalCount.toString(),
+      ]);
+    }
+
+    return EnumLocale.warehouseItemTotalQuantityChange.trArgs([
+      log.itemName?.firstOrNull ?? '',
+      '0',
+      totalCount.toString(),
+    ]);
+  }
+
+  String _genItemPositionContent(ItemRecord log) {
+    final positions = log.itemPosition ?? [];
+    if (positions.isEmpty) {
+      return '';
+    }
+
+    final positionStrings = positions.map((pos) => pos.cabinetName?.firstOrNull ?? '').where((str) => str.isNotEmpty).join(', ');
+
+    return positionStrings;
+  }
+
+  String _genItemNormalContent(ItemRecord log) {
+    return log.itemName?.lastOrNull ?? '';
+  }
+
+  String _genCabinetContent(ItemRecord log) {
+    return log.cabinetName?.lastOrNull ?? '';
+  }
+
+  String _genCategoryContent(ItemRecord log) {
+    return log.categoryName?.lastOrNull ?? '';
   }
 }

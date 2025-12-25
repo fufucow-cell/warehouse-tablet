@@ -43,9 +43,7 @@ class CategoryRow extends StatelessWidget {
             vertical: 24.0.scale,
           ),
           decoration: BoxDecoration(
-            color: isLevel1 && isExpanded
-                ? EnumColor.menuBgFocused.color
-                : Colors.transparent,
+            color: isLevel1 && isExpanded ? EnumColor.menuBgFocused.color : Colors.transparent,
             borderRadius: BorderRadius.circular(isLevel1 ? 20.0.scale : 0),
           ),
           child: Row(
@@ -58,9 +56,7 @@ class CategoryRow extends StatelessWidget {
                       child: WidgetUtil.textWidget(
                         category.name ?? '',
                         size: 32.0.scale,
-                        weightType: isLevel1
-                            ? EnumFontWeightType.bold
-                            : EnumFontWeightType.regular,
+                        weightType: isLevel1 ? EnumFontWeightType.bold : EnumFontWeightType.regular,
                       ),
                     ),
                     SizedBox(
@@ -112,7 +108,7 @@ class _CategoryActions extends StatelessWidget {
     return Row(
       children: [
         _ActionButton(
-          icon: EnumImage.cEdit.image(size: Size.square(40.0.scale)),
+          icon: EnumImage.cEditNormal.image(size: Size.square(40.0.scale)),
           onTap: () {
             controller.interactive(
               EnumWarehouseCategoryPageInteractive.tapEditCategory,
@@ -120,8 +116,7 @@ class _CategoryActions extends StatelessWidget {
             );
           },
         ),
-        if (hasChildren)
-          SizedBox(width: 16.0.scale),
+        if (hasChildren) SizedBox(width: 16.0.scale),
         if (hasChildren)
           _ActionButton(
             icon: Icon(

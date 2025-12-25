@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_item_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
@@ -58,11 +57,14 @@ class WarehouseService {
   // 物品
   List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
   RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
-  List<Item> get getAllItems => _model.allItems ?? <Item>[];
-  Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
+  List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
+  // Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
 
   // 記錄
   List<ItemRecord>? get getAllRecords => _model.allRecords;
+
+  // Tab 選擇
+  RxReadonly<EnumWarehouseTabItem> get mainPageSelectedTabItemRx => _model.mainPageSelectedTabItem.readonly;
 
   // MARK: - Init
 
@@ -151,58 +153,62 @@ class WarehouseService {
     ThemeUtil.instance.switchFromString(data.theme);
   }
 
-  List<DialogItemInfoRoomModel> filterItemFromRooms(Item item) {
-    final allRooms = _model.allRoomCabinetItems.value;
+  // List<DialogItemInfoRoomModel> filterItemFromRooms(Item item) {
+  //   final allRooms = _model.allRoomCabinetItems.value;
 
-    if (allRooms == null || (item.id?.isEmpty ?? true)) {
-      return [];
+  //   if (allRooms == null || (item.id?.isEmpty ?? true)) {
+  //     return [];
+  //   }
+
+  //   final result = <DialogItemInfoRoomModel>[];
+  //   final itemId = item.id!;
+
+  //   for (final room in allRooms) {
+  //     if (room.cabinets?.isEmpty ?? true) {
+  //       continue;
+  //     }
+
+  //     final matchingCabinets = <DialogItemInfoCabinetModel>[];
+
+  //     for (final cabinet in room.cabinets!) {
+  //       if (cabinet.items?.isEmpty ?? true) {
+  //         continue;
+  //       }
+
+  //       final matchingItem = cabinet.items!.where((i) => i.id == itemId).firstOrNull;
+
+  //       if (matchingItem != null) {
+  //         matchingCabinets.add(
+  //           DialogItemInfoCabinetModel(
+  //             cabinetId: cabinet.id ?? '',
+  //             cabinetName: cabinet.name ?? EnumLocale.warehouseUncategorized.tr,
+  //             quantity: matchingItem.quantity ?? 0,
+  //           ),
+  //         );
+  //       }
+  //     }
+
+  //     if (matchingCabinets.isNotEmpty) {
+  //       final roomInfo = _model.rooms.where((r) => r.id == room.roomId).firstOrNull;
+
+  //       result.add(
+  //         DialogItemInfoRoomModel(
+  //           roomId: roomInfo?.id ?? '',
+  //           roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
+  //           cabinets: matchingCabinets,
+  //         ),
+  //       );
+  //     }
+  //   }
+
+  //   return result;
+  // }
+
+  String convertCategoriesName(Item? item) {
+    if (item == null) {
+      return EnumLocale.warehouseUncategorized.tr;
     }
 
-    final result = <DialogItemInfoRoomModel>[];
-    final itemId = item.id!;
-
-    for (final room in allRooms) {
-      if (room.cabinets?.isEmpty ?? true) {
-        continue;
-      }
-
-      final matchingCabinets = <DialogItemInfoCabinetModel>[];
-
-      for (final cabinet in room.cabinets!) {
-        if (cabinet.items?.isEmpty ?? true) {
-          continue;
-        }
-
-        final matchingItem = cabinet.items!.where((i) => i.id == itemId).firstOrNull;
-
-        if (matchingItem != null) {
-          matchingCabinets.add(
-            DialogItemInfoCabinetModel(
-              cabinetId: cabinet.id ?? '',
-              cabinetName: cabinet.name ?? EnumLocale.warehouseUncategorized.tr,
-              quantity: matchingItem.quantity ?? 0,
-            ),
-          );
-        }
-      }
-
-      if (matchingCabinets.isNotEmpty) {
-        final roomInfo = _model.rooms.where((r) => r.id == room.roomId).firstOrNull;
-
-        result.add(
-          DialogItemInfoRoomModel(
-            roomId: roomInfo?.id ?? '',
-            roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
-            cabinets: matchingCabinets,
-          ),
-        );
-      }
-    }
-
-    return result;
-  }
-
-  String convertCategoriesName(Item item) {
     List<String> names = [];
 
     void extractCategories(dynamic category) {
@@ -249,6 +255,35 @@ class WarehouseService {
     _model.searchCondition.value = null;
   }
 
+  List<Item> combineItems(List<Item> oldItems) {
+    Map<String, List<Item>> groupItems = {};
+    final newItems = <Item>[];
+
+    for (var item in oldItems) {
+      if (item.id?.isNotEmpty ?? false) {
+        groupItems.putIfAbsent(item.id!, () => []).add(item);
+      }
+    }
+
+    for (var entry in groupItems.entries) {
+      final items = entry.value;
+
+      if (items.isEmpty) {
+        continue;
+      }
+
+      final totalQuantity = items.fold<int>(
+        0,
+        (sum, item) => sum + (item.quantity ?? 0),
+      );
+
+      final combinedItem = items.first.copyWith(quantity: totalQuantity);
+      newItems.add(combinedItem);
+    }
+
+    return newItems;
+  }
+
   // MARK: - Item APIs
 
   Future<List<Room>?> apiReqFetchItems(
@@ -263,9 +298,7 @@ class WarehouseService {
       onError: onError,
     );
     _model.allRoomCabinetItems.value = response?.data;
-    _genAllItems();
-    _genGroupItems();
-    _genAllLowStockItems();
+    _genAllCombineItems();
     return response?.data;
   }
 
@@ -300,6 +333,10 @@ class WarehouseService {
       requestModel: request,
       onError: onError,
     );
+  }
+
+  void changeMainPageSelectedTabItem(EnumWarehouseTabItem item) {
+    _model.mainPageSelectedTabItem.value = item;
   }
 
   // MARK: - Cabinet APIs
@@ -439,46 +476,39 @@ class WarehouseService {
 
   // MARK: - Private Method
 
-  void _genAllItems() {
-    _model.allItems =
-        _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList();
+  void _genAllCombineItems() {
+    final flattenItems =
+        _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
+            [];
+    _model.allCombineItems = combineItems(flattenItems);
   }
 
-  void _genGroupItems() {
-    final allItems = _model.allItems;
+  // void _genGroupItems() {
+  //   final flattenItems =
+  //       _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
+  //           [];
+  //   Map<String, List<Item>> groupItems = {};
 
-    if (allItems?.isEmpty ?? true) {
-      return;
-    }
+  //   for (var item in flattenItems) {
+  //     if (item.id?.isNotEmpty ?? false) {
+  //       groupItems.putIfAbsent(item.id!, () => []).add(item);
+  //     }
+  //   }
 
-    final Map<String, List<Item>> groupItems = {};
+  //   _model.allGroupItems = groupItems;
+  // }
 
-    for (final item in allItems!) {
-      if (item.id?.isEmpty ?? true) {
-        continue;
-      }
+  // void _genAllLowStockItems() {
+  //   final List<Item> lowStockItems = <Item>[];
 
-      if (groupItems.containsKey(item.id)) {
-        groupItems[item.id]!.add(item);
-      } else {
-        groupItems[item.id!] = [item];
-      }
-    }
+  //   for (final map in getAllGroupItems.entries) {
+  //     final items = map.value;
+  //     final totalQuantity = items.fold(0, (sum, item) => sum + (item.quantity ?? 0));
+  //     if (totalQuantity < (items.first.minStockAlert ?? 0)) {
+  //       lowStockItems.add(items.first.copyWith(quantity: totalQuantity));
+  //     }
+  //   }
 
-    _model.allGroupItems = groupItems;
-  }
-
-  void _genAllLowStockItems() {
-    final List<Item> lowStockItems = <Item>[];
-
-    for (final map in getAllGroupItems.entries) {
-      final items = map.value;
-      final totalQuantity = items.fold(0, (sum, item) => sum + (item.quantity ?? 0));
-      if (totalQuantity < (items.first.minStockAlert ?? 0)) {
-        lowStockItems.add(items.first.copyWith(quantity: totalQuantity));
-      }
-    }
-
-    _model.allLowStockItems.value = lowStockItems;
-  }
+  //   _model.allLowStockItems.value = lowStockItems;
+  // }
 }
