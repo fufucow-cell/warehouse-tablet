@@ -83,17 +83,17 @@ class DialogItemCreateWidgetController extends GetxController {
     );
   }
 
-  // 設置加載狀態
-  void setLoadingStatus(bool isLoading) {
-    _model.isLoading.value = isLoading;
-  }
-
   // 轉換文件為圖片
   Widget? convertFileToImage(String imagePath, {double? fitWidth, double? fitHeight}) {
     return _service.convertFileToImage(imagePath, fitWidth: fitWidth, fitHeight: fitHeight);
   }
 
   // MARK: - Private Method
+
+  // 設置加載狀態
+  void _setLoadingStatus(bool isLoading) {
+    _model.isLoading.value = isLoading;
+  }
 
   // 開啟相機
   Future<void> _openCamera() async {
@@ -187,33 +187,5 @@ class DialogItemCreateWidgetController extends GetxController {
   void _changeSelectedCategoryLevel3(String? categoryName) {
     final category = _model.visibleCategoryLevel3.value.firstWhereOrNull((cat) => cat.name == categoryName);
     _model.selectedCategoryLevel3.value = category != null ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '') : null;
-  }
-
-  // 釋放鍵盤
-  void _dismissKeyboard() {
-    final primaryFocus = FocusManager.instance.primaryFocus;
-    if (primaryFocus != null) {
-      // 檢查當前焦點是否對應到這些 controller 中的任何一個
-      final focusContext = primaryFocus.context;
-      if (focusContext != null) {
-        // 檢查焦點是否在 TextField 上，並且該 TextField 使用的是我們的 controller
-        final textField = focusContext.findAncestorWidgetOfExactType<TextField>();
-        if (textField != null) {
-          // 檢查這個 TextField 是否使用了我們的 controller
-          if (textField.controller == nameController ||
-              textField.controller == descriptionController ||
-              textField.controller == quantityController ||
-              textField.controller == minStockAlertController) {
-            primaryFocus.unfocus();
-          }
-        } else {
-          // 如果焦點不在 TextField 上，也移除焦點
-          primaryFocus.unfocus();
-        }
-      } else {
-        // 如果沒有 context，直接移除焦點
-        primaryFocus.unfocus();
-      }
-    }
   }
 }

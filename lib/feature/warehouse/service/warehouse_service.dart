@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_item_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
@@ -43,6 +44,8 @@ class WarehouseService {
   int get userRoleType => _model.userRoleType ?? -1;
   String get getHouseholdId => _model.household?.id ?? '';
 
+  // 搜尋條件
+  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
@@ -216,6 +219,34 @@ class WarehouseService {
 
     extractCategories(item.category);
     return names.join(' > ');
+  }
+
+  // 釋放鍵盤
+  void dismissKeyboard() {
+    final primaryFocus = FocusManager.instance.primaryFocus;
+    if (primaryFocus != null) {
+      final focusContext = primaryFocus.context;
+
+      if (focusContext != null) {
+        if (focusContext.findAncestorWidgetOfExactType<TextField>() != null) {
+          primaryFocus.unfocus();
+        }
+      } else {
+        primaryFocus.unfocus();
+      }
+    }
+  }
+
+  // 添加搜尋條件
+  void addSearchCondition(DialogItemSearchOutputModel model) {
+    if ((model.searchText?.isNotEmpty ?? false) || model.categoryLevel1 != null) {
+      _model.searchCondition.value = model;
+    }
+  }
+
+  // 清除搜尋條件
+  void clearSearchCondition() {
+    _model.searchCondition.value = null;
   }
 
   // MARK: - Item APIs

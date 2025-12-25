@@ -41,7 +41,7 @@ class DialogWithPhotoWidget extends StatelessWidget {
               ),
               SizedBox(height: 12.0.scale),
               _PhotoActionButton(
-                eImage: EnumImage.cDeleteImage,
+                eImage: EnumImage.cTrash2,
                 text: '刪除照片',
                 color: EnumColor.accentRed.color,
                 onPressed: onDeletePhoto,

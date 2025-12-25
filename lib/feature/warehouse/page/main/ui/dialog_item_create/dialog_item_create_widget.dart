@@ -33,23 +33,24 @@ class DialogItemCreateWidget extends StatelessWidget {
             final isLoading = controller.isLoadingRx.value;
 
             return DialogFrame(
+              minWidth: 962.0.scale,
+              minHeight: 1024.0.scale,
               header: DialogHeader(title: EnumLocale.createItemTitle.tr),
               footer: DialogFooter(
                 type: DialogFooterType.cancelAndConfirm,
                 isLoading: isLoading,
                 onCancel: () {
-                  // 先让 TextField 失去焦点，避免访问已销毁的 context
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  Navigator.of(context).pop();
+                  controller.interactive(
+                    EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton,
+                    data: context,
+                  );
                 },
                 onConfirm: () async {
-                  // 先让 TextField 失去焦点，避免访问已销毁的 context
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  controller.setLoadingStatus(true);
+                  controller.interactive(EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton, data: true);
                   final outputModel = await controller.checkOutputModel();
 
                   if (outputModel == null) {
-                    controller.setLoadingStatus(false);
+                    controller.interactive(EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton, data: false);
                     return;
                   }
 
@@ -59,7 +60,7 @@ class DialogItemCreateWidget extends StatelessWidget {
                     Navigator.of(context).pop();
                   }
 
-                  controller.setLoadingStatus(false);
+                  controller.interactive(EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton, data: context);
                 },
               ),
               child: const _Body(),

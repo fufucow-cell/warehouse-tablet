@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_create/dialog_item_create_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_create/dialog_item_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/tab_bar.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/top_tool.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/page_reference.dart';

@@ -14,6 +14,7 @@ class WarehouseItemPageController extends GetxController {
   RxReadonly<int> get filterIndexForRoomsRx => _model.filterIndexForRooms.readonly;
   RxReadonly<int> get cabinetFilterSelectedIndexRx => _model.filterIndexForCabinets.readonly;
   RxReadonly<Set<int>> get categoryFilterSelectedIndicesRx => _model.filterIndexForCategories.readonly;
+  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
 
   // MARK: - Init
 
@@ -23,6 +24,7 @@ class WarehouseItemPageController extends GetxController {
     LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
     _genFilterRuleForRoom();
     _queryApiData();
+    _listen();
   }
 
   @override
@@ -198,6 +200,95 @@ class WarehouseItemPageController extends GetxController {
     _model.visibleItems.value = resultItems;
   }
 
+  void _genVisibleItemsBySearchCondition() {
+    List<Item> matchItems = [..._service.getAllItems];
+    List<Item> combineItems = [];
+    final model = _model.searchCondition.value;
+    final lv1Id = model?.categoryLevel1?.id ?? '';
+    final lv2Id = model?.categoryLevel2?.id ?? '';
+    final lv3Id = model?.categoryLevel3?.id ?? '';
+    final str = model?.searchText ?? '';
+
+    if (lv1Id.isEmpty && lv2Id.isEmpty && lv3Id.isEmpty && str.isEmpty) {
+      _model.searchCondition.value = null;
+      _service.clearSearchCondition();
+      return;
+    }
+
+    if (lv1Id.isNotEmpty) {
+      matchItems.removeWhere((item) => item.category?.id != lv1Id);
+
+      if (lv2Id.isNotEmpty) {
+        matchItems.removeWhere((item) => item.category?.children?.id != lv2Id);
+
+        if (lv3Id.isNotEmpty) {
+          matchItems.removeWhere((item) => item.category?.children?.children?.id != lv3Id);
+        }
+      }
+    }
+
+    if (str.isNotEmpty) {
+      final searchText = str.toLowerCase();
+      matchItems.removeWhere((item) {
+        final name = (item.name ?? '').toLowerCase();
+        final description = (item.description ?? '').toLowerCase();
+        return !name.contains(searchText) && !description.contains(searchText);
+      });
+    }
+
+    if (matchItems.isNotEmpty) {
+      final Map<String, List<Item>> groupedItems = {};
+      for (var item in matchItems) {
+        final itemId = item.id ?? '';
+        if (itemId.isNotEmpty) {
+          groupedItems.putIfAbsent(itemId, () => []).add(item);
+        }
+      }
+
+      for (var entry in groupedItems.entries) {
+        final items = entry.value;
+
+        if (items.isEmpty) {
+          continue;
+        }
+
+        final baseItem = items.first;
+        final totalQuantity = items.fold<int>(
+          0,
+          (sum, item) => sum + (item.quantity ?? 0),
+        );
+
+        final combinedItem = baseItem.copyWith(quantity: totalQuantity);
+        combineItems.add(combinedItem);
+      }
+    }
+
+    _model.visibleItems.value = combineItems;
+  }
+
+  /// 递归收集分类及其所有子分类的 ID
+  void _collectCategoryIds(dynamic category, Set<String> categoryIds) {
+    if (category == null) return;
+
+    final categoryId = category.id;
+    if (categoryId != null && categoryId is String && categoryId.isNotEmpty) {
+      categoryIds.add(categoryId);
+    }
+
+    // 处理子分类（getAllCategories 返回的是 List<Category>，每个 Category 的 children 是 List<Category>）
+    final children = category.children;
+    if (children != null) {
+      if (children is List) {
+        for (var child in children) {
+          _collectCategoryIds(child, categoryIds);
+        }
+      } else {
+        // 如果是单个 Category（Item 的 category.children 是单个 Category）
+        _collectCategoryIds(children, categoryIds);
+      }
+    }
+  }
+
   // 用戶選擇分類多選框時，重新計算全選狀態
   void _changeCategoryMultiCheckbox(int index) {
     final currentSelectedIndices = Set<int>.from(_model.filterIndexForCategories.value);
@@ -226,5 +317,15 @@ class WarehouseItemPageController extends GetxController {
 
       _model.filterIndexForCategories.value = Set<int>.from(currentSelectedIndices);
     }
+  }
+
+  // 監聽
+  void _listen() {
+    ever(_service.searchConditionRx.rx, (model) {
+      if (model != null) {
+        _model.searchCondition.value = model;
+        _genVisibleItemsBySearchCondition();
+      }
+    });
   }
 }

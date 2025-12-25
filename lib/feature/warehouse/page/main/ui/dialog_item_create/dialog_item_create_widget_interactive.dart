@@ -13,6 +13,8 @@ enum EnumDialogItemCreateWidgetInteractive {
   tapRoom,
   tapCabinet,
   tapDropdownButton,
+  tapDialogCancelButton,
+  tapDialogConfirmButton,
 }
 
 /// DialogItemCreateWidget 用户事件处理扩展
@@ -22,7 +24,7 @@ extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetCont
     EnumDialogItemCreateWidgetInteractive type, {
     dynamic data,
   }) {
-    _dismissKeyboard();
+    _service.dismissKeyboard();
 
     switch (type) {
       case EnumDialogItemCreateWidgetInteractive.incrementQuantity:
@@ -61,6 +63,17 @@ extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetCont
       case EnumDialogItemCreateWidgetInteractive.tapCategoryLevel3:
         if (data is String) {
           _changeSelectedCategoryLevel3(data);
+        }
+      case EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton:
+        if (data is BuildContext) {
+          Navigator.of(data).pop();
+        }
+      case EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton:
+        if (data is bool) {
+          _setLoadingStatus(data);
+        } else if (data is BuildContext) {
+          _setLoadingStatus(false);
+          Navigator.of(data).pop();
         }
       default:
         break;

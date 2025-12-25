@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-24T16:54:05.374977
+/// 生成时间: 2025-12-25T15:39:39.367188
 library;
 
 import 'package:flutter/material.dart';
@@ -15,7 +15,6 @@ enum EnumImage {
   cCheckboxOff,
   cCheckboxOn,
   cCow,
-  cDeleteImage,
   cEdit,
   cHistory,
   cHouse,
@@ -29,8 +28,11 @@ enum EnumImage {
   cRefresh,
   cRoom,
   cSearch,
+  cSearch2,
   cSetting,
   cStockItem,
+  cTrash,
+  cTrash2,
   tBgContent,
   tCow;
 

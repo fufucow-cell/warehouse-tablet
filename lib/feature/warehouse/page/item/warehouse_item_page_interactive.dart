@@ -10,6 +10,7 @@ enum EnumWarehouseItemPageInteractive {
   tapChangeButton,
   tapInfoButton,
   tapRecordButton,
+  tapClearSearch,
 }
 
 extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
@@ -60,6 +61,10 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
           routerHandle(EnumWarehouseItemPageRoute.showRecordDialog, data: data);
         }
         break;
+      case EnumWarehouseItemPageInteractive.tapClearSearch:
+        _genVisibleItems();
+        _model.searchCondition.value = null;
+        _service.clearSearchCondition();
     }
   }
 }

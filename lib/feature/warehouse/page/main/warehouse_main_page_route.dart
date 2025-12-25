@@ -20,7 +20,11 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
           ),
         );
       case EnumWarehouseMainPageRoute.showSearchDialog:
-        _service.showSnackBar(title: '敬請期待', message: '搜索功能開發中');
+        _service.showAlert(
+          DialogItemSearchWidget(
+            onConfirm: _service.addSearchCondition,
+          ),
+        );
     }
   }
 

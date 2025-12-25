@@ -9,7 +9,9 @@ class DialogFrame extends StatelessWidget {
   final DialogHeader header;
   final DialogFooter? footer;
   final double? maxWidth;
+  final double? minWidth;
   final double? maxHeight;
+  final double? minHeight;
 
   const DialogFrame({
     super.key,
@@ -17,51 +19,63 @@ class DialogFrame extends StatelessWidget {
     required this.header,
     this.footer,
     this.maxWidth,
+    this.minWidth,
     this.maxHeight,
+    this.minHeight,
   });
 
   @override
   Widget build(BuildContext context) {
-    const minWidth = 962.0;
-    const minHeight = 1024.0;
+    const defaultMinWidth = 720.0;
+    const defaultMinHeight = 430.0;
+    const defaultMaxWidth = 1168.0;
+    const defaultMaxHeight = 1072.0;
 
     return Dialog(
       insetPadding: EdgeInsets.all(30.0.scale),
-      child: Container(
-        width: minWidth.scale,
-        height: minHeight.scale,
+      child: ConstrainedBox(
         constraints: BoxConstraints(
-          maxWidth: (maxWidth ?? minWidth).scale,
-          maxHeight: (maxHeight ?? minHeight).scale,
+          minWidth: minWidth ?? defaultMinWidth.scale,
+          minHeight: minHeight ?? defaultMinHeight.scale,
+          maxWidth: maxWidth ?? defaultMaxWidth.scale,
+          maxHeight: maxHeight ?? defaultMaxHeight.scale,
         ),
-        decoration: BoxDecoration(
-          color: EnumColor.backgroundPrimary.color,
-          borderRadius: BorderRadius.circular(24.0.scale),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            header,
-            Flexible(
-              child: SingleChildScrollView(
-                physics: const ClampingScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 56.0.scale,
-                    vertical: 32.0.scale,
+        child: Container(
+          width: minWidth ?? defaultMinWidth.scale,
+          decoration: BoxDecoration(
+            color: EnumColor.backgroundPrimary.color,
+            borderRadius: BorderRadius.circular(24.0.scale),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              header,
+              Flexible(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: (maxHeight ?? defaultMaxHeight).scale,
                   ),
-                  child: child,
+                  child: SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 56.0.scale,
+                        vertical: 32.0.scale,
+                      ),
+                      child: child,
+                    ),
+                  ),
                 ),
               ),
-            ),
-            footer ??
-                DialogFooter(
-                  type: DialogFooterType.onlyConfirm,
-                  onConfirm: () => Navigator.of(context).pop(),
-                ),
-          ],
+              footer ??
+                  DialogFooter(
+                    type: DialogFooterType.onlyConfirm,
+                    onConfirm: () => Navigator.of(context).pop(),
+                  ),
+            ],
+          ),
         ),
       ),
     );

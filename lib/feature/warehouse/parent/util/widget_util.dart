@@ -93,6 +93,8 @@ class WidgetUtil {
     TextAlign textAlign = TextAlign.start,
     EdgeInsetsGeometry? padding,
     int? maxLength,
+    Widget? prefixIcon,
+    double? prefixIconSize,
   }) {
     return Container(
       alignment: Alignment.centerLeft,
@@ -136,6 +138,15 @@ class WidgetUtil {
             fontSize: fontSize ?? 32.0.scale,
             color: hintColor ?? EnumColor.textSecondary.color,
           ),
+          prefixIcon: prefixIcon != null
+              ? Container(
+                  width: prefixIconSize,
+                  height: prefixIconSize,
+                  margin: EdgeInsets.only(right: 16.0.scale),
+                  alignment: Alignment.center,
+                  child: prefixIcon,
+                )
+              : null,
           border: InputBorder.none,
           isDense: true,
           counterText: '', // 隱藏字符計數器
