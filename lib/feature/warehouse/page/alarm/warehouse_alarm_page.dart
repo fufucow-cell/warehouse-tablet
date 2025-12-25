@@ -7,7 +7,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
@@ -121,33 +120,23 @@ class _AlarmList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseAlarmPageController>();
-
-    return Obx(
-      () {
-        final items = controller.lowStockItemsRx.value;
-
-        if (items?.isEmpty ?? true) {
-          return const SizedBox.shrink();
-        }
-
-        return SingleChildScrollView(
-          child: Column(
-            children: items!
-                .expand(
-                  (item) => [
-                    _CellWidget(item: item),
-                    Divider(
-                      height: 1,
-                      thickness: 1,
-                      color: EnumColor.lineDividerLight.color,
-                    ),
-                  ],
-                )
-                .toList()
-              ..removeLast(), // 移除最后一个 divider
-          ),
-        );
-      },
+    final items = controller.allAlarmItemsRx;
+    return SingleChildScrollView(
+      child: Column(
+        children: items
+            .expand(
+              (item) => [
+                _CellWidget(item: item),
+                Divider(
+                  height: 1,
+                  thickness: 1,
+                  color: EnumColor.lineDividerLight.color,
+                ),
+              ],
+            )
+            .toList()
+          ..removeLast(), // 移除最后一个 divider
+      ),
     );
   }
 }

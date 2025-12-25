@@ -7,7 +7,6 @@ class WarehouseItemPageController extends GetxController {
   final _service = WarehouseService.instance;
   List<WarehouseNameIdModel> get getfilterRuleForRooms => _model.filterRuleForRooms;
   String getItemCategoriesName(Item item) => _service.convertCategoriesName(item);
-  int get getTotalLowStockCount => _service.getAllLowStockItems.length;
   RxReadonly<List<Item>> get visibleItemsRx => _model.visibleItems.readonly;
   RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
   RxReadonly<bool> get isFilterExpandedRx => _model.isFilterExpanded.readonly;
@@ -72,8 +71,18 @@ class WarehouseItemPageController extends GetxController {
   }
 
   bool isShowStockWarningTag(Item item) {
-    final lowStockItemIds = _service.getAllLowStockItems.map((item) => item.id).toList();
-    return lowStockItemIds.contains(item.id);
+    final minStockAlert = item.minStockAlert ?? 0;
+    final quantity = item.quantity ?? 0;
+
+    if (minStockAlert > 0) {
+      return quantity < minStockAlert;
+    }
+
+    return false;
+  }
+
+  int get getTotalLowStockCount {
+    return _service.getAllCombineItems.where(isShowStockWarningTag).length;
   }
 
   // MARK: - Private Methods

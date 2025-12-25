@@ -1,6 +1,6 @@
 part of 'warehouse_alarm_page.dart';
 
 class WarehouseAlarmPageModel {
-  final lowStockItems = Rxn<List<Item>>();
+  List<Item> allAlarmItems = [];
   final columnRatio = [170, 705, 280, 280];
 }

@@ -55,8 +55,8 @@ class WarehouseService {
   List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
 
   // 物品
-  List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
-  RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
+  // List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
+  // RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
   List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
   // Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
 

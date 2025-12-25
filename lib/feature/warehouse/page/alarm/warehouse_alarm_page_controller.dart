@@ -6,7 +6,7 @@ class WarehouseAlarmPageController extends GetxController {
   final _model = WarehouseAlarmPageModel();
   final _service = WarehouseService.instance;
   List<int> get columnRatio => _model.columnRatio;
-  RxReadonly<List<Item>?> get lowStockItemsRx => _model.lowStockItems.readonly;
+  List<Item> get allAlarmItemsRx => _model.allAlarmItems;
 
   // MARK: - Init
 
@@ -14,8 +14,7 @@ class WarehouseAlarmPageController extends GetxController {
   void onInit() {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
-    _checkData();
-    _listenItemsData();
+    _loadData();
   }
 
   @override
@@ -27,27 +26,24 @@ class WarehouseAlarmPageController extends GetxController {
   // MARK: - Public Method
 
   int getStockDifference(Item item) {
-    final stock = item.minStockAlert ?? 0;
-    final quantity = item.quantity ?? 0;
-
-    if (stock >= quantity) {
-      return stock - quantity;
-    }
-
-    return 0;
+    return item.minStockAlert! - item.quantity!;
   }
 
   // MARK: - Private Method
 
-  void _checkData() {
-    final items = _service.allLowStockItemsRx.value;
-
-    if (items != null) {
-      _model.lowStockItems.value = items;
-    }
+  void _loadData() {
+    final items = _service.getAllCombineItems;
+    _model.allAlarmItems = items.where(_isLowStock).toList();
   }
 
-  void _listenItemsData() {
-    ever(_service.allLowStockItemsRx.rx, (_) => _checkData());
+  bool _isLowStock(Item item) {
+    final minStockAlert = item.minStockAlert ?? 0;
+    final quantity = item.quantity ?? 0;
+
+    if (minStockAlert > 0) {
+      return quantity < minStockAlert;
+    }
+
+    return false;
   }
 }
