@@ -8,8 +8,7 @@ class DialogFrame extends StatelessWidget {
   final Widget child;
   final DialogHeader header;
   final DialogFooter? footer;
-  final double? maxWidth;
-  final double? minWidth;
+  final double? width;
   final double? maxHeight;
   final double? minHeight;
 
@@ -18,30 +17,29 @@ class DialogFrame extends StatelessWidget {
     required this.child,
     required this.header,
     this.footer,
-    this.maxWidth,
-    this.minWidth,
+    this.width,
     this.maxHeight,
     this.minHeight,
   });
 
   @override
   Widget build(BuildContext context) {
-    const defaultMinWidth = 720.0;
+    const defaultWidth = 720.0;
     const defaultMinHeight = 430.0;
-    const defaultMaxWidth = 1168.0;
     const defaultMaxHeight = 1072.0;
+
+    // 使用固定宽度，高度自由伸展
+    final fixedWidth = width ?? defaultWidth.scale;
 
     return Dialog(
       insetPadding: EdgeInsets.all(30.0.scale),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: minWidth ?? defaultMinWidth.scale,
-          minHeight: minHeight ?? defaultMinHeight.scale,
-          maxWidth: maxWidth ?? defaultMaxWidth.scale,
-          maxHeight: maxHeight ?? defaultMaxHeight.scale,
+          minHeight: (minHeight ?? defaultMinHeight).scale,
+          maxHeight: (maxHeight ?? defaultMaxHeight).scale,
         ),
         child: Container(
-          width: minWidth ?? defaultMinWidth.scale,
+          width: fixedWidth,
           decoration: BoxDecoration(
             color: EnumColor.backgroundPrimary.color,
             borderRadius: BorderRadius.circular(24.0.scale),

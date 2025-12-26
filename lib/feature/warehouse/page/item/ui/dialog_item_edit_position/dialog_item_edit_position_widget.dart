@@ -27,7 +27,7 @@ class DialogItemEditPositionWidget extends StatelessWidget {
         return Obx(
           () {
             return DialogFrame(
-              maxWidth: 1168.0,
+              width: 1168.0.scale,
               header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
               footer: DialogFooter(
                 type: DialogFooterType.cancelAndConfirm,

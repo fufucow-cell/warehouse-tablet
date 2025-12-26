@@ -26,7 +26,7 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
         return Obx(
           () {
             return DialogFrame(
-              maxWidth: 1168.0,
+              width: 1168.0.scale,
               header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
               footer: DialogFooter(
                 type: DialogFooterType.cancelAndConfirm,
@@ -61,8 +61,7 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
                   SizedBox(height: 24.0.scale),
                   _TotalQuantitySection(totalQuantity: controller.totalQuantity),
                   SizedBox(height: 24.0.scale),
-                  if (controller.newLocationsRx.value.isNotEmpty ||
-                      controller.locationsRx.value.isNotEmpty) ...[
+                  if (controller.newLocationsRx.value.isNotEmpty || controller.locationsRx.value.isNotEmpty) ...[
                     _LocationsList(
                       controller: controller,
                     ),

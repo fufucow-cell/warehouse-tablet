@@ -25,7 +25,7 @@ class DialogItemSearchWidget extends StatelessWidget {
     return GetBuilder<DialogItemSearchWidgetController>(
       init: DialogItemSearchWidgetController(),
       builder: (controller) => DialogFrame(
-        minWidth: 720.0.scale,
+        width: 720.0.scale,
         minHeight: 530.0.scale,
         // maxHeight: 550.0.scale,
         header: DialogHeader(title: EnumLocale.commonSearch.tr),

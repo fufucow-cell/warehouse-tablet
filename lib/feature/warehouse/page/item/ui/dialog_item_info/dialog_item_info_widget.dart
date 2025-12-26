@@ -21,6 +21,7 @@ class DialogItemInfoWidget extends StatelessWidget {
       init: DialogItemInfoWidgetController(itemId),
       builder: (controller) {
         return DialogFrame(
+          width: 962.0.scale,
           header: DialogHeader(title: EnumLocale.warehouseItemInfo.tr),
           child: const _Body(),
         );

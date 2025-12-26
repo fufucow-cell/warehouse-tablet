@@ -33,7 +33,7 @@ class DialogItemCreateWidget extends StatelessWidget {
             final isLoading = controller.isLoadingRx.value;
 
             return DialogFrame(
-              minWidth: 962.0.scale,
+              width: 962.0.scale,
               minHeight: 1024.0.scale,
               header: DialogHeader(title: EnumLocale.createItemTitle.tr),
               footer: DialogFooter(
