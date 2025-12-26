@@ -108,6 +108,7 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _updateItemNormal(Item item, DialogItemNormalEditOutputModel model) async {
+    String errMsg = '';
     final requestModel = WarehouseItemEditNormalRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -120,16 +121,21 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemNormal(
       requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
     );
 
     final isSuccess = response != null;
     _service.showSnackBar(
       title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+      message: errMsg,
     );
     return isSuccess;
   }
 
   Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
+    String errMsg = '';
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -138,16 +144,21 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemQuantity(
       requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
     );
 
     final isSuccess = response != null;
     _service.showSnackBar(
       title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+      message: errMsg,
     );
     return isSuccess;
   }
 
   Future<bool> _updateItemPosition(Item item, List<DialogItemEditPositionOutputModel> models) async {
+    String errMsg = '';
     final requestModel = WarehouseItemEditPositionRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -156,11 +167,15 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemPosition(
       requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
     );
 
     final isSuccess = response != null;
     _service.showSnackBar(
       title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+      message: errMsg,
     );
     return isSuccess;
   }

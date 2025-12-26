@@ -44,6 +44,8 @@ const Map<String, String> jaJP = {
   'warehouseItemStockInsufficient': '在庫不足',
   'warehouseItemEdit': '編集',
   'warehouseItemEditPosition': '位置変更',
+  'warehouseItemCreateSuccess': '物品の作成に成功しました',
+  'warehouseItemCreateFailed': '物品の作成に失敗しました',
   'warehouseItemUpdateSuccess': '物品の更新に成功しました',
   'warehouseItemUpdateFailed': '物品の更新に失敗しました',
   'warehouseItemChange': '変更',

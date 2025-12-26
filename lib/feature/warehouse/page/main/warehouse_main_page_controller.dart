@@ -200,14 +200,10 @@ class WarehouseMainPageController extends GetxController {
     );
 
     final isSuccess = response != null;
-
-    if (isSuccess) {
-      _service.showSnackBar(title: '創建物品成功');
-      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
-      return true;
-    } else {
-      _service.showSnackBar(title: '創建物品失敗', message: errMsg);
-      return false;
-    }
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemCreateSuccess.tr : EnumLocale.warehouseItemCreateFailed.tr,
+      message: errMsg,
+    );
+    return isSuccess;
   }
 }

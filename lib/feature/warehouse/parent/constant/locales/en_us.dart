@@ -45,6 +45,8 @@ const Map<String, String> enUS = {
   'warehouseItemStockInsufficient': 'Insufficient Stock',
   'warehouseItemEdit': 'Edit',
   'warehouseItemEditPosition': 'Change Position',
+  'warehouseItemCreateSuccess': 'Item created successfully',
+  'warehouseItemCreateFailed': 'Item creation failed',
   'warehouseItemUpdateSuccess': 'Item updated successfully',
   'warehouseItemUpdateFailed': 'Item update failed',
   'warehouseItemChange': 'Change',
