@@ -247,10 +247,23 @@ class _ItemTools extends StatelessWidget {
         Expanded(
           child: _toolWidget(
             EnumImage.cEditQuantity,
-            EnumLocale.warehouseItemChange.tr,
+            EnumLocale.warehouseQuantityLabel.tr,
             onTap: () {
               controller.interactive(
                 EnumWarehouseItemPageInteractive.tapItemQuantityEdit,
+                data: item,
+              );
+            },
+          ),
+        ),
+        SizedBox(width: 12.0.scale),
+        Expanded(
+          child: _toolWidget(
+            EnumImage.cEditPosition,
+            EnumLocale.warehouseEntityTypePosition.tr,
+            onTap: () {
+              controller.interactive(
+                EnumWarehouseItemPageInteractive.tapItemPositionEdit,
                 data: item,
               );
             },
@@ -264,19 +277,6 @@ class _ItemTools extends StatelessWidget {
             onTap: () {
               controller.interactive(
                 EnumWarehouseItemPageInteractive.tapItemInfo,
-                data: item,
-              );
-            },
-          ),
-        ),
-        SizedBox(width: 12.0.scale),
-        Expanded(
-          child: _toolWidget(
-            EnumImage.cHistory,
-            EnumLocale.warehouseItemRecord.tr,
-            onTap: () {
-              controller.interactive(
-                EnumWarehouseItemPageInteractive.tapItemHistory,
                 data: item,
               );
             },

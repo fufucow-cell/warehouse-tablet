@@ -4,7 +4,6 @@ enum EnumWarehouseItemPageRoute {
   showDialogItemNormalEdit,
   showDialogItemQuantityEdit,
   showDialogItemPositionEdit,
-  showDialogItemHistory,
   showDialogItemInfo,
 }
 
@@ -33,40 +32,6 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
           _service.showAlert(
             DialogItemEditPositionWidget(itemId: data.id!),
           );
-        }
-      case EnumWarehouseItemPageRoute.showDialogItemHistory:
-        if (data is Item) {
-          // final allRecords = _service.getAllRecords;
-          // final itemRecords = allRecords?.where((record) => record.itemName?.contains(data.name ?? '') ?? false).toList() ?? [];
-
-          // final recordItems = itemRecords.map((record) {
-          //   final operateType = EnumOperateType.fromInt(record.operateType);
-          //   final entityType = EnumEntityType.fromInt(record.entityType);
-          //   final tagType = _genTagType(record, operateType, entityType);
-          //   final content = _genContent(record, operateType, entityType);
-          //   final date = _formatDate(record.createdAt);
-
-          //   return DialogItemRecordItemModel(
-          //     tag: tagType.title,
-          //     content: content,
-          //     date: date,
-          //   );
-          // }).toList();
-
-          // final rooms = _service.filterItemFromRooms(data);
-          // final currentQuantity = rooms
-          //     .expand<DialogItemInfoCabinetModel>((DialogItemInfoRoomModel room) => room.cabinets)
-          //     .fold<int>(0, (sum, cabinet) => sum + cabinet.quantity);
-
-          // _service.showAlert(
-          //   DialogItemRecord(
-          //     DialogItemRecordModel(
-          //       itemName: data.name,
-          //       currentQuantity: currentQuantity,
-          //       records: recordItems,
-          //     ),
-          //   ),
-          // );
         }
       case EnumWarehouseItemPageRoute.showDialogItemInfo:
         if (data is Item && (data.id?.isNotEmpty ?? false)) {
