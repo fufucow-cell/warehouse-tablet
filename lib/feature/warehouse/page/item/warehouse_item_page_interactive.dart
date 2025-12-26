@@ -9,7 +9,7 @@ enum EnumWarehouseItemPageInteractive {
   tapClearSearch,
   tapItemNormalEdit,
   tapItemQuantityEdit,
-  tapItemPositionEdit,
+  tapItemHistory,
   tapItemInfo,
 }
 
@@ -51,9 +51,9 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
           routerHandle(EnumWarehouseItemPageRoute.showDialogItemQuantityEdit, data: data);
         }
         break;
-      case EnumWarehouseItemPageInteractive.tapItemPositionEdit:
+      case EnumWarehouseItemPageInteractive.tapItemHistory:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showDialogItemPositionEdit, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemHistory, data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapItemInfo:

@@ -5,7 +5,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/fr
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
@@ -105,8 +104,6 @@ class _InfoCard extends StatelessWidget {
           ),
           SizedBox(height: 24.0.scale),
           _PositionsInfo(rooms: controller.getRooms),
-          SizedBox(height: 24.0.scale),
-          _RecordButton(),
         ],
       ),
     );
@@ -235,37 +232,6 @@ class _PositionItem extends StatelessWidget {
             '$quantity',
             size: 28.0.scale,
             color: EnumColor.textWhite.color,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _RecordButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemInfoWidgetController>();
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 112.0.scale,
-          child: WidgetUtil.textWidget(
-            '查看記錄',
-            size: 28.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
-        ),
-        SizedBox(width: 24.0.scale),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
-            borderRadius: BorderRadius.circular(20.0.scale),
-            child: EnumImage.cHistory.image(
-              size: Size.square(70.0.scale),
-            ),
           ),
         ),
       ],

@@ -3,7 +3,7 @@ part of 'warehouse_item_page.dart';
 enum EnumWarehouseItemPageRoute {
   showDialogItemNormalEdit,
   showDialogItemQuantityEdit,
-  showDialogItemPositionEdit,
+  showDialogItemHistory,
   showDialogItemInfo,
 }
 
@@ -47,7 +47,7 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
           //   ),
           // );
         }
-      case EnumWarehouseItemPageRoute.showDialogItemPositionEdit:
+      case EnumWarehouseItemPageRoute.showDialogItemHistory:
         if (data is Item) {
           // final allRecords = _service.getAllRecords;
           // final itemRecords = allRecords?.where((record) => record.itemName?.contains(data.name ?? '') ?? false).toList() ?? [];
