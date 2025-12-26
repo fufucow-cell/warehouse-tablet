@@ -27,7 +27,7 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
       builder: (controller) {
         return DialogFrame(
           width: 1168.0.scale,
-          header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
+          header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
           footer: DialogFooter(
             type: DialogFooterType.cancelAndConfirm,
             onCancel: () {

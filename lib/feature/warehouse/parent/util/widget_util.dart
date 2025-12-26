@@ -432,7 +432,6 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
                 SizedBox(width: 16.0.scale),
                 EnumImage.cArrowDown.image(
                   size: Size.square(38.0.scale),
-                  color: btnTextColor,
                 ),
               ],
             ),

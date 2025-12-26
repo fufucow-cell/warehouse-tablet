@@ -1,6 +1,19 @@
 part of 'dialog_item_edit_position_widget_controller.dart';
 
-// 目前没有路由需求，保留扩展以备将来使用
+enum EnumDialogItemEditPositionWidgetRoute {
+  tapDialogFooterButton,
+}
+
 extension DialogItemEditPositionWidgetRouteExtension on DialogItemEditPositionWidgetController {
-  // 路由处理方法可以在这里添加
+  void _routerHandle(
+    EnumDialogItemEditPositionWidgetRoute type,
+    dynamic data,
+  ) {
+    switch (type) {
+      case EnumDialogItemEditPositionWidgetRoute.tapDialogFooterButton:
+        if (data is BuildContext) {
+          Navigator.of(data).pop();
+        }
+    }
+  }
 }

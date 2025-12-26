@@ -6,6 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/fr
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
@@ -24,59 +25,54 @@ class DialogItemEditPositionWidget extends StatelessWidget {
     return GetBuilder<DialogItemEditPositionWidgetController>(
       init: DialogItemEditPositionWidgetController(itemId),
       builder: (controller) {
-        return Obx(
-          () {
-            return DialogFrame(
-              width: 1168.0.scale,
-              header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
-              footer: DialogFooter(
-                type: DialogFooterType.cancelAndConfirm,
-                onCancel: () {
-                  controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
-                    data: context,
-                  );
-                },
-                onConfirm: () {
-                  controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
-                    data: context,
-                  );
-                },
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _InfoCard(
-                    itemName: controller.itemNameRx.value ?? '',
-                    currentQuantity: controller.currentQuantityRx.value ?? 0,
-                  ),
-                  SizedBox(height: 24.0.scale),
-                  _LocationEditContent(
-                    locations: controller.locationsRx.value,
-                    controller: controller,
-                  ),
-                ],
-              ),
-            );
-          },
+        return DialogFrame(
+          width: 1168.0.scale,
+          header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
+          footer: DialogFooter(
+            type: DialogFooterType.cancelAndConfirm,
+            onCancel: () {
+              controller.interactive(
+                EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
+                data: context,
+              );
+            },
+            onConfirm: () {
+              controller.interactive(
+                EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                data: context,
+              );
+            },
+          ),
+          child: _Body(),
         );
       },
     );
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  final String itemName;
-  final int currentQuantity;
-
-  const _InfoCard({
-    required this.itemName,
-    required this.currentQuantity,
-  });
-
+class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    final positions = controller.getPositions;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _InfoCard(),
+        SizedBox(height: 24.0.scale),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: positions.map((position) => _PositionEditCard(model: position)).toList(),
+        ),
+      ],
+    );
+  }
+}
+
+class _InfoCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 32.0.scale,
@@ -92,12 +88,12 @@ class _InfoCard extends StatelessWidget {
         children: [
           _InfoRow(
             label: EnumLocale.createItemName.tr,
-            value: itemName,
+            value: controller.getItemName,
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: EnumLocale.warehouseCurrentQuantityLabel.tr,
-            value: currentQuantity.toString(),
+            value: controller.getOriginQuantity,
           ),
         ],
       ),
@@ -139,99 +135,17 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _LocationEditContent extends StatelessWidget {
-  final List<DialogItemEditPositionLocationModel> locations;
-  final DialogItemEditPositionWidgetController controller;
+class _PositionEditCard extends StatelessWidget {
+  final DisplayPositionModel model;
 
-  const _LocationEditContent({
-    required this.locations,
-    required this.controller,
+  const _PositionEditCard({
+    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (locations.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (int i = 0; i < locations.length; i++) ...[
-          _LocationEditCard(
-            location: locations[i],
-            controller: controller,
-          ),
-          if (i < locations.length - 1) SizedBox(height: 24.0.scale),
-        ],
-      ],
-    );
-  }
-}
-
-class _LocationEditCard extends StatefulWidget {
-  final DialogItemEditPositionLocationModel location;
-  final DialogItemEditPositionWidgetController controller;
-
-  const _LocationEditCard({
-    required this.location,
-    required this.controller,
-  });
-
-  @override
-  State<_LocationEditCard> createState() => _LocationEditCardState();
-}
-
-class _LocationEditCardState extends State<_LocationEditCard> {
-  late int _quantity;
-  String? _selectedRoom;
-  String? _selectedCabinet;
-  List<String> _availableCabinets = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _quantity = widget.location.quantity;
-  }
-
-  void _decrement() {
-    if (_quantity > 0) {
-      setState(() => _quantity--);
-    }
-  }
-
-  void _increment() {
-    setState(() => _quantity++);
-  }
-
-  void _onRoomSelected(String? room) {
-    setState(() {
-      _selectedRoom = room;
-      _selectedCabinet = null;
-      _availableCabinets = widget.controller.getCabinetsForRoom(room);
-    });
-  }
-
-  void _onCabinetSelected(String? cabinet) {
-    setState(() {
-      _selectedCabinet = cabinet;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // 如果选择了房间，更新可用柜位列表
-    if (_selectedRoom != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            _availableCabinets = widget.controller.getCabinetsForRoom(_selectedRoom);
-          });
-        }
-      });
-    }
-
     return Container(
+      width: 1056.0.scale,
       padding: EdgeInsets.all(32.0.scale),
       decoration: BoxDecoration(
         color: EnumColor.backgroundPrimary.color,
@@ -246,69 +160,57 @@ class _LocationEditCardState extends State<_LocationEditCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              WidgetUtil.textWidget(
-                widget.location.locationName,
-                size: 28.0.scale,
-                weightType: EnumFontWeightType.bold,
-              ),
-              SizedBox(width: 24.0.scale),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.0.scale),
-                decoration: BoxDecoration(
-                  color: EnumColor.accentBlue.color,
-                  borderRadius: BorderRadius.circular(12.0.scale),
-                ),
-                child: WidgetUtil.textWidget(
-                  _quantity.toString(),
-                  size: 28.0.scale,
-                  color: EnumColor.textWhite.color,
-                ),
-              ),
-            ],
-          ),
+          _OriginalPositionInfo(model: model),
           SizedBox(height: 24.0.scale),
-          _ChangeQuantitySection(
-            quantity: _quantity,
-            onDecrement: _decrement,
-            onIncrement: _increment,
-          ),
+          _ChangeQuantitySection(model: model),
           SizedBox(height: 32.0.scale),
-          Row(
-            children: [
-              Expanded(
-                child: _ChangeRoomField(
-                  selectedRoom: _selectedRoom,
-                  availableRooms: widget.controller.getRoomNameList(),
-                  onRoomChanged: _onRoomSelected,
-                ),
-              ),
-              SizedBox(width: 32.0.scale),
-              Expanded(
-                child: _ChangeCabinetField(
-                  selectedCabinet: _selectedCabinet,
-                  availableCabinets: _availableCabinets,
-                  onCabinetChanged: _onCabinetSelected,
-                ),
-              ),
-            ],
-          ),
+          _DropdownSection(model: model),
         ],
       ),
     );
   }
 }
 
+class _OriginalPositionInfo extends StatelessWidget {
+  final DisplayPositionModel model;
+
+  const _OriginalPositionInfo({
+    required this.model,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    return Row(
+      children: [
+        WidgetUtil.textWidget(
+          controller.getPositionName(model),
+          size: 28.0.scale,
+          weightType: EnumFontWeightType.bold,
+        ),
+        SizedBox(width: 24.0.scale),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12.0.scale),
+          decoration: BoxDecoration(
+            color: EnumColor.accentBlue.color,
+            borderRadius: BorderRadius.circular(12.0.scale),
+          ),
+          child: WidgetUtil.textWidget(
+            model.quantity.toString(),
+            size: 28.0.scale,
+            color: EnumColor.textWhite.color,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _ChangeQuantitySection extends StatelessWidget {
-  final int quantity;
-  final VoidCallback onDecrement;
-  final VoidCallback onIncrement;
+  final DisplayPositionModel model;
 
   const _ChangeQuantitySection({
-    required this.quantity,
-    required this.onDecrement,
-    required this.onIncrement,
+    required this.model,
   });
 
   @override
@@ -317,7 +219,7 @@ class _ChangeQuantitySection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         WidgetUtil.textWidget(
-          '更改數量',
+          EnumLocale.warehouseMoveQuantity.tr,
           size: 26.0.scale,
           color: EnumColor.textSecondary.color,
         ),
@@ -326,33 +228,25 @@ class _ChangeQuantitySection extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _QuantityButton(
-              icon: Icons.remove,
-              onPressed: onDecrement,
+              eImage: EnumImage.cMinus,
+              textController: model.textEditingController,
             ),
             SizedBox(width: 16.0.scale),
-            Expanded(
-              child: Container(
-                height: 70.0.scale,
-                padding: EdgeInsets.all(16.0.scale),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.0.scale,
-                    color: EnumColor.lineBorder.color,
-                  ),
-                  borderRadius: BorderRadius.circular(16.0.scale),
-                ),
-                child: Center(
-                  child: WidgetUtil.textWidget(
-                    quantity.toString(),
-                    size: 32.0.scale,
-                  ),
-                ),
+            SizedBox(
+              width: 180.0.scale,
+              height: 70.0.scale,
+              child: WidgetUtil.textField(
+                controller: model.textEditingController,
+                textFieldType: EnumTextFieldType.integer,
+                maxLength: 7,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
               ),
             ),
             SizedBox(width: 16.0.scale),
             _QuantityButton(
-              icon: Icons.add,
-              onPressed: onIncrement,
+              eImage: EnumImage.cPlus,
+              textController: model.textEditingController,
             ),
           ],
         ),
@@ -361,105 +255,151 @@ class _ChangeQuantitySection extends StatelessWidget {
   }
 }
 
-class _ChangeRoomField extends StatelessWidget {
-  final String? selectedRoom;
-  final List<String> availableRooms;
-  final ValueChanged<String?> onRoomChanged;
-
-  const _ChangeRoomField({
-    required this.selectedRoom,
-    required this.availableRooms,
-    required this.onRoomChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        WidgetUtil.textWidget(
-          '更改房間',
-          size: 26.0.scale,
-          color: EnumColor.textSecondary.color,
-        ),
-        SizedBox(height: 12.0.scale),
-        WidgetUtil.textDropdownButton(
-          selectedValue: selectedRoom,
-          values: availableRooms,
-          buttonTextColor: selectedRoom == null ? EnumColor.textSecondary.color : null,
-          onValueSelected: onRoomChanged,
-        ),
-      ],
-    );
-  }
-}
-
-class _ChangeCabinetField extends StatelessWidget {
-  final String? selectedCabinet;
-  final List<String> availableCabinets;
-  final ValueChanged<String?> onCabinetChanged;
-
-  const _ChangeCabinetField({
-    required this.selectedCabinet,
-    required this.availableCabinets,
-    required this.onCabinetChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        WidgetUtil.textWidget(
-          '更改櫥櫃/架子（可選）',
-          size: 26.0.scale,
-          color: EnumColor.textSecondary.color,
-        ),
-        SizedBox(height: 12.0.scale),
-        WidgetUtil.textDropdownButton(
-          selectedValue: selectedCabinet,
-          values: availableCabinets,
-          buttonTextColor: selectedCabinet == null ? EnumColor.textSecondary.color : null,
-          onValueSelected: onCabinetChanged,
-        ),
-      ],
-    );
-  }
-}
-
+/// 數量按鈕
 class _QuantityButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
+  final EnumImage eImage;
+  final TextEditingController textController;
 
   const _QuantityButton({
-    required this.icon,
-    required this.onPressed,
+    required this.eImage,
+    required this.textController,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 70.0.scale,
-      height: 70.0.scale,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1.0.scale,
-          color: EnumColor.lineBorder.color,
-        ),
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          controller.interactive(
+            (eImage == EnumImage.cPlus)
+                ? EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity
+                : EnumDialogItemEditPositionWidgetInteractive.tapDecrementQuantity,
+            data: textController,
+          );
+        },
         borderRadius: BorderRadius.circular(16.0.scale),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          borderRadius: BorderRadius.circular(16.0.scale),
-          child: Icon(
-            icon,
-            size: 40.0.scale,
-            color: EnumColor.textPrimary.color,
+        child: Container(
+          width: 70.0.scale,
+          height: 70.0.scale,
+          padding: EdgeInsets.all(15.0.scale),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0.scale,
+              color: EnumColor.lineBorder.color,
+            ),
+            borderRadius: BorderRadius.circular(16.0.scale),
+          ),
+          child: eImage.image(
+            size: Size.square(40.0.scale),
+            color: EnumColor.iconSecondary.color,
           ),
         ),
       ),
+    );
+  }
+}
+
+class _DropdownSection extends StatelessWidget {
+  final DisplayPositionModel model;
+
+  const _DropdownSection({
+    required this.model,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    return Obx(
+      () {
+        final changeRooms = controller.changeRoomsRx.value;
+        final changeCabinets = controller.changeCabinetsRx.value;
+        final selectedRoomName = changeRooms[model.index].name!;
+        final selectedCabinetName = changeCabinets[model.index].name!;
+
+        return Row(
+          children: [
+            Expanded(
+              child: _ChangePositionField(
+                title: EnumLocale.warehouseChangeRoom.tr,
+                values: controller.getRoomNameList(),
+                selectedValue: selectedRoomName,
+                onValueSelected: (str) {
+                  final room = controller.getRoomByName(str);
+                  if (room != null) {
+                    controller.interactive(
+                      EnumDialogItemEditPositionWidgetInteractive.tapUpdateRoom,
+                      data: UpdatePositionModel(
+                        index: model.index,
+                        position: room,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+            SizedBox(width: 32.0.scale),
+            Expanded(
+              child: _ChangePositionField(
+                title: EnumLocale.warehouseChangeCabinet.tr,
+                values: controller.getVisibleCabinetNameList(selectedRoomName),
+                selectedValue: selectedCabinetName,
+                onValueSelected: (str) {
+                  final cabinet = controller.getCabinetByName(str);
+                  if (cabinet != null) {
+                    controller.interactive(
+                      EnumDialogItemEditPositionWidgetInteractive.tapUpdateCabinet,
+                      data: UpdatePositionModel(
+                        index: model.index,
+                        position: cabinet,
+                      ),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _ChangePositionField extends StatelessWidget {
+  final String title;
+  final List<String> values;
+  final String selectedValue;
+  final Function(String?) onValueSelected;
+
+  const _ChangePositionField({
+    required this.title,
+    required this.values,
+    required this.selectedValue,
+    required this.onValueSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        WidgetUtil.textWidget(
+          title,
+          size: 26.0.scale,
+          color: EnumColor.textSecondary.color,
+        ),
+        SizedBox(height: 12.0.scale),
+        WidgetUtil.textDropdownButton(
+          selectedValue: selectedValue,
+          values: values,
+          onValueSelected: onValueSelected,
+          onMenuOpened: () => controller.interactive(
+            EnumDialogItemEditPositionWidgetInteractive.tapDropdownButton,
+          ),
+        ),
+      ],
     );
   }
 }

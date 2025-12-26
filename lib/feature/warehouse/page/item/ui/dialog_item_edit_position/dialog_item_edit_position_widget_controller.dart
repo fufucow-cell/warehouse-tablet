@@ -1,9 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
@@ -16,10 +17,11 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
   final DialogItemEditPositionWidgetModel _model = DialogItemEditPositionWidgetModel();
   final _service = WarehouseService.instance;
-
-  RxReadonly<String?> get itemNameRx => _model.itemName.readonly;
-  RxReadonly<int?> get currentQuantityRx => _model.currentQuantity.readonly;
-  RxReadonly<List<DialogItemEditPositionLocationModel>> get locationsRx => _model.locations.readonly;
+  String get getItemName => _model.combineItem?.name ?? '';
+  String get getOriginQuantity => (_model.combineItem?.quantity ?? 0).toString();
+  List<DisplayPositionModel> get getPositions => _model.positions;
+  RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;
+  RxReadonly<List<WarehouseNameIdModel>> get changeCabinetsRx => _model.changeCabinets.readonly;
 
   // MARK: - Init
 
@@ -42,24 +44,98 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
   // MARK: - Public Methods
 
+  List<WarehouseNameIdModel> get getRoomList => _service.rooms;
+
+  // 取得所有房間名稱
   List<String> getRoomNameList() {
     return _service.rooms.map((room) => room.name ?? '').where((name) => name.isNotEmpty).toList();
   }
 
-  List<String> getCabinetsForRoom(String? roomName) {
-    if (roomName == null) return [];
+  // 比對房間
+  WarehouseNameIdModel? getRoomByName(String? roomName) {
+    return _service.rooms.firstWhereOrNull((room) => room.name == roomName);
+  }
 
-    // 通过房间名称找到对应的 roomId
-    final roomModel = _service.rooms.where((r) => r.name == roomName).firstOrNull;
-    if (roomModel?.id == null) return [];
+  // 比對櫃位
+  WarehouseNameIdModel? getCabinetByName(String? cabinetName) {
+    final cabinet = _flattenAllCabinets().firstWhereOrNull((cabinet) => cabinet.name == cabinetName);
 
-    // 通过 roomId 找到对应的 Room 对象
-    final room = _service.getAllRoomCabinetItems
-        .where(
-          (room) => room.roomId == roomModel!.id,
-        )
-        .firstOrNull;
-    return room?.cabinets?.map((cabinet) => cabinet.name ?? '').where((name) => name.isNotEmpty).toList() ?? [];
+    if (cabinet == null) {
+      return null;
+    }
+
+    return WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '');
+  }
+
+  // 取得可顯示的櫃位名稱
+  List<String> getVisibleCabinetNameList(String? roomName) {
+    final matchRoom = _service.rooms.firstWhereOrNull((room) => room.name == roomName);
+    return getCabinetsForRoom(matchRoom).map((cabinet) => cabinet.name ?? '').where((name) => name.isNotEmpty).toList();
+  }
+
+  // 扁平化所有櫥櫃
+  List<Cabinet> _flattenAllCabinets() {
+    return _service.getAllRoomCabinetItems.expand<Cabinet>((room) => room.cabinets ?? []).toList();
+  }
+
+  List<WarehouseNameIdModel> getCabinetsForRoom(WarehouseNameIdModel? room) {
+    if (room == null) {
+      return _flattenAllCabinets().map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '')).toList();
+    }
+
+    return _service.getAllRoomCabinetItems
+            .firstWhereOrNull((e) => e.roomId == room.id)
+            ?.cabinets
+            ?.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? ''))
+            .toList() ??
+        [];
+  }
+
+  void updatePositionRoom(UpdatePositionModel model) {
+    final list = _model.positions;
+    final changeRooms = List<WarehouseNameIdModel>.from(_model.changeRooms.value);
+    final changeCabinets = List<WarehouseNameIdModel>.from(_model.changeCabinets.value);
+
+    if (model.index < list.length) {
+      final newName = model.position.name ?? '';
+      final oldName = changeRooms[model.index].name!;
+
+      if (newName != oldName) {
+        changeRooms[model.index] = model.position;
+        final availableCabinets = getCabinetsForRoom(model.position);
+        changeCabinets[model.index] = WarehouseNameIdModel(
+          id: '',
+          name: availableCabinets.isNotEmpty ? EnumLocale.optionPleaseSelect.tr : EnumLocale.optionNoData.tr,
+        );
+        _model.changeRooms.value = changeRooms;
+        _model.changeCabinets.value = changeCabinets;
+      }
+    }
+  }
+
+  void updatePositionCabinet(UpdatePositionModel model) {
+    final list = _model.positions;
+    final changeCabinets = List<WarehouseNameIdModel>.from(_model.changeCabinets.value);
+
+    if (model.index < list.length) {
+      final newName = model.position.name ?? '';
+      final oldName = changeCabinets[model.index].name!;
+
+      if (newName != oldName) {
+        changeCabinets[model.index] = model.position;
+        _model.changeCabinets.value = changeCabinets;
+      }
+    }
+  }
+
+  String getPositionName(DisplayPositionModel model) {
+    if ((model.roomName.isNotEmpty) && (model.cabinetName.isNotEmpty)) {
+      return '${model.roomName} → ${model.cabinetName}';
+    } else if ((model.roomName.isEmpty) && (model.cabinetName.isNotEmpty)) {
+      return '${EnumLocale.warehouseUncategorized.tr} → ${model.cabinetName}';
+    } else {
+      return EnumLocale.warehouseUncategorized.tr;
+    }
   }
 
   // MARK: - Private Methods
@@ -71,16 +147,16 @@ class DialogItemEditPositionWidgetController extends GetxController {
       return;
     }
 
-    _model.itemName.value = item.name;
-    _loadLocations(item);
+    _model.combineItem = item;
+    _initPositions();
   }
 
-  void _loadLocations(Item item) {
+  void _initPositions() {
     final allRoomCabinetItems = _service.getAllRoomCabinetItems;
-    final locations = <DialogItemEditPositionLocationModel>[];
-    final itemId = item.id;
+    final positions = <DisplayPositionModel>[];
+    final itemId = _model.combineItem?.id;
 
-    if (allRoomCabinetItems.isNotEmpty && (itemId != null && itemId.isNotEmpty)) {
+    if (allRoomCabinetItems.isNotEmpty && (itemId?.isNotEmpty ?? false)) {
       for (final room in allRoomCabinetItems) {
         if (room.cabinets?.isEmpty ?? true) {
           continue;
@@ -95,25 +171,27 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
           if (matchItem != null) {
             final roomInfo = _service.rooms.where((e) => e.id == room.roomId).firstOrNull;
-            final roomName = roomInfo?.name ?? '';
-            final cabinetName = cabinet.name ?? '';
-            final locationName = cabinetName.isNotEmpty ? '$roomName / $cabinetName' : roomName;
-            final locationId = '${room.roomId}_${cabinet.id ?? ''}';
+            final roomName = roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr;
+            final cabinetName = cabinet.name ?? EnumLocale.warehouseUncategorized.tr;
 
-            locations.add(
-              DialogItemEditPositionLocationModel(
-                locationId: locationId,
-                locationName: locationName,
-                quantity: matchItem.quantity ?? 0,
-              ),
+            final positionModel = DisplayPositionModel(
+              index: positions.length,
+              roomId: room.roomId,
+              roomName: roomName,
+              cabinetId: cabinet.id,
+              cabinetName: cabinetName,
+              quantity: matchItem.quantity ?? 0,
             );
+
+            positions.add(positionModel);
+            _model.changeRooms.value.add(WarehouseNameIdModel(id: '', name: EnumLocale.optionPleaseSelect.tr));
+            _model.changeCabinets.value.add(WarehouseNameIdModel(id: '', name: EnumLocale.optionPleaseSelect.tr));
           }
         }
       }
     }
 
-    final currentQuantity = locations.fold<int>(0, (sum, location) => sum + location.quantity);
-    _model.currentQuantity.value = currentQuantity;
-    _model.locations.value = locations;
+    _model.positions.clear();
+    _model.positions.addAll(positions);
   }
 }
