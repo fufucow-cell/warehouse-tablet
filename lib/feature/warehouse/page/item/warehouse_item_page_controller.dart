@@ -108,30 +108,61 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _updateItemNormal(Item item, DialogItemNormalEditOutputModel model) async {
-    String errMsg = '';
-
-    final requestModel = WarehouseItemRequestModel(
+    final requestModel = WarehouseItemEditNormalRequestModel(
+      householdId: _service.getHouseholdId,
       itemId: item.id,
+      photo: model.photo,
+      name: model.name,
+      description: model.description,
       categoryId: model.categoryId,
+      minStockAlert: model.minStockAlert,
     );
 
-    final response = await _service.apiReqModifyItem(
+    final response = await _service.apiReqUpdateItemNormal(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+    );
+    return isSuccess;
+  }
 
-    if (isSuccess) {
-      _service.showSnackBar(title: '更新物品成功');
-      _service.apiReqFetchItems(WarehouseItemRequestModel());
-      return true;
-    } else {
-      _service.showSnackBar(title: '更新物品失敗', message: errMsg);
-      return false;
-    }
+  Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
+    final requestModel = WarehouseItemEditQuantityRequestModel(
+      householdId: _service.getHouseholdId,
+      itemId: item.id,
+      cabinets: models.map((model) => QuantityCabinetRequestModel(cabinetId: model.cabinetId, quantity: model.quantity)).toList(),
+    );
+
+    final response = await _service.apiReqUpdateItemQuantity(
+      requestModel,
+    );
+
+    final isSuccess = response != null;
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+    );
+    return isSuccess;
+  }
+
+  Future<bool> _updateItemPosition(Item item, List<DialogItemEditPositionOutputModel> models) async {
+    final requestModel = WarehouseItemEditPositionRequestModel(
+      householdId: _service.getHouseholdId,
+      itemId: item.id,
+      cabinets: models.map((model) => PositionCabinetRequestModel(oldCabinetId: model.oldCabinetId, newCabinetId: model.newCabinetId)).toList(),
+    );
+
+    final response = await _service.apiReqUpdateItemPosition(
+      requestModel,
+    );
+
+    final isSuccess = response != null;
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+    );
+    return isSuccess;
   }
 
   // 設定分類篩選條件為全部

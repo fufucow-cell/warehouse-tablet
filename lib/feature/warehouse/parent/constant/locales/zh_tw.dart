@@ -44,6 +44,8 @@ const Map<String, String> zhTW = {
   'warehouseItemStockInsufficient': '庫存不足',
   'warehouseItemEdit': '編輯',
   'warehouseItemEditPosition': '異動位置',
+  'warehouseItemUpdateSuccess': '更新物品成功',
+  'warehouseItemUpdateFailed': '更新物品失敗',
   'warehouseItemChange': '異動',
   'warehouseItemInfo': '資訊',
   'warehouseItemRecord': '記錄',

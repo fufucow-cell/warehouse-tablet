@@ -8,6 +8,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -312,12 +315,34 @@ class WarehouseService {
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqModifyItem(
-    WarehouseItemRequestModel request, {
+  Future<ApiEmptyResponse?> apiReqUpdateItemNormal(
+    WarehouseItemEditNormalRequestModel request, {
     ApiErrorHandler? onError,
   }) {
     return ApiUtil.sendRequest<ApiEmptyResponse>(
-      EnumApiInfo.itemModify,
+      EnumApiInfo.itemUpdateNormal,
+      requestModel: request,
+      onError: onError,
+    );
+  }
+
+  Future<ApiEmptyResponse?> apiReqUpdateItemPosition(
+    WarehouseItemEditPositionRequestModel request, {
+    ApiErrorHandler? onError,
+  }) {
+    return ApiUtil.sendRequest<ApiEmptyResponse>(
+      EnumApiInfo.itemUpdatePosition,
+      requestModel: request,
+      onError: onError,
+    );
+  }
+
+  Future<ApiEmptyResponse?> apiReqUpdateItemQuantity(
+    WarehouseItemEditQuantityRequestModel request, {
+    ApiErrorHandler? onError,
+  }) {
+    return ApiUtil.sendRequest<ApiEmptyResponse>(
+      EnumApiInfo.itemUpdateQuantity,
       requestModel: request,
       onError: onError,
     );

@@ -19,7 +19,9 @@ enum EnumApiInfo {
   // Warehouse APIs
   itemCreate('item', EnumApiMethod.post),
   itemFetch('item', EnumApiMethod.get),
-  itemModify('item', EnumApiMethod.put),
+  itemUpdateNormal('item/normal', EnumApiMethod.put),
+  itemUpdatePosition('item/position', EnumApiMethod.put),
+  itemUpdateQuantity('item/quantity', EnumApiMethod.put),
   itemDelete('item', EnumApiMethod.delete),
   cabinetCreate('cabinet', EnumApiMethod.post),
   cabinetFetch('cabinet', EnumApiMethod.get),

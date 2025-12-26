@@ -1,7 +1,8 @@
 part of 'dialog_item_edit_quantity_widget_controller.dart';
 
 enum EnumDialogItemEditQuantityWidgetRoute {
-  tapDialogFooterButton,
+  tapDialogCancelButton,
+  tapDialogConfirmButton,
 }
 
 extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWidgetController {
@@ -10,8 +11,14 @@ extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWi
     dynamic data,
   ) {
     switch (type) {
-      case EnumDialogItemEditQuantityWidgetRoute.tapDialogFooterButton:
+      case EnumDialogItemEditQuantityWidgetRoute.tapDialogCancelButton:
         if (data is BuildContext) {
+          Navigator.of(data).pop();
+        }
+      case EnumDialogItemEditQuantityWidgetRoute.tapDialogConfirmButton:
+        if (data is bool) {
+          _setLoadingStatus(data);
+        } else if (data is BuildContext) {
           Navigator.of(data).pop();
         }
     }

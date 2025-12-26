@@ -37,3 +37,13 @@ class DisplayPositionModel {
     required this.quantity,
   });
 }
+
+class DialogItemEditQuantityOutputModel {
+  final String cabinetId;
+  final int quantity;
+
+  DialogItemEditQuantityOutputModel({
+    required this.cabinetId,
+    required this.quantity,
+  });
+}

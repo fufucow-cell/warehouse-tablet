@@ -252,6 +252,25 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     return result;
   }
 
+  List<DialogItemEditQuantityOutputModel> checkOutputData() {
+    final outputData = <DialogItemEditQuantityOutputModel>[];
+    final oldCabinets = getOldPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
+    final newCabinets = getNewPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
+
+    for (var cabinet in [...oldCabinets, ...newCabinets]) {
+      if (cabinet.id.isNotEmpty) {
+        outputData.add(
+          DialogItemEditQuantityOutputModel(
+            cabinetId: cabinet.id,
+            quantity: cabinet.quantity,
+          ),
+        );
+      }
+    }
+
+    return outputData;
+  }
+
   // MARK: - Private Methods
 
   void _loadData() {

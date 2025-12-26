@@ -187,6 +187,8 @@ enum EnumLocale {
   warehouseItemCollapse,
   warehouseItemEdit,
   warehouseItemEditPosition,
+  warehouseItemUpdateSuccess,
+  warehouseItemUpdateFailed,
   warehouseItemInfo,
   warehouseItemLowStock,
   warehouseItemMoreOptions,

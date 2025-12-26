@@ -1,7 +1,8 @@
 part of 'dialog_item_edit_position_widget_controller.dart';
 
 enum EnumDialogItemEditPositionWidgetRoute {
-  tapDialogFooterButton,
+  tapDialogCancelButton,
+  tapDialogConfirmButton,
 }
 
 extension DialogItemEditPositionWidgetRouteExtension on DialogItemEditPositionWidgetController {
@@ -10,8 +11,14 @@ extension DialogItemEditPositionWidgetRouteExtension on DialogItemEditPositionWi
     dynamic data,
   ) {
     switch (type) {
-      case EnumDialogItemEditPositionWidgetRoute.tapDialogFooterButton:
+      case EnumDialogItemEditPositionWidgetRoute.tapDialogCancelButton:
         if (data is BuildContext) {
+          Navigator.of(data).pop();
+        }
+      case EnumDialogItemEditPositionWidgetRoute.tapDialogConfirmButton:
+        if (data is bool) {
+          _setLoadingStatus(data);
+        } else if (data is BuildContext) {
           Navigator.of(data).pop();
         }
     }

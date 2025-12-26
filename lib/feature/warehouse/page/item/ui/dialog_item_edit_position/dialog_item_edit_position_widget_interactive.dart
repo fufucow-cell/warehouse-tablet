@@ -29,9 +29,9 @@ extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositi
           updatePositionCabinet(data);
         }
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogFooterButton, data);
+        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogCancelButton, data);
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton:
-        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogFooterButton, data);
+        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogConfirmButton, data);
       case EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity:
         if (data is TextEditingController) {
           final currentValue = int.tryParse(data.text.trim()) ?? 0;

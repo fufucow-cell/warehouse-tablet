@@ -4,10 +4,12 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_se
 import 'package:get/get.dart';
 
 class DialogItemEditPositionWidgetModel {
+  final isLoading = false.obs;
   String itemId = '';
   Item? combineItem;
   final changeRooms = Rx<List<WarehouseNameIdModel>>([]);
   final changeCabinets = Rx<List<WarehouseNameIdModel>>([]);
+  final List<TextEditingController> quantityControllers = [];
   final List<DisplayPositionModel> positions = [];
 }
 
@@ -28,7 +30,6 @@ class DisplayPositionModel {
   String? cabinetId;
   String cabinetName;
   int quantity;
-  final TextEditingController textEditingController;
 
   DisplayPositionModel({
     required this.index,
@@ -37,5 +38,17 @@ class DisplayPositionModel {
     this.cabinetId,
     required this.cabinetName,
     required this.quantity,
-  }) : textEditingController = TextEditingController(text: '0');
+  });
+}
+
+class DialogItemEditPositionOutputModel {
+  final String oldCabinetId;
+  final String newCabinetId;
+  final int moveQuantity;
+
+  DialogItemEditPositionOutputModel({
+    required this.oldCabinetId,
+    required this.newCabinetId,
+    required this.moveQuantity,
+  });
 }

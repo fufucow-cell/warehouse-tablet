@@ -24,13 +24,23 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
       case EnumWarehouseItemPageRoute.showDialogItemQuantityEdit:
         if (data is Item && (data.id?.isNotEmpty ?? false)) {
           _service.showAlert(
-            DialogItemEditQuantityWidget(itemId: data.id!),
+            DialogItemEditQuantityWidget(
+              itemId: data.id!,
+              onConfirm: (outputModel) async {
+                return await _updateItemQuantity(data, outputModel);
+              },
+            ),
           );
         }
       case EnumWarehouseItemPageRoute.showDialogItemPositionEdit:
         if (data is Item && (data.id?.isNotEmpty ?? false)) {
           _service.showAlert(
-            DialogItemEditPositionWidget(itemId: data.id!),
+            DialogItemEditPositionWidget(
+              itemId: data.id!,
+              onConfirm: (outputModel) async {
+                return await _updateItemPosition(data, outputModel);
+              },
+            ),
           );
         }
       case EnumWarehouseItemPageRoute.showDialogItemInfo:

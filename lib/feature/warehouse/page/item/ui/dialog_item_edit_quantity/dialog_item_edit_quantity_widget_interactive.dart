@@ -32,14 +32,9 @@ extension DialogItemEditQuantityWidgetUserEventExtension on DialogItemEditQuanti
           updateNewPositionCabinet(data);
         }
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogItemEditQuantityWidgetRoute.tapDialogFooterButton, data);
+        _routerHandle(EnumDialogItemEditQuantityWidgetRoute.tapDialogCancelButton, data);
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton:
-        if (data is bool) {
-          _setLoadingStatus(data);
-        } else if (data is BuildContext) {
-          _setLoadingStatus(false);
-          _routerHandle(EnumDialogItemEditQuantityWidgetRoute.tapDialogFooterButton, data);
-        }
+        _routerHandle(EnumDialogItemEditQuantityWidgetRoute.tapDialogConfirmButton, data);
       case EnumDialogItemEditQuantityWidgetInteractive.tapDecrementQuantity:
         if (data is TextEditingController) {
           final currentValue = int.tryParse(data.text.trim()) ?? 0;

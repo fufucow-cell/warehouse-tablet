@@ -20,8 +20,10 @@ class DialogItemEditPositionWidgetController extends GetxController {
   String get getItemName => _model.combineItem?.name ?? '';
   String get getOriginQuantity => (_model.combineItem?.quantity ?? 0).toString();
   List<DisplayPositionModel> get getPositions => _model.positions;
+  RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeCabinetsRx => _model.changeCabinets.readonly;
+  List<TextEditingController> get getQuantityControllers => _model.quantityControllers;
 
   // MARK: - Init
 
@@ -138,6 +140,30 @@ class DialogItemEditPositionWidgetController extends GetxController {
     }
   }
 
+  List<DialogItemEditPositionOutputModel> checkOutputData() {
+    final outputData = <DialogItemEditPositionOutputModel>[];
+    final oldList = _model.positions;
+    final newList = _model.changeCabinets.value;
+
+    for (var idx = 0; idx < newList.length; idx++) {
+      final newCabinet = newList[idx];
+      final newQuantity = int.tryParse(_model.quantityControllers[idx].text) ?? 0;
+
+      if ((newCabinet.id?.isNotEmpty ?? false) && (newQuantity > 0)) {
+        final oldCabinet = oldList[idx];
+        outputData.add(
+          DialogItemEditPositionOutputModel(
+            oldCabinetId: oldCabinet.cabinetId!,
+            newCabinetId: newCabinet.id!,
+            moveQuantity: newQuantity,
+          ),
+        );
+      }
+    }
+
+    return outputData;
+  }
+
   // MARK: - Private Methods
 
   void _loadData() {
@@ -186,6 +212,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
             positions.add(positionModel);
             _model.changeRooms.value.add(WarehouseNameIdModel(id: '', name: EnumLocale.optionPleaseSelect.tr));
             _model.changeCabinets.value.add(WarehouseNameIdModel(id: '', name: EnumLocale.optionPleaseSelect.tr));
+            _model.quantityControllers.add(TextEditingController(text: '0'));
           }
         }
       }
@@ -193,5 +220,9 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
     _model.positions.clear();
     _model.positions.addAll(positions);
+  }
+
+  void _setLoadingStatus(bool isLoading) {
+    _model.isLoading.value = isLoading;
   }
 }

@@ -44,6 +44,8 @@ const Map<String, String> zhCN = {
   'warehouseItemStockInsufficient': '库存不足',
   'warehouseItemEdit': '编辑',
   'warehouseItemEditPosition': '异动位置',
+  'warehouseItemUpdateSuccess': '更新物品成功',
+  'warehouseItemUpdateFailed': '更新物品失败',
   'warehouseItemChange': '异动',
   'warehouseItemInfo': '资讯',
   'warehouseItemRecord': '记录',

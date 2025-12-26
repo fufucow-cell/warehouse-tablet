@@ -79,6 +79,40 @@ class DialogItemNormalEditWidgetController extends GetxController {
     return _service.convertFileToImage(getFilePath, fitHeight: 200.0.scale);
   }
 
+  Future<DialogItemNormalEditNormalOutputModel?> checkNormalOutputModel() async {
+    final name = nameController.text.trim();
+    final minStockAlert = int.tryParse(minStockAlertController.text.trim()) ?? 0;
+    final description = descriptionController.text.trim();
+    String? photo;
+    String categoryId = '';
+
+    if (getFilePath.isNotEmpty) {
+      photo = await _convertFileToBase64(getFilePath);
+    } else if (_model.photoUrl.value == null) {
+      photo = '';
+    }
+
+    if (selectedCategoryLevel3Rx.value?.id?.isNotEmpty ?? false) {
+      categoryId = selectedCategoryLevel3Rx.value!.id!;
+    } else if (selectedCategoryLevel2Rx.value?.id?.isNotEmpty ?? false) {
+      categoryId = selectedCategoryLevel2Rx.value!.id!;
+    } else if (selectedCategoryLevel1Rx.value?.id?.isNotEmpty ?? false) {
+      categoryId = selectedCategoryLevel1Rx.value!.id!;
+    }
+
+    return DialogItemNormalEditNormalOutputModel(
+      name: name,
+      minStockAlert: minStockAlert,
+      description: description,
+      photo: photo,
+      categoryId: categoryId,
+    );
+  }
+
+  void setLoadingStatus(bool isLoading) {
+    _model.isLoading.value = isLoading;
+  }
+
   // MARK: - Private Method
 
   // 設置加載狀態

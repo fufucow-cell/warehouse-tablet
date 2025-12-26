@@ -14,10 +14,12 @@ import 'package:get/get.dart';
 
 class DialogItemEditPositionWidget extends StatelessWidget {
   final String itemId;
+  final Future<bool> Function(List<DialogItemEditPositionOutputModel>) onConfirm;
 
   const DialogItemEditPositionWidget({
     super.key,
     required this.itemId,
+    required this.onConfirm,
   });
 
   @override
@@ -28,18 +30,46 @@ class DialogItemEditPositionWidget extends StatelessWidget {
         return DialogFrame(
           width: 1168.0.scale,
           header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
-          footer: DialogFooter(
-            type: DialogFooterType.cancelAndConfirm,
-            onCancel: () {
-              controller.interactive(
-                EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
-                data: context,
-              );
-            },
-            onConfirm: () {
-              controller.interactive(
-                EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
-                data: context,
+          footer: Obx(
+            () {
+              return DialogFooter(
+                isLoading: controller.isLoadingRx.value,
+                type: DialogFooterType.cancelAndConfirm,
+                onCancel: () {
+                  controller.interactive(
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
+                    data: context,
+                  );
+                },
+                onConfirm: () async {
+                  controller.interactive(
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                    data: true,
+                  );
+                  final outputData = controller.checkOutputData();
+
+                  if (outputData.isEmpty) {
+                    controller.interactive(
+                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                      data: false,
+                    );
+                    return;
+                  }
+
+                  final isSuccess = await onConfirm(outputData);
+
+                  if (isSuccess) {
+                    controller.interactive(
+                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                      data: context,
+                    );
+                  }
+
+                  controller.interactive(
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                    data: false,
+                  );
+                },
               );
             },
           ),
@@ -215,6 +245,8 @@ class _ChangeQuantitySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    final textController = controller.getQuantityControllers[model.index];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -229,14 +261,14 @@ class _ChangeQuantitySection extends StatelessWidget {
           children: [
             _QuantityButton(
               eImage: EnumImage.cMinus,
-              textController: model.textEditingController,
+              textController: textController,
             ),
             SizedBox(width: 16.0.scale),
             SizedBox(
               width: 180.0.scale,
               height: 70.0.scale,
               child: WidgetUtil.textField(
-                controller: model.textEditingController,
+                controller: textController,
                 textFieldType: EnumTextFieldType.integer,
                 maxLength: 7,
                 keyboardType: TextInputType.number,
@@ -246,7 +278,7 @@ class _ChangeQuantitySection extends StatelessWidget {
             SizedBox(width: 16.0.scale),
             _QuantityButton(
               eImage: EnumImage.cPlus,
-              textController: model.textEditingController,
+              textController: textController,
             ),
           ],
         ),

@@ -13,11 +13,13 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 import 'package:get/get.dart';
 
 class DialogItemEditQuantityWidget extends StatelessWidget {
+  final Future<bool> Function(List<DialogItemEditQuantityOutputModel>) onConfirm;
   final String itemId;
 
   const DialogItemEditQuantityWidget({
     super.key,
     required this.itemId,
+    required this.onConfirm,
   });
 
   @override
@@ -28,18 +30,46 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
         return DialogFrame(
           width: 1168.0.scale,
           header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
-          footer: DialogFooter(
-            type: DialogFooterType.cancelAndConfirm,
-            onCancel: () {
-              controller.interactive(
-                EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton,
-                data: context,
-              );
-            },
-            onConfirm: () {
-              controller.interactive(
-                EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
-                data: context,
+          footer: Obx(
+            () {
+              return DialogFooter(
+                isLoading: controller.isLoadingRx.value,
+                type: DialogFooterType.cancelAndConfirm,
+                onCancel: () {
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton,
+                    data: context,
+                  );
+                },
+                onConfirm: () async {
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                    data: true,
+                  );
+                  final outputData = controller.checkOutputData();
+
+                  if (outputData.isEmpty) {
+                    controller.interactive(
+                      EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                      data: false,
+                    );
+                    return;
+                  }
+
+                  final isSuccess = await onConfirm(outputData);
+
+                  if (isSuccess) {
+                    controller.interactive(
+                      EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                      data: context,
+                    );
+                  }
+
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                    data: false,
+                  );
+                },
               );
             },
           ),

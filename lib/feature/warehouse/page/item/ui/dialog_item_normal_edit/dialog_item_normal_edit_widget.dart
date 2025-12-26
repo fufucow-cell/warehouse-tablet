@@ -37,31 +37,35 @@ class DialogItemNormalEditWidget extends StatelessWidget {
               width: 962.0.scale,
               minHeight: 1024.0.scale,
               header: DialogHeader(title: EnumLocale.createItemTitle.tr),
-              footer: DialogFooter(
-                type: DialogFooterType.cancelAndConfirm,
-                isLoading: isLoading,
-                onCancel: () {
-                  controller.interactive(
-                    EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
-                    data: context,
+              footer: Obx(
+                () {
+                  return DialogFooter(
+                    isLoading: controller.isLoadingRx.value,
+                    type: DialogFooterType.cancelAndConfirm,
+                    onCancel: () {
+                      controller.interactive(
+                        EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
+                        data: context,
+                      );
+                    },
+                    onConfirm: () async {
+                      controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: true);
+                      final outputModel = await controller.checkOutputModel();
+
+                      if (outputModel == null) {
+                        controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: false);
+                        return;
+                      }
+
+                      final isSuccess = await onConfirm(outputModel);
+
+                      if (isSuccess) {
+                        controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: context);
+                      }
+
+                      controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: false);
+                    },
                   );
-                },
-                onConfirm: () async {
-                  controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: true);
-                  final outputModel = await controller.checkOutputModel();
-
-                  if (outputModel == null) {
-                    controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: false);
-                    return;
-                  }
-
-                  final isSuccess = await onConfirm(outputModel);
-
-                  if (isSuccess) {
-                    Navigator.of(context).pop();
-                  }
-
-                  controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: context);
                 },
               ),
               child: const _Body(),

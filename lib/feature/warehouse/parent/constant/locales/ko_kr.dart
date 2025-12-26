@@ -44,6 +44,8 @@ const Map<String, String> koKR = {
   'warehouseItemStockInsufficient': '재고 부족',
   'warehouseItemEdit': '편집',
   'warehouseItemEditPosition': '위치 변경',
+  'warehouseItemUpdateSuccess': '항목 업데이트 성공',
+  'warehouseItemUpdateFailed': '항목 업데이트 실패',
   'warehouseItemChange': '변경',
   'warehouseItemInfo': '정보',
   'warehouseItemRecord': '기록',

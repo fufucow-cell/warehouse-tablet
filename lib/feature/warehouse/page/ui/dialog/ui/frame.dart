@@ -7,7 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 class DialogFrame extends StatelessWidget {
   final Widget child;
   final DialogHeader header;
-  final DialogFooter? footer;
+  final Widget? footer;
   final double? width;
   final double? maxHeight;
   final double? minHeight;

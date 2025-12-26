@@ -32,3 +32,19 @@ class DialogItemNormalEditOutputModel {
     this.categoryId,
   });
 }
+
+class DialogItemNormalEditNormalOutputModel {
+  String? name;
+  int? minStockAlert;
+  String? description;
+  String? photo;
+  String? categoryId;
+
+  DialogItemNormalEditNormalOutputModel({
+    this.name,
+    this.minStockAlert,
+    this.description,
+    this.photo,
+    this.categoryId,
+  });
+}
