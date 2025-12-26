@@ -61,6 +61,7 @@ const Map<String, String> enUS = {
   'warehouseChangeCabinet': 'Change Cabinet',
   'warehouseCabinetRoomSummary': 'Total @para1 cabinets, @para2 items',
   'warehouseRecord': 'Record',
+  'warehouseRecordCount': 'Record Count',
   'warehouseRecordColumnType': 'Type',
   'warehouseRecordColumnContent': 'Content',
   'warehouseRecordColumnTime': 'Time',

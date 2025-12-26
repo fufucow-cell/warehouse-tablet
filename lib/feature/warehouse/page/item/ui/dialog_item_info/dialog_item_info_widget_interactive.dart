@@ -12,7 +12,7 @@ extension DialogItemInfoWidgetUserEventExtension on DialogItemInfoWidgetControll
   }) {
     switch (type) {
       case EnumDialogItemInfoWidgetInteractive.tapRecordButton:
-        routerHandle(EnumDialogItemInfoWidgetRoute.switchMainPageTabItemIndex, data: data);
+        routerHandle(EnumDialogItemInfoWidgetRoute.showDialogItemHistory, data: data);
     }
   }
 }

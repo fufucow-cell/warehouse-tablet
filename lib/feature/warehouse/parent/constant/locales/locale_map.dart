@@ -228,6 +228,7 @@ enum EnumLocale {
   warehouseQuantityChange,
   warehouseQuantityLabel,
   warehouseRecord,
+  warehouseRecordCount,
   warehouseRecordColumnContent,
   warehouseRecordColumnPerson,
   warehouseRecordColumnTime,

@@ -60,6 +60,7 @@ const Map<String, String> zhTW = {
   'warehouseChangeCabinet': '更改櫃位',
   'warehouseCabinetRoomSummary': '總共 @para1 櫃位, @para2 項物品',
   'warehouseRecord': '記錄',
+  'warehouseRecordCount': '記錄數量',
   'warehouseRecordColumnType': '類型',
   'warehouseRecordColumnContent': '內容',
   'warehouseRecordColumnTime': '時間',

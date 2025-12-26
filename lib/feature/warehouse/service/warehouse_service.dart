@@ -58,13 +58,11 @@ class WarehouseService {
   List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
 
   // 物品
-  // List<Item> get getAllLowStockItems => _model.allLowStockItems.value ?? <Item>[];
-  // RxReadonly<List<Item>?> get allLowStockItemsRx => _model.allLowStockItems.readonly;
   List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
-  // Map<String, List<Item>> get getAllGroupItems => _model.allGroupItems ?? <String, List<Item>>{};
 
   // 記錄
-  List<ItemRecord>? get getAllRecords => _model.allRecords;
+  List<ItemRecord> get getAllRecords => _model.allRecords.value ?? <ItemRecord>[];
+  RxReadonly<List<ItemRecord>?> get allRecordsRx => _model.allRecords.readonly;
 
   // Tab 選擇
   RxReadonly<EnumWarehouseTabItem> get mainPageSelectedTabItemRx => _model.mainPageSelectedTabItem.readonly;
@@ -472,7 +470,7 @@ class WarehouseService {
       fromJson: WarehouseRecordResponseModel.fromJson,
       onError: onError,
     );
-    _model.allRecords = response?.data;
+    _model.allRecords.value = response?.data;
     return response?.data ?? [];
   }
 

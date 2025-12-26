@@ -269,6 +269,82 @@
                   }
                 }
               }
+            },
+            {
+              "id": "126e8400-e29b-41d4-a716-446655440026",
+              "name": "氣泡機",
+              "description": "氣泡機，可製作多種氣泡飲品",
+              "quantity": 0,
+              "min_stock_alert": 3,
+              "photo": null,
+              "category": {
+                "id": "333e8400-e29b-41d4-a716-446655440033",
+                "name": "廚房用品",
+                "parent_id": null,
+                "children": {
+                  "id": "333e8400-e29b-41d4-a716-446655440043",
+                  "name": "氣泡飲品",
+                  "parent_id": "333e8400-e29b-41d4-a716-446655440033",
+                  "children": null
+                }
+              }
+            },
+            {
+              "id": "127e8400-e29b-41d4-a716-446655440027",
+              "name": "咖啡機",
+              "description": "全自動義式咖啡機，可製作多種咖啡飲品",
+              "quantity": 0,
+              "min_stock_alert": 7,
+              "photo": "https://example.com/coffee_maker.jpg",
+              "category": {
+                "id": "333e8400-e29b-41d4-a716-446655440033",
+                "name": "廚房用品",
+                "parent_id": null,
+                "children": {
+                  "id": "333e8400-e29b-41d4-a716-446655440044",
+                  "name": "家電",
+                  "parent_id": "333e8400-e29b-41d4-a716-446655440033",
+                  "children": null
+                }
+              }
+            },
+            {
+              "id": "128e8400-e29b-41d4-a716-446655440028",
+              "name": "餐具組",
+              "description": null,
+              "quantity": 0,
+              "min_stock_alert": 0,
+              "photo": null,
+              "category": {
+                "id": "333e8400-e29b-41d4-a716-446655440033",
+                "name": "廚房用品",
+                "parent_id": null,
+                "children": {
+                  "id": "333e8400-e29b-41d4-a716-446655440045",
+                  "name": "餐具",
+                  "parent_id": "333e8400-e29b-41d4-a716-446655440033",
+                  "children": null
+                }
+              }
+            },
+            {
+              "id": "129e8400-e29b-41d4-a716-446655440029",
+              "name": "不鏽鋼餐具組",
+              "description": null,
+              "quantity": 0,
+              "min_stock_alert": 0,
+              "photo": null,
+              "category": {
+                "id": "333e8400-e29b-41d4-a716-446655440033",
+                "name": "廚房用品",
+                "parent_id": null,
+                "children": {
+                  "id": "333e8400-e29b-41d4-a716-446655440045",
+                  "name": "餐具",
+                  "parent_id": "333e8400-e29b-41d4-a716-446655440033",
+                  "children": null
+                }
+              }
             }
           ]
         },

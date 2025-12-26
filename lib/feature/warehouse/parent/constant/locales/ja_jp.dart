@@ -60,6 +60,7 @@ const Map<String, String> jaJP = {
   'warehouseChangeCabinet': 'キャビネット変更',
   'warehouseCabinetRoomSummary': '合計 @para1 キャビネット、@para2 アイテム',
   'warehouseRecord': '記録',
+  'warehouseRecordCount': '記録数',
   'warehouseRecordColumnType': 'タイプ',
   'warehouseRecordColumnContent': '内容',
   'warehouseRecordColumnTime': '時間',

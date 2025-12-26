@@ -10,6 +10,7 @@ class ItemRecord with _$ItemRecord {
   factory ItemRecord({
     String? id,
     @JsonKey(name: 'household_id') String? householdId,
+    @JsonKey(name: 'item_id') String? itemId,
     @JsonKey(name: 'user_name') String? userName,
     @JsonKey(name: 'created_at') int? createdAt,
     @JsonKey(name: 'operate_type') int? operateType,

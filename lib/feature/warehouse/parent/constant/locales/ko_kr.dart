@@ -60,6 +60,7 @@ const Map<String, String> koKR = {
   'warehouseChangeCabinet': '캐비닛 변경',
   'warehouseCabinetRoomSummary': '총 @para1 캐비닛, @para2 항목',
   'warehouseRecord': '기록',
+  'warehouseRecordCount': '기록 수',
   'warehouseRecordColumnType': '유형',
   'warehouseRecordColumnContent': '내용',
   'warehouseRecordColumnTime': '시간',

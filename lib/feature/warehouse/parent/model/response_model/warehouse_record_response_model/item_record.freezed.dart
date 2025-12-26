@@ -23,6 +23,8 @@ mixin _$ItemRecord {
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
   String? get householdId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_id')
+  String? get itemId => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
   String? get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -65,6 +67,7 @@ abstract class $ItemRecordCopyWith<$Res> {
   $Res call(
       {String? id,
       @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'item_id') String? itemId,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
@@ -97,6 +100,7 @@ class _$ItemRecordCopyWithImpl<$Res, $Val extends ItemRecord>
   $Res call({
     Object? id = freezed,
     Object? householdId = freezed,
+    Object? itemId = freezed,
     Object? userName = freezed,
     Object? createdAt = freezed,
     Object? operateType = freezed,
@@ -119,6 +123,10 @@ class _$ItemRecordCopyWithImpl<$Res, $Val extends ItemRecord>
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String?,
       userName: freezed == userName
           ? _value.userName
@@ -199,6 +207,7 @@ abstract class _$$ItemRecordImplCopyWith<$Res>
   $Res call(
       {String? id,
       @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'item_id') String? itemId,
       @JsonKey(name: 'user_name') String? userName,
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
@@ -230,6 +239,7 @@ class __$$ItemRecordImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? householdId = freezed,
+    Object? itemId = freezed,
     Object? userName = freezed,
     Object? createdAt = freezed,
     Object? operateType = freezed,
@@ -252,6 +262,10 @@ class __$$ItemRecordImplCopyWithImpl<$Res>
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String?,
       userName: freezed == userName
           ? _value.userName
@@ -315,6 +329,7 @@ class _$ItemRecordImpl implements _ItemRecord {
   _$ItemRecordImpl(
       {this.id,
       @JsonKey(name: 'household_id') this.householdId,
+      @JsonKey(name: 'item_id') this.itemId,
       @JsonKey(name: 'user_name') this.userName,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'operate_type') this.operateType,
@@ -345,6 +360,9 @@ class _$ItemRecordImpl implements _ItemRecord {
   @override
   @JsonKey(name: 'household_id')
   final String? householdId;
+  @override
+  @JsonKey(name: 'item_id')
+  final String? itemId;
   @override
   @JsonKey(name: 'user_name')
   final String? userName;
@@ -452,7 +470,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   @override
   String toString() {
-    return 'ItemRecord(id: $id, householdId: $householdId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, itemName: $itemName, itemDescription: $itemDescription, itemPhoto: $itemPhoto, itemMinStockCount: $itemMinStockCount, categoryName: $categoryName, cabinetName: $cabinetName, cabinetRoomName: $cabinetRoomName, itemPosition: $itemPosition, itemQuantity: $itemQuantity)';
+    return 'ItemRecord(id: $id, householdId: $householdId, itemId: $itemId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, itemName: $itemName, itemDescription: $itemDescription, itemPhoto: $itemPhoto, itemMinStockCount: $itemMinStockCount, categoryName: $categoryName, cabinetName: $cabinetName, cabinetRoomName: $cabinetRoomName, itemPosition: $itemPosition, itemQuantity: $itemQuantity)';
   }
 
   @override
@@ -463,6 +481,7 @@ class _$ItemRecordImpl implements _ItemRecord {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.householdId, householdId) ||
                 other.householdId == householdId) &&
+            (identical(other.itemId, itemId) || other.itemId == itemId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.createdAt, createdAt) ||
@@ -496,6 +515,7 @@ class _$ItemRecordImpl implements _ItemRecord {
       runtimeType,
       id,
       householdId,
+      itemId,
       userName,
       createdAt,
       operateType,
@@ -528,6 +548,7 @@ abstract class _ItemRecord implements ItemRecord {
   factory _ItemRecord(
       {final String? id,
       @JsonKey(name: 'household_id') final String? householdId,
+      @JsonKey(name: 'item_id') final String? itemId,
       @JsonKey(name: 'user_name') final String? userName,
       @JsonKey(name: 'created_at') final int? createdAt,
       @JsonKey(name: 'operate_type') final int? operateType,
@@ -551,6 +572,9 @@ abstract class _ItemRecord implements ItemRecord {
   @override
   @JsonKey(name: 'household_id')
   String? get householdId;
+  @override
+  @JsonKey(name: 'item_id')
+  String? get itemId;
   @override
   @JsonKey(name: 'user_name')
   String? get userName;

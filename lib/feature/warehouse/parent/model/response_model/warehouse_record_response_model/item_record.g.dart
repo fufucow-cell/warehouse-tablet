@@ -10,6 +10,7 @@ _$ItemRecordImpl _$$ItemRecordImplFromJson(Map<String, dynamic> json) =>
     _$ItemRecordImpl(
       id: json['id'] as String?,
       householdId: json['household_id'] as String?,
+      itemId: json['item_id'] as String?,
       userName: json['user_name'] as String?,
       createdAt: (json['created_at'] as num?)?.toInt(),
       operateType: (json['operate_type'] as num?)?.toInt(),
@@ -48,6 +49,7 @@ Map<String, dynamic> _$$ItemRecordImplToJson(_$ItemRecordImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'household_id': instance.householdId,
+      'item_id': instance.itemId,
       'user_name': instance.userName,
       'created_at': instance.createdAt,
       'operate_type': instance.operateType,

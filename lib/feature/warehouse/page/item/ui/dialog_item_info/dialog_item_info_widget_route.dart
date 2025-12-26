@@ -1,16 +1,16 @@
 part of 'dialog_item_info_widget_controller.dart';
 
 enum EnumDialogItemInfoWidgetRoute {
-  switchMainPageTabItemIndex,
+  showDialogItemHistory,
 }
 
 extension DialogItemInfoWidgetRouteExtension on DialogItemInfoWidgetController {
   void routerHandle(EnumDialogItemInfoWidgetRoute type, {dynamic data}) {
     switch (type) {
-      case EnumDialogItemInfoWidgetRoute.switchMainPageTabItemIndex:
+      case EnumDialogItemInfoWidgetRoute.showDialogItemHistory:
         if (data is BuildContext) {
-          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.record);
           Navigator.of(data).pop();
+          _service.showAlert(DialogItemHistoryWidget(item: _model.combineItem!));
         }
     }
   }
