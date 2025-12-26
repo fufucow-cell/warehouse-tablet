@@ -3,6 +3,7 @@ part of 'warehouse_item_page.dart';
 enum EnumWarehouseItemPageRoute {
   showDialogItemNormalEdit,
   showDialogItemQuantityEdit,
+  showDialogItemPositionEdit,
   showDialogItemHistory,
   showDialogItemInfo,
 }
@@ -22,30 +23,16 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
           );
         }
       case EnumWarehouseItemPageRoute.showDialogItemQuantityEdit:
-        if (data is Item) {
-          // final rooms = _service.filterItemFromRooms(data);
-          // final locations = rooms
-          //     .expand<DialogItemInfoCabinetModel>((DialogItemInfoRoomModel room) => room.cabinets)
-          //     .map(
-          //       (cabinet) => DialogItemEditQuantityLocationModel(
-          //         locationId: cabinet.cabinetId,
-          //         locationName: cabinet.cabinetName,
-          //         quantity: cabinet.quantity,
-          //       ),
-          //     )
-          //     .toList();
-
-          // _service.showAlert(
-          //   DialogItemEditQuantity(
-          //     DialogItemEditQuantityModel(
-          //       itemName: data.name,
-          //       currentQuantity: rooms
-          //           .expand<DialogItemInfoCabinetModel>((DialogItemInfoRoomModel room) => room.cabinets)
-          //           .fold<int>(0, (sum, cabinet) => sum + (cabinet.quantity)),
-          //       locations: locations,
-          //     ),
-          //   ),
-          // );
+        if (data is Item && (data.id?.isNotEmpty ?? false)) {
+          _service.showAlert(
+            DialogItemEditQuantityWidget(itemId: data.id!),
+          );
+        }
+      case EnumWarehouseItemPageRoute.showDialogItemPositionEdit:
+        if (data is Item && (data.id?.isNotEmpty ?? false)) {
+          _service.showAlert(
+            DialogItemEditPositionWidget(itemId: data.id!),
+          );
         }
       case EnumWarehouseItemPageRoute.showDialogItemHistory:
         if (data is Item) {

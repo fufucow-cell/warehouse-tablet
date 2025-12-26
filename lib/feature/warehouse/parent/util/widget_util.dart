@@ -181,8 +181,8 @@ class WidgetUtil {
 
   static Widget shimmerWidget({required Widget child, Color? highlightColor}) {
     return Shimmer.fromColors(
-      baseColor: EnumColor.backgroundSecondary.color,
-      highlightColor: highlightColor ?? EnumColor.backgroundProduct.color,
+      baseColor: EnumColor.backgroundLoadingBase.color,
+      highlightColor: highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
       child: child,
     );
   }

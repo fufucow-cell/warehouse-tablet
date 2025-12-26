@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-24T22:28:00.300140
+/// 生成时间: 2025-12-26T12:14:37.241861
 library;
 
 import 'package:flutter/material.dart';
@@ -21,6 +21,8 @@ enum EnumColor {
   backgroundDropdown,
   backgroundGhost,
   backgroundItemGradient,
+  backgroundLoadingBase,
+  backgroundLoadingHighlight,
   backgroundPrimary,
   backgroundProduct,
   backgroundQuaternary,
