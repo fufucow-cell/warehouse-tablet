@@ -90,6 +90,10 @@ const Map<String, String> zhCN = {
   'optionAll': '全部',
   'optionNotSet': '未设定',
   'optionNewCategory': '新增分类',
+  'optionPleaseSelect': '请选择',
+  'optionPleaseSelectRoom': '请选择房间',
+  'optionPleaseSelectCabinet': '请选择柜位',
+  'optionNoData': '无资料',
 
   // 搜尋相關
   'searchTitle': '搜索',
@@ -260,6 +264,9 @@ const Map<String, String> zhCN = {
   'warehouseTagTypeUpdateCategory': '异动分类',
   'warehouseTagTypeUpdateQuantity': '异动数量',
   'warehouseTagTypeUpdatePosition': '异动位置',
+  'warehouseTotalQuantityAfterAdjustment': '调整后总数量',
+  'warehouseAddStorageLocation': '新增存放位置',
+  'warehouseMaxNewPositionsReached': '已达最大新增数量',
   'warehouseTagTypeDeleteItem': '删除物品',
   'warehouseTagTypeDeleteCabinet': '删除柜位',
   'warehouseTagTypeDeleteCategory': '删除分类',

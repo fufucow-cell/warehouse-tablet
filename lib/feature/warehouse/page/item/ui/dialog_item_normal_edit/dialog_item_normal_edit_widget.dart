@@ -249,9 +249,7 @@ class _DropdownField extends StatelessWidget {
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
-        onValueSelected: (str, idx) {
-          onValueSelected(str);
-        },
+        onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDropdownButton),
       ),
     );

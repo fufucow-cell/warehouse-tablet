@@ -90,6 +90,10 @@ const Map<String, String> zhTW = {
   'optionAll': '全部',
   'optionNotSet': '未設定',
   'optionNewCategory': '新增分類',
+  'optionPleaseSelect': '請選擇',
+  'optionPleaseSelectRoom': '請選擇房間',
+  'optionPleaseSelectCabinet': '請選擇櫃位',
+  'optionNoData': '無資料',
 
   // 搜尋相關
   'searchTitle': '搜尋',
@@ -259,6 +263,9 @@ const Map<String, String> zhTW = {
   'warehouseTagTypeUpdateCategory': '異動分類',
   'warehouseTagTypeUpdateQuantity': '異動數量',
   'warehouseTagTypeUpdatePosition': '異動位置',
+  'warehouseTotalQuantityAfterAdjustment': '調整後總數量',
+  'warehouseAddStorageLocation': '新增存放位置',
+  'warehouseMaxNewPositionsReached': '已達最大新增數量',
   'warehouseTagTypeDeleteItem': '刪除物品',
   'warehouseTagTypeDeleteCabinet': '刪除櫃位',
   'warehouseTagTypeDeleteCategory': '刪除分類',

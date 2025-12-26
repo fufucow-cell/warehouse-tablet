@@ -91,6 +91,10 @@ const Map<String, String> enUS = {
   'optionAll': 'All',
   'optionNotSet': 'Not Set',
   'optionNewCategory': 'New Category',
+  'optionPleaseSelect': 'Please select',
+  'optionPleaseSelectRoom': 'Please select room',
+  'optionPleaseSelectCabinet': 'Please select cabinet',
+  'optionNoData': 'No data',
 
   // Search related
   'searchTitle': 'Search',
@@ -262,6 +266,9 @@ const Map<String, String> enUS = {
   'warehouseTagTypeUpdateCategory': 'Update Category',
   'warehouseTagTypeUpdateQuantity': 'Change Quantity',
   'warehouseTagTypeUpdatePosition': 'Change Position',
+  'warehouseTotalQuantityAfterAdjustment': 'Total Quantity After Adjustment',
+  'warehouseAddStorageLocation': 'Add Storage Location',
+  'warehouseMaxNewPositionsReached': 'Maximum New Positions Reached',
   'warehouseTagTypeDeleteItem': 'Delete Item',
   'warehouseTagTypeDeleteCabinet': 'Delete Cabinet',
   'warehouseTagTypeDeleteCategory': 'Delete Category',

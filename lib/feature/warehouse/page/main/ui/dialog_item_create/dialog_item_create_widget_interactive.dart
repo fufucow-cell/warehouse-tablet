@@ -38,10 +38,10 @@ extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetCont
           quantityController.text = _model.quantity.value.toString();
         }
       case EnumDialogItemCreateWidgetInteractive.tapSmartAddButton:
-        _routerHandle(EnumDialogItemCreateWidgetRoute.openCamera);
+        _routerHandle(EnumDialogItemCreateWidgetRoute.openCamera, data);
       case EnumDialogItemCreateWidgetInteractive.tapPhoto:
       case EnumDialogItemCreateWidgetInteractive.replacePhoto:
-        _routerHandle(EnumDialogItemCreateWidgetRoute.openGallery);
+        _routerHandle(EnumDialogItemCreateWidgetRoute.openGallery, data);
       case EnumDialogItemCreateWidgetInteractive.deletePhoto:
         _model.filePath.value = null;
       case EnumDialogItemCreateWidgetInteractive.tapRoom:
@@ -65,15 +65,13 @@ extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetCont
           _changeSelectedCategoryLevel3(data);
         }
       case EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton:
-        if (data is BuildContext) {
-          Navigator.of(data).pop();
-        }
+        _routerHandle(EnumDialogItemCreateWidgetRoute.tapDialogFooterButton, data);
       case EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
           _setLoadingStatus(false);
-          Navigator.of(data).pop();
+          _routerHandle(EnumDialogItemCreateWidgetRoute.tapDialogFooterButton, data);
         }
       default:
         break;

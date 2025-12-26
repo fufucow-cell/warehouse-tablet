@@ -90,6 +90,10 @@ const Map<String, String> jaJP = {
   'optionAll': 'すべて',
   'optionNotSet': '未設定',
   'optionNewCategory': '新規カテゴリ',
+  'optionPleaseSelect': '選択してください',
+  'optionPleaseSelectRoom': '部屋を選択してください',
+  'optionPleaseSelectCabinet': 'キャビネットを選択してください',
+  'optionNoData': 'データなし',
 
   // 検索関連
   'searchTitle': '検索',
@@ -260,6 +264,9 @@ const Map<String, String> jaJP = {
   'warehouseTagTypeUpdateCategory': 'カテゴリ変更',
   'warehouseTagTypeUpdateQuantity': '変更数量',
   'warehouseTagTypeUpdatePosition': '変更位置',
+  'warehouseTotalQuantityAfterAdjustment': '調整後総数量',
+  'warehouseAddStorageLocation': '保管場所追加',
+  'warehouseMaxNewPositionsReached': '最大追加数に達しました',
   'warehouseTagTypeDeleteItem': 'アイテム削除',
   'warehouseTagTypeDeleteCabinet': 'キャビネット削除',
   'warehouseTagTypeDeleteCategory': 'カテゴリ削除',

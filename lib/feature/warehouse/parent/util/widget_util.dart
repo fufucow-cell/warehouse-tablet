@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
@@ -158,7 +159,7 @@ class WidgetUtil {
   static Widget textDropdownButton({
     String? selectedValue,
     required List<String> values,
-    required Function(String?, int?) onValueSelected,
+    required Function(String?) onValueSelected,
     double? width,
     double? height,
     double? fontSize,
@@ -253,7 +254,7 @@ class WidgetUtil {
 class _TextDropdownButton extends StatefulWidget {
   final String? selectedValue;
   final List<String> values;
-  final Function(String?, int?) onValueSelected;
+  final Function(String?) onValueSelected;
   final double? width;
   final double? height;
   final double? fontSize;
@@ -358,7 +359,7 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
             _isMenuOpen = false;
           });
           if (selectedValue != null) {
-            widget.onValueSelected(selectedValue, widget.values.indexOf(selectedValue));
+            widget.onValueSelected(selectedValue);
           }
         }
       });
@@ -380,6 +381,17 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
       builder: (context, constraints) {
         final availableWidth = constraints.maxWidth;
         final btnWidth = widget.width ?? availableWidth;
+        Color btnTextColor;
+
+        if (widget.buttonTextColor != null) {
+          btnTextColor = widget.buttonTextColor!;
+        } else {
+          if (widget.values.isEmpty || widget.selectedValue == null || !widget.values.contains(widget.selectedValue)) {
+            btnTextColor = EnumColor.textSecondary.color;
+          } else {
+            btnTextColor = EnumColor.textPrimary.color;
+          }
+        }
 
         return GestureDetector(
           onTap: () {
@@ -412,14 +424,15 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
               children: [
                 Expanded(
                   child: WidgetUtil.textWidget(
-                    widget.selectedValue ?? (widget.values.isEmpty ? '無資料' : '請選擇'),
+                    widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
                     size: textSize,
-                    color: widget.buttonTextColor ?? EnumColor.textPrimary.color,
+                    color: btnTextColor,
                   ),
                 ),
                 SizedBox(width: 16.0.scale),
                 EnumImage.cArrowDown.image(
                   size: Size.square(38.0.scale),
+                  color: btnTextColor,
                 ),
               ],
             ),

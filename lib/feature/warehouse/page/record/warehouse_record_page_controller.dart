@@ -118,6 +118,10 @@ class WarehouseRecordPageController extends GetxController {
     return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
   }
 
+  List<String> get getFilterNames {
+    return EnumFilterType.values.map((type) => type.title).toList();
+  }
+
   // MARK: - Private Method
 
   void _checkData() {

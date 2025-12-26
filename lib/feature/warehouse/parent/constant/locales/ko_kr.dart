@@ -90,6 +90,10 @@ const Map<String, String> koKR = {
   'optionAll': '전체',
   'optionNotSet': '미설정',
   'optionNewCategory': '새 카테고리',
+  'optionPleaseSelect': '선택하세요',
+  'optionPleaseSelectRoom': '방을 선택하세요',
+  'optionPleaseSelectCabinet': '캐비닛을 선택하세요',
+  'optionNoData': '데이터 없음',
 
   // 검색 관련
   'searchTitle': '검색',
@@ -260,6 +264,9 @@ const Map<String, String> koKR = {
   'warehouseTagTypeUpdateCategory': '카테고리 변경',
   'warehouseTagTypeUpdateQuantity': '변경 수량',
   'warehouseTagTypeUpdatePosition': '변경 위치',
+  'warehouseTotalQuantityAfterAdjustment': '조정 후 총 수량',
+  'warehouseAddStorageLocation': '보관 위치 추가',
+  'warehouseMaxNewPositionsReached': '최대 추가 수량에 도달했습니다',
   'warehouseTagTypeDeleteItem': '항목 삭제',
   'warehouseTagTypeDeleteCabinet': '캐비닛 삭제',
   'warehouseTagTypeDeleteCategory': '카테고리 삭제',

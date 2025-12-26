@@ -387,7 +387,7 @@ class _ChangeRoomField extends StatelessWidget {
           selectedValue: selectedRoom,
           values: availableRooms,
           buttonTextColor: selectedRoom == null ? EnumColor.textSecondary.color : null,
-          onValueSelected: (str, idx) => onRoomChanged(str),
+          onValueSelected: onRoomChanged,
         ),
       ],
     );
@@ -420,7 +420,7 @@ class _ChangeCabinetField extends StatelessWidget {
           selectedValue: selectedCabinet,
           values: availableCabinets,
           buttonTextColor: selectedCabinet == null ? EnumColor.textSecondary.color : null,
-          onValueSelected: (str, idx) => onCabinetChanged(str),
+          onValueSelected: onCabinetChanged,
         ),
       ],
     );

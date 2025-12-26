@@ -1,6 +1,19 @@
 part of 'dialog_item_edit_quantity_widget_controller.dart';
 
-// 目前没有路由需求，保留扩展以备将来使用
+enum EnumDialogItemEditQuantityWidgetRoute {
+  tapDialogFooterButton,
+}
+
 extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWidgetController {
-  // 路由处理方法可以在这里添加
+  void _routerHandle(
+    EnumDialogItemEditQuantityWidgetRoute type,
+    dynamic data,
+  ) {
+    switch (type) {
+      case EnumDialogItemEditQuantityWidgetRoute.tapDialogFooterButton:
+        if (data is BuildContext) {
+          Navigator.of(data).pop();
+        }
+    }
+  }
 }

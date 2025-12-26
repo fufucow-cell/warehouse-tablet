@@ -304,7 +304,10 @@ class _ItemTools extends StatelessWidget {
           padding: EdgeInsets.all(16.0.scale),
           child: Column(
             children: [
-              eImg.image(size: Size.square(40.0.scale)),
+              eImg.image(
+                size: Size.square(40.0.scale),
+                color: EnumColor.iconSecondary.color,
+              ),
               SizedBox(height: 8.0.scale),
               WidgetUtil.textWidget(
                 title,

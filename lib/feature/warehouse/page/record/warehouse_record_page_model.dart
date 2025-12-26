@@ -29,6 +29,10 @@ enum EnumFilterType {
         EnumFilterType.lastWeek => DateTime.now().subtract(const Duration(days: 7)),
         EnumFilterType.all => null,
       };
+
+  static EnumFilterType fromString(String? value) {
+    return EnumFilterType.values.firstWhereOrNull((e) => e.title == value) ?? EnumFilterType.all;
+  }
 }
 
 enum EnumOperateType {

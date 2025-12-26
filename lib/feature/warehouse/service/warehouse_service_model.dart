@@ -34,3 +34,27 @@ class WarehouseNameIdModel {
     required this.name,
   });
 }
+
+class ItemPositionModel {
+  final String roomId;
+  final String roomName;
+  final List<ItemPositionCabinetModel> cabinets;
+
+  ItemPositionModel({
+    required this.roomId,
+    required this.roomName,
+    required this.cabinets,
+  });
+}
+
+class ItemPositionCabinetModel {
+  final String id;
+  final String name;
+  final int quantity;
+
+  ItemPositionCabinetModel({
+    required this.id,
+    required this.name,
+    required this.quantity,
+  });
+}

@@ -33,13 +33,12 @@ class _FilterDropdown extends StatelessWidget {
         width: 280.0.scale,
         height: 70.0.scale,
         selectedValue: controller.filterTypeRx.value.title,
-        values: EnumFilterType.values.map((type) => type.title).toList(),
-        onValueSelected: (str, idx) {
-          if (idx != null) {
-            final selectedType = EnumFilterType.values[idx];
+        values: controller.getFilterNames,
+        onValueSelected: (str) {
+          if (str?.isNotEmpty ?? false) {
             controller.interactive(
               EnumWarehouseRecordPageInteractive.tapFilterButton,
-              data: selectedType,
+              data: EnumFilterType.fromString(str),
             );
           }
         },

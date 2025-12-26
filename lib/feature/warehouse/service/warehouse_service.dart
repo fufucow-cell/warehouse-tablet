@@ -153,56 +153,55 @@ class WarehouseService {
     ThemeUtil.instance.switchFromString(data.theme);
   }
 
-  // List<DialogItemInfoRoomModel> filterItemFromRooms(Item item) {
-  //   final allRooms = _model.allRoomCabinetItems.value;
+  // 產出物品所在的房間與櫥櫃
+  List<ItemPositionModel> genItemPositionsFromRoomCabinet(Item? item) {
+    final allRoomCabinetItems = getAllRoomCabinetItems;
+    final result = <ItemPositionModel>[];
 
-  //   if (allRooms == null || (item.id?.isEmpty ?? true)) {
-  //     return [];
-  //   }
+    if (allRoomCabinetItems.isEmpty || (item?.id?.isEmpty ?? true)) {
+      return [];
+    }
 
-  //   final result = <DialogItemInfoRoomModel>[];
-  //   final itemId = item.id!;
+    for (final room in allRoomCabinetItems) {
+      if (room.cabinets?.isEmpty ?? true) {
+        continue;
+      }
 
-  //   for (final room in allRooms) {
-  //     if (room.cabinets?.isEmpty ?? true) {
-  //       continue;
-  //     }
+      final matchCabinets = <ItemPositionCabinetModel>[];
 
-  //     final matchingCabinets = <DialogItemInfoCabinetModel>[];
+      for (final cabinet in room.cabinets!) {
+        if (cabinet.items?.isEmpty ?? true) {
+          continue;
+        }
 
-  //     for (final cabinet in room.cabinets!) {
-  //       if (cabinet.items?.isEmpty ?? true) {
-  //         continue;
-  //       }
+        final matchItem = cabinet.items!.where((i) => i.id == item?.id).firstOrNull;
 
-  //       final matchingItem = cabinet.items!.where((i) => i.id == itemId).firstOrNull;
+        if (matchItem != null) {
+          matchCabinets.add(
+            ItemPositionCabinetModel(
+              id: cabinet.id ?? '',
+              name: cabinet.name ?? '',
+              quantity: matchItem.quantity ?? 0,
+            ),
+          );
+        }
+      }
 
-  //       if (matchingItem != null) {
-  //         matchingCabinets.add(
-  //           DialogItemInfoCabinetModel(
-  //             cabinetId: cabinet.id ?? '',
-  //             cabinetName: cabinet.name ?? EnumLocale.warehouseUncategorized.tr,
-  //             quantity: matchingItem.quantity ?? 0,
-  //           ),
-  //         );
-  //       }
-  //     }
+      if (matchCabinets.isNotEmpty) {
+        final roomInfo = rooms.where((e) => e.id == room.roomId).firstOrNull;
 
-  //     if (matchingCabinets.isNotEmpty) {
-  //       final roomInfo = _model.rooms.where((r) => r.id == room.roomId).firstOrNull;
+        result.add(
+          ItemPositionModel(
+            roomId: roomInfo?.id ?? '',
+            roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
+            cabinets: matchCabinets,
+          ),
+        );
+      }
+    }
 
-  //       result.add(
-  //         DialogItemInfoRoomModel(
-  //           roomId: roomInfo?.id ?? '',
-  //           roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
-  //           cabinets: matchingCabinets,
-  //         ),
-  //       );
-  //     }
-  //   }
-
-  //   return result;
-  // }
+    return result;
+  }
 
   String convertCategoriesName(Item? item) {
     if (item == null) {

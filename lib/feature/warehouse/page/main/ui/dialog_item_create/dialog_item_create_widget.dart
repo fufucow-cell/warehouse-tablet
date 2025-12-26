@@ -380,10 +380,7 @@ class _DropdownField extends StatelessWidget {
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
-        onValueSelected: (str, idx) {
-          // 先调用 interactive（里面会调用 dismissKeyboard），然后再调用 onValueSelected
-          onValueSelected(str);
-        },
+        onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.tapDropdownButton),
       ),
     );

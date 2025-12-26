@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
@@ -8,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogItemInfoWidget extends StatelessWidget {
@@ -105,7 +105,7 @@ class _InfoCard extends StatelessWidget {
             value: controller.getCategoryName,
           ),
           SizedBox(height: 24.0.scale),
-          _PositionsInfo(rooms: controller.getRooms),
+          _PositionsInfo(rooms: controller.getPositions),
           SizedBox(height: 24.0.scale),
           _RecordButton(),
         ],
@@ -149,7 +149,7 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _PositionsInfo extends StatelessWidget {
-  final List<DialogItemInfopPositionModel> rooms;
+  final List<ItemPositionModel> rooms;
 
   const _PositionsInfo({required this.rooms});
 
@@ -179,7 +179,7 @@ class _PositionsInfo extends StatelessWidget {
                     children: [
                       _PositionItem(
                         roomName: rooms[roomIdx].roomName,
-                        cabinetName: rooms[roomIdx].cabinets[cabinetIdx].cabinetName,
+                        cabinetName: rooms[roomIdx].cabinets[cabinetIdx].name,
                         quantity: rooms[roomIdx].cabinets[cabinetIdx].quantity,
                         showRoomName: cabinetIdx == 0,
                       ),

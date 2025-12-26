@@ -6,6 +6,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/fr
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
@@ -23,70 +25,63 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
     return GetBuilder<DialogItemEditQuantityWidgetController>(
       init: DialogItemEditQuantityWidgetController(itemId),
       builder: (controller) {
-        return Obx(
-          () {
-            return DialogFrame(
-              width: 1168.0.scale,
-              header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
-              footer: DialogFooter(
-                type: DialogFooterType.cancelAndConfirm,
-                onCancel: () {
-                  controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton,
-                    data: context,
-                  );
-                },
-                onConfirm: () {
-                  controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
-                    data: context,
-                  );
-                },
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _InfoCard(
-                    itemName: controller.itemNameRx.value ?? '',
-                    currentQuantity: controller.currentQuantityRx.value ?? 0,
-                  ),
-                  SizedBox(height: 24.0.scale),
-                  _AddLocationButton(
-                    onPressed: () {
-                      controller.interactive(
-                        EnumDialogItemEditQuantityWidgetInteractive.tapAddLocation,
-                      );
-                    },
-                  ),
-                  SizedBox(height: 24.0.scale),
-                  _TotalQuantitySection(totalQuantity: controller.totalQuantity),
-                  SizedBox(height: 24.0.scale),
-                  if (controller.newLocationsRx.value.isNotEmpty || controller.locationsRx.value.isNotEmpty) ...[
-                    _LocationsList(
-                      controller: controller,
-                    ),
-                  ],
-                ],
-              ),
-            );
-          },
+        return DialogFrame(
+          width: 1168.0.scale,
+          header: DialogHeader(title: EnumLocale.warehouseItemChange.tr),
+          footer: DialogFooter(
+            type: DialogFooterType.cancelAndConfirm,
+            onCancel: () {
+              controller.interactive(
+                EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton,
+                data: context,
+              );
+            },
+            onConfirm: () {
+              controller.interactive(
+                EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                data: context,
+              );
+            },
+          ),
+          child: _Body(),
         );
       },
     );
   }
 }
 
-class _InfoCard extends StatelessWidget {
-  final String itemName;
-  final int currentQuantity;
-
-  const _InfoCard({
-    required this.itemName,
-    required this.currentQuantity,
-  });
-
+class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
+    return Obx(
+      () {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _InfoCard(),
+            SizedBox(height: 24.0.scale),
+            _PositionInfo(),
+            SizedBox(height: 24.0.scale),
+            _PositionCard(
+              oldDisplayList: controller.getOldDisplayPositionList,
+            ),
+            SizedBox(height: 24.0.scale),
+            _PositionCard(
+              newDisplayList: controller.getNewDisplayPositionList,
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// 物品資訊
+class _InfoCard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
     return Container(
       padding: EdgeInsets.symmetric(
         horizontal: 32.0.scale,
@@ -102,12 +97,12 @@ class _InfoCard extends StatelessWidget {
         children: [
           _InfoRow(
             label: EnumLocale.createItemName.tr,
-            value: itemName,
+            value: controller.getItemName,
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
             label: EnumLocale.warehouseCurrentQuantityLabel.tr,
-            value: currentQuantity.toString(),
+            value: controller.getOldQuantity,
           ),
         ],
       ),
@@ -149,57 +144,15 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-class _AddLocationButton extends StatelessWidget {
-  final VoidCallback onPressed;
-
-  const _AddLocationButton({required this.onPressed});
-
+/// 位置資訊
+class _PositionInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24.0.scale,
-          vertical: 16.0.scale,
-        ),
-        backgroundColor: EnumColor.backgroundAccentBlue.color,
-        side: BorderSide.none,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0.scale),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            Icons.add,
-            size: 40.0.scale,
-            color: EnumColor.accentBlue.color,
-          ),
-          SizedBox(width: 12.0.scale),
-          WidgetUtil.textWidget(
-            '新增存放位置',
-            size: 28.0.scale,
-            color: EnumColor.accentBlue.color,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TotalQuantitySection extends StatelessWidget {
-  final int totalQuantity;
-
-  const _TotalQuantitySection({required this.totalQuantity});
-
-  @override
-  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
     return Row(
       children: [
         WidgetUtil.textWidget(
-          '調整後總數量',
+          EnumLocale.warehouseTotalQuantityAfterAdjustment.tr,
           size: 28.0.scale,
         ),
         SizedBox(width: 24.0.scale),
@@ -209,66 +162,89 @@ class _TotalQuantitySection extends StatelessWidget {
             color: EnumColor.accentBlue.color,
             borderRadius: BorderRadius.circular(12.0.scale),
           ),
-          child: WidgetUtil.textWidget(
-            totalQuantity.toString(),
-            size: 28.0.scale,
-            color: EnumColor.textWhite.color,
+          child: Obx(
+            () {
+              return WidgetUtil.textWidget(
+                controller.newQuantityRx.value.toString(),
+                size: 28.0.scale,
+                color: EnumColor.textWhite.color,
+              );
+            },
           ),
+        ),
+        SizedBox(width: 24.0.scale),
+        const Spacer(),
+        Obx(
+          () {
+            final maxCount = controller.getMaxNewPositions;
+            final newCount = controller.newPositionsRx.value.length;
+            final isEnabled = newCount < maxCount;
+            return OutlinedButton(
+              onPressed: () {
+                if (isEnabled) {
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapAddNewPostion,
+                  );
+                }
+              },
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24.0.scale,
+                  vertical: 16.0.scale,
+                ),
+                backgroundColor: EnumColor.backgroundAccentBlue.color,
+                side: BorderSide.none,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0.scale),
+                ),
+              ),
+              child: (!isEnabled)
+                  ? WidgetUtil.textWidget(
+                      EnumLocale.warehouseMaxNewPositionsReached.tr,
+                      size: 28.0.scale,
+                      color: EnumColor.accentBlue.color,
+                    )
+                  : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        EnumImage.cPlus.image(
+                          size: Size.square(40.0.scale),
+                          color: EnumColor.accentBlue.color,
+                        ),
+                        SizedBox(width: 3.0.scale),
+                        WidgetUtil.textWidget(
+                          EnumLocale.warehouseAddStorageLocation.tr,
+                          size: 28.0.scale,
+                          color: EnumColor.accentBlue.color,
+                        ),
+                      ],
+                    ),
+            );
+          },
         ),
       ],
     );
   }
 }
 
-class _LocationsList extends StatelessWidget {
-  final DialogItemEditQuantityWidgetController controller;
+/// 位置外匡卡片
+class _PositionCard extends StatelessWidget {
+  final List<DisplayPositionModel>? oldDisplayList;
+  final List<DisplayPositionModel>? newDisplayList;
 
-  const _LocationsList({
-    required this.controller,
+  const _PositionCard({
+    this.oldDisplayList,
+    this.newDisplayList,
   });
 
   @override
   Widget build(BuildContext context) {
-    final locations = controller.locationsRx.value;
-    final newLocations = controller.newLocationsRx.value;
-    final allItems = <Widget>[];
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
+    final displayList = oldDisplayList ?? newDisplayList;
+    final isOld = oldDisplayList != null;
 
-    // 添加原有的位置
-    for (int i = 0; i < locations.length; i++) {
-      allItems.add(_LocationItem(location: locations[i]));
-      if (i < locations.length - 1 || newLocations.isNotEmpty) {
-        allItems.add(SizedBox(height: 32.0.scale));
-        allItems.add(
-          Divider(
-            height: 1.0.scale,
-            thickness: 1.0.scale,
-            color: EnumColor.lineDividerLight.color,
-          ),
-        );
-        allItems.add(SizedBox(height: 32.0.scale));
-      }
-    }
-
-    // 添加新增的位置
-    for (int i = 0; i < newLocations.length; i++) {
-      allItems.add(
-        _NewLocationItem(
-          controller: controller,
-          model: newLocations[i],
-          index: i,
-        ),
-      );
-      if (i < newLocations.length - 1) {
-        allItems.add(SizedBox(height: 32.0.scale));
-        allItems.add(
-          Divider(
-            height: 1.0.scale,
-            thickness: 1.0.scale,
-            color: EnumColor.lineDividerLight.color,
-          ),
-        );
-        allItems.add(SizedBox(height: 32.0.scale));
-      }
+    if (displayList?.isEmpty ?? true) {
+      return const SizedBox.shrink();
     }
 
     return Container(
@@ -286,81 +262,98 @@ class _LocationsList extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: allItems,
+        children: displayList!.asMap().entries.expand((entry) {
+          final index = entry.key;
+          final model = entry.value;
+          final isLast = index == displayList.length - 1;
+          TextEditingController? textController;
+
+          if (isOld) {
+            if (index < controller.quantityControllers.length) {
+              textController = controller.quantityControllers[index];
+            }
+          } else {
+            final newIndex = index + controller.getOldDisplayPositionList.length;
+            if (newIndex < controller.quantityControllers.length) {
+              textController = controller.quantityControllers[newIndex];
+            }
+          }
+
+          final divider = Padding(
+            padding: EdgeInsets.symmetric(vertical: 32.0.scale),
+            child: Divider(
+              height: 1.0.scale,
+              thickness: 1.0.scale,
+              color: EnumColor.lineDividerLight.color,
+            ),
+          );
+
+          return isOld
+              ? [
+                  _OldPositionItem(
+                    model: model,
+                    textController: textController!,
+                  ),
+                  if (!isLast) divider,
+                ]
+              : [
+                  _NewPositionItem(
+                    model: model,
+                    textController: textController!,
+                    index: index,
+                  ),
+                  if (!isLast) divider,
+                ];
+        }).toList(),
       ),
     );
   }
 }
 
-class _LocationItem extends StatefulWidget {
-  final DialogItemEditQuantityLocationModel location;
+/// 舊位置項目
+class _OldPositionItem extends StatelessWidget {
+  final DisplayPositionModel model;
+  final TextEditingController textController;
 
-  const _LocationItem({required this.location});
-
-  @override
-  State<_LocationItem> createState() => _LocationItemState();
-}
-
-class _LocationItemState extends State<_LocationItem> {
-  late int _quantity;
-
-  @override
-  void initState() {
-    super.initState();
-    _quantity = widget.location.quantity;
-  }
-
-  void _decrement() {
-    if (_quantity > 0) {
-      setState(() => _quantity--);
-    }
-  }
-
-  void _increment() {
-    setState(() => _quantity++);
-  }
+  const _OldPositionItem({
+    required this.model,
+    required this.textController,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final locationName = '${model.roomName} → ${model.cabinetName}';
+
     return Row(
       children: [
-        Expanded(
-          child: WidgetUtil.textWidget(
-            widget.location.locationName,
-            size: 28.0.scale,
-          ),
+        WidgetUtil.textWidget(
+          locationName,
+          size: 28.0.scale,
         ),
         SizedBox(width: 64.0.scale),
+        const Spacer(),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             _QuantityButton(
-              icon: Icons.remove,
-              onPressed: _decrement,
+              eImage: EnumImage.cMinus,
+              textController: textController,
             ),
             SizedBox(width: 16.0.scale),
-            Container(
+            SizedBox(
               width: 180.0.scale,
-              height: 70.0.scale,
-              padding: EdgeInsets.all(16.0.scale),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  width: 1.0.scale,
-                  color: EnumColor.lineBorder.color,
-                ),
-                borderRadius: BorderRadius.circular(16.0.scale),
-              ),
-              child: Center(
-                child: WidgetUtil.textWidget(
-                  _quantity.toString(),
-                  size: 32.0.scale,
-                ),
+              child: WidgetUtil.textField(
+                controller: textController,
+                textFieldType: EnumTextFieldType.integer,
+                maxLength: 7,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
               ),
             ),
             SizedBox(width: 16.0.scale),
             _QuantityButton(
-              icon: Icons.add,
-              onPressed: _increment,
+              eImage: EnumImage.cPlus,
+              textController: textController,
             ),
           ],
         ),
@@ -369,20 +362,131 @@ class _LocationItemState extends State<_LocationItem> {
   }
 }
 
-class _QuantityButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onPressed;
+/// 新增位置項目
+class _NewPositionItem extends StatelessWidget {
+  final DisplayPositionModel model;
+  final TextEditingController textController;
+  final int index;
 
-  const _QuantityButton({
-    required this.icon,
-    required this.onPressed,
+  const _NewPositionItem({
+    required this.model,
+    required this.textController,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
+    DisplayPositionModel? displayModel;
+
+    if (index < controller.newPositionsRx.value.length) {
+      displayModel = controller.getNewDisplayPositionList[index];
+    }
+
+    final roomNames = controller.getRoomNameList();
+    final visibleCabinetNames = controller.getVisibleCabinetNameList(displayModel?.roomName);
+
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: WidgetUtil.textDropdownButton(
+              selectedValue: model.roomName,
+              values: roomNames,
+              menuMaxHeight: 290.0.scale,
+              onValueSelected: (str) {
+                final room = controller.getRoomByName(str);
+                if (str != null && room != null) {
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionRoom,
+                    data: UpdatePositionModel(
+                      index: index,
+                      position: room,
+                    ),
+                  );
+                }
+              },
+              onMenuOpened: () => controller.interactive(
+                EnumDialogItemEditQuantityWidgetInteractive.tapDropdownButton,
+              ),
+            ),
+          ),
+          SizedBox(width: 32.0.scale),
+          Expanded(
+            child: WidgetUtil.textDropdownButton(
+              selectedValue: model.cabinetName,
+              values: visibleCabinetNames,
+              menuMaxHeight: 290.0.scale,
+              onValueSelected: (str) {
+                final cabinet = controller.getCabinetByName(str);
+                if (str != null && cabinet != null) {
+                  controller.interactive(
+                    EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionCabinet,
+                    data: UpdatePositionModel(
+                      index: index,
+                      position: cabinet,
+                    ),
+                  );
+                }
+              },
+              onMenuOpened: () => controller.interactive(
+                EnumDialogItemEditQuantityWidgetInteractive.tapDropdownButton,
+              ),
+            ),
+          ),
+          SizedBox(width: 32.0.scale),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _QuantityButton(
+                eImage: EnumImage.cMinus,
+                textController: textController,
+              ),
+              SizedBox(width: 16.0.scale),
+              SizedBox(
+                width: 180.0.scale,
+                child: WidgetUtil.textField(
+                  controller: textController,
+                  textFieldType: EnumTextFieldType.integer,
+                  maxLength: 7,
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(width: 16.0.scale),
+              _QuantityButton(
+                eImage: EnumImage.cPlus,
+                textController: textController,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 數量按鈕
+class _QuantityButton extends StatelessWidget {
+  final EnumImage eImage;
+  final TextEditingController textController;
+
+  const _QuantityButton({
+    required this.eImage,
+    required this.textController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditQuantityWidgetController>();
     return Container(
       width: 70.0.scale,
       height: 70.0.scale,
+      padding: EdgeInsets.all(15.0.scale),
       decoration: BoxDecoration(
         border: Border.all(
           width: 1.0.scale,
@@ -393,223 +497,21 @@ class _QuantityButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onPressed,
+          onTap: () {
+            controller.interactive(
+              (eImage == EnumImage.cPlus)
+                  ? EnumDialogItemEditQuantityWidgetInteractive.tapIncrementQuantity
+                  : EnumDialogItemEditQuantityWidgetInteractive.tapDecrementQuantity,
+              data: textController,
+            );
+          },
           borderRadius: BorderRadius.circular(16.0.scale),
-          child: Icon(
-            icon,
-            size: 40.0.scale,
-            color: EnumColor.textPrimary.color,
+          child: eImage.image(
+            size: Size.square(40.0.scale),
+            color: EnumColor.iconSecondary.color,
           ),
         ),
       ),
-    );
-  }
-}
-
-class _NewLocationItem extends StatefulWidget {
-  final DialogItemEditQuantityWidgetController controller;
-  final NewLocationItemModel model;
-  final int index;
-
-  const _NewLocationItem({
-    required this.controller,
-    required this.model,
-    required this.index,
-  });
-
-  @override
-  State<_NewLocationItem> createState() => _NewLocationItemState();
-}
-
-class _NewLocationItemState extends State<_NewLocationItem> {
-  late int _quantity;
-  String? _selectedRoom;
-  String? _selectedCabinet;
-  List<String> _availableCabinets = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _quantity = widget.model.quantity;
-    _selectedRoom = widget.model.selectedRoom;
-    _selectedCabinet = widget.model.selectedCabinet;
-  }
-
-  @override
-  void didUpdateWidget(_NewLocationItem oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.model.selectedRoom != _selectedRoom) {
-      _selectedRoom = widget.model.selectedRoom;
-      _availableCabinets = widget.controller.getCabinetsForRoom(_selectedRoom);
-    }
-    if (widget.model.selectedCabinet != _selectedCabinet) {
-      _selectedCabinet = widget.model.selectedCabinet;
-    }
-    if (widget.model.quantity != _quantity) {
-      _quantity = widget.model.quantity;
-    }
-  }
-
-  void _decrement() {
-    if (_quantity > 0) {
-      setState(() {
-        _quantity--;
-      });
-      widget.controller.interactive(
-        EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewLocationQuantity,
-        data: {'index': widget.index, 'quantity': _quantity},
-      );
-    }
-  }
-
-  void _increment() {
-    setState(() {
-      _quantity++;
-    });
-    widget.controller.interactive(
-      EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewLocationQuantity,
-      data: {'index': widget.index, 'quantity': _quantity},
-    );
-  }
-
-  void _onRoomSelected(String? room) {
-    setState(() {
-      _selectedRoom = room;
-      _selectedCabinet = null;
-      _availableCabinets = widget.controller.getCabinetsForRoom(room);
-    });
-    widget.controller.interactive(
-      EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewLocationRoom,
-      data: {'index': widget.index, 'room': room},
-    );
-  }
-
-  void _onCabinetSelected(String? cabinet) {
-    setState(() {
-      _selectedCabinet = cabinet;
-    });
-    widget.controller.interactive(
-      EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewLocationCabinet,
-      data: {'index': widget.index, 'cabinet': cabinet},
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final rooms = widget.controller.getRoomNameList();
-
-    // 如果选择了房间，更新可用柜位列表
-    if (_selectedRoom != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (mounted) {
-          setState(() {
-            _availableCabinets = widget.controller.getCabinetsForRoom(_selectedRoom);
-          });
-        }
-      });
-    }
-
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              WidgetUtil.textWidget(
-                '房間',
-                size: 26.0.scale,
-                color: EnumColor.textSecondary.color,
-              ),
-              SizedBox(height: 12.0.scale),
-              WidgetUtil.textDropdownButton(
-                selectedValue: _selectedRoom,
-                values: rooms,
-                buttonTextColor: _selectedRoom == null ? EnumColor.textSecondary.color : null,
-                onValueSelected: (str, idx) => _onRoomSelected(str),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(width: 32.0.scale),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              WidgetUtil.textWidget(
-                '櫃位',
-                size: 26.0.scale,
-                color: EnumColor.textSecondary.color,
-              ),
-              SizedBox(height: 12.0.scale),
-              WidgetUtil.textDropdownButton(
-                selectedValue: _selectedCabinet,
-                values: _availableCabinets,
-                buttonTextColor: _selectedCabinet == null ? EnumColor.textSecondary.color : null,
-                onValueSelected: (str, idx) => _onCabinetSelected(str),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(width: 32.0.scale),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            WidgetUtil.textWidget(
-              '數量',
-              size: 26.0.scale,
-              color: EnumColor.textSecondary.color,
-            ),
-            SizedBox(height: 12.0.scale),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _QuantityButton(
-                  icon: Icons.remove,
-                  onPressed: _decrement,
-                ),
-                SizedBox(width: 16.0.scale),
-                Container(
-                  width: 180.0.scale,
-                  height: 70.0.scale,
-                  padding: EdgeInsets.all(16.0.scale),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0.scale,
-                      color: EnumColor.lineBorder.color,
-                    ),
-                    borderRadius: BorderRadius.circular(16.0.scale),
-                  ),
-                  child: Center(
-                    child: WidgetUtil.textWidget(
-                      _quantity.toString(),
-                      size: 32.0.scale,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 16.0.scale),
-                _QuantityButton(
-                  icon: Icons.add,
-                  onPressed: _increment,
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(width: 16.0.scale),
-        IconButton(
-          onPressed: () {
-            widget.controller.interactive(
-              EnumDialogItemEditQuantityWidgetInteractive.tapRemoveNewLocation,
-              data: widget.index,
-            );
-          },
-          icon: Icon(
-            Icons.delete_outline,
-            size: 40.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
-        ),
-      ],
     );
   }
 }
