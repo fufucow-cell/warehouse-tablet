@@ -1,4 +1,18 @@
-part of 'warehouse_cabinet_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_cabinet_create.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:get/get.dart';
+
+part 'warehouse_cabinet_page_interactive.dart';
+part 'warehouse_cabinet_page_route.dart';
 
 class WarehouseCabinetPageController extends GetxController {
   // MARK: - Properties

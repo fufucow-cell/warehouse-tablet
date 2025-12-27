@@ -1,4 +1,4 @@
-part of 'warehouse_cabinet_page.dart';
+part of 'warehouse_cabinet_page_controller.dart';
 
 enum EnumWarehouseCabinetPageRoute {
   showSomeDialog,
@@ -18,8 +18,7 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
 
   Future<void> _showCreateCabinetDialog() async {
     try {
-      final service = WarehouseService.instance;
-      service.showAlert(const DialogCabinetCreate());
+      _service.showAlert(const DialogCabinetCreate());
     } on Exception catch (e) {
       // 错误处理
       final context = Get.context;

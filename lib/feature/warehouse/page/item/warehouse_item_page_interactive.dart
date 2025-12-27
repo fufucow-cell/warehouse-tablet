@@ -1,4 +1,4 @@
-part of 'warehouse_item_page.dart';
+part of 'warehouse_item_page_controller.dart';
 
 enum EnumWarehouseItemPageInteractive {
   tapSomeWidget,

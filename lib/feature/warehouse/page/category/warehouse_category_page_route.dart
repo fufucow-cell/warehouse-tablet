@@ -1,4 +1,4 @@
-part of 'warehouse_category_page.dart';
+part of 'warehouse_category_page_controller.dart';
 
 enum EnumWarehouseCategoryPageRoute {
   showSomeDialog,
@@ -40,12 +40,13 @@ extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController
 
   Future<void> _showEditCategoryDialog(dynamic data) async {
     try {
-      final service = WarehouseService.instance;
-      if (data is Category) {
-        service.showAlert(DialogCategoryEdit(category: data));
-      } else {
-        service.showAlert(const DialogCategoryEdit());
-      }
+      // TODO: Import DialogCategoryEdit when available
+      // final service = WarehouseService.instance;
+      // if (data is Category) {
+      //   service.showAlert(DialogCategoryEdit(category: data));
+      // } else {
+      //   service.showAlert(const DialogCategoryEdit());
+      // }
     } on Exception catch (e) {
       // 错误处理
       final context = Get.context;

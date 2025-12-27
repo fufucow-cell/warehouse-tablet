@@ -1,4 +1,4 @@
-part of 'warehouse_record_page.dart';
+part of 'warehouse_record_page_controller.dart';
 
 enum EnumWarehouseRecordPageRoute {
   showSomeDialog,

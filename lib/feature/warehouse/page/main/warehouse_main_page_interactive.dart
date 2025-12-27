@@ -1,4 +1,4 @@
-part of 'warehouse_main_page.dart';
+part of 'warehouse_main_page_controller.dart';
 
 enum EnumWarehouseMainPageInteractive {
   selectTabItem,
@@ -15,7 +15,7 @@ extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
   }) {
     switch (type) {
       case EnumWarehouseMainPageInteractive.selectTabItem:
-        if (data is int && _model.isTabControllerReady.value && !tabController!.indexIsChanging) {
+        if (data is int && _model.isTabControllerReady.value && tabController != null && !tabController!.indexIsChanging) {
           final newItem = EnumWarehouseTabItem.values[data];
           _service.changeMainPageSelectedTabItem(newItem);
         }

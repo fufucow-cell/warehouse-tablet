@@ -1,4 +1,4 @@
-part of 'warehouse_alarm_page.dart';
+part of 'warehouse_alarm_page_controller.dart';
 
 enum EnumWarehouseAlarmPageRoute {
   showEditDialog,

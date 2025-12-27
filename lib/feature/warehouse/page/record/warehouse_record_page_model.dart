@@ -1,4 +1,8 @@
-part of 'warehouse_record_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
+import 'package:get/get.dart';
 
 class WarehouseRecordPageModel {
   final allLogs = Rxn<List<ItemRecord>>();

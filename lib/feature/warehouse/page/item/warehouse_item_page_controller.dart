@@ -1,4 +1,31 @@
-part of 'warehouse_item_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/category.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:get/get.dart';
+
+part 'warehouse_item_page_interactive.dart';
+part 'warehouse_item_page_route.dart';
 
 class WarehouseItemPageController extends GetxController {
   // MARK: - Properties
@@ -48,7 +75,9 @@ class WarehouseItemPageController extends GetxController {
       }
 
       allCategoryIds.add(category!.id!);
-      extractCategory(category.children);
+      if (category.children != null) {
+        extractCategory(category.children);
+      }
     }
 
     for (var item in allItems) {
@@ -282,7 +311,7 @@ class WarehouseItemPageController extends GetxController {
     } else {
       // 從選中的索引中取得對應的分類 ID
       final categoryIds =
-          selectedIndexes.map((index) => _model.filterRuleForCategories.value[index].id).where((id) => id != null && id.isNotEmpty).toSet();
+          selectedIndexes.map((index) => _model.filterRuleForCategories.value[index].id).where((id) => id != null && (id as String).isNotEmpty).toSet();
       // 篩選出分類 ID 在選中列表中的物品
       resultItems.addAll(_model.allItemsForCategory.where((item) => categoryIds.contains(item.category?.id ?? '')).toList());
     }
@@ -327,29 +356,6 @@ class WarehouseItemPageController extends GetxController {
 
     _model.visibleItems.value = matchItems;
   }
-
-  /// 递归收集分类及其所有子分类的 ID
-  // void _collectCategoryIds(dynamic category, Set<String> categoryIds) {
-  //   if (category == null) return;
-
-  //   final categoryId = category.id;
-  //   if (categoryId != null && categoryId is String && categoryId.isNotEmpty) {
-  //     categoryIds.add(categoryId);
-  //   }
-
-  //   // 处理子分类（getAllCategories 返回的是 List<Category>，每个 Category 的 children 是 List<Category>）
-  //   final children = category.children;
-  //   if (children != null) {
-  //     if (children is List) {
-  //       for (var child in children) {
-  //         _collectCategoryIds(child, categoryIds);
-  //       }
-  //     } else {
-  //       // 如果是单个 Category（Item 的 category.children 是单个 Category）
-  //       _collectCategoryIds(children, categoryIds);
-  //     }
-  //   }
-  // }
 
   // 用戶選擇分類多選框時，重新計算全選狀態
   void _changeCategoryMultiCheckbox(int index) {

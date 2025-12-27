@@ -1,4 +1,18 @@
-part of 'warehouse_record_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_position.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:get/get.dart';
+
+part 'warehouse_record_page_interactive.dart';
+part 'warehouse_record_page_route.dart';
 
 class WarehouseRecordPageController extends GetxController {
   // MARK: - Properties
@@ -125,7 +139,7 @@ class WarehouseRecordPageController extends GetxController {
   // MARK: - Private Method
 
   void _checkData() {
-    final allLogs = _service.getAllRecords;
+    final allLogs = _service.allRecordsRx.value;
 
     if (allLogs == null) {
       _queryApiData();

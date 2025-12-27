@@ -1,4 +1,11 @@
-part of 'warehouse_main_page.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse_alarm_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:get/get.dart';
 
 class WarehouseMainPageModel {
   final isTabControllerReady = false.obs;
