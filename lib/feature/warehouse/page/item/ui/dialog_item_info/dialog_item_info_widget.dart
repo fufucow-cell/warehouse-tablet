@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 class DialogItemInfoWidget extends StatelessWidget {
   final String itemId;
 
-  const DialogItemInfoWidget(this.itemId, {super.key});
+  const DialogItemInfoWidget({super.key, required this.itemId});
 
   @override
   Widget build(BuildContext context) {

@@ -46,4 +46,27 @@ class WarehouseAlarmPageController extends GetxController {
 
     return false;
   }
+
+  Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
+    String errMsg = '';
+    final requestModel = WarehouseItemEditQuantityRequestModel(
+      householdId: _service.getHouseholdId,
+      itemId: item.id,
+      cabinets: models.map((model) => QuantityCabinetRequestModel(cabinetId: model.cabinetId, quantity: model.quantity)).toList(),
+    );
+
+    final response = await _service.apiReqUpdateItemQuantity(
+      requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
+    );
+
+    final isSuccess = response != null;
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+      message: errMsg,
+    );
+    return isSuccess;
+  }
 }

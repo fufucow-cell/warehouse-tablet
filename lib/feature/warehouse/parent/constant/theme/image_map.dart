@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-26T12:49:40.811364
+/// 生成时间: 2025-12-27T19:03:38.568367
 library;
 
 import 'package:flutter/material.dart';
@@ -9,7 +9,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_ut
 enum EnumImage {
   cAdd,
   cArrowDown,
+  cArrowDown2,
   cArrowUp,
+  cArrowUp2,
   cCamera,
   cChangeImage,
   cCheckboxOff,
@@ -26,6 +28,7 @@ enum EnumImage {
   cMinus,
   cPhoto,
   cPlus,
+  cPlus2,
   cRefresh,
   cRoom,
   cSearch,
@@ -34,6 +37,7 @@ enum EnumImage {
   cStockItem,
   cTrash,
   cTrash2,
+  cTrash3,
   tBgContent,
   tCow;
 

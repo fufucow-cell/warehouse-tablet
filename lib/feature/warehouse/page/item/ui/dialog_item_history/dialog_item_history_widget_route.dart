@@ -10,6 +10,7 @@ extension DialogItemHistoryWidgetRouteExtension on DialogItemHistoryWidgetContro
       case EnumDialogItemHistoryWidgetRoute.tapDialogConfirmButton:
         if (data is BuildContext) {
           Navigator.of(data).pop();
+          _service.showAlert(DialogItemInfoWidget(itemId: _model.combineItem!.id!));
         }
     }
   }

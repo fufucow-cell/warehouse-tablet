@@ -22,7 +22,8 @@ extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController
 
   Future<void> _showCreateCategoryDialog() async {
     try {
-      final service = WarehouseService.instance;
+      // TODO: Implement create category dialog
+      // final service = WarehouseService.instance;
       // service.showAlert(const DialogCategoryCreate());
     } on Exception catch (e) {
       // 错误处理

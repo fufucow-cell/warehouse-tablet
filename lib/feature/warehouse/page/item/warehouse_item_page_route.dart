@@ -46,7 +46,7 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
       case EnumWarehouseItemPageRoute.showDialogItemInfo:
         if (data is Item && (data.id?.isNotEmpty ?? false)) {
           _service.showAlert(
-            DialogItemInfoWidget(data.id!),
+            DialogItemInfoWidget(itemId: data.id!),
           );
         }
     }

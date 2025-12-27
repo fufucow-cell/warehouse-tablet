@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/category_list.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/major_list.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_category_edit.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
@@ -32,11 +32,8 @@ class WarehouseCategoryPage extends GetView<WarehouseCategoryPageController> {
         children: [
           const TopInfo(),
           SizedBox(height: 32.0.scale),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.all(32.0.scale),
-              child: const CategoryList(),
-            ),
+          const Expanded(
+            child: MajorListWidget(),
           ),
         ],
       ),
