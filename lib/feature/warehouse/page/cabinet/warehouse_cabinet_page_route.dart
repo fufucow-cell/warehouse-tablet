@@ -1,34 +1,45 @@
 part of 'warehouse_cabinet_page_controller.dart';
 
 enum EnumWarehouseCabinetPageRoute {
-  showSomeDialog,
   showCreateCabinetDialog,
+  showEditCabinetDialog,
+  showDeleteCabinetDialog,
 }
 
 extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
   void routerHandle(EnumWarehouseCabinetPageRoute type, {dynamic data}) {
     switch (type) {
-      case EnumWarehouseCabinetPageRoute.showSomeDialog:
-        break;
       case EnumWarehouseCabinetPageRoute.showCreateCabinetDialog:
-        _showCreateCabinetDialog();
-        break;
-    }
-  }
-
-  Future<void> _showCreateCabinetDialog() async {
-    try {
-      _service.showAlert(const DialogCabinetCreate());
-    } on Exception catch (e) {
-      // 错误处理
-      final context = Get.context;
-      if (context != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
+        _service.showAlert(
+          DialogCabinetCreateWidget(
+            onConfirm: (outputModel) async {
+              return await _createCabinet(outputModel);
+            },
           ),
         );
-      }
+      case EnumWarehouseCabinetPageRoute.showEditCabinetDialog:
+        if (data is Cabinet) {
+          final cabinetId = data.id ?? '';
+          _service.showAlert(
+            DialogCabinetEditWidget(
+              cabinet: data,
+              onConfirm: (outputModel) async {
+                return await _updateCabinet(outputModel, cabinetId);
+              },
+            ),
+          );
+        }
+      case EnumWarehouseCabinetPageRoute.showDeleteCabinetDialog:
+        if (data is Cabinet) {
+          _service.showAlert(
+            DialogCabinetDeleteWidget(
+              cabinet: data,
+              onConfirm: (outputModel) async {
+                return await _deleteCabinet(outputModel);
+              },
+            ),
+          );
+        }
     }
   }
 }

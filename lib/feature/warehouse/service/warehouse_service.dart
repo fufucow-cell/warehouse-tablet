@@ -313,6 +313,11 @@ class WarehouseService {
     return result;
   }
 
+  // 取得所有櫃位
+  List<Cabinet> getAllCabinets() {
+    return _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).toList() ?? [];
+  }
+
   // MARK: - Item APIs
 
   Future<List<Room>?> apiReqFetchItems(

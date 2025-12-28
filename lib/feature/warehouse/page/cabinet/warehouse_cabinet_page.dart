@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_mix_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
@@ -23,7 +22,7 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
     }
 
     final controller = Get.find<WarehouseCabinetPageController>();
-    final rooms = controller.getRoomsInfo;
+    final rooms = controller.getRoomsInfo();
 
     return SecondBackgroundCard(
       child: Column(
@@ -147,7 +146,7 @@ class _RoomItemCountInfo extends StatelessWidget {
     final cabinetsCount = controller.getCabinets(roomNameId).length;
 
     return WidgetUtil.textWidget(
-      EnumLocale.warehouseCabinetRoomSummary.trArgs(['$cabinetsCount', '$roomItemQuantity']),
+      EnumLocale.warehouseTotalCabinetAndItem.trArgs(['$cabinetsCount', '$roomItemQuantity']),
       size: 22.0.scale,
     );
   }
@@ -169,7 +168,8 @@ class _RoomCabinetInfo extends StatelessWidget {
     if (cabinets.isEmpty) {
       card = const SizedBox.shrink();
     } else if (cabinets.length > 2) {
-      card = CabinetMixCard(cabinets: cabinets);
+      //card = CabinetMixCard(cabinets: cabinets);
+      card = CabinetRowCard(cabinets: cabinets);
     } else {
       card = CabinetRowCard(cabinets: cabinets);
     }

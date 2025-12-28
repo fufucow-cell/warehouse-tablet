@@ -21,7 +21,7 @@ class CabinetRowCard extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.zero,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       itemCount: cabinets.length,
       separatorBuilder: (context, index) => SizedBox(height: 8.0.scale),
       itemBuilder: (context, index) {
@@ -53,6 +53,8 @@ class CabinetRowCard extends StatelessWidget {
               cabinet.name ?? '',
               size: 26.0.scale,
               color: EnumColor.textSecondary.color,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           Container(

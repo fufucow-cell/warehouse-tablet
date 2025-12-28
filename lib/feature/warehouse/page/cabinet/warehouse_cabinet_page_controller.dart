@@ -1,9 +1,15 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_delete/dialog_cabinet_delete_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_delete/dialog_cabinet_delete_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_cabinet_create.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
@@ -19,8 +25,8 @@ class WarehouseCabinetPageController extends GetxController {
 
   final _model = WarehouseCabinetPageModel();
   final _service = WarehouseService.instance;
+  int get getTotalRoomsCount => _service.rooms.length;
   RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
-  List<WarehouseNameIdModel> get getRoomsInfo => _service.rooms;
 
   // MARK: - Init
 
@@ -46,7 +52,15 @@ class WarehouseCabinetPageController extends GetxController {
 
   List<Cabinet> getCabinets(WarehouseNameIdModel roomNameId) {
     final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    final room = allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
+    final room = allRoomCabinetItems?.firstWhereOrNull((room) {
+      if (roomNameId.id?.isEmpty ?? true) {
+        if (room.roomId?.isEmpty ?? true) {
+          return true;
+        }
+      }
+
+      return room.roomId == roomNameId.id;
+    });
     return room?.cabinets ?? <Cabinet>[];
   }
 
@@ -61,19 +75,64 @@ class WarehouseCabinetPageController extends GetxController {
     );
   }
 
+  List<WarehouseNameIdModel> getRoomsInfo() {
+    final result = List<WarehouseNameIdModel>.from(_service.rooms);
+    // 是否有未綁定房間的櫃位
+    bool hasNoBindRoomCabinet = _service.getAllRoomCabinetItems.any((room) => room.roomId == null);
+
+    if (hasNoBindRoomCabinet) {
+      result.add(WarehouseNameIdModel(id: '', name: '未綁定'));
+    }
+
+    return result;
+  }
+
   // MARK: - Private Method
 
   void _checkData() {
     final allRoomCabinetItems = _service.allRoomCabinetItemsRx.value;
 
     if (allRoomCabinetItems == null) {
-      _queryApiData();
+      _readCabinet();
     } else {
       _model.allRoomCabinetItems.value = allRoomCabinetItems;
     }
   }
 
-  Future<void> _queryApiData() async {
+  Future<bool> _createCabinet(DialogCabinetCreateOutputModel outputModel) async {
+    final request = WarehouseCabinetRequestModel(
+      homeId: _service.getHouseholdId,
+      roomId: outputModel.roomId,
+    );
+
+    final response = await _service.apiReqCreateCabinet(request);
+
+    if (response != null) {
+      unawaited(_readCabinet());
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> _updateCabinet(DialogCabinetEditOutputModel outputModel, String cabinetId) async {
+    final request = WarehouseCabinetRequestModel(
+      homeId: _service.getHouseholdId,
+      cabinetId: cabinetId,
+      roomId: outputModel.roomId,
+    );
+
+    final response = await _service.apiReqModifyCabinet(request);
+
+    if (response != null) {
+      unawaited(_readCabinet());
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<void> _readCabinet() async {
     final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
 
     if (response == null) {
@@ -81,5 +140,21 @@ class WarehouseCabinetPageController extends GetxController {
     }
 
     _model.allRoomCabinetItems.value = response;
+  }
+
+  Future<bool> _deleteCabinet(DialogCabinetDeleteOutputModel outputModel) async {
+    final request = WarehouseCabinetRequestModel(
+      homeId: _service.getHouseholdId,
+      cabinetId: outputModel.cabinetId,
+    );
+
+    final response = await _service.apiReqDeleteCabinet(request);
+
+    if (response != null) {
+      unawaited(_readCabinet());
+      return true;
+    }
+
+    return false;
   }
 }

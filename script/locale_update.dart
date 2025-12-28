@@ -72,7 +72,14 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('');
   buffer.writeln('  String get key => name;');
   buffer.writeln('  String get tr => key.tr;');
-  buffer.writeln('  String trArgs(List<String> params) => key.trArgs(params);');
+  buffer.writeln('');
+  buffer.writeln('  String trArgs(List<String> params) {');
+  buffer.writeln('    Map<String, String> namedParams = {};');
+  buffer.writeln('    for (int i = 0; i < params.length; i++) {');
+  buffer.writeln("      namedParams['para\${i + 1}'] = params[i];");
+  buffer.writeln('    }');
+  buffer.writeln('    return key.trParams(namedParams);');
+  buffer.writeln('  }');
   buffer.writeln('');
   buffer.writeln('  static LocaleTranslation? get currentTranslation => _currentTranslation;');
   buffer.writeln('');

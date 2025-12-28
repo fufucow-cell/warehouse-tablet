@@ -67,9 +67,11 @@ class CabinetMixCard extends StatelessWidget {
         children: [
           Expanded(
             child: WidgetUtil.textWidget(
-              cabinet.name ?? '',
+              (cabinet.name ?? '') * 10,
               size: 26.0.scale,
               color: EnumColor.textSecondary.color,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
           SizedBox(width: 8.0.scale),
