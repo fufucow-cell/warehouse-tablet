@@ -102,12 +102,17 @@ class DialogCategoryCreateWidgetController extends GetxController {
   void _genHintText() {
     String result = EnumLocale.createCategoryParentQuestion.tr;
 
-    if (nameController.text.trim().isNotEmpty && _model.selectedLevel1.value != null) {
+    if (nameController.text.trim().isNotEmpty) {
+      final newName = nameController.text.trim();
       final level1Name = _model.selectedLevel1.value?.name;
       final level2Name = _model.selectedLevel2.value?.name;
-      final parentName = level2Name != null ? '$level1Name > $level2Name' : level1Name;
-      final newName = nameController.text.trim();
-      result = '分類結果: $parentName > $newName';
+      final parentName = (level2Name != null)
+          ? '$level1Name > $level2Name'
+          : (level1Name != null)
+              ? level1Name
+              : null;
+      final resultName = (parentName != null) ? '$parentName > $newName' : newName;
+      result = '分類結果: $resultName';
     }
 
     _model.hintText.value = result;

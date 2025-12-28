@@ -5,6 +5,8 @@ enum EnumDialogCategoryCreateWidgetInteractive {
   tapLevel2Button,
   tapDialogCancelButton,
   tapDialogConfirmButton,
+  tapClearLevel1Button,
+  tapClearLevel2Button,
 }
 
 /// DialogCategoryCreateWidget 用户事件处理扩展
@@ -44,6 +46,13 @@ extension DialogCategoryCreateWidgetUserEventExtension on DialogCategoryCreateWi
         } else if (data is BuildContext) {
           _routerHandle(EnumDialogCategoryCreateWidgetRoute.closeDialog, data);
         }
+      case EnumDialogCategoryCreateWidgetInteractive.tapClearLevel1Button:
+        _model.selectedLevel1.value = null;
+        _model.selectedLevel2.value = null;
+        _genHintText();
+      case EnumDialogCategoryCreateWidgetInteractive.tapClearLevel2Button:
+        _model.selectedLevel2.value = null;
+        _genHintText();
     }
   }
 }

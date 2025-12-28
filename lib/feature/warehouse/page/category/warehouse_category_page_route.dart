@@ -18,8 +18,16 @@ extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController
           ),
         );
       case EnumWarehouseCategoryPageRoute.showDialogEditCategory:
-        // _showDialogEditCategory(data);
-        break;
+        if (data is Category) {
+          _service.showAlert(
+            DialogCategoryEditWidget(
+              category: data,
+              onConfirm: (outputModel) async {
+                return await _editCategory(outputModel);
+              },
+            ),
+          );
+        }
       case EnumWarehouseCategoryPageRoute.showDialogDeleteCategory:
         // _showDialogDeleteCategory(data);
         break;

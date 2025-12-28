@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/actions.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
@@ -10,26 +10,29 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
-class DialogCategoryCreateWidget extends StatelessWidget {
-  final Future<bool> Function(DialogCategoryCreateOutputModel) onConfirm;
+class DialogCategoryEditWidget extends StatelessWidget {
+  final Future<bool> Function(DialogCategoryEditOutputModel) onConfirm;
+  final Category category;
 
-  const DialogCategoryCreateWidget({
+  const DialogCategoryEditWidget({
     super.key,
     required this.onConfirm,
+    required this.category,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DialogCategoryCreateWidgetController>(
-      init: DialogCategoryCreateWidgetController(),
+    return GetBuilder<DialogCategoryEditWidgetController>(
+      init: DialogCategoryEditWidgetController(category),
       builder: (controller) {
         return DialogFrame(
           width: 720.0.scale,
           minHeight: 625.0.scale,
-          header: DialogHeader(title: EnumLocale.createCategoryTitle.tr),
+          header: DialogHeader(title: EnumLocale.editCategoryTitle.tr),
           footer: Obx(
             () {
               final isLoading = controller.isLoadingRx.value;
@@ -38,7 +41,7 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCategoryEditWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -50,20 +53,20 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -82,17 +85,16 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogCategoryCreateWidgetController>();
+    final controller = Get.find<DialogCategoryEditWidgetController>();
     return Obx(
       () {
-        final hintText = controller.hintTextRx.value;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const _NameField(),
             SizedBox(height: 24.0.scale),
             WidgetUtil.textWidget(
-              hintText,
+              controller.getHintText,
               size: 28.0.scale,
               color: EnumColor.textPrimary.color,
             ),
@@ -101,8 +103,9 @@ class _Body extends StatelessWidget {
               title: EnumLocale.createLevel1Category.tr,
               selectedValue: controller.selectedLevel1Rx.value?.name,
               visibleValues: controller.getLevel1NameList(),
-              onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel1Button, data: str),
-              onDelete: () => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapClearLevel1Button),
+              isMax: controller.level1IsMaxRx.value,
+              onValueSelected: (str) => controller.interactive(EnumDialogCategoryEditWidgetInteractive.tapLevel1Button, data: str),
+              onDelete: () => controller.interactive(EnumDialogCategoryEditWidgetInteractive.tapDeleteLevel1Button, data: context),
             ),
             if (controller.selectedLevel1Rx.value != null) ...[
               SizedBox(height: 24.0.scale),
@@ -110,8 +113,9 @@ class _Body extends StatelessWidget {
                 title: EnumLocale.createLevel2Category.tr,
                 selectedValue: controller.selectedLevel2Rx.value?.name,
                 visibleValues: controller.getLevel2NameList(),
-                onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel2Button, data: str),
-                onDelete: () => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapClearLevel2Button),
+                isMax: controller.level2IsMaxRx.value,
+                onValueSelected: (str) => controller.interactive(EnumDialogCategoryEditWidgetInteractive.tapLevel2Button, data: str),
+                onDelete: () => controller.interactive(EnumDialogCategoryEditWidgetInteractive.tapDeleteLevel2Button, data: context),
               ),
             ],
           ],
@@ -126,7 +130,7 @@ class _NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogCategoryCreateWidgetController>();
+    final controller = Get.find<DialogCategoryEditWidgetController>();
     return DialogSectionWidget(
       isRequired: true,
       title: EnumLocale.createCategoryName.tr,
@@ -142,6 +146,7 @@ class _DropdownField extends StatelessWidget {
   final String title;
   final String? selectedValue;
   final List<String> visibleValues;
+  final bool isMax;
   final Function(String?) onValueSelected;
   final VoidCallback onDelete;
 
@@ -149,6 +154,7 @@ class _DropdownField extends StatelessWidget {
     required this.title,
     required this.selectedValue,
     required this.visibleValues,
+    required this.isMax,
     required this.onValueSelected,
     required this.onDelete,
   });
@@ -162,8 +168,8 @@ class _DropdownField extends StatelessWidget {
           child: DialogSectionWidget(
             title: title,
             child: WidgetUtil.textDropdownButton(
-              selectedValue: selectedValue,
-              values: visibleValues,
+              selectedValue: isMax ? EnumLocale.editCategoryMaxLevelReached.tr : selectedValue,
+              values: isMax ? [] : visibleValues,
               buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
               menuMaxHeight: 290.0.scale,
               onValueSelected: onValueSelected,

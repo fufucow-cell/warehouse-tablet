@@ -24,7 +24,7 @@ class ActionsWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        _ActionButton(
+        ActionButton(
           eImage: EnumImage.cEditNormal,
           onTap: () {
             controller.interactive(
@@ -34,7 +34,7 @@ class ActionsWidget extends StatelessWidget {
           },
         ),
         SizedBox(width: 16.0.scale),
-        _ActionButton(
+        ActionButton(
           eImage: EnumImage.cTrash3,
           onTap: () {
             controller.interactive(
@@ -46,7 +46,7 @@ class ActionsWidget extends StatelessWidget {
         SizedBox(width: 16.0.scale),
         Visibility(
           visible: hasChildren,
-          child: _ActionButton(
+          child: ActionButton(
             eImage: isExpanded ? EnumImage.cArrowUp : EnumImage.cArrowDown,
             onTap: () {
               controller.interactive(
@@ -61,29 +61,34 @@ class ActionsWidget extends StatelessWidget {
   }
 }
 
-class _ActionButton extends StatelessWidget {
+class ActionButton extends StatelessWidget {
   final EnumImage eImage;
   final VoidCallback onTap;
 
-  const _ActionButton({
+  const ActionButton({
+    super.key,
     required this.eImage,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = (eImage == EnumImage.cArrowUp) ? EnumColor.backgroundProduct.color : EnumColor.backgroundSecondary.color;
+
     return Material(
-      color: Colors.transparent,
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(20.0.scale),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(20.0.scale),
-        child: Container(
+        splashColor: EnumColor.accentBlue.color.withOpacity(0.2),
+        highlightColor: EnumColor.accentBlue.color.withOpacity(0.1),
+        child: Ink(
           padding: EdgeInsets.symmetric(
             horizontal: 13.5.scale,
             vertical: 12.0.scale,
           ),
           decoration: BoxDecoration(
-            color: (eImage == EnumImage.cArrowUp) ? EnumColor.backgroundProduct.color : EnumColor.backgroundSecondary.color,
             borderRadius: BorderRadius.circular(20.0.scale),
           ),
           child: eImage.image(size: Size.square(40.0.scale)),

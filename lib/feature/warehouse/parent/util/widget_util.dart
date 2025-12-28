@@ -105,7 +105,7 @@ class WidgetUtil {
           ),
       height: height ?? 70.0.scale,
       decoration: BoxDecoration(
-        color: EnumColor.backgroundSecondary.color,
+        color: EnumColor.backgroundPrimary.color,
         border: Border.all(
           width: 1.0.scale,
           color: EnumColor.lineBorder.color,

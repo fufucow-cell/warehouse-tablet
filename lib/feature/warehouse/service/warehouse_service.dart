@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
@@ -285,6 +284,32 @@ class WarehouseService {
     return newItems;
   }
 
+  List<Category> flattenAllLevel2Categories() {
+    final result = <Category>[];
+
+    for (final cat in getAllCategories) {
+      if (cat.children?.isEmpty ?? true) {
+        continue;
+      }
+
+      result.addAll(cat.children!);
+    }
+
+    return result;
+  }
+
+  List<Category> flattenAllLevel3Categories() {
+    final result = <Category>[];
+
+    for (final cat in flattenAllLevel2Categories()) {
+      if (cat.children?.isEmpty ?? true) {
+        continue;
+      }
+    }
+
+    return result;
+  }
+
   // MARK: - Item APIs
 
   Future<List<Room>?> apiReqFetchItems(
@@ -505,33 +530,4 @@ class WarehouseService {
             [];
     _model.allCombineItems = combineItems(flattenItems);
   }
-
-  // void _genGroupItems() {
-  //   final flattenItems =
-  //       _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
-  //           [];
-  //   Map<String, List<Item>> groupItems = {};
-
-  //   for (var item in flattenItems) {
-  //     if (item.id?.isNotEmpty ?? false) {
-  //       groupItems.putIfAbsent(item.id!, () => []).add(item);
-  //     }
-  //   }
-
-  //   _model.allGroupItems = groupItems;
-  // }
-
-  // void _genAllLowStockItems() {
-  //   final List<Item> lowStockItems = <Item>[];
-
-  //   for (final map in getAllGroupItems.entries) {
-  //     final items = map.value;
-  //     final totalQuantity = items.fold(0, (sum, item) => sum + (item.quantity ?? 0));
-  //     if (totalQuantity < (items.first.minStockAlert ?? 0)) {
-  //       lowStockItems.add(items.first.copyWith(quantity: totalQuantity));
-  //     }
-  //   }
-
-  //   _model.allLowStockItems.value = lowStockItems;
-  // }
 }
