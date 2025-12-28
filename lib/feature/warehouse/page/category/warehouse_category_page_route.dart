@@ -29,8 +29,16 @@ extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController
           );
         }
       case EnumWarehouseCategoryPageRoute.showDialogDeleteCategory:
-        // _showDialogDeleteCategory(data);
-        break;
+        if (data is Category) {
+          _service.showAlert(
+            DialogCategoryDeleteWidget(
+              category: data,
+              onConfirm: (outputModel) async {
+                return await _deleteCategory(outputModel);
+              },
+            ),
+          );
+        }
     }
   }
 }

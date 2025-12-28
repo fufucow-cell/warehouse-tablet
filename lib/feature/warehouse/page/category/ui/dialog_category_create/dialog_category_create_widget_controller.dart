@@ -112,7 +112,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
               ? level1Name
               : null;
       final resultName = (parentName != null) ? '$parentName > $newName' : newName;
-      result = '分類結果: $resultName';
+      result = EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
     }
 
     _model.hintText.value = result;

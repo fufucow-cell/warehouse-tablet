@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_model.dart';
@@ -165,6 +167,10 @@ class WarehouseCategoryPageController extends GetxController {
   }
 
   Future<bool> _editCategory(DialogCategoryEditOutputModel outputModel) async {
+    return true;
+  }
+
+  Future<bool> _deleteCategory(DialogCategoryDeleteOutputModel outputModel) async {
     return true;
   }
 }

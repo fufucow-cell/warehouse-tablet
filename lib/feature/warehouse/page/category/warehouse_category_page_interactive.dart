@@ -18,7 +18,7 @@ extension WarehouseCategoryPageUserEventExtension on WarehouseCategoryPageContro
           data: data,
         );
       case EnumWarehouseCategoryPageInteractive.tapDeleteCategory:
-        break;
+        routerHandle(EnumWarehouseCategoryPageRoute.showDialogDeleteCategory, data: data);
       case EnumWarehouseCategoryPageInteractive.tapExpandCategory:
         if (data is Category) {
           toggleCategoryExpanded(data);
