@@ -19,11 +19,12 @@ extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController
         );
       case EnumWarehouseCategoryPageRoute.showDialogEditCategory:
         if (data is Category) {
+          final categoryId = data.id ?? '';
           _service.showAlert(
             DialogCategoryEditWidget(
               category: data,
               onConfirm: (outputModel) async {
-                return await _editCategory(outputModel);
+                return await _updateCategory(outputModel, categoryId);
               },
             ),
           );

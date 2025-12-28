@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
@@ -6,11 +8,13 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dia
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_delete_request_model/warehouse_category_delete_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -152,25 +156,64 @@ class WarehouseCategoryPageController extends GetxController {
     _model.allCategories.value = allCategories;
 
     if (allCategories == null) {
-      _queryApiData();
+      _readCategory();
     }
   }
 
-  Future<void> _queryApiData() async {
+  Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
+    final request = WarehouseCategoryCreateRequestModel(
+      name: outputModel.name,
+      homeId: _service.getHouseholdId,
+      parentId: outputModel.parentId,
+    );
+
+    final response = await _service.apiReqCreateCategory(request);
+
+    if (response != null) {
+      unawaited(_readCategory());
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<void> _readCategory() async {
     _model.allCategories.value = null;
-    final response = await _service.apiReqFetchCategories(WarehouseCategoryRequestModel());
+    final response = await _service.apiReqReadCategory(WarehouseCategoryReadRequestModel());
     _model.allCategories.value = response;
   }
 
-  Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
-    return true;
-  }
+  Future<bool> _updateCategory(DialogCategoryEditOutputModel outputModel, String categoryId) async {
+    final request = WarehouseCategoryUpdateRequestModel(
+      homeId: _service.getHouseholdId,
+      categoryId: categoryId,
+      name: outputModel.name,
+      parentId: outputModel.parentId,
+    );
 
-  Future<bool> _editCategory(DialogCategoryEditOutputModel outputModel) async {
-    return true;
+    final response = await _service.apiReqUpdateCategory(request);
+
+    if (response != null) {
+      unawaited(_readCategory());
+      return true;
+    }
+
+    return false;
   }
 
   Future<bool> _deleteCategory(DialogCategoryDeleteOutputModel outputModel) async {
-    return true;
+    final request = WarehouseCategoryDeleteRequestModel(
+      homeId: _service.getHouseholdId,
+      categoryId: outputModel.categoryId,
+    );
+
+    final response = await _service.apiReqDeleteCategory(request);
+
+    if (response != null) {
+      unawaited(_readCategory());
+      return true;
+    }
+
+    return false;
   }
 }

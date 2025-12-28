@@ -13,7 +13,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehous
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
@@ -136,7 +136,7 @@ class WarehouseMainPageController extends GetxController {
   Future<void> _queryApiData() async {
     final responses = await Future.wait([
       _service.apiReqFetchItems(WarehouseItemRequestModel()),
-      _service.apiReqFetchCategories(WarehouseCategoryRequestModel()),
+      _service.apiReqReadCategory(WarehouseCategoryReadRequestModel()),
     ]);
 
     final items = responses[0];

@@ -6,7 +6,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_request_model/warehouse_category_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_delete_request_model/warehouse_category_delete_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
@@ -437,8 +440,20 @@ class WarehouseService {
 
   // MARK: - Category APIs
 
-  Future<List<Category>?> apiReqFetchCategories(
-    WarehouseCategoryRequestModel request, {
+  Future<Category?> apiReqCreateCategory(
+    WarehouseCategoryCreateRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    return await ApiUtil.sendRequest<Category?>(
+      EnumApiInfo.categoryCreate,
+      requestModel: request,
+      fromJson: Category.fromJson,
+      onError: onError,
+    );
+  }
+
+  Future<List<Category>?> apiReqReadCategory(
+    WarehouseCategoryReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
     final response = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
@@ -447,37 +462,31 @@ class WarehouseService {
       fromJson: WarehouseCategoryResponseModel.fromJson,
       onError: onError,
     );
-    _model.allCategories.value = response?.data;
+
+    if (request.categoryId == null) {
+      _model.allCategories.value = response?.data;
+    }
+
     return response?.data;
   }
 
-  Future<ApiEmptyResponse?> apiReqCreateCategory(
-    WarehouseCategoryRequestModel request, {
+  Future<Category?> apiReqUpdateCategory(
+    WarehouseCategoryUpdateRequestModel request, {
     ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
-      EnumApiInfo.categoryCreate,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<ApiEmptyResponse?> apiReqModifyCategory(
-    WarehouseCategoryRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+  }) async {
+    return await ApiUtil.sendRequest<Category?>(
       EnumApiInfo.categoryModify,
       requestModel: request,
+      fromJson: Category.fromJson,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqDeleteCategory(
-    WarehouseCategoryRequestModel request, {
+  Future<BaseApiResponseModel<void>?> apiReqDeleteCategory(
+    WarehouseCategoryDeleteRequestModel request, {
     ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+  }) async {
+    return await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.categoryDelete,
       requestModel: request,
       onError: onError,
