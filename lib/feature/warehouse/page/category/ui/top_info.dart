@@ -29,7 +29,8 @@ class TopInfo extends StatelessWidget {
         ),
         const Spacer(),
         Material(
-          color: Colors.transparent,
+          color: EnumColor.backgroundPrimary.color,
+          borderRadius: BorderRadius.circular(16.0.scale),
           child: InkWell(
             onTap: () {
               controller.interactive(
@@ -37,11 +38,12 @@ class TopInfo extends StatelessWidget {
               );
             },
             borderRadius: BorderRadius.circular(16.0.scale),
-            child: Container(
+            splashColor: EnumColor.accentBlue.color.withOpacity(0.2),
+            highlightColor: EnumColor.accentBlue.color.withOpacity(0.1),
+            child: Ink(
               height: 70.0.scale,
               padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
               decoration: BoxDecoration(
-                color: EnumColor.backgroundPrimary.color,
                 border: Border.all(
                   width: 1.0.scale,
                   color: EnumColor.accentBlue.color,

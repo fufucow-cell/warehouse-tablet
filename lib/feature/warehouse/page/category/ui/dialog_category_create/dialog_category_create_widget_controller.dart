@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -17,8 +18,9 @@ class DialogCategoryCreateWidgetController extends GetxController {
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<Category?> get selectedParentCategoryRx => _model.selectedParentCategory.readonly;
-  RxReadonly<List<Category>> get visibleParentCategoriesRx => _model.visibleParentCategories.readonly;
+  RxReadonly<Category?> get selectedLevel1Rx => _model.selectedLevel1.readonly;
+  RxReadonly<Category?> get selectedLevel2Rx => _model.selectedLevel2.readonly;
+  RxReadonly<String> get hintTextRx => _model.hintText.readonly;
 
   // MARK: - Init
 
@@ -26,12 +28,14 @@ class DialogCategoryCreateWidgetController extends GetxController {
   void onInit() {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[DialogCategoryCreateWidgetController] onInit - $hashCode');
-    _genParentCategoryList();
+    _genHintText();
+    nameController.addListener(_onNameChanged);
   }
 
   @override
   void onClose() {
     LogUtil.i(EnumLogType.debug, '[DialogCategoryCreateWidgetController] onClose - $hashCode');
+    nameController.removeListener(_onNameChanged);
     nameController.dispose();
     super.onClose();
   }
@@ -41,52 +45,71 @@ class DialogCategoryCreateWidgetController extends GetxController {
   // 檢查輸出資料
   Future<DialogCategoryCreateOutputModel?> checkOutputModel() async {
     final name = nameController.text.trim();
+
     if (name.isEmpty) {
       return null;
     }
 
     return DialogCategoryCreateOutputModel(
       name: name,
-      parentCategoryId: _model.selectedParentCategory.value?.id,
+      parentId: _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
     );
   }
 
-  // 獲取父分類名稱列表（扁平化所有分類）
-  List<String> getParentCategoryNameList() {
-    return _flattenCategories(_model.visibleParentCategories.value)
-        .map((cat) => cat.name ?? '')
-        .toList();
+  List<String> getLevel1NameList() {
+    return _service.getAllCategories.map((cat) => cat.name ?? '').toList();
+  }
+
+  List<String> getLevel2NameList() {
+    if (_model.selectedLevel1.value == null) {
+      return [];
+    }
+
+    return _service.getAllCategories
+            .firstWhereOrNull((cat) => cat.id == _model.selectedLevel1.value?.id)
+            ?.children
+            ?.map((cat) => cat.name ?? '')
+            .toList() ??
+        [];
   }
 
   // MARK: - Private Method
 
-  // 設置加載狀態
+  void _onNameChanged() {
+    _model.name.value = nameController.text;
+    _genHintText();
+  }
+
   void _setLoadingStatus(bool isLoading) {
     _model.isLoading.value = isLoading;
   }
 
-  // 扁平化分類列表（遞歸獲取所有層級的分類）
-  List<Category> _flattenCategories(List<Category> categories) {
-    final List<Category> result = [];
-    for (final category in categories) {
-      result.add(category);
-      if (category.children != null && category.children!.isNotEmpty) {
-        result.addAll(_flattenCategories(category.children!));
-      }
+  Category? _getLevel1CategoryByName(String name) {
+    return _service.getAllCategories.firstWhereOrNull((cat) => cat.name == name);
+  }
+
+  Category? _getLevel2CategoryByName(String name) {
+    if (_model.selectedLevel1.value == null) {
+      return null;
     }
-    return result;
+
+    return _service.getAllCategories
+        .firstWhereOrNull((cat) => cat.id == _model.selectedLevel1.value?.id)
+        ?.children
+        ?.firstWhereOrNull((cat) => cat.name == name);
   }
 
-  // 生成父分類列表
-  void _genParentCategoryList() {
-    _model.selectedParentCategory.value = null;
-    _model.visibleParentCategories.value = _service.getAllCategories;
-  }
+  void _genHintText() {
+    String result = EnumLocale.createCategoryParentQuestion.tr;
 
-  // 選擇父分類
-  void _changeSelectedParentCategory(String? categoryName) {
-    final allCategories = _flattenCategories(_model.visibleParentCategories.value);
-    final category = allCategories.firstWhereOrNull((cat) => cat.name == categoryName);
-    _model.selectedParentCategory.value = category;
+    if (nameController.text.trim().isNotEmpty && _model.selectedLevel1.value != null) {
+      final level1Name = _model.selectedLevel1.value?.name;
+      final level2Name = _model.selectedLevel2.value?.name;
+      final parentName = level2Name != null ? '$level1Name > $level2Name' : level1Name;
+      final newName = nameController.text.trim();
+      result = '分類結果: $parentName > $newName';
+    }
+
+    _model.hintText.value = result;
   }
 }

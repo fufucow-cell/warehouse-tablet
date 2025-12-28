@@ -21,7 +21,7 @@ class PatchListWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(
         left: 32.0.scale,
-        right: controller.rowRightGap.scale,
+        right: controller.rowRightGap,
       ),
       decoration: BoxDecoration(
         color: EnumColor.menuBgFocused.color,

@@ -34,14 +34,22 @@ class MajorListWidget extends StatelessWidget {
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               final category = level1Cats[index];
-
               return Obx(
                 () {
                   controller.expandedCategoryIdsRx.value;
                   final isExpanded = controller.isCategoryExpanded(category);
+                  bool isPreviousExpanded = false;
+                  double topMargin = 0.0.scale;
+
+                  if (index > 0) {
+                    final previousCategory = level1Cats[index - 1];
+                    isPreviousExpanded = controller.isCategoryExpanded(previousCategory);
+                    topMargin = 24.0.scale;
+                  }
+
                   return Column(
                     children: [
-                      if (!isExpanded && index != 0)
+                      if (!isExpanded && index != 0 && !isPreviousExpanded)
                         Divider(
                           height: 1.0.scale,
                           thickness: 1.0.scale,
@@ -50,9 +58,10 @@ class MajorListWidget extends StatelessWidget {
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
+                        margin: EdgeInsets.only(top: (isExpanded && isPreviousExpanded) ? topMargin : 0.0.scale),
                         padding: EdgeInsets.only(
                           left: 32.0.scale,
-                          right: controller.rowRightGap.scale,
+                          right: controller.rowRightGap,
                           top: 24.0.scale,
                           bottom: 24.0.scale,
                         ),
@@ -94,7 +103,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
       width: double.infinity,
       padding: EdgeInsets.only(
         left: 32.0.scale,
-        right: controller.rowRightGap.scale,
+        right: controller.rowRightGap,
         top: 22.0.scale,
         bottom: 22.0.scale,
       ),
@@ -129,7 +138,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
               color: EnumColor.textSecondary.color,
             ),
           ),
-          SizedBox(width: (controller.rowRightGap * 2).scale), // 為了跟子類別 Column 切齊
+          SizedBox(width: controller.rowRightGap * 2), // 為了跟子類別 Column 切齊
         ],
       ),
     );
@@ -209,7 +218,7 @@ class _MajorRow extends StatelessWidget {
             category: category,
           ),
         ),
-        SizedBox(width: (controller.rowRightGap * 2).scale), // 為了跟子類別 Column 切齊
+        SizedBox(width: controller.rowRightGap * 2), // 為了跟子類別 Column 切齊
       ],
     );
   }

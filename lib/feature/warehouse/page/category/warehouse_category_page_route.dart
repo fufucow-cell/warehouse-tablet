@@ -1,62 +1,28 @@
 part of 'warehouse_category_page_controller.dart';
 
 enum EnumWarehouseCategoryPageRoute {
-  showSomeDialog,
-  showCreateCategoryDialog,
-  showEditCategoryDialog,
+  showDialogCreateCategory,
+  showDialogEditCategory,
+  showDialogDeleteCategory,
 }
 
 extension WarehouseCategoryPageRouteExtension on WarehouseCategoryPageController {
   void routerHandle(EnumWarehouseCategoryPageRoute type, {dynamic data}) {
     switch (type) {
-      case EnumWarehouseCategoryPageRoute.showSomeDialog:
-        break;
-      case EnumWarehouseCategoryPageRoute.showCreateCategoryDialog:
-        _showCreateCategoryDialog();
-        break;
-      case EnumWarehouseCategoryPageRoute.showEditCategoryDialog:
-        _showEditCategoryDialog(data);
-        break;
-    }
-  }
-
-  Future<void> _showCreateCategoryDialog() async {
-    try {
-      // TODO: Implement create category dialog
-      // final service = WarehouseService.instance;
-      // service.showAlert(const DialogCategoryCreate());
-    } on Exception catch (e) {
-      // 错误处理
-      final context = Get.context;
-      if (context != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
+      case EnumWarehouseCategoryPageRoute.showDialogCreateCategory:
+        _service.showAlert(
+          DialogCategoryCreateWidget(
+            onConfirm: (outputModel) async {
+              return await _createCategory(outputModel);
+            },
           ),
         );
-      }
-    }
-  }
-
-  Future<void> _showEditCategoryDialog(dynamic data) async {
-    try {
-      // TODO: Import DialogCategoryEdit when available
-      // final service = WarehouseService.instance;
-      // if (data is Category) {
-      //   service.showAlert(DialogCategoryEdit(category: data));
-      // } else {
-      //   service.showAlert(const DialogCategoryEdit());
-      // }
-    } on Exception catch (e) {
-      // 错误处理
-      final context = Get.context;
-      if (context != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(EnumLocale.warehouseErrorFetchData.trArgs([e.toString()])),
-          ),
-        );
-      }
+      case EnumWarehouseCategoryPageRoute.showDialogEditCategory:
+        // _showDialogEditCategory(data);
+        break;
+      case EnumWarehouseCategoryPageRoute.showDialogDeleteCategory:
+        // _showDialogDeleteCategory(data);
+        break;
     }
   }
 }

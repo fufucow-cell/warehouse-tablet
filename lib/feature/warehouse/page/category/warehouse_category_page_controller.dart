@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
@@ -28,6 +30,7 @@ class WarehouseCategoryPageController extends GetxController {
   double get rowActionWidth => 280.0.scale;
   double get rowCountWidth => 400.0.scale;
   double get rowRightGap => 32.0.scale;
+  double get rowLeftGap => 24.0.scale;
 
   // MARK: - Init
 
@@ -153,5 +156,9 @@ class WarehouseCategoryPageController extends GetxController {
     _model.allCategories.value = null;
     final response = await _service.apiReqFetchCategories(WarehouseCategoryRequestModel());
     _model.allCategories.value = response;
+  }
+
+  Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
+    return true;
   }
 }

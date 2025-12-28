@@ -1,8 +1,8 @@
 part of 'dialog_category_create_widget_controller.dart';
 
 enum EnumDialogCategoryCreateWidgetInteractive {
-  tapParentCategory,
-  tapDropdownButton,
+  tapLevel1Button,
+  tapLevel2Button,
   tapDialogCancelButton,
   tapDialogConfirmButton,
 }
@@ -17,21 +17,33 @@ extension DialogCategoryCreateWidgetUserEventExtension on DialogCategoryCreateWi
     _service.dismissKeyboard();
 
     switch (type) {
-      case EnumDialogCategoryCreateWidgetInteractive.tapParentCategory:
+      case EnumDialogCategoryCreateWidgetInteractive.tapLevel1Button:
         if (data is String) {
-          _changeSelectedParentCategory(data);
+          final cat = _getLevel1CategoryByName(data);
+
+          if (cat != null) {
+            _model.selectedLevel1.value = cat;
+            _model.selectedLevel2.value = null;
+            _genHintText();
+          }
+        }
+      case EnumDialogCategoryCreateWidgetInteractive.tapLevel2Button:
+        if (data is String) {
+          final cat = _getLevel2CategoryByName(data);
+
+          if (cat != null) {
+            _model.selectedLevel2.value = cat;
+            _genHintText();
+          }
         }
       case EnumDialogCategoryCreateWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogCategoryCreateWidgetRoute.tapDialogFooterButton, data);
+        _routerHandle(EnumDialogCategoryCreateWidgetRoute.closeDialog, data);
       case EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
-          _setLoadingStatus(false);
-          _routerHandle(EnumDialogCategoryCreateWidgetRoute.tapDialogFooterButton, data);
+          _routerHandle(EnumDialogCategoryCreateWidgetRoute.closeDialog, data);
         }
-      default:
-        break;
     }
   }
 }

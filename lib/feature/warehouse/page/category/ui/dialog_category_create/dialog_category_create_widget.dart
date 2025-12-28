@@ -24,15 +24,14 @@ class DialogCategoryCreateWidget extends StatelessWidget {
     return GetBuilder<DialogCategoryCreateWidgetController>(
       init: DialogCategoryCreateWidgetController(),
       builder: (controller) {
-        return Obx(
-          () {
-            final isLoading = controller.isLoadingRx.value;
-
-            return DialogFrame(
-              width: 720.0.scale,
-              minHeight: 430.0.scale,
-              header: DialogHeader(title: EnumLocale.createCategoryTitle.tr),
-              footer: DialogFooter(
+        return DialogFrame(
+          width: 720.0.scale,
+          minHeight: 625.0.scale,
+          header: DialogHeader(title: EnumLocale.createCategoryTitle.tr),
+          footer: Obx(
+            () {
+              final isLoading = controller.isLoadingRx.value;
+              return DialogFooter(
                 type: DialogFooterType.cancelAndConfirm,
                 isLoading: isLoading,
                 onCancel: () {
@@ -42,26 +41,34 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                   );
                 },
                 onConfirm: () async {
-                  controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton, data: true);
                   final outputModel = await controller.checkOutputModel();
 
                   if (outputModel == null) {
-                    controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton, data: false);
                     return;
                   }
 
+                  controller.interactive(
+                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    data: true,
+                  );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
-                    Navigator.of(context).pop();
+                    controller.interactive(
+                      EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                      data: context,
+                    );
                   }
 
-                  controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton, data: context);
+                  controller.interactive(
+                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    data: false,
+                  );
                 },
-              ),
-              child: const _Body(),
-            );
-          },
+              );
+            },
+          ),
+          child: const _Body(),
         );
       },
     );
@@ -74,26 +81,38 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogCategoryCreateWidgetController>();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _NameField(),
-        SizedBox(height: 24.0.scale),
-        WidgetUtil.textWidget(
-          EnumLocale.createCategoryParentQuestion.tr,
-          size: 28.0.scale,
-          color: EnumColor.textPrimary.color,
-        ),
-        SizedBox(height: 24.0.scale),
-        Obx(
-          () => _DropdownField(
-            title: EnumLocale.createCategoryParentLabel.tr,
-            selectedValue: controller.selectedParentCategoryRx.value?.name,
-            visibleValues: controller.getParentCategoryNameList(),
-            onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapParentCategory, data: str),
-          ),
-        ),
-      ],
+    return Obx(
+      () {
+        final hintText = controller.hintTextRx.value;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _NameField(),
+            SizedBox(height: 24.0.scale),
+            WidgetUtil.textWidget(
+              hintText,
+              size: 28.0.scale,
+              color: EnumColor.textPrimary.color,
+            ),
+            SizedBox(height: 24.0.scale),
+            _DropdownField(
+              title: EnumLocale.createLevel1Category.tr,
+              selectedValue: controller.selectedLevel1Rx.value?.name,
+              visibleValues: controller.getLevel1NameList(),
+              onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel1Button, data: str),
+            ),
+            if (controller.selectedLevel1Rx.value != null) ...[
+              SizedBox(height: 24.0.scale),
+              _DropdownField(
+                title: EnumLocale.createLevel2Category.tr,
+                selectedValue: controller.selectedLevel2Rx.value?.name,
+                visibleValues: controller.getLevel2NameList(),
+                onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel2Button, data: str),
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 }
@@ -130,7 +149,6 @@ class _DropdownField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogCategoryCreateWidgetController>();
     return DialogSectionWidget(
       title: title,
       child: WidgetUtil.textDropdownButton(
@@ -139,7 +157,6 @@ class _DropdownField extends StatelessWidget {
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
-        onMenuOpened: () => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapDropdownButton),
       ),
     );
   }

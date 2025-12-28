@@ -4,16 +4,17 @@ import 'package:get/get.dart';
 class DialogCategoryCreateWidgetModel {
   final isLoading = false.obs;
   final name = ''.obs;
-  final selectedParentCategory = Rxn<Category>();
-  final visibleParentCategories = Rx<List<Category>>([]);
+  final selectedLevel1 = Rxn<Category>();
+  final selectedLevel2 = Rxn<Category>();
+  final hintText = ''.obs;
 }
 
 class DialogCategoryCreateOutputModel {
   String name;
-  String? parentCategoryId;
+  String? parentId;
 
   DialogCategoryCreateOutputModel({
     required this.name,
-    this.parentCategoryId,
+    this.parentId,
   });
 }
