@@ -26,6 +26,7 @@ extension DialogCategoryEditWidgetUserEventExtension on DialogCategoryEditWidget
           if (cat != null) {
             _model.selectedLevel1.value = cat;
             _model.selectedLevel2.value = null;
+            _genHintText();
           }
         }
       case EnumDialogCategoryEditWidgetInteractive.tapLevel2Button:
@@ -34,6 +35,7 @@ extension DialogCategoryEditWidgetUserEventExtension on DialogCategoryEditWidget
 
           if (cat != null) {
             _model.selectedLevel2.value = cat;
+            _genHintText();
           }
         }
       case EnumDialogCategoryEditWidgetInteractive.tapDialogCancelButton:
@@ -47,8 +49,10 @@ extension DialogCategoryEditWidgetUserEventExtension on DialogCategoryEditWidget
       case EnumDialogCategoryEditWidgetInteractive.tapDeleteLevel1Button:
         _model.selectedLevel1.value = null;
         _model.selectedLevel2.value = null;
+        _genHintText();
       case EnumDialogCategoryEditWidgetInteractive.tapDeleteLevel2Button:
         _model.selectedLevel2.value = null;
+        _genHintText();
     }
   }
 }

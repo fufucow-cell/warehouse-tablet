@@ -17,7 +17,7 @@ class DialogCategoryEditWidgetController extends GetxController {
   final DialogCategoryEditWidgetModel _model = DialogCategoryEditWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
-  String get getHintText => _model.hintText;
+  RxReadonly<String> get hintTextRx => _model.hintText.readonly;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<Category?> get selectedLevel1Rx => _model.selectedLevel1.readonly;
   RxReadonly<Category?> get selectedLevel2Rx => _model.selectedLevel2.readonly;
@@ -35,11 +35,13 @@ class DialogCategoryEditWidgetController extends GetxController {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[DialogCategoryEditWidgetController] onInit - $hashCode');
     _checkData();
+    nameController.addListener(_onNameChanged);
   }
 
   @override
   void onClose() {
     LogUtil.i(EnumLogType.debug, '[DialogCategoryEditWidgetController] onClose - $hashCode');
+    nameController.removeListener(_onNameChanged);
     nameController.dispose();
     super.onClose();
   }
@@ -79,6 +81,11 @@ class DialogCategoryEditWidgetController extends GetxController {
 
   // MARK: - Private Method
 
+  void _onNameChanged() {
+    _genCombineName();
+    _genHintText();
+  }
+
   void _setLoadingStatus(bool isLoading) {
     _model.isLoading.value = isLoading;
   }
@@ -98,7 +105,7 @@ class DialogCategoryEditWidgetController extends GetxController {
         ?.firstWhereOrNull((cat) => cat.name == name);
   }
 
-  int _checkChildrenLevel() {
+  void _checkChildrenLevel() {
     final cat = _model.category;
     int resultLevel = 0;
 
@@ -115,31 +122,59 @@ class DialogCategoryEditWidgetController extends GetxController {
       }
     }
 
-    return resultLevel;
+    if (resultLevel == 1) {
+      _model.level2IsMax.value = true;
+    } else if (resultLevel == 2) {
+      _model.level1IsMax.value = true;
+      _model.level2IsMax.value = true;
+    }
+
+    _model.childLevel = resultLevel;
+  }
+
+  void _genHintText() {
+    String resultName = _model.combineName;
+
+    if (!level1IsMaxRx.value && selectedLevel1Rx.value != null) {
+      if (!level2IsMaxRx.value && selectedLevel2Rx.value != null) {
+        resultName = '${selectedLevel1Rx.value!.name!} > ${selectedLevel2Rx.value!.name!} > ${_model.combineName}';
+      } else {
+        resultName = '${selectedLevel1Rx.value!.name!} > ${_model.combineName}';
+      }
+    }
+
+    _model.hintText.value = EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
+  }
+
+  void _genCombineName() {
+    String currentName = nameController.text.trim();
+
+    if (currentName.isEmpty) {
+      currentName = '_';
+    }
+
+    if (_model.childLevel == 0) {
+      _model.combineName = currentName;
+    } else if (_model.childLevel == 1) {
+      _model.combineName = '$currentName > *';
+    } else if (_model.childLevel == 2) {
+      _model.combineName = '$currentName > * > *';
+    }
   }
 
   void _checkData() {
     final cat = _model.category;
 
-    if (cat == null) {
+    if (cat?.name?.isEmpty ?? true) {
       return;
     }
 
-    final childLevel = _checkChildrenLevel();
-    nameController.text = cat.name ?? '';
-
-    if (childLevel == 0) {
-      _model.hintText = EnumLocale.editCategoryNoSubcategory.tr;
-    } else if (childLevel == 1) {
-      _model.hintText = EnumLocale.editCategoryHasLevel1Subcategory.tr;
-      _model.level2IsMax.value = true;
-    } else if (childLevel == 2) {
-      _model.hintText = EnumLocale.editCategoryHasLevel2Subcategory.tr;
-      _model.level1IsMax.value = true;
-      _model.level2IsMax.value = true;
-    }
+    nameController.text = cat!.name!;
+    _checkChildrenLevel();
+    _genCombineName();
 
     if (cat.parentId == null) {
+      _genHintText();
       return;
     }
 
@@ -160,5 +195,7 @@ class DialogCategoryEditWidgetController extends GetxController {
         _model.selectedLevel1.value = level1Cat;
       }
     }
+
+    _genHintText();
   }
 }

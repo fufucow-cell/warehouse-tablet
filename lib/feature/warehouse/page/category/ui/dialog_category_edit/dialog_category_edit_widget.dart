@@ -94,7 +94,7 @@ class _Body extends StatelessWidget {
             const _NameField(),
             SizedBox(height: 24.0.scale),
             WidgetUtil.textWidget(
-              controller.getHintText,
+              controller.hintTextRx.value,
               size: 28.0.scale,
               color: EnumColor.textPrimary.color,
             ),

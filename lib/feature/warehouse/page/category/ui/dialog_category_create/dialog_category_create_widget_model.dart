@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 class DialogCategoryCreateWidgetModel {
   final isLoading = false.obs;
-  final name = ''.obs;
   final selectedLevel1 = Rxn<Category>();
   final selectedLevel2 = Rxn<Category>();
   final hintText = ''.obs;

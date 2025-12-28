@@ -76,7 +76,6 @@ class DialogCategoryCreateWidgetController extends GetxController {
   // MARK: - Private Method
 
   void _onNameChanged() {
-    _model.name.value = nameController.text;
     _genHintText();
   }
 

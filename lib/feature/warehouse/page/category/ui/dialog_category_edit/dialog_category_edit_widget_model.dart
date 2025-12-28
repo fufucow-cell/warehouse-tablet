@@ -9,7 +9,9 @@ class DialogCategoryEditWidgetModel {
   final selectedLevel2 = Rxn<Category>();
   final level1IsMax = false.obs;
   final level2IsMax = false.obs;
-  String hintText = '';
+  final hintText = ''.obs;
+  String combineName = '';
+  int childLevel = 0;
 }
 
 class DialogCategoryEditOutputModel {
