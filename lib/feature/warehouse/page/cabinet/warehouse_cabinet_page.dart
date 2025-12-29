@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/empty_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
@@ -30,7 +29,7 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
         children: [
           const TopInfo(),
           if (rooms.isEmpty)
-            const EmptyWidget()
+            Expanded(child: WidgetUtil.emptyWidget())
           else ...[
             SizedBox(height: 32.0.scale),
             Expanded(

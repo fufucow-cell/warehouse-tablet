@@ -4,6 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
@@ -19,22 +20,20 @@ class WarehouseAlarmPageController extends GetxController {
   final _model = WarehouseAlarmPageModel();
   final _service = WarehouseService.instance;
   List<int> get columnRatio => _model.columnRatio;
-  List<Item> get allAlarmItemsRx => _model.allAlarmItems;
+  RxReadonly<List<Item>?> get allAlarmItemsRx => _model.allAlarmItems.readonly;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
-        EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseAlarmPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onClose - $hashCode');
     super.onClose();
   }
 
@@ -48,7 +47,7 @@ class WarehouseAlarmPageController extends GetxController {
 
   void _loadData() {
     final items = _service.getAllCombineItems;
-    _model.allAlarmItems = items.where(_isLowStock).toList();
+    _model.allAlarmItems.value = items.where(_isLowStock).toList();
   }
 
   bool _isLowStock(Item item) {
@@ -62,16 +61,12 @@ class WarehouseAlarmPageController extends GetxController {
     return false;
   }
 
-  Future<bool> _updateItemQuantity(
-      Item item, List<DialogItemEditQuantityOutputModel> models) async {
+  Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
     String errMsg = '';
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
-      cabinets: models
-          .map((model) => QuantityCabinetRequestModel(
-              cabinetId: model.cabinetId, quantity: model.quantity))
-          .toList(),
+      cabinets: models.map((model) => QuantityCabinetRequestModel(cabinetId: model.cabinetId, quantity: model.quantity)).toList(),
     );
 
     final response = await _service.apiReqUpdateItemQuantity(
@@ -83,9 +78,7 @@ class WarehouseAlarmPageController extends GetxController {
 
     final isSuccess = response != null;
     _service.showSnackBar(
-      title: isSuccess
-          ? EnumLocale.warehouseItemUpdateSuccess.tr
-          : EnumLocale.warehouseItemUpdateFailed.tr,
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
       message: errMsg,
     );
     return isSuccess;

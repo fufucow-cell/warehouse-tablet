@@ -264,6 +264,25 @@ class WidgetUtil {
       return imageWidget;
     }
   }
+
+  static Widget emptyWidget({double width = double.infinity, double height = double.infinity}) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          EnumImage.cEmpty.image(size: Size(422.0.scale, 298.0.scale)),
+          SizedBox(height: 24.0.scale),
+          WidgetUtil.textWidget(
+            EnumLocale.commonNoData.tr,
+            size: 28.0.scale,
+            color: const Color(0xFFBDBDBD),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class _TextDropdownButton extends StatefulWidget {

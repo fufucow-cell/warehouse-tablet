@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse_alarm_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
@@ -113,22 +113,35 @@ class _AlarmList extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseAlarmPageController>();
     final items = controller.allAlarmItemsRx;
-    return SingleChildScrollView(
-      child: Column(
-        children: items
-            .expand(
-              (item) => [
-                _CellWidget(item: item),
-                Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: EnumColor.lineDividerLight.color,
-                ),
-              ],
-            )
-            .toList()
-          ..removeLast(), // 移除最后一个 divider
-      ),
+    return Obx(
+      () {
+        final isLoading = controller.allAlarmItemsRx.value == null;
+        final isEmpty = controller.allAlarmItemsRx.value?.isEmpty ?? true;
+
+        if (isLoading) {
+          return const _AlarmListShimmer();
+        } else if (isEmpty) {
+          return WidgetUtil.emptyWidget();
+        }
+
+        return SingleChildScrollView(
+          child: Column(
+            children: items.value!
+                .expand(
+                  (item) => [
+                    _CellWidget(item: item),
+                    Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: EnumColor.lineDividerLight.color,
+                    ),
+                  ],
+                )
+                .toList()
+              ..removeLast(), // 移除最后一个 divider
+          ),
+        );
+      },
     );
   }
 }
@@ -166,8 +179,7 @@ class _CellWidget extends StatelessWidget {
                       width: 114.0.scale,
                       height: 80.0.scale,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          WidgetUtil.emptyImage(
+                      errorBuilder: (context, error, stackTrace) => WidgetUtil.emptyImage(
                         width: 114.0.scale,
                         height: 80.0.scale,
                       ),
@@ -259,6 +271,23 @@ class _CellWidget extends StatelessWidget {
         ),
         child: eImg.image(),
       ),
+    );
+  }
+}
+
+class _AlarmListShimmer extends StatelessWidget {
+  const _AlarmListShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: 3,
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 16.0.scale);
+      },
+      itemBuilder: (context, index) {
+        return WidgetUtil.shimmerWidget(height: 112.0.scale);
+      },
     );
   }
 }

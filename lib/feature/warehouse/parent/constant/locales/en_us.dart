@@ -54,6 +54,7 @@ const Map<String, String> enUS = {
   'warehouseItemChange': 'Change',
   'warehouseItemInfo': 'Info',
   'warehouseItemRecord': 'Record',
+  'warehouseItemClickToViewRecord': 'Click to view record',
   'warehouseItemCollapse': 'Collapse',
   'warehouseItemMoreOptions': 'More Options',
   'warehouseCategory': 'Category',

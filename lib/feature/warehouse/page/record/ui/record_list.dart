@@ -18,6 +18,14 @@ class RecordList extends StatelessWidget {
         return Obx(
           () {
             final logs = controller.visibleLogsRx.value;
+            final isLoading = controller.allLogsRx.value == null;
+            final isEmpty = controller.allLogsRx.value?.isEmpty ?? true;
+
+            if (isLoading) {
+              return const _RecordHeaderShimmer();
+            } else if (isEmpty) {
+              return WidgetUtil.emptyWidget();
+            }
 
             if (logs.isEmpty) {
               return const SizedBox.shrink();
@@ -216,11 +224,8 @@ class _RecordItem extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                         color: log.itemPhoto == null ||
-                                (log.itemPhoto != null &&
-                                    log.itemPhoto!.isEmpty) ||
-                                (log.itemPhoto != null &&
-                                    log.itemPhoto!.isNotEmpty &&
-                                    (log.itemPhoto![0].isEmpty))
+                                (log.itemPhoto != null && log.itemPhoto!.isEmpty) ||
+                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0].isEmpty))
                             ? EnumColor.backgroundSecondary.color
                             : null,
                         shape: RoundedRectangleBorder(
@@ -240,6 +245,23 @@ class _RecordItem extends StatelessWidget {
             ],
           ),
         );
+      },
+    );
+  }
+}
+
+class _RecordHeaderShimmer extends StatelessWidget {
+  const _RecordHeaderShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemCount: 3,
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 16.0.scale);
+      },
+      itemBuilder: (context, index) {
+        return WidgetUtil.shimmerWidget(height: 112.0.scale);
       },
     );
   }

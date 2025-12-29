@@ -75,9 +75,11 @@ class _InfoCard extends StatelessWidget {
           SizedBox(height: 24.0.scale),
           Obx(
             () {
-              final recordCount = controller.recordsRx.value?.length;
+              final recordCount = controller.recordsRx.value;
+              final isLoading = recordCount == null;
+              final count = recordCount?.length ?? 0;
 
-              if (recordCount == null) {
+              if (isLoading) {
                 return WidgetUtil.shimmerWidget(
                   height: 24.0.scale,
                   width: 112.0.scale,
@@ -86,7 +88,7 @@ class _InfoCard extends StatelessWidget {
 
               return _InfoRow(
                 label: EnumLocale.warehouseRecordCount.tr,
-                value: recordCount.toString(),
+                value: count.toString(),
               );
             },
           ),
@@ -137,13 +139,14 @@ class _RecordsList extends StatelessWidget {
     return Obx(
       () {
         final records = controller.recordsRx.value;
+        final isLoading = records == null;
 
-        if (records == null) {
+        if (isLoading) {
           return WidgetUtil.shimmerWidget(
             height: 100.0.scale,
           );
         } else if (records.isEmpty) {
-          return const SizedBox.shrink();
+          return WidgetUtil.emptyWidget();
         }
 
         return Column(
@@ -184,7 +187,7 @@ class _RecordItem extends StatelessWidget {
     final date = controller.formatDate(record.createdAt);
 
     return Padding(
-      padding: EdgeInsets.all(24.0.scale),
+      padding: EdgeInsets.symmetric(vertical: 24.0.scale),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -218,6 +218,7 @@ enum EnumLocale {
   warehouseItemLowStock,
   warehouseItemMoreOptions,
   warehouseItemRecord,
+  warehouseItemClickToViewRecord,
   warehouseItemRoom,
   warehouseItemStockInsufficient,
   warehouseItemTotal,

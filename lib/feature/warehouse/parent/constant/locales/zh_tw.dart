@@ -53,6 +53,7 @@ const Map<String, String> zhTW = {
   'warehouseItemChange': '異動',
   'warehouseItemInfo': '資訊',
   'warehouseItemRecord': '記錄',
+  'warehouseItemClickToViewRecord': '點擊查看記錄',
   'warehouseItemCollapse': '收起',
   'warehouseItemMoreOptions': '更多選項',
   'warehouseCategory': '分類',

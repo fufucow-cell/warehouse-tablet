@@ -31,10 +31,8 @@ class WarehouseCategoryPageController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final Map<GlobalKey, double> _subHeaderPositions = {};
   final _showSubHeader = Rx<bool>(false);
-  RxReadonly<List<Category>?> get allCategoriesRx =>
-      _model.allCategories.readonly;
-  RxReadonly<Set<String>> get expandedCategoryIdsRx =>
-      _model.expandedCategoryIds.readonly;
+  RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
+  RxReadonly<Set<String>> get expandedCategoryIdsRx => _model.expandedCategoryIds.readonly;
   RxReadonly<bool> get showSubHeaderRx => _showSubHeader.readonly;
   Set<String> get getExpandedCategoryIds => _model.expandedCategoryIds.value;
   double get rowActionWidth => 280.0.scale;
@@ -47,16 +45,14 @@ class WarehouseCategoryPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseCategoryPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onInit - $hashCode');
     scrollController.addListener(_onScroll);
     _checkData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[WarehouseCategoryPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onClose - $hashCode');
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
     super.onClose();
@@ -121,15 +117,10 @@ class WarehouseCategoryPageController extends GetxController {
     }
 
     final lv1 = categories.length;
-    final lv2 = categories.fold<int>(
-        0, (sum, category) => sum + (category.children?.length ?? 0));
+    final lv2 = categories.fold<int>(0, (sum, category) => sum + (category.children?.length ?? 0));
     final lv3 = categories.fold<int>(
       0,
-      (sum, category) =>
-          sum +
-          (category.children?.fold<int>(0,
-                  (sum, category) => sum + (category.children?.length ?? 0)) ??
-              0),
+      (sum, category) => sum + (category.children?.fold<int>(0, (sum, category) => sum + (category.children?.length ?? 0)) ?? 0),
     );
     return [lv1, lv2, lv3];
   }
@@ -169,8 +160,7 @@ class WarehouseCategoryPageController extends GetxController {
     }
   }
 
-  Future<bool> _createCategory(
-      DialogCategoryCreateOutputModel outputModel) async {
+  Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
     final request = WarehouseCategoryCreateRequestModel(
       name: outputModel.name,
       homeId: _service.getHouseholdId,
@@ -189,13 +179,11 @@ class WarehouseCategoryPageController extends GetxController {
 
   Future<void> _readCategory() async {
     _model.allCategories.value = null;
-    final response =
-        await _service.apiReqReadCategory(WarehouseCategoryReadRequestModel());
+    final response = await _service.apiReqReadCategory(WarehouseCategoryReadRequestModel());
     _model.allCategories.value = response;
   }
 
-  Future<bool> _updateCategory(
-      DialogCategoryEditOutputModel outputModel, String categoryId) async {
+  Future<bool> _updateCategory(DialogCategoryEditOutputModel outputModel, String categoryId) async {
     final request = WarehouseCategoryUpdateRequestModel(
       homeId: _service.getHouseholdId,
       categoryId: categoryId,
@@ -213,8 +201,7 @@ class WarehouseCategoryPageController extends GetxController {
     return false;
   }
 
-  Future<bool> _deleteCategory(
-      DialogCategoryDeleteOutputModel outputModel) async {
+  Future<bool> _deleteCategory(DialogCategoryDeleteOutputModel outputModel) async {
     final request = WarehouseCategoryDeleteRequestModel(
       homeId: _service.getHouseholdId,
       categoryId: outputModel.categoryId,

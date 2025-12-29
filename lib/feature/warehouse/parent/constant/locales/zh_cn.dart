@@ -53,6 +53,7 @@ const Map<String, String> zhCN = {
   'warehouseItemChange': '异动',
   'warehouseItemInfo': '资讯',
   'warehouseItemRecord': '记录',
+  'warehouseItemClickToViewRecord': '点击查看记录',
   'warehouseItemCollapse': '收起',
   'warehouseItemMoreOptions': '更多选项',
   'warehouseCategory': '分类',

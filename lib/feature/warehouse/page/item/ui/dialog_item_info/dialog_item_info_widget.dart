@@ -252,19 +252,36 @@ class _RecordButton extends StatelessWidget {
         SizedBox(
           width: 112.0.scale,
           child: WidgetUtil.textWidget(
-            '查看記錄',
+            EnumLocale.warehouseItemRecord.tr,
             size: 28.0.scale,
             color: EnumColor.textSecondary.color,
           ),
         ),
         SizedBox(width: 24.0.scale),
         Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
-            borderRadius: BorderRadius.circular(20.0.scale),
-            child: EnumImage.cHistory.image(
-              size: Size.square(70.0.scale),
+          color: EnumColor.backgroundPrimary.color,
+          borderRadius: BorderRadius.circular(20.0.scale),
+          child: Ink(
+            decoration: BoxDecoration(
+              color: EnumColor.backgroundPrimary.color,
+              borderRadius: BorderRadius.circular(20.0.scale),
+            ),
+            child: InkWell(
+              onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
+              child: Row(
+                children: [
+                  EnumImage.cHistory.image(
+                    size: Size.square(40.0.scale),
+                    color: EnumColor.textLink.color,
+                  ),
+                  SizedBox(width: 10.0.scale),
+                  WidgetUtil.textWidget(
+                    EnumLocale.warehouseItemClickToViewRecord.tr,
+                    size: 28.0.scale,
+                    color: EnumColor.textLink.color,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

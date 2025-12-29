@@ -53,6 +53,7 @@ const Map<String, String> koKR = {
   'warehouseItemChange': '변경',
   'warehouseItemInfo': '정보',
   'warehouseItemRecord': '기록',
+  'warehouseItemClickToViewRecord': '기록 보기',
   'warehouseItemCollapse': '접기',
   'warehouseItemMoreOptions': '더 많은 옵션',
   'warehouseCategory': '카테고리',

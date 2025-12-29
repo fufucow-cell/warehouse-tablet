@@ -53,6 +53,7 @@ const Map<String, String> jaJP = {
   'warehouseItemChange': '変更',
   'warehouseItemInfo': '情報',
   'warehouseItemRecord': '記録',
+  'warehouseItemClickToViewRecord': '記録を表示',
   'warehouseItemCollapse': '折りたたむ',
   'warehouseItemMoreOptions': 'その他のオプション',
   'warehouseCategory': 'カテゴリ',
