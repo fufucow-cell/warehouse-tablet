@@ -12,8 +12,7 @@ enum EnumDialogItemEditQuantityWidgetInteractive {
 }
 
 /// DialogItemEditQuantityWidget 用户事件处理扩展
-extension DialogItemEditQuantityWidgetUserEventExtension
-    on DialogItemEditQuantityWidgetController {
+extension DialogItemEditQuantityWidgetUserEventExtension on DialogItemEditQuantityWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditQuantityWidgetInteractive type, {
@@ -28,17 +27,24 @@ extension DialogItemEditQuantityWidgetUserEventExtension
         if (data is UpdatePositionModel) {
           updateNewPositionRoom(data);
         }
-      case EnumDialogItemEditQuantityWidgetInteractive
-            .tapUpdateNewPositionCabinet:
+      case EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionCabinet:
         if (data is UpdatePositionModel) {
           updateNewPositionCabinet(data);
         }
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton:
         _routerHandle(
-            EnumDialogItemEditQuantityWidgetRoute.tapDialogCancelButton, data);
+          EnumDialogItemEditQuantityWidgetRoute.closeDialog,
+          data,
+        );
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton:
-        _routerHandle(
-            EnumDialogItemEditQuantityWidgetRoute.tapDialogConfirmButton, data);
+        if (data is bool) {
+          _setLoadingStatus(data);
+        } else if (data is BuildContext) {
+          _routerHandle(
+            EnumDialogItemEditQuantityWidgetRoute.closeDialog,
+            data,
+          );
+        }
       case EnumDialogItemEditQuantityWidgetInteractive.tapDecrementQuantity:
         if (data is TextEditingController) {
           final currentValue = int.tryParse(data.text.trim()) ?? 0;

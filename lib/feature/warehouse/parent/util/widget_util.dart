@@ -204,11 +204,8 @@ class WidgetUtil {
     double? width = double.infinity,
     double? height = double.infinity,
   }) {
-    return Container(
-      width: width,
-      height: height,
-      color: Colors.grey[300],
-      child: const Icon(Icons.image_not_supported),
+    return EnumImage.cEmptyPhoto.image(
+      size: Size(width ?? double.infinity, height ?? double.infinity),
     );
   }
 
@@ -221,6 +218,8 @@ class WidgetUtil {
     final loadingSize = height ?? width ?? double.infinity;
     Widget imageWidget = Image.network(
       url,
+      width: width,
+      height: height,
       fit: fit ?? BoxFit.contain,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) {
@@ -262,11 +261,7 @@ class WidgetUtil {
         child: imageWidget,
       );
     } else {
-      return SizedBox(
-        width: width,
-        height: height,
-        child: imageWidget,
-      );
+      return imageWidget;
     }
   }
 }

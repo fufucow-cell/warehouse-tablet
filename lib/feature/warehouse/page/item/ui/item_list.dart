@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/empty_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
@@ -19,9 +20,10 @@ class ItemList extends StatelessWidget {
         return Obx(
           () {
             final items = controller.visibleItemsRx.value;
+            final isLoading = controller.allItemsRx.value == null;
 
             if (items.isEmpty) {
-              return const SizedBox.shrink();
+              return const EmptyWidget();
             }
 
             return GridView.builder(
@@ -38,8 +40,12 @@ class ItemList extends StatelessWidget {
                 mainAxisSpacing: 32.0.scale,
                 childAspectRatio: 524 / 724,
               ),
-              itemCount: items.length,
+              itemCount: isLoading ? 3 : items.length,
               itemBuilder: (context, index) {
+                if (isLoading) {
+                  return WidgetUtil.shimmerWidget();
+                }
+
                 final item = items[index];
                 return _ItemCard(
                   item: item,

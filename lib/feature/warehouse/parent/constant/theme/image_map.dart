@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-29T17:18:54.666250
+/// 生成时间: 2025-12-29T21:20:44.834849
 library;
 
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ enum EnumImage {
   cEditPosition,
   cEditQuantity,
   cEmpty,
+  cEmptyPhoto,
   cHistory,
   cHouse,
   cInfo,

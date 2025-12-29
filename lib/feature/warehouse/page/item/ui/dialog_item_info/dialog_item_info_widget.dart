@@ -51,14 +51,12 @@ class _PhotoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemInfoWidgetController>();
     return ClipRRect(
-      borderRadius: BorderRadius.circular(11.0.scale),
-      child: Image.network(
-        controller.getPhoto,
+      borderRadius: BorderRadius.circular(30.0.scale),
+      child: WidgetUtil.networkImage(
+        url: controller.getPhoto,
         width: 320.0.scale,
         height: 225.0.scale,
         fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            WidgetUtil.emptyImage(width: 200.0.scale, height: 200.0.scale),
       ),
     );
   }
@@ -174,9 +172,7 @@ class _PositionsInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (int roomIdx = 0; roomIdx < rooms.length; roomIdx++)
-                for (int cabinetIdx = 0;
-                    cabinetIdx < rooms[roomIdx].cabinets.length;
-                    cabinetIdx++)
+                for (int cabinetIdx = 0; cabinetIdx < rooms[roomIdx].cabinets.length; cabinetIdx++)
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -186,9 +182,7 @@ class _PositionsInfo extends StatelessWidget {
                         quantity: rooms[roomIdx].cabinets[cabinetIdx].quantity,
                         showRoomName: cabinetIdx == 0,
                       ),
-                      if (!(roomIdx == rooms.length - 1 &&
-                          cabinetIdx == rooms[roomIdx].cabinets.length - 1))
-                        SizedBox(height: 16.0.scale),
+                      if (!(roomIdx == rooms.length - 1 && cabinetIdx == rooms[roomIdx].cabinets.length - 1)) SizedBox(height: 16.0.scale),
                     ],
                   ),
             ],
@@ -267,9 +261,7 @@ class _RecordButton extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () => controller.interactive(
-                EnumDialogItemInfoWidgetInteractive.tapRecordButton,
-                data: context),
+            onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
             borderRadius: BorderRadius.circular(20.0.scale),
             child: EnumImage.cHistory.image(
               size: Size.square(70.0.scale),

@@ -4,8 +4,7 @@ enum EnumDialogItemHistoryWidgetInteractive {
   tapDialogConfirmButton,
 }
 
-extension DialogItemHistoryWidgetUserEventExtension
-    on DialogItemHistoryWidgetController {
+extension DialogItemHistoryWidgetUserEventExtension on DialogItemHistoryWidgetController {
   void interactive(
     EnumDialogItemHistoryWidgetInteractive type, {
     dynamic data,
@@ -13,7 +12,7 @@ extension DialogItemHistoryWidgetUserEventExtension
     switch (type) {
       case EnumDialogItemHistoryWidgetInteractive.tapDialogConfirmButton:
         _routerHandle(
-          EnumDialogItemHistoryWidgetRoute.tapDialogConfirmButton,
+          EnumDialogItemHistoryWidgetRoute.showDialogInfo,
           data,
         );
     }

@@ -16,10 +16,6 @@ class FilterTextListSingle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -59,14 +55,10 @@ class FilterTextListSingleItem extends StatelessWidget {
           horizontal: 24.0.scale,
           vertical: 16.0.scale,
         ),
-        backgroundColor:
-            isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
-        foregroundColor: isSelected
-            ? EnumColor.textProduct.color
-            : EnumColor.textSecondary.color,
+        backgroundColor: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+        foregroundColor: isSelected ? EnumColor.textProduct.color : EnumColor.textSecondary.color,
         side: BorderSide(
-          color:
-              isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
+          color: isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
           width: 1.0,
         ),
         shape: RoundedRectangleBorder(

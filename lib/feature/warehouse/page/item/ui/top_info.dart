@@ -92,10 +92,13 @@ class TopInfoItem extends StatelessWidget {
               color: EnumColor.textSecondary.color,
             ),
             SizedBox(width: 16.0.scale),
-            WidgetUtil.textWidget(
-              count,
-              weightType: EnumFontWeightType.bold,
-            ),
+            if (isLoading)
+              WidgetUtil.shimmerWidget(width: 52.0.scale, height: 34.0.scale)
+            else
+              WidgetUtil.textWidget(
+                count,
+                weightType: EnumFontWeightType.bold,
+              ),
           ],
         ),
       ),
