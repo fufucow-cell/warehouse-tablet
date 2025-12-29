@@ -74,7 +74,7 @@ class ApiUtil extends GetxService {
       final options = Options(
         method: apiInfo.method.value,
         extra: {
-          ApiEmptyResponse.name: T == ApiEmptyResponse,
+          BaseApiResponseModel.name: T == BaseApiResponseModel,
         },
       );
 
@@ -143,7 +143,7 @@ class ApiUtil extends GetxService {
     final finalMessage = message ?? EnumErrorMap.code201.message;
 
     if (finalCode == EnumErrorMap.code200.code) {
-      if (rawData == null && T == ApiEmptyResponse) {
+      if (rawData == null && T == BaseApiResponseModel) {
         return BaseApiResponseModel<T>.emptySuccess();
       } else if (fromJson != null) {
         if (rawData is Map<String, dynamic>) {

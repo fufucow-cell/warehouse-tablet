@@ -32,15 +32,12 @@ class WarehouseMainPageController extends GetxController {
   WarehouseService get _service => WarehouseService.instance;
   TabController? _tabController;
   TabController? get tabController => _tabController;
-  RxReadonly<bool> get isTabControllerReadyRx =>
-      _model.isTabControllerReady.readonly;
+  RxReadonly<bool> get isTabControllerReadyRx => _model.isTabControllerReady.readonly;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<EnumWarehouseTabItem> get selectedItemRx =>
-      _service.mainPageSelectedTabItemRx;
-  List<Tab> get tabs =>
-      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews =>
-      EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  RxReadonly<EnumWarehouseTabItem> get selectedItemRx => _service.mainPageSelectedTabItemRx;
+  List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  Worker? _selectedItemWorker;
 
   // MARK: - Init
 
@@ -51,7 +48,7 @@ class WarehouseMainPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseMainPageController] onInit - $hashCode',
     );
-    _listen();
+    _addListeners();
   }
 
   @override
@@ -60,6 +57,7 @@ class WarehouseMainPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseMainPageController] onClose - $hashCode',
     );
+    _selectedItemWorker?.dispose();
     _disposeTabController();
     _disposeTabPageControllers();
     WarehouseService.unregister();
@@ -87,8 +85,7 @@ class WarehouseMainPageController extends GetxController {
         BuildContext? currentContext = context;
 
         while (currentContext != null) {
-          final materialApp =
-              currentContext.findAncestorWidgetOfExactType<MaterialApp>();
+          final materialApp = currentContext.findAncestorWidgetOfExactType<MaterialApp>();
 
           if (materialApp != null) {
             final navigator = Navigator.maybeOf(
@@ -149,8 +146,8 @@ class WarehouseMainPageController extends GetxController {
     _model.isLoading.value = (items == null || categories == null);
   }
 
-  void _listen() {
-    ever(
+  void _addListeners() {
+    _selectedItemWorker = ever(
       selectedItemRx.rx,
       (value) {
         _tabController?.animateTo(EnumWarehouseTabItem.values.indexOf(value));
@@ -231,9 +228,7 @@ class WarehouseMainPageController extends GetxController {
 
     final isSuccess = response != null;
     _service.showSnackBar(
-      title: isSuccess
-          ? EnumLocale.warehouseItemCreateSuccess.tr
-          : EnumLocale.warehouseItemCreateFailed.tr,
+      title: isSuccess ? EnumLocale.warehouseItemCreateSuccess.tr : EnumLocale.warehouseItemCreateFailed.tr,
       message: errMsg,
     );
     return isSuccess;

@@ -62,10 +62,9 @@ class ApiMockUtil {
     RequestInterceptorHandler handler,
     EnumApiInfo apiInfo,
   ) async {
-    final isApiEmptyResponse =
-        options.extra[ApiEmptyResponse.name] as bool? ?? false;
+    final isEmptyResponse = options.extra[BaseApiResponseModel.name] as bool? ?? false;
 
-    if (isApiEmptyResponse) {
+    if (isEmptyResponse) {
       final successResponse = Response<dynamic>(
         requestOptions: options,
         data: {
@@ -116,15 +115,7 @@ class ApiMockUtil {
     final cleanPath = options.path.replaceAll(RegExp(r'^/+'), '');
     final methodName = apiInfo.method.name.toLowerCase();
     String baseFileName = cleanPath.replaceAll('/', '_');
-
-    if (cleanPath == EnumApiInfo.homeFetch.path ||
-        cleanPath == EnumApiInfo.itemFetch.path ||
-        cleanPath == EnumApiInfo.categoryFetch.path ||
-        cleanPath == EnumApiInfo.logFetch.path) {
-      baseFileName = '${baseFileName}_$methodName';
-    }
-
-    // 其他 path 保持原來的格式
+    baseFileName = '${baseFileName}_$methodName';
     return '$baseFileName.json';
   }
 }

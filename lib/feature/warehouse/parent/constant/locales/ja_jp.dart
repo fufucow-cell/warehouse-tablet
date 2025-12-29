@@ -18,6 +18,7 @@ const Map<String, String> jaJP = {
   'commonFinish': '完了',
   'commonProcessing': '処理中',
   'commonReminder': 'ご案内',
+  'commonNoData': 'データがありません',
 
   // 言語
   'languageTitle': '言語設定',
@@ -143,6 +144,9 @@ const Map<String, String> jaJP = {
   'editCabinetTitle': 'キャビネット編集',
   'editCabinetDeleteMultipleMessage':
       '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
+  'editCabinetMoveToNewRoom': '新しい部屋に移動',
+  'editCabinetRoomName': '部屋名',
+  'editCabinetWillDelete': 'このキャビネットは削除されます',
   'deleteCabinetTitle': 'キャビネット削除',
   'deleteCabinetMessageNoItems': '「@para1」キャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'deleteCabinetMessageWithItems':
@@ -322,4 +326,5 @@ const Map<String, String> jaJP = {
   'warehousePhotoDelete': '写真削除',
   'warehouseMinStockUpdate': '最低在庫数量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '部屋更新: @para1 -> @para2',
+  'warehouseUnbound': '未バインド',
 };

@@ -182,11 +182,21 @@ class WidgetUtil {
     );
   }
 
-  static Widget shimmerWidget({required Widget child, Color? highlightColor}) {
+  static Widget shimmerWidget({double width = double.infinity, double height = double.infinity, Widget? child, Color? highlightColor}) {
     return Shimmer.fromColors(
       baseColor: EnumColor.backgroundLoadingBase.color,
       highlightColor: highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
-      child: child,
+      child: child ??
+          Container(
+            height: height,
+            width: width,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0.scale),
+              ),
+            ),
+          ),
     );
   }
 

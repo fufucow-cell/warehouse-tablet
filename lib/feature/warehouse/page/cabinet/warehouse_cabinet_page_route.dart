@@ -29,9 +29,8 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
           );
         }
       case EnumWarehouseCabinetPageRoute.changeMainPageTabItem:
-        if (data is WarehouseNameIdModel) {
-          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.item,
-              data: data);
+        if (data is Cabinet) {
+          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.item, data: data.id);
         }
     }
   }

@@ -18,6 +18,7 @@ const Map<String, String> enUS = {
   'commonFinish': 'Finish',
   'commonProcessing': 'Processing',
   'commonReminder': 'Friendly Reminder',
+  'commonNoData': 'No data available',
 
   // Language
   'languageTitle': 'Language Settings',
@@ -144,6 +145,9 @@ const Map<String, String> enUS = {
   'editCabinetTitle': 'Edit Cabinet',
   'editCabinetDeleteMultipleMessage':
       'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
+  'editCabinetMoveToNewRoom': 'Move to New Room',
+  'editCabinetRoomName': 'Room Name',
+  'editCabinetWillDelete': 'This cabinet will be deleted',
   'deleteCabinetTitle': 'Delete Cabinet',
   'deleteCabinetMessageNoItems':
       'Are you sure you want to delete the cabinet "@para1"?\nThis action cannot be undone.',
@@ -329,4 +333,5 @@ const Map<String, String> enUS = {
   'warehousePhotoDelete': 'Photo delete',
   'warehouseMinStockUpdate': 'Min stock update: @para1 -> @para2',
   'warehouseRoomUpdate': 'Room update: @para1 -> @para2',
+  'warehouseUnbound': 'Unbound',
 };

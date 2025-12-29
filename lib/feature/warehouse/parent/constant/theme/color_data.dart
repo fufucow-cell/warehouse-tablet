@@ -113,10 +113,10 @@ const Map<String, ColorData> colorDataMap = {
   ),
   'backgroundLoadingBase': ColorData(
     light: Color(0xFFE4E4E4),
-    dark: Color(0xFFF6F6F6),
+    dark: Color(0xFF2F333F),
   ),
   'backgroundLoadingHighlight': ColorData(
-    light: Color(0xFF2F333F),
+    light: Color(0xFFF6F6F6),
     dark: Color(0xFF444651),
   ),
   'lineDivider': ColorData(

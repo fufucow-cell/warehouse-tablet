@@ -21,7 +21,6 @@ dependencies:
   collection: ^1.18.0
   shimmer: ^3.0.0
   image_picker: ^1.0.7
-  super_sliver_list: ^0.4.1
 
 dev_dependencies:
   flutter_test:

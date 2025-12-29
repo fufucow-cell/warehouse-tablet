@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:get/get.dart';
 
 class CabinetRowCard extends StatelessWidget {
   final List<Cabinet> cabinets;
@@ -25,56 +27,16 @@ class CabinetRowCard extends StatelessWidget {
         padding: EdgeInsets.zero,
         physics: const ClampingScrollPhysics(),
         itemCount: cabinets.length,
-        separatorBuilder: (context, index) => SizedBox(height: 8.0.scale),
+        separatorBuilder: (context, index) => SizedBox(height: 16.0.scale),
         itemBuilder: (context, index) {
           return Row(
             children: [
               Expanded(
-                child: _buildCabinetCard(cabinets[index]),
+                child: _CabinetCard(cabinet: cabinets[index]),
               ),
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildCabinetCard(Cabinet cabinet) {
-    return Container(
-      decoration: BoxDecoration(
-        color: EnumColor.backgroundSecondary.color,
-        borderRadius: BorderRadius.circular(20.0.scale),
-      ),
-      padding: EdgeInsets.symmetric(
-        vertical: 22.0.scale,
-        horizontal: 32.0.scale,
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: WidgetUtil.textWidget(
-              cabinet.name ?? '',
-              size: 26.0.scale,
-              color: EnumColor.textSecondary.color,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(
-              horizontal: 18.0.scale,
-            ),
-            decoration: BoxDecoration(
-              color: EnumColor.backgroundAccentBlue.color,
-              borderRadius: BorderRadius.circular(12.0.scale),
-            ),
-            child: WidgetUtil.textWidget(
-              '${cabinet.quantity ?? 0}',
-              size: 28.0.scale,
-              color: EnumColor.accentBlue.color,
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -96,6 +58,65 @@ class CabinetRowCard extends StatelessWidget {
         color: EnumColor.textSecondary.color,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class _CabinetCard extends StatelessWidget {
+  final Cabinet cabinet;
+
+  const _CabinetCard({
+    required this.cabinet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseCabinetPageController>();
+    return Material(
+      color: EnumColor.backgroundSecondary.color,
+      borderRadius: BorderRadius.circular(20.0.scale),
+      child: InkWell(
+        onTap: () {
+          controller.interactive(
+            EnumWarehouseCabinetPageInteractive.tapCabinet,
+            data: cabinet,
+          );
+        },
+        borderRadius: BorderRadius.circular(20.0.scale),
+        child: Ink(
+          padding: EdgeInsets.symmetric(
+            vertical: 22.0.scale,
+            horizontal: 32.0.scale,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: WidgetUtil.textWidget(
+                  cabinet.name ?? '',
+                  size: 26.0.scale,
+                  color: EnumColor.textSecondary.color,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 18.0.scale,
+                ),
+                decoration: BoxDecoration(
+                  color: EnumColor.backgroundAccentBlue.color,
+                  borderRadius: BorderRadius.circular(12.0.scale),
+                ),
+                child: WidgetUtil.textWidget(
+                  '${cabinet.quantity ?? 0}',
+                  size: 28.0.scale,
+                  color: EnumColor.accentBlue.color,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

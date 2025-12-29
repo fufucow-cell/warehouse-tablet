@@ -18,6 +18,7 @@ const Map<String, String> koKR = {
   'commonFinish': '완료',
   'commonProcessing': '처리 중',
   'commonReminder': '안내',
+  'commonNoData': '데이터가 없습니다',
 
   // 언어
   'languageTitle': '언어 설정',
@@ -143,6 +144,9 @@ const Map<String, String> koKR = {
   'editCabinetTitle': '캐비닛 편집',
   'editCabinetDeleteMultipleMessage':
       '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'editCabinetMoveToNewRoom': '새 방으로 이동',
+  'editCabinetRoomName': '방 이름',
+  'editCabinetWillDelete': '이 캐비닛은 삭제됩니다',
   'deleteCabinetTitle': '캐비닛 삭제',
   'deleteCabinetMessageNoItems': '「@para1」캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'deleteCabinetMessageWithItems':
@@ -322,4 +326,5 @@ const Map<String, String> koKR = {
   'warehousePhotoDelete': '사진 삭제',
   'warehouseMinStockUpdate': '최소 재고 수량 업데이트: @para1 -> @para2',
   'warehouseRoomUpdate': '방 업데이트: @para1 -> @para2',
+  'warehouseUnbound': '바인딩되지 않음',
 };

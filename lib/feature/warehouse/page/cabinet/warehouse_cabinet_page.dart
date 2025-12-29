@@ -24,16 +24,15 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
 
     final controller = Get.find<WarehouseCabinetPageController>();
     final rooms = controller.getRoomsInfo();
-    rooms.clear();
 
     return SecondBackgroundCard(
       child: Column(
         children: [
           const TopInfo(),
-          SizedBox(height: 32.0.scale),
           if (rooms.isEmpty)
             const EmptyWidget()
-          else
+          else ...[
+            SizedBox(height: 32.0.scale),
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
@@ -58,6 +57,7 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
                 },
               ),
             ),
+          ],
         ],
       ),
     );
@@ -73,36 +73,41 @@ class _RoomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: Container(
-        padding: EdgeInsets.only(
-          left: 32.0.scale,
-          right: 32.0.scale,
-          top: 32.0.scale,
-          bottom: 32.0.scale,
-        ),
-        decoration: BoxDecoration(
-          color: EnumColor.backgroundPrimary.color,
-          borderRadius: BorderRadius.circular(32.0.scale),
-          boxShadow: [
-            BoxShadow(
-              color: EnumColor.shadowCard.color,
-              blurRadius: 8.0.scale,
-              offset: Offset(0, 2.0.scale),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _RoomTitleInfo(roomNameId: roomNameId),
-            SizedBox(height: 16.0.scale),
-            _RoomItemCountInfo(roomNameId: roomNameId),
-            SizedBox(height: 32.0.scale),
-            _RoomCabinetInfo(roomNameId: roomNameId),
-          ],
-        ),
+    final controller = Get.find<WarehouseCabinetPageController>();
+    return Container(
+      padding: EdgeInsets.only(
+        left: 32.0.scale,
+        right: 32.0.scale,
+        top: 32.0.scale,
+        bottom: 32.0.scale,
+      ),
+      decoration: BoxDecoration(
+        color: EnumColor.backgroundPrimary.color,
+        borderRadius: BorderRadius.circular(32.0.scale),
+        boxShadow: [
+          BoxShadow(
+            color: EnumColor.shadowCard.color,
+            blurRadius: 8.0.scale,
+            offset: Offset(0, 2.0.scale),
+          ),
+        ],
+      ),
+      child: Obx(
+        () {
+          if (controller.allItemsRx.value == null) {
+            return const _RoomCardShimmer();
+          }
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _RoomTitleInfo(roomNameId: roomNameId),
+              SizedBox(height: 16.0.scale),
+              _RoomItemCountInfo(roomNameId: roomNameId),
+              SizedBox(height: 32.0.scale),
+              _RoomCabinetInfo(roomNameId: roomNameId),
+            ],
+          );
+        },
       ),
     );
   }
@@ -164,15 +169,9 @@ class _RoomItemCountInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseCabinetPageController>();
-
-    if (controller.allItemsRx.value == null) {
-      return const SizedBox.shrink();
-    }
-
     final room = controller.getRoom(roomNameId);
     final roomItemQuantity = room?.quantity ?? 0;
     final cabinetsCount = controller.getCabinets(roomNameId).length;
-
     return WidgetUtil.textWidget(
       EnumLocale.warehouseTotalCabinetAndItem.trArgs(['$cabinetsCount', '$roomItemQuantity']),
       size: 22.0.scale,
@@ -192,5 +191,23 @@ class _RoomCabinetInfo extends StatelessWidget {
     final controller = Get.find<WarehouseCabinetPageController>();
     final cabinets = controller.getCabinets(roomNameId);
     return CabinetRowCard(cabinets: cabinets);
+  }
+}
+
+class _RoomCardShimmer extends StatelessWidget {
+  const _RoomCardShimmer();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        WidgetUtil.shimmerWidget(height: 38.0.scale),
+        SizedBox(height: 16.0.scale),
+        WidgetUtil.shimmerWidget(height: 26.0.scale),
+        SizedBox(height: 32.0.scale),
+        WidgetUtil.shimmerWidget(height: 78.0.scale),
+      ],
+    );
   }
 }

@@ -30,7 +30,7 @@ extension AppMainPageRouteExtension on AppMainPageController {
   Future<void> _handleLogout() async {
     try {
       // 调用登出 API
-      await ApiUtil.sendRequest<ApiEmptyResponse>(
+      await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
         EnumApiInfo.userLogout,
       );
 

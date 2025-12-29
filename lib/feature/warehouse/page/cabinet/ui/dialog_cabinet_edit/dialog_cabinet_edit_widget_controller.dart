@@ -32,15 +32,19 @@ class DialogCabinetEditWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug,
-        '[DialogCabinetEditWidgetController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogCabinetEditWidgetController] onInit - $hashCode',
+    );
     _checkData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[DialogCabinetEditWidgetController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogCabinetEditWidgetController] onClose - $hashCode',
+    );
     for (var model in _model.editModels.value) {
       model.textController.dispose();
     }
@@ -80,10 +84,7 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   List<String> getRoomNameList({bool isExcludeOldRoomName = false}) {
     if (isExcludeOldRoomName) {
-      return _service.rooms
-          .where((room) => room.name != getRoom.name)
-          .map((room) => room.name ?? '')
-          .toList();
+      return _service.rooms.where((room) => room.name != getRoom.name).map((room) => room.name ?? '').toList();
     }
 
     return _service.rooms.map((room) => room.name ?? '').toList();
@@ -94,13 +95,13 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   Future<bool> showDeleteHint() async {
-    final deleteCabnites =
-        getEditModels.where((editModel) => editModel.isDelete).toList();
+    final deleteCabnites = getEditModels.where((editModel) => editModel.isDelete).toList();
 
     if (deleteCabnites.isNotEmpty) {
       final isConfirm = await _routerHandle<bool>(
-          EnumDialogCabinetEditWidgetRoute.showDialogDeleteHint,
-          data: _genDeleteHintMessage(deleteCabnites));
+        EnumDialogCabinetEditWidgetRoute.showDialogDeleteHint,
+        data: _genDeleteHintMessage(deleteCabnites),
+      );
       return isConfirm ?? true;
     }
 
@@ -114,9 +115,13 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   void _checkData() {
-    final cabinets = _service.getAllRoomCabinetItems
-            .firstWhereOrNull((e) => e.roomId == _model.room?.id)
-            ?.cabinets ??
+    final cabinets = _service.getAllRoomCabinetItems.firstWhereOrNull((e) {
+          if ((_model.room?.id?.isEmpty ?? true) && (e.roomId?.isEmpty ?? true)) {
+            return true;
+          }
+
+          return e.roomId == _model.room?.id;
+        })?.cabinets ??
         [];
 
     if (cabinets.isEmpty) {
@@ -143,18 +148,14 @@ class DialogCabinetEditWidgetController extends GetxController {
     final newRoomId = getRoomIdByName(newRoomName);
 
     if (newRoomId != null) {
-      editModel.newRoom =
-          WarehouseNameIdModel(id: newRoomId, name: newRoomName);
+      editModel.newRoom = WarehouseNameIdModel(id: newRoomId, name: newRoomName);
     }
 
     _model.editModels.value = copyEditModels;
   }
 
   String _genDeleteHintMessage(List<EditModel> editModels) {
-    final names = editModels
-        .map((editModel) => editModel.oldCabinet.name)
-        .map((e) => '「$e」')
-        .join(', ');
+    final names = editModels.map((editModel) => editModel.oldCabinet.name).map((e) => '「$e」').join(', ');
     return EnumLocale.editCabinetDeleteMultipleMessage.trArgs([names]);
   }
 }

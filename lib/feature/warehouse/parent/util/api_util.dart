@@ -61,7 +61,7 @@ class ApiUtil extends GetxService {
       final options = Options(
         method: apiInfo.method.value,
         extra: {
-          ApiEmptyResponse.name: T == ApiEmptyResponse,
+          BaseApiResponseModel.name: _isBaseApiResponseModelType<T>(),
         },
       );
 
@@ -78,7 +78,11 @@ class ApiUtil extends GetxService {
       );
 
       if (resModel.code == EnumErrorMap.code200.code) {
-        return resModel.data as T;
+        if (_isBaseApiResponseModelType<T>()) {
+          return resModel as T;
+        } else {
+          return resModel.data as T;
+        }
       } else {
         throw BaseApiResponseModel<T>(
           code: resModel.code,
@@ -92,6 +96,11 @@ class ApiUtil extends GetxService {
   }
 
   // MARK: - Private Method
+
+  static bool _isBaseApiResponseModelType<T>() {
+    final typeString = T.toString();
+    return typeString.contains('BaseApiResponseModel');
+  }
 
   static BaseApiResponseModel<void> _errorHandle(Object exception) {
     final err = BaseApiResponseModel<void>.unknowError();
@@ -152,7 +161,7 @@ class ApiUtil extends GetxService {
     final finalMessage = message ?? EnumErrorMap.code201.message;
 
     if (finalCode == EnumErrorMap.code200.code) {
-      if (rawData == null && T == ApiEmptyResponse) {
+      if (rawData == null && _isBaseApiResponseModelType<T>()) {
         return BaseApiResponseModel<T>.emptySuccess();
       } else if (fromJson != null) {
         if (rawData is Map<String, dynamic>) {

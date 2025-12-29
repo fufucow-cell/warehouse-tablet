@@ -18,6 +18,7 @@ const Map<String, String> zhCN = {
   'commonFinish': '完成',
   'commonProcessing': '处理中',
   'commonReminder': '温馨提醒',
+  'commonNoData': '暂时没有资料',
 
   // 語言
   'languageTitle': '语言设置',
@@ -142,6 +143,9 @@ const Map<String, String> zhCN = {
   'createCabinetRoom': '房间',
   'editCabinetTitle': '编辑柜子',
   'editCabinetDeleteMultipleMessage': '您确定要删除@para1柜子吗？\n此操作无法撤销。',
+  'editCabinetMoveToNewRoom': '移至新房间',
+  'editCabinetRoomName': '房间名称',
+  'editCabinetWillDelete': '即将删除此柜子',
   'deleteCabinetTitle': '删除柜子',
   'deleteCabinetMessageNoItems': '您确定要删除「@para1」柜子吗？\n此操作无法撤销。',
   'deleteCabinetMessageWithItems': '您确定要删除「@para1」柜子及其所有物品吗？\n此操作无法撤销。',
@@ -318,4 +322,5 @@ const Map<String, String> zhCN = {
   'warehousePhotoDelete': '照片删除',
   'warehouseMinStockUpdate': '低库存数量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '房间更新: @para1 -> @para2',
+  'warehouseUnbound': '未绑定',
 };

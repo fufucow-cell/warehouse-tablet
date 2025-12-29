@@ -18,6 +18,7 @@ const Map<String, String> zhTW = {
   'commonFinish': '完成',
   'commonProcessing': '處理中',
   'commonReminder': '溫馨提醒',
+  'commonNoData': '暫時沒有資料',
 
   // 語言
   'languageTitle': '語言設定',
@@ -141,6 +142,9 @@ const Map<String, String> zhTW = {
   'createCabinetRoom': '房間',
   'editCabinetTitle': '編輯櫃位',
   'editCabinetDeleteMultipleMessage': '您確定要刪除@para1櫃位嗎？\n此操作無法撤銷。',
+  'editCabinetMoveToNewRoom': '移至新房間',
+  'editCabinetRoomName': '房間名稱',
+  'editCabinetWillDelete': '即將刪除此櫃位',
   'deleteCabinetTitle': '刪除櫃位',
   'deleteCabinetMessageNoItems': '您確定要刪除「@para1」櫃位嗎？\n此操作無法撤銷。',
   'deleteCabinetMessageWithItems': '您確定要刪除「@para1」櫃位及其所有物品嗎？\n此操作無法撤銷。',
@@ -317,4 +321,5 @@ const Map<String, String> zhTW = {
   'warehousePhotoDelete': '照片刪除',
   'warehouseMinStockUpdate': '低庫存數量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '房間更新: @para1 -> @para2',
+  'warehouseUnbound': '未綁定',
 };

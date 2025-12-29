@@ -1,6 +1,8 @@
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/error_map_constant.dart';
 
 class BaseApiResponseModel<T> {
+  static const name = 'BaseApiResponseModel';
+
   final int code;
   final String? message;
   final T? data;
@@ -35,10 +37,4 @@ class BaseApiResponseModel<T> {
       message: EnumErrorMap.code201.message,
     );
   }
-}
-
-class ApiEmptyResponse {
-  const ApiEmptyResponse();
-
-  static const name = 'ApiEmptyResponse';
 }

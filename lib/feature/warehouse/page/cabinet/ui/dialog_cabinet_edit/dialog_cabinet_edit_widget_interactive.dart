@@ -9,8 +9,7 @@ enum EnumDialogCabinetEditWidgetInteractive {
 }
 
 /// DialogCabinetEditWidget 用户事件处理扩展
-extension DialogCabinetEditWidgetUserEventExtension
-    on DialogCabinetEditWidgetController {
+extension DialogCabinetEditWidgetUserEventExtension on DialogCabinetEditWidgetController {
   /// 处理用户事件
   Future<void> interactive(
     EnumDialogCabinetEditWidgetInteractive type, {
@@ -24,26 +23,36 @@ extension DialogCabinetEditWidgetUserEventExtension
           _updateEditModels(data);
         }
       case EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton:
-        unawaited(_routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog,
-            data: data));
+        unawaited(
+          _routerHandle(
+            EnumDialogCabinetEditWidgetRoute.closeDialog,
+            data: data,
+          ),
+        );
       case EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
-          unawaited(_routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog,
-              data: data));
+          unawaited(
+            _routerHandle(
+              EnumDialogCabinetEditWidgetRoute.closeDialog,
+              data: data,
+            ),
+          );
         }
       case EnumDialogCabinetEditWidgetInteractive.tapDeleteButton:
         if (data is EditModel) {
           data.isDelete = !data.isDelete;
           _updateEditModels(
-              ChangeRoomModel(editModel: data, newRoomName: null));
+            ChangeRoomModel(editModel: data, newRoomName: null),
+          );
         }
       case EnumDialogCabinetEditWidgetInteractive.tapExpandButton:
         if (data is EditModel) {
           data.isExpanded = !data.isExpanded;
           _updateEditModels(
-              ChangeRoomModel(editModel: data, newRoomName: null));
+            ChangeRoomModel(editModel: data, newRoomName: null),
+          );
         }
     }
   }

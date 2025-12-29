@@ -418,7 +418,7 @@
           "quantity": 4,
           "items": [
             {
-              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "id": "1cf29b46-ce04-4fd7-a5a4-d18ee197d0a7",
               "name": "iPhone 15 Pro",
               "description": "蘋果最新智慧型手機，256GB 儲存空間",
               "quantity": 4,
@@ -450,12 +450,12 @@
       "quantity": 9,
       "cabinets": [
         {
-          "id": "222e8400-e29b-41d4-a716-446655440022",
+          "id": "9e568d0b-8692-4821-a382-01cbaf776314",
           "name": "衣櫃",
           "quantity": 9,
           "items": [
             {
-              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "id": "e08b826e-8414-4e78-b565-c9b78ebbfe04",
               "name": "iPhone 15 Pro",
               "description": "蘋果最新智慧型手機，256GB 儲存空間",
               "quantity": 3,
@@ -535,12 +535,12 @@
       "quantity": 7,
       "cabinets": [
         {
-          "id": "220e8400-e29b-41d4-a716-446655440020",
+          "id": "54076e2e-24af-45b7-a88e-0601f84e36ca",
           "name": "儲物櫃",
           "quantity": 4,
           "items": [
             {
-              "id": "113e8400-e29b-41d4-a716-446655440013",
+              "id": "236cf43f-b0e1-4149-94f7-b450d754fe4e",
               "name": "橄欖油",
               "description": "5公升，非基改",
               "quantity": 6,
@@ -556,12 +556,12 @@
           ]
         },
         {
-          "id": "221e8400-e29b-41d4-a716-446655440021",
+          "id": "8ccb1d5f-12d6-4fa5-99e4-3f3a12659f63",
           "name": "置物櫃",
           "quantity": 3,
           "items": [
             {
-              "id": "114e8400-e29b-41d4-a716-446655440014",
+              "id": "2e5c01a0-c7ae-4806-8704-e38ee3675087",
               "name": "白米",
               "description": "10公斤裝，優質米",
               "quantity": 5,
@@ -593,12 +593,12 @@
       "quantity": 10,
       "cabinets": [
         {
-          "id": "222e8400-e29b-41d4-a716-446655440022",
+          "id": "a0a0daa3-7981-4e43-93c8-89ce657237eb",
           "name": "床頭櫃",
           "quantity": 8,
           "items": [
             {
-              "id": "115e8400-e29b-41d4-a716-446655440015",
+              "id": "da1c00b1-a874-42ed-b1a9-5376aec0f39f",
               "name": "香皂",
               "description": "3入組，抗菌配方",
               "quantity": 8,
@@ -622,7 +622,7 @@
               }
             },
             {
-              "id": "116e8400-e29b-41d4-a716-446655440016",
+              "id": "dfd118b1-3550-483f-9d69-6ed5cf1d4464",
               "name": "去屑洗髮精",
               "description": "750毫升，去屑配方",
               "quantity": 3,
@@ -643,12 +643,12 @@
           ]
         },
         {
-          "id": "220e8400-e29b-41d4-a716-446655440020",
+          "id": "5efd2858-ac4d-4d88-9351-3ff2923680e1",
           "name": "收納櫃",
           "quantity": 2,
           "items": [
             {
-              "id": "116e8400-e29b-41d4-a716-446655440016",
+              "id": "0101daf5-d6b7-42e3-8700-80110089e9d5",
               "name": "去屑洗髮精",
               "description": "750毫升，去屑配方",
               "quantity": 3,
@@ -685,7 +685,7 @@
           "quantity": 4,
           "items": [
             {
-              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "id": "fae6b7f4-a52a-4657-8eda-b009d6e638e9",
               "name": "抽取式衛生紙",
               "description": "3層，130張 × 12包",
               "quantity": 10,
@@ -716,7 +716,7 @@
           "quantity": 4,
           "items": [
             {
-              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "id": "e6e7bdfe-3162-49b8-8c77-1400885927dd",
               "name": "抽取式衛生紙",
               "description": "3層，130張 × 12包",
               "quantity": 10,
@@ -747,7 +747,7 @@
           "quantity": 3,
           "items": [
             {
-              "id": "117e8400-e29b-41d4-a716-446655440017",
+              "id": "597bcade-bfd6-4f71-888e-cb073ccf5137",
               "name": "抽取式衛生紙",
               "description": "3層，130張 × 12包",
               "quantity": 9,

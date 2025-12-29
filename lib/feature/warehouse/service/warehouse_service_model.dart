@@ -11,6 +11,7 @@ class WarehouseServiceModel {
   BuildContext? rootContext;
   // 搜尋條件
   final searchCondition = Rxn<DialogItemSearchOutputModel>();
+  final searchCabinetId = Rxn<String?>();
   // 房間
   final allRoomCabinetItems = Rxn<List<Room>>();
   // 分類

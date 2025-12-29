@@ -79,11 +79,8 @@ class _InfoCard extends StatelessWidget {
 
               if (recordCount == null) {
                 return WidgetUtil.shimmerWidget(
-                  child: Container(
-                    height: 24.0.scale,
-                    width: 112.0.scale,
-                    color: Colors.white,
-                  ),
+                  height: 24.0.scale,
+                  width: 112.0.scale,
                 );
               }
 
@@ -143,11 +140,7 @@ class _RecordsList extends StatelessWidget {
 
         if (records == null) {
           return WidgetUtil.shimmerWidget(
-            child: Container(
-              height: 100.0.scale,
-              width: double.infinity,
-              color: Colors.white,
-            ),
+            height: 100.0.scale,
           );
         } else if (records.isEmpty) {
           return const SizedBox.shrink();

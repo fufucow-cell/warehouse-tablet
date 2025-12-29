@@ -52,6 +52,7 @@ class WarehouseService {
 
   // 搜尋條件
   RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
+  RxReadonly<String?> get searchCabinetIdRx => _model.searchCabinetId.readonly;
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
@@ -345,55 +346,55 @@ class WarehouseService {
     return response?.data;
   }
 
-  Future<ApiEmptyResponse?> apiReqCreateItem(
+  Future<BaseApiResponseModel<void>?> apiReqCreateItem(
     WarehouseItemCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemCreate,
       requestModel: request,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqUpdateItemNormal(
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemNormal(
     WarehouseItemEditNormalRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdateNormal,
       requestModel: request,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqUpdateItemPosition(
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemPosition(
     WarehouseItemEditPositionRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdatePosition,
       requestModel: request,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqUpdateItemQuantity(
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemQuantity(
     WarehouseItemEditQuantityRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdateQuantity,
       requestModel: request,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqDeleteItem(
+  Future<BaseApiResponseModel<void>?> apiReqDeleteItem(
     WarehouseItemRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemDelete,
       requestModel: request,
       onError: onError,
@@ -405,9 +406,9 @@ class WarehouseService {
     dynamic data,
   }) {
     switch (item) {
-      case EnumWarehouseTabItem.cabinet:
-        if (data is WarehouseNameIdModel) {
-          break;
+      case EnumWarehouseTabItem.item:
+        if (data is String) {
+          _model.searchCabinetId.value = data;
         }
       default:
         break;
@@ -512,22 +513,22 @@ class WarehouseService {
     return response?.data ?? [];
   }
 
-  Future<ApiEmptyResponse?> apiReqCreateLog(
+  Future<BaseApiResponseModel<void>?> apiReqCreateLog(
     WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.logCreate,
       requestModel: request,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqDeleteLog(
+  Future<BaseApiResponseModel<void>?> apiReqDeleteLog(
     WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.logDelete,
       requestModel: request,
       onError: onError,

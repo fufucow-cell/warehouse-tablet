@@ -14,7 +14,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
-import 'package:super_sliver_list/super_sliver_list.dart';
 
 class DialogCabinetEditWidget extends StatelessWidget {
   final Future<bool> Function(List<DialogCabinetEditOutputModel>) onConfirm;
@@ -43,8 +42,7 @@ class DialogCabinetEditWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -63,8 +61,7 @@ class DialogCabinetEditWidget extends StatelessWidget {
 
                   unawaited(
                     controller.interactive(
-                      EnumDialogCabinetEditWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
                       data: true,
                     ),
                   );
@@ -74,8 +71,7 @@ class DialogCabinetEditWidget extends StatelessWidget {
                   if (isSuccess) {
                     unawaited(
                       controller.interactive(
-                        EnumDialogCabinetEditWidgetInteractive
-                            .tapDialogConfirmButton,
+                        EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
                         data: context,
                       ),
                     );
@@ -83,8 +79,7 @@ class DialogCabinetEditWidget extends StatelessWidget {
 
                   unawaited(
                     controller.interactive(
-                      EnumDialogCabinetEditWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
                       data: false,
                     ),
                   );
@@ -120,7 +115,7 @@ class _CurrentField extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<DialogCabinetEditWidgetController>();
     return DialogSectionWidget(
-      title: '房間名稱',
+      title: EnumLocale.editCabinetRoomName.tr,
       child: WidgetUtil.textField(
         controller: TextEditingController(text: controller.getRoom.name),
         isReadOnly: true,
@@ -143,15 +138,14 @@ class _CabinetListField extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           slivers: [
-            SuperSliverList(
+            SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   final model = editModels[index];
                   return Column(
                     children: [
                       _CabinetField(editModel: model),
-                      if (index < editModels.length - 1)
-                        SizedBox(height: 12.0.scale),
+                      if (index < editModels.length - 1) SizedBox(height: 12.0.scale),
                     ],
                   );
                 },
@@ -188,9 +182,7 @@ class _CabinetField extends StatelessWidget {
                 child: WidgetUtil.textField(
                   textColor: isDelete ? EnumColor.textSecondary.color : null,
                   isReadOnly: isDelete,
-                  controller: isDelete
-                      ? TextEditingController(text: '即將刪除此櫃位')
-                      : editModel.textController,
+                  controller: isDelete ? TextEditingController(text: EnumLocale.editCabinetWillDelete.tr) : editModel.textController,
                 ),
               ),
             ),
@@ -206,15 +198,13 @@ class _CabinetField extends StatelessWidget {
                   children: [
                     SizedBox(height: 12.0.scale),
                     DialogSectionWidget(
-                      title: '移至新房間',
+                      title: EnumLocale.editCabinetMoveToNewRoom.tr,
                       child: WidgetUtil.textDropdownButton(
                         selectedValue: editModel.newRoom?.name,
-                        values: controller.getRoomNameList(
-                            isExcludeOldRoomName: true),
+                        values: controller.getRoomNameList(isExcludeOldRoomName: true),
                         onValueSelected: (value) => controller.interactive(
                           EnumDialogCabinetEditWidgetInteractive.tapRoomButton,
-                          data: ChangeRoomModel(
-                              editModel: editModel, newRoomName: value),
+                          data: ChangeRoomModel(editModel: editModel, newRoomName: value),
                         ),
                       ),
                     ),
@@ -243,16 +233,12 @@ class _ActionTool extends StatelessWidget {
       children: [
         _ActionButton(
           eImage: isExpanded ? EnumImage.cArrowUp2 : EnumImage.cArrowDown2,
-          onTap: () => controller.interactive(
-              EnumDialogCabinetEditWidgetInteractive.tapExpandButton,
-              data: editModel),
+          onTap: () => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapExpandButton, data: editModel),
         ),
         SizedBox(width: 12.0.scale),
         _ActionButton(
           eImage: isDelete ? EnumImage.cRecover : EnumImage.cTrash3,
-          onTap: () => controller.interactive(
-              EnumDialogCabinetEditWidgetInteractive.tapDeleteButton,
-              data: editModel),
+          onTap: () => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapDeleteButton, data: editModel),
         ),
       ],
     );

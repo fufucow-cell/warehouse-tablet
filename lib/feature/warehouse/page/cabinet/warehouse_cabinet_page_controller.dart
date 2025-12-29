@@ -6,6 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dial
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
@@ -91,7 +92,7 @@ class WarehouseCabinetPageController extends GetxController {
     bool hasNoBindRoomCabinet = _service.getAllRoomCabinetItems.any((room) => room.roomId == null);
 
     if (hasNoBindRoomCabinet) {
-      result.add(WarehouseNameIdModel(id: '', name: '未綁定'));
+      result.add(WarehouseNameIdModel(id: '', name: EnumLocale.warehouseUnbound.tr));
     }
 
     return result;
