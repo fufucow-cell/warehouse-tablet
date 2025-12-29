@@ -5,7 +5,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/warehouse_cabinet_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_delete_request_model/warehouse_category_delete_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
@@ -128,8 +129,16 @@ class WarehouseService {
     return await _themeService.compressImageFile(imagePath, maxSide: maxSide);
   }
 
-  Widget? convertFileToImage(String imagePath, {double? fitWidth, double? fitHeight}) {
-    return _themeService.convertFileToImage(imagePath, fitWidth: fitWidth, fitHeight: fitHeight);
+  Widget? convertFileToImage(
+    String imagePath, {
+    double? fitWidth,
+    double? fitHeight,
+  }) {
+    return _themeService.convertFileToImage(
+      imagePath,
+      fitWidth: fitWidth,
+      fitHeight: fitHeight,
+    );
   }
 
   Future<String?> convertFileToBase64(String imagePath) async {
@@ -391,53 +400,42 @@ class WarehouseService {
     );
   }
 
-  void changeMainPageSelectedTabItem(EnumWarehouseTabItem item) {
+  void changeMainPageSelectedTabItem(
+    EnumWarehouseTabItem item, {
+    dynamic data,
+  }) {
+    switch (item) {
+      case EnumWarehouseTabItem.cabinet:
+        if (data is WarehouseNameIdModel) {
+          break;
+        }
+      default:
+        break;
+    }
+
     _model.mainPageSelectedTabItem.value = item;
   }
 
   // MARK: - Cabinet APIs
 
-  Future<List<Room>?> apiReqFetchCabinets(
-    WarehouseCabinetRequestModel request, {
-    ApiErrorHandler? onError,
-  }) async {
-    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
-      EnumApiInfo.cabinetFetch,
-      requestModel: request,
-      fromJson: WarehouseItemResponseModel.fromJson,
-      onError: onError,
-    );
-    return response?.data;
-  }
-
-  Future<ApiEmptyResponse?> apiReqCreateCabinet(
-    WarehouseCabinetRequestModel request, {
+  Future<Cabinet?> apiReqCreateCabinet(
+    WarehouseCabinetCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
+    return ApiUtil.sendRequest<Cabinet?>(
       EnumApiInfo.cabinetCreate,
       requestModel: request,
+      fromJson: Cabinet.fromJson,
       onError: onError,
     );
   }
 
-  Future<ApiEmptyResponse?> apiReqModifyCabinet(
-    WarehouseCabinetRequestModel request, {
+  Future<BaseApiResponseModel<void>?> apiReqUpdateCabinet(
+    WarehouseCabinetUpdateRequestModel request, {
     ApiErrorHandler? onError,
   }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
-      EnumApiInfo.cabinetModify,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<ApiEmptyResponse?> apiReqDeleteCabinet(
-    WarehouseCabinetRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<ApiEmptyResponse>(
-      EnumApiInfo.cabinetDelete,
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.cabinetUpdate,
       requestModel: request,
       onError: onError,
     );

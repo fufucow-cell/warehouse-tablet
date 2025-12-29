@@ -10,5 +10,6 @@ class ItemPosition with _$ItemPosition {
     int? count,
   }) = _ItemPosition;
 
-  factory ItemPosition.fromJson(Map<String, dynamic> json) => _$ItemPositionFromJson(json);
+  factory ItemPosition.fromJson(Map<String, dynamic> json) =>
+      _$ItemPositionFromJson(json);
 }

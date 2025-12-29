@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
@@ -15,24 +16,26 @@ class CabinetRowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (cabinets.isEmpty) {
-      return const SizedBox.shrink();
+      return _buildEmptyCard();
     }
 
-    return ListView.separated(
-      shrinkWrap: true,
-      padding: EdgeInsets.zero,
-      physics: const ClampingScrollPhysics(),
-      itemCount: cabinets.length,
-      separatorBuilder: (context, index) => SizedBox(height: 8.0.scale),
-      itemBuilder: (context, index) {
-        return Row(
-          children: [
-            Expanded(
-              child: _buildCabinetCard(cabinets[index]),
-            ),
-          ],
-        );
-      },
+    return Expanded(
+      child: ListView.separated(
+        shrinkWrap: true,
+        padding: EdgeInsets.zero,
+        physics: const ClampingScrollPhysics(),
+        itemCount: cabinets.length,
+        separatorBuilder: (context, index) => SizedBox(height: 8.0.scale),
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              Expanded(
+                child: _buildCabinetCard(cabinets[index]),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
@@ -53,7 +56,7 @@ class CabinetRowCard extends StatelessWidget {
               cabinet.name ?? '',
               size: 26.0.scale,
               color: EnumColor.textSecondary.color,
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -72,6 +75,27 @@ class CabinetRowCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyCard() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: EnumColor.backgroundSecondary.color,
+        borderRadius: BorderRadius.circular(20.0.scale),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 32.0.scale,
+        vertical: 22.0.scale,
+      ),
+      child: WidgetUtil.textWidget(
+        EnumLocale.warehouseNoCabinetInRoom.tr,
+        size: 26.0.scale,
+        color: EnumColor.textSecondary.color,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

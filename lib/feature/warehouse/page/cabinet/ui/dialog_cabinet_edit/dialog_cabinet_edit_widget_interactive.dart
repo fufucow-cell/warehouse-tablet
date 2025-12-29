@@ -1,39 +1,50 @@
 part of 'dialog_cabinet_edit_widget_controller.dart';
 
 enum EnumDialogCabinetEditWidgetInteractive {
-  tapRoomButton,
   tapDialogCancelButton,
   tapDialogConfirmButton,
-  tapDeleteRoomButton,
+  tapRoomButton,
+  tapDeleteButton,
+  tapExpandButton,
 }
 
 /// DialogCabinetEditWidget 用户事件处理扩展
-extension DialogCabinetEditWidgetUserEventExtension on DialogCabinetEditWidgetController {
+extension DialogCabinetEditWidgetUserEventExtension
+    on DialogCabinetEditWidgetController {
   /// 处理用户事件
-  void interactive(
+  Future<void> interactive(
     EnumDialogCabinetEditWidgetInteractive type, {
     dynamic data,
-  }) {
+  }) async {
     _service.dismissKeyboard();
 
     switch (type) {
       case EnumDialogCabinetEditWidgetInteractive.tapRoomButton:
-        if (data is String) {
-          final roomId = getRoomIdByName(data);
-          if (roomId != null) {
-            _model.selectedRoomId.value = roomId;
-          }
+        if (data is ChangeRoomModel) {
+          _updateEditModels(data);
         }
       case EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog, data);
+        unawaited(_routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog,
+            data: data));
       case EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
-          _routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog, data);
+          unawaited(_routerHandle(EnumDialogCabinetEditWidgetRoute.closeDialog,
+              data: data));
         }
-      case EnumDialogCabinetEditWidgetInteractive.tapDeleteRoomButton:
-        _model.selectedRoomId.value = null;
+      case EnumDialogCabinetEditWidgetInteractive.tapDeleteButton:
+        if (data is EditModel) {
+          data.isDelete = !data.isDelete;
+          _updateEditModels(
+              ChangeRoomModel(editModel: data, newRoomName: null));
+        }
+      case EnumDialogCabinetEditWidgetInteractive.tapExpandButton:
+        if (data is EditModel) {
+          data.isExpanded = !data.isExpanded;
+          _updateEditModels(
+              ChangeRoomModel(editModel: data, newRoomName: null));
+        }
     }
   }
 }

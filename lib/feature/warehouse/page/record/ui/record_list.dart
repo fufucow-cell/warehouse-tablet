@@ -216,8 +216,11 @@ class _RecordItem extends StatelessWidget {
                           fit: BoxFit.cover,
                         ),
                         color: log.itemPhoto == null ||
-                                (log.itemPhoto != null && log.itemPhoto!.isEmpty) ||
-                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0].isEmpty))
+                                (log.itemPhoto != null &&
+                                    log.itemPhoto!.isEmpty) ||
+                                (log.itemPhoto != null &&
+                                    log.itemPhoto!.isNotEmpty &&
+                                    (log.itemPhoto![0].isEmpty))
                             ? EnumColor.backgroundSecondary.color
                             : null,
                         shape: RoundedRectangleBorder(

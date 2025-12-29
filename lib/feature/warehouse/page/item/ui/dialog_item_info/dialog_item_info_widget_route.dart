@@ -10,7 +10,8 @@ extension DialogItemInfoWidgetRouteExtension on DialogItemInfoWidgetController {
       case EnumDialogItemInfoWidgetRoute.showDialogItemHistory:
         if (data is BuildContext) {
           Navigator.of(data).pop();
-          _service.showAlert(DialogItemHistoryWidget(item: _model.combineItem!));
+          _service
+              .showAlert(DialogItemHistoryWidget(item: _model.combineItem!));
         }
     }
   }

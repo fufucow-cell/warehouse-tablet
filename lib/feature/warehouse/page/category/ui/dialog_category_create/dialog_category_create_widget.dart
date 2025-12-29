@@ -38,7 +38,8 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -50,20 +51,23 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogCategoryCreateWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -101,8 +105,12 @@ class _Body extends StatelessWidget {
               title: EnumLocale.createLevel1Category.tr,
               selectedValue: controller.selectedLevel1Rx.value?.name,
               visibleValues: controller.getLevel1NameList(),
-              onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel1Button, data: str),
-              onDelete: () => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapClearLevel1Button),
+              onValueSelected: (str) => controller.interactive(
+                  EnumDialogCategoryCreateWidgetInteractive.tapLevel1Button,
+                  data: str),
+              onDelete: () => controller.interactive(
+                  EnumDialogCategoryCreateWidgetInteractive
+                      .tapClearLevel1Button),
             ),
             if (controller.selectedLevel1Rx.value != null) ...[
               SizedBox(height: 24.0.scale),
@@ -110,8 +118,12 @@ class _Body extends StatelessWidget {
                 title: EnumLocale.createLevel2Category.tr,
                 selectedValue: controller.selectedLevel2Rx.value?.name,
                 visibleValues: controller.getLevel2NameList(),
-                onValueSelected: (str) => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapLevel2Button, data: str),
-                onDelete: () => controller.interactive(EnumDialogCategoryCreateWidgetInteractive.tapClearLevel2Button),
+                onValueSelected: (str) => controller.interactive(
+                    EnumDialogCategoryCreateWidgetInteractive.tapLevel2Button,
+                    data: str),
+                onDelete: () => controller.interactive(
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapClearLevel2Button),
               ),
             ],
           ],
@@ -164,13 +176,15 @@ class _DropdownField extends StatelessWidget {
             child: WidgetUtil.textDropdownButton(
               selectedValue: selectedValue,
               values: visibleValues,
-              buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+              buttonTextColor:
+                  selectedValue == null ? EnumColor.textSecondary.color : null,
               menuMaxHeight: 290.0.scale,
               onValueSelected: onValueSelected,
             ),
           ),
         ),
-        if (selectedValue != null && selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
+        if (selectedValue != null &&
+            selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
           SizedBox(width: 12.0.scale),
           ActionButton(
             eImage: EnumImage.cTrash3,

@@ -166,7 +166,8 @@ class _CellWidget extends StatelessWidget {
                       width: 114.0.scale,
                       height: 80.0.scale,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => WidgetUtil.emptyImage(
+                      errorBuilder: (context, error, stackTrace) =>
+                          WidgetUtil.emptyImage(
                         width: 114.0.scale,
                         height: 80.0.scale,
                       ),

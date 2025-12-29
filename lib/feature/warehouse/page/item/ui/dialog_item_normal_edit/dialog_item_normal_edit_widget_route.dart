@@ -5,7 +5,8 @@ enum EnumDialogItemNormalEditWidgetRoute {
   openGallery,
 }
 
-extension DialogItemNormalEditWidgetRouteExtension on DialogItemNormalEditWidgetController {
+extension DialogItemNormalEditWidgetRouteExtension
+    on DialogItemNormalEditWidgetController {
   void _routerHandle(
     EnumDialogItemNormalEditWidgetRoute type,
   ) {

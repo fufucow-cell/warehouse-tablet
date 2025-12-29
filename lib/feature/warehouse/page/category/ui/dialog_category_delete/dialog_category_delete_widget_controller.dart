@@ -14,7 +14,8 @@ part 'dialog_category_delete_widget_route.dart';
 class DialogCategoryDeleteWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCategoryDeleteWidgetModel _model = DialogCategoryDeleteWidgetModel();
+  final DialogCategoryDeleteWidgetModel _model =
+      DialogCategoryDeleteWidgetModel();
   final _service = WarehouseService.instance;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   String get categoryName => _model.category?.name ?? '';
@@ -28,12 +29,14 @@ class DialogCategoryDeleteWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogCategoryDeleteWidgetController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogCategoryDeleteWidgetController] onInit - $hashCode');
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogCategoryDeleteWidgetController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogCategoryDeleteWidgetController] onClose - $hashCode');
     super.onClose();
   }
 
@@ -53,7 +56,8 @@ class DialogCategoryDeleteWidgetController extends GetxController {
   String getMessage() {
     final hasChildren = _model.category?.children?.isNotEmpty ?? false;
     if (hasChildren) {
-      return EnumLocale.deleteCategoryMessageWithChildren.trArgs([categoryName]);
+      return EnumLocale.deleteCategoryMessageWithChildren
+          .trArgs([categoryName]);
     } else {
       return EnumLocale.deleteCategoryMessageNoChildren.trArgs([categoryName]);
     }

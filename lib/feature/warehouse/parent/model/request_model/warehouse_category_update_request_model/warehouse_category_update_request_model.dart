@@ -4,7 +4,8 @@ part 'warehouse_category_update_request_model.freezed.dart';
 part 'warehouse_category_update_request_model.g.dart';
 
 @freezed
-class WarehouseCategoryUpdateRequestModel with _$WarehouseCategoryUpdateRequestModel {
+class WarehouseCategoryUpdateRequestModel
+    with _$WarehouseCategoryUpdateRequestModel {
   factory WarehouseCategoryUpdateRequestModel({
     @JsonKey(name: 'household_id') required String homeId,
     @JsonKey(name: 'category_id') required String categoryId,

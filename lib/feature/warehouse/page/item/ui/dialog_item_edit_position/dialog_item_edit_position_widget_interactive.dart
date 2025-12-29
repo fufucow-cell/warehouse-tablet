@@ -11,7 +11,8 @@ enum EnumDialogItemEditPositionWidgetInteractive {
 }
 
 /// DialogItemEditPositionWidget 用户事件处理扩展
-extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositionWidgetController {
+extension DialogItemEditPositionWidgetUserEventExtension
+    on DialogItemEditPositionWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditPositionWidgetInteractive type, {
@@ -29,9 +30,11 @@ extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositi
           updatePositionCabinet(data);
         }
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogCancelButton, data);
+        _routerHandle(
+            EnumDialogItemEditPositionWidgetRoute.tapDialogCancelButton, data);
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton:
-        _routerHandle(EnumDialogItemEditPositionWidgetRoute.tapDialogConfirmButton, data);
+        _routerHandle(
+            EnumDialogItemEditPositionWidgetRoute.tapDialogConfirmButton, data);
       case EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity:
         if (data is TextEditingController) {
           final currentValue = int.tryParse(data.text.trim()) ?? 0;

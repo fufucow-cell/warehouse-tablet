@@ -10,7 +10,8 @@ class WarehouseRecordPageModel {
   final isShowFilterMenu = false.obs;
   final filterType = Rx<EnumFilterType>(EnumFilterType.all);
   final columnRatio = [170, 705, 280, 280];
-  final avatarUrl = 'https://cdn.vectorstock.com/i/500p/29/53/gray-silhouette-avatar-for-male-profile-picture-vector-56412953.jpg';
+  final avatarUrl =
+      'https://cdn.vectorstock.com/i/500p/29/53/gray-silhouette-avatar-for-male-profile-picture-vector-56412953.jpg';
 }
 
 enum EnumFilterType {
@@ -30,12 +31,14 @@ enum EnumFilterType {
             DateTime.now().month,
             DateTime.now().day,
           ),
-        EnumFilterType.lastWeek => DateTime.now().subtract(const Duration(days: 7)),
+        EnumFilterType.lastWeek =>
+          DateTime.now().subtract(const Duration(days: 7)),
         EnumFilterType.all => null,
       };
 
   static EnumFilterType fromString(String? value) {
-    return EnumFilterType.values.firstWhereOrNull((e) => e.title == value) ?? EnumFilterType.all;
+    return EnumFilterType.values.firstWhereOrNull((e) => e.title == value) ??
+        EnumFilterType.all;
   }
 }
 
@@ -69,7 +72,8 @@ enum EnumOperateType {
       };
 
   static EnumOperateType fromInt(int? value) {
-    return EnumOperateType.values.firstWhereOrNull((e) => e.index == value) ?? EnumOperateType.unknown;
+    return EnumOperateType.values.firstWhereOrNull((e) => e.index == value) ??
+        EnumOperateType.unknown;
   }
 }
 
@@ -87,7 +91,8 @@ enum EnumEntityType {
       };
 
   static EnumEntityType fromInt(int? value) {
-    return EnumEntityType.values.firstWhereOrNull((e) => e.index == value) ?? EnumEntityType.unknown;
+    return EnumEntityType.values.firstWhereOrNull((e) => e.index == value) ??
+        EnumEntityType.unknown;
   }
 }
 
@@ -108,19 +113,28 @@ enum EnumTagType {
   String get title => switch (this) {
         EnumTagType.unknown => EnumLocale.warehouseTagTypeUnknown.tr,
         EnumTagType.createItem => EnumLocale.warehouseTagTypeCreateItem.tr,
-        EnumTagType.createCabinet => EnumLocale.warehouseTagTypeCreateCabinet.tr,
-        EnumTagType.createCategory => EnumLocale.warehouseTagTypeCreateCategory.tr,
+        EnumTagType.createCabinet =>
+          EnumLocale.warehouseTagTypeCreateCabinet.tr,
+        EnumTagType.createCategory =>
+          EnumLocale.warehouseTagTypeCreateCategory.tr,
         EnumTagType.updateItem => EnumLocale.warehouseTagTypeUpdateItem.tr,
-        EnumTagType.updateCabinet => EnumLocale.warehouseTagTypeUpdateCabinet.tr,
-        EnumTagType.updateCategory => EnumLocale.warehouseTagTypeUpdateCategory.tr,
-        EnumTagType.updateQuantity => EnumLocale.warehouseTagTypeUpdateQuantity.tr,
-        EnumTagType.updatePosition => EnumLocale.warehouseTagTypeUpdatePosition.tr,
+        EnumTagType.updateCabinet =>
+          EnumLocale.warehouseTagTypeUpdateCabinet.tr,
+        EnumTagType.updateCategory =>
+          EnumLocale.warehouseTagTypeUpdateCategory.tr,
+        EnumTagType.updateQuantity =>
+          EnumLocale.warehouseTagTypeUpdateQuantity.tr,
+        EnumTagType.updatePosition =>
+          EnumLocale.warehouseTagTypeUpdatePosition.tr,
         EnumTagType.deleteItem => EnumLocale.warehouseTagTypeDeleteItem.tr,
-        EnumTagType.deleteCabinet => EnumLocale.warehouseTagTypeDeleteCabinet.tr,
-        EnumTagType.deleteCategory => EnumLocale.warehouseTagTypeDeleteCategory.tr,
+        EnumTagType.deleteCabinet =>
+          EnumLocale.warehouseTagTypeDeleteCabinet.tr,
+        EnumTagType.deleteCategory =>
+          EnumLocale.warehouseTagTypeDeleteCategory.tr,
       };
 
   static EnumTagType fromInt(int? value) {
-    return EnumTagType.values.firstWhereOrNull((e) => e.index == value) ?? EnumTagType.unknown;
+    return EnumTagType.values.firstWhereOrNull((e) => e.index == value) ??
+        EnumTagType.unknown;
   }
 }

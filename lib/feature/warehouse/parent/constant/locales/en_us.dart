@@ -17,6 +17,7 @@ const Map<String, String> enUS = {
   'commonNext': 'Next',
   'commonFinish': 'Finish',
   'commonProcessing': 'Processing',
+  'commonReminder': 'Friendly Reminder',
 
   // Language
   'languageTitle': 'Language Settings',
@@ -70,7 +71,8 @@ const Map<String, String> enUS = {
   'warehouseRefresh': 'Refresh',
   'warehouseSubCategoryCount': 'Subcategory Count',
   'warehouseCategoryCount': 'Category Count',
-  'warehouseCategoryTotalCount': 'Level 1 Categories: @para1, Level 2 Categories: @para2, Level 3 Categories: @para3',
+  'warehouseCategoryTotalCount':
+      'Level 1 Categories: @para1, Level 2 Categories: @para2, Level 3 Categories: @para3',
   'warehouseAlarm': 'Alarm',
   'warehouseAlarmProductPhoto': 'Product Photo',
   'warehouseAlarmProductName': 'Product Name',
@@ -140,18 +142,26 @@ const Map<String, String> enUS = {
   'createCabinetTitle': 'Add Cabinet',
   'createCabinetRoom': 'Room',
   'editCabinetTitle': 'Edit Cabinet',
+  'editCabinetDeleteMultipleMessage':
+      'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
   'deleteCabinetTitle': 'Delete Cabinet',
-  'deleteCabinetMessageNoItems': 'Are you sure you want to delete the cabinet "@para1"?\nThis action cannot be undone.',
-  'deleteCabinetMessageWithItems': 'Are you sure you want to delete the cabinet "@para1" and all its items?\nThis action cannot be undone.',
+  'deleteCabinetMessageNoItems':
+      'Are you sure you want to delete the cabinet "@para1"?\nThis action cannot be undone.',
+  'deleteCabinetMessageWithItems':
+      'Are you sure you want to delete the cabinet "@para1" and all its items?\nThis action cannot be undone.',
   'createCategoryTitle': 'Add Category',
   'createCategoryCurrentCategory': 'Current Category: @para1',
   'deleteCategoryTitle': 'Delete Category',
-  'deleteCategoryMessageNoChildren': 'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
-  'deleteCategoryMessageWithChildren': 'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
+  'deleteCategoryMessageNoChildren':
+      'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
+  'deleteCategoryMessageWithChildren':
+      'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
   'editCategoryTitle': 'Edit Category',
   'editCategoryNoSubcategory': 'This category currently has no subcategories',
-  'editCategoryHasLevel1Subcategory': 'This category currently has level 1 subcategories',
-  'editCategoryHasLevel2Subcategory': 'This category currently has level 2 subcategories',
+  'editCategoryHasLevel1Subcategory':
+      'This category currently has level 1 subcategories',
+  'editCategoryHasLevel2Subcategory':
+      'This category currently has level 2 subcategories',
   'editCategoryMaxLevelReached': 'Maximum level reached',
   'createItemName': 'Item Name',
   'createItemNameHint': 'Enter item name',
@@ -163,7 +173,8 @@ const Map<String, String> enUS = {
   'createCategoryNameLevel3': 'Level 3 New Name',
   'createCategoryNameHint': 'Enter new name',
   'createCategoryParentLabel': 'Category Option',
-  'createCategoryParentQuestion': 'Please confirm which category level to place the category?',
+  'createCategoryParentQuestion':
+      'Please confirm which category level to place the category?',
   'createCategorySelected': 'Existing category selected',
   'createCategorySelectLevel1First': 'Please select Level 1 first',
   'createCategorySelectLevel2First': 'Please select Level 2 first',
@@ -231,6 +242,7 @@ const Map<String, String> enUS = {
   'warehouseNoItem': 'No Items',
   'warehouseUnnamedItem': 'Unnamed',
   'warehouseNoCabinet': 'No Cabinets',
+  'warehouseNoCabinetInRoom': 'This room has no cabinets',
   'warehouseUnnamedCabinet': 'Unnamed',
   'warehouseNoAlarm': 'No Alarm Records',
   'warehouseNoRecord': 'No Records',

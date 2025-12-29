@@ -6,7 +6,8 @@ enum EnumDialogCategoryDeleteWidgetInteractive {
 }
 
 /// DialogCategoryDeleteWidget 用户事件处理扩展
-extension DialogCategoryDeleteWidgetUserEventExtension on DialogCategoryDeleteWidgetController {
+extension DialogCategoryDeleteWidgetUserEventExtension
+    on DialogCategoryDeleteWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogCategoryDeleteWidgetInteractive type, {

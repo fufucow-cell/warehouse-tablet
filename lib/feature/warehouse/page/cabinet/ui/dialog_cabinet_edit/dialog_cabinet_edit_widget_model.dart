@@ -1,18 +1,49 @@
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogCabinetEditWidgetModel {
   final isLoading = false.obs;
-  Cabinet? cabinet;
-  final selectedRoomId = Rxn<String>();
+  WarehouseNameIdModel? room;
+  final editModels = Rx<List<EditModel>>([]);
+}
+
+class EditModel {
+  WarehouseNameIdModel oldCabinet;
+  String? newCabinetName;
+  WarehouseNameIdModel? newRoom;
+  bool isDelete = false;
+  bool isExpanded = false;
+  TextEditingController textController;
+
+  EditModel({
+    required this.oldCabinet,
+    required this.textController,
+    this.newCabinetName,
+    this.newRoom,
+  });
+}
+
+class ChangeRoomModel {
+  EditModel editModel;
+  String? newRoomName;
+
+  ChangeRoomModel({
+    required this.editModel,
+    this.newRoomName,
+  });
 }
 
 class DialogCabinetEditOutputModel {
-  String name;
-  String roomId;
+  String cabinetId;
+  bool isDelete;
+  String? newRoomId;
+  String? newCabinetName;
 
   DialogCabinetEditOutputModel({
-    required this.name,
-    required this.roomId,
+    required this.cabinetId,
+    required this.isDelete,
+    required this.newRoomId,
+    required this.newCabinetName,
   });
 }

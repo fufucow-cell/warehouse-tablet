@@ -10,7 +10,8 @@ enum EnumDialogCategoryEditWidgetInteractive {
 }
 
 /// DialogCategoryEditWidget 用户事件处理扩展
-extension DialogCategoryEditWidgetUserEventExtension on DialogCategoryEditWidgetController {
+extension DialogCategoryEditWidgetUserEventExtension
+    on DialogCategoryEditWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogCategoryEditWidgetInteractive type, {

@@ -2,14 +2,15 @@ import 'dart:async';
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_delete/dialog_cabinet_delete_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_delete/dialog_cabinet_delete_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_request_model/warehouse_cabinet_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/request_cabinet.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/warehouse_cabinet_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
@@ -27,19 +28,28 @@ class WarehouseCabinetPageController extends GetxController {
   final _service = WarehouseService.instance;
   int get getTotalRoomsCount => _service.rooms.length;
   RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
+  Worker? _allRoomCabinetItemsWorker;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[WarehouseCabinetPageController] onInit - $hashCode',
+    );
     _checkData();
+    _addListeners();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[WarehouseCabinetPageController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[WarehouseCabinetPageController] onClose - $hashCode',
+    );
+    _allRoomCabinetItemsWorker?.dispose();
     super.onClose();
   }
 
@@ -89,69 +99,65 @@ class WarehouseCabinetPageController extends GetxController {
 
   // MARK: - Private Method
 
-  void _checkData() {
+  Future<void> _checkData() async {
     final allRoomCabinetItems = _service.allRoomCabinetItemsRx.value;
 
     if (allRoomCabinetItems == null) {
-      _readCabinet();
+      final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
+
+      if (response != null) {
+        _model.allRoomCabinetItems.value = response;
+      }
     } else {
       _model.allRoomCabinetItems.value = allRoomCabinetItems;
     }
   }
 
-  Future<bool> _createCabinet(DialogCabinetCreateOutputModel outputModel) async {
-    final request = WarehouseCabinetRequestModel(
-      homeId: _service.getHouseholdId,
+  void _addListeners() {
+    _allRoomCabinetItemsWorker = ever(_service.allRoomCabinetItemsRx.rx, (value) {
+      _model.allRoomCabinetItems.value = value;
+    });
+  }
+
+  Future<bool> _createCabinet(
+    DialogCabinetCreateOutputModel outputModel,
+  ) async {
+    final request = WarehouseCabinetCreateRequestModel(
+      householdId: _service.getHouseholdId,
       roomId: outputModel.roomId,
     );
 
     final response = await _service.apiReqCreateCabinet(request);
 
     if (response != null) {
-      unawaited(_readCabinet());
+      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
       return true;
     }
 
     return false;
   }
 
-  Future<bool> _updateCabinet(DialogCabinetEditOutputModel outputModel, String cabinetId) async {
-    final request = WarehouseCabinetRequestModel(
-      homeId: _service.getHouseholdId,
-      cabinetId: cabinetId,
-      roomId: outputModel.roomId,
+  Future<bool> _updateCabinet(
+    List<DialogCabinetEditOutputModel> outputModel,
+  ) async {
+    final reqModel = WarehouseCabinetUpdateRequestModel(
+      householdId: _service.getHouseholdId,
+      cabinets: outputModel
+          .map(
+            (e) => RequestCabinet(
+              cabinetId: e.cabinetId,
+              newRequestCabinetName: e.newCabinetName,
+              newRoomId: e.newRoomId,
+              isDelete: e.isDelete,
+            ),
+          )
+          .toList(),
     );
 
-    final response = await _service.apiReqModifyCabinet(request);
+    final response = await _service.apiReqUpdateCabinet(reqModel);
 
     if (response != null) {
-      unawaited(_readCabinet());
-      return true;
-    }
-
-    return false;
-  }
-
-  Future<void> _readCabinet() async {
-    final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
-
-    if (response == null) {
-      return;
-    }
-
-    _model.allRoomCabinetItems.value = response;
-  }
-
-  Future<bool> _deleteCabinet(DialogCabinetDeleteOutputModel outputModel) async {
-    final request = WarehouseCabinetRequestModel(
-      homeId: _service.getHouseholdId,
-      cabinetId: outputModel.cabinetId,
-    );
-
-    final response = await _service.apiReqDeleteCabinet(request);
-
-    if (response != null) {
-      unawaited(_readCabinet());
+      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
       return true;
     }
 

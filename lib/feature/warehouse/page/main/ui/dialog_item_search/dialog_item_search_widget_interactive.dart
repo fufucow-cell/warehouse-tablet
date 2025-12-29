@@ -9,7 +9,8 @@ enum EnumDialogItemSearchWidgetInteractive {
 }
 
 /// DialogItemSearchWidget 用户事件处理扩展
-extension DialogItemSearchWidgetUserEventExtension on DialogItemSearchWidgetController {
+extension DialogItemSearchWidgetUserEventExtension
+    on DialogItemSearchWidgetController {
   void interactive(
     EnumDialogItemSearchWidgetInteractive type, {
     dynamic data,
@@ -21,7 +22,8 @@ extension DialogItemSearchWidgetUserEventExtension on DialogItemSearchWidgetCont
         if (data is Category) {
           _changeSelectedCategoryLevel1(data);
         } else if (data is String) {
-          final category = _model.visibleCategoryLevel1.value.firstWhereOrNull((cat) => cat.name == data);
+          final category = _model.visibleCategoryLevel1.value
+              .firstWhereOrNull((cat) => cat.name == data);
           _changeSelectedCategoryLevel1(category);
         } else {
           _changeSelectedCategoryLevel1(null);
@@ -30,7 +32,8 @@ extension DialogItemSearchWidgetUserEventExtension on DialogItemSearchWidgetCont
         if (data is Category) {
           _changeSelectedCategoryLevel2(data);
         } else if (data is String) {
-          final category = _model.visibleCategoryLevel2.value.firstWhereOrNull((cat) => cat.name == data);
+          final category = _model.visibleCategoryLevel2.value
+              .firstWhereOrNull((cat) => cat.name == data);
           _changeSelectedCategoryLevel2(category);
         } else {
           _changeSelectedCategoryLevel2(null);
@@ -39,7 +42,8 @@ extension DialogItemSearchWidgetUserEventExtension on DialogItemSearchWidgetCont
         if (data is Category) {
           _changeSelectedCategoryLevel3(data);
         } else if (data is String) {
-          final category = _model.visibleCategoryLevel3.value.firstWhereOrNull((cat) => cat.name == data);
+          final category = _model.visibleCategoryLevel3.value
+              .firstWhereOrNull((cat) => cat.name == data);
           _changeSelectedCategoryLevel3(category);
         } else {
           _changeSelectedCategoryLevel3(null);

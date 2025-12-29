@@ -4,14 +4,17 @@ part 'warehouse_item_edit_position_request_model.freezed.dart';
 part 'warehouse_item_edit_position_request_model.g.dart';
 
 @freezed
-class WarehouseItemEditPositionRequestModel with _$WarehouseItemEditPositionRequestModel {
+class WarehouseItemEditPositionRequestModel
+    with _$WarehouseItemEditPositionRequestModel {
   factory WarehouseItemEditPositionRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,
     List<PositionCabinetRequestModel>? cabinets,
   }) = _WarehouseItemEditPositionRequestModel;
 
-  factory WarehouseItemEditPositionRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemEditPositionRequestModelFromJson(json);
+  factory WarehouseItemEditPositionRequestModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$WarehouseItemEditPositionRequestModelFromJson(json);
 }
 
 @freezed
@@ -22,5 +25,6 @@ class PositionCabinetRequestModel with _$PositionCabinetRequestModel {
     int? quantity,
   }) = _PositionCabinetRequestModel;
 
-  factory PositionCabinetRequestModel.fromJson(Map<String, dynamic> json) => _$PositionCabinetRequestModelFromJson(json);
+  factory PositionCabinetRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$PositionCabinetRequestModelFromJson(json);
 }

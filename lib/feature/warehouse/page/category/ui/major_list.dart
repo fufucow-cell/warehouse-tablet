@@ -43,7 +43,8 @@ class MajorListWidget extends StatelessWidget {
 
                   if (index > 0) {
                     final previousCategory = level1Cats[index - 1];
-                    isPreviousExpanded = controller.isCategoryExpanded(previousCategory);
+                    isPreviousExpanded =
+                        controller.isCategoryExpanded(previousCategory);
                     topMargin = 24.0.scale;
                   }
 
@@ -58,7 +59,10 @@ class MajorListWidget extends StatelessWidget {
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.easeInOut,
-                        margin: EdgeInsets.only(top: (isExpanded && isPreviousExpanded) ? topMargin : 0.0.scale),
+                        margin: EdgeInsets.only(
+                            top: (isExpanded && isPreviousExpanded)
+                                ? topMargin
+                                : 0.0.scale),
                         padding: EdgeInsets.only(
                           left: 32.0.scale,
                           right: controller.rowRightGap,
@@ -66,7 +70,9 @@ class MajorListWidget extends StatelessWidget {
                           bottom: 24.0.scale,
                         ),
                         decoration: BoxDecoration(
-                          color: isExpanded ? EnumColor.menuBgFocused.color : EnumColor.backgroundPrimary.color,
+                          color: isExpanded
+                              ? EnumColor.menuBgFocused.color
+                              : EnumColor.backgroundPrimary.color,
                           borderRadius: BorderRadius.circular(20.0.scale),
                         ),
                         child: _MajorRowWithChildren(
@@ -94,10 +100,12 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent => 78.0.scale;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      false;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     final controller = Get.find<WarehouseCategoryPageController>();
     return Container(
       width: double.infinity,

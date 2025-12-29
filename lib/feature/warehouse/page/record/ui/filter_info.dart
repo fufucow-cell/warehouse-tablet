@@ -44,7 +44,8 @@ class _FilterDropdown extends StatelessWidget {
           }
         },
         onMenuOpened: () {
-          controller.interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
+          controller
+              .interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
         },
       ),
     );

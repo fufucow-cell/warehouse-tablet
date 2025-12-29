@@ -78,9 +78,12 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.warehouseCategory.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null
+                      ? EnumLocale.warehouseCategory.tr
+                      : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
-                  visibleValues: visibleLevel1.map((cat) => cat.name ?? '').toList(),
+                  visibleValues:
+                      visibleLevel1.map((cat) => cat.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
                     EnumDialogItemSearchWidgetInteractive.tapCategoryLevel1,
                     data: str,
@@ -91,7 +94,8 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel2Category.tr,
                     selectedValue: selectedLevel2?.name,
-                    visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
+                    visibleValues:
+                        visibleLevel2.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemSearchWidgetInteractive.tapCategoryLevel2,
                       data: str,
@@ -103,7 +107,8 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel3Category.tr,
                     selectedValue: selectedLevel3?.name,
-                    visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
+                    visibleValues:
+                        visibleLevel3.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemSearchWidgetInteractive.tapCategoryLevel3,
                       data: str,
@@ -140,10 +145,12 @@ class _DropdownField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor:
+            selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
-        onMenuOpened: () => controller.interactive(EnumDialogItemSearchWidgetInteractive.tapDropdownButton),
+        onMenuOpened: () => controller.interactive(
+            EnumDialogItemSearchWidgetInteractive.tapDropdownButton),
       ),
     );
   }

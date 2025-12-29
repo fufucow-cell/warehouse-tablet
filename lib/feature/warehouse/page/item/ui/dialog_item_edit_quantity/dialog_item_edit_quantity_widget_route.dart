@@ -5,7 +5,8 @@ enum EnumDialogItemEditQuantityWidgetRoute {
   tapDialogConfirmButton,
 }
 
-extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWidgetController {
+extension DialogItemEditQuantityWidgetRouteExtension
+    on DialogItemEditQuantityWidgetController {
   void _routerHandle(
     EnumDialogItemEditQuantityWidgetRoute type,
     dynamic data,

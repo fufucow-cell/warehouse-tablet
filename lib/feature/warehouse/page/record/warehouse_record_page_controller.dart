@@ -32,13 +32,15 @@ class WarehouseRecordPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[WarehouseRecordPageController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[WarehouseRecordPageController] onInit - $hashCode');
     _checkData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[WarehouseRecordPageController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[WarehouseRecordPageController] onClose - $hashCode');
     scrollController.dispose();
     super.onClose();
   }
@@ -150,7 +152,8 @@ class WarehouseRecordPageController extends GetxController {
   }
 
   Future<void> _queryApiData() async {
-    final response = await _service.apiReqFetchLogs(WarehouseRecordRequestModel());
+    final response =
+        await _service.apiReqFetchLogs(WarehouseRecordRequestModel());
     _model.allLogs.value = response;
     _genVisibleLogs();
   }
@@ -165,7 +168,8 @@ class WarehouseRecordPageController extends GetxController {
     final startDate = _model.filterType.value.startDate;
 
     if (startDate == null) {
-      _model.visibleLogs.value = allLogs.where((log) => log.createdAt != null).toList();
+      _model.visibleLogs.value =
+          allLogs.where((log) => log.createdAt != null).toList();
       return;
     }
 
@@ -188,7 +192,9 @@ class WarehouseRecordPageController extends GetxController {
       final quantity = log.itemQuantity!;
       final oldCount = quantity.totalCount?.firstOrNull ?? '-';
       final newCount = quantity.totalCount?.lastOrNull ?? '-';
-      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       final strTotalCount = EnumLocale.warehouseItemTotalQuantityChange.trArgs([
         itemName,
         oldCount.toString(),
@@ -216,16 +222,23 @@ class WarehouseRecordPageController extends GetxController {
     String result = '';
 
     if (log.itemName?.length == 1) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       result += oldValue;
     }
 
     if (log.itemPosition != null) {
       for (ItemPosition position in log.itemPosition ?? []) {
-        final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.firstOrNull!;
-        final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.lastOrNull!;
+        final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true)
+            ? EnumLocale.warehouseUnnamed.tr
+            : position.cabinetName!.firstOrNull!;
+        final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true)
+            ? EnumLocale.warehouseUnnamed.tr
+            : position.cabinetName!.lastOrNull!;
         final count = position.count ?? '-';
-        final strCabinet = EnumLocale.warehouseMoveFromTo.trArgs([oldName, newName, count.toString()]);
+        final strCabinet = EnumLocale.warehouseMoveFromTo
+            .trArgs([oldName, newName, count.toString()]);
         result += '\n$strCabinet';
       }
     }
@@ -237,25 +250,45 @@ class WarehouseRecordPageController extends GetxController {
     String result = '';
 
     if (log.itemName?.length == 1) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       result += oldValue;
     } else if (log.itemName?.length == 2) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
-      final newValue = (log.itemName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.lastOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
+      final newValue = (log.itemName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.lastOrNull!;
       final str = EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
       result += str;
     }
 
     if (log.itemDescription?.length == 2) {
-      final oldValue = (log.itemDescription?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.firstOrNull!;
-      final newValue = (log.itemDescription?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.itemDescription?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : log.itemDescription!.firstOrNull!;
+      final newValue = (log.itemDescription?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : log.itemDescription!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([
+            oldValue,
+            newValue
+          ])}';
     }
 
     if (log.categoryName?.length == 2) {
-      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
-      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([
+            oldValue,
+            newValue
+          ])}';
     }
 
     if (log.itemPhoto?.length == 2) {
@@ -276,7 +309,10 @@ class WarehouseRecordPageController extends GetxController {
       final newValue = log.itemMinStockCount?.lastOrNull ?? -1;
 
       if (oldValue >= 0 && newValue >= 0 && oldValue != newValue) {
-        result += '\n${EnumLocale.warehouseMinStockUpdate.trArgs([oldValue.toString(), newValue.toString()])}';
+        result += '\n${EnumLocale.warehouseMinStockUpdate.trArgs([
+              oldValue.toString(),
+              newValue.toString()
+            ])}';
       }
     }
 
@@ -287,18 +323,29 @@ class WarehouseRecordPageController extends GetxController {
     String result = '';
 
     if (log.cabinetName?.length == 1) {
-      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.firstOrNull!;
       result += oldValue;
     } else if (log.cabinetName?.length == 2) {
-      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
-      final newValue = (log.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.lastOrNull!;
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.firstOrNull!;
+      final newValue = (log.cabinetName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.lastOrNull!;
       result += EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
     }
 
     if (log.cabinetRoomName?.length == 2) {
-      final oldValue = (log.cabinetRoomName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.cabinetRoomName!.firstOrNull!;
-      final newValue = (log.cabinetRoomName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.cabinetRoomName!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.cabinetRoomName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.cabinetRoomName!.firstOrNull!;
+      final newValue = (log.cabinetRoomName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.cabinetRoomName!.lastOrNull!;
+      result +=
+          '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
     }
 
     return result;
@@ -308,8 +355,12 @@ class WarehouseRecordPageController extends GetxController {
     String result = '';
 
     if (log.categoryName?.length == 2) {
-      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
-      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.lastOrNull!;
       result += EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue]);
     }
 

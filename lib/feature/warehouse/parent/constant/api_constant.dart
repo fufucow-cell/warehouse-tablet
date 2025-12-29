@@ -6,31 +6,32 @@ enum EnumApiInfo {
   tokenRefresh('auth/refresh', EnumApiMethod.post),
   forgotPassword('auth/forgot-password', EnumApiMethod.post),
   resetPassword('auth/reset-password', EnumApiMethod.post),
-  // Home APIs
+  // Household
   homeCreate('home', EnumApiMethod.post),
   homeFetch('home', EnumApiMethod.get),
   homeModify('home', EnumApiMethod.put),
   homeDelete('home', EnumApiMethod.delete),
-  // Room APIs
+  // Room
   roomCreate('room', EnumApiMethod.post),
   roomFetch('room', EnumApiMethod.get),
   roomModify('room', EnumApiMethod.put),
   roomDelete('room', EnumApiMethod.delete),
-  // Warehouse APIs
+  // Warehouse Item
   itemCreate('item', EnumApiMethod.post),
   itemFetch('item', EnumApiMethod.get),
   itemUpdateNormal('item/normal', EnumApiMethod.put),
   itemUpdatePosition('item/position', EnumApiMethod.put),
   itemUpdateQuantity('item/quantity', EnumApiMethod.put),
   itemDelete('item', EnumApiMethod.delete),
+  // Warehouse Cabinet
   cabinetCreate('cabinet', EnumApiMethod.post),
-  cabinetFetch('cabinet', EnumApiMethod.get),
-  cabinetModify('cabinet', EnumApiMethod.put),
-  cabinetDelete('cabinet', EnumApiMethod.delete),
+  cabinetUpdate('cabinet', EnumApiMethod.put),
+  // Warehouse Category
   categoryCreate('category', EnumApiMethod.post),
   categoryFetch('category', EnumApiMethod.get),
   categoryModify('category', EnumApiMethod.put),
   categoryDelete('category', EnumApiMethod.delete),
+  // Warehouse Record
   logCreate('log', EnumApiMethod.post),
   logFetch('log', EnumApiMethod.get),
   logDelete('log', EnumApiMethod.delete);

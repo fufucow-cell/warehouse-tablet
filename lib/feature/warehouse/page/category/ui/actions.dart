@@ -73,7 +73,9 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = (eImage == EnumImage.cArrowUp) ? EnumColor.backgroundProduct.color : EnumColor.backgroundSecondary.color;
+    final backgroundColor = (eImage == EnumImage.cArrowUp)
+        ? EnumColor.backgroundProduct.color
+        : EnumColor.backgroundSecondary.color;
 
     return Material(
       color: backgroundColor,

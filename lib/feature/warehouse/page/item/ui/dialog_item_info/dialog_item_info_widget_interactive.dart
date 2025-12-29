@@ -5,14 +5,16 @@ enum EnumDialogItemInfoWidgetInteractive {
 }
 
 /// DialogItemInfoWidget 用户事件处理扩展
-extension DialogItemInfoWidgetUserEventExtension on DialogItemInfoWidgetController {
+extension DialogItemInfoWidgetUserEventExtension
+    on DialogItemInfoWidgetController {
   void interactive(
     EnumDialogItemInfoWidgetInteractive type, {
     dynamic data,
   }) {
     switch (type) {
       case EnumDialogItemInfoWidgetInteractive.tapRecordButton:
-        routerHandle(EnumDialogItemInfoWidgetRoute.showDialogItemHistory, data: data);
+        routerHandle(EnumDialogItemInfoWidgetRoute.showDialogItemHistory,
+            data: data);
     }
   }
 }

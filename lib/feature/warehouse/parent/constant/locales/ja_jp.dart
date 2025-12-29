@@ -17,6 +17,7 @@ const Map<String, String> jaJP = {
   'commonNext': '次へ',
   'commonFinish': '完了',
   'commonProcessing': '処理中',
+  'commonReminder': 'ご案内',
 
   // 言語
   'languageTitle': '言語設定',
@@ -69,7 +70,8 @@ const Map<String, String> jaJP = {
   'warehouseRefresh': '更新',
   'warehouseSubCategoryCount': 'サブカテゴリ数',
   'warehouseCategoryCount': 'カテゴリ数',
-  'warehouseCategoryTotalCount': '第一階分類: @para1 件, 第二階分類: @para2 件, 第三階分類: @para3 件',
+  'warehouseCategoryTotalCount':
+      '第一階分類: @para1 件, 第二階分類: @para2 件, 第三階分類: @para3 件',
   'warehouseAlarm': 'アラーム',
   'warehouseAlarmProductPhoto': '商品写真',
   'warehouseAlarmProductName': '商品名',
@@ -139,14 +141,19 @@ const Map<String, String> jaJP = {
   'createCabinetTitle': 'キャビネット追加',
   'createCabinetRoom': '部屋',
   'editCabinetTitle': 'キャビネット編集',
+  'editCabinetDeleteMultipleMessage':
+      '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'deleteCabinetTitle': 'キャビネット削除',
   'deleteCabinetMessageNoItems': '「@para1」キャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
-  'deleteCabinetMessageWithItems': '「@para1」キャビネットとそのすべてのアイテムを削除してもよろしいですか？\nこの操作は元に戻せません。',
+  'deleteCabinetMessageWithItems':
+      '「@para1」キャビネットとそのすべてのアイテムを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'createCategoryTitle': 'カテゴリ追加',
   'createCategoryCurrentCategory': '現在のカテゴリ: @para1',
   'deleteCategoryTitle': 'カテゴリ削除',
-  'deleteCategoryMessageNoChildren': 'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
-  'deleteCategoryMessageWithChildren': 'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageNoChildren':
+      'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageWithChildren':
+      'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
   'editCategoryTitle': 'カテゴリ編集',
   'editCategoryNoSubcategory': 'このカテゴリには現在サブカテゴリがありません',
   'editCategoryHasLevel1Subcategory': 'このカテゴリには現在1階層のサブカテゴリがあります',
@@ -229,6 +236,7 @@ const Map<String, String> jaJP = {
   'warehouseNoItem': 'アイテムがありません',
   'warehouseUnnamedItem': '名前なし',
   'warehouseNoCabinet': 'キャビネットがありません',
+  'warehouseNoCabinetInRoom': 'この部屋にはキャビネットがありません',
   'warehouseUnnamedCabinet': '名前なし',
   'warehouseNoAlarm': 'アラーム記録がありません',
   'warehouseNoRecord': '記録がありません',

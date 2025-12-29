@@ -38,7 +38,8 @@ class DialogCategoryDeleteWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCategoryDeleteWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -50,20 +51,23 @@ class DialogCategoryDeleteWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryDeleteWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogCategoryDeleteWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryDeleteWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: false,
                   );
                 },

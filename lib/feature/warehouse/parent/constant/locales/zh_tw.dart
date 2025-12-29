@@ -17,6 +17,7 @@ const Map<String, String> zhTW = {
   'commonNext': '下一步',
   'commonFinish': '完成',
   'commonProcessing': '處理中',
+  'commonReminder': '溫馨提醒',
 
   // 語言
   'languageTitle': '語言設定',
@@ -69,7 +70,8 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子類別數量',
   'warehouseCategoryCount': '分類量',
-  'warehouseCategoryTotalCount': '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount':
+      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
   'warehouseAlarm': '警報',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名稱',
@@ -138,6 +140,7 @@ const Map<String, String> zhTW = {
   'createCabinetTitle': '新增櫃位',
   'createCabinetRoom': '房間',
   'editCabinetTitle': '編輯櫃位',
+  'editCabinetDeleteMultipleMessage': '您確定要刪除@para1櫃位嗎？\n此操作無法撤銷。',
   'deleteCabinetTitle': '刪除櫃位',
   'deleteCabinetMessageNoItems': '您確定要刪除「@para1」櫃位嗎？\n此操作無法撤銷。',
   'deleteCabinetMessageWithItems': '您確定要刪除「@para1」櫃位及其所有物品嗎？\n此操作無法撤銷。',
@@ -228,6 +231,7 @@ const Map<String, String> zhTW = {
   'warehouseNoItem': '暫無物品',
   'warehouseUnnamedItem': '未命名',
   'warehouseNoCabinet': '暫無櫃位',
+  'warehouseNoCabinetInRoom': '此房間沒有櫃位',
   'warehouseUnnamedCabinet': '未命名',
   'warehouseNoAlarm': '暫無告警記錄',
   'warehouseNoRecord': '暫無記錄',

@@ -4,14 +4,17 @@ part 'warehouse_item_edit_quantity_request_model.freezed.dart';
 part 'warehouse_item_edit_quantity_request_model.g.dart';
 
 @freezed
-class WarehouseItemEditQuantityRequestModel with _$WarehouseItemEditQuantityRequestModel {
+class WarehouseItemEditQuantityRequestModel
+    with _$WarehouseItemEditQuantityRequestModel {
   factory WarehouseItemEditQuantityRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,
     List<QuantityCabinetRequestModel>? cabinets,
   }) = _WarehouseItemEditQuantityRequestModel;
 
-  factory WarehouseItemEditQuantityRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemEditQuantityRequestModelFromJson(json);
+  factory WarehouseItemEditQuantityRequestModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$WarehouseItemEditQuantityRequestModelFromJson(json);
 }
 
 @freezed
@@ -21,5 +24,6 @@ class QuantityCabinetRequestModel with _$QuantityCabinetRequestModel {
     int? quantity,
   }) = _QuantityCabinetRequestModel;
 
-  factory QuantityCabinetRequestModel.fromJson(Map<String, dynamic> json) => _$QuantityCabinetRequestModelFromJson(json);
+  factory QuantityCabinetRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$QuantityCabinetRequestModelFromJson(json);
 }

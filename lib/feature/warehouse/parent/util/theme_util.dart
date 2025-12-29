@@ -77,11 +77,15 @@ class ThemeUtil extends GetxService {
     return false;
   }
 
-  Future<bool> switchFromString(String? strMode) async => switchFromMode(_convertThemeFromString(strMode));
+  Future<bool> switchFromString(String? strMode) async =>
+      switchFromMode(_convertThemeFromString(strMode));
 
   EnumThemeMode get getThemeFromSystem {
-    final platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    return platformBrightness == Brightness.dark ? EnumThemeMode.dark : EnumThemeMode.light;
+    final platformBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    return platformBrightness == Brightness.dark
+        ? EnumThemeMode.dark
+        : EnumThemeMode.light;
   }
 
   /// 取得圖片路徑
@@ -118,7 +122,8 @@ class ThemeUtil extends GetxService {
   }
 
   /// 將文件轉換為圖片 Widget
-  Widget? convertFileToImage(String filePath, {double? fitWidth, double? fitHeight}) {
+  Widget? convertFileToImage(String filePath,
+      {double? fitWidth, double? fitHeight}) {
     try {
       final File file = File(filePath);
 
@@ -143,7 +148,8 @@ class ThemeUtil extends GetxService {
   }
 
   /// 壓縮文件，將寬或高較長的一邊 fit 至 100 size，保持寬高比
-  Future<String?> compressImageFile(String imagePath, {int maxSide = 100}) async {
+  Future<String?> compressImageFile(String imagePath,
+      {int maxSide = 100}) async {
     try {
       final File imageFile = File(imagePath);
       if (!imageFile.existsSync()) {

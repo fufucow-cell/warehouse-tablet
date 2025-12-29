@@ -210,15 +210,19 @@ class _DashedBorderPainter extends CustomPainter {
     for (int i = 0; i < dashCount; i++) {
       // 計算當前虛線段的起始角度
       final currentOffset = i * totalDashLength;
-      final angle = startAngle + (currentOffset / actualRadius) * (sweepAngle > 0 ? 1 : -1);
+      final angle = startAngle +
+          (currentOffset / actualRadius) * (sweepAngle > 0 ? 1 : -1);
 
       // 計算剩餘的弧長
       final remainingLength = circumference - currentOffset;
-      final remainingAngle = (remainingLength / actualRadius) * (sweepAngle > 0 ? 1 : -1);
+      final remainingAngle =
+          (remainingLength / actualRadius) * (sweepAngle > 0 ? 1 : -1);
 
       // 計算當前虛線段的角度（不超過剩餘角度）
-      final dashAngle =
-          (sweepAngle > 0 ? 1 : -1) * (remainingAngle.abs() < (dashWidth / actualRadius) ? remainingAngle.abs() : (dashWidth / actualRadius));
+      final dashAngle = (sweepAngle > 0 ? 1 : -1) *
+          (remainingAngle.abs() < (dashWidth / actualRadius)
+              ? remainingAngle.abs()
+              : (dashWidth / actualRadius));
 
       if (dashAngle.abs() > 0.001) {
         final path = Path()..addArc(rect, angle, dashAngle);

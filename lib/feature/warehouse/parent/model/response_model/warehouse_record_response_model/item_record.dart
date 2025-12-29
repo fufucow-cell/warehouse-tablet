@@ -26,5 +26,6 @@ class ItemRecord with _$ItemRecord {
     @JsonKey(name: 'item_quantity') ItemQuantity? itemQuantity,
   }) = _ItemRecord;
 
-  factory ItemRecord.fromJson(Map<String, dynamic> json) => _$ItemRecordFromJson(json);
+  factory ItemRecord.fromJson(Map<String, dynamic> json) =>
+      _$ItemRecordFromJson(json);
 }

@@ -7,7 +7,8 @@ enum EnumWarehouseCategoryPageInteractive {
   tapExpandCategory,
 }
 
-extension WarehouseCategoryPageUserEventExtension on WarehouseCategoryPageController {
+extension WarehouseCategoryPageUserEventExtension
+    on WarehouseCategoryPageController {
   void interactive(EnumWarehouseCategoryPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseCategoryPageInteractive.tapCreateCategory:
@@ -18,7 +19,8 @@ extension WarehouseCategoryPageUserEventExtension on WarehouseCategoryPageContro
           data: data,
         );
       case EnumWarehouseCategoryPageInteractive.tapDeleteCategory:
-        routerHandle(EnumWarehouseCategoryPageRoute.showDialogDeleteCategory, data: data);
+        routerHandle(EnumWarehouseCategoryPageRoute.showDialogDeleteCategory,
+            data: data);
       case EnumWarehouseCategoryPageInteractive.tapExpandCategory:
         if (data is Category) {
           toggleCategoryExpanded(data);

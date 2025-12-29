@@ -12,23 +12,27 @@ part 'dialog_cabinet_create_widget_route.dart';
 class DialogCabinetCreateWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCabinetCreateWidgetModel _model = DialogCabinetCreateWidgetModel();
+  final DialogCabinetCreateWidgetModel _model =
+      DialogCabinetCreateWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx => _model.selectedRoom.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx =>
+      _model.selectedRoom.readonly;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogCabinetCreateWidgetController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogCabinetCreateWidgetController] onInit - $hashCode');
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogCabinetCreateWidgetController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogCabinetCreateWidgetController] onClose - $hashCode');
     nameController.dispose();
     super.onClose();
   }

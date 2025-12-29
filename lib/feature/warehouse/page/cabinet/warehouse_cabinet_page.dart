@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/empty_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
@@ -23,36 +24,40 @@ class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
 
     final controller = Get.find<WarehouseCabinetPageController>();
     final rooms = controller.getRoomsInfo();
+    rooms.clear();
 
     return SecondBackgroundCard(
       child: Column(
         children: [
           const TopInfo(),
           SizedBox(height: 32.0.scale),
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return GridView.builder(
-                  padding: EdgeInsets.all(
-                    12.0.scale,
-                  ), // Add padding for shadow (blurRadius + spreadRadius)
-                  physics: const ClampingScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 32.0.scale,
-                    mainAxisSpacing: 32.0.scale,
-                    childAspectRatio: 514.0 / 420.0,
-                  ),
-                  itemCount: rooms.length,
-                  itemBuilder: (context, index) {
-                    return _RoomCard(
-                      roomNameId: rooms[index],
-                    );
-                  },
-                );
-              },
+          if (rooms.isEmpty)
+            const EmptyWidget()
+          else
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return GridView.builder(
+                    padding: EdgeInsets.all(
+                      12.0.scale,
+                    ), // Add padding for shadow (blurRadius + spreadRadius)
+                    physics: const ClampingScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 32.0.scale,
+                      mainAxisSpacing: 32.0.scale,
+                      childAspectRatio: 514.0 / 420.0,
+                    ),
+                    itemCount: rooms.length,
+                    itemBuilder: (context, index) {
+                      return _RoomCard(
+                        roomNameId: rooms[index],
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -112,6 +117,8 @@ class _RoomTitleInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseCabinetPageController>();
+
     return Row(
       children: [
         Expanded(
@@ -120,7 +127,28 @@ class _RoomTitleInfo extends StatelessWidget {
             weightType: EnumFontWeightType.bold,
           ),
         ),
-        EnumImage.cEditNormal.image(size: Size.square(32.0.scale)),
+        Material(
+          color: EnumColor.backgroundPrimary.color,
+          borderRadius: BorderRadius.circular(20.0.scale),
+          child: InkWell(
+            onTap: () {
+              controller.interactive(
+                EnumWarehouseCabinetPageInteractive.tapEditCabinet,
+                data: roomNameId,
+              );
+            },
+            borderRadius: BorderRadius.circular(20.0.scale),
+            splashColor: EnumColor.accentBlue.color.withOpacity(0.2),
+            highlightColor: EnumColor.accentBlue.color.withOpacity(0.1),
+            child: Ink(
+              padding: EdgeInsets.all(4.0.scale),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20.0.scale),
+              ),
+              child: EnumImage.cEditNormal.image(size: Size.square(32.0.scale)),
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -163,17 +191,6 @@ class _RoomCabinetInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseCabinetPageController>();
     final cabinets = controller.getCabinets(roomNameId);
-    Widget card;
-
-    if (cabinets.isEmpty) {
-      card = const SizedBox.shrink();
-    } else if (cabinets.length > 2) {
-      //card = CabinetMixCard(cabinets: cabinets);
-      card = CabinetRowCard(cabinets: cabinets);
-    } else {
-      card = CabinetRowCard(cabinets: cabinets);
-    }
-
-    return Expanded(child: card);
+    return CabinetRowCard(cabinets: cabinets);
   }
 }

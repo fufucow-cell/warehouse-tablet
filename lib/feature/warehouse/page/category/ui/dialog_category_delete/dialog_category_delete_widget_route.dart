@@ -4,7 +4,8 @@ enum EnumDialogCategoryDeleteWidgetRoute {
   closeDialog,
 }
 
-extension DialogCategoryDeleteWidgetRouteExtension on DialogCategoryDeleteWidgetController {
+extension DialogCategoryDeleteWidgetRouteExtension
+    on DialogCategoryDeleteWidgetController {
   void _routerHandle(
     EnumDialogCategoryDeleteWidgetRoute type,
     dynamic data,

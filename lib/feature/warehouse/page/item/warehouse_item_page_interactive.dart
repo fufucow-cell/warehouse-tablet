@@ -43,22 +43,26 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
         }
       case EnumWarehouseItemPageInteractive.tapItemNormalEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showDialogItemNormalEdit, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemNormalEdit,
+              data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapItemQuantityEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showDialogItemQuantityEdit, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemQuantityEdit,
+              data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapItemPositionEdit:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showDialogItemPositionEdit, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemPositionEdit,
+              data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapItemInfo:
         if (data is Item) {
-          routerHandle(EnumWarehouseItemPageRoute.showDialogItemInfo, data: data);
+          routerHandle(EnumWarehouseItemPageRoute.showDialogItemInfo,
+              data: data);
         }
         break;
       case EnumWarehouseItemPageInteractive.tapClearSearch:

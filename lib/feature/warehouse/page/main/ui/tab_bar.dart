@@ -6,7 +6,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 class CustomTabBar extends StatelessWidget {
   final itemSpacing = 40.0; // 每個 tab Item 之間的間距
   final itemPaddingHorizontal = 22.0; // 每個 tab Item 左右內縮的距離 (讓底線寬度能超出文字)
-  double get combinedPadding => (itemPaddingHorizontal + (itemSpacing / 2)); // 將兩個 padding 結合
+  double get combinedPadding =>
+      (itemPaddingHorizontal + (itemSpacing / 2)); // 將兩個 padding 結合
   final underlineSpacing = 12.0;
   final TabController controller;
   final List<Widget> tabs;

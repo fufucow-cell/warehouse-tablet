@@ -17,6 +17,7 @@ const Map<String, String> zhCN = {
   'commonNext': '下一步',
   'commonFinish': '完成',
   'commonProcessing': '处理中',
+  'commonReminder': '温馨提醒',
 
   // 語言
   'languageTitle': '语言设置',
@@ -69,7 +70,8 @@ const Map<String, String> zhCN = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子类别数量',
   'warehouseCategoryCount': '分类量',
-  'warehouseCategoryTotalCount': '第一阶分类: @para1 笔, 第二阶分类: @para2 笔, 第三阶分类: @para3 笔',
+  'warehouseCategoryTotalCount':
+      '第一阶分类: @para1 笔, 第二阶分类: @para2 笔, 第三阶分类: @para3 笔',
   'warehouseAlarm': '警报',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名称',
@@ -139,6 +141,7 @@ const Map<String, String> zhCN = {
   'createCabinetTitle': '新增柜子',
   'createCabinetRoom': '房间',
   'editCabinetTitle': '编辑柜子',
+  'editCabinetDeleteMultipleMessage': '您确定要删除@para1柜子吗？\n此操作无法撤销。',
   'deleteCabinetTitle': '删除柜子',
   'deleteCabinetMessageNoItems': '您确定要删除「@para1」柜子吗？\n此操作无法撤销。',
   'deleteCabinetMessageWithItems': '您确定要删除「@para1」柜子及其所有物品吗？\n此操作无法撤销。',
@@ -229,6 +232,7 @@ const Map<String, String> zhCN = {
   'warehouseNoItem': '暂无物品',
   'warehouseUnnamedItem': '未命名',
   'warehouseNoCabinet': '暂无柜子',
+  'warehouseNoCabinetInRoom': '此房间没有柜子',
   'warehouseUnnamedCabinet': '未命名',
   'warehouseNoAlarm': '暂无告警记录',
   'warehouseNoRecord': '暂无记录',

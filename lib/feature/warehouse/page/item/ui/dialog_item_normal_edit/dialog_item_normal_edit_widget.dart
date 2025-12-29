@@ -44,26 +44,39 @@ class DialogItemNormalEditWidget extends StatelessWidget {
                     type: DialogFooterType.cancelAndConfirm,
                     onCancel: () {
                       controller.interactive(
-                        EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
+                        EnumDialogItemNormalEditWidgetInteractive
+                            .tapDialogCancelButton,
                         data: context,
                       );
                     },
                     onConfirm: () async {
-                      controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: true);
+                      controller.interactive(
+                          EnumDialogItemNormalEditWidgetInteractive
+                              .tapDialogConfirmButton,
+                          data: true);
                       final outputModel = await controller.checkOutputModel();
 
                       if (outputModel == null) {
-                        controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: false);
+                        controller.interactive(
+                            EnumDialogItemNormalEditWidgetInteractive
+                                .tapDialogConfirmButton,
+                            data: false);
                         return;
                       }
 
                       final isSuccess = await onConfirm(outputModel);
 
                       if (isSuccess) {
-                        controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: context);
+                        controller.interactive(
+                            EnumDialogItemNormalEditWidgetInteractive
+                                .tapDialogConfirmButton,
+                            data: context);
                       }
 
-                      controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton, data: false);
+                      controller.interactive(
+                          EnumDialogItemNormalEditWidgetInteractive
+                              .tapDialogConfirmButton,
+                          data: false);
                     },
                   );
                 },
@@ -106,18 +119,28 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.warehouseCategory.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null
+                      ? EnumLocale.warehouseCategory.tr
+                      : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
-                  visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
-                  onValueSelected: (str) => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel1, data: str),
+                  visibleValues:
+                      visibleLevel1.map((e) => e.name ?? '').toList(),
+                  onValueSelected: (str) => controller.interactive(
+                      EnumDialogItemNormalEditWidgetInteractive
+                          .tapCategoryLevel1,
+                      data: str),
                 ),
                 if (selectedLevel1 != null) ...[
                   SizedBox(height: 24.0.scale),
                   _DropdownField(
                     title: EnumLocale.createLevel2Category.tr,
                     selectedValue: selectedLevel2?.name,
-                    visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
-                    onValueSelected: (str) => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel2, data: str),
+                    visibleValues:
+                        visibleLevel2.map((cat) => cat.name ?? '').toList(),
+                    onValueSelected: (str) => controller.interactive(
+                        EnumDialogItemNormalEditWidgetInteractive
+                            .tapCategoryLevel2,
+                        data: str),
                   ),
                 ],
                 if (selectedLevel2 != null) ...[
@@ -125,8 +148,12 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel3Category.tr,
                     selectedValue: selectedLevel3?.name,
-                    visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
-                    onValueSelected: (str) => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel3, data: str),
+                    visibleValues:
+                        visibleLevel3.map((cat) => cat.name ?? '').toList(),
+                    onValueSelected: (str) => controller.interactive(
+                        EnumDialogItemNormalEditWidgetInteractive
+                            .tapCategoryLevel3,
+                        data: str),
                   ),
                 ],
               ],
@@ -146,7 +173,8 @@ class _PhotoSection extends StatelessWidget {
       () {
         final filePath = controller.filePathRx.value;
         final photoUrl = controller.photoUrlRx.value;
-        final hasPhoto = (photoUrl?.isNotEmpty ?? false) || (filePath?.isNotEmpty ?? false);
+        final hasPhoto =
+            (photoUrl?.isNotEmpty ?? false) || (filePath?.isNotEmpty ?? false);
 
         if (hasPhoto) {
           Widget? imageWidget;
@@ -163,13 +191,17 @@ class _PhotoSection extends StatelessWidget {
           if (imageWidget != null) {
             return DialogWithPhotoWidget(
               imageWidget: imageWidget,
-              onReplacePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.replacePhoto),
-              onDeletePhoto: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.deletePhoto),
+              onReplacePhoto: () => controller.interactive(
+                  EnumDialogItemNormalEditWidgetInteractive.replacePhoto),
+              onDeletePhoto: () => controller.interactive(
+                  EnumDialogItemNormalEditWidgetInteractive.deletePhoto),
             );
           }
         }
 
-        return DialogWithoutPhotoWidget(onTap: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapPhoto));
+        return DialogWithoutPhotoWidget(
+            onTap: () => controller.interactive(
+                EnumDialogItemNormalEditWidgetInteractive.tapPhoto));
       },
     );
   }
@@ -251,10 +283,12 @@ class _DropdownField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor:
+            selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
-        onMenuOpened: () => controller.interactive(EnumDialogItemNormalEditWidgetInteractive.tapDropdownButton),
+        onMenuOpened: () => controller.interactive(
+            EnumDialogItemNormalEditWidgetInteractive.tapDropdownButton),
       ),
     );
   }

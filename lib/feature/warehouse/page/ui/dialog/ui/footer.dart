@@ -62,7 +62,9 @@ class DialogFooter extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             vertical: 24.0.scale,
           ),
-          backgroundColor: isConfirm ? EnumColor.backgroundButton.color : EnumColor.backgroundPrimary.color,
+          backgroundColor: isConfirm
+              ? EnumColor.backgroundButton.color
+              : EnumColor.backgroundPrimary.color,
           side: isConfirm
               ? null
               : BorderSide(
@@ -82,7 +84,9 @@ class DialogFooter extends StatelessWidget {
                 ),
               )
             : WidgetUtil.textWidget(
-                isConfirm ? EnumLocale.commonConfirm.tr : EnumLocale.commonCancel.tr,
+                isConfirm
+                    ? EnumLocale.commonConfirm.tr
+                    : EnumLocale.commonCancel.tr,
                 size: 26.0.scale,
               ),
       ),

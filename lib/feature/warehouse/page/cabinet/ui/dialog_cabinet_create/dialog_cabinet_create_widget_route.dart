@@ -4,7 +4,8 @@ enum EnumDialogCabinetCreateWidgetRoute {
   closeDialog,
 }
 
-extension DialogCabinetCreateWidgetRouteExtension on DialogCabinetCreateWidgetController {
+extension DialogCabinetCreateWidgetRouteExtension
+    on DialogCabinetCreateWidgetController {
   void _routerHandle(
     EnumDialogCabinetCreateWidgetRoute type,
     dynamic data,

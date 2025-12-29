@@ -4,7 +4,8 @@ enum EnumDialogCategoryCreateWidgetRoute {
   closeDialog,
 }
 
-extension DialogCategoryCreateWidgetRouteExtension on DialogCategoryCreateWidgetController {
+extension DialogCategoryCreateWidgetRouteExtension
+    on DialogCategoryCreateWidgetController {
   void _routerHandle(
     EnumDialogCategoryCreateWidgetRoute type,
     dynamic data,

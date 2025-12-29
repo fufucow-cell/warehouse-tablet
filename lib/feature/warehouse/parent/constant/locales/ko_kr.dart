@@ -17,6 +17,7 @@ const Map<String, String> koKR = {
   'commonNext': '다음',
   'commonFinish': '완료',
   'commonProcessing': '처리 중',
+  'commonReminder': '안내',
 
   // 언어
   'languageTitle': '언어 설정',
@@ -69,7 +70,8 @@ const Map<String, String> koKR = {
   'warehouseRefresh': '새로고침',
   'warehouseSubCategoryCount': '하위 카테고리 수',
   'warehouseCategoryCount': '카테고리 수',
-  'warehouseCategoryTotalCount': '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
+  'warehouseCategoryTotalCount':
+      '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
   'warehouseAlarm': '알람',
   'warehouseAlarmProductPhoto': '상품 사진',
   'warehouseAlarmProductName': '상품명',
@@ -139,14 +141,19 @@ const Map<String, String> koKR = {
   'createCabinetTitle': '캐비닛 추가',
   'createCabinetRoom': '방',
   'editCabinetTitle': '캐비닛 편집',
+  'editCabinetDeleteMultipleMessage':
+      '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'deleteCabinetTitle': '캐비닛 삭제',
   'deleteCabinetMessageNoItems': '「@para1」캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
-  'deleteCabinetMessageWithItems': '「@para1」캐비닛과 모든 항목을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCabinetMessageWithItems':
+      '「@para1」캐비닛과 모든 항목을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'createCategoryTitle': '카테고리 추가',
   'createCategoryCurrentCategory': '현재 카테고리: @para1',
   'deleteCategoryTitle': '카테고리 삭제',
-  'deleteCategoryMessageNoChildren': '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
-  'deleteCategoryMessageWithChildren': '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageNoChildren':
+      '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageWithChildren':
+      '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'editCategoryTitle': '카테고리 편집',
   'editCategoryNoSubcategory': '이 카테고리에는 현재 하위 카테고리가 없습니다',
   'editCategoryHasLevel1Subcategory': '이 카테고리에는 현재 1단계 하위 카테고리가 있습니다',
@@ -229,6 +236,7 @@ const Map<String, String> koKR = {
   'warehouseNoItem': '항목이 없습니다',
   'warehouseUnnamedItem': '이름 없음',
   'warehouseNoCabinet': '캐비닛이 없습니다',
+  'warehouseNoCabinetInRoom': '이 방에는 캐비닛이 없습니다',
   'warehouseUnnamedCabinet': '이름 없음',
   'warehouseNoAlarm': '알람 기록이 없습니다',
   'warehouseNoRecord': '기록이 없습니다',

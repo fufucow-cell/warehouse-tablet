@@ -21,7 +21,8 @@ class WarehouseMainPage extends StatefulWidget {
   State<WarehouseMainPage> createState() => _WarehouseMainPageState();
 }
 
-class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTickerProviderStateMixin {
+class _WarehouseMainPageState extends State<WarehouseMainPage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -89,7 +90,8 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
               ),
             ),
             FirstBackgroundCard(
-              child: controller.isLoadingRx.value ? _shimmerContent : tabBarView,
+              child:
+                  controller.isLoadingRx.value ? _shimmerContent : tabBarView,
             ),
           ],
         ),

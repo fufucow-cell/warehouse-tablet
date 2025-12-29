@@ -3,7 +3,7 @@ part of 'warehouse_cabinet_page_controller.dart';
 enum EnumWarehouseCabinetPageRoute {
   showCreateCabinetDialog,
   showEditCabinetDialog,
-  showDeleteCabinetDialog,
+  changeMainPageTabItem,
 }
 
 extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
@@ -18,27 +18,20 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
           ),
         );
       case EnumWarehouseCabinetPageRoute.showEditCabinetDialog:
-        if (data is Cabinet) {
-          final cabinetId = data.id ?? '';
+        if (data is WarehouseNameIdModel) {
           _service.showAlert(
             DialogCabinetEditWidget(
-              cabinet: data,
+              room: data,
               onConfirm: (outputModel) async {
-                return await _updateCabinet(outputModel, cabinetId);
+                return await _updateCabinet(outputModel);
               },
             ),
           );
         }
-      case EnumWarehouseCabinetPageRoute.showDeleteCabinetDialog:
-        if (data is Cabinet) {
-          _service.showAlert(
-            DialogCabinetDeleteWidget(
-              cabinet: data,
-              onConfirm: (outputModel) async {
-                return await _deleteCabinet(outputModel);
-              },
-            ),
-          );
+      case EnumWarehouseCabinetPageRoute.changeMainPageTabItem:
+        if (data is WarehouseNameIdModel) {
+          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.item,
+              data: data);
         }
     }
   }

@@ -96,6 +96,7 @@ class WidgetUtil {
     int? maxLength,
     Widget? prefixIcon,
     double? prefixIconSize,
+    bool isReadOnly = false,
   }) {
     return Container(
       alignment: Alignment.centerLeft,
@@ -105,7 +106,7 @@ class WidgetUtil {
           ),
       height: height ?? 70.0.scale,
       decoration: BoxDecoration(
-        color: EnumColor.backgroundPrimary.color,
+        color: isReadOnly ? EnumColor.backgroundSecondary.color : EnumColor.backgroundPrimary.color,
         border: Border.all(
           width: 1.0.scale,
           color: EnumColor.lineBorder.color,
@@ -113,6 +114,7 @@ class WidgetUtil {
         borderRadius: BorderRadius.circular(16.0.scale),
       ),
       child: TextField(
+        readOnly: isReadOnly,
         controller: controller,
         keyboardType: keyboardType ?? textFieldType.keyboardType,
         maxLines: maxLines ?? (expands == true ? null : 1),
@@ -188,7 +190,10 @@ class WidgetUtil {
     );
   }
 
-  static Widget emptyImage({double? width = double.infinity, double? height = double.infinity}) {
+  static Widget emptyImage({
+    double? width = double.infinity,
+    double? height = double.infinity,
+  }) {
     return Container(
       width: width,
       height: height,
@@ -197,7 +202,12 @@ class WidgetUtil {
     );
   }
 
-  static Widget networkImage({required String url, double? width, double? height, BoxFit? fit}) {
+  static Widget networkImage({
+    required String url,
+    double? width,
+    double? height,
+    BoxFit? fit,
+  }) {
     final loadingSize = height ?? width ?? double.infinity;
     Widget imageWidget = Image.network(
       url,

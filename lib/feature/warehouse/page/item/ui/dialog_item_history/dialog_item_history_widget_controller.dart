@@ -35,13 +35,15 @@ class DialogItemHistoryWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogItemHistoryWidgetController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogItemHistoryWidgetController] onInit - $hashCode');
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogItemHistoryWidgetController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogItemHistoryWidgetController] onClose - $hashCode');
     super.onClose();
   }
 
@@ -69,7 +71,9 @@ class DialogItemHistoryWidgetController extends GetxController {
   }
 
   void _filterItemRecords(List<ItemRecord> records) {
-    _model.records.value = records.where((record) => record.itemId == _model.combineItem?.id).toList()
+    _model.records.value = records
+        .where((record) => record.itemId == _model.combineItem?.id)
+        .toList()
       ..sort((a, b) {
         final aTime = a.createdAt ?? 0;
         final bTime = b.createdAt ?? 0;
@@ -175,7 +179,9 @@ class DialogItemHistoryWidgetController extends GetxController {
       final quantity = log.itemQuantity!;
       final oldCount = quantity.totalCount?.firstOrNull ?? '-';
       final newCount = quantity.totalCount?.lastOrNull ?? '-';
-      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       final strTotalCount = EnumLocale.warehouseItemTotalQuantityChange.trArgs([
         itemName,
         oldCount.toString(),
@@ -203,16 +209,23 @@ class DialogItemHistoryWidgetController extends GetxController {
     String result = '';
 
     if (log.itemName?.length == 1) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       result += oldValue;
     }
 
     if (log.itemPosition != null) {
       for (ItemPosition position in log.itemPosition ?? []) {
-        final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.firstOrNull!;
-        final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.lastOrNull!;
+        final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true)
+            ? EnumLocale.warehouseUnnamed.tr
+            : position.cabinetName!.firstOrNull!;
+        final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true)
+            ? EnumLocale.warehouseUnnamed.tr
+            : position.cabinetName!.lastOrNull!;
         final count = position.count ?? '-';
-        final strCabinet = EnumLocale.warehouseMoveFromTo.trArgs([oldName, newName, count.toString()]);
+        final strCabinet = EnumLocale.warehouseMoveFromTo
+            .trArgs([oldName, newName, count.toString()]);
         result += '\n$strCabinet';
       }
     }
@@ -224,25 +237,45 @@ class DialogItemHistoryWidgetController extends GetxController {
     String result = '';
 
     if (log.itemName?.length == 1) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
       result += oldValue;
     } else if (log.itemName?.length == 2) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
-      final newValue = (log.itemName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.lastOrNull!;
+      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.firstOrNull!;
+      final newValue = (log.itemName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.itemName!.lastOrNull!;
       final str = EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
       result += str;
     }
 
     if (log.itemDescription?.length == 2) {
-      final oldValue = (log.itemDescription?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.firstOrNull!;
-      final newValue = (log.itemDescription?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : log.itemDescription!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.itemDescription?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : log.itemDescription!.firstOrNull!;
+      final newValue = (log.itemDescription?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : log.itemDescription!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([
+            oldValue,
+            newValue
+          ])}';
     }
 
     if (log.categoryName?.length == 2) {
-      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
-      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.lastOrNull!;
+      result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([
+            oldValue,
+            newValue
+          ])}';
     }
 
     return result;
@@ -252,19 +285,30 @@ class DialogItemHistoryWidgetController extends GetxController {
     String result = '';
 
     if (log.cabinetName?.length == 1) {
-      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.firstOrNull!;
       result += oldValue;
     } else if (log.cabinetName?.length == 2) {
-      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.firstOrNull!;
-      final newValue = (log.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetName!.lastOrNull!;
+      final oldValue = (log.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.firstOrNull!;
+      final newValue = (log.cabinetName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetName!.lastOrNull!;
       final str = EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
       result += str;
     }
 
     if (log.cabinetRoomName?.length == 2) {
-      final oldValue = (log.cabinetRoomName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetRoomName!.firstOrNull!;
-      final newValue = (log.cabinetRoomName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.cabinetRoomName!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (log.cabinetRoomName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetRoomName!.firstOrNull!;
+      final newValue = (log.cabinetRoomName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : log.cabinetRoomName!.lastOrNull!;
+      result +=
+          '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
     }
 
     return result;
@@ -274,11 +318,17 @@ class DialogItemHistoryWidgetController extends GetxController {
     String result = '';
 
     if (log.categoryName?.length == 1) {
-      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.firstOrNull!;
       result += oldValue;
     } else if (log.categoryName?.length == 2) {
-      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.firstOrNull!;
-      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : log.categoryName!.lastOrNull!;
+      final oldValue = (log.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.firstOrNull!;
+      final newValue = (log.categoryName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : log.categoryName!.lastOrNull!;
       final str = EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
       result += str;
     }

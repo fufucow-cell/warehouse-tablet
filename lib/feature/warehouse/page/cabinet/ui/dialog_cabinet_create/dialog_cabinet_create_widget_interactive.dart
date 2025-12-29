@@ -7,7 +7,8 @@ enum EnumDialogCabinetCreateWidgetInteractive {
 }
 
 /// DialogCabinetCreateWidget 用户事件处理扩展
-extension DialogCabinetCreateWidgetUserEventExtension on DialogCabinetCreateWidgetController {
+extension DialogCabinetCreateWidgetUserEventExtension
+    on DialogCabinetCreateWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogCabinetCreateWidgetInteractive type, {

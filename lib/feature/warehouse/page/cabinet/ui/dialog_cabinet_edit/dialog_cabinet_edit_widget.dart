@@ -1,7 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/actions.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
@@ -10,24 +11,25 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
+import 'package:super_sliver_list/super_sliver_list.dart';
 
 class DialogCabinetEditWidget extends StatelessWidget {
-  final Future<bool> Function(DialogCabinetEditOutputModel) onConfirm;
-  final Cabinet cabinet;
+  final Future<bool> Function(List<DialogCabinetEditOutputModel>) onConfirm;
+  final WarehouseNameIdModel room;
 
   const DialogCabinetEditWidget({
     super.key,
     required this.onConfirm,
-    required this.cabinet,
+    required this.room,
   });
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<DialogCabinetEditWidgetController>(
-      init: DialogCabinetEditWidgetController(cabinet),
+      init: DialogCabinetEditWidgetController(room),
       builder: (controller) {
         return DialogFrame(
           width: 720.0.scale,
@@ -41,33 +43,50 @@ class DialogCabinetEditWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCabinetEditWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
                 onConfirm: () async {
                   final outputModel = await controller.checkOutputModel();
 
-                  if (outputModel == null) {
+                  if (outputModel?.isEmpty ?? true) {
                     return;
                   }
 
-                  controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                    data: true,
+                  final isConfirmDelete = await controller.showDeleteHint();
+
+                  if (!isConfirmDelete) {
+                    return;
+                  }
+
+                  unawaited(
+                    controller.interactive(
+                      EnumDialogCabinetEditWidgetInteractive
+                          .tapDialogConfirmButton,
+                      data: true,
+                    ),
                   );
-                  final isSuccess = await onConfirm(outputModel);
+
+                  final isSuccess = await onConfirm(outputModel!);
 
                   if (isSuccess) {
-                    controller.interactive(
-                      EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                      data: context,
+                    unawaited(
+                      controller.interactive(
+                        EnumDialogCabinetEditWidgetInteractive
+                            .tapDialogConfirmButton,
+                        data: context,
+                      ),
                     );
                   }
 
-                  controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                    data: false,
+                  unawaited(
+                    controller.interactive(
+                      EnumDialogCabinetEditWidgetInteractive
+                          .tapDialogConfirmButton,
+                      data: false,
+                    ),
                   );
                 },
               );
@@ -85,23 +104,59 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _CurrentField(),
+        SizedBox(height: 24.0.scale),
+        _CabinetListField(),
+      ],
+    );
+  }
+}
+
+class _CurrentField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogCabinetEditWidgetController>();
+    return DialogSectionWidget(
+      title: '房間名稱',
+      child: WidgetUtil.textField(
+        controller: TextEditingController(text: controller.getRoom.name),
+        isReadOnly: true,
+      ),
+    );
+  }
+}
+
+class _CabinetListField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     final controller = Get.find<DialogCabinetEditWidgetController>();
     return Obx(
       () {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const _NameField(),
-            SizedBox(height: 24.0.scale),
-            _RoomField(
-              selectedValue: controller.selectedRoomIdRx.value != null
-                  ? controller.getRoomNameList().firstWhereOrNull(
-                        (name) => controller.getRoomIdByName(name) == controller.selectedRoomIdRx.value,
-                      )
-                  : null,
-              visibleValues: controller.getRoomNameList(),
-              onValueSelected: (str) => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapRoomButton, data: str),
-              onDelete: () => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapDeleteRoomButton),
+        final editModels = controller.editModelsRx.value;
+        if (editModels.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        return CustomScrollView(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          slivers: [
+            SuperSliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final model = editModels[index];
+                  return Column(
+                    children: [
+                      _CabinetField(editModel: model),
+                      if (index < editModels.length - 1)
+                        SizedBox(height: 12.0.scale),
+                    ],
+                  );
+                },
+                childCount: editModels.length,
+              ),
             ),
           ],
         );
@@ -110,62 +165,132 @@ class _Body extends StatelessWidget {
   }
 }
 
-class _NameField extends StatelessWidget {
-  const _NameField();
+class _CabinetField extends StatelessWidget {
+  final EditModel editModel;
 
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<DialogCabinetEditWidgetController>();
-    return DialogSectionWidget(
-      isRequired: true,
-      title: EnumLocale.createCabinetName.tr,
-      child: WidgetUtil.textField(
-        controller: controller.nameController,
-        maxLength: 100,
-      ),
-    );
-  }
-}
-
-class _RoomField extends StatelessWidget {
-  final String? selectedValue;
-  final List<String> visibleValues;
-  final Function(String?) onValueSelected;
-  final VoidCallback onDelete;
-
-  const _RoomField({
-    required this.selectedValue,
-    required this.visibleValues,
-    required this.onValueSelected,
-    required this.onDelete,
+  const _CabinetField({
+    required this.editModel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    final controller = Get.find<DialogCabinetEditWidgetController>();
+    final isExpanded = editModel.isExpanded;
+    final isDelete = editModel.isDelete;
+    return Column(
       children: [
-        Expanded(
-          child: DialogSectionWidget(
-            isRequired: true,
-            title: EnumLocale.createCabinetRoom.tr,
-            child: WidgetUtil.textDropdownButton(
-              selectedValue: selectedValue,
-              values: visibleValues,
-              buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
-              menuMaxHeight: 290.0.scale,
-              onValueSelected: onValueSelected,
+        Row(
+          children: [
+            Expanded(
+              child: DialogSectionWidget(
+                title: editModel.oldCabinet.name ?? '',
+                isRequired: true,
+                child: WidgetUtil.textField(
+                  textColor: isDelete ? EnumColor.textSecondary.color : null,
+                  isReadOnly: isDelete,
+                  controller: isDelete
+                      ? TextEditingController(text: '即將刪除此櫃位')
+                      : editModel.textController,
+                ),
+              ),
+            ),
+            SizedBox(width: 12.0.scale),
+            _ActionTool(editModel: editModel),
+          ],
+        ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          child: isExpanded
+              ? Column(
+                  children: [
+                    SizedBox(height: 12.0.scale),
+                    DialogSectionWidget(
+                      title: '移至新房間',
+                      child: WidgetUtil.textDropdownButton(
+                        selectedValue: editModel.newRoom?.name,
+                        values: controller.getRoomNameList(
+                            isExcludeOldRoomName: true),
+                        onValueSelected: (value) => controller.interactive(
+                          EnumDialogCabinetEditWidgetInteractive.tapRoomButton,
+                          data: ChangeRoomModel(
+                              editModel: editModel, newRoomName: value),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : const SizedBox.shrink(),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionTool extends StatelessWidget {
+  final EditModel editModel;
+
+  const _ActionTool({
+    required this.editModel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogCabinetEditWidgetController>();
+    final isExpanded = editModel.isExpanded;
+    final isDelete = editModel.isDelete;
+    return Row(
+      children: [
+        _ActionButton(
+          eImage: isExpanded ? EnumImage.cArrowUp2 : EnumImage.cArrowDown2,
+          onTap: () => controller.interactive(
+              EnumDialogCabinetEditWidgetInteractive.tapExpandButton,
+              data: editModel),
+        ),
+        SizedBox(width: 12.0.scale),
+        _ActionButton(
+          eImage: isDelete ? EnumImage.cRecover : EnumImage.cTrash3,
+          onTap: () => controller.interactive(
+              EnumDialogCabinetEditWidgetInteractive.tapDeleteButton,
+              data: editModel),
+        ),
+      ],
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final EnumImage eImage;
+  final VoidCallback onTap;
+
+  const _ActionButton({
+    required this.eImage,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 50.0.scale),
+      child: Material(
+        color: EnumColor.backgroundPrimary.color,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20.0.scale),
+          child: Ink(
+            child: Container(
+              padding: EdgeInsets.all(
+                15.0.scale,
+              ),
+              width: 70.0.scale,
+              height: 70.0.scale,
+              child: eImage.image(
+                color: EnumColor.iconSecondary.color,
+              ),
             ),
           ),
         ),
-        if (selectedValue != null && selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
-          SizedBox(width: 12.0.scale),
-          ActionButton(
-            eImage: EnumImage.cTrash3,
-            onTap: onDelete,
-          ),
-        ],
-      ],
+      ),
     );
   }
 }

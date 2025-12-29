@@ -6,7 +6,8 @@ enum EnumDialogItemCreateWidgetRoute {
   tapDialogFooterButton,
 }
 
-extension DialogItemCreateWidgetRouteExtension on DialogItemCreateWidgetController {
+extension DialogItemCreateWidgetRouteExtension
+    on DialogItemCreateWidgetController {
   void _routerHandle(
     EnumDialogItemCreateWidgetRoute type,
     dynamic data,

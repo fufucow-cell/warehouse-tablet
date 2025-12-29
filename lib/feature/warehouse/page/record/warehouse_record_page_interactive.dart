@@ -4,7 +4,8 @@ enum EnumWarehouseRecordPageInteractive {
   tapFilterButton,
 }
 
-extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController {
+extension WarehouseRecordPageUserEventExtension
+    on WarehouseRecordPageController {
   void interactive(EnumWarehouseRecordPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseRecordPageInteractive.tapFilterButton:

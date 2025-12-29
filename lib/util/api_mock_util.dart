@@ -62,8 +62,7 @@ class ApiMockUtil {
     RequestInterceptorHandler handler,
     EnumApiInfo apiInfo,
   ) async {
-    final isApiEmptyResponse =
-        options.extra[ApiEmptyResponse.name] as bool? ?? false;
+    final isApiEmptyResponse = options.extra[ApiEmptyResponse.name] as bool? ?? false;
 
     if (isApiEmptyResponse) {
       final successResponse = Response<dynamic>(
@@ -120,7 +119,6 @@ class ApiMockUtil {
     if (cleanPath == EnumApiInfo.homeFetch.path ||
         cleanPath == EnumApiInfo.itemFetch.path ||
         cleanPath == EnumApiInfo.categoryFetch.path ||
-        cleanPath == EnumApiInfo.cabinetFetch.path ||
         cleanPath == EnumApiInfo.logFetch.path) {
       baseFileName = '${baseFileName}_$methodName';
     }

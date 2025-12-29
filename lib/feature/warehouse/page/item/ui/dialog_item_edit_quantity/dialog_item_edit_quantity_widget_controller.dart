@@ -14,7 +14,8 @@ part 'dialog_item_edit_quantity_widget_route.dart';
 class DialogItemEditQuantityWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogItemEditQuantityWidgetModel _model = DialogItemEditQuantityWidgetModel();
+  final DialogItemEditQuantityWidgetModel _model =
+      DialogItemEditQuantityWidgetModel();
   final _service = WarehouseService.instance;
   String get getItemName => _model.combineItem?.name ?? '';
   String get getOldQuantity => (_model.combineItem?.quantity ?? 0).toString();
@@ -23,7 +24,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   List<ItemPositionModel> get getNewPositions => _model.newPositions.value;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<int> get newQuantityRx => _model.newQuantity.readonly;
-  RxReadonly<List<ItemPositionModel>> get newPositionsRx => _model.newPositions.readonly;
+  RxReadonly<List<ItemPositionModel>> get newPositionsRx =>
+      _model.newPositions.readonly;
   final List<TextEditingController> quantityControllers = [];
 
   // MARK: - Init
@@ -35,13 +37,15 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogItemEditQuantityWidgetController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogItemEditQuantityWidgetController] onInit - $hashCode');
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogItemEditQuantityWidgetController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug,
+        '[DialogItemEditQuantityWidgetController] onClose - $hashCode');
     super.onClose();
     for (var controller in quantityControllers) {
       controller.dispose();
@@ -56,11 +60,15 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     final cabinetCount = _flattenAllCabinets().length;
     final model = ItemPositionModel(
       roomId: '',
-      roomName: roomCount > 0 ? EnumLocale.optionPleaseSelectRoom.tr : EnumLocale.optionNoData.tr,
+      roomName: roomCount > 0
+          ? EnumLocale.optionPleaseSelectRoom.tr
+          : EnumLocale.optionNoData.tr,
       cabinets: [
         ItemPositionCabinetModel(
           id: '',
-          name: cabinetCount > 0 ? EnumLocale.optionPleaseSelectCabinet.tr : EnumLocale.optionNoData.tr,
+          name: cabinetCount > 0
+              ? EnumLocale.optionPleaseSelectCabinet.tr
+              : EnumLocale.optionNoData.tr,
           quantity: 1,
         ),
       ],
@@ -89,7 +97,9 @@ class DialogItemEditQuantityWidgetController extends GetxController {
           cabinets: [
             ItemPositionCabinetModel(
               id: '',
-              name: cabinetCount > 0 ? EnumLocale.optionPleaseSelectCabinet.tr : EnumLocale.optionNoData.tr,
+              name: cabinetCount > 0
+                  ? EnumLocale.optionPleaseSelectCabinet.tr
+                  : EnumLocale.optionNoData.tr,
               quantity: 1,
             ),
           ],
@@ -125,10 +135,12 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     }
   }
 
-  void updateNewPositionQuantity(int positionIndex, int cabinetIndex, int quantity) {
+  void updateNewPositionQuantity(
+      int positionIndex, int cabinetIndex, int quantity) {
     final newList = List<ItemPositionModel>.from(_model.newPositions.value);
 
-    if (positionIndex < newList.length && cabinetIndex < newList[positionIndex].cabinets.length) {
+    if (positionIndex < newList.length &&
+        cabinetIndex < newList[positionIndex].cabinets.length) {
       final position = newList[positionIndex];
       final cabinets = List<ItemPositionCabinetModel>.from(position.cabinets);
       cabinets[cabinetIndex] = ItemPositionCabinetModel(
@@ -145,10 +157,12 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     }
   }
 
-  void updateOldPositionQuantity(int positionIndex, int cabinetIndex, int quantity) {
+  void updateOldPositionQuantity(
+      int positionIndex, int cabinetIndex, int quantity) {
     final oldList = List<ItemPositionModel>.from(_model.oldPositions ?? []);
 
-    if (positionIndex < oldList.length && cabinetIndex < oldList[positionIndex].cabinets.length) {
+    if (positionIndex < oldList.length &&
+        cabinetIndex < oldList[positionIndex].cabinets.length) {
       final position = oldList[positionIndex];
       final cabinets = List<ItemPositionCabinetModel>.from(position.cabinets);
       cabinets[cabinetIndex] = ItemPositionCabinetModel(
@@ -167,7 +181,10 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
   // 取得所有房間名稱
   List<String> getRoomNameList() {
-    return _service.rooms.map((room) => room.name ?? '').where((name) => name.isNotEmpty).toList();
+    return _service.rooms
+        .map((room) => room.name ?? '')
+        .where((name) => name.isNotEmpty)
+        .toList();
   }
 
   // 比對房間
@@ -177,31 +194,42 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
   // 比對櫃位
   WarehouseNameIdModel? getCabinetByName(String? cabinetName) {
-    final cabinet = _flattenAllCabinets().firstWhereOrNull((cabinet) => cabinet.name == cabinetName);
+    final cabinet = _flattenAllCabinets()
+        .firstWhereOrNull((cabinet) => cabinet.name == cabinetName);
     if (cabinet == null) return null;
     return WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '');
   }
 
   // 取得可顯示的櫃位名稱
   List<String> getVisibleCabinetNameList(String? roomName) {
-    final matchRoom = _service.rooms.firstWhereOrNull((room) => room.name == roomName);
-    return getCabinetsForRoom(matchRoom).map((cabinet) => cabinet.name ?? '').where((name) => name.isNotEmpty).toList();
+    final matchRoom =
+        _service.rooms.firstWhereOrNull((room) => room.name == roomName);
+    return getCabinetsForRoom(matchRoom)
+        .map((cabinet) => cabinet.name ?? '')
+        .where((name) => name.isNotEmpty)
+        .toList();
   }
 
   // 扁平化所有櫥櫃
   List<Cabinet> _flattenAllCabinets() {
-    return _service.getAllRoomCabinetItems.expand<Cabinet>((room) => room.cabinets ?? []).toList();
+    return _service.getAllRoomCabinetItems
+        .expand<Cabinet>((room) => room.cabinets ?? [])
+        .toList();
   }
 
   List<WarehouseNameIdModel> getCabinetsForRoom(WarehouseNameIdModel? room) {
     if (room == null) {
-      return _flattenAllCabinets().map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? '')).toList();
+      return _flattenAllCabinets()
+          .map((cabinet) => WarehouseNameIdModel(
+              id: cabinet.id ?? '', name: cabinet.name ?? ''))
+          .toList();
     }
 
     return _service.getAllRoomCabinetItems
             .firstWhereOrNull((e) => e.roomId == room.id)
             ?.cabinets
-            ?.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? ''))
+            ?.map((cabinet) => WarehouseNameIdModel(
+                id: cabinet.id ?? '', name: cabinet.name ?? ''))
             .toList() ??
         [];
   }
@@ -254,8 +282,12 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
   List<DialogItemEditQuantityOutputModel> checkOutputData() {
     final outputData = <DialogItemEditQuantityOutputModel>[];
-    final oldCabinets = getOldPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
-    final newCabinets = getNewPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
+    final oldCabinets = getOldPositions
+        .expand<ItemPositionCabinetModel>((position) => position.cabinets)
+        .toList();
+    final newCabinets = getNewPositions
+        .expand<ItemPositionCabinetModel>((position) => position.cabinets)
+        .toList();
 
     for (var cabinet in [...oldCabinets, ...newCabinets]) {
       if (cabinet.id.isNotEmpty) {
@@ -274,7 +306,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   // MARK: - Private Methods
 
   void _loadData() {
-    final item = _service.getAllCombineItems.firstWhereOrNull((item) => item.id == _model.itemId);
+    final item = _service.getAllCombineItems
+        .firstWhereOrNull((item) => item.id == _model.itemId);
 
     if (item == null) {
       return;
@@ -289,7 +322,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
     final displayList = getOldDisplayPositionList;
     for (var i = 0; i < displayList.length; i++) {
-      final controller = TextEditingController(text: displayList[i].quantity.toString());
+      final controller =
+          TextEditingController(text: displayList[i].quantity.toString());
       quantityControllers.add(controller);
       _listen(controller);
     }

@@ -4,7 +4,8 @@ enum EnumDialogCategoryEditWidgetRoute {
   closeDialog,
 }
 
-extension DialogCategoryEditWidgetRouteExtension on DialogCategoryEditWidgetController {
+extension DialogCategoryEditWidgetRouteExtension
+    on DialogCategoryEditWidgetController {
   void _routerHandle(
     EnumDialogCategoryEditWidgetRoute type,
     dynamic data,
