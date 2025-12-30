@@ -124,16 +124,20 @@ class _InfoRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          width: 112.0.scale,
-          child: WidgetUtil.textWidget(
-            label,
-            size: 28.0.scale,
-            color: EnumColor.textSecondary.color,
+        Flexible(
+          flex: 2,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minWidth: 112.0.scale),
+            child: WidgetUtil.textWidget(
+              label,
+              size: 28.0.scale,
+              color: EnumColor.textSecondary.color,
+            ),
           ),
         ),
         SizedBox(width: 24.0.scale),
         Expanded(
+          flex: 3,
           child: WidgetUtil.textWidget(
             value,
             size: 28.0.scale,
@@ -256,29 +260,22 @@ class _RecordButton extends StatelessWidget {
         ),
         SizedBox(width: 24.0.scale),
         Material(
-          color: EnumColor.backgroundPrimary.color,
-          borderRadius: BorderRadius.circular(20.0.scale),
-          child: Ink(
-            decoration: BoxDecoration(
-              color: EnumColor.backgroundDropdown.color,
-              borderRadius: BorderRadius.circular(20.0.scale),
-            ),
-            child: InkWell(
-              onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
-              child: Row(
-                children: [
-                  EnumImage.cHistory.image(
-                    size: Size.square(40.0.scale),
-                    color: EnumColor.textLink.color,
-                  ),
-                  SizedBox(width: 10.0.scale),
-                  WidgetUtil.textWidget(
-                    EnumLocale.warehouseItemClickToViewRecord.tr,
-                    size: 28.0.scale,
-                    color: EnumColor.textLink.color,
-                  ),
-                ],
-              ),
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
+            child: Row(
+              children: [
+                EnumImage.cHistory.image(
+                  size: Size.square(40.0.scale),
+                  color: EnumColor.textLink.color,
+                ),
+                SizedBox(width: 10.0.scale),
+                WidgetUtil.textWidget(
+                  EnumLocale.warehouseItemClickToViewRecord.tr,
+                  size: 28.0.scale,
+                  color: EnumColor.textLink.color,
+                ),
+              ],
             ),
           ),
         ),
