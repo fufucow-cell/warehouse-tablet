@@ -169,6 +169,30 @@ class WidgetUtil {
     double? menuMaxHeight,
     VoidCallback? onMenuOpened,
   }) {
+    return _TextDropdownButtonAuto(
+      selectedValue: selectedValue,
+      values: values,
+      onValueSelected: onValueSelected,
+      width: width,
+      height: height,
+      fontSize: fontSize,
+      buttonTextColor: buttonTextColor,
+      menuMaxHeight: menuMaxHeight,
+      onMenuOpened: onMenuOpened,
+    );
+  }
+
+  static Widget popupMenuButtonInDialog({
+    String? selectedValue,
+    required List<String> values,
+    required Function(String?) onValueSelected,
+    double? width,
+    double? height,
+    double? fontSize,
+    Color? buttonTextColor,
+    double? menuMaxHeight,
+    VoidCallback? onMenuOpened,
+  }) {
     return _TextDropdownButton(
       selectedValue: selectedValue,
       values: values,
@@ -179,6 +203,28 @@ class WidgetUtil {
       buttonTextColor: buttonTextColor,
       menuMaxHeight: menuMaxHeight,
       onMenuOpened: onMenuOpened,
+    );
+  }
+
+  static Widget popupMenuButtonInPage({
+    required String? selectedValue,
+    required List<String> values,
+    required Function(String?) onSelected,
+    required double width,
+    required double height,
+    double? fontSize,
+    Color? buttonTextColor,
+    VoidCallback? onOpened,
+  }) {
+    return _PopupMenuButtonWidget(
+      selectedValue: selectedValue,
+      values: values,
+      onSelected: onSelected,
+      width: width,
+      height: height,
+      fontSize: fontSize,
+      buttonTextColor: buttonTextColor,
+      onOpened: onOpened,
     );
   }
 
@@ -465,5 +511,190 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
         );
       },
     );
+  }
+}
+
+class _PopupMenuButtonWidget extends StatefulWidget {
+  final String? selectedValue;
+  final List<String> values;
+  final Function(String?) onSelected;
+  final double width;
+  final double height;
+  final double? fontSize;
+  final Color? buttonTextColor;
+  final VoidCallback? onOpened;
+
+  const _PopupMenuButtonWidget({
+    required this.selectedValue,
+    required this.values,
+    required this.onSelected,
+    required this.width,
+    required this.height,
+    this.buttonTextColor,
+    this.fontSize,
+    this.onOpened,
+  });
+
+  @override
+  State<_PopupMenuButtonWidget> createState() => _PopupMenuButtonWidgetState();
+}
+
+class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
+  bool _isMenuOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final textSize = widget.fontSize ?? 32.0.scale;
+
+    return PopupMenuButton<String?>(
+      offset: Offset(0, widget.height + 10.0.scale),
+      constraints: BoxConstraints(
+        minWidth: widget.width,
+        maxWidth: widget.width,
+      ),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          width: 1.0.scale,
+          color: EnumColor.lineProduct.color,
+        ),
+        borderRadius: BorderRadius.circular(16.0.scale),
+      ),
+      color: EnumColor.backgroundPrimary.color,
+      padding: EdgeInsets.all(16.0.scale),
+      onOpened: () {
+        setState(() {
+          _isMenuOpen = true;
+        });
+        widget.onOpened?.call();
+      },
+      onCanceled: () {
+        setState(() {
+          _isMenuOpen = false;
+        });
+      },
+      onSelected: (value) {
+        setState(() {
+          _isMenuOpen = false;
+        });
+        if (value != null) {
+          widget.onSelected(value);
+        }
+      },
+      itemBuilder: (context) => widget.values.map((value) {
+        final isSelected = widget.selectedValue == value;
+        return PopupMenuItem<String?>(
+          value: value,
+          child: Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+              borderRadius: BorderRadius.circular(12.0.scale),
+            ),
+            padding: EdgeInsets.all(16.0.scale),
+            child: WidgetUtil.textWidget(
+              value,
+              size: textSize,
+              color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+            ),
+          ),
+        );
+      }).toList(),
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        padding: EdgeInsets.symmetric(horizontal: 32.0.scale),
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: EnumColor.backgroundPrimary.color,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1.0.scale,
+              color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
+            ),
+            borderRadius: BorderRadius.circular(16.0.scale),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: WidgetUtil.textWidget(
+                widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
+                size: textSize,
+                color: widget.buttonTextColor ?? EnumColor.textPrimary.color,
+              ),
+            ),
+            SizedBox(width: 16.0.scale),
+            EnumImage.cArrowDown.image(
+              size: Size.square(38.0.scale),
+              color: EnumColor.iconSecondary.color,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TextDropdownButtonAuto extends StatelessWidget {
+  final String? selectedValue;
+  final List<String> values;
+  final Function(String?) onValueSelected;
+  final double? width;
+  final double? height;
+  final double? fontSize;
+  final Color? buttonTextColor;
+  final double? menuMaxHeight;
+  final VoidCallback? onMenuOpened;
+
+  const _TextDropdownButtonAuto({
+    required this.selectedValue,
+    required this.values,
+    required this.onValueSelected,
+    this.width,
+    this.height,
+    this.fontSize,
+    this.buttonTextColor,
+    this.menuMaxHeight,
+    this.onMenuOpened,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    // 检测是否在弹窗中
+    final isInDialog = context.findAncestorWidgetOfExactType<Dialog>() != null ||
+        context.findAncestorWidgetOfExactType<AlertDialog>() != null ||
+        context.findAncestorWidgetOfExactType<SimpleDialog>() != null;
+
+    if (isInDialog) {
+      // 在弹窗中，使用 popupMenuButtonInDialog
+      return WidgetUtil.popupMenuButtonInDialog(
+        selectedValue: selectedValue,
+        values: values,
+        onValueSelected: onValueSelected,
+        width: width,
+        height: height,
+        fontSize: fontSize,
+        buttonTextColor: buttonTextColor,
+        menuMaxHeight: menuMaxHeight,
+        onMenuOpened: onMenuOpened,
+      );
+    } else {
+      // 在页面中，使用 popupMenuButtonInPage
+      final btnWidth = width ?? 280.0.scale;
+      final btnHeight = height ?? 70.0.scale;
+      return WidgetUtil.popupMenuButtonInPage(
+        selectedValue: selectedValue,
+        values: values,
+        onSelected: onValueSelected,
+        width: btnWidth,
+        height: btnHeight,
+        fontSize: fontSize,
+        buttonTextColor: buttonTextColor,
+        onOpened: onMenuOpened,
+      );
+    }
   }
 }

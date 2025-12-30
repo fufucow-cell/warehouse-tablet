@@ -2,10 +2,10 @@ part of 'warehouse_record_page_controller.dart';
 
 enum EnumWarehouseRecordPageInteractive {
   tapFilterButton,
+  tapRefreshButton,
 }
 
-extension WarehouseRecordPageUserEventExtension
-    on WarehouseRecordPageController {
+extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController {
   void interactive(EnumWarehouseRecordPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseRecordPageInteractive.tapFilterButton:
@@ -22,6 +22,8 @@ extension WarehouseRecordPageUserEventExtension
         }
 
         _model.isShowFilterMenu.value = !_model.isShowFilterMenu.value;
+      case EnumWarehouseRecordPageInteractive.tapRefreshButton:
+        _queryApiData();
     }
   }
 }

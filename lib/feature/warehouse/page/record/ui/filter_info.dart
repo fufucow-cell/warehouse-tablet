@@ -54,39 +54,49 @@ class _FilterDropdown extends StatelessWidget {
 class _RefreshButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 24.0.scale,
-        vertical: 11.0.scale,
-      ),
-      clipBehavior: Clip.antiAlias,
-      decoration: ShapeDecoration(
-        color: EnumColor.backgroundPrimary.color,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1.0.scale,
-            color: EnumColor.accentBlue.color,
+    final controller = Get.find<WarehouseRecordPageController>();
+    return Material(
+      color: EnumColor.backgroundDropdown.color,
+      borderRadius: BorderRadius.circular(16.0.scale),
+      child: InkWell(
+        onTap: () {
+          controller.interactive(EnumWarehouseRecordPageInteractive.tapRefreshButton);
+        },
+        borderRadius: BorderRadius.circular(16.0.scale),
+        child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.0.scale,
+            vertical: 11.0.scale,
           ),
-          borderRadius: BorderRadius.circular(16.0.scale),
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1.0.scale,
+                color: EnumColor.accentBlue.color,
+              ),
+              borderRadius: BorderRadius.circular(16.0.scale),
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              EnumImage.cRefresh.image(
+                size: Size.square(48.0.scale),
+                color: EnumColor.accentBlue.color,
+              ),
+              SizedBox(width: 10.0.scale),
+              WidgetUtil.textWidget(
+                EnumLocale.warehouseRefresh.tr,
+                size: 32.0.scale,
+                color: EnumColor.accentBlue.color,
+                align: TextAlign.center,
+              ),
+            ],
+          ),
         ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          EnumImage.cRefresh.image(
-            size: Size.square(48.0.scale),
-            color: EnumColor.accentBlue.color,
-          ),
-          SizedBox(width: 10.0.scale),
-          WidgetUtil.textWidget(
-            EnumLocale.warehouseRefresh.tr,
-            size: 32.0.scale,
-            color: EnumColor.accentBlue.color,
-            align: TextAlign.center,
-          ),
-        ],
       ),
     );
   }

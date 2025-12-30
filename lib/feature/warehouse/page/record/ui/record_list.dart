@@ -19,16 +19,11 @@ class RecordList extends StatelessWidget {
           () {
             final logs = controller.visibleLogsRx.value;
             final isLoading = controller.allLogsRx.value == null;
-            final isEmpty = controller.allLogsRx.value?.isEmpty ?? true;
 
             if (isLoading) {
               return const _RecordHeaderShimmer();
-            } else if (isEmpty) {
+            } else if (logs.isEmpty) {
               return WidgetUtil.emptyWidget();
-            }
-
-            if (logs.isEmpty) {
-              return const SizedBox.shrink();
             }
 
             return Column(
