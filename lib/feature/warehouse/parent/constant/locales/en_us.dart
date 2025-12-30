@@ -34,8 +34,7 @@ const Map<String, String> enUS = {
   'deviceCameraNotAvailable': 'Camera not available',
   'deviceGalleryFailed': 'Failed to open gallery',
   'deviceUnsupported': 'Unsupported Device',
-  'deviceUnsupportedMessage':
-      'This application only supports mobile and tablet devices',
+  'deviceUnsupportedMessage': 'This application only supports mobile and tablet devices',
 
   // Warehouse
   'warehouseTitle': 'Warehouse',
@@ -73,8 +72,7 @@ const Map<String, String> enUS = {
   'warehouseRefresh': 'Refresh',
   'warehouseSubCategoryCount': 'Subcategory Count',
   'warehouseCategoryCount': 'Category Count',
-  'warehouseCategoryTotalCount':
-      'Level 1 Categories: @para1, Level 2 Categories: @para2, Level 3 Categories: @para3',
+  'warehouseCategoryTotalCount': 'Level 1 Categories: @para1, Level 2 Categories: @para2, Level 3 Categories: @para3',
   'warehouseAlarm': 'Alarm',
   'warehouseAlarmProductPhoto': 'Product Photo',
   'warehouseAlarmProductName': 'Product Name',
@@ -117,7 +115,7 @@ const Map<String, String> enUS = {
   'searchNameHintItem': 'Enter item name',
   'searchNameHintCabinet': 'Enter cabinet name',
   'searchNameHintCategory': 'Enter category name',
-  'searchItemNameOrDescriptionHint': 'Search by name or description',
+  'searchItemNameOrDescriptionHint': 'name or description',
   'searchCategory': 'Category',
   'searchCategoryLevel2': 'Category (Level 2)',
   'searchCategoryLevel3': 'Category (Level 3)',
@@ -144,29 +142,22 @@ const Map<String, String> enUS = {
   'createCabinetTitle': 'Add Cabinet',
   'createCabinetRoom': 'Room',
   'editCabinetTitle': 'Edit Cabinet',
-  'editCabinetDeleteMultipleMessage':
-      'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
+  'editCabinetDeleteMultipleMessage': 'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
   'editCabinetMoveToNewRoom': 'Move to New Room',
   'editCabinetRoomName': 'Room Name',
   'editCabinetWillDelete': 'This cabinet will be deleted',
   'deleteCabinetTitle': 'Delete Cabinet',
-  'deleteCabinetMessageNoItems':
-      'Are you sure you want to delete the cabinet "@para1"?\nThis action cannot be undone.',
-  'deleteCabinetMessageWithItems':
-      'Are you sure you want to delete the cabinet "@para1" and all its items?\nThis action cannot be undone.',
+  'deleteCabinetMessageNoItems': 'Are you sure you want to delete the cabinet "@para1"?\nThis action cannot be undone.',
+  'deleteCabinetMessageWithItems': 'Are you sure you want to delete the cabinet "@para1" and all its items?\nThis action cannot be undone.',
   'createCategoryTitle': 'Add Category',
   'createCategoryCurrentCategory': 'Current Category: @para1',
   'deleteCategoryTitle': 'Delete Category',
-  'deleteCategoryMessageNoChildren':
-      'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
-  'deleteCategoryMessageWithChildren':
-      'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
+  'deleteCategoryMessageNoChildren': 'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
+  'deleteCategoryMessageWithChildren': 'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
   'editCategoryTitle': 'Edit Category',
   'editCategoryNoSubcategory': 'This category currently has no subcategories',
-  'editCategoryHasLevel1Subcategory':
-      'This category currently has level 1 subcategories',
-  'editCategoryHasLevel2Subcategory':
-      'This category currently has level 2 subcategories',
+  'editCategoryHasLevel1Subcategory': 'This category currently has level 1 subcategories',
+  'editCategoryHasLevel2Subcategory': 'This category currently has level 2 subcategories',
   'editCategoryMaxLevelReached': 'Maximum level reached',
   'createItemName': 'Item Name',
   'createItemNameHint': 'Enter item name',
@@ -178,13 +169,11 @@ const Map<String, String> enUS = {
   'createCategoryNameLevel3': 'Level 3 New Name',
   'createCategoryNameHint': 'Enter new name',
   'createCategoryParentLabel': 'Category Option',
-  'createCategoryParentQuestion':
-      'Please confirm which category level to place the category?',
+  'createCategoryParentQuestion': 'Please confirm which category level to place the category?',
   'createCategorySelected': 'Existing category selected',
   'createCategorySelectLevel1First': 'Please select Level 1 first',
   'createCategorySelectLevel2First': 'Please select Level 2 first',
-  'createCategorySelectNewToCreate':
-      'Please select "New Category" to create a new category',
+  'createCategorySelectNewToCreate': 'Please select "New Category" to create a new category',
   'createCategoryInputLevel1Name': 'Please enter Level 1 new name',
   'createCategoryInputLevel2Name': 'Please enter Level 2 new name',
   'createCategoryInputLevel3Name': 'Please enter Level 3 new name',
@@ -321,8 +310,7 @@ const Map<String, String> enUS = {
   'warehouseUnnamed': 'Unnamed',
   'warehouseUndescribed': 'Undescribed',
   'warehouseUncategorized': 'Uncategorized',
-  'warehouseItemTotalQuantityChange':
-      'Item @para1: Total quantity from @para2 -> @para3',
+  'warehouseItemTotalQuantityChange': 'Item @para1: Total quantity from @para2 -> @para3',
   'warehouseCabinetQuantityChange': '@para1: Quantity from @para2 -> @para3',
   'warehouseMoveFromTo': 'Move from @para1 to @para2, Move quantity: @para3',
   'warehouseMoveQuantity': 'Move Quantity',
@@ -332,6 +320,8 @@ const Map<String, String> enUS = {
   'warehousePhotoUpdate': 'Photo update',
   'warehousePhotoAdd': 'Photo add',
   'warehousePhotoDelete': 'Photo delete',
+  'warehousePhotoReadFailed': 'Photo read failed, please upload again',
+  'warehousePhotoTapToUpload': 'Tap to upload photo',
   'warehouseMinStockUpdate': 'Min stock update: @para1 -> @para2',
   'warehouseRoomUpdate': 'Room update: @para1 -> @para2',
   'warehouseUnbound': 'Unbound',

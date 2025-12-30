@@ -81,7 +81,7 @@ class _RoomCard extends StatelessWidget {
         bottom: 32.0.scale,
       ),
       decoration: BoxDecoration(
-        color: EnumColor.backgroundPrimary.color,
+        color: EnumColor.backgroundDropdown.color,
         borderRadius: BorderRadius.circular(32.0.scale),
         boxShadow: [
           BoxShadow(
@@ -132,7 +132,7 @@ class _RoomTitleInfo extends StatelessWidget {
           ),
         ),
         Material(
-          color: EnumColor.backgroundPrimary.color,
+          color: EnumColor.backgroundDropdown.color,
           borderRadius: BorderRadius.circular(20.0.scale),
           child: InkWell(
             onTap: () {
@@ -149,7 +149,7 @@ class _RoomTitleInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0.scale),
               ),
-              child: EnumImage.cEditNormal.image(size: Size.square(32.0.scale)),
+              child: EnumImage.cEditNormal.image(size: Size.square(32.0.scale), color: EnumColor.iconSecondary.color),
             ),
           ),
         ),

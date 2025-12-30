@@ -144,8 +144,8 @@ class _ExpandButton extends StatelessWidget {
             width: 40.0.scale,
             height: 40.0.scale,
             child: isExpanded
-                ? EnumImage.cArrowUp.image(color: EnumColor.textSecondary.color)
-                : EnumImage.cArrowDown.image(color: EnumColor.textSecondary.color),
+                ? EnumImage.cArrowUp.image(color: EnumColor.iconSecondary.color)
+                : EnumImage.cArrowDown.image(color: EnumColor.iconSecondary.color),
           ),
         ],
       ),

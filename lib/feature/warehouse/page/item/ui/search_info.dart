@@ -53,6 +53,7 @@ class SearchInfo extends StatelessWidget {
               children: [
                 EnumImage.cTrash.image(
                   size: Size.square(48.0.scale),
+                  color: EnumColor.accentBlue.color,
                 ),
                 SizedBox(width: 10.0.scale),
                 WidgetUtil.textWidget(

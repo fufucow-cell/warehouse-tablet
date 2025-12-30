@@ -47,7 +47,7 @@ class ActionsWidget extends StatelessWidget {
         Visibility(
           visible: hasChildren,
           child: ActionButton(
-            eImage: isExpanded ? EnumImage.cArrowUp : EnumImage.cArrowDown,
+            eImage: isExpanded ? EnumImage.cArrowUp2 : EnumImage.cArrowDown2,
             onTap: () {
               controller.interactive(
                 EnumWarehouseCategoryPageInteractive.tapExpandCategory,
@@ -73,9 +73,7 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = (eImage == EnumImage.cArrowUp)
-        ? EnumColor.backgroundProduct.color
-        : EnumColor.backgroundSecondary.color;
+    final backgroundColor = (eImage == EnumImage.cArrowUp2) ? EnumColor.backgroundProduct.color : EnumColor.backgroundSecondary.color;
 
     return Material(
       color: backgroundColor,
@@ -93,7 +91,7 @@ class ActionButton extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0.scale),
           ),
-          child: eImage.image(size: Size.square(40.0.scale)),
+          child: eImage.image(size: Size.square(40.0.scale), color: EnumColor.iconSecondary.color),
         ),
       ),
     );

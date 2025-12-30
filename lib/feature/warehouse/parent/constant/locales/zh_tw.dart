@@ -320,6 +320,8 @@ const Map<String, String> zhTW = {
   'warehousePhotoUpdate': '照片更新',
   'warehousePhotoAdd': '照片新增',
   'warehousePhotoDelete': '照片刪除',
+  'warehousePhotoReadFailed': '照片讀取失敗，請重新上傳',
+  'warehousePhotoTapToUpload': '點選上傳照片',
   'warehouseMinStockUpdate': '低庫存數量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '房間更新: @para1 -> @para2',
   'warehouseUnbound': '未綁定',

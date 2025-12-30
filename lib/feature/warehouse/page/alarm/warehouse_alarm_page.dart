@@ -165,26 +165,11 @@ class _CellWidget extends StatelessWidget {
             children: [
               Expanded(
                 flex: controller.columnRatio[0],
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(7.0.scale),
-                  child: Container(
-                    width: 114.0.scale,
-                    height: 80.0.scale,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(7.0.scale),
-                      color: Colors.grey[300],
-                    ),
-                    child: Image.network(
-                      item.photo.toString(),
-                      width: 114.0.scale,
-                      height: 80.0.scale,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) => WidgetUtil.emptyImage(
-                        width: 114.0.scale,
-                        height: 80.0.scale,
-                      ),
-                    ),
-                  ),
+                child: WidgetUtil.networkImage(
+                  url: item.photo.toString(),
+                  width: 114.0.scale,
+                  height: 100.0.scale,
+                  fit: BoxFit.cover,
                 ),
               ),
               SizedBox(width: 44.0.scale),
@@ -269,7 +254,7 @@ class _CellWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0.scale),
           ),
         ),
-        child: eImg.image(),
+        child: eImg.image(color: EnumColor.iconSecondary.color),
       ),
     );
   }

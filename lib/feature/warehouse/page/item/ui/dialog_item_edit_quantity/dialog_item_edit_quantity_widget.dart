@@ -13,8 +13,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 import 'package:get/get.dart';
 
 class DialogItemEditQuantityWidget extends StatelessWidget {
-  final Future<bool> Function(List<DialogItemEditQuantityOutputModel>)
-      onConfirm;
+  final Future<bool> Function(List<DialogItemEditQuantityOutputModel>) onConfirm;
   final String itemId;
 
   const DialogItemEditQuantityWidget({
@@ -30,7 +29,7 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
       builder: (controller) {
         return DialogFrame(
           width: 1168.0.scale,
-          header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
+          header: DialogHeader(title: EnumLocale.warehouseTagTypeUpdateQuantity.tr),
           footer: Obx(
             () {
               return DialogFooter(
@@ -38,23 +37,20 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
                 type: DialogFooterType.cancelAndConfirm,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
                 onConfirm: () async {
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final outputData = controller.checkOutputData();
 
                   if (outputData.isEmpty) {
                     controller.interactive(
-                      EnumDialogItemEditQuantityWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
                       data: false,
                     );
                     return;
@@ -64,15 +60,13 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogItemEditQuantityWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -219,8 +213,7 @@ class _PositionInfo extends StatelessWidget {
               onPressed: () {
                 if (isEnabled) {
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapAddNewPostion,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapAddNewPostion,
                   );
                 }
               },
@@ -287,7 +280,7 @@ class _PositionCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(32.0.scale),
       decoration: BoxDecoration(
-        color: EnumColor.backgroundPrimary.color,
+        color: EnumColor.backgroundDropdown.color,
         borderRadius: BorderRadius.circular(20.0.scale),
         boxShadow: [
           BoxShadow(
@@ -310,8 +303,7 @@ class _PositionCard extends StatelessWidget {
               textController = controller.quantityControllers[index];
             }
           } else {
-            final newIndex =
-                index + controller.getOldDisplayPositionList.length;
+            final newIndex = index + controller.getOldDisplayPositionList.length;
             if (newIndex < controller.quantityControllers.length) {
               textController = controller.quantityControllers[newIndex];
             }
@@ -422,8 +414,7 @@ class _NewPositionItem extends StatelessWidget {
     }
 
     final roomNames = controller.getRoomNameList();
-    final visibleCabinetNames =
-        controller.getVisibleCabinetNameList(displayModel?.roomName);
+    final visibleCabinetNames = controller.getVisibleCabinetNameList(displayModel?.roomName);
 
     return SizedBox(
       width: double.infinity,
@@ -441,8 +432,7 @@ class _NewPositionItem extends StatelessWidget {
                 final room = controller.getRoomByName(str);
                 if (str != null && room != null) {
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapUpdateNewPositionRoom,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionRoom,
                     data: UpdatePositionModel(
                       index: index,
                       position: room,
@@ -465,8 +455,7 @@ class _NewPositionItem extends StatelessWidget {
                 final cabinet = controller.getCabinetByName(str);
                 if (str != null && cabinet != null) {
                   controller.interactive(
-                    EnumDialogItemEditQuantityWidgetInteractive
-                        .tapUpdateNewPositionCabinet,
+                    EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionCabinet,
                     data: UpdatePositionModel(
                       index: index,
                       position: cabinet,
@@ -524,31 +513,29 @@ class _QuantityButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemEditQuantityWidgetController>();
-    return Container(
-      width: 70.0.scale,
-      height: 70.0.scale,
-      padding: EdgeInsets.all(15.0.scale),
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1.0.scale,
-          color: EnumColor.lineBorder.color,
-        ),
+    return Material(
+      color: EnumColor.backgroundDropdown.color,
+      child: InkWell(
+        onTap: () {
+          controller.interactive(
+            (eImage == EnumImage.cPlus)
+                ? EnumDialogItemEditQuantityWidgetInteractive.tapIncrementQuantity
+                : EnumDialogItemEditQuantityWidgetInteractive.tapDecrementQuantity,
+            data: textController,
+          );
+        },
         borderRadius: BorderRadius.circular(16.0.scale),
-      ),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            controller.interactive(
-              (eImage == EnumImage.cPlus)
-                  ? EnumDialogItemEditQuantityWidgetInteractive
-                      .tapIncrementQuantity
-                  : EnumDialogItemEditQuantityWidgetInteractive
-                      .tapDecrementQuantity,
-              data: textController,
-            );
-          },
-          borderRadius: BorderRadius.circular(16.0.scale),
+        child: Container(
+          width: 70.0.scale,
+          height: 70.0.scale,
+          padding: EdgeInsets.all(15.0.scale),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0.scale,
+              color: EnumColor.lineBorder.color,
+            ),
+            borderRadius: BorderRadius.circular(16.0.scale),
+          ),
           child: eImage.image(
             size: Size.square(40.0.scale),
             color: EnumColor.iconSecondary.color,

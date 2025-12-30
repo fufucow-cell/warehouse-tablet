@@ -106,7 +106,7 @@ class WidgetUtil {
           ),
       height: height ?? 70.0.scale,
       decoration: BoxDecoration(
-        color: isReadOnly ? EnumColor.backgroundSecondary.color : EnumColor.backgroundPrimary.color,
+        color: isReadOnly ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
         border: Border.all(
           width: 1.0.scale,
           color: EnumColor.lineBorder.color,
@@ -200,15 +200,6 @@ class WidgetUtil {
     );
   }
 
-  static Widget emptyImage({
-    double? width = double.infinity,
-    double? height = double.infinity,
-  }) {
-    return EnumImage.cEmptyPhoto.image(
-      size: Size(width ?? double.infinity, height ?? double.infinity),
-    );
-  }
-
   static Widget networkImage({
     required String url,
     double? width,
@@ -238,31 +229,29 @@ class WidgetUtil {
         );
       },
       errorBuilder: (context, error, stackTrace) => emptyImage(
-        width: width ?? loadingSize,
-        height: height ?? loadingSize,
+        width: width,
+        height: height,
       ),
     );
 
-    // 如果只设置了 height，使用 ConstrainedBox 限制高度，宽度自适应
-    if (height != null && width == null) {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: height,
-          minHeight: height,
+    return ClipRRect(borderRadius: BorderRadius.circular(20.0.scale), child: imageWidget);
+  }
+
+  static Widget emptyImage({
+    double? width,
+    double? height,
+  }) {
+    return Container(
+      width: width ?? double.infinity,
+      height: height ?? double.infinity,
+      color: EnumColor.backgroundSecondary.color,
+      child: Center(
+        child: EnumImage.cEmptyPhoto.image(
+          size: Size.square(40.0.scale),
+          color: EnumColor.iconSecondary.color,
         ),
-        child: imageWidget,
-      );
-    } else if (width != null && height == null) {
-      return ConstrainedBox(
-        constraints: BoxConstraints(
-          maxWidth: width,
-          minWidth: width,
-        ),
-        child: imageWidget,
-      );
-    } else {
-      return imageWidget;
-    }
+      ),
+    );
   }
 
   static Widget emptyWidget({double width = double.infinity, double height = double.infinity}) {
@@ -442,7 +431,7 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
             ),
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: widget.values.isEmpty ? EnumColor.backgroundSecondary.color : EnumColor.backgroundPrimary.color,
+              color: widget.values.isEmpty ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.0.scale,
@@ -466,6 +455,7 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
                 SizedBox(width: 16.0.scale),
                 EnumImage.cArrowDown.image(
                   size: Size.square(38.0.scale),
+                  color: EnumColor.iconSecondary.color,
                 ),
               ],
             ),

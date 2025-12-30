@@ -325,6 +325,8 @@ const Map<String, String> jaJP = {
   'warehousePhotoUpdate': '写真更新',
   'warehousePhotoAdd': '写真追加',
   'warehousePhotoDelete': '写真削除',
+  'warehousePhotoReadFailed': '写真の読み込みに失敗しました。再度アップロードしてください',
+  'warehousePhotoTapToUpload': '写真をアップロード',
   'warehouseMinStockUpdate': '最低在庫数量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '部屋更新: @para1 -> @para2',
   'warehouseUnbound': '未バインド',

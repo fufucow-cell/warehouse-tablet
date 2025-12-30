@@ -137,7 +137,7 @@ const Map<String, ColorData> colorDataMap = {
   ),
   'lineProduct': ColorData(
     light: Color(0xFFFB9B51),
-    dark: Color(0xFFDCDCDC),
+    dark: Color(0xFFFDB874),
   ),
   'iconPrimary': ColorData(
     light: Color(0xFF292929),

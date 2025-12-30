@@ -14,8 +14,7 @@ import 'package:get/get.dart';
 
 class DialogItemEditPositionWidget extends StatelessWidget {
   final String itemId;
-  final Future<bool> Function(List<DialogItemEditPositionOutputModel>)
-      onConfirm;
+  final Future<bool> Function(List<DialogItemEditPositionOutputModel>) onConfirm;
 
   const DialogItemEditPositionWidget({
     super.key,
@@ -38,23 +37,20 @@ class DialogItemEditPositionWidget extends StatelessWidget {
                 type: DialogFooterType.cancelAndConfirm,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
                 onConfirm: () async {
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final outputData = controller.checkOutputData();
 
                   if (outputData.isEmpty) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
                       data: false,
                     );
                     return;
@@ -64,15 +60,13 @@ class DialogItemEditPositionWidget extends StatelessWidget {
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -98,9 +92,12 @@ class _Body extends StatelessWidget {
         SizedBox(height: 24.0.scale),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: positions
-              .map((position) => _PositionEditCard(model: position))
-              .toList(),
+          children: [
+            for (int i = 0; i < positions.length; i++) ...[
+              _PositionEditCard(model: positions[i]),
+              if (i < positions.length - 1) SizedBox(height: 32.0.scale),
+            ],
+          ],
         ),
       ],
     );
@@ -186,7 +183,7 @@ class _PositionEditCard extends StatelessWidget {
       width: 1056.0.scale,
       padding: EdgeInsets.all(32.0.scale),
       decoration: BoxDecoration(
-        color: EnumColor.backgroundPrimary.color,
+        color: EnumColor.backgroundDropdown.color,
         borderRadius: BorderRadius.circular(20.0.scale),
         boxShadow: [
           BoxShadow(
@@ -309,15 +306,14 @@ class _QuantityButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemEditPositionWidgetController>();
     return Material(
-      color: Colors.transparent,
+      color: EnumColor.backgroundDropdown.color,
+      borderRadius: BorderRadius.circular(16.0.scale),
       child: InkWell(
         onTap: () {
           controller.interactive(
             (eImage == EnumImage.cPlus)
-                ? EnumDialogItemEditPositionWidgetInteractive
-                    .tapIncrementQuantity
-                : EnumDialogItemEditPositionWidgetInteractive
-                    .tapDecrementQuantity,
+                ? EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity
+                : EnumDialogItemEditPositionWidgetInteractive.tapDecrementQuantity,
             data: textController,
           );
         },
@@ -391,8 +387,7 @@ class _DropdownSection extends StatelessWidget {
                   final cabinet = controller.getCabinetByName(str);
                   if (cabinet != null) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive
-                          .tapUpdateCabinet,
+                      EnumDialogItemEditPositionWidgetInteractive.tapUpdateCabinet,
                       data: UpdatePositionModel(
                         index: model.index,
                         position: cabinet,

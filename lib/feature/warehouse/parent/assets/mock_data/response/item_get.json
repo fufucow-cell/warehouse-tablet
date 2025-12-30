@@ -12,7 +12,7 @@
           "quantity": 14,
           "items": [
             {
-              "id": "110e8400-e29b-41d4-a716-446655440010",
+              "id": "1cf29b46-ce04-4fd7-a5a4-d18ee197d0a7",
               "name": "iPhone 15 Pro",
               "description": "蘋果最新智慧型手機，256GB 儲存空間",
               "quantity": 1,
@@ -447,15 +447,39 @@
     },
     {
       "room_id": "2",
-      "quantity": 9,
+      "quantity": 10,
       "cabinets": [
         {
           "id": "9e568d0b-8692-4821-a382-01cbaf776314",
           "name": "衣櫃",
-          "quantity": 9,
+          "quantity": 10,
           "items": [
             {
-              "id": "e08b826e-8414-4e78-b565-c9b78ebbfe04",
+              "id": "1cf29b46-ce04-4fd7-a5a4-d18ee197d0a7",
+              "name": "iPhone 15 Pro",
+              "description": "蘋果最新智慧型手機，256GB 儲存空間",
+              "quantity": 1,
+              "min_stock_alert": 2,
+              "photo": null,
+              "category": {
+                "id": "330e8400-e29b-41d4-a716-446655440030",
+                "name": "電子產品",
+                "parent_id": null,
+                "children": {
+                  "id": "330e8400-e29b-41d4-a716-446655440040",
+                  "name": "手機",
+                  "parent_id": "330e8400-e29b-41d4-a716-446655440030",
+                  "children": {
+                    "id": "330e8400-e29b-41d4-a716-446655440050",
+                    "name": "iPhone",
+                    "parent_id": "330e8400-e29b-41d4-a716-446655440040",
+                    "children": null
+                  }
+                }
+              }
+            },
+            {
+              "id": "1cf29b46-ce04-4fd7-a5a4-d18ee197d0a7",
               "name": "iPhone 15 Pro",
               "description": "蘋果最新智慧型手機，256GB 儲存空間",
               "quantity": 3,

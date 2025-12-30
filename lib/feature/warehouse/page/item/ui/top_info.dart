@@ -27,23 +27,23 @@ class TopInfo extends StatelessWidget {
             childAspectRatio: 393 / 112,
             children: [
               TopInfoItem(
-                icon: EnumImage.cItem.image(),
+                eImage: EnumImage.cItem,
                 title: EnumLocale.warehouseItemTotal.tr,
                 count: '${controller.getTotalItemCount()}',
                 isLoading: isLoading,
               ),
               TopInfoItem(
-                icon: EnumImage.cMember.image(),
+                eImage: EnumImage.cMember,
                 title: EnumLocale.warehouseItemCategory.tr,
                 count: '${controller.getTotalCategoryCount()}',
               ),
               TopInfoItem(
-                icon: EnumImage.cRoom.image(),
+                eImage: EnumImage.cRoom,
                 title: EnumLocale.warehouseItemRoom.tr,
                 count: '${controller.getfilterRuleForRooms.length - 1}',
               ),
               TopInfoItem(
-                icon: EnumImage.cStockItem.image(),
+                eImage: EnumImage.cStockItem,
                 title: EnumLocale.warehouseItemLowStock.tr,
                 count: '${controller.getTotalLowStockCount}',
                 isLoading: isLoading,
@@ -57,14 +57,14 @@ class TopInfo extends StatelessWidget {
 }
 
 class TopInfoItem extends StatelessWidget {
-  final Widget icon;
+  final EnumImage eImage;
   final String title;
   final String count;
   final bool isLoading;
 
   const TopInfoItem({
     super.key,
-    required this.icon,
+    required this.eImage,
     required this.title,
     required this.count,
     this.isLoading = false,
@@ -84,7 +84,7 @@ class TopInfoItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 32.0.scale),
-            SizedBox(width: 64.0.scale, height: 64.0.scale, child: icon),
+            SizedBox(width: 64.0.scale, height: 64.0.scale, child: eImage.image()),
             SizedBox(width: 32.0.scale),
             WidgetUtil.textWidget(
               title,

@@ -321,6 +321,8 @@ const Map<String, String> zhCN = {
   'warehousePhotoUpdate': '照片更新',
   'warehousePhotoAdd': '照片新增',
   'warehousePhotoDelete': '照片删除',
+  'warehousePhotoReadFailed': '照片读取失败，请重新上传',
+  'warehousePhotoTapToUpload': '点击上传照片',
   'warehouseMinStockUpdate': '低库存数量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '房间更新: @para1 -> @para2',
   'warehouseUnbound': '未绑定',

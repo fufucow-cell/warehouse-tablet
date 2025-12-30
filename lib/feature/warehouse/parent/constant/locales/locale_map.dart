@@ -252,6 +252,8 @@ enum EnumLocale {
   warehousePhotoAdd,
   warehousePhotoDelete,
   warehousePhotoLabel,
+  warehousePhotoReadFailed,
+  warehousePhotoTapToUpload,
   warehousePhotoUpdate,
   warehouseQuantityChange,
   warehouseQuantityLabel,

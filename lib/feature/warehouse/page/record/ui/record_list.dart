@@ -215,22 +215,13 @@ class _RecordItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 64.0.scale,
-                      height: 64.0.scale,
-                      decoration: ShapeDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(controller.avatarUrl),
-                          fit: BoxFit.cover,
-                        ),
-                        color: log.itemPhoto == null ||
-                                (log.itemPhoto != null && log.itemPhoto!.isEmpty) ||
-                                (log.itemPhoto != null && log.itemPhoto!.isNotEmpty && (log.itemPhoto![0].isEmpty))
-                            ? EnumColor.backgroundSecondary.color
-                            : null,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100.0.scale),
-                        ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(32.0.scale),
+                      child: WidgetUtil.networkImage(
+                        url: controller.avatarUrl,
+                        width: 64.0.scale,
+                        height: 64.0.scale,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     SizedBox(width: 24.0.scale),

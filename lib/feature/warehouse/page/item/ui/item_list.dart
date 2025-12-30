@@ -70,7 +70,7 @@ class _ItemCard extends StatelessWidget {
         padding: EdgeInsets.all(24.0.scale),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(32.0.scale),
-          color: EnumColor.backgroundPrimary.color,
+          color: EnumColor.backgroundDropdown.color,
           boxShadow: [
             BoxShadow(
               color: EnumColor.shadowCard.color,
@@ -109,14 +109,11 @@ class _ItemPhotoWidget extends StatelessWidget {
       height: 335.0.scale,
       child: Stack(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(28.0.scale),
-            child: WidgetUtil.networkImage(
-              url: item.photo?.toString() ?? '',
-              width: double.infinity,
-              height: photoHeight,
-              fit: BoxFit.cover,
-            ),
+          WidgetUtil.networkImage(
+            url: item.photo?.toString() ?? '',
+            width: double.infinity,
+            height: photoHeight,
+            fit: BoxFit.cover,
           ),
           // leftTopWarningTagWidget
           if (hasWarning)

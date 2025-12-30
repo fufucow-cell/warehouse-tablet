@@ -50,14 +50,11 @@ class _PhotoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemInfoWidgetController>();
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(30.0.scale),
-      child: WidgetUtil.networkImage(
-        url: controller.getPhoto,
-        width: 320.0.scale,
-        height: 225.0.scale,
-        fit: BoxFit.cover,
-      ),
+    return WidgetUtil.networkImage(
+      url: controller.getPhoto,
+      width: 320.0.scale,
+      height: 225.0.scale,
+      fit: BoxFit.cover,
     );
   }
 }
@@ -263,7 +260,7 @@ class _RecordButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0.scale),
           child: Ink(
             decoration: BoxDecoration(
-              color: EnumColor.backgroundPrimary.color,
+              color: EnumColor.backgroundDropdown.color,
               borderRadius: BorderRadius.circular(20.0.scale),
             ),
             child: InkWell(

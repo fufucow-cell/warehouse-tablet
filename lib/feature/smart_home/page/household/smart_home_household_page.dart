@@ -65,8 +65,7 @@ class _HouseholdContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // 家庭切换下拉菜单
-              if (controller.householdList != null &&
-                  controller.householdList!.length > 1)
+              if (controller.householdList != null && controller.householdList!.length > 1)
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
@@ -83,10 +82,7 @@ class _HouseholdContent extends StatelessWidget {
                             children: [
                               Text(
                                 EnumLocale.smartHomeSwitchHousehold.tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
+                                style: Theme.of(context).textTheme.labelMedium?.copyWith(
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.onSurfaceVariant,
@@ -94,19 +90,15 @@ class _HouseholdContent extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               GetBuilder<SmartHomeHouseholdPageController>(
-                                builder: (controller) =>
-                                    DropdownButton<Household>(
+                                builder: (controller) => DropdownButton<Household>(
                                   value: controller.currentHousehold,
                                   isExpanded: true,
                                   underline: Container(),
-                                  items: controller.householdList!
-                                      .map((household) {
+                                  items: controller.householdList!.map((household) {
                                     return DropdownMenuItem<Household>(
                                       value: household,
                                       child: Text(
-                                        household.homeName ??
-                                            EnumLocale
-                                                .smartHomeUnnamedHousehold.tr,
+                                        household.homeName ?? EnumLocale.smartHomeUnnamedHousehold.tr,
                                         style: Theme.of(
                                           context,
                                         ).textTheme.titleMedium,
@@ -118,8 +110,7 @@ class _HouseholdContent extends StatelessWidget {
                                   ) {
                                     if (newHousehold != null) {
                                       controller.interactive(
-                                        EnumSmartHomeHouseholdPageInteractive
-                                            .tapHomeItem,
+                                        EnumSmartHomeHouseholdPageInteractive.tapHomeItem,
                                         data: newHousehold,
                                       );
                                     }
@@ -133,9 +124,7 @@ class _HouseholdContent extends StatelessWidget {
                     ),
                   ),
                 ),
-              if (controller.householdList != null &&
-                  controller.householdList!.length > 1)
-                const SizedBox(height: 16),
+              if (controller.householdList != null && controller.householdList!.length > 1) const SizedBox(height: 16),
               // 家庭名称
               Text(
                 '${EnumLocale.smartHomeHouseholdName.tr}: ${householdData.homeName ?? EnumLocale.smartHomeUnnamed.tr}',
@@ -143,8 +132,7 @@ class _HouseholdContent extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               // 房间列表
-              if (householdData.rooms != null &&
-                  householdData.rooms!.isNotEmpty)
+              if (householdData.rooms != null && householdData.rooms!.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -161,8 +149,7 @@ class _HouseholdContent extends StatelessWidget {
                         child: Card(
                           child: ListTile(
                             title: Text(
-                              room.roomName ??
-                                  EnumLocale.smartHomeUnnamedRoom.tr,
+                              room.roomName ?? EnumLocale.smartHomeUnnamedRoom.tr,
                             ),
                           ),
                         ),
@@ -219,8 +206,7 @@ class _EmptyHouseholdContent extends StatelessWidget {
             const SizedBox(height: 24),
             // 建立家庭按钮
             ElevatedButton(
-              onPressed:
-                  controller.isLoading ? null : () => controller.createHome(),
+              onPressed: controller.isLoading ? null : () => controller.createHome(),
               child: controller.isLoading
                   ? const SizedBox(
                       width: 20,

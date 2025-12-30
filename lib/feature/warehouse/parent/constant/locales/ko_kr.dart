@@ -325,6 +325,8 @@ const Map<String, String> koKR = {
   'warehousePhotoUpdate': '사진 업데이트',
   'warehousePhotoAdd': '사진 추가',
   'warehousePhotoDelete': '사진 삭제',
+  'warehousePhotoReadFailed': '사진 읽기 실패, 다시 업로드해주세요',
+  'warehousePhotoTapToUpload': '사진 업로드',
   'warehouseMinStockUpdate': '최소 재고 수량 업데이트: @para1 -> @para2',
   'warehouseRoomUpdate': '방 업데이트: @para1 -> @para2',
   'warehouseUnbound': '바인딩되지 않음',

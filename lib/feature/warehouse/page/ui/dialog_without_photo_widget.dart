@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dashed_border_container.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -32,10 +33,10 @@ class DialogWithoutPhotoWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              EnumImage.cPhoto.image(size: Size.square(40.0.scale)),
+              EnumImage.cPhoto.image(size: Size.square(40.0.scale), color: EnumColor.iconSecondary.color),
               SizedBox(height: 16.0.scale),
               WidgetUtil.textWidget(
-                isError ? '照片讀取失敗，請重新上傳' : '點選上傳照片',
+                isError ? EnumLocale.warehousePhotoReadFailed.tr : EnumLocale.warehousePhotoTapToUpload.tr,
                 size: 22.0.scale,
                 color: EnumColor.textSecondary.color,
               ),
