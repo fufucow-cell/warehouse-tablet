@@ -31,8 +31,6 @@ class DialogItemNormalEditWidget extends StatelessWidget {
       builder: (controller) {
         return Obx(
           () {
-            final isLoading = controller.isLoadingRx.value;
-
             return DialogFrame(
               width: 962.0.scale,
               minHeight: 1024.0.scale,

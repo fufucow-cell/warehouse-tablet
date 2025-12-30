@@ -11,8 +11,7 @@ class SmartHomeService {
   final _model = SmartHomeServiceModel();
   UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
   HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
-  Map<String, HomeHouseholdResponseModel> get allHouseholdDataMap =>
-      _model.allHouseholdDataMap;
+  Map<String, HomeHouseholdResponseModel> get allHouseholdDataMap => _model.allHouseholdDataMap;
 
   // MARK: - Init
 
@@ -50,7 +49,9 @@ class SmartHomeService {
 
   // 根據 householdId 獲取已保存的家庭數據
   HomeHouseholdResponseModel? getHouseholdDataById(String? householdId) {
-    if (householdId == null) return null;
+    if (householdId == null) {
+      return null;
+    }
     return _model.allHouseholdDataMap[householdId];
   }
 }

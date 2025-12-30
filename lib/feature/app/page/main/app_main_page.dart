@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_constant.dart';
@@ -98,17 +100,13 @@ class _TabListWidget extends StatelessWidget {
             selected: isSelected,
             leading: Icon(
               item.icon,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurface,
+              color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               item.title,
               style: TextStyle(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface,
+                color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
               ),
             ),
             onTap: () => controller.interactive(

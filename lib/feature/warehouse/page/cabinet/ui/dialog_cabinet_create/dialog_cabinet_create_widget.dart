@@ -27,8 +27,7 @@ class DialogCabinetCreateWidget extends StatelessWidget {
         return DialogFrame(
           width: 720.0.scale,
           minHeight: 346.0.scale,
-          header:
-              DialogHeader(title: EnumLocale.warehouseTagTypeCreateCabinet.tr),
+          header: DialogHeader(title: EnumLocale.warehouseTagTypeCreateCabinet.tr),
           footer: Obx(
             () {
               final isLoading = controller.isLoadingRx.value;
@@ -37,8 +36,7 @@ class DialogCabinetCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -50,23 +48,20 @@ class DialogCabinetCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCabinetCreateWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -97,8 +92,9 @@ class _Body extends StatelessWidget {
               selectedValue: controller.selectedRoomRx.value?.name,
               visibleValues: controller.getRoomNameList(),
               onValueSelected: (str) => controller.interactive(
-                  EnumDialogCabinetCreateWidgetInteractive.tapRoomButton,
-                  data: str),
+                EnumDialogCabinetCreateWidgetInteractive.tapRoomButton,
+                data: str,
+              ),
             ),
           ],
         );
@@ -142,8 +138,7 @@ class _RoomField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor:
-            selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
       ),

@@ -55,7 +55,7 @@ enum EnumColor {
     final result = <Color>[];
 
     for (var num = 1; num <= 100; num++) {
-      final colorData = colorDataMap['${key}$num'];
+      final colorData = colorDataMap['$key$num'];
 
       if (colorData == null) {
         break;
@@ -76,10 +76,7 @@ enum EnumColor {
     return switch (themeUtil.currentTheme) {
       EnumThemeMode.light => data.light,
       EnumThemeMode.dark => data.dark,
-      EnumThemeMode.system =>
-        themeUtil.getThemeFromSystem == EnumThemeMode.light
-            ? data.light
-            : data.dark,
+      EnumThemeMode.system => themeUtil.getThemeFromSystem == EnumThemeMode.light ? data.light : data.dark,
     };
   }
 }

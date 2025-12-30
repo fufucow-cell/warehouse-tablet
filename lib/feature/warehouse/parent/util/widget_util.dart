@@ -328,7 +328,9 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
 
       // 重新获取 button 的位置和大小（如果有键盘，键盘消失后位置会变化）
       final RenderBox? renderBox = _buttonKey.currentContext?.findRenderObject() as RenderBox?;
-      if (renderBox == null) return;
+      if (renderBox == null) {
+        return;
+      }
 
       final size = renderBox.size;
       final offset = renderBox.localToGlobal(Offset.zero);

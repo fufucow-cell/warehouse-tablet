@@ -14,8 +14,7 @@ part 'dialog_category_create_widget_route.dart';
 class DialogCategoryCreateWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCategoryCreateWidgetModel _model =
-      DialogCategoryCreateWidgetModel();
+  final DialogCategoryCreateWidgetModel _model = DialogCategoryCreateWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
@@ -28,16 +27,20 @@ class DialogCategoryCreateWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug,
-        '[DialogCategoryCreateWidgetController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogCategoryCreateWidgetController] onInit - $hashCode',
+    );
     _genHintText();
     nameController.addListener(_onNameChanged);
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[DialogCategoryCreateWidgetController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogCategoryCreateWidgetController] onClose - $hashCode',
+    );
     nameController.removeListener(_onNameChanged);
     nameController.dispose();
     super.onClose();
@@ -55,8 +58,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
 
     return DialogCategoryCreateOutputModel(
       name: name,
-      parentId:
-          _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
+      parentId: _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
     );
   }
 
@@ -71,7 +73,8 @@ class DialogCategoryCreateWidgetController extends GetxController {
 
     return _service.getAllCategories
             .firstWhereOrNull(
-                (cat) => cat.id == _model.selectedLevel1.value?.id)
+              (cat) => cat.id == _model.selectedLevel1.value?.id,
+            )
             ?.children
             ?.map((cat) => cat.name ?? '')
             .toList() ??
@@ -89,8 +92,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
   }
 
   Category? _getLevel1CategoryByName(String name) {
-    return _service.getAllCategories
-        .firstWhereOrNull((cat) => cat.name == name);
+    return _service.getAllCategories.firstWhereOrNull((cat) => cat.name == name);
   }
 
   Category? _getLevel2CategoryByName(String name) {
@@ -116,8 +118,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
           : (level1Name != null)
               ? level1Name
               : null;
-      final resultName =
-          (parentName != null) ? '$parentName > $newName' : newName;
+      final resultName = (parentName != null) ? '$parentName > $newName' : newName;
       result = EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
     }
 

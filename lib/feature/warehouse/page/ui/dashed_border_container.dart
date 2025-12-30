@@ -176,7 +176,9 @@ class _DashedBorderPainter extends CustomPainter {
 
   void _drawDashedLine(Canvas canvas, Paint paint, Offset start, Offset end) {
     final distance = (end - start).distance;
-    if (distance <= 0) return;
+    if (distance <= 0) {
+      return;
+    }
 
     final direction = (end - start) / distance;
     final totalDashLength = dashWidth + dashSpace;
@@ -197,11 +199,15 @@ class _DashedBorderPainter extends CustomPainter {
     double sweepAngle,
   ) {
     final radius = rect.width / 2;
-    if (radius <= 0) return;
+    if (radius <= 0) {
+      return;
+    }
 
     // 計算圓角弧線的實際周長（考慮邊框寬度）
     final actualRadius = radius - borderWidth / 2;
-    if (actualRadius <= 0) return;
+    if (actualRadius <= 0) {
+      return;
+    }
 
     final circumference = actualRadius * (sweepAngle.abs());
     final totalDashLength = dashWidth + dashSpace;
@@ -210,19 +216,15 @@ class _DashedBorderPainter extends CustomPainter {
     for (int i = 0; i < dashCount; i++) {
       // 計算當前虛線段的起始角度
       final currentOffset = i * totalDashLength;
-      final angle = startAngle +
-          (currentOffset / actualRadius) * (sweepAngle > 0 ? 1 : -1);
+      final angle = startAngle + (currentOffset / actualRadius) * (sweepAngle > 0 ? 1 : -1);
 
       // 計算剩餘的弧長
       final remainingLength = circumference - currentOffset;
-      final remainingAngle =
-          (remainingLength / actualRadius) * (sweepAngle > 0 ? 1 : -1);
+      final remainingAngle = (remainingLength / actualRadius) * (sweepAngle > 0 ? 1 : -1);
 
       // 計算當前虛線段的角度（不超過剩餘角度）
-      final dashAngle = (sweepAngle > 0 ? 1 : -1) *
-          (remainingAngle.abs() < (dashWidth / actualRadius)
-              ? remainingAngle.abs()
-              : (dashWidth / actualRadius));
+      final dashAngle =
+          (sweepAngle > 0 ? 1 : -1) * (remainingAngle.abs() < (dashWidth / actualRadius) ? remainingAngle.abs() : (dashWidth / actualRadius));
 
       if (dashAngle.abs() > 0.001) {
         final path = Path()..addArc(rect, angle, dashAngle);

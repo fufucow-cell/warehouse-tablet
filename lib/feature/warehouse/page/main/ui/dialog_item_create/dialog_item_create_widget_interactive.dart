@@ -18,8 +18,7 @@ enum EnumDialogItemCreateWidgetInteractive {
 }
 
 /// DialogItemCreateWidget 用户事件处理扩展
-extension DialogItemCreateWidgetUserEventExtension
-    on DialogItemCreateWidgetController {
+extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemCreateWidgetInteractive type, {
@@ -67,14 +66,18 @@ extension DialogItemCreateWidgetUserEventExtension
         }
       case EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton:
         _routerHandle(
-            EnumDialogItemCreateWidgetRoute.tapDialogFooterButton, data);
+          EnumDialogItemCreateWidgetRoute.tapDialogFooterButton,
+          data,
+        );
       case EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
           _setLoadingStatus(false);
           _routerHandle(
-              EnumDialogItemCreateWidgetRoute.tapDialogFooterButton, data);
+            EnumDialogItemCreateWidgetRoute.tapDialogFooterButton,
+            data,
+          );
         }
       default:
         break;

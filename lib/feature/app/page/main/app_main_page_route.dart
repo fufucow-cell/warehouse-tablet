@@ -15,7 +15,7 @@ extension AppMainPageRouteExtension on AppMainPageController {
       case EnumAppMainPageRoute.switchContentPage:
         if (data is EnumAppMainTabItem) {
           final routePath = data.router.path;
-          AppMainRouterUtil.instance.pushReplacementNamed(routePath);
+          unawaited(AppMainRouterUtil.instance.pushReplacementNamed(routePath));
         }
       case EnumAppMainPageRoute.showDialog:
         const CustDialog(
@@ -47,21 +47,8 @@ extension AppMainPageRouteExtension on AppMainPageController {
       );
 
       // 跳转到登录页
-      Get.offAllNamed(EnumRootRouter.login.path);
-    } on BaseApiResponseModel catch (e) {
-      // API 调用失败，仍然清除本地存储并跳转
-      await StorageUtil.remove(
-        EnumStorageKey.accessToken,
-      );
-      await StorageUtil.remove(
-        EnumStorageKey.refreshToken,
-      );
-      await StorageUtil.remove(EnumStorageKey.account);
-      await StorageUtil.remove(
-        EnumStorageKey.isRememberLogin,
-      );
-      Get.offAllNamed(EnumRootRouter.login.path);
-    } catch (e) {
+      unawaited(Get.offAllNamed(EnumRootRouter.login.path));
+    } on Object {
       // 其他错误，仍然清除本地存储并跳转
       await StorageUtil.remove(
         EnumStorageKey.accessToken,
@@ -73,7 +60,7 @@ extension AppMainPageRouteExtension on AppMainPageController {
       await StorageUtil.remove(
         EnumStorageKey.isRememberLogin,
       );
-      Get.offAllNamed(EnumRootRouter.login.path);
+      unawaited(Get.offAllNamed(EnumRootRouter.login.path));
     }
   }
 }

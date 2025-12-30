@@ -26,9 +26,7 @@ abstract class BasePageController extends GetxController {
     bool isCallApiWhenInit = true,
   }) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _model.scrollButtonStatus = needShowBackToTop
-          ? EnumBasePageScrollToTopStatus.hide
-          : EnumBasePageScrollToTopStatus.dontShow;
+      _model.scrollButtonStatus = needShowBackToTop ? EnumBasePageScrollToTopStatus.hide : EnumBasePageScrollToTopStatus.dontShow;
 
       if (needLoadMoreScroll) {
         _addScrollListen();
@@ -84,8 +82,7 @@ abstract class BasePageController extends GetxController {
 
       _configApiStatus(EnumBasePageCallApiStatus.success);
     } on BaseApiResponseModel<dynamic> catch (error) {
-      final isFirstLoad =
-          _model.apiStatus.value == EnumBasePageCallApiStatus.firstCalling;
+      final isFirstLoad = _model.apiStatus.value == EnumBasePageCallApiStatus.firstCalling;
       _configApiStatus(EnumBasePageCallApiStatus.fail);
       unawaited(
         apiProcessFail(
@@ -120,21 +117,17 @@ abstract class BasePageController extends GetxController {
       if (scrollController != null) {
         final sv = scrollController!;
 
-        if (_model.scrollButtonStatus !=
-            EnumBasePageScrollToTopStatus.dontShow) {
-          if (sv.offset > 200 &&
-              _model.scrollButtonStatus != EnumBasePageScrollToTopStatus.show) {
+        if (_model.scrollButtonStatus != EnumBasePageScrollToTopStatus.dontShow) {
+          if (sv.offset > 200 && _model.scrollButtonStatus != EnumBasePageScrollToTopStatus.show) {
             _model.scrollButtonStatus = EnumBasePageScrollToTopStatus.show;
             _model.isShowBackToTop.value = true;
-          } else if (sv.offset <= 200 &&
-              _model.scrollButtonStatus != EnumBasePageScrollToTopStatus.hide) {
+          } else if (sv.offset <= 200 && _model.scrollButtonStatus != EnumBasePageScrollToTopStatus.hide) {
             _model.scrollButtonStatus = EnumBasePageScrollToTopStatus.hide;
             _model.isShowBackToTop.value = false;
           }
         }
 
-        if (sv.position.pixels >= sv.position.maxScrollExtent - 200 &&
-            _model.hasMoreData) {
+        if (sv.position.pixels >= sv.position.maxScrollExtent - 200 && _model.hasMoreData) {
           startApiProcess(isLoadMore: true);
         }
       }
@@ -148,19 +141,16 @@ abstract class BasePageController extends GetxController {
     switch (status) {
       case EnumBasePageCallApiStatus.firstCalling:
       case EnumBasePageCallApiStatus.reloading:
-        // TODO 是否顯示全頁加載頁面
         break;
       default:
-        // TODO 隱藏全頁加載頁面
         apiProcessDone();
     }
   }
 
   void _updateLoadingStatus() {
-    _model.isLoading.value =
-        _model.apiStatus.value == EnumBasePageCallApiStatus.firstCalling ||
-            _model.apiStatus.value == EnumBasePageCallApiStatus.reloading ||
-            _model.apiStatus.value == EnumBasePageCallApiStatus.loadingMore;
+    _model.isLoading.value = _model.apiStatus.value == EnumBasePageCallApiStatus.firstCalling ||
+        _model.apiStatus.value == EnumBasePageCallApiStatus.reloading ||
+        _model.apiStatus.value == EnumBasePageCallApiStatus.loadingMore;
   }
 
   @override

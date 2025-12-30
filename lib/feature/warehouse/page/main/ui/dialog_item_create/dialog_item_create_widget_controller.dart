@@ -23,40 +23,35 @@ class DialogItemCreateWidgetController extends GetxController {
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<int> get quantityRx => _model.quantity.readonly;
   RxReadonly<String?> get filePathRx => _model.filePath.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx =>
-      _model.selectedRoom.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedCabinetRx =>
-      _model.selectedCabinet.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel1Rx =>
-      _model.selectedCategoryLevel1.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel2Rx =>
-      _model.selectedCategoryLevel2.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel3Rx =>
-      _model.selectedCategoryLevel3.readonly;
-  RxReadonly<List<WarehouseNameIdModel>> get visibleCabinetsRx =>
-      _model.visibleCabinets.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel1Rx =>
-      _model.visibleCategoryLevel1.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel2Rx =>
-      _model.visibleCategoryLevel2.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel3Rx =>
-      _model.visibleCategoryLevel3.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx => _model.selectedRoom.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedCabinetRx => _model.selectedCabinet.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel1Rx => _model.selectedCategoryLevel1.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel2Rx => _model.selectedCategoryLevel2.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedCategoryLevel3Rx => _model.selectedCategoryLevel3.readonly;
+  RxReadonly<List<WarehouseNameIdModel>> get visibleCabinetsRx => _model.visibleCabinets.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel1Rx => _model.visibleCategoryLevel1.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel2Rx => _model.visibleCategoryLevel2.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel3Rx => _model.visibleCategoryLevel3.readonly;
 
   // MARK: - Init
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug,
-        '[DialogItemCreateWidgetController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogItemCreateWidgetController] onInit - $hashCode',
+    );
     _genCabinetList();
     _genCategoryLevel1List();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug,
-        '[DialogItemCreateWidgetController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogItemCreateWidgetController] onClose - $hashCode',
+    );
     nameController.dispose();
     descriptionController.dispose();
     quantityController.dispose();
@@ -87,22 +82,24 @@ class DialogItemCreateWidgetController extends GetxController {
       name: nameController.text.trim(),
       quantity: int.tryParse(quantityController.text.trim()) ?? 0,
       minStockAlert: int.tryParse(minStockAlertController.text.trim()) ?? 0,
-      description: descriptionController.text.trim().isEmpty
-          ? null
-          : descriptionController.text.trim(),
+      description: descriptionController.text.trim().isEmpty ? null : descriptionController.text.trim(),
       photo: imgBase64,
       cabinetId: _model.selectedCabinet.value?.id,
-      categoryId: _model.selectedCategoryLevel3.value?.id ??
-          _model.selectedCategoryLevel2.value?.id ??
-          _model.selectedCategoryLevel1.value?.id,
+      categoryId: _model.selectedCategoryLevel3.value?.id ?? _model.selectedCategoryLevel2.value?.id ?? _model.selectedCategoryLevel1.value?.id,
     );
   }
 
   // 轉換文件為圖片
-  Widget? convertFileToImage(String imagePath,
-      {double? fitWidth, double? fitHeight}) {
-    return _service.convertFileToImage(imagePath,
-        fitWidth: fitWidth, fitHeight: fitHeight);
+  Widget? convertFileToImage(
+    String imagePath, {
+    double? fitWidth,
+    double? fitHeight,
+  }) {
+    return _service.convertFileToImage(
+      imagePath,
+      fitWidth: fitWidth,
+      fitHeight: fitHeight,
+    );
   }
 
   // MARK: - Private Method
@@ -142,23 +139,19 @@ class DialogItemCreateWidgetController extends GetxController {
 
   // 扁平化所有櫥櫃
   List<Cabinet> _flattenAllCabinets() {
-    return _service.getAllRoomCabinetItems
-        .expand<Cabinet>((room) => room.cabinets ?? [])
-        .toList();
+    return _service.getAllRoomCabinetItems.expand<Cabinet>((room) => room.cabinets ?? []).toList();
   }
 
   // 選擇房間
   void _changeSelectedRoom(String? roomName) {
-    final room =
-        _service.rooms.firstWhereOrNull((room) => room.name == roomName);
+    final room = _service.rooms.firstWhereOrNull((room) => room.name == roomName);
     _model.selectedRoom.value = room;
     _genCabinetList();
   }
 
   // 選擇櫃位
   void _changeSelectedCabinet(String? cabinetName) {
-    final cabinet = _model.visibleCabinets.value
-        .firstWhereOrNull((cabinet) => cabinet.name == cabinetName);
+    final cabinet = _model.visibleCabinets.value.firstWhereOrNull((cabinet) => cabinet.name == cabinetName);
     _model.selectedCabinet.value = cabinet;
   }
 
@@ -171,13 +164,18 @@ class DialogItemCreateWidgetController extends GetxController {
       cabinets = _flattenAllCabinets();
     } else {
       final room = _service.getAllRoomCabinetItems.firstWhereOrNull(
-          (room) => room.roomId == _model.selectedRoom.value?.id);
+        (room) => room.roomId == _model.selectedRoom.value?.id,
+      );
       cabinets = room?.cabinets ?? [];
     }
 
     _model.visibleCabinets.value = cabinets
-        .map((cabinet) => WarehouseNameIdModel(
-            id: cabinet.id ?? '', name: cabinet.name ?? ''))
+        .map(
+          (cabinet) => WarehouseNameIdModel(
+            id: cabinet.id ?? '',
+            name: cabinet.name ?? '',
+          ),
+        )
         .toList();
   }
 
@@ -194,10 +192,7 @@ class DialogItemCreateWidgetController extends GetxController {
     final level1Id = _model.selectedCategoryLevel1.value?.id;
     _model.selectedCategoryLevel2.value = null;
     _model.selectedCategoryLevel3.value = null;
-    _model.visibleCategoryLevel2.value = _model.visibleCategoryLevel1.value
-            .firstWhereOrNull((cat) => cat.id == level1Id)
-            ?.children ??
-        [];
+    _model.visibleCategoryLevel2.value = _model.visibleCategoryLevel1.value.firstWhereOrNull((cat) => cat.id == level1Id)?.children ?? [];
     _model.visibleCategoryLevel3.value = [];
   }
 
@@ -205,35 +200,23 @@ class DialogItemCreateWidgetController extends GetxController {
   void _genCategoryLevel3List() {
     final level2Id = _model.selectedCategoryLevel2.value?.id;
     _model.selectedCategoryLevel3.value = null;
-    _model.visibleCategoryLevel3.value = _model.visibleCategoryLevel2.value
-            .firstWhereOrNull((cat) => cat.id == level2Id)
-            ?.children ??
-        [];
+    _model.visibleCategoryLevel3.value = _model.visibleCategoryLevel2.value.firstWhereOrNull((cat) => cat.id == level2Id)?.children ?? [];
   }
 
   void _changeSelectedCategoryLevel1(String? categoryName) {
-    final category = _model.visibleCategoryLevel1.value
-        .firstWhereOrNull((cat) => cat.name == categoryName);
-    _model.selectedCategoryLevel1.value = category != null
-        ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '')
-        : null;
+    final category = _model.visibleCategoryLevel1.value.firstWhereOrNull((cat) => cat.name == categoryName);
+    _model.selectedCategoryLevel1.value = category != null ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '') : null;
     _genCategoryLevel2List();
   }
 
   void _changeSelectedCategoryLevel2(String? categoryName) {
-    final category = _model.visibleCategoryLevel2.value
-        .firstWhereOrNull((cat) => cat.name == categoryName);
-    _model.selectedCategoryLevel2.value = category != null
-        ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '')
-        : null;
+    final category = _model.visibleCategoryLevel2.value.firstWhereOrNull((cat) => cat.name == categoryName);
+    _model.selectedCategoryLevel2.value = category != null ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '') : null;
     _genCategoryLevel3List();
   }
 
   void _changeSelectedCategoryLevel3(String? categoryName) {
-    final category = _model.visibleCategoryLevel3.value
-        .firstWhereOrNull((cat) => cat.name == categoryName);
-    _model.selectedCategoryLevel3.value = category != null
-        ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '')
-        : null;
+    final category = _model.visibleCategoryLevel3.value.firstWhereOrNull((cat) => cat.name == categoryName);
+    _model.selectedCategoryLevel3.value = category != null ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '') : null;
   }
 }

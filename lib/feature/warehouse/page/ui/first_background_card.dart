@@ -7,6 +7,7 @@ class FirstBackgroundCard extends StatelessWidget {
   final Widget child;
 
   const FirstBackgroundCard({
+    super.key,
     required this.child,
   });
 
@@ -22,7 +23,10 @@ class FirstBackgroundCard extends StatelessWidget {
         color: EnumColor.backgroundPrimary.color,
         child: Container(
           padding: EdgeInsets.only(
-              left: 32.0.scale, right: 32.0.scale, top: 32.0.scale),
+            left: 32.0.scale,
+            right: 32.0.scale,
+            top: 32.0.scale,
+          ),
           decoration: BoxDecoration(
             image: EnumImage.tBgContent.decorationImage,
           ),

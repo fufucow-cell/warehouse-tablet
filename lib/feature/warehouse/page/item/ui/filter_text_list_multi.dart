@@ -50,7 +50,6 @@ class _FilterItem extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const _FilterItem({
-    super.key,
     required this.title,
     required this.isSelected,
     this.onPressed,

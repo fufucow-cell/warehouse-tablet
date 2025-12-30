@@ -15,14 +15,13 @@ class DeviceUtil extends GetxService {
   // MARK: - Properties
 
   LogUtil get _logService => LogUtil.instance;
-  ThemeUtil get _themeService => ThemeUtil.instance;
+  ThemeUtil get themeService => ThemeUtil.instance;
 
   /// 系統平台判斷
   bool get isIOS => Platform.isIOS;
   bool get isAndroid => Platform.isAndroid;
   bool get isWeb => kIsWeb;
-  bool get isDesktop =>
-      Platform.isMacOS || Platform.isWindows || Platform.isLinux;
+  bool get isDesktop => Platform.isMacOS || Platform.isWindows || Platform.isLinux;
 
   /// 取得設備語言
   Locale? get deviceLocale => Get.deviceLocale;

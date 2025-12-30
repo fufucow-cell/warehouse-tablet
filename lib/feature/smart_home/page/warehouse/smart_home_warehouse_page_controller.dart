@@ -1,10 +1,6 @@
 part of 'smart_home_warehouse_page.dart';
 
 class SmartHomeWarehousePageController extends BasePageController {
-  // Properties
-
-  final _service = LocaleUtil.instance;
-
   // MARK: - Init
 
   SmartHomeWarehousePageController() {

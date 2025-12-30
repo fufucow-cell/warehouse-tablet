@@ -46,7 +46,11 @@ class MajorListWidget extends StatelessWidget {
                       controller.expandedCategoryIdsRx.value;
                       final isExpanded = controller.isCategoryExpanded(category);
                       bool isPreviousExpanded = false;
-                      double topMargin = 0.0.scale;
+
+                      if (index > 0) {
+                        final previousCategory = level1Cats[index - 1];
+                        isPreviousExpanded = controller.isCategoryExpanded(previousCategory);
+                      }
 
                       return Column(
                         children: [
@@ -60,7 +64,7 @@ class MajorListWidget extends StatelessWidget {
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                             margin: EdgeInsets.only(
-                              top: (isExpanded && isPreviousExpanded) ? topMargin : 0.0.scale,
+                              top: (isExpanded && isPreviousExpanded) ? 20.0.scale : 0.0.scale,
                             ),
                             padding: EdgeInsets.only(
                               left: 32.0.scale,
