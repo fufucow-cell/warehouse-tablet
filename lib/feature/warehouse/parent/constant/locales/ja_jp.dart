@@ -40,8 +40,7 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '更新',
   'warehouseSubCategoryCount': 'サブカテゴリ数',
   'warehouseCategoryCount': 'カテゴリ数',
-  'warehouseCategoryTotalCount':
-      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount': '第1階分類: @para1 件, 第2階分類: @para2 件, 第3階分類: @para3 件',
   'warehouseAlarmProductPhoto': '商品写真',
   'warehouseAlarmProductName': '商品名',
   'warehouseAlarmBelowStockLevel': '在庫水位以下',
@@ -69,16 +68,13 @@ const Map<String, String> zhTW = {
 
   // 新增/創建相關
   'editCabinetTitle': 'キャビネット編集',
-  'editCabinetDeleteMultipleMessage':
-      '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
+  'editCabinetDeleteMultipleMessage': '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'editCabinetMoveToNewRoom': '新しい部屋に移動',
   'editCabinetRoomName': '部屋名',
   'editCabinetWillDelete': 'このキャビネットは削除されます',
   'createCategoryCurrentCategory': '現在のカテゴリ: @para1',
-  'deleteCategoryMessageNoChildren':
-      'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
-  'deleteCategoryMessageWithChildren':
-      'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageNoChildren': 'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageWithChildren': 'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
   'editCategoryTitle': 'カテゴリ編集',
   'editCategoryMaxLevelReached': '最大階層数に達しました',
   'createItemName': 'アイテム名',
@@ -150,7 +146,7 @@ const Map<String, String> zhTW = {
   'roomKitchen': 'キッチン',
   'roomChildrenRoom': '子供部屋',
   'languageFollowSystem': 'システムに従う',
-  'languageSimplifiedChinese': '簡体字中国語',
+  'languageSimplifiedChinese': '简体中文',
   'themeFollowSystem': 'システムに従う',
   'themeLightMode': 'ライトモード',
   'themeDarkMode': 'ダークモード',

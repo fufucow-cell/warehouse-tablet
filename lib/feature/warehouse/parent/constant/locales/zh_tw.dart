@@ -40,8 +40,7 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子類別數量',
   'warehouseCategoryCount': '分類量',
-  'warehouseCategoryTotalCount':
-      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount': '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名稱',
   'warehouseAlarmBelowStockLevel': '低於庫存水位',
@@ -147,7 +146,7 @@ const Map<String, String> zhTW = {
   'roomKitchen': '廚房',
   'roomChildrenRoom': '兒童房',
   'languageFollowSystem': '跟隨系統',
-  'languageSimplifiedChinese': '簡體中文',
+  'languageSimplifiedChinese': '简体中文',
   'themeFollowSystem': '跟隨系統',
   'themeLightMode': '淺色模式',
   'themeDarkMode': '深色模式',

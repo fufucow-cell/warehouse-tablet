@@ -146,7 +146,7 @@ const Map<String, String> zhTW = {
   'roomKitchen': '주방',
   'roomChildrenRoom': '아이방',
   'languageFollowSystem': '시스템 따르기',
-  'languageSimplifiedChinese': '간체 중국어',
+  'languageSimplifiedChinese': '简体中文',
   'themeFollowSystem': '시스템 따르기',
   'themeLightMode': '라이트 모드',
   'themeDarkMode': '다크 모드',
