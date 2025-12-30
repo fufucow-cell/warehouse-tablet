@@ -150,7 +150,14 @@ class WarehouseMainPageController extends GetxController {
     _selectedItemWorker = ever(
       selectedItemRx.rx,
       (value) {
-        _tabController?.animateTo(EnumWarehouseTabItem.values.indexOf(value));
+        if (_model.isTabControllerReady.value &&
+            _tabController != null &&
+            !_tabController!.indexIsChanging) {
+          final targetIndex = EnumWarehouseTabItem.values.indexOf(value);
+          if (targetIndex >= 0 && targetIndex < EnumWarehouseTabItem.values.length) {
+            _tabController!.animateTo(targetIndex);
+          }
+        }
       },
     );
   }

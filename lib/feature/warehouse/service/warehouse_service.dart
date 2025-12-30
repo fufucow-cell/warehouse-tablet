@@ -260,6 +260,7 @@ class WarehouseService {
   void addSearchCondition(DialogItemSearchOutputModel model) {
     if ((model.searchText?.isNotEmpty ?? false) || model.categoryLevel1 != null) {
       _model.searchCondition.value = model;
+      changeMainPageSelectedTabItem(EnumWarehouseTabItem.item);
     }
   }
 
