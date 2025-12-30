@@ -1,11 +1,13 @@
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+
 /// 支援的裝置類型
 enum EnumSupportedDevice {
   mobile,
   tablet;
 
   String get displayName => switch (this) {
-        EnumSupportedDevice.mobile => '行動裝置',
-        EnumSupportedDevice.tablet => '平板裝置',
+        EnumSupportedDevice.mobile => EnumLocale.deviceMobile.tr,
+        EnumSupportedDevice.tablet => EnumLocale.deviceTablet.tr,
       };
 
   /// 設計稿寬度（單位：px）

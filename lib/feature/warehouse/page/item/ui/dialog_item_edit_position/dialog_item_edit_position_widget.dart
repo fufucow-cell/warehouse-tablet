@@ -29,7 +29,7 @@ class DialogItemEditPositionWidget extends StatelessWidget {
       builder: (controller) {
         return DialogFrame(
           width: 1168.0.scale,
-          header: DialogHeader(title: EnumLocale.warehouseItemEditPosition.tr),
+          header: DialogHeader(title: EnumLocale.editPosition.tr),
           footer: Obx(
             () {
               return DialogFooter(

@@ -136,7 +136,7 @@ class WidgetUtil {
           color: textColor ?? EnumColor.textPrimary.color,
         ),
         decoration: InputDecoration(
-          hintText: hintText ?? '請輸入',
+          hintText: hintText ?? EnumLocale.commonInputHint.tr,
           hintStyle: TextStyle(
             fontSize: fontSize ?? 32.0.scale,
             color: hintColor ?? EnumColor.textSecondary.color,

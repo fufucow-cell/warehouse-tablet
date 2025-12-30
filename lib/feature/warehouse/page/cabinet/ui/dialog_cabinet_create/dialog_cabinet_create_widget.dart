@@ -134,7 +134,7 @@ class _RoomField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogSectionWidget(
-      title: EnumLocale.createCabinetRoom.tr,
+      title: EnumLocale.room.tr,
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,

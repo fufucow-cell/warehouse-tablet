@@ -29,7 +29,7 @@ class DialogCategoryDeleteWidget extends StatelessWidget {
         return DialogFrame(
           width: 720.0.scale,
           minHeight: 385.0.scale,
-          header: DialogHeader(title: EnumLocale.deleteCategoryTitle.tr),
+          header: DialogHeader(title: EnumLocale.deleteCategory.tr),
           footer: Obx(
             () {
               final isLoading = controller.isLoadingRx.value;

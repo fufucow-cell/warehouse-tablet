@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 
 /// 主題模式枚舉
 enum EnumThemeMode {
@@ -7,9 +8,9 @@ enum EnumThemeMode {
   dark;
 
   String get displayName => switch (this) {
-        EnumThemeMode.system => '跟隨系統',
-        EnumThemeMode.light => '淺色模式',
-        EnumThemeMode.dark => '深色模式',
+        EnumThemeMode.system => EnumLocale.themeFollowSystem.tr,
+        EnumThemeMode.light => EnumLocale.themeLightMode.tr,
+        EnumThemeMode.dark => EnumLocale.themeDarkMode.tr,
       };
 
   ThemeMode get themeMode => switch (this) {

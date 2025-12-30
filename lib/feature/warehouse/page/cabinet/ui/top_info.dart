@@ -63,7 +63,7 @@ class TopInfo extends StatelessWidget {
                         ),
                         SizedBox(width: 10.0.scale),
                         WidgetUtil.textWidget(
-                          EnumLocale.warehouseCabinetPosition.tr,
+                          EnumLocale.cabinet.tr,
                           size: 32.0.scale,
                           color: EnumColor.accentBlue.color,
                         ),

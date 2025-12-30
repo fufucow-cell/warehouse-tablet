@@ -246,7 +246,7 @@ class WarehouseItemPageController extends GetxController {
   void _genFilterRuleForRoom() {
     _model.filterRuleForRooms.clear();
     _model.filterRuleForRooms.addAll([
-      WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr),
+      WarehouseNameIdModel(id: 'all', name: EnumLocale.all.tr),
       ..._service.rooms,
     ]);
   }
@@ -255,7 +255,7 @@ class WarehouseItemPageController extends GetxController {
   void _genFilterRuleForCabinet() {
     final allRoomsCabinets = _model.allRoomCabinetItems.value ?? [];
     final roomIdx = _model.filterIndexForRooms.value;
-    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)];
+    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.all.tr)];
 
     if (roomIdx == 0) {
       final allCabinets = _flattenAllCabinets();
@@ -277,7 +277,7 @@ class WarehouseItemPageController extends GetxController {
     final cabinetIndex = _model.filterIndexForCabinets.value;
     final roomId = _model.filterRuleForRooms[roomIndex].id;
     final cabinetId = _model.filterRuleForCabinets.value[cabinetIndex].id;
-    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.optionAll.tr)];
+    final List<WarehouseNameIdModel> resultRules = [WarehouseNameIdModel(id: 'all', name: EnumLocale.all.tr)];
 
     if (roomIndex == 0 && cabinetIndex == 0) {
       allItems = _flattenAllItems();

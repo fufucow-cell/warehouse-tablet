@@ -27,7 +27,7 @@ class DialogItemHistoryWidget extends StatelessWidget {
       builder: (controller) {
         return DialogFrame(
           width: 962.0.scale,
-          header: DialogHeader(title: EnumLocale.warehouseItemRecord.tr),
+          header: DialogHeader(title: EnumLocale.record.tr),
           footer: DialogFooter(
             type: DialogFooterType.onlyConfirm,
             onConfirm: () {

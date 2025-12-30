@@ -29,7 +29,7 @@ class DialogCategoryCreateWidget extends StatelessWidget {
         return DialogFrame(
           width: 720.0.scale,
           minHeight: 625.0.scale,
-          header: DialogHeader(title: EnumLocale.createCategoryTitle.tr),
+          header: DialogHeader(title: EnumLocale.createCategory.tr),
           footer: Obx(
             () {
               final isLoading = controller.isLoadingRx.value;

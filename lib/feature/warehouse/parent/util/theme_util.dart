@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_data.dart';
@@ -139,7 +140,7 @@ class ThemeUtil extends GetxService {
       );
     } on Object catch (e) {
       _logService.showSnackBar(
-        title: '讀取圖片文件失敗',
+        title: EnumLocale.errorReadImageFileFailed.tr,
         message: e.toString(),
       );
       return null;
@@ -213,7 +214,7 @@ class ThemeUtil extends GetxService {
       return tempPath;
     } on Object catch (e) {
       _logService.showSnackBar(
-        title: '壓縮圖片失敗',
+        title: EnumLocale.errorCompressImageFailed.tr,
         message: e.toString(),
       );
       return null;
@@ -233,7 +234,7 @@ class ThemeUtil extends GetxService {
       return base64Encode(imageBytes);
     } on Object catch (e) {
       _logService.showSnackBar(
-        title: '轉換文件為 base64 失敗',
+        title: EnumLocale.errorConvertFileToBase64Failed.tr,
         message: e.toString(),
       );
       return null;
@@ -264,7 +265,7 @@ class ThemeUtil extends GetxService {
       );
     } on Object catch (e) {
       _logService.showSnackBar(
-        title: '轉換 base64 為圖片失敗',
+        title: EnumLocale.errorConvertBase64ToImageFailed.tr,
         message: e.toString(),
       );
       return Container(
@@ -298,7 +299,7 @@ class ThemeUtil extends GetxService {
       return base64String;
     } on Object catch (e) {
       _logService.showSnackBar(
-        title: '轉換圖片為 base64 失敗',
+        title: EnumLocale.errorConvertImageToBase64Failed.tr,
         message: e.toString(),
       );
       return null;

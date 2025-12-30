@@ -204,7 +204,7 @@ class _ItemInfo extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           WidgetUtil.textWidget(
-            '${EnumLocale.warehouseQuantityLabel.tr}：',
+            '${EnumLocale.quantity.tr}：',
             size: 22.0.scale,
             color: EnumColor.accentBlue.color,
           ),
@@ -249,7 +249,7 @@ class _ItemTools extends StatelessWidget {
         Expanded(
           child: _toolWidget(
             EnumImage.cEditQuantity,
-            EnumLocale.warehouseQuantityLabel.tr,
+            EnumLocale.quantity.tr,
             onTap: () {
               controller.interactive(
                 EnumWarehouseItemPageInteractive.tapItemQuantityEdit,

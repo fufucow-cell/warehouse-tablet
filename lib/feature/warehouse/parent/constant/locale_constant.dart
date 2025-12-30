@@ -4,6 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
     as ja_jp;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/ko_kr.dart'
     as ko_kr;
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/zh_cn.dart'
     as zh_cn;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/zh_tw.dart'
@@ -38,12 +39,14 @@ class LocaleTranslation extends Translations {
   });
 
   /// 系統語言（跟隨系統）
-  static final LocaleTranslation system = LocaleTranslation._(
-    languageCode: 'system',
-    countryCode: null,
-    displayName: '跟隨系統',
-    translationMap: {},
-  );
+  static LocaleTranslation get system {
+    return LocaleTranslation._(
+      languageCode: 'system',
+      countryCode: null,
+      displayName: EnumLocale.languageFollowSystem.tr,
+      translationMap: {},
+    );
+  }
 
   /// 繁體中文
   static final LocaleTranslation zhTW = LocaleTranslation._(
@@ -54,19 +57,21 @@ class LocaleTranslation extends Translations {
   );
 
   /// 簡體中文
-  static final LocaleTranslation zhCN = LocaleTranslation._(
-    languageCode: 'zh',
-    countryCode: 'CN',
-    displayName: '简体中文',
-    translationMap: zh_cn.zhCN,
-  );
+  static LocaleTranslation get zhCN {
+    return LocaleTranslation._(
+      languageCode: 'zh',
+      countryCode: 'CN',
+      displayName: EnumLocale.languageSimplifiedChinese.tr,
+      translationMap: zh_cn.zhTW,
+    );
+  }
 
   /// 英文
   static final LocaleTranslation enUS = LocaleTranslation._(
     languageCode: 'en',
     countryCode: 'US',
     displayName: 'English',
-    translationMap: en_us.enUS,
+      translationMap: en_us.zhTW,
   );
 
   /// 日文
@@ -74,7 +79,7 @@ class LocaleTranslation extends Translations {
     languageCode: 'ja',
     countryCode: 'JP',
     displayName: '日本語',
-    translationMap: ja_jp.jaJP,
+      translationMap: ja_jp.zhTW,
   );
 
   /// 韓文
@@ -82,7 +87,7 @@ class LocaleTranslation extends Translations {
     languageCode: 'ko',
     countryCode: 'KR',
     displayName: '한국어',
-    translationMap: ko_kr.koKR,
+      translationMap: ko_kr.zhTW,
   );
 
   // MARK: - Public Methods

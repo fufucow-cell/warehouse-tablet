@@ -1,3 +1,5 @@
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+
 /// 從 launch.json 讀取環境參數的 key
 const String launchEnvironmentKey = 'ENVIRONMENT';
 
@@ -14,10 +16,10 @@ enum EnumEnvironment {
   prd;
 
   String get displayName => switch (this) {
-        EnumEnvironment.dev => '開發環境',
-        EnumEnvironment.stg => '測試環境',
-        EnumEnvironment.uat => '預發布環境',
-        EnumEnvironment.prd => '生產環境',
+        EnumEnvironment.dev => EnumLocale.environmentDev.tr,
+        EnumEnvironment.stg => EnumLocale.environmentStg.tr,
+        EnumEnvironment.uat => EnumLocale.environmentUat.tr,
+        EnumEnvironment.prd => EnumLocale.environmentPrd.tr,
       };
 
   String get apiBaseUrl {

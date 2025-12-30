@@ -78,7 +78,7 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.warehouseCategory.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
                   visibleValues: visibleLevel1.map((cat) => cat.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(

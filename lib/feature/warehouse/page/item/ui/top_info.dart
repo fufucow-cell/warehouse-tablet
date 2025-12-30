@@ -39,7 +39,7 @@ class TopInfo extends StatelessWidget {
               ),
               TopInfoItem(
                 eImage: EnumImage.cRoom,
-                title: EnumLocale.warehouseItemRoom.tr,
+                title: EnumLocale.room.tr,
                 count: '${controller.getfilterRuleForRooms.length - 1}',
               ),
               TopInfoItem(

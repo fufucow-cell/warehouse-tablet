@@ -35,7 +35,7 @@ class DialogItemCreateWidget extends StatelessWidget {
             return DialogFrame(
               width: 962.0.scale,
               minHeight: 1024.0.scale,
-              header: DialogHeader(title: EnumLocale.createItemTitle.tr),
+              header: DialogHeader(title: EnumLocale.createItem.tr),
               footer: DialogFooter(
                 type: DialogFooterType.cancelAndConfirm,
                 isLoading: isLoading,
@@ -115,7 +115,7 @@ class _Body extends StatelessWidget {
             Expanded(
               child: Obx(
                 () => _DropdownField(
-                  title: EnumLocale.warehouseRoomLabel.tr,
+                  title: EnumLocale.room.tr,
                   selectedValue: controller.selectedRoomRx.value?.name,
                   visibleValues: controller.getRoomNameList(),
                   onValueSelected: (str) => controller.interactive(
@@ -129,7 +129,7 @@ class _Body extends StatelessWidget {
             Expanded(
               child: Obx(
                 () => _DropdownField(
-                  title: EnumLocale.warehouseCabinetPosition.tr,
+                  title: EnumLocale.cabinet.tr,
                   selectedValue: controller.selectedCabinetRx.value?.name,
                   visibleValues: controller.visibleCabinetsRx.value.map((cabinet) => cabinet.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
@@ -155,7 +155,7 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.warehouseCategory.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
                   visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
@@ -306,7 +306,7 @@ class _QuantityField extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemCreateWidgetController>();
     return DialogSectionWidget(
-      title: EnumLocale.createQuantity.tr,
+      title: EnumLocale.quantity.tr,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

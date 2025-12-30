@@ -97,7 +97,7 @@ class _InfoCard extends StatelessWidget {
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
-            label: EnumLocale.warehouseCategory.tr,
+            label: EnumLocale.category.tr,
             value: controller.getCategoryName,
           ),
           SizedBox(height: 24.0.scale),
@@ -249,7 +249,7 @@ class _RecordButton extends StatelessWidget {
         SizedBox(
           width: 112.0.scale,
           child: WidgetUtil.textWidget(
-            EnumLocale.warehouseItemRecord.tr,
+            EnumLocale.record.tr,
             size: 28.0.scale,
             color: EnumColor.textSecondary.color,
           ),

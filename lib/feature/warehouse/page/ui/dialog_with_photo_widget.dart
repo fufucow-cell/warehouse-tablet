@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_section_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -20,7 +21,7 @@ class DialogWithPhotoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogSectionWidget(
-      title: '物品照片',
+      title: EnumLocale.warehouseItemPhoto.tr,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -35,14 +36,14 @@ class DialogWithPhotoWidget extends StatelessWidget {
             children: [
               _PhotoActionButton(
                 eImage: EnumImage.cChangeImage,
-                text: '更換照片',
+                text: EnumLocale.warehouseChangePhoto.tr,
                 color: EnumColor.textLink.color,
                 onPressed: onReplacePhoto,
               ),
               SizedBox(height: 12.0.scale),
               _PhotoActionButton(
                 eImage: EnumImage.cTrash2,
-                text: '刪除照片',
+                text: EnumLocale.warehouseDeletePhoto.tr,
                 color: EnumColor.accentRed.color,
                 onPressed: onDeletePhoto,
               ),

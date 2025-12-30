@@ -29,58 +29,54 @@ class DialogItemNormalEditWidget extends StatelessWidget {
     return GetBuilder<DialogItemNormalEditWidgetController>(
       init: DialogItemNormalEditWidgetController(itemId),
       builder: (controller) {
-        return Obx(
-          () {
-            return DialogFrame(
-              width: 962.0.scale,
-              minHeight: 1024.0.scale,
-              header: DialogHeader(title: EnumLocale.warehouseItemEdit.tr),
-              footer: Obx(
-                () {
-                  return DialogFooter(
-                    isLoading: controller.isLoadingRx.value,
-                    type: DialogFooterType.cancelAndConfirm,
-                    onCancel: () {
-                      controller.interactive(
-                        EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
-                        data: context,
-                      );
-                    },
-                    onConfirm: () async {
-                      controller.interactive(
-                        EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                        data: true,
-                      );
-                      final outputModel = await controller.checkOutputModel();
-
-                      if (outputModel == null) {
-                        controller.interactive(
-                          EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                          data: false,
-                        );
-                        return;
-                      }
-
-                      final isSuccess = await onConfirm(outputModel);
-
-                      if (isSuccess) {
-                        controller.interactive(
-                          EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                          data: context,
-                        );
-                      }
-
-                      controller.interactive(
-                        EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                        data: false,
-                      );
-                    },
+        return DialogFrame(
+          width: 962.0.scale,
+          minHeight: 1024.0.scale,
+          header: DialogHeader(title: EnumLocale.warehouseItemEdit.tr),
+          footer: Obx(
+            () {
+              return DialogFooter(
+                isLoading: controller.isLoadingRx.value,
+                type: DialogFooterType.cancelAndConfirm,
+                onCancel: () {
+                  controller.interactive(
+                    EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
+                    data: context,
                   );
                 },
-              ),
-              child: const _Body(),
-            );
-          },
+                onConfirm: () async {
+                  controller.interactive(
+                    EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
+                    data: true,
+                  );
+                  final outputModel = await controller.checkOutputModel();
+
+                  if (outputModel == null) {
+                    controller.interactive(
+                      EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
+                      data: false,
+                    );
+                    return;
+                  }
+
+                  final isSuccess = await onConfirm(outputModel);
+
+                  if (isSuccess) {
+                    controller.interactive(
+                      EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
+                      data: context,
+                    );
+                  }
+
+                  controller.interactive(
+                    EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
+                    data: false,
+                  );
+                },
+              );
+            },
+          ),
+          child: const _Body(),
         );
       },
     );
@@ -116,7 +112,7 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.warehouseCategory.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
                   visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
