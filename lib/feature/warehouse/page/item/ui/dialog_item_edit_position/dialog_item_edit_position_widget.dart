@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/item_info_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
@@ -88,7 +89,11 @@ class _Body extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _InfoCard(),
+        ItemInfoCard(
+          itemName: controller.getItemName,
+          count: controller.getOriginQuantity,
+          isHistory: false,
+        ),
         SizedBox(height: 24.0.scale),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,72 +103,6 @@ class _Body extends StatelessWidget {
               if (i < positions.length - 1) SizedBox(height: 32.0.scale),
             ],
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class _InfoCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemEditPositionWidgetController>();
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 32.0.scale,
-        vertical: 44.0.scale,
-      ),
-      decoration: BoxDecoration(
-        color: EnumColor.backgroundSecondary.color,
-        borderRadius: BorderRadius.circular(20.0.scale),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _InfoRow(
-            label: EnumLocale.createItemName.tr,
-            value: controller.getItemName,
-          ),
-          SizedBox(height: 24.0.scale),
-          _InfoRow(
-            label: EnumLocale.warehouseCurrentQuantityLabel.tr,
-            value: controller.getOriginQuantity,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _InfoRow({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 112.0.scale,
-          child: WidgetUtil.textWidget(
-            label,
-            size: 28.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
-        ),
-        SizedBox(width: 24.0.scale),
-        Expanded(
-          child: WidgetUtil.textWidget(
-            value,
-            size: 28.0.scale,
-          ),
         ),
       ],
     );

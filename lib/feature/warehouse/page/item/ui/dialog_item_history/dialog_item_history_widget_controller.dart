@@ -25,6 +25,7 @@ class DialogItemHistoryWidgetController extends GetxController {
   final _service = WarehouseService.instance;
   RxReadonly<List<ItemRecord>?> get recordsRx => _model.records.readonly;
   String get getItemName => _model.combineItem?.name ?? '';
+  int get getRecordCount => _model.records.value?.length ?? 0;
 
   // MARK: - Init
 

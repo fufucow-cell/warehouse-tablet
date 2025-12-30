@@ -17,7 +17,7 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   final DialogItemEditQuantityWidgetModel _model = DialogItemEditQuantityWidgetModel();
   final _service = WarehouseService.instance;
   String get getItemName => _model.combineItem?.name ?? '';
-  String get getOldQuantity => (_model.combineItem?.quantity ?? 0).toString();
+  int get getOldQuantity => _model.combineItem?.quantity ?? 0;
   int get getMaxNewPositions => _model.maxNewPositions;
   List<ItemPositionModel> get getOldPositions => _model.oldPositions ?? [];
   List<ItemPositionModel> get getNewPositions => _model.newPositions.value;

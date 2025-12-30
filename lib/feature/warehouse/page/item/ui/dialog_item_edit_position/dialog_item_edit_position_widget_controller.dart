@@ -18,7 +18,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
   final DialogItemEditPositionWidgetModel _model = DialogItemEditPositionWidgetModel();
   final _service = WarehouseService.instance;
   String get getItemName => _model.combineItem?.name ?? '';
-  String get getOriginQuantity => (_model.combineItem?.quantity ?? 0).toString();
+  int get getOriginQuantity => _model.combineItem?.quantity ?? 0;
   List<DisplayPositionModel> get getPositions => _model.positions;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;

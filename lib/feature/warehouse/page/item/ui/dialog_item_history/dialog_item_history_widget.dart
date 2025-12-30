@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_history/dialog_item_history_widget_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/item_info_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
@@ -40,94 +41,17 @@ class DialogItemHistoryWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _InfoCard(),
+              ItemInfoCard(
+                itemName: controller.getItemName,
+                count: controller.getRecordCount,
+                isHistory: true,
+              ),
               SizedBox(height: 24.0.scale),
               _RecordsList(),
             ],
           ),
         );
       },
-    );
-  }
-}
-
-class _InfoCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemHistoryWidgetController>();
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 32.0.scale,
-        vertical: 44.0.scale,
-      ),
-      decoration: BoxDecoration(
-        color: EnumColor.backgroundSecondary.color,
-        borderRadius: BorderRadius.circular(20.0.scale),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _InfoRow(
-            label: EnumLocale.createItemName.tr,
-            value: controller.getItemName,
-          ),
-          SizedBox(height: 24.0.scale),
-          Obx(
-            () {
-              final recordCount = controller.recordsRx.value;
-              final isLoading = recordCount == null;
-              final count = recordCount?.length ?? 0;
-
-              if (isLoading) {
-                return WidgetUtil.shimmerWidget(
-                  height: 24.0.scale,
-                  width: 112.0.scale,
-                );
-              }
-
-              return _InfoRow(
-                label: EnumLocale.warehouseRecordCount.tr,
-                value: count.toString(),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _InfoRow({
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 112.0.scale,
-          child: WidgetUtil.textWidget(
-            label,
-            size: 26.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
-        ),
-        SizedBox(width: 24.0.scale),
-        Expanded(
-          child: WidgetUtil.textWidget(
-            value,
-            size: 26.0.scale,
-          ),
-        ),
-      ],
     );
   }
 }
