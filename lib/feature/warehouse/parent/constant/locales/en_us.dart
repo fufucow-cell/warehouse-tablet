@@ -1,21 +1,13 @@
-/// 繁體中文翻譯
 const Map<String, String> zhTW = {
-  // 通用
   'commonConfirm': 'Confirm',
   'commonCancel': 'Cancel',
   'commonSearch': 'Search',
   'commonProcessing': 'Processing',
   'commonReminder': 'Friendly Reminder',
   'commonNoData': 'No data available',
-
-  // 語言
-
-  // 設備
   'deviceCameraFailed': 'Failed to open camera',
   'deviceCameraNotAvailable': 'Camera not available',
   'deviceGalleryFailed': 'Failed to open gallery',
-
-  // 倉庫相關（根據你的項目結構添加）
   'warehouseItemTotal': 'Total Items',
   'warehouseItemCategory': 'Categories',
   'warehouseItemLowStock': 'Low Stock',
@@ -45,28 +37,14 @@ const Map<String, String> zhTW = {
   'warehouseAlarmProductName': 'Product Name',
   'warehouseAlarmBelowStockLevel': 'Below Stock Level',
   'warehouseAlarmOperation': 'Operation',
-
-  // 錯誤訊息
-
-  // 成功訊息
-
-  // 設置
-
-  // 倉庫主頁
   'warehouseTabAlarm': 'Alarm',
-
-  // 通用選項
   'optionPleaseSelect': 'Please select',
   'optionPleaseSelectRoom': 'Please select room',
   'optionPleaseSelectCabinet': 'Please select cabinet',
   'optionNoData': 'No data',
-
-  // 搜尋相關
   'searchItemNameOrDescriptionHint': 'name or description',
   'searchClearResult': 'Clear search results',
   'searchResultCount': 'Search results: @para1 items',
-
-  // 新增/創建相關
   'editCabinetTitle': 'Edit Cabinet',
   'editCabinetDeleteMultipleMessage': 'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
   'editCabinetMoveToNewRoom': 'Move to New Room',
@@ -86,14 +64,6 @@ const Map<String, String> zhTW = {
   'createLevel2Category': 'Level 2 Category',
   'createLevel3Category': 'Level 3 Category',
   'createSmartAddItem': 'Smart Add Item',
-
-  // Smart Home 相關
-
-  // 登入相關
-
-  // 登出相關
-
-  // 倉庫頁面相關
   'warehouseNoCabinetInRoom': 'This room has no cabinets',
   'warehouseLocationsLabel': 'Storage Locations',
   'warehouseDescriptionLabel': 'Description',

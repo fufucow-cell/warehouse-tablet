@@ -1,21 +1,13 @@
-/// 繁體中文翻譯
 const Map<String, String> zhTW = {
-  // 通用
   'commonConfirm': '確認',
   'commonCancel': 'キャンセル',
   'commonSearch': '検索',
   'commonProcessing': '処理中',
   'commonReminder': 'ご案内',
   'commonNoData': 'データがありません',
-
-  // 語言
-
-  // 設備
   'deviceCameraFailed': 'カメラを開くのに失敗しました',
   'deviceCameraNotAvailable': 'カメラ機能がありません',
   'deviceGalleryFailed': 'ギャラリーを開くのに失敗しました',
-
-  // 倉庫相關（根據你的項目結構添加）
   'warehouseItemTotal': 'アイテム総数',
   'warehouseItemCategory': 'カテゴリ',
   'warehouseItemLowStock': '低在庫',
@@ -45,28 +37,14 @@ const Map<String, String> zhTW = {
   'warehouseAlarmProductName': '商品名',
   'warehouseAlarmBelowStockLevel': '在庫水位以下',
   'warehouseAlarmOperation': '操作',
-
-  // 錯誤訊息
-
-  // 成功訊息
-
-  // 設置
-
-  // 倉庫主頁
   'warehouseTabAlarm': 'アラーム',
-
-  // 通用選項
   'optionPleaseSelect': '選択してください',
   'optionPleaseSelectRoom': '部屋を選択してください',
   'optionPleaseSelectCabinet': 'キャビネットを選択してください',
   'optionNoData': 'データなし',
-
-  // 搜尋相關
   'searchItemNameOrDescriptionHint': '名前または説明で検索',
   'searchClearResult': '検索結果をクリア',
   'searchResultCount': '検索結果: @para1 件',
-
-  // 新增/創建相關
   'editCabinetTitle': 'キャビネット編集',
   'editCabinetDeleteMultipleMessage': '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'editCabinetMoveToNewRoom': '新しい部屋に移動',
@@ -86,14 +64,6 @@ const Map<String, String> zhTW = {
   'createLevel2Category': '二階分類',
   'createLevel3Category': '三階分類',
   'createSmartAddItem': 'スマート追加アイテム',
-
-  // Smart Home 相關
-
-  // 登入相關
-
-  // 登出相關
-
-  // 倉庫頁面相關
   'warehouseNoCabinetInRoom': 'この部屋にはキャビネットがありません',
   'warehouseLocationsLabel': '保管場所',
   'warehouseDescriptionLabel': '説明',

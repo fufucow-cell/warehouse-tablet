@@ -1,21 +1,13 @@
-/// 繁體中文翻譯
 const Map<String, String> zhTW = {
-  // 通用
   'commonConfirm': '確認',
   'commonCancel': '取消',
   'commonSearch': '搜尋',
   'commonProcessing': '處理中',
   'commonReminder': '溫馨提醒',
   'commonNoData': '暫時沒有資料',
-
-  // 語言
-
-  // 設備
   'deviceCameraFailed': '開啟相機失敗',
   'deviceCameraNotAvailable': '無相機功能',
   'deviceGalleryFailed': '開啟相簿失敗',
-
-  // 倉庫相關（根據你的項目結構添加）
   'warehouseItemTotal': '物品總數',
   'warehouseItemCategory': '物品分類',
   'warehouseItemLowStock': '低庫存',
@@ -45,28 +37,14 @@ const Map<String, String> zhTW = {
   'warehouseAlarmProductName': '商品名稱',
   'warehouseAlarmBelowStockLevel': '低於庫存水位',
   'warehouseAlarmOperation': '操作',
-
-  // 錯誤訊息
-
-  // 成功訊息
-
-  // 設置
-
-  // 倉庫主頁
   'warehouseTabAlarm': '告警',
-
-  // 通用選項
   'optionPleaseSelect': '請選擇',
   'optionPleaseSelectRoom': '請選擇房間',
   'optionPleaseSelectCabinet': '請選擇櫃位',
   'optionNoData': '無資料',
-
-  // 搜尋相關
   'searchItemNameOrDescriptionHint': '依名稱或描述搜尋物品',
   'searchClearResult': '清除搜尋結果',
   'searchResultCount': '搜尋結果: @para1 筆',
-
-  // 新增/創建相關
   'editCabinetTitle': '編輯櫃位',
   'editCabinetDeleteMultipleMessage': '您確定要刪除@para1櫃位嗎？\n此操作無法撤銷。',
   'editCabinetMoveToNewRoom': '移至新房間',
@@ -86,14 +64,6 @@ const Map<String, String> zhTW = {
   'createLevel2Category': '二階分類',
   'createLevel3Category': '三階分類',
   'createSmartAddItem': '智能新增物品',
-
-  // Smart Home 相關
-
-  // 登入相關
-
-  // 登出相關
-
-  // 倉庫頁面相關
   'warehouseNoCabinetInRoom': '此房間沒有櫃位',
   'warehouseLocationsLabel': '存放位置',
   'warehouseDescriptionLabel': '描述',

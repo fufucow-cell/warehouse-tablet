@@ -1,21 +1,13 @@
-/// 繁體中文翻譯
 const Map<String, String> zhTW = {
-  // 通用
   'commonConfirm': '确认',
   'commonCancel': '取消',
   'commonSearch': '搜索',
   'commonProcessing': '处理中',
   'commonReminder': '温馨提醒',
   'commonNoData': '暂时没有资料',
-
-  // 語言
-
-  // 設備
   'deviceCameraFailed': '开启相机失败',
   'deviceCameraNotAvailable': '无相机功能',
   'deviceGalleryFailed': '开启相簿失败',
-
-  // 倉庫相關（根據你的項目結構添加）
   'warehouseItemTotal': '物品总数',
   'warehouseItemCategory': '物品分类',
   'warehouseItemLowStock': '低库存',
@@ -40,34 +32,19 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子类别数量',
   'warehouseCategoryCount': '分类量',
-  'warehouseCategoryTotalCount':
-      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount': '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名称',
   'warehouseAlarmBelowStockLevel': '低于库存水位',
   'warehouseAlarmOperation': '操作',
-
-  // 錯誤訊息
-
-  // 成功訊息
-
-  // 設置
-
-  // 倉庫主頁
   'warehouseTabAlarm': '告警',
-
-  // 通用選項
   'optionPleaseSelect': '请选择',
   'optionPleaseSelectRoom': '请选择房间',
   'optionPleaseSelectCabinet': '请选择柜位',
   'optionNoData': '无资料',
-
-  // 搜尋相關
   'searchItemNameOrDescriptionHint': '依名称或描述搜索物品',
   'searchClearResult': '清除搜索结果',
   'searchResultCount': '搜索结果: @para1 笔',
-
-  // 新增/創建相關
   'editCabinetTitle': '编辑柜子',
   'editCabinetDeleteMultipleMessage': '您确定要删除@para1柜子吗？\n此操作无法撤销。',
   'editCabinetMoveToNewRoom': '移至新房间',
@@ -87,14 +64,6 @@ const Map<String, String> zhTW = {
   'createLevel2Category': '二阶分类',
   'createLevel3Category': '三阶分类',
   'createSmartAddItem': '智能新增物品',
-
-  // Smart Home 相關
-
-  // 登入相關
-
-  // 登出相關
-
-  // 倉庫頁面相關
   'warehouseNoCabinetInRoom': '此房间没有柜子',
   'warehouseLocationsLabel': '存放位置',
   'warehouseDescriptionLabel': '描述',
