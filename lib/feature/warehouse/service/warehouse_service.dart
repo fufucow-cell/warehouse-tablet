@@ -27,7 +27,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
@@ -83,19 +82,23 @@ class WarehouseService {
     } else {
       final service = WarehouseService._internal();
       Get.put<WarehouseService>(service, permanent: true);
-      service._registerWarehouseApiUtil();
       return service;
     }
   }
 
   static void unregister() {
     if (Get.isRegistered<WarehouseService>()) {
-      instance._unregisterWarehouseApiUtil();
+      ApiUtil.unregister();
       Get.delete<WarehouseService>(force: true);
     }
   }
 
-  static WarehouseService get instance => register();
+  static WarehouseService get instance {
+    if (!Get.isRegistered<WarehouseService>()) {
+      return register();
+    }
+    return Get.find<WarehouseService>();
+  }
 
   // MARK: - Public Method
 
@@ -169,7 +172,7 @@ class WarehouseService {
     LocaleUtil.instance.switchFromCode(data.language);
     ThemeUtil.instance.switchFromString(data.theme);
     final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
-    ApiUtil.instance.updateDomain(domain);
+    _registerWarehouseApiUtil(domain);
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -553,12 +556,7 @@ class WarehouseService {
     _model.allCombineItems = combineItems(flattenItems);
   }
 
-  void _registerWarehouseApiUtil() {
-    final envUtil = EnvironmentUtil.instance;
-    ApiUtil.register(envUtil.apiBaseUrl);
-  }
-
-  void _unregisterWarehouseApiUtil() {
-    ApiUtil.unregister();
+  void _registerWarehouseApiUtil(String baseUrl) {
+    ApiUtil.register(baseUrl);
   }
 }
