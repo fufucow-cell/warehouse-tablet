@@ -274,7 +274,7 @@ class ApiUtil extends GetxService {
     final finalMessage = message ?? EnumErrorMap.code201.message;
 
     if (finalCode == EnumErrorMap.code200.code) {
-      if (rawData == null && _isBaseApiResponseModelType<T>()) {
+      if (_isBaseApiResponseModelType<T>()) {
         return BaseApiResponseModel<T>.emptySuccess();
       } else if (fromJson != null) {
         if (rawData is Map<String, dynamic>) {
