@@ -124,9 +124,7 @@ class WarehouseItemPageController extends GetxController {
   // MARK: - Private Methods
 
   void _checkData() {
-    if (_model.allRoomCabinetItems.value == null) {
-      _queryApiData();
-    } else {
+    if (_model.allRoomCabinetItems.value != null) {
       _model.allRoomCabinetItems.value = _service.getAllRoomCabinetItems;
       _refreshData();
     }
@@ -135,7 +133,6 @@ class WarehouseItemPageController extends GetxController {
   void _refreshData() {
     _genFilterRuleForCabinet();
     _genAllFilterRuleAndItemForCategory();
-    _genVisibleItems();
   }
 
   Future<void> _queryApiData() async {

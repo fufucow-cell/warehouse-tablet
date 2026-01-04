@@ -12,53 +12,53 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
-class WarehouseCabinetPage extends GetView<WarehouseCabinetPageController> {
+class WarehouseCabinetPage extends StatelessWidget {
   const WarehouseCabinetPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<WarehouseCabinetPageController>()) {
-      Get.put(WarehouseCabinetPageController(), permanent: false);
-    }
+    return GetBuilder<WarehouseCabinetPageController>(
+      init: Get.isRegistered<WarehouseCabinetPageController>() ? null : WarehouseCabinetPageController(),
+      builder: (controller) {
+        final rooms = controller.getRoomsInfo();
 
-    final controller = Get.find<WarehouseCabinetPageController>();
-    final rooms = controller.getRoomsInfo();
-
-    return SecondBackgroundCard(
-      child: Column(
-        children: [
-          const TopInfo(),
-          if (rooms.isEmpty)
-            Expanded(child: WidgetUtil.emptyWidget())
-          else ...[
-            SizedBox(height: 32.0.scale),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return GridView.builder(
-                    padding: EdgeInsets.all(
-                      12.0.scale,
-                    ), // Add padding for shadow (blurRadius + spreadRadius)
-                    physics: const ClampingScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 32.0.scale,
-                      mainAxisSpacing: 32.0.scale,
-                      childAspectRatio: 514.0 / 420.0,
-                    ),
-                    itemCount: rooms.length,
-                    itemBuilder: (context, index) {
-                      return _RoomCard(
-                        roomNameId: rooms[index],
+        return SecondBackgroundCard(
+          child: Column(
+            children: [
+              const TopInfo(),
+              if (rooms.isEmpty)
+                Expanded(child: WidgetUtil.emptyWidget())
+              else ...[
+                SizedBox(height: 32.0.scale),
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return GridView.builder(
+                        padding: EdgeInsets.all(
+                          12.0.scale,
+                        ), // Add padding for shadow (blurRadius + spreadRadius)
+                        physics: const ClampingScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 32.0.scale,
+                          mainAxisSpacing: 32.0.scale,
+                          childAspectRatio: 514.0 / 420.0,
+                        ),
+                        itemCount: rooms.length,
+                        itemBuilder: (context, index) {
+                          return _RoomCard(
+                            roomNameId: rooms[index],
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
-            ),
-          ],
-        ],
-      ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -343,18 +343,18 @@ class WarehouseService {
     WarehouseItemRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    _model.allRoomCabinetItems.value = null;
     final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
       EnumApiInfo.itemRead,
       requestModel: request,
       fromJson: WarehouseItemResponseModel.fromJson,
-      onError: (error) {
-        print(error);
-        onError?.call(error);
-      },
+      onError: onError,
     );
-    _model.allRoomCabinetItems.value = response?.data;
-    _genAllCombineItems();
+
+    if (response?.data != null) {
+      _model.allRoomCabinetItems.value = response?.data;
+      _genAllCombineItems();
+    }
+
     return response?.data;
   }
 
@@ -479,7 +479,7 @@ class WarehouseService {
       onError: onError,
     );
 
-    if (request.categoryId == null) {
+    if (request.categoryId == null && response?.data != null) {
       _model.allCategories.value = response?.data;
     }
 

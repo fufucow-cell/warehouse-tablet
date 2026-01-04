@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse_alarm_page.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page.dart';
@@ -28,11 +30,11 @@ enum EnumWarehouseTabItem {
       };
 
   Widget get page => switch (this) {
-        item => const WarehouseItemPage(),
-        cabinet => const WarehouseCabinetPage(),
-        category => const WarehouseCategoryPage(),
-        record => const WarehouseRecordPage(),
-        alarm => const WarehouseAlarmPage(),
+        item => WarehouseItemPage(),
+        cabinet => WarehouseCabinetPage(),
+        category => WarehouseCategoryPage(),
+        record => WarehouseRecordPage(),
+        alarm => WarehouseAlarmPage(),
       };
 }
 

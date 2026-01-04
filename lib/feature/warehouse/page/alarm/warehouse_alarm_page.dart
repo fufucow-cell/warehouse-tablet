@@ -10,24 +10,25 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
-class WarehouseAlarmPage extends GetView<WarehouseAlarmPageController> {
+class WarehouseAlarmPage extends StatelessWidget {
   const WarehouseAlarmPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    if (!Get.isRegistered<WarehouseAlarmPageController>()) {
-      Get.put(WarehouseAlarmPageController(), permanent: false);
-    }
-
-    return const SecondBackgroundCard(
-      child: Column(
-        children: [
-          _HeaderWidget(),
-          Expanded(
-            child: _AlarmList(),
+    return GetBuilder<WarehouseAlarmPageController>(
+      init: Get.isRegistered<WarehouseAlarmPageController>() ? null : WarehouseAlarmPageController(),
+      builder: (controller) {
+        return const SecondBackgroundCard(
+          child: Column(
+            children: [
+              _HeaderWidget(),
+              Expanded(
+                child: _AlarmList(),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

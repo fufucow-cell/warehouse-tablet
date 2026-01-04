@@ -22,15 +22,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440040",
                   "name": "手機",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440050",
                     "name": "iPhone",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440040",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -46,15 +46,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440041",
                   "name": "調味料",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440051",
                     "name": "食用油",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440041",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -70,15 +70,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440052",
                     "name": "洗髮精",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440042",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -94,11 +94,11 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440060",
                   "name": "電池",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": null
+                  "child": null
                 }
               }
             },
@@ -113,15 +113,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440045",
                   "name": "飲品",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440055",
                     "name": "咖啡",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440045",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -137,15 +137,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440043",
                   "name": "衛生用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440056",
                     "name": "面紙",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440043",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -161,15 +161,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440070",
                   "name": "電腦配件",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440071",
                     "name": "滑鼠",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440070",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -185,15 +185,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440041",
                   "name": "調味料",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440072",
                     "name": "醬油",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440041",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -209,15 +209,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440073",
                   "name": "個人護理",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440074",
                     "name": "口腔護理",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440073",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -233,15 +233,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440070",
                   "name": "電腦配件",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440075",
                     "name": "傳輸線",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440070",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -257,15 +257,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440041",
                   "name": "調味料",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440076",
                     "name": "鹽",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440041",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -281,11 +281,11 @@
                 "id": "333e8400-e29b-41d4-a716-446655440033",
                 "name": "廚房用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "333e8400-e29b-41d4-a716-446655440043",
                   "name": "氣泡飲品",
                   "parent_id": "333e8400-e29b-41d4-a716-446655440033",
-                  "children": null
+                  "child": null
                 }
               }
             },
@@ -300,11 +300,11 @@
                 "id": "333e8400-e29b-41d4-a716-446655440033",
                 "name": "廚房用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "333e8400-e29b-41d4-a716-446655440044",
                   "name": "家電",
                   "parent_id": "333e8400-e29b-41d4-a716-446655440033",
-                  "children": null
+                  "child": null
                 }
               }
             },
@@ -319,11 +319,11 @@
                 "id": "333e8400-e29b-41d4-a716-446655440033",
                 "name": "廚房用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "333e8400-e29b-41d4-a716-446655440045",
                   "name": "餐具",
                   "parent_id": "333e8400-e29b-41d4-a716-446655440033",
-                  "children": null
+                  "child": null
                 }
               }
             },
@@ -338,11 +338,11 @@
                 "id": "333e8400-e29b-41d4-a716-446655440033",
                 "name": "廚房用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "333e8400-e29b-41d4-a716-446655440045",
                   "name": "餐具",
                   "parent_id": "333e8400-e29b-41d4-a716-446655440033",
-                  "children": null
+                  "child": null
                 }
               }
             }
@@ -373,15 +373,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440044",
                   "name": "主食",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440054",
                     "name": "米類",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440044",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -397,15 +397,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440043",
                   "name": "衛生用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440053",
                     "name": "衛生紙",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440043",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -428,15 +428,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440040",
                   "name": "手機",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440050",
                     "name": "iPhone",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440040",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -465,15 +465,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440040",
                   "name": "手機",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440050",
                     "name": "iPhone",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440040",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -489,15 +489,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440040",
                   "name": "手機",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440050",
                     "name": "iPhone",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440040",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -513,15 +513,15 @@
                 "id": "330e8400-e29b-41d4-a716-446655440030",
                 "name": "電子產品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "330e8400-e29b-41d4-a716-446655440040",
                   "name": "手機",
                   "parent_id": "330e8400-e29b-41d4-a716-446655440030",
-                  "children": {
+                  "child": {
                     "id": "330e8400-e29b-41d4-a716-446655440050",
                     "name": "iPhone",
                     "parent_id": "330e8400-e29b-41d4-a716-446655440040",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -537,15 +537,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440055",
                     "name": "香皂",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440042",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -574,7 +574,7 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": null
+                "child": null
               }
             }
           ]
@@ -595,15 +595,15 @@
                 "id": "331e8400-e29b-41d4-a716-446655440031",
                 "name": "食品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "331e8400-e29b-41d4-a716-446655440044",
                   "name": "主食",
                   "parent_id": "331e8400-e29b-41d4-a716-446655440031",
-                  "children": {
+                  "child": {
                     "id": "331e8400-e29b-41d4-a716-446655440054",
                     "name": "米類",
                     "parent_id": "331e8400-e29b-41d4-a716-446655440044",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -632,15 +632,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440055",
                     "name": "香皂",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440042",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -656,11 +656,11 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": null
+                  "child": null
                 }
               }
             }
@@ -682,15 +682,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440052",
                     "name": "洗髮精",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440042",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -719,15 +719,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440043",
                   "name": "衛生用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440053",
                     "name": "衛生紙",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440043",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -750,15 +750,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440043",
                   "name": "衛生用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440053",
                     "name": "衛生紙",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440043",
-                    "children": null
+                    "child": null
                   }
                 }
               }
@@ -781,15 +781,15 @@
                 "id": "332e8400-e29b-41d4-a716-446655440032",
                 "name": "日用品",
                 "parent_id": null,
-                "children": {
+                "child": {
                   "id": "332e8400-e29b-41d4-a716-446655440042",
                   "name": "清潔用品",
                   "parent_id": "332e8400-e29b-41d4-a716-446655440032",
-                  "children": {
+                  "child": {
                     "id": "332e8400-e29b-41d4-a716-446655440052",
                     "name": "洗髮精",
                     "parent_id": "332e8400-e29b-41d4-a716-446655440042",
-                    "children": null
+                    "child": null
                   }
                 }
               }
