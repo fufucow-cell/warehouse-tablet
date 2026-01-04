@@ -8,6 +8,7 @@ class WarehouseItemEditPositionRequestModel with _$WarehouseItemEditPositionRequ
   factory WarehouseItemEditPositionRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,
+    @JsonKey(name: 'user_name') String? userName,
     List<PositionCabinetRequestModel>? cabinets,
   }) = _WarehouseItemEditPositionRequestModel;
 

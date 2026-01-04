@@ -4,12 +4,12 @@ part 'warehouse_cabinet_create_request_model.freezed.dart';
 part 'warehouse_cabinet_create_request_model.g.dart';
 
 @freezed
-class WarehouseCabinetCreateRequestModel
-    with _$WarehouseCabinetCreateRequestModel {
+class WarehouseCabinetCreateRequestModel with _$WarehouseCabinetCreateRequestModel {
   factory WarehouseCabinetCreateRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
-    @JsonKey(name: 'cabinet_name') String? cabinetName,
     @JsonKey(name: 'room_id') String? roomId,
+    @JsonKey(name: 'user_name') String? userName,
+    String? name,
   }) = _WarehouseCabinetCreateRequestModel;
 
   factory WarehouseCabinetCreateRequestModel.fromJson(

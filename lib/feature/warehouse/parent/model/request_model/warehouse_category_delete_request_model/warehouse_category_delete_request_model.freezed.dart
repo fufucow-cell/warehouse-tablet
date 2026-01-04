@@ -22,9 +22,11 @@ WarehouseCategoryDeleteRequestModel
 /// @nodoc
 mixin _$WarehouseCategoryDeleteRequestModel {
   @JsonKey(name: 'household_id')
-  String get homeId => throw _privateConstructorUsedError;
+  String get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   String get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,8 +44,9 @@ abstract class $WarehouseCategoryDeleteRequestModelCopyWith<$Res> {
           WarehouseCategoryDeleteRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String homeId,
-      @JsonKey(name: 'category_id') String categoryId});
+      {@JsonKey(name: 'household_id') String householdId,
+      @JsonKey(name: 'category_id') String categoryId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -60,18 +63,23 @@ class _$WarehouseCategoryDeleteRequestModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = null,
+    Object? householdId = null,
     Object? categoryId = null,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -86,8 +94,9 @@ abstract class _$$WarehouseCategoryDeleteRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String homeId,
-      @JsonKey(name: 'category_id') String categoryId});
+      {@JsonKey(name: 'household_id') String householdId,
+      @JsonKey(name: 'category_id') String categoryId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -103,18 +112,23 @@ class __$$WarehouseCategoryDeleteRequestModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = null,
+    Object? householdId = null,
     Object? categoryId = null,
+    Object? userName = freezed,
   }) {
     return _then(_$WarehouseCategoryDeleteRequestModelImpl(
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -124,8 +138,9 @@ class __$$WarehouseCategoryDeleteRequestModelImplCopyWithImpl<$Res>
 class _$WarehouseCategoryDeleteRequestModelImpl
     implements _WarehouseCategoryDeleteRequestModel {
   _$WarehouseCategoryDeleteRequestModelImpl(
-      {@JsonKey(name: 'household_id') required this.homeId,
-      @JsonKey(name: 'category_id') required this.categoryId});
+      {@JsonKey(name: 'household_id') required this.householdId,
+      @JsonKey(name: 'category_id') required this.categoryId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$WarehouseCategoryDeleteRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -133,14 +148,17 @@ class _$WarehouseCategoryDeleteRequestModelImpl
 
   @override
   @JsonKey(name: 'household_id')
-  final String homeId;
+  final String householdId;
   @override
   @JsonKey(name: 'category_id')
   final String categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseCategoryDeleteRequestModel(homeId: $homeId, categoryId: $categoryId)';
+    return 'WarehouseCategoryDeleteRequestModel(householdId: $householdId, categoryId: $categoryId, userName: $userName)';
   }
 
   @override
@@ -148,14 +166,18 @@ class _$WarehouseCategoryDeleteRequestModelImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WarehouseCategoryDeleteRequestModelImpl &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+                other.categoryId == categoryId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, homeId, categoryId);
+  int get hashCode =>
+      Object.hash(runtimeType, householdId, categoryId, userName);
 
   @JsonKey(ignore: true)
   @override
@@ -176,8 +198,9 @@ class _$WarehouseCategoryDeleteRequestModelImpl
 abstract class _WarehouseCategoryDeleteRequestModel
     implements WarehouseCategoryDeleteRequestModel {
   factory _WarehouseCategoryDeleteRequestModel(
-          {@JsonKey(name: 'household_id') required final String homeId,
-          @JsonKey(name: 'category_id') required final String categoryId}) =
+          {@JsonKey(name: 'household_id') required final String householdId,
+          @JsonKey(name: 'category_id') required final String categoryId,
+          @JsonKey(name: 'user_name') final String? userName}) =
       _$WarehouseCategoryDeleteRequestModelImpl;
 
   factory _WarehouseCategoryDeleteRequestModel.fromJson(
@@ -186,10 +209,13 @@ abstract class _WarehouseCategoryDeleteRequestModel
 
   @override
   @JsonKey(name: 'household_id')
-  String get homeId;
+  String get householdId;
   @override
   @JsonKey(name: 'category_id')
   String get categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseCategoryDeleteRequestModelImplCopyWith<

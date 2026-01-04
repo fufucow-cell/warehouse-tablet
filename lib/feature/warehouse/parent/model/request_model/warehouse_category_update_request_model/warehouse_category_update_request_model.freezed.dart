@@ -22,13 +22,15 @@ WarehouseCategoryUpdateRequestModel
 /// @nodoc
 mixin _$WarehouseCategoryUpdateRequestModel {
   @JsonKey(name: 'household_id')
-  String get homeId => throw _privateConstructorUsedError;
+  String get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   String get categoryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'name')
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'parent_id')
   String? get parentId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,10 +48,11 @@ abstract class $WarehouseCategoryUpdateRequestModelCopyWith<$Res> {
           WarehouseCategoryUpdateRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String homeId,
+      {@JsonKey(name: 'household_id') String householdId,
       @JsonKey(name: 'category_id') String categoryId,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'parent_id') String? parentId});
+      @JsonKey(name: 'parent_id') String? parentId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -66,15 +69,16 @@ class _$WarehouseCategoryUpdateRequestModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = null,
+    Object? householdId = null,
     Object? categoryId = null,
     Object? name = null,
     Object? parentId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       categoryId: null == categoryId
           ? _value.categoryId
@@ -87,6 +91,10 @@ class _$WarehouseCategoryUpdateRequestModelCopyWithImpl<$Res,
       parentId: freezed == parentId
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -102,10 +110,11 @@ abstract class _$$WarehouseCategoryUpdateRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String homeId,
+      {@JsonKey(name: 'household_id') String householdId,
       @JsonKey(name: 'category_id') String categoryId,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'parent_id') String? parentId});
+      @JsonKey(name: 'parent_id') String? parentId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -121,15 +130,16 @@ class __$$WarehouseCategoryUpdateRequestModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = null,
+    Object? householdId = null,
     Object? categoryId = null,
     Object? name = null,
     Object? parentId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_$WarehouseCategoryUpdateRequestModelImpl(
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       categoryId: null == categoryId
           ? _value.categoryId
@@ -143,6 +153,10 @@ class __$$WarehouseCategoryUpdateRequestModelImplCopyWithImpl<$Res>
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,10 +166,11 @@ class __$$WarehouseCategoryUpdateRequestModelImplCopyWithImpl<$Res>
 class _$WarehouseCategoryUpdateRequestModelImpl
     implements _WarehouseCategoryUpdateRequestModel {
   _$WarehouseCategoryUpdateRequestModelImpl(
-      {@JsonKey(name: 'household_id') required this.homeId,
+      {@JsonKey(name: 'household_id') required this.householdId,
       @JsonKey(name: 'category_id') required this.categoryId,
       @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'parent_id') this.parentId});
+      @JsonKey(name: 'parent_id') this.parentId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$WarehouseCategoryUpdateRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -163,7 +178,7 @@ class _$WarehouseCategoryUpdateRequestModelImpl
 
   @override
   @JsonKey(name: 'household_id')
-  final String homeId;
+  final String householdId;
   @override
   @JsonKey(name: 'category_id')
   final String categoryId;
@@ -173,10 +188,13 @@ class _$WarehouseCategoryUpdateRequestModelImpl
   @override
   @JsonKey(name: 'parent_id')
   final String? parentId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseCategoryUpdateRequestModel(homeId: $homeId, categoryId: $categoryId, name: $name, parentId: $parentId)';
+    return 'WarehouseCategoryUpdateRequestModel(householdId: $householdId, categoryId: $categoryId, name: $name, parentId: $parentId, userName: $userName)';
   }
 
   @override
@@ -184,18 +202,21 @@ class _$WarehouseCategoryUpdateRequestModelImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WarehouseCategoryUpdateRequestModelImpl &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.parentId, parentId) ||
-                other.parentId == parentId));
+                other.parentId == parentId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, homeId, categoryId, name, parentId);
+  int get hashCode => Object.hash(
+      runtimeType, householdId, categoryId, name, parentId, userName);
 
   @JsonKey(ignore: true)
   @override
@@ -216,10 +237,11 @@ class _$WarehouseCategoryUpdateRequestModelImpl
 abstract class _WarehouseCategoryUpdateRequestModel
     implements WarehouseCategoryUpdateRequestModel {
   factory _WarehouseCategoryUpdateRequestModel(
-          {@JsonKey(name: 'household_id') required final String homeId,
+          {@JsonKey(name: 'household_id') required final String householdId,
           @JsonKey(name: 'category_id') required final String categoryId,
           @JsonKey(name: 'name') required final String name,
-          @JsonKey(name: 'parent_id') final String? parentId}) =
+          @JsonKey(name: 'parent_id') final String? parentId,
+          @JsonKey(name: 'user_name') final String? userName}) =
       _$WarehouseCategoryUpdateRequestModelImpl;
 
   factory _WarehouseCategoryUpdateRequestModel.fromJson(
@@ -228,7 +250,7 @@ abstract class _WarehouseCategoryUpdateRequestModel
 
   @override
   @JsonKey(name: 'household_id')
-  String get homeId;
+  String get householdId;
   @override
   @JsonKey(name: 'category_id')
   String get categoryId;
@@ -238,6 +260,9 @@ abstract class _WarehouseCategoryUpdateRequestModel
   @override
   @JsonKey(name: 'parent_id')
   String? get parentId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseCategoryUpdateRequestModelImplCopyWith<

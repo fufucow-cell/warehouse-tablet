@@ -53,7 +53,7 @@ class SmartHomeHouseholdPageController extends BasePageController {
   @override
   Future<void> apiProcessing() async {
     final response = await ApiUtil.sendRequest<HomeHouseholdResponseModel>(
-      EnumApiInfo.homeFetch,
+      EnumApiInfo.homeRead,
       requestModel: HomeHouseholdRequestModel(
         householdId: _model.householdId?.toString(),
       ),

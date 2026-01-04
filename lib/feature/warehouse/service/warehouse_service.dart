@@ -27,6 +27,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
@@ -82,12 +83,14 @@ class WarehouseService {
     } else {
       final service = WarehouseService._internal();
       Get.put<WarehouseService>(service, permanent: true);
+      service._registerWarehouseApiUtil();
       return service;
     }
   }
 
   static void unregister() {
     if (Get.isRegistered<WarehouseService>()) {
+      instance._unregisterWarehouseApiUtil();
       Get.delete<WarehouseService>(force: true);
     }
   }
@@ -165,6 +168,8 @@ class WarehouseService {
         .toList();
     LocaleUtil.instance.switchFromCode(data.language);
     ThemeUtil.instance.switchFromString(data.theme);
+    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
+    ApiUtil.instance.updateDomain(domain);
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -331,16 +336,19 @@ class WarehouseService {
 
   // MARK: - Item APIs
 
-  Future<List<Room>?> apiReqFetchItems(
+  Future<List<Room>?> apiReqReadItems(
     WarehouseItemRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
     _model.allRoomCabinetItems.value = null;
     final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
-      EnumApiInfo.itemFetch,
+      EnumApiInfo.itemRead,
       requestModel: request,
       fromJson: WarehouseItemResponseModel.fromJson,
-      onError: onError,
+      onError: (error) {
+        print(error);
+        onError?.call(error);
+      },
     );
     _model.allRoomCabinetItems.value = response?.data;
     _genAllCombineItems();
@@ -462,7 +470,7 @@ class WarehouseService {
     ApiErrorHandler? onError,
   }) async {
     final response = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
-      EnumApiInfo.categoryFetch,
+      EnumApiInfo.categoryRead,
       requestModel: request,
       fromJson: WarehouseCategoryResponseModel.fromJson,
       onError: onError,
@@ -480,7 +488,7 @@ class WarehouseService {
     ApiErrorHandler? onError,
   }) async {
     return await ApiUtil.sendRequest<Category?>(
-      EnumApiInfo.categoryModify,
+      EnumApiInfo.categoryUpdate,
       requestModel: request,
       fromJson: Category.fromJson,
       onError: onError,
@@ -500,12 +508,12 @@ class WarehouseService {
 
   // MARK: - Log APIs
 
-  Future<List<ItemRecord>?> apiReqFetchLogs(
+  Future<List<ItemRecord>?> apiReqReadLogs(
     WarehouseRecordRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
     final response = await ApiUtil.sendRequest<WarehouseRecordResponseModel>(
-      EnumApiInfo.logFetch,
+      EnumApiInfo.logRead,
       requestModel: request,
       fromJson: WarehouseRecordResponseModel.fromJson,
       onError: onError,
@@ -543,5 +551,14 @@ class WarehouseService {
         _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
             [];
     _model.allCombineItems = combineItems(flattenItems);
+  }
+
+  void _registerWarehouseApiUtil() {
+    final envUtil = EnvironmentUtil.instance;
+    ApiUtil.register(envUtil.apiBaseUrl);
+  }
+
+  void _unregisterWarehouseApiUtil() {
+    ApiUtil.unregister();
   }
 }

@@ -13,6 +13,7 @@ class WarehouseItemEditNormalRequestModel with _$WarehouseItemEditNormalRequestM
     String? description,
     int? minStockAlert,
     String? categoryId,
+    @JsonKey(name: 'user_name') String? userName,
   }) = _WarehouseItemEditNormalRequestModel;
 
   factory WarehouseItemEditNormalRequestModel.fromJson(

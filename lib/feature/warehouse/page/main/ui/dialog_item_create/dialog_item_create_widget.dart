@@ -62,13 +62,9 @@ class DialogItemCreateWidget extends StatelessWidget {
 
                   final isSuccess = await onConfirm(outputModel);
 
-                  if (isSuccess) {
-                    Navigator.of(context).pop();
-                  }
-
                   controller.interactive(
                     EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
-                    data: context,
+                    data: isSuccess ? context : false,
                   );
                 },
               ),

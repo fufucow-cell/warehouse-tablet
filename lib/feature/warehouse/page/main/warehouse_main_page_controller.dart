@@ -16,8 +16,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
@@ -61,7 +59,6 @@ class WarehouseMainPageController extends GetxController {
     _disposeTabController();
     _disposeTabPageControllers();
     WarehouseService.unregister();
-    _unregisterWarehouseApiUtil();
     super.onClose();
   }
 
@@ -69,7 +66,6 @@ class WarehouseMainPageController extends GetxController {
 
   void setRouterData(WarehouseMainPageRouterData routerData) {
     WarehouseService.register().updateData(routerData);
-    _registerWarehouseApiUtil();
     _queryApiData();
   }
 
@@ -137,8 +133,8 @@ class WarehouseMainPageController extends GetxController {
 
   Future<void> _queryApiData() async {
     final responses = await Future.wait([
-      _service.apiReqFetchItems(WarehouseItemRequestModel()),
-      _service.apiReqReadCategory(WarehouseCategoryReadRequestModel()),
+      _service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)),
+      // _service.apiReqReadCategory(WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId)),
     ]);
 
     final items = responses[0];
@@ -150,9 +146,7 @@ class WarehouseMainPageController extends GetxController {
     _selectedItemWorker = ever(
       selectedItemRx.rx,
       (value) {
-        if (_model.isTabControllerReady.value &&
-            _tabController != null &&
-            !_tabController!.indexIsChanging) {
+        if (_model.isTabControllerReady.value && _tabController != null && !_tabController!.indexIsChanging) {
           final targetIndex = EnumWarehouseTabItem.values.indexOf(value);
           if (targetIndex >= 0 && targetIndex < EnumWarehouseTabItem.values.length) {
             _tabController!.animateTo(targetIndex);
@@ -160,15 +154,6 @@ class WarehouseMainPageController extends GetxController {
         }
       },
     );
-  }
-
-  void _registerWarehouseApiUtil() {
-    final envUtil = EnvironmentUtil.instance;
-    ApiUtil.register(envUtil.apiBaseUrl);
-  }
-
-  void _unregisterWarehouseApiUtil() {
-    ApiUtil.unregister();
   }
 
   void _disposeTabController() {
@@ -224,6 +209,7 @@ class WarehouseMainPageController extends GetxController {
       cabinetId: model.cabinetId,
       categoryId: model.categoryId,
       householdId: _service.getHouseholdId,
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqCreateItem(

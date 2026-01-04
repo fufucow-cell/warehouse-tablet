@@ -53,7 +53,7 @@ class DialogItemHistoryWidgetController extends GetxController {
     final records = _service.allRecordsRx.value;
 
     if (records == null) {
-      final response = await _service.apiReqFetchLogs(
+      final response = await _service.apiReqReadLogs(
         WarehouseRecordRequestModel(),
         onError: (error) {
           errMsg = '[${error.code}] ${error.message ?? ''}';

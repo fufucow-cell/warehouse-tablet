@@ -104,7 +104,7 @@ class WarehouseCabinetPageController extends GetxController {
     final allRoomCabinetItems = _service.allRoomCabinetItemsRx.value;
 
     if (allRoomCabinetItems == null) {
-      final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
+      final response = await _service.apiReqReadItems(WarehouseItemRequestModel());
 
       if (response != null) {
         _model.allRoomCabinetItems.value = response;
@@ -131,7 +131,7 @@ class WarehouseCabinetPageController extends GetxController {
     final response = await _service.apiReqCreateCabinet(request);
 
     if (response != null) {
-      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
+      unawaited(_service.apiReqReadItems(WarehouseItemRequestModel()));
       return true;
     }
 
@@ -158,7 +158,7 @@ class WarehouseCabinetPageController extends GetxController {
     final response = await _service.apiReqUpdateCabinet(reqModel);
 
     if (response != null) {
-      unawaited(_service.apiReqFetchItems(WarehouseItemRequestModel()));
+      unawaited(_service.apiReqReadItems(WarehouseItemRequestModel()));
       return true;
     }
 

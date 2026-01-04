@@ -8,6 +8,7 @@ part 'warehouse_cabinet_update_request_model.g.dart';
 class WarehouseCabinetUpdateRequestModel with _$WarehouseCabinetUpdateRequestModel {
   factory WarehouseCabinetUpdateRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
+    @JsonKey(name: 'user_name') String? userName,
     List<RequestCabinet>? cabinets,
   }) = _WarehouseCabinetUpdateRequestModel;
 

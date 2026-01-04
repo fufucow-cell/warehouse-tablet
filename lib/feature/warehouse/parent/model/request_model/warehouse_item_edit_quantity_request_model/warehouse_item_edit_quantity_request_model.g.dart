@@ -12,6 +12,7 @@ _$WarehouseItemEditQuantityRequestModelImpl
         _$WarehouseItemEditQuantityRequestModelImpl(
           householdId: json['household_id'] as String?,
           itemId: json['item_id'] as String?,
+          userName: json['user_name'] as String?,
           cabinets: (json['cabinets'] as List<dynamic>?)
               ?.map((e) => QuantityCabinetRequestModel.fromJson(
                   e as Map<String, dynamic>))
@@ -23,6 +24,7 @@ Map<String, dynamic> _$$WarehouseItemEditQuantityRequestModelImplToJson(
     <String, dynamic>{
       'household_id': instance.householdId,
       'item_id': instance.itemId,
+      'user_name': instance.userName,
       'cabinets': instance.cabinets?.map((e) => e.toJson()).toList(),
     };
 

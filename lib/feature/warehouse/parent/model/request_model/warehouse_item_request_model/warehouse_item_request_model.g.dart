@@ -13,7 +13,7 @@ _$WarehouseItemRequestModelImpl _$$WarehouseItemRequestModelImplFromJson(
       cabinetId: json['cabinet_id'] as String?,
       categoryId: json['category_id'] as String?,
       roomId: json['room_id'] as String?,
-      homeId: json['household_id'] as String?,
+      householdId: json['household_id'] as String?,
     );
 
 Map<String, dynamic> _$$WarehouseItemRequestModelImplToJson(
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$WarehouseItemRequestModelImplToJson(
       'cabinet_id': instance.cabinetId,
       'category_id': instance.categoryId,
       'room_id': instance.roomId,
-      'household_id': instance.homeId,
+      'household_id': instance.householdId,
     };

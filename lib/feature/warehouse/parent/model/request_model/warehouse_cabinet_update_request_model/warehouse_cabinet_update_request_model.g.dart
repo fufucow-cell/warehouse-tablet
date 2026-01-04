@@ -11,6 +11,7 @@ _$WarehouseCabinetUpdateRequestModelImpl
             Map<String, dynamic> json) =>
         _$WarehouseCabinetUpdateRequestModelImpl(
           householdId: json['household_id'] as String?,
+          userName: json['user_name'] as String?,
           cabinets: (json['cabinets'] as List<dynamic>?)
               ?.map((e) => RequestCabinet.fromJson(e as Map<String, dynamic>))
               .toList(),
@@ -20,5 +21,6 @@ Map<String, dynamic> _$$WarehouseCabinetUpdateRequestModelImplToJson(
         _$WarehouseCabinetUpdateRequestModelImpl instance) =>
     <String, dynamic>{
       'household_id': instance.householdId,
+      'user_name': instance.userName,
       'cabinets': instance.cabinets?.map((e) => e.toJson()).toList(),
     };

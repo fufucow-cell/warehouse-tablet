@@ -30,6 +30,8 @@ mixin _$WarehouseItemEditNormalRequestModel {
   String? get description => throw _privateConstructorUsedError;
   int? get minStockAlert => throw _privateConstructorUsedError;
   String? get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -53,7 +55,8 @@ abstract class $WarehouseItemEditNormalRequestModelCopyWith<$Res> {
       String? name,
       String? description,
       int? minStockAlert,
-      String? categoryId});
+      String? categoryId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -77,6 +80,7 @@ class _$WarehouseItemEditNormalRequestModelCopyWithImpl<$Res,
     Object? description = freezed,
     Object? minStockAlert = freezed,
     Object? categoryId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
       householdId: freezed == householdId
@@ -107,6 +111,10 @@ class _$WarehouseItemEditNormalRequestModelCopyWithImpl<$Res,
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -127,7 +135,8 @@ abstract class _$$WarehouseItemEditNormalRequestModelImplCopyWith<$Res>
       String? name,
       String? description,
       int? minStockAlert,
-      String? categoryId});
+      String? categoryId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -150,6 +159,7 @@ class __$$WarehouseItemEditNormalRequestModelImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? minStockAlert = freezed,
     Object? categoryId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_$WarehouseItemEditNormalRequestModelImpl(
       householdId: freezed == householdId
@@ -180,6 +190,10 @@ class __$$WarehouseItemEditNormalRequestModelImplCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -195,7 +209,8 @@ class _$WarehouseItemEditNormalRequestModelImpl
       this.name,
       this.description,
       this.minStockAlert,
-      this.categoryId});
+      this.categoryId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$WarehouseItemEditNormalRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -217,10 +232,13 @@ class _$WarehouseItemEditNormalRequestModelImpl
   final int? minStockAlert;
   @override
   final String? categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseItemEditNormalRequestModel(householdId: $householdId, itemId: $itemId, photo: $photo, name: $name, description: $description, minStockAlert: $minStockAlert, categoryId: $categoryId)';
+    return 'WarehouseItemEditNormalRequestModel(householdId: $householdId, itemId: $itemId, photo: $photo, name: $name, description: $description, minStockAlert: $minStockAlert, categoryId: $categoryId, userName: $userName)';
   }
 
   @override
@@ -238,13 +256,15 @@ class _$WarehouseItemEditNormalRequestModelImpl
             (identical(other.minStockAlert, minStockAlert) ||
                 other.minStockAlert == minStockAlert) &&
             (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
+                other.categoryId == categoryId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, householdId, itemId, photo, name,
-      description, minStockAlert, categoryId);
+      description, minStockAlert, categoryId, userName);
 
   @JsonKey(ignore: true)
   @override
@@ -265,13 +285,15 @@ class _$WarehouseItemEditNormalRequestModelImpl
 abstract class _WarehouseItemEditNormalRequestModel
     implements WarehouseItemEditNormalRequestModel {
   factory _WarehouseItemEditNormalRequestModel(
-      {@JsonKey(name: 'household_id') final String? householdId,
-      @JsonKey(name: 'item_id') final String? itemId,
-      final String? photo,
-      final String? name,
-      final String? description,
-      final int? minStockAlert,
-      final String? categoryId}) = _$WarehouseItemEditNormalRequestModelImpl;
+          {@JsonKey(name: 'household_id') final String? householdId,
+          @JsonKey(name: 'item_id') final String? itemId,
+          final String? photo,
+          final String? name,
+          final String? description,
+          final int? minStockAlert,
+          final String? categoryId,
+          @JsonKey(name: 'user_name') final String? userName}) =
+      _$WarehouseItemEditNormalRequestModelImpl;
 
   factory _WarehouseItemEditNormalRequestModel.fromJson(
           Map<String, dynamic> json) =
@@ -293,6 +315,9 @@ abstract class _WarehouseItemEditNormalRequestModel
   int? get minStockAlert;
   @override
   String? get categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseItemEditNormalRequestModelImplCopyWith<

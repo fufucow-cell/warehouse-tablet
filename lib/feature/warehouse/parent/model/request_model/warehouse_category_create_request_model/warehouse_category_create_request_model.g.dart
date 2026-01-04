@@ -11,14 +11,16 @@ _$WarehouseCategoryCreateRequestModelImpl
             Map<String, dynamic> json) =>
         _$WarehouseCategoryCreateRequestModelImpl(
           name: json['name'] as String,
-          homeId: json['household_id'] as String,
+          householdId: json['household_id'] as String,
           parentId: json['parent_id'] as String?,
+          userName: json['user_name'] as String?,
         );
 
 Map<String, dynamic> _$$WarehouseCategoryCreateRequestModelImplToJson(
         _$WarehouseCategoryCreateRequestModelImpl instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'household_id': instance.homeId,
+      'household_id': instance.householdId,
       'parent_id': instance.parentId,
+      'user_name': instance.userName,
     };

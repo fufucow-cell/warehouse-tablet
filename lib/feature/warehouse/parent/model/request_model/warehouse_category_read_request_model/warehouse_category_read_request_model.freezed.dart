@@ -22,7 +22,7 @@ WarehouseCategoryReadRequestModel _$WarehouseCategoryReadRequestModelFromJson(
 /// @nodoc
 mixin _$WarehouseCategoryReadRequestModel {
   @JsonKey(name: 'household_id')
-  String? get homeId => throw _privateConstructorUsedError;
+  String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   String? get categoryId => throw _privateConstructorUsedError;
 
@@ -41,7 +41,7 @@ abstract class $WarehouseCategoryReadRequestModelCopyWith<$Res> {
           WarehouseCategoryReadRequestModel>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'category_id') String? categoryId});
 }
 
@@ -59,13 +59,13 @@ class _$WarehouseCategoryReadRequestModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? categoryId = freezed,
   }) {
     return _then(_value.copyWith(
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryId: freezed == categoryId
           ? _value.categoryId
@@ -85,7 +85,7 @@ abstract class _$$WarehouseCategoryReadRequestModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'household_id') String? homeId,
+      {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'category_id') String? categoryId});
 }
 
@@ -102,13 +102,13 @@ class __$$WarehouseCategoryReadRequestModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? categoryId = freezed,
   }) {
     return _then(_$WarehouseCategoryReadRequestModelImpl(
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       categoryId: freezed == categoryId
           ? _value.categoryId
@@ -123,7 +123,7 @@ class __$$WarehouseCategoryReadRequestModelImplCopyWithImpl<$Res>
 class _$WarehouseCategoryReadRequestModelImpl
     implements _WarehouseCategoryReadRequestModel {
   _$WarehouseCategoryReadRequestModelImpl(
-      {@JsonKey(name: 'household_id') this.homeId,
+      {@JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'category_id') this.categoryId});
 
   factory _$WarehouseCategoryReadRequestModelImpl.fromJson(
@@ -132,14 +132,14 @@ class _$WarehouseCategoryReadRequestModelImpl
 
   @override
   @JsonKey(name: 'household_id')
-  final String? homeId;
+  final String? householdId;
   @override
   @JsonKey(name: 'category_id')
   final String? categoryId;
 
   @override
   String toString() {
-    return 'WarehouseCategoryReadRequestModel(homeId: $homeId, categoryId: $categoryId)';
+    return 'WarehouseCategoryReadRequestModel(householdId: $householdId, categoryId: $categoryId)';
   }
 
   @override
@@ -147,14 +147,15 @@ class _$WarehouseCategoryReadRequestModelImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$WarehouseCategoryReadRequestModelImpl &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, homeId, categoryId);
+  int get hashCode => Object.hash(runtimeType, householdId, categoryId);
 
   @JsonKey(ignore: true)
   @override
@@ -175,7 +176,7 @@ class _$WarehouseCategoryReadRequestModelImpl
 abstract class _WarehouseCategoryReadRequestModel
     implements WarehouseCategoryReadRequestModel {
   factory _WarehouseCategoryReadRequestModel(
-          {@JsonKey(name: 'household_id') final String? homeId,
+          {@JsonKey(name: 'household_id') final String? householdId,
           @JsonKey(name: 'category_id') final String? categoryId}) =
       _$WarehouseCategoryReadRequestModelImpl;
 
@@ -185,7 +186,7 @@ abstract class _WarehouseCategoryReadRequestModel
 
   @override
   @JsonKey(name: 'household_id')
-  String? get homeId;
+  String? get householdId;
   @override
   @JsonKey(name: 'category_id')
   String? get categoryId;

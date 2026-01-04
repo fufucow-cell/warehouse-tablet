@@ -1,6 +1,7 @@
 import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_service_model.dart';
@@ -54,4 +55,6 @@ class SmartHomeService {
     }
     return _model.allHouseholdDataMap[householdId];
   }
+
+  String get getDomain => ApiUtil.getDomain;
 }

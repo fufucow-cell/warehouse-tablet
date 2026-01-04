@@ -23,6 +23,8 @@ WarehouseCabinetUpdateRequestModel _$WarehouseCabinetUpdateRequestModelFromJson(
 mixin _$WarehouseCabinetUpdateRequestModel {
   @JsonKey(name: 'household_id')
   String? get householdId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
   List<RequestCabinet>? get cabinets => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -42,6 +44,7 @@ abstract class $WarehouseCabinetUpdateRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'user_name') String? userName,
       List<RequestCabinet>? cabinets});
 }
 
@@ -60,12 +63,17 @@ class _$WarehouseCabinetUpdateRequestModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? householdId = freezed,
+    Object? userName = freezed,
     Object? cabinets = freezed,
   }) {
     return _then(_value.copyWith(
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       cabinets: freezed == cabinets
           ? _value.cabinets
@@ -86,6 +94,7 @@ abstract class _$$WarehouseCabinetUpdateRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'user_name') String? userName,
       List<RequestCabinet>? cabinets});
 }
 
@@ -103,12 +112,17 @@ class __$$WarehouseCabinetUpdateRequestModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? householdId = freezed,
+    Object? userName = freezed,
     Object? cabinets = freezed,
   }) {
     return _then(_$WarehouseCabinetUpdateRequestModelImpl(
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       cabinets: freezed == cabinets
           ? _value._cabinets
@@ -124,6 +138,7 @@ class _$WarehouseCabinetUpdateRequestModelImpl
     implements _WarehouseCabinetUpdateRequestModel {
   _$WarehouseCabinetUpdateRequestModelImpl(
       {@JsonKey(name: 'household_id') this.householdId,
+      @JsonKey(name: 'user_name') this.userName,
       final List<RequestCabinet>? cabinets})
       : _cabinets = cabinets;
 
@@ -134,6 +149,9 @@ class _$WarehouseCabinetUpdateRequestModelImpl
   @override
   @JsonKey(name: 'household_id')
   final String? householdId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
   final List<RequestCabinet>? _cabinets;
   @override
   List<RequestCabinet>? get cabinets {
@@ -146,7 +164,7 @@ class _$WarehouseCabinetUpdateRequestModelImpl
 
   @override
   String toString() {
-    return 'WarehouseCabinetUpdateRequestModel(householdId: $householdId, cabinets: $cabinets)';
+    return 'WarehouseCabinetUpdateRequestModel(householdId: $householdId, userName: $userName, cabinets: $cabinets)';
   }
 
   @override
@@ -156,13 +174,15 @@ class _$WarehouseCabinetUpdateRequestModelImpl
             other is _$WarehouseCabinetUpdateRequestModelImpl &&
             (identical(other.householdId, householdId) ||
                 other.householdId == householdId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
             const DeepCollectionEquality().equals(other._cabinets, _cabinets));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, householdId, const DeepCollectionEquality().hash(_cabinets));
+  int get hashCode => Object.hash(runtimeType, householdId, userName,
+      const DeepCollectionEquality().hash(_cabinets));
 
   @JsonKey(ignore: true)
   @override
@@ -184,6 +204,7 @@ abstract class _WarehouseCabinetUpdateRequestModel
     implements WarehouseCabinetUpdateRequestModel {
   factory _WarehouseCabinetUpdateRequestModel(
           {@JsonKey(name: 'household_id') final String? householdId,
+          @JsonKey(name: 'user_name') final String? userName,
           final List<RequestCabinet>? cabinets}) =
       _$WarehouseCabinetUpdateRequestModelImpl;
 
@@ -194,6 +215,9 @@ abstract class _WarehouseCabinetUpdateRequestModel
   @override
   @JsonKey(name: 'household_id')
   String? get householdId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   List<RequestCabinet>? get cabinets;
   @override

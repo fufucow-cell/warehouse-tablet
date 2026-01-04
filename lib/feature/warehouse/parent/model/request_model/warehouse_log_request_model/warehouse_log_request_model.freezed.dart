@@ -24,7 +24,7 @@ mixin _$WarehouseRecordRequestModel {
   @JsonKey(name: 'log_id')
   String? get logId => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
-  String? get homeId => throw _privateConstructorUsedError;
+  String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'after_time')
   int? get afterTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'operate_type')
@@ -50,7 +50,7 @@ abstract class $WarehouseRecordRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
-      @JsonKey(name: 'household_id') String? homeId,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -72,7 +72,7 @@ class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? logId = freezed,
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? afterTime = freezed,
     Object? operateType = freezed,
     Object? itemType = freezed,
@@ -83,9 +83,9 @@ class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
           ? _value.logId
           : logId // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       afterTime: freezed == afterTime
           ? _value.afterTime
@@ -118,7 +118,7 @@ abstract class _$$WarehouseRecordRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
-      @JsonKey(name: 'household_id') String? homeId,
+      @JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -139,7 +139,7 @@ class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? logId = freezed,
-    Object? homeId = freezed,
+    Object? householdId = freezed,
     Object? afterTime = freezed,
     Object? operateType = freezed,
     Object? itemType = freezed,
@@ -150,9 +150,9 @@ class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
           ? _value.logId
           : logId // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
       afterTime: freezed == afterTime
           ? _value.afterTime
@@ -180,7 +180,7 @@ class _$WarehouseRecordRequestModelImpl
     implements _WarehouseRecordRequestModel {
   _$WarehouseRecordRequestModelImpl(
       {@JsonKey(name: 'log_id') this.logId,
-      @JsonKey(name: 'household_id') this.homeId,
+      @JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'after_time') this.afterTime,
       @JsonKey(name: 'operate_type') this.operateType,
       @JsonKey(name: 'item_type') this.itemType,
@@ -195,7 +195,7 @@ class _$WarehouseRecordRequestModelImpl
   final String? logId;
   @override
   @JsonKey(name: 'household_id')
-  final String? homeId;
+  final String? householdId;
   @override
   @JsonKey(name: 'after_time')
   final int? afterTime;
@@ -211,7 +211,7 @@ class _$WarehouseRecordRequestModelImpl
 
   @override
   String toString() {
-    return 'WarehouseRecordRequestModel(logId: $logId, homeId: $homeId, afterTime: $afterTime, operateType: $operateType, itemType: $itemType, logType: $logType)';
+    return 'WarehouseRecordRequestModel(logId: $logId, householdId: $householdId, afterTime: $afterTime, operateType: $operateType, itemType: $itemType, logType: $logType)';
   }
 
   @override
@@ -220,7 +220,8 @@ class _$WarehouseRecordRequestModelImpl
         (other.runtimeType == runtimeType &&
             other is _$WarehouseRecordRequestModelImpl &&
             (identical(other.logId, logId) || other.logId == logId) &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.afterTime, afterTime) ||
                 other.afterTime == afterTime) &&
             (identical(other.operateType, operateType) ||
@@ -232,8 +233,8 @@ class _$WarehouseRecordRequestModelImpl
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, logId, homeId, afterTime, operateType, itemType, logType);
+  int get hashCode => Object.hash(runtimeType, logId, householdId, afterTime,
+      operateType, itemType, logType);
 
   @JsonKey(ignore: true)
   @override
@@ -254,7 +255,7 @@ abstract class _WarehouseRecordRequestModel
     implements WarehouseRecordRequestModel {
   factory _WarehouseRecordRequestModel(
           {@JsonKey(name: 'log_id') final String? logId,
-          @JsonKey(name: 'household_id') final String? homeId,
+          @JsonKey(name: 'household_id') final String? householdId,
           @JsonKey(name: 'after_time') final int? afterTime,
           @JsonKey(name: 'operate_type') final int? operateType,
           @JsonKey(name: 'item_type') final int? itemType,
@@ -269,7 +270,7 @@ abstract class _WarehouseRecordRequestModel
   String? get logId;
   @override
   @JsonKey(name: 'household_id')
-  String? get homeId;
+  String? get householdId;
   @override
   @JsonKey(name: 'after_time')
   int? get afterTime;

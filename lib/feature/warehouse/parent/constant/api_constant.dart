@@ -8,17 +8,17 @@ enum EnumApiInfo {
   resetPassword('auth/reset-password', EnumApiMethod.post),
   // Household
   homeCreate('home', EnumApiMethod.post),
-  homeFetch('home', EnumApiMethod.get),
-  homeModify('home', EnumApiMethod.put),
+  homeRead('home', EnumApiMethod.get),
+  homeUpdate('home', EnumApiMethod.put),
   homeDelete('home', EnumApiMethod.delete),
   // Room
   roomCreate('room', EnumApiMethod.post),
-  roomFetch('room', EnumApiMethod.get),
-  roomModify('room', EnumApiMethod.put),
+  roomRead('room', EnumApiMethod.get),
+  roomUpdate('room', EnumApiMethod.put),
   roomDelete('room', EnumApiMethod.delete),
   // Warehouse Item
   itemCreate('item', EnumApiMethod.post),
-  itemFetch('item', EnumApiMethod.get),
+  itemRead('item', EnumApiMethod.get),
   itemUpdateNormal('item/normal', EnumApiMethod.put),
   itemUpdatePosition('item/position', EnumApiMethod.put),
   itemUpdateQuantity('item/quantity', EnumApiMethod.put),
@@ -28,12 +28,12 @@ enum EnumApiInfo {
   cabinetUpdate('cabinet', EnumApiMethod.put),
   // Warehouse Category
   categoryCreate('category', EnumApiMethod.post),
-  categoryFetch('category', EnumApiMethod.get),
-  categoryModify('category', EnumApiMethod.put),
+  categoryRead('category', EnumApiMethod.get),
+  categoryUpdate('category', EnumApiMethod.put),
   categoryDelete('category', EnumApiMethod.delete),
   // Warehouse Record
   logCreate('log', EnumApiMethod.post),
-  logFetch('log', EnumApiMethod.get),
+  logRead('log', EnumApiMethod.get),
   logDelete('log', EnumApiMethod.delete);
 
   const EnumApiInfo(this.path, this.method);

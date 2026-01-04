@@ -8,6 +8,7 @@ class WarehouseItemEditQuantityRequestModel with _$WarehouseItemEditQuantityRequ
   factory WarehouseItemEditQuantityRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,
+    @JsonKey(name: 'user_name') String? userName,
     List<QuantityCabinetRequestModel>? cabinets,
   }) = _WarehouseItemEditQuantityRequestModel;
 

@@ -9,8 +9,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_
 class ApiMockUtil {
   // MARK: - Properties
 
-  static const bool isAllMock = true;
-  static List<EnumApiInfo> get mockApiList => [];
+  static const bool isAllMock = false;
+  static List<EnumApiInfo> get mockApiList => [
+        // EnumApiInfo.itemRead,
+      ];
 
   // MARK: - Method
 

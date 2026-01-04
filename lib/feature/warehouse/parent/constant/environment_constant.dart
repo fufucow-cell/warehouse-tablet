@@ -24,7 +24,7 @@ enum EnumEnvironment {
 
   String get apiBaseUrl {
     return switch (this) {
-      EnumEnvironment.dev => 'http://localhost:8000',
+      EnumEnvironment.dev => 'http://127.0.0.1:8000',
       EnumEnvironment.stg => '',
       EnumEnvironment.uat => '',
       EnumEnvironment.prd => '',

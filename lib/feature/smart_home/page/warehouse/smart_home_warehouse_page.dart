@@ -21,7 +21,7 @@ class SmartHomeWarehousePage extends GetView<SmartHomeWarehousePageController> {
       init: SmartHomeWarehousePageController(),
       builder: (controller) {
         return WarehouseMainPage(
-          routerData: controller.getWarehouseMainPageRouterData(),
+          routerData: controller.getMockData(),
         );
       },
     );

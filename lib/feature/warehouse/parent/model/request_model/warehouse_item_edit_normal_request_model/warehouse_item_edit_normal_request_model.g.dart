@@ -17,6 +17,7 @@ _$WarehouseItemEditNormalRequestModelImpl
           description: json['description'] as String?,
           minStockAlert: (json['minStockAlert'] as num?)?.toInt(),
           categoryId: json['categoryId'] as String?,
+          userName: json['user_name'] as String?,
         );
 
 Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
@@ -29,4 +30,5 @@ Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
       'description': instance.description,
       'minStockAlert': instance.minStockAlert,
       'categoryId': instance.categoryId,
+      'user_name': instance.userName,
     };

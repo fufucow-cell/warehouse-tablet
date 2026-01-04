@@ -163,7 +163,7 @@ class WarehouseCategoryPageController extends GetxController {
   Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
     final request = WarehouseCategoryCreateRequestModel(
       name: outputModel.name,
-      homeId: _service.getHouseholdId,
+      householdId: _service.getHouseholdId,
       parentId: outputModel.parentId,
     );
 
@@ -185,7 +185,7 @@ class WarehouseCategoryPageController extends GetxController {
 
   Future<bool> _updateCategory(DialogCategoryEditOutputModel outputModel, String categoryId) async {
     final request = WarehouseCategoryUpdateRequestModel(
-      homeId: _service.getHouseholdId,
+      householdId: _service.getHouseholdId,
       categoryId: categoryId,
       name: outputModel.name,
       parentId: outputModel.parentId,
@@ -203,7 +203,7 @@ class WarehouseCategoryPageController extends GetxController {
 
   Future<bool> _deleteCategory(DialogCategoryDeleteOutputModel outputModel) async {
     final request = WarehouseCategoryDeleteRequestModel(
-      homeId: _service.getHouseholdId,
+      householdId: _service.getHouseholdId,
       categoryId: outputModel.categoryId,
     );
 

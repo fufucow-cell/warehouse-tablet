@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget.dart';
@@ -41,6 +43,7 @@ class WarehouseItemPageController extends GetxController {
   RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
   Worker? _searchConditionWorker;
   Worker? _searchCabinetIdWorker;
+  Worker? _allRoomCabinetItemsWorker;
 
   // MARK: - Init
 
@@ -48,9 +51,10 @@ class WarehouseItemPageController extends GetxController {
   void onInit() {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
-    _genFilterRuleForRoom();
-    _queryApiData();
     _addListeners();
+    _genFilterRuleForRoom();
+    _checkData();
+    _queryApiData();
   }
 
   @override
@@ -58,6 +62,7 @@ class WarehouseItemPageController extends GetxController {
     LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
     _searchConditionWorker?.dispose();
     _searchCabinetIdWorker?.dispose();
+    _allRoomCabinetItemsWorker?.dispose();
     super.onClose();
   }
 
@@ -118,24 +123,27 @@ class WarehouseItemPageController extends GetxController {
 
   // MARK: - Private Methods
 
-  Future<void> _queryApiData() async {
-    final response = await _service.apiReqFetchItems(WarehouseItemRequestModel());
-
-    if (response == null) {
-      return;
+  void _checkData() {
+    if (_model.allRoomCabinetItems.value == null) {
+      _queryApiData();
+    } else {
+      _model.allRoomCabinetItems.value = _service.getAllRoomCabinetItems;
+      _refreshData();
     }
+  }
 
-    _model.allRoomCabinetItems.value = response;
-
-    // 恢復所有篩選條件索引值
-    _model.filterIndexForRooms.value = 0;
-    _model.filterIndexForCabinets.value = 0;
-    _model.filterIndexForCategories.value = {};
-
-    // 生成篩選條件
+  void _refreshData() {
     _genFilterRuleForCabinet();
     _genAllFilterRuleAndItemForCategory();
     _genVisibleItems();
+  }
+
+  Future<void> _queryApiData() async {
+    _model.allRoomCabinetItems.value = null;
+    _model.filterIndexForRooms.value = 0;
+    _model.filterIndexForCabinets.value = 0;
+    _model.filterIndexForCategories.value = {};
+    unawaited(_service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)));
   }
 
   Future<bool> _updateItemNormal(Item item, DialogItemNormalEditOutputModel model) async {
@@ -408,6 +416,10 @@ class WarehouseItemPageController extends GetxController {
           _model.isFilterExpanded.value = true;
         }
       }
+    });
+    _allRoomCabinetItemsWorker = ever(_service.allRoomCabinetItemsRx.rx, (rooms) {
+      _model.allRoomCabinetItems.value = rooms;
+      _refreshData();
     });
   }
 }

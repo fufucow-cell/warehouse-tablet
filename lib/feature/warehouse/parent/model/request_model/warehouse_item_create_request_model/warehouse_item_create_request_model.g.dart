@@ -17,6 +17,7 @@ _$WarehouseItemCreateRequestModelImpl
           cabinetId: json['cabinet_id'] as String?,
           categoryId: json['category_id'] as String?,
           householdId: json['household_id'] as String?,
+          userName: json['user_name'] as String?,
         );
 
 Map<String, dynamic> _$$WarehouseItemCreateRequestModelImplToJson(
@@ -30,4 +31,5 @@ Map<String, dynamic> _$$WarehouseItemCreateRequestModelImplToJson(
       'cabinet_id': instance.cabinetId,
       'category_id': instance.categoryId,
       'household_id': instance.householdId,
+      'user_name': instance.userName,
     };

@@ -30,7 +30,7 @@ mixin _$WarehouseItemRequestModel {
   @JsonKey(name: 'room_id')
   String? get roomId => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
-  String? get homeId => throw _privateConstructorUsedError;
+  String? get householdId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,7 +49,7 @@ abstract class $WarehouseItemRequestModelCopyWith<$Res> {
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'household_id') String? homeId});
+      @JsonKey(name: 'household_id') String? householdId});
 }
 
 /// @nodoc
@@ -70,7 +70,7 @@ class _$WarehouseItemRequestModelCopyWithImpl<$Res,
     Object? cabinetId = freezed,
     Object? categoryId = freezed,
     Object? roomId = freezed,
-    Object? homeId = freezed,
+    Object? householdId = freezed,
   }) {
     return _then(_value.copyWith(
       itemId: freezed == itemId
@@ -89,9 +89,9 @@ class _$WarehouseItemRequestModelCopyWithImpl<$Res,
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -111,7 +111,7 @@ abstract class _$$WarehouseItemRequestModelImplCopyWith<$Res>
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
       @JsonKey(name: 'room_id') String? roomId,
-      @JsonKey(name: 'household_id') String? homeId});
+      @JsonKey(name: 'household_id') String? householdId});
 }
 
 /// @nodoc
@@ -131,7 +131,7 @@ class __$$WarehouseItemRequestModelImplCopyWithImpl<$Res>
     Object? cabinetId = freezed,
     Object? categoryId = freezed,
     Object? roomId = freezed,
-    Object? homeId = freezed,
+    Object? householdId = freezed,
   }) {
     return _then(_$WarehouseItemRequestModelImpl(
       itemId: freezed == itemId
@@ -150,9 +150,9 @@ class __$$WarehouseItemRequestModelImplCopyWithImpl<$Res>
           ? _value.roomId
           : roomId // ignore: cast_nullable_to_non_nullable
               as String?,
-      homeId: freezed == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: freezed == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -166,7 +166,7 @@ class _$WarehouseItemRequestModelImpl implements _WarehouseItemRequestModel {
       @JsonKey(name: 'cabinet_id') this.cabinetId,
       @JsonKey(name: 'category_id') this.categoryId,
       @JsonKey(name: 'room_id') this.roomId,
-      @JsonKey(name: 'household_id') this.homeId});
+      @JsonKey(name: 'household_id') this.householdId});
 
   factory _$WarehouseItemRequestModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$WarehouseItemRequestModelImplFromJson(json);
@@ -185,11 +185,11 @@ class _$WarehouseItemRequestModelImpl implements _WarehouseItemRequestModel {
   final String? roomId;
   @override
   @JsonKey(name: 'household_id')
-  final String? homeId;
+  final String? householdId;
 
   @override
   String toString() {
-    return 'WarehouseItemRequestModel(itemId: $itemId, cabinetId: $cabinetId, categoryId: $categoryId, roomId: $roomId, homeId: $homeId)';
+    return 'WarehouseItemRequestModel(itemId: $itemId, cabinetId: $cabinetId, categoryId: $categoryId, roomId: $roomId, householdId: $householdId)';
   }
 
   @override
@@ -203,13 +203,14 @@ class _$WarehouseItemRequestModelImpl implements _WarehouseItemRequestModel {
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
-            (identical(other.homeId, homeId) || other.homeId == homeId));
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, itemId, cabinetId, categoryId, roomId, homeId);
+  int get hashCode => Object.hash(
+      runtimeType, itemId, cabinetId, categoryId, roomId, householdId);
 
   @JsonKey(ignore: true)
   @override
@@ -232,7 +233,7 @@ abstract class _WarehouseItemRequestModel implements WarehouseItemRequestModel {
           @JsonKey(name: 'cabinet_id') final String? cabinetId,
           @JsonKey(name: 'category_id') final String? categoryId,
           @JsonKey(name: 'room_id') final String? roomId,
-          @JsonKey(name: 'household_id') final String? homeId}) =
+          @JsonKey(name: 'household_id') final String? householdId}) =
       _$WarehouseItemRequestModelImpl;
 
   factory _WarehouseItemRequestModel.fromJson(Map<String, dynamic> json) =
@@ -252,7 +253,7 @@ abstract class _WarehouseItemRequestModel implements WarehouseItemRequestModel {
   String? get roomId;
   @override
   @JsonKey(name: 'household_id')
-  String? get homeId;
+  String? get householdId;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseItemRequestModelImplCopyWith<_$WarehouseItemRequestModelImpl>

@@ -23,9 +23,11 @@ WarehouseCategoryCreateRequestModel
 mixin _$WarehouseCategoryCreateRequestModel {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
-  String get homeId => throw _privateConstructorUsedError;
+  String get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'parent_id')
   String? get parentId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,8 +46,9 @@ abstract class $WarehouseCategoryCreateRequestModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String name,
-      @JsonKey(name: 'household_id') String homeId,
-      @JsonKey(name: 'parent_id') String? parentId});
+      @JsonKey(name: 'household_id') String householdId,
+      @JsonKey(name: 'parent_id') String? parentId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -63,21 +66,26 @@ class _$WarehouseCategoryCreateRequestModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? name = null,
-    Object? homeId = null,
+    Object? householdId = null,
     Object? parentId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       parentId: freezed == parentId
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -94,8 +102,9 @@ abstract class _$$WarehouseCategoryCreateRequestModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String name,
-      @JsonKey(name: 'household_id') String homeId,
-      @JsonKey(name: 'parent_id') String? parentId});
+      @JsonKey(name: 'household_id') String householdId,
+      @JsonKey(name: 'parent_id') String? parentId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -112,21 +121,26 @@ class __$$WarehouseCategoryCreateRequestModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
-    Object? homeId = null,
+    Object? householdId = null,
     Object? parentId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_$WarehouseCategoryCreateRequestModelImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      homeId: null == homeId
-          ? _value.homeId
-          : homeId // ignore: cast_nullable_to_non_nullable
+      householdId: null == householdId
+          ? _value.householdId
+          : householdId // ignore: cast_nullable_to_non_nullable
               as String,
       parentId: freezed == parentId
           ? _value.parentId
           : parentId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -138,8 +152,9 @@ class _$WarehouseCategoryCreateRequestModelImpl
     implements _WarehouseCategoryCreateRequestModel {
   _$WarehouseCategoryCreateRequestModelImpl(
       {required this.name,
-      @JsonKey(name: 'household_id') required this.homeId,
-      @JsonKey(name: 'parent_id') this.parentId});
+      @JsonKey(name: 'household_id') required this.householdId,
+      @JsonKey(name: 'parent_id') this.parentId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$WarehouseCategoryCreateRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -149,14 +164,17 @@ class _$WarehouseCategoryCreateRequestModelImpl
   final String name;
   @override
   @JsonKey(name: 'household_id')
-  final String homeId;
+  final String householdId;
   @override
   @JsonKey(name: 'parent_id')
   final String? parentId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseCategoryCreateRequestModel(name: $name, homeId: $homeId, parentId: $parentId)';
+    return 'WarehouseCategoryCreateRequestModel(name: $name, householdId: $householdId, parentId: $parentId, userName: $userName)';
   }
 
   @override
@@ -165,14 +183,18 @@ class _$WarehouseCategoryCreateRequestModelImpl
         (other.runtimeType == runtimeType &&
             other is _$WarehouseCategoryCreateRequestModelImpl &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.homeId, homeId) || other.homeId == homeId) &&
+            (identical(other.householdId, householdId) ||
+                other.householdId == householdId) &&
             (identical(other.parentId, parentId) ||
-                other.parentId == parentId));
+                other.parentId == parentId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, name, homeId, parentId);
+  int get hashCode =>
+      Object.hash(runtimeType, name, householdId, parentId, userName);
 
   @JsonKey(ignore: true)
   @override
@@ -194,8 +216,9 @@ abstract class _WarehouseCategoryCreateRequestModel
     implements WarehouseCategoryCreateRequestModel {
   factory _WarehouseCategoryCreateRequestModel(
           {required final String name,
-          @JsonKey(name: 'household_id') required final String homeId,
-          @JsonKey(name: 'parent_id') final String? parentId}) =
+          @JsonKey(name: 'household_id') required final String householdId,
+          @JsonKey(name: 'parent_id') final String? parentId,
+          @JsonKey(name: 'user_name') final String? userName}) =
       _$WarehouseCategoryCreateRequestModelImpl;
 
   factory _WarehouseCategoryCreateRequestModel.fromJson(
@@ -206,10 +229,13 @@ abstract class _WarehouseCategoryCreateRequestModel
   String get name;
   @override
   @JsonKey(name: 'household_id')
-  String get homeId;
+  String get householdId;
   @override
   @JsonKey(name: 'parent_id')
   String? get parentId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseCategoryCreateRequestModelImplCopyWith<

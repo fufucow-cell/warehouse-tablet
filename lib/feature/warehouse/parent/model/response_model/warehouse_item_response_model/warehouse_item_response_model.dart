@@ -12,6 +12,5 @@ class WarehouseItemResponseModel with _$WarehouseItemResponseModel {
     List<Room>? data,
   }) = _WarehouseItemResponseModel;
 
-  factory WarehouseItemResponseModel.fromJson(Map<String, dynamic> json) =>
-      _$WarehouseItemResponseModelFromJson(json);
+  factory WarehouseItemResponseModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemResponseModelFromJson(json);
 }

@@ -43,6 +43,7 @@ class WarehouseMainPageRouterData {
   final String theme;
   final String accessToken;
   final String refreshToken;
+  final String domain;
   final WarehouseHomeRouterData household;
   final List<WarehouseHomeRouterData> rooms;
   final int userRoleType;
@@ -52,6 +53,7 @@ class WarehouseMainPageRouterData {
     required this.userName,
     required this.language,
     required this.theme,
+    required this.domain,
     required this.accessToken,
     required this.refreshToken,
     required this.household,
@@ -70,6 +72,7 @@ class WarehouseMainPageRouterData {
       theme: 'system',
       accessToken: 'mock_access_token_1234567890',
       refreshToken: 'mock_refresh_token_1234567890',
+      domain: 'http://127.0.0.1:8003',
       household: const WarehouseHomeRouterData(
         id: '550e8400-e29b-41d4-a716-446655440000',
         name: 'My Home',

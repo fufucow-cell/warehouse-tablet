@@ -157,7 +157,7 @@ class WarehouseRecordPageController extends GetxController {
 
   Future<void> _queryApiData() async {
     _model.allLogs.value = null;
-    final response = await _service.apiReqFetchLogs(WarehouseRecordRequestModel());
+    final response = await _service.apiReqReadLogs(WarehouseRecordRequestModel());
     _model.allLogs.value = response;
     _genVisibleLogs();
   }

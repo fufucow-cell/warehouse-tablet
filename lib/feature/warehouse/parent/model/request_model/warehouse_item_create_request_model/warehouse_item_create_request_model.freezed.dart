@@ -33,6 +33,8 @@ mixin _$WarehouseItemCreateRequestModel {
   String? get categoryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
   String? get householdId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +58,8 @@ abstract class $WarehouseItemCreateRequestModelCopyWith<$Res> {
       String? photo,
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
-      @JsonKey(name: 'household_id') String? householdId});
+      @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -81,6 +84,7 @@ class _$WarehouseItemCreateRequestModelCopyWithImpl<$Res,
     Object? cabinetId = freezed,
     Object? categoryId = freezed,
     Object? householdId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -115,6 +119,10 @@ class _$WarehouseItemCreateRequestModelCopyWithImpl<$Res,
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -136,7 +144,8 @@ abstract class _$$WarehouseItemCreateRequestModelImplCopyWith<$Res>
       String? photo,
       @JsonKey(name: 'cabinet_id') String? cabinetId,
       @JsonKey(name: 'category_id') String? categoryId,
-      @JsonKey(name: 'household_id') String? householdId});
+      @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'user_name') String? userName});
 }
 
 /// @nodoc
@@ -160,6 +169,7 @@ class __$$WarehouseItemCreateRequestModelImplCopyWithImpl<$Res>
     Object? cabinetId = freezed,
     Object? categoryId = freezed,
     Object? householdId = freezed,
+    Object? userName = freezed,
   }) {
     return _then(_$WarehouseItemCreateRequestModelImpl(
       name: null == name
@@ -194,6 +204,10 @@ class __$$WarehouseItemCreateRequestModelImplCopyWithImpl<$Res>
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
               as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -210,7 +224,8 @@ class _$WarehouseItemCreateRequestModelImpl
       this.photo,
       @JsonKey(name: 'cabinet_id') this.cabinetId,
       @JsonKey(name: 'category_id') this.categoryId,
-      @JsonKey(name: 'household_id') this.householdId});
+      @JsonKey(name: 'household_id') this.householdId,
+      @JsonKey(name: 'user_name') this.userName});
 
   factory _$WarehouseItemCreateRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -236,10 +251,13 @@ class _$WarehouseItemCreateRequestModelImpl
   @override
   @JsonKey(name: 'household_id')
   final String? householdId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseItemCreateRequestModel(name: $name, description: $description, quantity: $quantity, minStockAlert: $minStockAlert, photo: $photo, cabinetId: $cabinetId, categoryId: $categoryId, householdId: $householdId)';
+    return 'WarehouseItemCreateRequestModel(name: $name, description: $description, quantity: $quantity, minStockAlert: $minStockAlert, photo: $photo, cabinetId: $cabinetId, categoryId: $categoryId, householdId: $householdId, userName: $userName)';
   }
 
   @override
@@ -260,13 +278,15 @@ class _$WarehouseItemCreateRequestModelImpl
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.householdId, householdId) ||
-                other.householdId == householdId));
+                other.householdId == householdId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, name, description, quantity,
-      minStockAlert, photo, cabinetId, categoryId, householdId);
+      minStockAlert, photo, cabinetId, categoryId, householdId, userName);
 
   @JsonKey(ignore: true)
   @override
@@ -294,7 +314,8 @@ abstract class _WarehouseItemCreateRequestModel
           final String? photo,
           @JsonKey(name: 'cabinet_id') final String? cabinetId,
           @JsonKey(name: 'category_id') final String? categoryId,
-          @JsonKey(name: 'household_id') final String? householdId}) =
+          @JsonKey(name: 'household_id') final String? householdId,
+          @JsonKey(name: 'user_name') final String? userName}) =
       _$WarehouseItemCreateRequestModelImpl;
 
   factory _WarehouseItemCreateRequestModel.fromJson(Map<String, dynamic> json) =
@@ -320,6 +341,9 @@ abstract class _WarehouseItemCreateRequestModel
   @override
   @JsonKey(name: 'household_id')
   String? get householdId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseItemCreateRequestModelImplCopyWith<

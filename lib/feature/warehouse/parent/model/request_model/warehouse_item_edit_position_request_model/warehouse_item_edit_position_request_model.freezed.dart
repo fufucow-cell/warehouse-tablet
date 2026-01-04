@@ -25,6 +25,8 @@ mixin _$WarehouseItemEditPositionRequestModel {
   String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'item_id')
   String? get itemId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
   List<PositionCabinetRequestModel>? get cabinets =>
       throw _privateConstructorUsedError;
 
@@ -46,6 +48,7 @@ abstract class $WarehouseItemEditPositionRequestModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'item_id') String? itemId,
+      @JsonKey(name: 'user_name') String? userName,
       List<PositionCabinetRequestModel>? cabinets});
 }
 
@@ -65,6 +68,7 @@ class _$WarehouseItemEditPositionRequestModelCopyWithImpl<$Res,
   $Res call({
     Object? householdId = freezed,
     Object? itemId = freezed,
+    Object? userName = freezed,
     Object? cabinets = freezed,
   }) {
     return _then(_value.copyWith(
@@ -75,6 +79,10 @@ class _$WarehouseItemEditPositionRequestModelCopyWithImpl<$Res,
       itemId: freezed == itemId
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       cabinets: freezed == cabinets
           ? _value.cabinets
@@ -96,6 +104,7 @@ abstract class _$$WarehouseItemEditPositionRequestModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'item_id') String? itemId,
+      @JsonKey(name: 'user_name') String? userName,
       List<PositionCabinetRequestModel>? cabinets});
 }
 
@@ -114,6 +123,7 @@ class __$$WarehouseItemEditPositionRequestModelImplCopyWithImpl<$Res>
   $Res call({
     Object? householdId = freezed,
     Object? itemId = freezed,
+    Object? userName = freezed,
     Object? cabinets = freezed,
   }) {
     return _then(_$WarehouseItemEditPositionRequestModelImpl(
@@ -124,6 +134,10 @@ class __$$WarehouseItemEditPositionRequestModelImplCopyWithImpl<$Res>
       itemId: freezed == itemId
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       cabinets: freezed == cabinets
           ? _value._cabinets
@@ -140,6 +154,7 @@ class _$WarehouseItemEditPositionRequestModelImpl
   _$WarehouseItemEditPositionRequestModelImpl(
       {@JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'item_id') this.itemId,
+      @JsonKey(name: 'user_name') this.userName,
       final List<PositionCabinetRequestModel>? cabinets})
       : _cabinets = cabinets;
 
@@ -153,6 +168,9 @@ class _$WarehouseItemEditPositionRequestModelImpl
   @override
   @JsonKey(name: 'item_id')
   final String? itemId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
   final List<PositionCabinetRequestModel>? _cabinets;
   @override
   List<PositionCabinetRequestModel>? get cabinets {
@@ -165,7 +183,7 @@ class _$WarehouseItemEditPositionRequestModelImpl
 
   @override
   String toString() {
-    return 'WarehouseItemEditPositionRequestModel(householdId: $householdId, itemId: $itemId, cabinets: $cabinets)';
+    return 'WarehouseItemEditPositionRequestModel(householdId: $householdId, itemId: $itemId, userName: $userName, cabinets: $cabinets)';
   }
 
   @override
@@ -176,12 +194,14 @@ class _$WarehouseItemEditPositionRequestModelImpl
             (identical(other.householdId, householdId) ||
                 other.householdId == householdId) &&
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
             const DeepCollectionEquality().equals(other._cabinets, _cabinets));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, householdId, itemId,
+  int get hashCode => Object.hash(runtimeType, householdId, itemId, userName,
       const DeepCollectionEquality().hash(_cabinets));
 
   @JsonKey(ignore: true)
@@ -205,6 +225,7 @@ abstract class _WarehouseItemEditPositionRequestModel
   factory _WarehouseItemEditPositionRequestModel(
           {@JsonKey(name: 'household_id') final String? householdId,
           @JsonKey(name: 'item_id') final String? itemId,
+          @JsonKey(name: 'user_name') final String? userName,
           final List<PositionCabinetRequestModel>? cabinets}) =
       _$WarehouseItemEditPositionRequestModelImpl;
 
@@ -218,6 +239,9 @@ abstract class _WarehouseItemEditPositionRequestModel
   @override
   @JsonKey(name: 'item_id')
   String? get itemId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   List<PositionCabinetRequestModel>? get cabinets;
   @override
