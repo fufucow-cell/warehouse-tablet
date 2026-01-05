@@ -9,6 +9,7 @@ const Map<String, String> zhTW = {
   'deviceCameraNotAvailable': '无相机功能',
   'deviceGalleryFailed': '开启相簿失败',
   'warehouseItemTotal': '物品总数',
+  'warehouseCabinetTotal': '柜位总数',
   'warehouseItemCategory': '物品分类',
   'warehouseItemLowStock': '低库存',
   'warehouseItemStockInsufficient': '库存不足',

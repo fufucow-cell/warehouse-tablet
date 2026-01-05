@@ -10,6 +10,7 @@ class DialogItemEditQuantityWidgetModel {
   final newQuantity = Rx<int>(0);
   final newPositions = Rx<List<ItemPositionModel>>([]);
   final maxNewPositions = 5;
+  final allRoomCabinetInfo = Rx<List<RoomCabinetInfo>>([]);
 }
 
 class UpdatePositionModel {

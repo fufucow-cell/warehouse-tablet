@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-05T16:08:02.824122
+/// 生成时间: 2026-01-05T23:42:42.778647
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
@@ -118,6 +118,7 @@ enum EnumLocale {
   warehouseAlarmProductPhoto,
   warehouseAlertQuantityLabel,
   warehouseCabinetQuantityChange,
+  warehouseCabinetTotal,
   warehouseCategoryCount,
   warehouseCategoryTotalCount,
   warehouseCategoryUpdate,

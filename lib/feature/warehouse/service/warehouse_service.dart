@@ -59,6 +59,7 @@ class WarehouseService {
   // 櫃位
   List<Room> get getAllRoomCabinets => _model.allRoomCabinets.value ?? [];
   RxReadonly<List<Room>?> get allRoomCabinetsRx => _model.allRoomCabinets.readonly;
+  List<RoomCabinetInfo> get roomCabinetInfos => _model.roomCabinetInfos;
   // 分類
   RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
   List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
@@ -446,7 +447,8 @@ class WarehouseService {
     );
 
     if (response?.data != null && request.roomId == null && request.cabinetId == null) {
-      _model.allRoomCabinets.value = response?.data;
+      _genRoomCabinetInfo(response!.data!);
+      _model.allRoomCabinets.value = response.data!;
     }
 
     return response?.data;
@@ -569,6 +571,57 @@ class WarehouseService {
   }
 
   // MARK: - Private Method
+
+  void _genRoomCabinetInfo(List<Room> resRooms) {
+    final result = <RoomCabinetInfo>[];
+
+    for (WarehouseNameIdModel room in _model.rooms) {
+      final roomMatch = resRooms.firstWhereOrNull((r) => r.roomId == room.id);
+      List<CabinetInfo> cabinets = [];
+
+      if (roomMatch != null) {
+        cabinets = roomMatch.cabinets?.map<CabinetInfo>((cabinet) {
+              return CabinetInfo(
+                cabinetId: cabinet.id ?? '',
+                cabinetName: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
+                quantity: cabinet.quantity ?? 0,
+              );
+            }).toList() ??
+            [];
+      }
+
+      result.add(
+        RoomCabinetInfo(
+          roomId: room.id ?? '',
+          roomName: room.name ?? EnumLocale.warehouseUnboundRoom.tr,
+          quantity: roomMatch?.quantity ?? 0,
+          cabinets: cabinets,
+        ),
+      );
+    }
+
+    final unboundRoom = resRooms.firstWhereOrNull((r) => r.roomId?.isEmpty ?? true);
+
+    if (unboundRoom != null && (unboundRoom.cabinets?.isNotEmpty ?? false)) {
+      result.add(
+        RoomCabinetInfo(
+          roomId: '',
+          roomName: EnumLocale.warehouseUnboundRoom.tr,
+          quantity: 0,
+          cabinets: unboundRoom.cabinets?.map<CabinetInfo>((cabinet) {
+                return CabinetInfo(
+                  cabinetId: cabinet.id ?? '',
+                  cabinetName: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
+                  quantity: cabinet.quantity ?? 0,
+                );
+              }).toList() ??
+              [],
+        ),
+      );
+    }
+
+    _model.roomCabinetInfos = result;
+  }
 
   void _genAllCombineItems() {
     final flattenItems =

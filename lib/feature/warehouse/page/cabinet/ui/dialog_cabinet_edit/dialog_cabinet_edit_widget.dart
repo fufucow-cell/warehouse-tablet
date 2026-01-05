@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogCabinetEditWidget extends StatelessWidget {

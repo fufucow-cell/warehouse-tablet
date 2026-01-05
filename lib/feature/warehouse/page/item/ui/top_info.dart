@@ -16,7 +16,8 @@ class TopInfo extends StatelessWidget {
     return GetBuilder<WarehouseItemPageController>(
       builder: (controller) {
         return Obx(() {
-          final isLoading = controller.allItemsRx.value == null;
+          final allItems = controller.allItemsRx.value;
+          final allCabinets = controller.allCabinetsRx.value;
           return GridView.count(
             padding: EdgeInsets.zero,
             crossAxisCount: 4,
@@ -30,7 +31,13 @@ class TopInfo extends StatelessWidget {
                 eImage: EnumImage.cItem,
                 title: EnumLocale.warehouseItemTotal.tr,
                 count: '${controller.getTotalItemCount()}',
-                isLoading: isLoading,
+                isLoading: allItems == null,
+              ),
+              TopInfoItem(
+                eImage: EnumImage.cRoom,
+                title: EnumLocale.warehouseCabinetTotal.tr,
+                count: '${controller.getTotalCabinetCount}',
+                isLoading: allCabinets == null,
               ),
               TopInfoItem(
                 eImage: EnumImage.cMember,
@@ -38,15 +45,10 @@ class TopInfo extends StatelessWidget {
                 count: '${controller.getTotalCategoryCount()}',
               ),
               TopInfoItem(
-                eImage: EnumImage.cRoom,
-                title: EnumLocale.room.tr,
-                count: '${controller.getfilterRuleForRooms.length - 1}',
-              ),
-              TopInfoItem(
                 eImage: EnumImage.cStockItem,
                 title: EnumLocale.warehouseItemLowStock.tr,
                 count: '${controller.getTotalLowStockCount}',
-                isLoading: isLoading,
+                isLoading: allItems == null,
               ),
             ],
           );

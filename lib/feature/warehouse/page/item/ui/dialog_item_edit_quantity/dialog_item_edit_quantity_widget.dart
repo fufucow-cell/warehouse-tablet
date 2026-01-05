@@ -11,6 +11,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogItemEditQuantityWidget extends StatelessWidget {
@@ -381,7 +382,7 @@ class _NewPositionItem extends StatelessWidget {
                     EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionRoom,
                     data: UpdatePositionModel(
                       index: index,
-                      position: room,
+                      position: WarehouseNameIdModel(id: room.roomId, name: room.roomName),
                     ),
                   );
                 }
@@ -404,7 +405,7 @@ class _NewPositionItem extends StatelessWidget {
                     EnumDialogItemEditQuantityWidgetInteractive.tapUpdateNewPositionCabinet,
                     data: UpdatePositionModel(
                       index: index,
-                      position: cabinet,
+                      position: WarehouseNameIdModel(id: cabinet.cabinetId, name: cabinet.cabinetName),
                     ),
                   );
                 }

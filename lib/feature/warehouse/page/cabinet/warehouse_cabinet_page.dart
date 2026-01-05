@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class WarehouseCabinetPage extends StatelessWidget {
@@ -20,23 +20,21 @@ class WarehouseCabinetPage extends StatelessWidget {
     return GetBuilder<WarehouseCabinetPageController>(
       init: Get.isRegistered<WarehouseCabinetPageController>() ? null : WarehouseCabinetPageController(),
       builder: (controller) {
-        final rooms = controller.getRoomsInfo();
-
         return SecondBackgroundCard(
           child: Column(
             children: [
               const TopInfo(),
-              if (rooms.isEmpty)
+              if (!controller.hasRoom)
                 Expanded(child: WidgetUtil.emptyWidget())
               else
                 Expanded(
                   child: Obx(
                     () {
-                      if (controller.allCabinetsRx.value == null) {
+                      if (controller.allVisibleCabinetsRx.value == null) {
                         return const _RoomCardShimmer();
                       }
 
-                      final visibleCabinets = controller.allVisibleCabinetsRx.value;
+                      final visibleCabinets = controller.allVisibleCabinetsRx.value ?? [];
 
                       return Column(
                         children: [

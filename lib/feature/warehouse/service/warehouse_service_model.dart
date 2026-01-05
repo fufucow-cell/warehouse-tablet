@@ -7,6 +7,7 @@ class WarehouseServiceModel {
   String? refreshToken;
   WarehouseNameIdModel? household;
   List<WarehouseNameIdModel> rooms = [];
+  List<RoomCabinetInfo> roomCabinetInfos = [];
   int? userRoleType;
   BuildContext? rootContext;
   // 搜尋條件
@@ -58,6 +59,32 @@ class ItemPositionCabinetModel {
   ItemPositionCabinetModel({
     required this.id,
     required this.name,
+    required this.quantity,
+  });
+}
+
+class RoomCabinetInfo {
+  final String roomId;
+  final String roomName;
+  final int quantity;
+  final List<CabinetInfo> cabinets;
+
+  RoomCabinetInfo({
+    required this.roomId,
+    required this.roomName,
+    required this.quantity,
+    required this.cabinets,
+  });
+}
+
+class CabinetInfo {
+  final String cabinetId;
+  final String cabinetName;
+  final int quantity;
+
+  CabinetInfo({
+    required this.cabinetId,
+    required this.cabinetName,
     required this.quantity,
   });
 }
