@@ -17,8 +17,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -76,7 +76,7 @@ class WarehouseItemPageController extends GetxController {
     final allItems = _service.getAllCombineItems;
     final Set<String> allCategoryIds = {};
 
-    void extractCategory(Category? category) {
+    void extractCategory(ItemCategory? category) {
       if (category?.id?.isEmpty ?? true) {
         return;
       }
@@ -153,6 +153,7 @@ class WarehouseItemPageController extends GetxController {
       description: model.description,
       categoryId: model.categoryId,
       minStockAlert: model.minStockAlert,
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqUpdateItemNormal(
@@ -176,6 +177,7 @@ class WarehouseItemPageController extends GetxController {
       householdId: _service.getHouseholdId,
       itemId: item.id,
       cabinets: models.map((model) => QuantityCabinetRequestModel(cabinetId: model.cabinetId, quantity: model.quantity)).toList(),
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqUpdateItemQuantity(
@@ -199,6 +201,7 @@ class WarehouseItemPageController extends GetxController {
       householdId: _service.getHouseholdId,
       itemId: item.id,
       cabinets: models.map((model) => PositionCabinetRequestModel(oldCabinetId: model.oldCabinetId, newCabinetId: model.newCabinetId)).toList(),
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqUpdateItemPosition(

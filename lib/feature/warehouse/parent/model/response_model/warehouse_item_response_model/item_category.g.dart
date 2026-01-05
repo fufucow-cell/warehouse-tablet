@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'category.dart';
+part of 'item_category.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
-    _$CategoryImpl(
+_$ItemCategoryImpl _$$ItemCategoryImplFromJson(Map<String, dynamic> json) =>
+    _$ItemCategoryImpl(
       id: json['id'] as String?,
       name: json['name'] as String?,
       parentId: json['parent_id'] as String?,
       children: json['children'] == null
           ? null
-          : Category.fromJson(json['children'] as Map<String, dynamic>),
+          : ItemCategory.fromJson(json['children'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$CategoryImplToJson(_$CategoryImpl instance) =>
+Map<String, dynamic> _$$ItemCategoryImplToJson(_$ItemCategoryImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

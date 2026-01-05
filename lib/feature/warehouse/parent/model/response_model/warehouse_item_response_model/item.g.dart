@@ -15,7 +15,7 @@ _$ItemImpl _$$ItemImplFromJson(Map<String, dynamic> json) => _$ItemImpl(
       photo: json['photo'] as String?,
       category: json['category'] == null
           ? null
-          : Category.fromJson(json['category'] as Map<String, dynamic>),
+          : ItemCategory.fromJson(json['category'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ItemImplToJson(_$ItemImpl instance) =>

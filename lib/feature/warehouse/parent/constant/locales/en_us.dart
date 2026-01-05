@@ -110,6 +110,8 @@ const Map<String, String> zhTW = {
   'warehouseMinStockUpdate': 'Min stock update: @para1 -> @para2',
   'warehouseRoomUpdate': 'Room update: @para1 -> @para2',
   'warehouseUnbound': 'Unbound',
+  'warehouseUnboundCabinet': 'Unbound Cabinet',
+  'warehouseUnboundRoom': 'Unbound Room',
   'roomOffice': 'Office',
   'roomMasterBedroom': 'Master Bedroom',
   'roomMeetingRoom': 'Meeting Room',

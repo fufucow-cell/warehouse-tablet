@@ -202,7 +202,7 @@ class WarehouseService {
           matchCabinets.add(
             ItemPositionCabinetModel(
               id: cabinet.id ?? '',
-              name: cabinet.name ?? '',
+              name: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
               quantity: matchItem.quantity ?? 0,
             ),
           );
@@ -215,7 +215,7 @@ class WarehouseService {
         result.add(
           ItemPositionModel(
             roomId: roomInfo?.id ?? '',
-            roomName: roomInfo?.name ?? EnumLocale.warehouseUncategorized.tr,
+            roomName: roomInfo?.name ?? EnumLocale.warehouseUnboundRoom.tr,
             cabinets: matchCabinets,
           ),
         );

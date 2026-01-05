@@ -134,7 +134,7 @@ class WarehouseMainPageController extends GetxController {
   Future<void> _queryApiData() async {
     final responses = await Future.wait([
       _service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)),
-      // _service.apiReqReadCategory(WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId)),
+      _service.apiReqReadCategory(WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId)),
     ]);
 
     final items = responses[0];

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'category.dart';
+part of 'item_category.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,42 +14,43 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return _Category.fromJson(json);
+ItemCategory _$ItemCategoryFromJson(Map<String, dynamic> json) {
+  return _ItemCategory.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Category {
+mixin _$ItemCategory {
   String? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'parent_id')
   String? get parentId => throw _privateConstructorUsedError;
-  Category? get children => throw _privateConstructorUsedError;
+  ItemCategory? get children => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CategoryCopyWith<Category> get copyWith =>
+  $ItemCategoryCopyWith<ItemCategory> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoryCopyWith<$Res> {
-  factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
-      _$CategoryCopyWithImpl<$Res, Category>;
+abstract class $ItemCategoryCopyWith<$Res> {
+  factory $ItemCategoryCopyWith(
+          ItemCategory value, $Res Function(ItemCategory) then) =
+      _$ItemCategoryCopyWithImpl<$Res, ItemCategory>;
   @useResult
   $Res call(
       {String? id,
       String? name,
       @JsonKey(name: 'parent_id') String? parentId,
-      Category? children});
+      ItemCategory? children});
 
-  $CategoryCopyWith<$Res>? get children;
+  $ItemCategoryCopyWith<$Res>? get children;
 }
 
 /// @nodoc
-class _$CategoryCopyWithImpl<$Res, $Val extends Category>
-    implements $CategoryCopyWith<$Res> {
-  _$CategoryCopyWithImpl(this._value, this._then);
+class _$ItemCategoryCopyWithImpl<$Res, $Val extends ItemCategory>
+    implements $ItemCategoryCopyWith<$Res> {
+  _$ItemCategoryCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -80,47 +81,47 @@ class _$CategoryCopyWithImpl<$Res, $Val extends Category>
       children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
-              as Category?,
+              as ItemCategory?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get children {
+  $ItemCategoryCopyWith<$Res>? get children {
     if (_value.children == null) {
       return null;
     }
 
-    return $CategoryCopyWith<$Res>(_value.children!, (value) {
+    return $ItemCategoryCopyWith<$Res>(_value.children!, (value) {
       return _then(_value.copyWith(children: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$CategoryImplCopyWith<$Res>
-    implements $CategoryCopyWith<$Res> {
-  factory _$$CategoryImplCopyWith(
-          _$CategoryImpl value, $Res Function(_$CategoryImpl) then) =
-      __$$CategoryImplCopyWithImpl<$Res>;
+abstract class _$$ItemCategoryImplCopyWith<$Res>
+    implements $ItemCategoryCopyWith<$Res> {
+  factory _$$ItemCategoryImplCopyWith(
+          _$ItemCategoryImpl value, $Res Function(_$ItemCategoryImpl) then) =
+      __$$ItemCategoryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {String? id,
       String? name,
       @JsonKey(name: 'parent_id') String? parentId,
-      Category? children});
+      ItemCategory? children});
 
   @override
-  $CategoryCopyWith<$Res>? get children;
+  $ItemCategoryCopyWith<$Res>? get children;
 }
 
 /// @nodoc
-class __$$CategoryImplCopyWithImpl<$Res>
-    extends _$CategoryCopyWithImpl<$Res, _$CategoryImpl>
-    implements _$$CategoryImplCopyWith<$Res> {
-  __$$CategoryImplCopyWithImpl(
-      _$CategoryImpl _value, $Res Function(_$CategoryImpl) _then)
+class __$$ItemCategoryImplCopyWithImpl<$Res>
+    extends _$ItemCategoryCopyWithImpl<$Res, _$ItemCategoryImpl>
+    implements _$$ItemCategoryImplCopyWith<$Res> {
+  __$$ItemCategoryImplCopyWithImpl(
+      _$ItemCategoryImpl _value, $Res Function(_$ItemCategoryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -131,7 +132,7 @@ class __$$CategoryImplCopyWithImpl<$Res>
     Object? parentId = freezed,
     Object? children = freezed,
   }) {
-    return _then(_$CategoryImpl(
+    return _then(_$ItemCategoryImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -147,22 +148,22 @@ class __$$CategoryImplCopyWithImpl<$Res>
       children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
-              as Category?,
+              as ItemCategory?,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$CategoryImpl implements _Category {
-  _$CategoryImpl(
+class _$ItemCategoryImpl implements _ItemCategory {
+  _$ItemCategoryImpl(
       {this.id,
       this.name,
       @JsonKey(name: 'parent_id') this.parentId,
       this.children});
 
-  factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CategoryImplFromJson(json);
+  factory _$ItemCategoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ItemCategoryImplFromJson(json);
 
   @override
   final String? id;
@@ -172,18 +173,18 @@ class _$CategoryImpl implements _Category {
   @JsonKey(name: 'parent_id')
   final String? parentId;
   @override
-  final Category? children;
+  final ItemCategory? children;
 
   @override
   String toString() {
-    return 'Category(id: $id, name: $name, parentId: $parentId, children: $children)';
+    return 'ItemCategory(id: $id, name: $name, parentId: $parentId, children: $children)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CategoryImpl &&
+            other is _$ItemCategoryImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.parentId, parentId) ||
@@ -199,26 +200,26 @@ class _$CategoryImpl implements _Category {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
-      __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
+  _$$ItemCategoryImplCopyWith<_$ItemCategoryImpl> get copyWith =>
+      __$$ItemCategoryImplCopyWithImpl<_$ItemCategoryImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CategoryImplToJson(
+    return _$$ItemCategoryImplToJson(
       this,
     );
   }
 }
 
-abstract class _Category implements Category {
-  factory _Category(
+abstract class _ItemCategory implements ItemCategory {
+  factory _ItemCategory(
       {final String? id,
       final String? name,
       @JsonKey(name: 'parent_id') final String? parentId,
-      final Category? children}) = _$CategoryImpl;
+      final ItemCategory? children}) = _$ItemCategoryImpl;
 
-  factory _Category.fromJson(Map<String, dynamic> json) =
-      _$CategoryImpl.fromJson;
+  factory _ItemCategory.fromJson(Map<String, dynamic> json) =
+      _$ItemCategoryImpl.fromJson;
 
   @override
   String? get id;
@@ -228,9 +229,9 @@ abstract class _Category implements Category {
   @JsonKey(name: 'parent_id')
   String? get parentId;
   @override
-  Category? get children;
+  ItemCategory? get children;
   @override
   @JsonKey(ignore: true)
-  _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
+  _$$ItemCategoryImplCopyWith<_$ItemCategoryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

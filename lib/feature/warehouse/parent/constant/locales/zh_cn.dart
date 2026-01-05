@@ -110,6 +110,8 @@ const Map<String, String> zhTW = {
   'warehouseMinStockUpdate': '低库存数量更新: @para1 -> @para2',
   'warehouseRoomUpdate': '房间更新: @para1 -> @para2',
   'warehouseUnbound': '未绑定',
+  'warehouseUnboundCabinet': '未绑定柜位',
+  'warehouseUnboundRoom': '未绑定房间',
   'roomOffice': '办公室',
   'roomMasterBedroom': '主卧',
   'roomMeetingRoom': '会议室',

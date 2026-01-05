@@ -27,7 +27,7 @@ mixin _$Item {
   @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert => throw _privateConstructorUsedError;
   String? get photo => throw _privateConstructorUsedError;
-  Category? get category => throw _privateConstructorUsedError;
+  ItemCategory? get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,9 +46,9 @@ abstract class $ItemCopyWith<$Res> {
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
       String? photo,
-      Category? category});
+      ItemCategory? category});
 
-  $CategoryCopyWith<$Res>? get category;
+  $ItemCategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -100,18 +100,18 @@ class _$ItemCopyWithImpl<$Res, $Val extends Item>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
+              as ItemCategory?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $CategoryCopyWith<$Res>? get category {
+  $ItemCategoryCopyWith<$Res>? get category {
     if (_value.category == null) {
       return null;
     }
 
-    return $CategoryCopyWith<$Res>(_value.category!, (value) {
+    return $ItemCategoryCopyWith<$Res>(_value.category!, (value) {
       return _then(_value.copyWith(category: value) as $Val);
     });
   }
@@ -131,10 +131,10 @@ abstract class _$$ItemImplCopyWith<$Res> implements $ItemCopyWith<$Res> {
       int? quantity,
       @JsonKey(name: 'min_stock_alert') int? minStockAlert,
       String? photo,
-      Category? category});
+      ItemCategory? category});
 
   @override
-  $CategoryCopyWith<$Res>? get category;
+  $ItemCategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
@@ -183,7 +183,7 @@ class __$$ItemImplCopyWithImpl<$Res>
       category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
-              as Category?,
+              as ItemCategory?,
     ));
   }
 }
@@ -217,7 +217,7 @@ class _$ItemImpl implements _Item {
   @override
   final String? photo;
   @override
-  final Category? category;
+  final ItemCategory? category;
 
   @override
   String toString() {
@@ -269,7 +269,7 @@ abstract class _Item implements Item {
       final int? quantity,
       @JsonKey(name: 'min_stock_alert') final int? minStockAlert,
       final String? photo,
-      final Category? category}) = _$ItemImpl;
+      final ItemCategory? category}) = _$ItemImpl;
 
   factory _Item.fromJson(Map<String, dynamic> json) = _$ItemImpl.fromJson;
 
@@ -287,7 +287,7 @@ abstract class _Item implements Item {
   @override
   String? get photo;
   @override
-  Category? get category;
+  ItemCategory? get category;
   @override
   @JsonKey(ignore: true)
   _$$ItemImplCopyWith<_$ItemImpl> get copyWith =>
