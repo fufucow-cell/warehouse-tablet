@@ -39,11 +39,11 @@ class DisplayPositionModel {
 }
 
 class DialogItemEditQuantityOutputModel {
-  final String cabinetId;
+  final String? cabinetId;
   final int quantity;
 
   DialogItemEditQuantityOutputModel({
-    required this.cabinetId,
+    this.cabinetId,
     required this.quantity,
   });
 }

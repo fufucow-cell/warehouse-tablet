@@ -93,7 +93,7 @@ class _CabinetCard extends StatelessWidget {
             children: [
               Expanded(
                 child: WidgetUtil.textWidget(
-                  cabinet.name ?? '',
+                  cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
                   size: 26.0.scale,
                   color: EnumColor.textSecondary.color,
                   maxLines: 2,

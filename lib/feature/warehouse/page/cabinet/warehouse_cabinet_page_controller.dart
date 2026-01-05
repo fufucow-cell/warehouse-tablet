@@ -92,7 +92,7 @@ class WarehouseCabinetPageController extends GetxController {
     bool hasNoBindRoomCabinet = _service.getAllRoomCabinetItems.any((room) => room.roomId == null);
 
     if (hasNoBindRoomCabinet) {
-      result.add(WarehouseNameIdModel(id: '', name: EnumLocale.warehouseUnbound.tr));
+      result.add(WarehouseNameIdModel(id: '', name: EnumLocale.warehouseUnboundRoom.tr));
     }
 
     return result;
@@ -123,12 +123,14 @@ class WarehouseCabinetPageController extends GetxController {
   Future<bool> _createCabinet(
     DialogCabinetCreateOutputModel outputModel,
   ) async {
-    final request = WarehouseCabinetCreateRequestModel(
-      householdId: _service.getHouseholdId,
-      roomId: outputModel.roomId,
+    final response = await _service.apiReqCreateCabinet(
+      WarehouseCabinetCreateRequestModel(
+        householdId: _service.getHouseholdId,
+        roomId: outputModel.roomId,
+        name: outputModel.name,
+        userName: _service.userName,
+      ),
     );
-
-    final response = await _service.apiReqCreateCabinet(request);
 
     if (response != null) {
       unawaited(_service.apiReqReadItems(WarehouseItemRequestModel()));

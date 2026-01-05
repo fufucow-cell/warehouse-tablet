@@ -280,17 +280,57 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     return result;
   }
 
-  List<DialogItemEditQuantityOutputModel> checkOutputData() {
+  List<DialogItemEditQuantityOutputModel>? checkOutputData() {
     final outputData = <DialogItemEditQuantityOutputModel>[];
     final oldCabinets = getOldPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
     final newCabinets = getNewPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
 
-    for (var cabinet in [...oldCabinets, ...newCabinets]) {
-      if (cabinet.id.isNotEmpty) {
+    // 取得所有 oldCabinets 的 ID 集合
+    final oldCabinetIds = oldCabinets.map((cabinet) => cabinet.id).where((id) => id.isNotEmpty).toSet();
+
+    // 找出第一個重複的 cabinet name
+    final duplicateCabinet = newCabinets.firstWhereOrNull(
+      (cabinet) => cabinet.id.isNotEmpty && oldCabinetIds.contains(cabinet.id),
+    );
+
+    // 如果有重複的 ID，顯示錯誤並返回 null
+    if (duplicateCabinet != null) {
+      routerHandle(
+        EnumDialogItemEditQuantityWidgetRoute.showDuplicateCabinetNameSnackBar,
+        data: duplicateCabinet.name,
+      );
+      return null;
+    }
+
+    // 處理 oldCabinets：如果 quantity 與 textfield 的 quantity 一樣，代表沒變，所以不用加到 outputData 內
+    for (int i = 0; i < oldCabinets.length; i++) {
+      final cabinet = oldCabinets[i];
+      final textFieldQuantity = int.tryParse(quantityControllers[i].text.trim()) ?? 0;
+      final originalQuantity = cabinet.quantity;
+
+      // 如果 quantity 有變化，才加入 outputData
+      if (textFieldQuantity != originalQuantity) {
         outputData.add(
           DialogItemEditQuantityOutputModel(
-            cabinetId: cabinet.id,
-            quantity: cabinet.quantity,
+            cabinetId: cabinet.id.isEmpty ? null : cabinet.id,
+            quantity: textFieldQuantity,
+          ),
+        );
+      }
+    }
+
+    // 處理 newCabinets：如果 textfield 的 quantity 為 0 也直接忽略
+    final oldCabinetsCount = oldCabinets.length;
+    for (int i = 0; i < newCabinets.length; i++) {
+      final cabinet = newCabinets[i];
+      final textFieldQuantity = int.tryParse(quantityControllers[oldCabinetsCount + i].text.trim()) ?? 0;
+
+      // 如果 quantity 不為 0，才加入 outputData
+      if (textFieldQuantity > 0) {
+        outputData.add(
+          DialogItemEditQuantityOutputModel(
+            cabinetId: cabinet.id.isEmpty ? null : cabinet.id,
+            quantity: textFieldQuantity,
           ),
         );
       }

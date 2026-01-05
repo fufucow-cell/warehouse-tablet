@@ -112,6 +112,7 @@ const Map<String, String> zhTW = {
   'warehouseUnbound': '未バインド',
   'warehouseUnboundCabinet': '未バインドキャビネット',
   'warehouseUnboundRoom': '未バインド部屋',
+  'warehouseDuplicateCabinetName': '@para1 が重複しています',
   'roomOffice': 'オフィス',
   'roomMasterBedroom': '主寝室',
   'roomMeetingRoom': '会議室',

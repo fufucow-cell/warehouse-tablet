@@ -112,6 +112,7 @@ const Map<String, String> zhTW = {
   'warehouseUnbound': '未綁定',
   'warehouseUnboundCabinet': '未綁定櫃位',
   'warehouseUnboundRoom': '未綁定房間',
+  'warehouseDuplicateCabinetName': '@para1 重複',
   'roomOffice': '辦公室',
   'roomMasterBedroom': '主臥',
   'roomMeetingRoom': '會議室',

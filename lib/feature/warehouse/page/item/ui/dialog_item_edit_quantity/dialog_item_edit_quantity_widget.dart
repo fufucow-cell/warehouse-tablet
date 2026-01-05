@@ -49,6 +49,14 @@ class DialogItemEditQuantityWidget extends StatelessWidget {
                   );
                   final outputData = controller.checkOutputData();
 
+                  if (outputData == null) {
+                    controller.interactive(
+                      EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,
+                      data: false,
+                    );
+                    return;
+                  }
+
                   if (outputData.isEmpty) {
                     controller.interactive(
                       EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton,

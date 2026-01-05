@@ -32,17 +32,17 @@ extension DialogItemEditQuantityWidgetUserEventExtension on DialogItemEditQuanti
           updateNewPositionCabinet(data);
         }
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(
+        routerHandle(
           EnumDialogItemEditQuantityWidgetRoute.closeDialog,
-          data,
+          data: data,
         );
       case EnumDialogItemEditQuantityWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
-          _routerHandle(
+          routerHandle(
             EnumDialogItemEditQuantityWidgetRoute.closeDialog,
-            data,
+            data: data,
           );
         }
       case EnumDialogItemEditQuantityWidgetInteractive.tapDecrementQuantity:

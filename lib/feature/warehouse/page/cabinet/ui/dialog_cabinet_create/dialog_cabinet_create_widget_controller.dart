@@ -51,7 +51,7 @@ class DialogCabinetCreateWidgetController extends GetxController {
 
     return DialogCabinetCreateOutputModel(
       name: name,
-      roomId: selectedRoomRx.value?.id ?? '',
+      roomId: selectedRoomRx.value?.id,
     );
   }
 

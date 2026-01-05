@@ -112,6 +112,7 @@ const Map<String, String> zhTW = {
   'warehouseUnbound': 'Unbound',
   'warehouseUnboundCabinet': 'Unbound Cabinet',
   'warehouseUnboundRoom': 'Unbound Room',
+  'warehouseDuplicateCabinetName': '@para1 duplicate',
   'roomOffice': 'Office',
   'roomMasterBedroom': 'Master Bedroom',
   'roomMeetingRoom': 'Meeting Room',

@@ -112,6 +112,7 @@ const Map<String, String> zhTW = {
   'warehouseUnbound': '바인딩되지 않음',
   'warehouseUnboundCabinet': '바인딩되지 않은 캐비닛',
   'warehouseUnboundRoom': '바인딩되지 않은 방',
+  'warehouseDuplicateCabinetName': '@para1 중복',
   'roomOffice': '사무실',
   'roomMasterBedroom': '주침실',
   'roomMeetingRoom': '회의실',
