@@ -18,7 +18,7 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
           ),
         );
       case EnumWarehouseCabinetPageRoute.showEditCabinetDialog:
-        if (data is WarehouseNameIdModel) {
+        if (data is RoomCabinetInfo) {
           _service.showAlert(
             DialogCabinetEditWidget(
               room: data,
@@ -29,8 +29,8 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
           );
         }
       case EnumWarehouseCabinetPageRoute.changeMainPageTabItem:
-        if (data is Cabinet) {
-          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.item, data: data.id);
+        if (data is CabinetInfo) {
+          _service.changeMainPageSelectedTabItem(EnumWarehouseTabItem.item, data: data.cabinetId);
         }
     }
   }

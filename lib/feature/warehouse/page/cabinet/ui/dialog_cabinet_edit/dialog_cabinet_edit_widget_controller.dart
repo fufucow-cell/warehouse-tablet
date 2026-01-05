@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
@@ -18,14 +19,14 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   final DialogCabinetEditWidgetModel _model = DialogCabinetEditWidgetModel();
   final _service = WarehouseService.instance;
-  WarehouseNameIdModel get getRoom => _model.room!;
+  RoomCabinetInfo get getRoom => _model.room!;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<List<EditModel>> get editModelsRx => _model.editModels.readonly;
   List<EditModel> get getEditModels => _model.editModels.value;
 
   // MARK: - Init
 
-  DialogCabinetEditWidgetController(WarehouseNameIdModel room) {
+  DialogCabinetEditWidgetController(RoomCabinetInfo room) {
     _model.room = room;
   }
 
@@ -84,7 +85,7 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   List<String> getRoomNameList({bool isExcludeOldRoomName = false}) {
     if (isExcludeOldRoomName) {
-      return _service.rooms.where((room) => room.name != getRoom.name).map((room) => room.name ?? '').toList();
+      return _service.rooms.where((room) => room.name != getRoom.roomName).map((room) => room.name ?? '').toList();
     }
 
     return _service.rooms.map((room) => room.name ?? '').toList();
@@ -116,11 +117,11 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   void _checkData() {
     final cabinets = _service.getAllRoomCabinetItems.firstWhereOrNull((e) {
-          if ((_model.room?.id?.isEmpty ?? true) && (e.roomId?.isEmpty ?? true)) {
+          if ((_model.room?.roomId.isEmpty ?? true) && (e.roomId?.isEmpty ?? true)) {
             return true;
           }
 
-          return e.roomId == _model.room?.id;
+          return e.roomId == _model.room?.roomId;
         })?.cabinets ??
         [];
 

@@ -3,7 +3,7 @@
   "message": "Success",
   "data": [
     {
-      "room_id": "1",
+      "room_id": "00000001-e29b-41d4-a716-446655440001",
       "quantity": 24,
       "cabinets": [
         {
@@ -446,7 +446,7 @@
       ]
     },
     {
-      "room_id": "2",
+      "room_id": "00000002-e29b-41d4-a716-446655440002",
       "quantity": 10,
       "cabinets": [
         {
@@ -555,7 +555,7 @@
       ]
     },
     {
-      "room_id": "3",
+      "room_id": "00000003-e29b-41d4-a716-446655440003",
       "quantity": 7,
       "cabinets": [
         {
@@ -613,7 +613,7 @@
       ]
     },
     {
-      "room_id": "4",
+      "room_id": "00000004-e29b-41d4-a716-446655440004",
       "quantity": 10,
       "cabinets": [
         {

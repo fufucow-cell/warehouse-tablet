@@ -6,6 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/warehouse_cabinet_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_delete_request_model/warehouse_category_delete_request_model.dart';
@@ -55,15 +56,17 @@ class WarehouseService {
   RxReadonly<String?> get searchCabinetIdRx => _model.searchCabinetId.readonly;
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
-  List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
-  RxReadonly<List<Room>?> get allRoomCabinetItemsRx => _model.allRoomCabinetItems.readonly;
-
+  // 櫃位
+  List<Room> get getAllRoomCabinets => _model.allRoomCabinets.value ?? [];
+  RxReadonly<List<Room>?> get allRoomCabinetsRx => _model.allRoomCabinets.readonly;
   // 分類
   RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
   List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
 
   // 物品
   List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
+  List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
+  RxReadonly<List<Room>?> get allRoomCabinetItemsRx => _model.allRoomCabinetItems.readonly;
 
   // 記錄
   List<ItemRecord> get getAllRecords => _model.allRecords.value ?? <ItemRecord>[];
@@ -350,7 +353,7 @@ class WarehouseService {
       onError: onError,
     );
 
-    if (response?.data != null) {
+    if (response?.data != null && request.roomId == null && request.cabinetId == null && request.categoryId == null && request.itemId == null) {
       _model.allRoomCabinetItems.value = response?.data;
       _genAllCombineItems();
     }
@@ -430,6 +433,24 @@ class WarehouseService {
   }
 
   // MARK: - Cabinet APIs
+
+  Future<List<Room>?> apiReqReadCabinets(
+    WarehouseCabinetReadRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
+      EnumApiInfo.cabinetRead,
+      requestModel: request,
+      fromJson: WarehouseItemResponseModel.fromJson,
+      onError: onError,
+    );
+
+    if (response?.data != null && request.roomId == null && request.cabinetId == null) {
+      _model.allRoomCabinets.value = response?.data;
+    }
+
+    return response?.data;
+  }
 
   Future<Cabinet?> apiReqCreateCabinet(
     WarehouseCabinetCreateRequestModel request, {

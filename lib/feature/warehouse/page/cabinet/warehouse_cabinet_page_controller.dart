@@ -10,6 +10,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/request_cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/warehouse_cabinet_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
@@ -28,8 +29,8 @@ class WarehouseCabinetPageController extends GetxController {
   final _model = WarehouseCabinetPageModel();
   final _service = WarehouseService.instance;
   int get getTotalRoomsCount => _service.rooms.length;
-  RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
-  Worker? _allRoomCabinetItemsWorker;
+  RxReadonly<List<RoomCabinetInfo>> get allVisibleCabinetsRx => _model.allVisibleCabinets.readonly;
+  RxReadonly<List<Room>?> get allCabinetsRx => _model.allRoomCabinets.readonly;
 
   // MARK: - Init
 
@@ -40,8 +41,8 @@ class WarehouseCabinetPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseCabinetPageController] onInit - $hashCode',
     );
-    _checkData();
     _addListeners();
+    _checkData();
   }
 
   @override
@@ -50,20 +51,20 @@ class WarehouseCabinetPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseCabinetPageController] onClose - $hashCode',
     );
-    _allRoomCabinetItemsWorker?.dispose();
+    _model.allRoomCabinetsWorker?.dispose();
     super.onClose();
   }
 
   // MARK: - Public Method
 
   Room? getRoom(WarehouseNameIdModel roomNameId) {
-    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    return allRoomCabinetItems?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
+    final allRoomCabinets = _model.allRoomCabinets.value;
+    return allRoomCabinets?.firstWhereOrNull((room) => room.roomId == roomNameId.id);
   }
 
   List<Cabinet> getCabinets(WarehouseNameIdModel roomNameId) {
-    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    final room = allRoomCabinetItems?.firstWhereOrNull((room) {
+    final allRoomCabinets = _model.allRoomCabinets.value;
+    final room = allRoomCabinets?.firstWhereOrNull((room) {
       if (roomNameId.id?.isEmpty ?? true) {
         if (room.roomId?.isEmpty ?? true) {
           return true;
@@ -76,11 +77,11 @@ class WarehouseCabinetPageController extends GetxController {
   }
 
   int getTotalCabinetsCount() {
-    final allRoomCabinetItems = _model.allRoomCabinetItems.value;
-    if (allRoomCabinetItems == null) {
+    final allRoomCabinets = _model.allRoomCabinets.value;
+    if (allRoomCabinets == null) {
       return 0;
     }
-    return allRoomCabinetItems.fold<int>(
+    return allRoomCabinets.fold<int>(
       0,
       (sum, room) => sum + (room.cabinets?.length ?? 0),
     );
@@ -89,7 +90,7 @@ class WarehouseCabinetPageController extends GetxController {
   List<WarehouseNameIdModel> getRoomsInfo() {
     final result = List<WarehouseNameIdModel>.from(_service.rooms);
     // 是否有未綁定房間的櫃位
-    bool hasNoBindRoomCabinet = _service.getAllRoomCabinetItems.any((room) => room.roomId == null);
+    bool hasNoBindRoomCabinet = _service.getAllRoomCabinets.any((room) => room.roomId == null);
 
     if (hasNoBindRoomCabinet) {
       result.add(WarehouseNameIdModel(id: '', name: EnumLocale.warehouseUnboundRoom.tr));
@@ -101,23 +102,61 @@ class WarehouseCabinetPageController extends GetxController {
   // MARK: - Private Method
 
   Future<void> _checkData() async {
-    final allRoomCabinetItems = _service.allRoomCabinetItemsRx.value;
+    final allRoomCabinets = _service.allRoomCabinetsRx.value;
 
-    if (allRoomCabinetItems == null) {
-      final response = await _service.apiReqReadItems(WarehouseItemRequestModel());
-
-      if (response != null) {
-        _model.allRoomCabinetItems.value = response;
-      }
+    if (allRoomCabinets == null) {
+      unawaited(_readCabinets());
     } else {
-      _model.allRoomCabinetItems.value = allRoomCabinetItems;
+      _model.allRoomCabinets.value = allRoomCabinets;
+      _genAllVisibleCabinets();
     }
   }
 
+  void _genAllVisibleCabinets() {
+    final resultCabinets = _service.rooms.map((room) => RoomCabinetInfo(roomId: room.id ?? '', roomName: room.name ?? '', cabinets: [])).toList();
+    resultCabinets.add(RoomCabinetInfo(roomId: '', roomName: EnumLocale.warehouseUnboundRoom.tr, cabinets: []));
+
+    for (var room in _model.allRoomCabinets.value ?? []) {
+      final roomId = room.roomId ?? '';
+      final matchedRoomCabinetInfo = resultCabinets.firstWhereOrNull(
+        (roomCabinetInfo) => roomCabinetInfo.roomId == roomId,
+      );
+
+      if (matchedRoomCabinetInfo != null && room.cabinets != null) {
+        final cabinets = room.cabinets! as List<Cabinet>;
+        final cabinetInfos = cabinets.map((cabinet) {
+          return CabinetInfo(
+            cabinetId: cabinet.id ?? '',
+            cabinetName: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
+            quantity: cabinet.quantity ?? 0,
+          );
+        }).toList();
+        matchedRoomCabinetInfo.cabinets.addAll(cabinetInfos);
+      }
+    }
+
+    resultCabinets.removeWhere(
+      (roomCabinetInfo) => roomCabinetInfo.roomId == '' && roomCabinetInfo.cabinets.isEmpty,
+    );
+
+    _model.allVisibleCabinets.value = resultCabinets;
+  }
+
   void _addListeners() {
-    _allRoomCabinetItemsWorker = ever(_service.allRoomCabinetItemsRx.rx, (value) {
-      _model.allRoomCabinetItems.value = value;
+    _model.allRoomCabinetsWorker = ever(_service.allRoomCabinetsRx.rx, (value) {
+      _model.allRoomCabinets.value = value;
+      _genAllVisibleCabinets();
     });
+  }
+
+  Future<void> _readCabinets() async {
+    unawaited(
+      _service.apiReqReadCabinets(
+        WarehouseCabinetReadRequestModel(
+          householdId: _service.getHouseholdId,
+        ),
+      ),
+    );
   }
 
   Future<bool> _createCabinet(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogCabinetEditWidgetModel {
   final isLoading = false.obs;
-  WarehouseNameIdModel? room;
+  RoomCabinetInfo? room;
   final editModels = Rx<List<EditModel>>([]);
 }
 

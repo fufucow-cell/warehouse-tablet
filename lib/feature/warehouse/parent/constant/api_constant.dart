@@ -24,8 +24,10 @@ enum EnumApiInfo {
   itemUpdateQuantity('item/quantity', EnumApiMethod.put),
   itemDelete('item', EnumApiMethod.delete),
   // Warehouse Cabinet
+  cabinetRead('cabinet', EnumApiMethod.get),
   cabinetCreate('cabinet', EnumApiMethod.post),
   cabinetUpdate('cabinet', EnumApiMethod.put),
+  cabinetDelete('cabinet', EnumApiMethod.delete),
   // Warehouse Category
   categoryCreate('category', EnumApiMethod.post),
   categoryRead('category', EnumApiMethod.get),

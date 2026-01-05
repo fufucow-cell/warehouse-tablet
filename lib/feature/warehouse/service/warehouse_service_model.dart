@@ -12,8 +12,10 @@ class WarehouseServiceModel {
   // 搜尋條件
   final searchCondition = Rxn<DialogItemSearchOutputModel>();
   final searchCabinetId = Rxn<String?>();
-  // 房間
+  // 房間櫃位物品
   final allRoomCabinetItems = Rxn<List<Room>>();
+  // 房間櫃位
+  final allRoomCabinets = Rxn<List<Room>>();
   // 分類
   final allCategories = Rxn<List<Category>>();
   // 物品
