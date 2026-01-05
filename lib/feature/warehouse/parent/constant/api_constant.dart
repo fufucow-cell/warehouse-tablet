@@ -34,9 +34,9 @@ enum EnumApiInfo {
   categoryUpdate('category', EnumApiMethod.put),
   categoryDelete('category', EnumApiMethod.delete),
   // Warehouse Record
-  logCreate('log', EnumApiMethod.post),
-  logRead('log', EnumApiMethod.get),
-  logDelete('log', EnumApiMethod.delete);
+  recordCreate('record', EnumApiMethod.post),
+  recordRead('record', EnumApiMethod.get),
+  recordDelete('record', EnumApiMethod.delete);
 
   const EnumApiInfo(this.path, this.method);
   final String path;

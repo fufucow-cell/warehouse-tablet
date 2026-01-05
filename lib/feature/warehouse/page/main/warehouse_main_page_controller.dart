@@ -13,6 +13,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehous
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
@@ -134,6 +135,7 @@ class WarehouseMainPageController extends GetxController {
   Future<void> _queryApiData() async {
     final responses = await Future.wait([
       _service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)),
+      _service.apiReqReadCabinets(WarehouseCabinetReadRequestModel(householdId: _service.getHouseholdId)),
       _service.apiReqReadCategory(WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId)),
     ]);
 
@@ -220,6 +222,11 @@ class WarehouseMainPageController extends GetxController {
     );
 
     final isSuccess = response != null;
+
+    if (isSuccess) {
+      unawaited(_queryApiData());
+    }
+
     _service.showSnackBar(
       title: isSuccess ? EnumLocale.warehouseItemCreateSuccess.tr : EnumLocale.warehouseItemCreateFailed.tr,
       message: errMsg,

@@ -18,15 +18,15 @@ class DialogItemNormalEditWidgetModel {
 }
 
 class DialogItemNormalEditOutputModel {
-  String name;
-  int minStockAlert;
+  String? name;
+  int? minStockAlert;
   String? description;
   String? photo;
   String? categoryId;
 
   DialogItemNormalEditOutputModel({
-    required this.name,
-    required this.minStockAlert,
+    this.name,
+    this.minStockAlert,
     this.description,
     this.photo,
     this.categoryId,

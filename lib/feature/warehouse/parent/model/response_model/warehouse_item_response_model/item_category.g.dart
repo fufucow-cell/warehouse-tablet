@@ -11,9 +11,9 @@ _$ItemCategoryImpl _$$ItemCategoryImplFromJson(Map<String, dynamic> json) =>
       id: json['id'] as String?,
       name: json['name'] as String?,
       parentId: json['parent_id'] as String?,
-      children: json['children'] == null
+      child: json['child'] == null
           ? null
-          : ItemCategory.fromJson(json['children'] as Map<String, dynamic>),
+          : ItemCategory.fromJson(json['child'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ItemCategoryImplToJson(_$ItemCategoryImpl instance) =>
@@ -21,5 +21,5 @@ Map<String, dynamic> _$$ItemCategoryImplToJson(_$ItemCategoryImpl instance) =>
       'id': instance.id,
       'name': instance.name,
       'parent_id': instance.parentId,
-      'children': instance.children?.toJson(),
+      'child': instance.child?.toJson(),
     };

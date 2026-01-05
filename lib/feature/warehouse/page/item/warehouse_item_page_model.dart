@@ -17,8 +17,6 @@ class WarehouseItemPageModel {
   final filterIndexForCategories = Rx<Set<int>>({});
   final isFilterExpanded = false.obs;
   final searchCondition = Rxn<DialogItemSearchOutputModel>();
-  Worker? searchConditionWorker;
-  Worker? searchCabinetIdWorker;
   Worker? allRoomCabinetItemsWorker;
   Worker? allRoomCabinetsWorker;
 }

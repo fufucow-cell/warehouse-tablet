@@ -15,34 +15,18 @@ _$ItemRecordImpl _$$ItemRecordImplFromJson(Map<String, dynamic> json) =>
       createdAt: (json['created_at'] as num?)?.toInt(),
       operateType: (json['operate_type'] as num?)?.toInt(),
       entityType: (json['entity_type'] as num?)?.toInt(),
-      itemName: (json['item_name'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      itemDescription: (json['item_description'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      itemPhoto: (json['item_photo'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      itemName: _stringListFromJson(json['item_name']),
+      itemDescription: _stringListFromJson(json['item_description']),
+      itemPhoto: _stringListFromJson(json['item_photo']),
       itemMinStockCount: (json['item_min_stock_count'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
-      categoryName: (json['category_name'] as List<dynamic>?)
-          ?.map((e) => e as String)
+      categoryName: _categoryNameListFromJson(json['category_name']),
+      cabinetName: _stringListFromJson(json['cabinet_name']),
+      cabinetRoomName: _stringListFromJson(json['cabinet_room_name']),
+      quantityCount: (json['quantity_count'] as List<dynamic>?)
+          ?.map((e) => (e as num).toInt())
           .toList(),
-      cabinetName: (json['cabinet_name'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      cabinetRoomName: (json['cabinet_room_name'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      itemPosition: (json['item_position'] as List<dynamic>?)
-          ?.map((e) => ItemPosition.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      itemQuantity: json['item_quantity'] == null
-          ? null
-          : ItemQuantity.fromJson(
-              json['item_quantity'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ItemRecordImplToJson(_$ItemRecordImpl instance) =>
@@ -61,6 +45,5 @@ Map<String, dynamic> _$$ItemRecordImplToJson(_$ItemRecordImpl instance) =>
       'category_name': instance.categoryName,
       'cabinet_name': instance.cabinetName,
       'cabinet_room_name': instance.cabinetRoomName,
-      'item_position': instance.itemPosition?.map((e) => e.toJson()).toList(),
-      'item_quantity': instance.itemQuantity?.toJson(),
+      'quantity_count': instance.quantityCount,
     };

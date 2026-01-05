@@ -47,6 +47,7 @@ class WarehouseCategoryPageController extends GetxController {
     super.onInit();
     LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onInit - $hashCode');
     scrollController.addListener(_onScroll);
+    _addListeners();
     _checkData();
   }
 
@@ -55,6 +56,7 @@ class WarehouseCategoryPageController extends GetxController {
     LogUtil.i(EnumLogType.debug, '[WarehouseCategoryPageController] onClose - $hashCode');
     scrollController.removeListener(_onScroll);
     scrollController.dispose();
+    _model.allCategoriesWorker?.dispose();
     super.onClose();
   }
 
@@ -153,11 +155,18 @@ class WarehouseCategoryPageController extends GetxController {
 
   void _checkData() {
     final allCategories = _service.allCategoriesRx.value;
-    _model.allCategories.value = allCategories;
 
     if (allCategories == null) {
       _readCategory();
+    } else {
+      _model.allCategories.value = allCategories;
     }
+  }
+
+  void _addListeners() {
+    _model.allCategoriesWorker = ever(_service.allCategoriesRx.rx, (value) {
+      _model.allCategories.value = value;
+    });
   }
 
   Future<bool> _createCategory(DialogCategoryCreateOutputModel outputModel) async {
@@ -165,22 +174,26 @@ class WarehouseCategoryPageController extends GetxController {
       name: outputModel.name,
       householdId: _service.getHouseholdId,
       parentId: outputModel.parentId,
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqCreateCategory(request);
 
-    if (response != null) {
+    final isSuccess = response != null;
+
+    if (isSuccess) {
       unawaited(_readCategory());
-      return true;
     }
 
-    return false;
+    return isSuccess;
   }
 
   Future<void> _readCategory() async {
-    _model.allCategories.value = null;
-    final response = await _service.apiReqReadCategory(WarehouseCategoryReadRequestModel());
-    _model.allCategories.value = response;
+    unawaited(
+      _service.apiReqReadCategory(
+        WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId),
+      ),
+    );
   }
 
   Future<bool> _updateCategory(DialogCategoryEditOutputModel outputModel, String categoryId) async {

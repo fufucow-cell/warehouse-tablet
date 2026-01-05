@@ -3,7 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehous
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_record_read_request_model/warehouse_record_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_position.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
@@ -64,13 +64,13 @@ class WarehouseRecordPageController extends GetxController {
           _ => EnumTagType.unknown,
         };
       case EnumOperateType.update:
-        if (entityType == EnumEntityType.item) {
-          if (log.itemQuantity != null) {
-            return EnumTagType.updateQuantity;
-          } else if (log.itemPosition != null) {
-            return EnumTagType.updatePosition;
-          }
-        }
+        // if (entityType == EnumEntityType.item) {
+        // if (log.itemQuantity != null) {
+        //   return EnumTagType.updateQuantity;
+        // } else if (log.itemPosition != null) {
+        //   return EnumTagType.updatePosition;
+        // }
+        // }
 
         return switch (entityType) {
           EnumEntityType.item => EnumTagType.updateItem,
@@ -104,11 +104,11 @@ class WarehouseRecordPageController extends GetxController {
         };
       case EnumOperateType.update:
         if (entityType == EnumEntityType.item) {
-          if (log.itemQuantity != null) {
-            return _genItemQuantityContent(log);
-          } else if (log.itemPosition != null) {
-            return _genItemPositionContent(log);
-          }
+          // if (log.itemQuantity != null) {
+          //   return _genItemQuantityContent(log);
+          // } else if (log.itemPosition != null) {
+          //   return _genItemPositionContent(log);
+          // }
         }
 
         return switch (entityType) {
@@ -157,7 +157,7 @@ class WarehouseRecordPageController extends GetxController {
 
   Future<void> _queryApiData() async {
     _model.allLogs.value = null;
-    final response = await _service.apiReqReadLogs(WarehouseRecordRequestModel());
+    final response = await _service.apiReqReadRecord(WarehouseRecordReadRequestModel());
     _model.allLogs.value = response;
     _genVisibleLogs();
   }
@@ -188,57 +188,57 @@ class WarehouseRecordPageController extends GetxController {
     _model.visibleLogs.value = visibleLogs;
   }
 
-  String _genItemQuantityContent(ItemRecord log) {
-    String result = '';
+  // String _genItemQuantityContent(ItemRecord log) {
+  //   String result = '';
 
-    if (log.itemQuantity != null) {
-      final quantity = log.itemQuantity!;
-      final oldCount = quantity.totalCount?.firstOrNull ?? '-';
-      final newCount = quantity.totalCount?.lastOrNull ?? '-';
-      final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
-      final strTotalCount = EnumLocale.warehouseItemTotalQuantityChange.trArgs([
-        itemName,
-        oldCount.toString(),
-        newCount.toString(),
-      ]);
-      result += strTotalCount;
+  //   if (log.itemQuantity != null) {
+  //     final quantity = log.itemQuantity!;
+  //     final oldCount = quantity.totalCount?.firstOrNull ?? '-';
+  //     final newCount = quantity.totalCount?.lastOrNull ?? '-';
+  //     final itemName = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+  //     final strTotalCount = EnumLocale.warehouseItemTotalQuantityChange.trArgs([
+  //       itemName,
+  //       oldCount.toString(),
+  //       newCount.toString(),
+  //     ]);
+  //     result += strTotalCount;
 
-      for (Cabinet cabinet in quantity.cabinets ?? []) {
-        final oldCount = cabinet.count?.firstOrNull ?? '-';
-        final newCount = cabinet.count?.lastOrNull ?? '-';
-        final cabinetName = cabinet.cabinetName ?? '-';
-        final strCabinet = EnumLocale.warehouseCabinetQuantityChange.trArgs([
-          cabinetName,
-          oldCount.toString(),
-          newCount.toString(),
-        ]);
-        result += '\n$strCabinet';
-      }
-    }
+  //     for (Cabinet cabinet in quantity.cabinets ?? []) {
+  //       final oldCount = cabinet.count?.firstOrNull ?? '-';
+  //       final newCount = cabinet.count?.lastOrNull ?? '-';
+  //       final cabinetName = cabinet.cabinetName ?? '-';
+  //       final strCabinet = EnumLocale.warehouseCabinetQuantityChange.trArgs([
+  //         cabinetName,
+  //         oldCount.toString(),
+  //         newCount.toString(),
+  //       ]);
+  //       result += '\n$strCabinet';
+  //     }
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
-  String _genItemPositionContent(ItemRecord log) {
-    String result = '';
+  // String _genItemPositionContent(ItemRecord log) {
+  //   String result = '';
 
-    if (log.itemName?.length == 1) {
-      final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
-      result += oldValue;
-    }
+  //   if (log.itemName?.length == 1) {
+  //     final oldValue = (log.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : log.itemName!.firstOrNull!;
+  //     result += oldValue;
+  //   }
 
-    if (log.itemPosition != null) {
-      for (ItemPosition position in log.itemPosition ?? []) {
-        final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.firstOrNull!;
-        final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.lastOrNull!;
-        final count = position.count ?? '-';
-        final strCabinet = EnumLocale.warehouseMoveFromTo.trArgs([oldName, newName, count.toString()]);
-        result += '\n$strCabinet';
-      }
-    }
+  //   if (log.itemPosition != null) {
+  //     for (ItemPosition position in log.itemPosition ?? []) {
+  //       final oldName = (position.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.firstOrNull!;
+  //       final newName = (position.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : position.cabinetName!.lastOrNull!;
+  //       final count = position.count ?? '-';
+  //       final strCabinet = EnumLocale.warehouseMoveFromTo.trArgs([oldName, newName, count.toString()]);
+  //       result += '\n$strCabinet';
+  //     }
+  //   }
 
-    return result;
-  }
+  //   return result;
+  // }
 
   String _genItemNormalContent(ItemRecord log) {
     String result = '';

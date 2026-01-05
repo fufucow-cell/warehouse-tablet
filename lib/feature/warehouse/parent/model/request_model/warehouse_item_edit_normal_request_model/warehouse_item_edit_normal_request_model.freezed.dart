@@ -25,13 +25,14 @@ mixin _$WarehouseItemEditNormalRequestModel {
   String? get householdId => throw _privateConstructorUsedError;
   @JsonKey(name: 'item_id')
   String? get itemId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  String? get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
   String? get photo => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   int? get minStockAlert => throw _privateConstructorUsedError;
-  String? get categoryId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_name')
-  String? get userName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,12 +52,12 @@ abstract class $WarehouseItemEditNormalRequestModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'item_id') String? itemId,
+      @JsonKey(name: 'category_id') String? categoryId,
+      @JsonKey(name: 'user_name') String? userName,
       String? photo,
       String? name,
       String? description,
-      int? minStockAlert,
-      String? categoryId,
-      @JsonKey(name: 'user_name') String? userName});
+      int? minStockAlert});
 }
 
 /// @nodoc
@@ -75,12 +76,12 @@ class _$WarehouseItemEditNormalRequestModelCopyWithImpl<$Res,
   $Res call({
     Object? householdId = freezed,
     Object? itemId = freezed,
+    Object? categoryId = freezed,
+    Object? userName = freezed,
     Object? photo = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? minStockAlert = freezed,
-    Object? categoryId = freezed,
-    Object? userName = freezed,
   }) {
     return _then(_value.copyWith(
       householdId: freezed == householdId
@@ -90,6 +91,14 @@ class _$WarehouseItemEditNormalRequestModelCopyWithImpl<$Res,
       itemId: freezed == itemId
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       photo: freezed == photo
           ? _value.photo
@@ -107,14 +116,6 @@ class _$WarehouseItemEditNormalRequestModelCopyWithImpl<$Res,
           ? _value.minStockAlert
           : minStockAlert // ignore: cast_nullable_to_non_nullable
               as int?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: freezed == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -131,12 +132,12 @@ abstract class _$$WarehouseItemEditNormalRequestModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'item_id') String? itemId,
+      @JsonKey(name: 'category_id') String? categoryId,
+      @JsonKey(name: 'user_name') String? userName,
       String? photo,
       String? name,
       String? description,
-      int? minStockAlert,
-      String? categoryId,
-      @JsonKey(name: 'user_name') String? userName});
+      int? minStockAlert});
 }
 
 /// @nodoc
@@ -154,12 +155,12 @@ class __$$WarehouseItemEditNormalRequestModelImplCopyWithImpl<$Res>
   $Res call({
     Object? householdId = freezed,
     Object? itemId = freezed,
+    Object? categoryId = freezed,
+    Object? userName = freezed,
     Object? photo = freezed,
     Object? name = freezed,
     Object? description = freezed,
     Object? minStockAlert = freezed,
-    Object? categoryId = freezed,
-    Object? userName = freezed,
   }) {
     return _then(_$WarehouseItemEditNormalRequestModelImpl(
       householdId: freezed == householdId
@@ -169,6 +170,14 @@ class __$$WarehouseItemEditNormalRequestModelImplCopyWithImpl<$Res>
       itemId: freezed == itemId
           ? _value.itemId
           : itemId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userName: freezed == userName
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String?,
       photo: freezed == photo
           ? _value.photo
@@ -186,14 +195,6 @@ class __$$WarehouseItemEditNormalRequestModelImplCopyWithImpl<$Res>
           ? _value.minStockAlert
           : minStockAlert // ignore: cast_nullable_to_non_nullable
               as int?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userName: freezed == userName
-          ? _value.userName
-          : userName // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -205,12 +206,12 @@ class _$WarehouseItemEditNormalRequestModelImpl
   _$WarehouseItemEditNormalRequestModelImpl(
       {@JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'item_id') this.itemId,
+      @JsonKey(name: 'category_id') this.categoryId,
+      @JsonKey(name: 'user_name') this.userName,
       this.photo,
       this.name,
       this.description,
-      this.minStockAlert,
-      this.categoryId,
-      @JsonKey(name: 'user_name') this.userName});
+      this.minStockAlert});
 
   factory _$WarehouseItemEditNormalRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -223,6 +224,12 @@ class _$WarehouseItemEditNormalRequestModelImpl
   @JsonKey(name: 'item_id')
   final String? itemId;
   @override
+  @JsonKey(name: 'category_id')
+  final String? categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
+  @override
   final String? photo;
   @override
   final String? name;
@@ -230,15 +237,10 @@ class _$WarehouseItemEditNormalRequestModelImpl
   final String? description;
   @override
   final int? minStockAlert;
-  @override
-  final String? categoryId;
-  @override
-  @JsonKey(name: 'user_name')
-  final String? userName;
 
   @override
   String toString() {
-    return 'WarehouseItemEditNormalRequestModel(householdId: $householdId, itemId: $itemId, photo: $photo, name: $name, description: $description, minStockAlert: $minStockAlert, categoryId: $categoryId, userName: $userName)';
+    return 'WarehouseItemEditNormalRequestModel(householdId: $householdId, itemId: $itemId, categoryId: $categoryId, userName: $userName, photo: $photo, name: $name, description: $description, minStockAlert: $minStockAlert)';
   }
 
   @override
@@ -249,22 +251,22 @@ class _$WarehouseItemEditNormalRequestModelImpl
             (identical(other.householdId, householdId) ||
                 other.householdId == householdId) &&
             (identical(other.itemId, itemId) || other.itemId == itemId) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
             (identical(other.photo, photo) || other.photo == photo) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.minStockAlert, minStockAlert) ||
-                other.minStockAlert == minStockAlert) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.userName, userName) ||
-                other.userName == userName));
+                other.minStockAlert == minStockAlert));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, householdId, itemId, photo, name,
-      description, minStockAlert, categoryId, userName);
+  int get hashCode => Object.hash(runtimeType, householdId, itemId, categoryId,
+      userName, photo, name, description, minStockAlert);
 
   @JsonKey(ignore: true)
   @override
@@ -285,15 +287,14 @@ class _$WarehouseItemEditNormalRequestModelImpl
 abstract class _WarehouseItemEditNormalRequestModel
     implements WarehouseItemEditNormalRequestModel {
   factory _WarehouseItemEditNormalRequestModel(
-          {@JsonKey(name: 'household_id') final String? householdId,
-          @JsonKey(name: 'item_id') final String? itemId,
-          final String? photo,
-          final String? name,
-          final String? description,
-          final int? minStockAlert,
-          final String? categoryId,
-          @JsonKey(name: 'user_name') final String? userName}) =
-      _$WarehouseItemEditNormalRequestModelImpl;
+      {@JsonKey(name: 'household_id') final String? householdId,
+      @JsonKey(name: 'item_id') final String? itemId,
+      @JsonKey(name: 'category_id') final String? categoryId,
+      @JsonKey(name: 'user_name') final String? userName,
+      final String? photo,
+      final String? name,
+      final String? description,
+      final int? minStockAlert}) = _$WarehouseItemEditNormalRequestModelImpl;
 
   factory _WarehouseItemEditNormalRequestModel.fromJson(
           Map<String, dynamic> json) =
@@ -306,6 +307,12 @@ abstract class _WarehouseItemEditNormalRequestModel
   @JsonKey(name: 'item_id')
   String? get itemId;
   @override
+  @JsonKey(name: 'category_id')
+  String? get categoryId;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
+  @override
   String? get photo;
   @override
   String? get name;
@@ -313,11 +320,6 @@ abstract class _WarehouseItemEditNormalRequestModel
   String? get description;
   @override
   int? get minStockAlert;
-  @override
-  String? get categoryId;
-  @override
-  @JsonKey(name: 'user_name')
-  String? get userName;
   @override
   @JsonKey(ignore: true)
   _$$WarehouseItemEditNormalRequestModelImplCopyWith<

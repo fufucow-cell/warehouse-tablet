@@ -17,6 +17,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item_category.dart';
@@ -33,11 +34,11 @@ class WarehouseItemPageController extends GetxController {
 
   final _model = WarehouseItemPageModel();
   final _service = WarehouseService.instance;
-  // List<WarehouseNameIdModel> get getfilterRuleForRooms => _model.filterRuleForRooms;
   String getItemCategoriesName(Item item) => _service.convertCategoriesName(item);
   RxReadonly<List<Item>> get visibleItemsRx => _model.visibleItems.readonly;
   RxReadonly<List<Room>?> get allItemsRx => _model.allRoomCabinetItems.readonly;
   RxReadonly<List<Room>?> get allCabinetsRx => _model.allRoomCabinets.readonly;
+  RxReadonly<List<Category>?> get allCategoriesRx => _service.allCategoriesRx;
   RxReadonly<bool> get isFilterExpandedRx => _model.isFilterExpanded.readonly;
   RxReadonly<int> get filterIndexForRoomsRx => _model.filterIndexForRooms.readonly;
   RxReadonly<int> get cabinetFilterSelectedIndexRx => _model.filterIndexForCabinets.readonly;
@@ -58,8 +59,6 @@ class WarehouseItemPageController extends GetxController {
   @override
   void onClose() {
     LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
-    _model.searchConditionWorker?.dispose();
-    _model.searchCabinetIdWorker?.dispose();
     _model.allRoomCabinetItemsWorker?.dispose();
     _model.allRoomCabinetsWorker?.dispose();
     super.onClose();
@@ -72,13 +71,17 @@ class WarehouseItemPageController extends GetxController {
   }
 
   int getTotalCabinetCount() {
-    return _model.allRoomCabinets.value
-            ?.where((room) => (room.roomId?.isNotEmpty ?? false))
-            .fold<int>(0, (sum, room) => sum + (room.cabinets?.length ?? 0)) ??
-        0;
+    return _model.allRoomCabinets.value?.fold<int>(0, (sum, room) => sum + (room.cabinets?.length ?? 0)) ?? 0;
   }
 
   int getTotalCategoryCount() {
+    final lv1Count = allCategoriesRx.value?.length ?? 0;
+    final lv2Count = _service.flattenAllLevel2Categories().length;
+    final lv3Count = _service.flattenAllLevel3Categories().length;
+    return lv1Count + lv2Count + lv3Count;
+  }
+
+  int getTotalCategoryCountOnItemsUse() {
     final allItems = _service.getAllCombineItems;
     final Set<String> allCategoryIds = {};
 
@@ -88,8 +91,8 @@ class WarehouseItemPageController extends GetxController {
       }
 
       allCategoryIds.add(category!.id!);
-      if (category.children != null) {
-        extractCategory(category.children);
+      if (category.child != null) {
+        extractCategory(category.child);
       }
     }
 
@@ -149,20 +152,40 @@ class WarehouseItemPageController extends GetxController {
     }
 
     if (_model.allRoomCabinetItems.value != null && _model.allRoomCabinets.value != null) {
-      _refreshData();
+      _initData();
     }
   }
 
-  void _refreshData() {
+  void _initData() {
+    final searchCondition = _service.getSearchCondition;
+    final searchCabinetId = _service.getSearchCabinetId;
+
+    if (searchCondition != null) {
+      _model.searchCondition.value = searchCondition;
+      _genVisibleItemsBySearchCondition();
+      _service.clearSearchCondition();
+    } else if (searchCabinetId.isNotEmpty) {
+      interactive(EnumWarehouseItemPageInteractive.tapRoomFilter, data: 0);
+      final List<WarehouseNameIdModel> cabinets = _model.filterRuleForCabinets.value;
+      final matchIndex = cabinets.indexWhere((cabinet) => cabinet.id == searchCabinetId);
+
+      if (matchIndex != -1) {
+        interactive(EnumWarehouseItemPageInteractive.tapCabinetFilter, data: matchIndex);
+        _model.isFilterExpanded.value = true;
+      }
+
+      _service.clearSearchCabinetId();
+    }
+
     _genFilterRuleForCabinet();
     _genAllFilterRuleAndItemForCategory();
   }
 
   Future<void> _queryApiData() async {
-    _model.allRoomCabinetItems.value = null;
-    _model.filterIndexForRooms.value = 0;
-    _model.filterIndexForCabinets.value = 0;
-    _model.filterIndexForCategories.value = {};
+    // _model.allRoomCabinetItems.value = null;
+    // _model.filterIndexForRooms.value = 0;
+    // _model.filterIndexForCabinets.value = 0;
+    // _model.filterIndexForCategories.value = {};
     unawaited(_service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)));
   }
 
@@ -187,6 +210,11 @@ class WarehouseItemPageController extends GetxController {
     );
 
     final isSuccess = response != null;
+
+    if (isSuccess) {
+      unawaited(_queryApiData());
+    }
+
     _service.showSnackBar(
       title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
       message: errMsg,
@@ -263,6 +291,16 @@ class WarehouseItemPageController extends GetxController {
     return _model.allRoomCabinets.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
   }
 
+  // 扁平化所有櫥櫃包含物品
+  List<Cabinet> _flattenAllCabinetsWithItems() {
+    return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
+  }
+
+  // 扁平化所有物品
+  List<Cabinet> _flattenAllCabinetItems() {
+    return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
+  }
+
   // 取得第一階分類
   List<WarehouseNameIdModel> _genFirstLevelCategory(List<Item> items) {
     final Set<String> matchCategoryIds = {};
@@ -296,14 +334,19 @@ class WarehouseItemPageController extends GetxController {
     if (roomIdx == 0) {
       final allCabinets = _flattenAllCabinets();
       resultRules.addAll(
-        allCabinets.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr)),
+        allCabinets
+            .where((cabinet) => ((cabinet.id?.isNotEmpty ?? false) && (cabinet.name?.isNotEmpty ?? false)))
+            .map((cabinet) => WarehouseNameIdModel(id: cabinet.id, name: cabinet.name)),
       );
     } else {
       final roomId = _model.filterRuleForRooms[roomIdx].id;
       final room = allRoomsCabinets.firstWhereOrNull((room) => room.roomId == roomId);
       final cabinets = room?.cabinets ?? <Cabinet>[];
-      resultRules
-          .addAll(cabinets.map((cabinet) => WarehouseNameIdModel(id: cabinet.id ?? '', name: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr)));
+      resultRules.addAll(
+        cabinets
+            .where((cabinet) => ((cabinet.id?.isNotEmpty ?? false) && (cabinet.name?.isNotEmpty ?? false)))
+            .map((cabinet) => WarehouseNameIdModel(id: cabinet.id, name: cabinet.name)),
+      );
     }
 
     _model.filterRuleForCabinets.value = resultRules;
@@ -328,7 +371,7 @@ class WarehouseItemPageController extends GetxController {
               .toList() ??
           [];
     } else {
-      final allCabinets = _flattenAllCabinets();
+      final allCabinets = _flattenAllCabinetsWithItems();
       final matchCabinet = allCabinets.firstWhereOrNull((cabinet) => cabinet.id == cabinetId);
       allItems = matchCabinet?.items ?? [];
     }
@@ -378,10 +421,10 @@ class WarehouseItemPageController extends GetxController {
       matchItems.removeWhere((item) => item.category?.id != lv1Id);
 
       if (lv2Id.isNotEmpty) {
-        matchItems.removeWhere((item) => item.category?.children?.id != lv2Id);
+        matchItems.removeWhere((item) => item.category?.child?.id != lv2Id);
 
         if (lv3Id.isNotEmpty) {
-          matchItems.removeWhere((item) => item.category?.children?.children?.id != lv3Id);
+          matchItems.removeWhere((item) => item.category?.child?.child?.id != lv3Id);
         }
       }
     }
@@ -430,34 +473,16 @@ class WarehouseItemPageController extends GetxController {
 
   // 監聽
   void _addListeners() {
-    _model.searchConditionWorker = ever(_service.searchConditionRx.rx, (model) {
-      if (model != null) {
-        _model.searchCondition.value = model;
-        _genVisibleItemsBySearchCondition();
-      }
-    });
-    _model.searchCabinetIdWorker = ever(_service.searchCabinetIdRx.rx, (id) {
-      if (id != null) {
-        interactive(EnumWarehouseItemPageInteractive.tapRoomFilter, data: 0);
-        final cabinets = _model.filterRuleForCabinets.value;
-        final matchIndex = cabinets.indexWhere((cabinet) => cabinet.id == id);
-
-        if (matchIndex != -1) {
-          interactive(EnumWarehouseItemPageInteractive.tapCabinetFilter, data: matchIndex);
-          _model.isFilterExpanded.value = true;
-        }
-      }
-    });
     _model.allRoomCabinetItemsWorker = ever(_service.allRoomCabinetItemsRx.rx, (rooms) {
       _model.allRoomCabinetItems.value = rooms;
       if (_model.allRoomCabinets.value != null) {
-        _refreshData();
+        _initData();
       }
     });
     _model.allRoomCabinetsWorker = ever(_service.allRoomCabinetsRx.rx, (rooms) {
       _model.allRoomCabinets.value = rooms;
       if (_model.allRoomCabinetItems.value != null) {
-        _refreshData();
+        _initData();
       }
     });
   }

@@ -18,6 +18,7 @@ class TopInfo extends StatelessWidget {
         return Obx(() {
           final allItems = controller.allItemsRx.value;
           final allCabinets = controller.allCabinetsRx.value;
+          final allCategories = controller.allCategoriesRx.value;
           return GridView.count(
             padding: EdgeInsets.zero,
             crossAxisCount: 4,
@@ -36,13 +37,14 @@ class TopInfo extends StatelessWidget {
               TopInfoItem(
                 eImage: EnumImage.cRoom,
                 title: EnumLocale.warehouseCabinetTotal.tr,
-                count: '${controller.getTotalCabinetCount}',
+                count: '${controller.getTotalCabinetCount()}',
                 isLoading: allCabinets == null,
               ),
               TopInfoItem(
                 eImage: EnumImage.cMember,
-                title: EnumLocale.warehouseItemCategory.tr,
+                title: EnumLocale.warehouseCategoryTotal.tr,
                 count: '${controller.getTotalCategoryCount()}',
+                isLoading: allCategories == null,
               ),
               TopInfoItem(
                 eImage: EnumImage.cStockItem,

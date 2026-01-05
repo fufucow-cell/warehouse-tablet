@@ -12,12 +12,12 @@ _$WarehouseItemEditNormalRequestModelImpl
         _$WarehouseItemEditNormalRequestModelImpl(
           householdId: json['household_id'] as String?,
           itemId: json['item_id'] as String?,
+          categoryId: json['category_id'] as String?,
+          userName: json['user_name'] as String?,
           photo: json['photo'] as String?,
           name: json['name'] as String?,
           description: json['description'] as String?,
           minStockAlert: (json['minStockAlert'] as num?)?.toInt(),
-          categoryId: json['categoryId'] as String?,
-          userName: json['user_name'] as String?,
         );
 
 Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
@@ -25,10 +25,10 @@ Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
     <String, dynamic>{
       'household_id': instance.householdId,
       'item_id': instance.itemId,
+      'category_id': instance.categoryId,
+      'user_name': instance.userName,
       'photo': instance.photo,
       'name': instance.name,
       'description': instance.description,
       'minStockAlert': instance.minStockAlert,
-      'categoryId': instance.categoryId,
-      'user_name': instance.userName,
     };

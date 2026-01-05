@@ -66,6 +66,11 @@ class DialogItemCreateWidgetController extends GetxController {
     return _service.rooms.map((room) => room.name ?? '').toList();
   }
 
+  // 獲取可見櫃位名稱列表
+  List<String> getVisibleCabinetNameList() {
+    return _model.visibleCabinets.value.map((cabinet) => cabinet.name ?? '').toList();
+  }
+
   // 檢查輸出資料
   Future<DialogItemCreateOutputModel?> checkOutputModel() async {
     String? imgBase64;
@@ -139,7 +144,7 @@ class DialogItemCreateWidgetController extends GetxController {
 
   // 扁平化所有櫥櫃
   List<Cabinet> _flattenAllCabinets() {
-    return _service.getAllRoomCabinetItems.expand<Cabinet>((room) => room.cabinets ?? []).toList();
+    return _service.getAllRoomCabinets.expand<Cabinet>((room) => room.cabinets ?? []).toList();
   }
 
   // 選擇房間
@@ -163,7 +168,7 @@ class DialogItemCreateWidgetController extends GetxController {
     if (_model.selectedRoom.value == null) {
       cabinets = _flattenAllCabinets();
     } else {
-      final room = _service.getAllRoomCabinetItems.firstWhereOrNull(
+      final room = _service.getAllRoomCabinets.firstWhereOrNull(
         (room) => room.roomId == _model.selectedRoom.value?.id,
       );
       cabinets = room?.cabinets ?? [];

@@ -8,12 +8,12 @@ class WarehouseItemEditNormalRequestModel with _$WarehouseItemEditNormalRequestM
   factory WarehouseItemEditNormalRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,
+    @JsonKey(name: 'category_id') String? categoryId,
+    @JsonKey(name: 'user_name') String? userName,
     String? photo,
     String? name,
     String? description,
     int? minStockAlert,
-    String? categoryId,
-    @JsonKey(name: 'user_name') String? userName,
   }) = _WarehouseItemEditNormalRequestModel;
 
   factory WarehouseItemEditNormalRequestModel.fromJson(

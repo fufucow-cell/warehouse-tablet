@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'warehouse_log_request_model.dart';
+part of 'warehouse_record_read_request_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,17 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-WarehouseRecordRequestModel _$WarehouseRecordRequestModelFromJson(
+WarehouseRecordReadRequestModel _$WarehouseRecordReadRequestModelFromJson(
     Map<String, dynamic> json) {
-  return _WarehouseRecordRequestModel.fromJson(json);
+  return _WarehouseRecordReadRequestModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$WarehouseRecordRequestModel {
+mixin _$WarehouseRecordReadRequestModel {
   @JsonKey(name: 'log_id')
   String? get logId => throw _privateConstructorUsedError;
   @JsonKey(name: 'household_id')
   String? get householdId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'item_id')
+  String? get itemId => throw _privateConstructorUsedError;
   @JsonKey(name: 'after_time')
   int? get afterTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'operate_type')
@@ -36,21 +38,22 @@ mixin _$WarehouseRecordRequestModel {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $WarehouseRecordRequestModelCopyWith<WarehouseRecordRequestModel>
+  $WarehouseRecordReadRequestModelCopyWith<WarehouseRecordReadRequestModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $WarehouseRecordRequestModelCopyWith<$Res> {
-  factory $WarehouseRecordRequestModelCopyWith(
-          WarehouseRecordRequestModel value,
-          $Res Function(WarehouseRecordRequestModel) then) =
-      _$WarehouseRecordRequestModelCopyWithImpl<$Res,
-          WarehouseRecordRequestModel>;
+abstract class $WarehouseRecordReadRequestModelCopyWith<$Res> {
+  factory $WarehouseRecordReadRequestModelCopyWith(
+          WarehouseRecordReadRequestModel value,
+          $Res Function(WarehouseRecordReadRequestModel) then) =
+      _$WarehouseRecordReadRequestModelCopyWithImpl<$Res,
+          WarehouseRecordReadRequestModel>;
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
       @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'item_id') String? itemId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -58,10 +61,10 @@ abstract class $WarehouseRecordRequestModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
-        $Val extends WarehouseRecordRequestModel>
-    implements $WarehouseRecordRequestModelCopyWith<$Res> {
-  _$WarehouseRecordRequestModelCopyWithImpl(this._value, this._then);
+class _$WarehouseRecordReadRequestModelCopyWithImpl<$Res,
+        $Val extends WarehouseRecordReadRequestModel>
+    implements $WarehouseRecordReadRequestModelCopyWith<$Res> {
+  _$WarehouseRecordReadRequestModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -73,6 +76,7 @@ class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
   $Res call({
     Object? logId = freezed,
     Object? householdId = freezed,
+    Object? itemId = freezed,
     Object? afterTime = freezed,
     Object? operateType = freezed,
     Object? itemType = freezed,
@@ -86,6 +90,10 @@ class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String?,
       afterTime: freezed == afterTime
           ? _value.afterTime
@@ -108,17 +116,18 @@ class _$WarehouseRecordRequestModelCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$WarehouseRecordRequestModelImplCopyWith<$Res>
-    implements $WarehouseRecordRequestModelCopyWith<$Res> {
-  factory _$$WarehouseRecordRequestModelImplCopyWith(
-          _$WarehouseRecordRequestModelImpl value,
-          $Res Function(_$WarehouseRecordRequestModelImpl) then) =
-      __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>;
+abstract class _$$WarehouseRecordReadRequestModelImplCopyWith<$Res>
+    implements $WarehouseRecordReadRequestModelCopyWith<$Res> {
+  factory _$$WarehouseRecordReadRequestModelImplCopyWith(
+          _$WarehouseRecordReadRequestModelImpl value,
+          $Res Function(_$WarehouseRecordReadRequestModelImpl) then) =
+      __$$WarehouseRecordReadRequestModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
       {@JsonKey(name: 'log_id') String? logId,
       @JsonKey(name: 'household_id') String? householdId,
+      @JsonKey(name: 'item_id') String? itemId,
       @JsonKey(name: 'after_time') int? afterTime,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'item_type') int? itemType,
@@ -126,13 +135,13 @@ abstract class _$$WarehouseRecordRequestModelImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
-    extends _$WarehouseRecordRequestModelCopyWithImpl<$Res,
-        _$WarehouseRecordRequestModelImpl>
-    implements _$$WarehouseRecordRequestModelImplCopyWith<$Res> {
-  __$$WarehouseRecordRequestModelImplCopyWithImpl(
-      _$WarehouseRecordRequestModelImpl _value,
-      $Res Function(_$WarehouseRecordRequestModelImpl) _then)
+class __$$WarehouseRecordReadRequestModelImplCopyWithImpl<$Res>
+    extends _$WarehouseRecordReadRequestModelCopyWithImpl<$Res,
+        _$WarehouseRecordReadRequestModelImpl>
+    implements _$$WarehouseRecordReadRequestModelImplCopyWith<$Res> {
+  __$$WarehouseRecordReadRequestModelImplCopyWithImpl(
+      _$WarehouseRecordReadRequestModelImpl _value,
+      $Res Function(_$WarehouseRecordReadRequestModelImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -140,12 +149,13 @@ class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
   $Res call({
     Object? logId = freezed,
     Object? householdId = freezed,
+    Object? itemId = freezed,
     Object? afterTime = freezed,
     Object? operateType = freezed,
     Object? itemType = freezed,
     Object? logType = freezed,
   }) {
-    return _then(_$WarehouseRecordRequestModelImpl(
+    return _then(_$WarehouseRecordReadRequestModelImpl(
       logId: freezed == logId
           ? _value.logId
           : logId // ignore: cast_nullable_to_non_nullable
@@ -153,6 +163,10 @@ class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
       householdId: freezed == householdId
           ? _value.householdId
           : householdId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      itemId: freezed == itemId
+          ? _value.itemId
+          : itemId // ignore: cast_nullable_to_non_nullable
               as String?,
       afterTime: freezed == afterTime
           ? _value.afterTime
@@ -176,19 +190,20 @@ class __$$WarehouseRecordRequestModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$WarehouseRecordRequestModelImpl
-    implements _WarehouseRecordRequestModel {
-  _$WarehouseRecordRequestModelImpl(
+class _$WarehouseRecordReadRequestModelImpl
+    implements _WarehouseRecordReadRequestModel {
+  _$WarehouseRecordReadRequestModelImpl(
       {@JsonKey(name: 'log_id') this.logId,
       @JsonKey(name: 'household_id') this.householdId,
+      @JsonKey(name: 'item_id') this.itemId,
       @JsonKey(name: 'after_time') this.afterTime,
       @JsonKey(name: 'operate_type') this.operateType,
       @JsonKey(name: 'item_type') this.itemType,
       @JsonKey(name: 'log_type') this.logType});
 
-  factory _$WarehouseRecordRequestModelImpl.fromJson(
+  factory _$WarehouseRecordReadRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
-      _$$WarehouseRecordRequestModelImplFromJson(json);
+      _$$WarehouseRecordReadRequestModelImplFromJson(json);
 
   @override
   @JsonKey(name: 'log_id')
@@ -196,6 +211,9 @@ class _$WarehouseRecordRequestModelImpl
   @override
   @JsonKey(name: 'household_id')
   final String? householdId;
+  @override
+  @JsonKey(name: 'item_id')
+  final String? itemId;
   @override
   @JsonKey(name: 'after_time')
   final int? afterTime;
@@ -211,17 +229,18 @@ class _$WarehouseRecordRequestModelImpl
 
   @override
   String toString() {
-    return 'WarehouseRecordRequestModel(logId: $logId, householdId: $householdId, afterTime: $afterTime, operateType: $operateType, itemType: $itemType, logType: $logType)';
+    return 'WarehouseRecordReadRequestModel(logId: $logId, householdId: $householdId, itemId: $itemId, afterTime: $afterTime, operateType: $operateType, itemType: $itemType, logType: $logType)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$WarehouseRecordRequestModelImpl &&
+            other is _$WarehouseRecordReadRequestModelImpl &&
             (identical(other.logId, logId) || other.logId == logId) &&
             (identical(other.householdId, householdId) ||
                 other.householdId == householdId) &&
+            (identical(other.itemId, itemId) || other.itemId == itemId) &&
             (identical(other.afterTime, afterTime) ||
                 other.afterTime == afterTime) &&
             (identical(other.operateType, operateType) ||
@@ -233,37 +252,39 @@ class _$WarehouseRecordRequestModelImpl
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, logId, householdId, afterTime,
-      operateType, itemType, logType);
+  int get hashCode => Object.hash(runtimeType, logId, householdId, itemId,
+      afterTime, operateType, itemType, logType);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$WarehouseRecordRequestModelImplCopyWith<_$WarehouseRecordRequestModelImpl>
-      get copyWith => __$$WarehouseRecordRequestModelImplCopyWithImpl<
-          _$WarehouseRecordRequestModelImpl>(this, _$identity);
+  _$$WarehouseRecordReadRequestModelImplCopyWith<
+          _$WarehouseRecordReadRequestModelImpl>
+      get copyWith => __$$WarehouseRecordReadRequestModelImplCopyWithImpl<
+          _$WarehouseRecordReadRequestModelImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WarehouseRecordRequestModelImplToJson(
+    return _$$WarehouseRecordReadRequestModelImplToJson(
       this,
     );
   }
 }
 
-abstract class _WarehouseRecordRequestModel
-    implements WarehouseRecordRequestModel {
-  factory _WarehouseRecordRequestModel(
+abstract class _WarehouseRecordReadRequestModel
+    implements WarehouseRecordReadRequestModel {
+  factory _WarehouseRecordReadRequestModel(
           {@JsonKey(name: 'log_id') final String? logId,
           @JsonKey(name: 'household_id') final String? householdId,
+          @JsonKey(name: 'item_id') final String? itemId,
           @JsonKey(name: 'after_time') final int? afterTime,
           @JsonKey(name: 'operate_type') final int? operateType,
           @JsonKey(name: 'item_type') final int? itemType,
           @JsonKey(name: 'log_type') final int? logType}) =
-      _$WarehouseRecordRequestModelImpl;
+      _$WarehouseRecordReadRequestModelImpl;
 
-  factory _WarehouseRecordRequestModel.fromJson(Map<String, dynamic> json) =
-      _$WarehouseRecordRequestModelImpl.fromJson;
+  factory _WarehouseRecordReadRequestModel.fromJson(Map<String, dynamic> json) =
+      _$WarehouseRecordReadRequestModelImpl.fromJson;
 
   @override
   @JsonKey(name: 'log_id')
@@ -271,6 +292,9 @@ abstract class _WarehouseRecordRequestModel
   @override
   @JsonKey(name: 'household_id')
   String? get householdId;
+  @override
+  @JsonKey(name: 'item_id')
+  String? get itemId;
   @override
   @JsonKey(name: 'after_time')
   int? get afterTime;
@@ -285,6 +309,7 @@ abstract class _WarehouseRecordRequestModel
   int? get logType;
   @override
   @JsonKey(ignore: true)
-  _$$WarehouseRecordRequestModelImplCopyWith<_$WarehouseRecordRequestModelImpl>
+  _$$WarehouseRecordReadRequestModelImplCopyWith<
+          _$WarehouseRecordReadRequestModelImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

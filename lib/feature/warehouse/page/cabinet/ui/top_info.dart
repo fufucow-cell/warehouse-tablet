@@ -15,7 +15,6 @@ class TopInfo extends StatelessWidget {
     return GetBuilder<WarehouseCabinetPageController>(
       builder: (controller) {
         final totalRooms = controller.getTotalRoomsCount;
-        final totalCabinets = controller.getTotalCabinetsCount();
 
         return SizedBox(
           width: double.infinity,
@@ -24,12 +23,17 @@ class TopInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              WidgetUtil.textWidget(
-                EnumLocale.warehouseTotalRoomAndCabinet.trArgs([
-                  '$totalRooms',
-                  '$totalCabinets',
-                ]),
-                size: 32.0.scale,
+              Obx(
+                () {
+                  controller.allVisibleCabinetsRx.value;
+                  return WidgetUtil.textWidget(
+                    EnumLocale.warehouseTotalRoomAndCabinet.trArgs([
+                      '$totalRooms',
+                      '${controller.getTotalCabinetsCount()}',
+                    ]),
+                    size: 32.0.scale,
+                  );
+                },
               ),
               const Spacer(),
               Material(

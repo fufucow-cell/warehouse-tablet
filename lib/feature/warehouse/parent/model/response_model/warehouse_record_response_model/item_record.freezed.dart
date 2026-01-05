@@ -33,24 +33,22 @@ mixin _$ItemRecord {
   int? get operateType => throw _privateConstructorUsedError;
   @JsonKey(name: 'entity_type')
   int? get entityType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'item_name')
+  @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
   List<String>? get itemName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'item_description')
+  @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
   List<String>? get itemDescription => throw _privateConstructorUsedError;
-  @JsonKey(name: 'item_photo')
+  @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
   List<String>? get itemPhoto => throw _privateConstructorUsedError;
   @JsonKey(name: 'item_min_stock_count')
   List<int>? get itemMinStockCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
   List<String>? get categoryName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'cabinet_name')
+  @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
   List<String>? get cabinetName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'cabinet_room_name')
+  @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
   List<String>? get cabinetRoomName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'item_position')
-  List<ItemPosition>? get itemPosition => throw _privateConstructorUsedError;
-  @JsonKey(name: 'item_quantity')
-  ItemQuantity? get itemQuantity => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quantity_count')
+  List<int>? get quantityCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -72,17 +70,20 @@ abstract class $ItemRecordCopyWith<$Res> {
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'entity_type') int? entityType,
-      @JsonKey(name: 'item_name') List<String>? itemName,
-      @JsonKey(name: 'item_description') List<String>? itemDescription,
-      @JsonKey(name: 'item_photo') List<String>? itemPhoto,
+      @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
+      List<String>? itemName,
+      @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
+      List<String>? itemDescription,
+      @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
+      List<String>? itemPhoto,
       @JsonKey(name: 'item_min_stock_count') List<int>? itemMinStockCount,
-      @JsonKey(name: 'category_name') List<String>? categoryName,
-      @JsonKey(name: 'cabinet_name') List<String>? cabinetName,
-      @JsonKey(name: 'cabinet_room_name') List<String>? cabinetRoomName,
-      @JsonKey(name: 'item_position') List<ItemPosition>? itemPosition,
-      @JsonKey(name: 'item_quantity') ItemQuantity? itemQuantity});
-
-  $ItemQuantityCopyWith<$Res>? get itemQuantity;
+      @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
+      List<String>? categoryName,
+      @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
+      List<String>? cabinetName,
+      @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
+      List<String>? cabinetRoomName,
+      @JsonKey(name: 'quantity_count') List<int>? quantityCount});
 }
 
 /// @nodoc
@@ -112,8 +113,7 @@ class _$ItemRecordCopyWithImpl<$Res, $Val extends ItemRecord>
     Object? categoryName = freezed,
     Object? cabinetName = freezed,
     Object? cabinetRoomName = freezed,
-    Object? itemPosition = freezed,
-    Object? itemQuantity = freezed,
+    Object? quantityCount = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -172,27 +172,11 @@ class _$ItemRecordCopyWithImpl<$Res, $Val extends ItemRecord>
           ? _value.cabinetRoomName
           : cabinetRoomName // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      itemPosition: freezed == itemPosition
-          ? _value.itemPosition
-          : itemPosition // ignore: cast_nullable_to_non_nullable
-              as List<ItemPosition>?,
-      itemQuantity: freezed == itemQuantity
-          ? _value.itemQuantity
-          : itemQuantity // ignore: cast_nullable_to_non_nullable
-              as ItemQuantity?,
+      quantityCount: freezed == quantityCount
+          ? _value.quantityCount
+          : quantityCount // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ItemQuantityCopyWith<$Res>? get itemQuantity {
-    if (_value.itemQuantity == null) {
-      return null;
-    }
-
-    return $ItemQuantityCopyWith<$Res>(_value.itemQuantity!, (value) {
-      return _then(_value.copyWith(itemQuantity: value) as $Val);
-    });
   }
 }
 
@@ -212,18 +196,20 @@ abstract class _$$ItemRecordImplCopyWith<$Res>
       @JsonKey(name: 'created_at') int? createdAt,
       @JsonKey(name: 'operate_type') int? operateType,
       @JsonKey(name: 'entity_type') int? entityType,
-      @JsonKey(name: 'item_name') List<String>? itemName,
-      @JsonKey(name: 'item_description') List<String>? itemDescription,
-      @JsonKey(name: 'item_photo') List<String>? itemPhoto,
+      @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
+      List<String>? itemName,
+      @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
+      List<String>? itemDescription,
+      @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
+      List<String>? itemPhoto,
       @JsonKey(name: 'item_min_stock_count') List<int>? itemMinStockCount,
-      @JsonKey(name: 'category_name') List<String>? categoryName,
-      @JsonKey(name: 'cabinet_name') List<String>? cabinetName,
-      @JsonKey(name: 'cabinet_room_name') List<String>? cabinetRoomName,
-      @JsonKey(name: 'item_position') List<ItemPosition>? itemPosition,
-      @JsonKey(name: 'item_quantity') ItemQuantity? itemQuantity});
-
-  @override
-  $ItemQuantityCopyWith<$Res>? get itemQuantity;
+      @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
+      List<String>? categoryName,
+      @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
+      List<String>? cabinetName,
+      @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
+      List<String>? cabinetRoomName,
+      @JsonKey(name: 'quantity_count') List<int>? quantityCount});
 }
 
 /// @nodoc
@@ -251,8 +237,7 @@ class __$$ItemRecordImplCopyWithImpl<$Res>
     Object? categoryName = freezed,
     Object? cabinetName = freezed,
     Object? cabinetRoomName = freezed,
-    Object? itemPosition = freezed,
-    Object? itemQuantity = freezed,
+    Object? quantityCount = freezed,
   }) {
     return _then(_$ItemRecordImpl(
       id: freezed == id
@@ -311,14 +296,10 @@ class __$$ItemRecordImplCopyWithImpl<$Res>
           ? _value._cabinetRoomName
           : cabinetRoomName // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      itemPosition: freezed == itemPosition
-          ? _value._itemPosition
-          : itemPosition // ignore: cast_nullable_to_non_nullable
-              as List<ItemPosition>?,
-      itemQuantity: freezed == itemQuantity
-          ? _value.itemQuantity
-          : itemQuantity // ignore: cast_nullable_to_non_nullable
-              as ItemQuantity?,
+      quantityCount: freezed == quantityCount
+          ? _value._quantityCount
+          : quantityCount // ignore: cast_nullable_to_non_nullable
+              as List<int>?,
     ));
   }
 }
@@ -334,15 +315,20 @@ class _$ItemRecordImpl implements _ItemRecord {
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'operate_type') this.operateType,
       @JsonKey(name: 'entity_type') this.entityType,
-      @JsonKey(name: 'item_name') final List<String>? itemName,
-      @JsonKey(name: 'item_description') final List<String>? itemDescription,
-      @JsonKey(name: 'item_photo') final List<String>? itemPhoto,
+      @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
+      final List<String>? itemName,
+      @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
+      final List<String>? itemDescription,
+      @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
+      final List<String>? itemPhoto,
       @JsonKey(name: 'item_min_stock_count') final List<int>? itemMinStockCount,
-      @JsonKey(name: 'category_name') final List<String>? categoryName,
-      @JsonKey(name: 'cabinet_name') final List<String>? cabinetName,
-      @JsonKey(name: 'cabinet_room_name') final List<String>? cabinetRoomName,
-      @JsonKey(name: 'item_position') final List<ItemPosition>? itemPosition,
-      @JsonKey(name: 'item_quantity') this.itemQuantity})
+      @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
+      final List<String>? categoryName,
+      @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
+      final List<String>? cabinetName,
+      @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
+      final List<String>? cabinetRoomName,
+      @JsonKey(name: 'quantity_count') final List<int>? quantityCount})
       : _itemName = itemName,
         _itemDescription = itemDescription,
         _itemPhoto = itemPhoto,
@@ -350,7 +336,7 @@ class _$ItemRecordImpl implements _ItemRecord {
         _categoryName = categoryName,
         _cabinetName = cabinetName,
         _cabinetRoomName = cabinetRoomName,
-        _itemPosition = itemPosition;
+        _quantityCount = quantityCount;
 
   factory _$ItemRecordImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemRecordImplFromJson(json);
@@ -377,7 +363,7 @@ class _$ItemRecordImpl implements _ItemRecord {
   final int? entityType;
   final List<String>? _itemName;
   @override
-  @JsonKey(name: 'item_name')
+  @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
   List<String>? get itemName {
     final value = _itemName;
     if (value == null) return null;
@@ -388,7 +374,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   final List<String>? _itemDescription;
   @override
-  @JsonKey(name: 'item_description')
+  @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
   List<String>? get itemDescription {
     final value = _itemDescription;
     if (value == null) return null;
@@ -399,7 +385,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   final List<String>? _itemPhoto;
   @override
-  @JsonKey(name: 'item_photo')
+  @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
   List<String>? get itemPhoto {
     final value = _itemPhoto;
     if (value == null) return null;
@@ -422,7 +408,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   final List<String>? _categoryName;
   @override
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
   List<String>? get categoryName {
     final value = _categoryName;
     if (value == null) return null;
@@ -433,7 +419,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   final List<String>? _cabinetName;
   @override
-  @JsonKey(name: 'cabinet_name')
+  @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
   List<String>? get cabinetName {
     final value = _cabinetName;
     if (value == null) return null;
@@ -444,7 +430,7 @@ class _$ItemRecordImpl implements _ItemRecord {
 
   final List<String>? _cabinetRoomName;
   @override
-  @JsonKey(name: 'cabinet_room_name')
+  @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
   List<String>? get cabinetRoomName {
     final value = _cabinetRoomName;
     if (value == null) return null;
@@ -453,24 +439,20 @@ class _$ItemRecordImpl implements _ItemRecord {
     return EqualUnmodifiableListView(value);
   }
 
-  final List<ItemPosition>? _itemPosition;
+  final List<int>? _quantityCount;
   @override
-  @JsonKey(name: 'item_position')
-  List<ItemPosition>? get itemPosition {
-    final value = _itemPosition;
+  @JsonKey(name: 'quantity_count')
+  List<int>? get quantityCount {
+    final value = _quantityCount;
     if (value == null) return null;
-    if (_itemPosition is EqualUnmodifiableListView) return _itemPosition;
+    if (_quantityCount is EqualUnmodifiableListView) return _quantityCount;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
-  @JsonKey(name: 'item_quantity')
-  final ItemQuantity? itemQuantity;
-
-  @override
   String toString() {
-    return 'ItemRecord(id: $id, householdId: $householdId, itemId: $itemId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, itemName: $itemName, itemDescription: $itemDescription, itemPhoto: $itemPhoto, itemMinStockCount: $itemMinStockCount, categoryName: $categoryName, cabinetName: $cabinetName, cabinetRoomName: $cabinetRoomName, itemPosition: $itemPosition, itemQuantity: $itemQuantity)';
+    return 'ItemRecord(id: $id, householdId: $householdId, itemId: $itemId, userName: $userName, createdAt: $createdAt, operateType: $operateType, entityType: $entityType, itemName: $itemName, itemDescription: $itemDescription, itemPhoto: $itemPhoto, itemMinStockCount: $itemMinStockCount, categoryName: $categoryName, cabinetName: $cabinetName, cabinetRoomName: $cabinetRoomName, quantityCount: $quantityCount)';
   }
 
   @override
@@ -504,9 +486,7 @@ class _$ItemRecordImpl implements _ItemRecord {
             const DeepCollectionEquality()
                 .equals(other._cabinetRoomName, _cabinetRoomName) &&
             const DeepCollectionEquality()
-                .equals(other._itemPosition, _itemPosition) &&
-            (identical(other.itemQuantity, itemQuantity) ||
-                other.itemQuantity == itemQuantity));
+                .equals(other._quantityCount, _quantityCount));
   }
 
   @JsonKey(ignore: true)
@@ -527,8 +507,7 @@ class _$ItemRecordImpl implements _ItemRecord {
       const DeepCollectionEquality().hash(_categoryName),
       const DeepCollectionEquality().hash(_cabinetName),
       const DeepCollectionEquality().hash(_cabinetRoomName),
-      const DeepCollectionEquality().hash(_itemPosition),
-      itemQuantity);
+      const DeepCollectionEquality().hash(_quantityCount));
 
   @JsonKey(ignore: true)
   @override
@@ -553,16 +532,21 @@ abstract class _ItemRecord implements ItemRecord {
       @JsonKey(name: 'created_at') final int? createdAt,
       @JsonKey(name: 'operate_type') final int? operateType,
       @JsonKey(name: 'entity_type') final int? entityType,
-      @JsonKey(name: 'item_name') final List<String>? itemName,
-      @JsonKey(name: 'item_description') final List<String>? itemDescription,
-      @JsonKey(name: 'item_photo') final List<String>? itemPhoto,
+      @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
+      final List<String>? itemName,
+      @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
+      final List<String>? itemDescription,
+      @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
+      final List<String>? itemPhoto,
       @JsonKey(name: 'item_min_stock_count') final List<int>? itemMinStockCount,
-      @JsonKey(name: 'category_name') final List<String>? categoryName,
-      @JsonKey(name: 'cabinet_name') final List<String>? cabinetName,
-      @JsonKey(name: 'cabinet_room_name') final List<String>? cabinetRoomName,
-      @JsonKey(name: 'item_position') final List<ItemPosition>? itemPosition,
-      @JsonKey(name: 'item_quantity')
-      final ItemQuantity? itemQuantity}) = _$ItemRecordImpl;
+      @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
+      final List<String>? categoryName,
+      @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
+      final List<String>? cabinetName,
+      @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
+      final List<String>? cabinetRoomName,
+      @JsonKey(name: 'quantity_count')
+      final List<int>? quantityCount}) = _$ItemRecordImpl;
 
   factory _ItemRecord.fromJson(Map<String, dynamic> json) =
       _$ItemRecordImpl.fromJson;
@@ -588,32 +572,29 @@ abstract class _ItemRecord implements ItemRecord {
   @JsonKey(name: 'entity_type')
   int? get entityType;
   @override
-  @JsonKey(name: 'item_name')
+  @JsonKey(name: 'item_name', fromJson: _stringListFromJson)
   List<String>? get itemName;
   @override
-  @JsonKey(name: 'item_description')
+  @JsonKey(name: 'item_description', fromJson: _stringListFromJson)
   List<String>? get itemDescription;
   @override
-  @JsonKey(name: 'item_photo')
+  @JsonKey(name: 'item_photo', fromJson: _stringListFromJson)
   List<String>? get itemPhoto;
   @override
   @JsonKey(name: 'item_min_stock_count')
   List<int>? get itemMinStockCount;
   @override
-  @JsonKey(name: 'category_name')
+  @JsonKey(name: 'category_name', fromJson: _categoryNameListFromJson)
   List<String>? get categoryName;
   @override
-  @JsonKey(name: 'cabinet_name')
+  @JsonKey(name: 'cabinet_name', fromJson: _stringListFromJson)
   List<String>? get cabinetName;
   @override
-  @JsonKey(name: 'cabinet_room_name')
+  @JsonKey(name: 'cabinet_room_name', fromJson: _stringListFromJson)
   List<String>? get cabinetRoomName;
   @override
-  @JsonKey(name: 'item_position')
-  List<ItemPosition>? get itemPosition;
-  @override
-  @JsonKey(name: 'item_quantity')
-  ItemQuantity? get itemQuantity;
+  @JsonKey(name: 'quantity_count')
+  List<int>? get quantityCount;
   @override
   @JsonKey(ignore: true)
   _$$ItemRecordImplCopyWith<_$ItemRecordImpl> get copyWith =>

@@ -4,4 +4,5 @@ import 'package:get/get.dart';
 class WarehouseCategoryPageModel {
   final allCategories = Rxn<List<Category>>();
   final expandedCategoryIds = Rx<Set<String>>({});
+  Worker? allCategoriesWorker;
 }

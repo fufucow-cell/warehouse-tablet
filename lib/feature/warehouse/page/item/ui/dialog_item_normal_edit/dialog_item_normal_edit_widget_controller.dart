@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
@@ -66,13 +67,64 @@ class DialogItemNormalEditWidgetController extends GetxController {
       }
     }
 
-    return DialogItemNormalEditOutputModel(
-      name: nameController.text.trim(),
-      minStockAlert: int.tryParse(minStockAlertController.text.trim()) ?? 0,
-      description: descriptionController.text.trim().isEmpty ? null : descriptionController.text.trim(),
-      photo: imgBase64,
-      categoryId: _model.selectedCategoryLevel3.value?.id ?? _model.selectedCategoryLevel2.value?.id ?? _model.selectedCategoryLevel1.value?.id,
+    // 獲取新值
+    final newNameValue = nameController.text.trim();
+    final newMinStockAlertValue = int.tryParse(minStockAlertController.text.trim()) ?? 0;
+    final newDescriptionValue = descriptionController.text.trim();
+    final newPhotoValue = imgBase64;
+    final newCategoryIdValue =
+        _model.selectedCategoryLevel3.value?.id ?? _model.selectedCategoryLevel2.value?.id ?? _model.selectedCategoryLevel1.value?.id;
+
+    // 獲取原始值
+    final originalName = _model.combineItem?.name;
+    final originalMinStockAlert = _model.combineItem?.minStockAlert ?? 0;
+    final originalDescription = _model.combineItem?.description ?? '';
+    final originalPhoto = _model.combineItem?.photo;
+
+    // 獲取原始分類 ID（找到最深的 category id）
+    String? originalCategoryId;
+    final catLv1 = _model.combineItem?.category;
+    if (catLv1?.id?.isNotEmpty ?? false) {
+      final catLv2 = catLv1?.child;
+      if (catLv2?.id?.isNotEmpty ?? false) {
+        final catLv3 = catLv2?.child;
+        originalCategoryId = catLv3?.id?.isNotEmpty ?? false ? catLv3?.id : catLv2?.id;
+      } else {
+        originalCategoryId = catLv1?.id;
+      }
+    }
+
+    // 比較並設置值，如果相同則為 null（name 和 minStockAlert 是必需的，所以即使相同也要傳值）
+    final newName = newNameValue == originalName ? null : newNameValue;
+    final newMinStockAlert = newMinStockAlertValue == originalMinStockAlert ? null : newMinStockAlertValue;
+    final newDescription = newDescriptionValue == originalDescription ? null : newDescriptionValue;
+    final newCategoryId = newCategoryIdValue == originalCategoryId ? null : newCategoryIdValue;
+
+    String? newPhoto;
+    if (newPhotoValue != null) {
+      newPhoto = newPhotoValue;
+    } else if (originalPhoto != null && _model.photoUrl.value == null) {
+      newPhoto = '';
+    }
+
+    // 檢查所有字段是否都為 null（表示沒有變更）
+    if (newName == null && newMinStockAlert == null && newDescription == null && newPhoto == null && newCategoryId == null) {
+      _service.showSnackBar(
+        title: EnumLocale.commonHint.tr,
+        message: EnumLocale.warehouseItemNoChange.tr,
+      );
+      return null;
+    }
+
+    final result = DialogItemNormalEditOutputModel(
+      name: newName,
+      minStockAlert: newMinStockAlert,
+      description: newDescription,
+      photo: newPhoto,
+      categoryId: newCategoryId,
     );
+
+    return result;
   }
 
   Widget? get convertFileToImage {
@@ -173,12 +225,12 @@ class DialogItemNormalEditWidgetController extends GetxController {
     if (catLv1?.id?.isNotEmpty ?? false) {
       _model.selectedCategoryLevel1.value = WarehouseNameIdModel(id: catLv1?.id ?? '', name: catLv1?.name ?? '');
       _genCategoryLevel2List();
-      final catLv2 = catLv1?.children;
+      final catLv2 = catLv1?.child;
 
       if (catLv2?.id?.isNotEmpty ?? false) {
         _model.selectedCategoryLevel2.value = WarehouseNameIdModel(id: catLv2?.id ?? '', name: catLv2?.name ?? '');
         _genCategoryLevel3List();
-        final catLv3 = catLv2?.children;
+        final catLv3 = catLv2?.child;
 
         if (catLv3?.id?.isNotEmpty ?? false) {
           _model.selectedCategoryLevel3.value = WarehouseNameIdModel(id: catLv3?.id ?? '', name: catLv3?.name ?? '');

@@ -127,7 +127,7 @@ class _Body extends StatelessWidget {
                 () => _DropdownField(
                   title: EnumLocale.cabinet.tr,
                   selectedValue: controller.selectedCabinetRx.value?.name,
-                  visibleValues: controller.visibleCabinetsRx.value.map((cabinet) => cabinet.name ?? '').toList(),
+                  visibleValues: controller.getVisibleCabinetNameList(),
                   onValueSelected: (str) => controller.interactive(
                     EnumDialogItemCreateWidgetInteractive.tapCabinet,
                     data: str,

@@ -71,7 +71,6 @@ class WarehouseCabinetPageController extends GetxController {
       unawaited(_readCabinets());
     } else {
       _model.allVisibleCabinets.value = _service.roomCabinetInfos;
-      // _genAllVisibleCabinets();
     }
   }
 
@@ -103,12 +102,13 @@ class WarehouseCabinetPageController extends GetxController {
       ),
     );
 
-    if (response != null) {
-      unawaited(_service.apiReqReadItems(WarehouseItemRequestModel()));
-      return true;
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      unawaited(_readCabinets());
     }
 
-    return false;
+    return isSuccess;
   }
 
   Future<bool> _updateCabinet(

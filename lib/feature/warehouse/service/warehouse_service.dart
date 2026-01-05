@@ -17,11 +17,12 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_log_request_model/warehouse_log_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_record_read_request_model/warehouse_record_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/warehouse_category_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/warehouse_item_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
@@ -52,8 +53,8 @@ class WarehouseService {
   String get getHouseholdId => _model.household?.id ?? '';
 
   // 搜尋條件
-  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
-  RxReadonly<String?> get searchCabinetIdRx => _model.searchCabinetId.readonly;
+  DialogItemSearchOutputModel? get getSearchCondition => _model.searchCondition;
+  String get getSearchCabinetId => _model.searchCabinetId ?? '';
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   // 櫃位
@@ -244,7 +245,15 @@ class WarehouseService {
         } else if (categoryName != null) {
           names.add(categoryName.toString());
         }
-        extractCategories(category.children);
+        // ItemCategory 使用 child，Category 使用 children
+        if (category is ItemCategory) {
+          extractCategories(category.child);
+        } else if (category is Category) {
+          final children = category.children;
+          if (children != null && children.isNotEmpty) {
+            extractCategories(children.first);
+          }
+        }
       }
     }
 
@@ -271,14 +280,14 @@ class WarehouseService {
   // 添加搜尋條件
   void addSearchCondition(DialogItemSearchOutputModel model) {
     if ((model.searchText?.isNotEmpty ?? false) || model.categoryLevel1 != null) {
-      _model.searchCondition.value = model;
+      _model.searchCondition = model;
       changeMainPageSelectedTabItem(EnumWarehouseTabItem.item);
     }
   }
 
   // 清除搜尋條件
   void clearSearchCondition() {
-    _model.searchCondition.value = null;
+    _model.searchCondition = null;
   }
 
   List<Item> combineItems(List<Item> oldItems) {
@@ -314,11 +323,9 @@ class WarehouseService {
     final result = <Category>[];
 
     for (final cat in getAllCategories) {
-      if (cat.children?.isEmpty ?? true) {
-        continue;
+      if (cat.children?.isNotEmpty ?? false) {
+        result.addAll(cat.children!);
       }
-
-      result.addAll(cat.children!);
     }
 
     return result;
@@ -328,8 +335,8 @@ class WarehouseService {
     final result = <Category>[];
 
     for (final cat in flattenAllLevel2Categories()) {
-      if (cat.children?.isEmpty ?? true) {
-        continue;
+      if (cat.children?.isNotEmpty ?? false) {
+        result.addAll(cat.children!);
       }
     }
 
@@ -417,6 +424,10 @@ class WarehouseService {
     );
   }
 
+  void clearSearchCabinetId() {
+    _model.searchCabinetId = null;
+  }
+
   void changeMainPageSelectedTabItem(
     EnumWarehouseTabItem item, {
     dynamic data,
@@ -424,7 +435,7 @@ class WarehouseService {
     switch (item) {
       case EnumWarehouseTabItem.item:
         if (data is String) {
-          _model.searchCabinetId.value = data;
+          _model.searchCabinetId = data;
         }
       default:
         break;
@@ -534,40 +545,22 @@ class WarehouseService {
 
   // MARK: - Log APIs
 
-  Future<List<ItemRecord>?> apiReqReadLogs(
-    WarehouseRecordRequestModel request, {
+  Future<List<ItemRecord>?> apiReqReadRecord(
+    WarehouseRecordReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
     final response = await ApiUtil.sendRequest<WarehouseRecordResponseModel>(
-      EnumApiInfo.logRead,
+      EnumApiInfo.recordRead,
       requestModel: request,
       fromJson: WarehouseRecordResponseModel.fromJson,
       onError: onError,
     );
-    _model.allRecords.value = response?.data;
-    return response?.data ?? [];
-  }
 
-  Future<BaseApiResponseModel<void>?> apiReqCreateLog(
-    WarehouseRecordRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.logCreate,
-      requestModel: request,
-      onError: onError,
-    );
-  }
+    if (response?.data != null && request.itemId == null) {
+      _model.allRecords.value = response?.data;
+    }
 
-  Future<BaseApiResponseModel<void>?> apiReqDeleteLog(
-    WarehouseRecordRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.logDelete,
-      requestModel: request,
-      onError: onError,
-    );
+    return response?.data;
   }
 
   // MARK: - Private Method

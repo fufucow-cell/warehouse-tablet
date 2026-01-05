@@ -9,7 +9,7 @@ class ItemCategory with _$ItemCategory {
     String? id,
     String? name,
     @JsonKey(name: 'parent_id') String? parentId,
-    ItemCategory? children,
+    ItemCategory? child,
   }) = _ItemCategory;
 
   factory ItemCategory.fromJson(Map<String, dynamic> json) => _$ItemCategoryFromJson(json);

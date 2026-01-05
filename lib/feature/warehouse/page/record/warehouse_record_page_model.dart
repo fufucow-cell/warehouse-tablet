@@ -69,25 +69,25 @@ enum EnumOperateType {
       };
 
   static EnumOperateType fromInt(int? value) {
-    return EnumOperateType.values.firstWhereOrNull((e) => e.index == value) ?? EnumOperateType.unknown;
+    return EnumOperateType.values.firstWhereOrNull((e) => e.index - 1 == value) ?? EnumOperateType.unknown;
   }
 }
 
 enum EnumEntityType {
   unknown,
   cabinet,
-  category,
-  item;
+  item,
+  category;
 
   String get title => switch (this) {
         EnumEntityType.unknown => EnumLocale.unknown.tr,
         EnumEntityType.cabinet => EnumLocale.warehouseEntityTypeCabinet.tr,
-        EnumEntityType.category => EnumLocale.category.tr,
         EnumEntityType.item => EnumLocale.item.tr,
+        EnumEntityType.category => EnumLocale.category.tr,
       };
 
   static EnumEntityType fromInt(int? value) {
-    return EnumEntityType.values.firstWhereOrNull((e) => e.index == value) ?? EnumEntityType.unknown;
+    return EnumEntityType.values.firstWhereOrNull((e) => e.index - 1 == value) ?? EnumEntityType.unknown;
   }
 }
 

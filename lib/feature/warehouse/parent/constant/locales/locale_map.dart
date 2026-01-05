@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-05T23:42:42.778647
+/// 生成时间: 2026-01-06T04:30:46.801481
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
@@ -14,6 +14,7 @@ enum EnumLocale {
   commonCancel,
   commonConfirm,
   commonError,
+  commonHint,
   commonInputHint,
   commonNoData,
   commonProcessing,
@@ -120,6 +121,8 @@ enum EnumLocale {
   warehouseCabinetQuantityChange,
   warehouseCabinetTotal,
   warehouseCategoryCount,
+  warehouseCategoryRemove,
+  warehouseCategoryTotal,
   warehouseCategoryTotalCount,
   warehouseCategoryUpdate,
   warehouseChangeCabinet,
@@ -127,7 +130,9 @@ enum EnumLocale {
   warehouseChangeRoom,
   warehouseCurrentQuantityLabel,
   warehouseDeletePhoto,
+  warehouseDescriptionAdd,
   warehouseDescriptionLabel,
+  warehouseDescriptionRemove,
   warehouseDescriptionUpdate,
   warehouseDuplicateCabinetName,
   warehouseEntityTypeCabinet,
@@ -143,6 +148,7 @@ enum EnumLocale {
   warehouseItemInfo,
   warehouseItemLowStock,
   warehouseItemMoreOptions,
+  warehouseItemNoChange,
   warehouseItemPhoto,
   warehouseItemStockInsufficient,
   warehouseItemTotal,
