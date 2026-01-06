@@ -8,6 +8,8 @@ enum EnumDialogItemEditPositionWidgetInteractive {
   tapDecrementQuantity,
   tapDialogCancelButton,
   tapDialogConfirmButton,
+  tapDeleteButton,
+  tapRestoreButton,
 }
 
 /// DialogItemEditPositionWidget 用户事件处理扩展
@@ -31,7 +33,7 @@ extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositi
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton:
         _routerHandle(
           EnumDialogItemEditPositionWidgetRoute.closeDialog,
-          data,
+          data: data,
         );
       case EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
@@ -39,7 +41,7 @@ extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositi
         } else if (data is BuildContext) {
           _routerHandle(
             EnumDialogItemEditPositionWidgetRoute.closeDialog,
-            data,
+            data: data,
           );
         }
       case EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity:
@@ -54,6 +56,17 @@ extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositi
           if (currentValue > 0) {
             data.text = (currentValue - 1).toString();
           }
+        }
+      case EnumDialogItemEditPositionWidgetInteractive.tapDeleteButton:
+        if (data is DisplayPositionModel) {
+          getQuantityControllers[data.index].text = data.quantity.toString();
+          data.isDelete = true;
+          update();
+        }
+      case EnumDialogItemEditPositionWidgetInteractive.tapRestoreButton:
+        if (data is DisplayPositionModel) {
+          data.isDelete = false;
+          update();
         }
       default:
         break;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
@@ -9,13 +10,13 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
-part 'dialog_item_normal_edit_widget_interactive.dart';
-part 'dialog_item_normal_edit_widget_route.dart';
+part 'dialog_item_edit_normal_widget_interactive.dart';
+part 'dialog_item_edit_normal_widget_route.dart';
 
-class DialogItemNormalEditWidgetController extends GetxController {
+class DialogItemEditNormalWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogItemNormalEditWidgetModel _model = DialogItemNormalEditWidgetModel();
+  final DialogItemEditNormalWidgetModel _model = DialogItemEditNormalWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -33,20 +34,20 @@ class DialogItemNormalEditWidgetController extends GetxController {
 
   // MARK: - Init
 
-  DialogItemNormalEditWidgetController(String itemId) {
+  DialogItemEditNormalWidgetController(String itemId) {
     _model.itemId = itemId;
   }
 
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogItemNormalEditWidgetController] onInit - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onInit - $hashCode');
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogItemNormalEditWidgetController] onClose - $hashCode');
+    LogUtil.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onClose - $hashCode');
     nameController.dispose();
     descriptionController.dispose();
     minStockAlertController.dispose();
@@ -56,7 +57,7 @@ class DialogItemNormalEditWidgetController extends GetxController {
   // MARK: - Public Method
 
   // 檢查輸出資料
-  Future<DialogItemNormalEditOutputModel?> checkOutputModel() async {
+  Future<DialogItemEditNormalOutputModel?> checkOutputModel() async {
     String? imgBase64;
 
     if (_model.filePath.value != null) {
@@ -116,7 +117,7 @@ class DialogItemNormalEditWidgetController extends GetxController {
       return null;
     }
 
-    final result = DialogItemNormalEditOutputModel(
+    final result = DialogItemEditNormalOutputModel(
       name: newName,
       minStockAlert: newMinStockAlert,
       description: newDescription,
@@ -131,7 +132,7 @@ class DialogItemNormalEditWidgetController extends GetxController {
     return _service.convertFileToImage(getFilePath, fitHeight: 200.0.scale);
   }
 
-  Future<DialogItemNormalEditNormalOutputModel?> checkNormalOutputModel() async {
+  Future<DialogItemEditNormalNormalOutputModel?> checkNormalOutputModel() async {
     final name = nameController.text.trim();
     final minStockAlert = int.tryParse(minStockAlertController.text.trim()) ?? 0;
     final description = descriptionController.text.trim();
@@ -152,7 +153,7 @@ class DialogItemNormalEditWidgetController extends GetxController {
       categoryId = selectedCategoryLevel1Rx.value!.id!;
     }
 
-    return DialogItemNormalEditNormalOutputModel(
+    return DialogItemEditNormalNormalOutputModel(
       name: name,
       minStockAlert: minStockAlert,
       description: description,
@@ -163,6 +164,77 @@ class DialogItemNormalEditWidgetController extends GetxController {
 
   void setLoadingStatus(bool isLoading) {
     _model.isLoading.value = isLoading;
+  }
+
+  // 處理確認操作
+  Future<void> handleConfirm(
+    Future<bool> Function(DialogItemEditNormalOutputModel) onConfirm,
+    BuildContext context,
+  ) async {
+    interactive(
+      EnumDialogItemEditNormalWidgetInteractive.tapDialogConfirmButton,
+      data: true,
+    );
+
+    final outputModel = await checkOutputModel();
+
+    if (outputModel == null) {
+      interactive(
+        EnumDialogItemEditNormalWidgetInteractive.tapDialogConfirmButton,
+        data: false,
+      );
+      return;
+    }
+
+    final isSuccess = await onConfirm(outputModel);
+
+    if (isSuccess) {
+      interactive(
+        EnumDialogItemEditNormalWidgetInteractive.tapDialogConfirmButton,
+        data: context,
+      );
+    } else {
+      interactive(
+        EnumDialogItemEditNormalWidgetInteractive.tapDialogConfirmButton,
+        data: false,
+      );
+    }
+  }
+
+  // 處理刪除操作
+  Future<void> handleDelete(
+    Future<bool> Function(String itemId) onDelete,
+    BuildContext context,
+  ) async {
+    // 先顯示刪除確認對話框
+    final confirmResult = await _routerHandle<bool>(
+          EnumDialogItemEditNormalWidgetRoute.showDialogDeleteHint,
+        ) ??
+        false;
+
+    // 如果用戶取消刪除，則返回
+    if (!confirmResult) {
+      return;
+    }
+
+    interactive(
+      EnumDialogItemEditNormalWidgetInteractive.tapDialogDeleteButton,
+      data: true,
+    );
+
+    final isSuccess = await onDelete(_model.itemId);
+
+    if (isSuccess) {
+      interactive(
+        EnumDialogItemEditNormalWidgetInteractive.tapDialogDeleteButton,
+        data: context,
+      );
+    } else {
+      interactive(
+        EnumDialogItemEditNormalWidgetInteractive.tapDialogDeleteButton,
+        data: false,
+      );
+    }
   }
 
   // MARK: - Private Method

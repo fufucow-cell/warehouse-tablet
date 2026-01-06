@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-06T04:30:46.801481
+/// 生成时间: 2026-01-06T16:37:06.367459
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
@@ -19,6 +19,7 @@ enum EnumLocale {
   commonNoData,
   commonProcessing,
   commonReminder,
+  commonRequestFailed,
   commonSearch,
   commonSuccess,
   createCabinetName,
@@ -36,6 +37,7 @@ enum EnumLocale {
   deleteCategory,
   deleteCategoryMessageNoChildren,
   deleteCategoryMessageWithChildren,
+  deleteItemMessage,
   deviceCameraFailed,
   deviceCameraNotAvailable,
   deviceGalleryFailed,
@@ -113,6 +115,7 @@ enum EnumLocale {
   themeLightMode,
   unknown,
   warehouseAddStorageLocation,
+  warehouseAdjustQuantity,
   warehouseAlarmBelowStockLevel,
   warehouseAlarmOperation,
   warehouseAlarmProductName,
@@ -129,6 +132,7 @@ enum EnumLocale {
   warehouseChangePhoto,
   warehouseChangeRoom,
   warehouseCurrentQuantityLabel,
+  warehouseDeleteCabinetItemMustMoveFirst,
   warehouseDeletePhoto,
   warehouseDescriptionAdd,
   warehouseDescriptionLabel,
@@ -160,9 +164,13 @@ enum EnumLocale {
   warehouseMinStockUpdate,
   warehouseMoveFromTo,
   warehouseMoveQuantity,
+  warehouseMoveQuantityInsufficient,
+  warehouseRemoveItemFromCabinet,
+  warehouseMoveToSameCabinet,
   warehouseNameLabel,
   warehouseNameUpdate,
   warehouseNoCabinetInRoom,
+  warehouseNoChange,
   warehouseOperateTypeCreate,
   warehouseOperateTypeDelete,
   warehouseOperateTypeUpdate,
@@ -176,6 +184,7 @@ enum EnumLocale {
   warehouseRecordColumnTime,
   warehouseRecordColumnType,
   warehouseRecordCount,
+  warehouseRecordTotal,
   warehouseRefresh,
   warehouseRoomUpdate,
   warehouseSubCategoryCount,

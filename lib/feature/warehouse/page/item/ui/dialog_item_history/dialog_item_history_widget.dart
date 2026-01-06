@@ -5,11 +5,11 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehous
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
@@ -96,7 +96,7 @@ class _RecordsList extends StatelessWidget {
 }
 
 class _RecordItem extends StatelessWidget {
-  final ItemRecord record;
+  final CombineRecord record;
 
   const _RecordItem({
     required this.record,
@@ -104,27 +104,21 @@ class _RecordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemHistoryWidgetController>();
-    final operateType = EnumOperateType.fromInt(record.operateType);
-    final tag = controller.genTag(record);
-    final content = controller.genContent(record);
-    final date = controller.formatDate(record.createdAt);
-
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 24.0.scale),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _RecordTag(
-            tag: tag,
-            operateType: operateType,
+            tag: record.tagType.title,
+            operateType: record.tagType.operateType,
           ),
           SizedBox(width: 24.0.scale),
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(top: 12.0.scale),
               child: WidgetUtil.textWidget(
-                content,
+                record.content,
                 size: 28.0.scale,
               ),
             ),
@@ -133,7 +127,7 @@ class _RecordItem extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(top: 12.0.scale),
             child: WidgetUtil.textWidget(
-              date,
+              record.date,
               size: 28.0.scale,
             ),
           ),

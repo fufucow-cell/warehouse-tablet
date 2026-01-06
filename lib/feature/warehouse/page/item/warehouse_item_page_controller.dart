@@ -1,18 +1,19 @@
 import 'dart:async';
 
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_delete_request_model/warehouse_item_delete_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
@@ -189,7 +190,7 @@ class WarehouseItemPageController extends GetxController {
     unawaited(_service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)));
   }
 
-  Future<bool> _updateItemNormal(Item item, DialogItemNormalEditOutputModel model) async {
+  Future<bool> _updateItemNormal(Item item, DialogItemEditNormalOutputModel model) async {
     String errMsg = '';
     final requestModel = WarehouseItemEditNormalRequestModel(
       householdId: _service.getHouseholdId,
@@ -203,6 +204,34 @@ class WarehouseItemPageController extends GetxController {
     );
 
     final response = await _service.apiReqUpdateItemNormal(
+      requestModel,
+      onError: (error) {
+        errMsg = '[${error.code}] ${error.message ?? ''}';
+      },
+    );
+
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      unawaited(_queryApiData());
+    }
+
+    _service.showSnackBar(
+      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
+      message: errMsg,
+    );
+    return isSuccess;
+  }
+
+  Future<bool> _deleteItem(String itemId) async {
+    String errMsg = '';
+    final requestModel = WarehouseItemDeleteRequestModel(
+      householdId: _service.getHouseholdId,
+      id: itemId,
+      userName: _service.userName,
+    );
+
+    final response = await _service.apiReqDeleteItem(
       requestModel,
       onError: (error) {
         errMsg = '[${error.code}] ${error.message ?? ''}';
@@ -256,7 +285,16 @@ class WarehouseItemPageController extends GetxController {
     final requestModel = WarehouseItemEditPositionRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
-      cabinets: models.map((model) => PositionCabinetRequestModel(oldCabinetId: model.oldCabinetId, newCabinetId: model.newCabinetId)).toList(),
+      cabinets: models
+          .map(
+            (model) => PositionCabinetRequestModel(
+              oldCabinetId: model.oldCabinetId,
+              newCabinetId: model.newCabinetId,
+              quantity: model.moveQuantity,
+              isDelete: model.isDelete,
+            ),
+          )
+          .toList(),
       userName: _service.userName,
     );
 
@@ -272,6 +310,11 @@ class WarehouseItemPageController extends GetxController {
       title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
       message: errMsg,
     );
+
+    if (isSuccess) {
+      unawaited(_queryApiData());
+    }
+
     return isSuccess;
   }
 

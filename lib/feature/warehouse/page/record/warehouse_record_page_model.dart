@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:get/get.dart';
 
 class WarehouseRecordPageModel {
-  final allLogs = Rxn<List<ItemRecord>>();
-  final visibleLogs = Rx<List<ItemRecord>>([]);
+  final allLogs = Rxn<List<CombineRecord>>();
+  final visibleLogs = Rx<List<CombineRecord>>([]);
   final isShowFilterMenu = false.obs;
   final filterType = Rx<EnumFilterType>(EnumFilterType.all);
   final columnRatio = [170, 705, 280, 280];
@@ -76,14 +76,18 @@ enum EnumOperateType {
 enum EnumEntityType {
   unknown,
   cabinet,
-  item,
-  category;
+  itemNormal,
+  category,
+  itemQuantity,
+  itemPosition;
 
   String get title => switch (this) {
         EnumEntityType.unknown => EnumLocale.unknown.tr,
         EnumEntityType.cabinet => EnumLocale.warehouseEntityTypeCabinet.tr,
-        EnumEntityType.item => EnumLocale.item.tr,
+        EnumEntityType.itemNormal => EnumLocale.item.tr,
         EnumEntityType.category => EnumLocale.category.tr,
+        EnumEntityType.itemQuantity => EnumLocale.item.tr,
+        EnumEntityType.itemPosition => EnumLocale.item.tr,
       };
 
   static EnumEntityType fromInt(int? value) {
@@ -123,4 +127,19 @@ enum EnumTagType {
   static EnumTagType fromInt(int? value) {
     return EnumTagType.values.firstWhereOrNull((e) => e.index == value) ?? EnumTagType.unknown;
   }
+
+  EnumOperateType get operateType => switch (this) {
+        EnumTagType.createItem => EnumOperateType.create,
+        EnumTagType.createCabinet => EnumOperateType.create,
+        EnumTagType.createCategory => EnumOperateType.create,
+        EnumTagType.updateItem => EnumOperateType.update,
+        EnumTagType.updateCabinet => EnumOperateType.update,
+        EnumTagType.updateCategory => EnumOperateType.update,
+        EnumTagType.updateQuantity => EnumOperateType.update,
+        EnumTagType.updatePosition => EnumOperateType.update,
+        EnumTagType.deleteItem => EnumOperateType.delete,
+        EnumTagType.deleteCabinet => EnumOperateType.delete,
+        EnumTagType.deleteCategory => EnumOperateType.delete,
+        _ => EnumOperateType.unknown,
+      };
 }

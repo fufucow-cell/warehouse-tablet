@@ -17,7 +17,7 @@ extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController
           }
 
           if (_model.allLogs.value != null) {
-            _genVisibleLogs();
+            _genVisibleLogs(_model.allLogs.value ?? []);
           }
         }
 

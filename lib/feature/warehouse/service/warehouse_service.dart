@@ -13,6 +13,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_delete_request_model/warehouse_item_delete_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
@@ -414,7 +415,7 @@ class WarehouseService {
   }
 
   Future<BaseApiResponseModel<void>?> apiReqDeleteItem(
-    WarehouseItemRequestModel request, {
+    WarehouseItemDeleteRequestModel request, {
     ApiErrorHandler? onError,
   }) {
     return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(

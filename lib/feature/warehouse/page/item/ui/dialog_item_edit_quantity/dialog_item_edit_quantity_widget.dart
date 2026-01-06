@@ -360,7 +360,7 @@ class _NewPositionItem extends StatelessWidget {
       displayModel = controller.getNewDisplayPositionList[index];
     }
 
-    final roomNames = controller.getRoomNameList();
+    final roomNames = controller.getRoomNameList;
     final visibleCabinetNames = controller.getVisibleCabinetNameList(displayModel?.roomName);
 
     return SizedBox(

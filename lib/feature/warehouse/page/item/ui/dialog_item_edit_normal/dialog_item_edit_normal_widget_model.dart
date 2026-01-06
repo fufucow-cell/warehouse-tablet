@@ -3,7 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
-class DialogItemNormalEditWidgetModel {
+class DialogItemEditNormalWidgetModel {
   final isLoading = false.obs;
   final filePath = Rxn<String>();
   final photoUrl = Rxn<String>();
@@ -17,14 +17,14 @@ class DialogItemNormalEditWidgetModel {
   final visibleCategoryLevel3 = Rx<List<Category>>([]);
 }
 
-class DialogItemNormalEditOutputModel {
+class DialogItemEditNormalOutputModel {
   String? name;
   int? minStockAlert;
   String? description;
   String? photo;
   String? categoryId;
 
-  DialogItemNormalEditOutputModel({
+  DialogItemEditNormalOutputModel({
     this.name,
     this.minStockAlert,
     this.description,
@@ -33,14 +33,14 @@ class DialogItemNormalEditOutputModel {
   });
 }
 
-class DialogItemNormalEditNormalOutputModel {
+class DialogItemEditNormalNormalOutputModel {
   String? name;
   int? minStockAlert;
   String? description;
   String? photo;
   String? categoryId;
 
-  DialogItemNormalEditNormalOutputModel({
+  DialogItemEditNormalNormalOutputModel({
     this.name,
     this.minStockAlert,
     this.description,

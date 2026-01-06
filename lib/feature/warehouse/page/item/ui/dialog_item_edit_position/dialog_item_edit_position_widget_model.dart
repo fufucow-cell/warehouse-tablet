@@ -30,6 +30,7 @@ class DisplayPositionModel {
   String? cabinetId;
   String cabinetName;
   int quantity;
+  bool isDelete = false;
 
   DisplayPositionModel({
     required this.index,
@@ -45,10 +46,12 @@ class DialogItemEditPositionOutputModel {
   final String oldCabinetId;
   final String newCabinetId;
   final int moveQuantity;
+  final bool isDelete;
 
   DialogItemEditPositionOutputModel({
     required this.oldCabinetId,
     required this.newCabinetId,
     required this.moveQuantity,
+    required this.isDelete,
   });
 }

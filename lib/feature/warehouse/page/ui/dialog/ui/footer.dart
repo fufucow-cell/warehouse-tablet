@@ -7,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_u
 enum DialogFooterType {
   onlyConfirm,
   cancelAndConfirm,
+  deleteWithBoth,
 }
 
 class DialogFooter extends StatelessWidget {
@@ -14,6 +15,7 @@ class DialogFooter extends StatelessWidget {
   final bool isLoading;
   final VoidCallback? onConfirm;
   final VoidCallback? onCancel;
+  final VoidCallback? onDelete;
 
   const DialogFooter({
     super.key,
@@ -21,6 +23,7 @@ class DialogFooter extends StatelessWidget {
     this.isLoading = false,
     this.onConfirm,
     this.onCancel,
+    this.onDelete,
   });
 
   @override
@@ -40,20 +43,141 @@ class DialogFooter extends StatelessWidget {
           ),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          if (type == DialogFooterType.cancelAndConfirm) ...[
-            _button(false, onCancel ?? () => Navigator.of(context).pop()),
-            SizedBox(width: 16.0.scale),
-          ],
-          _button(true, onConfirm),
-        ],
-      ),
+      child: _buildFooterContent(context),
     );
   }
 
-  Widget _button(bool isConfirm, VoidCallback? onPressed) {
+  Widget _buildFooterContent(BuildContext context) {
+    switch (type) {
+      case DialogFooterType.onlyConfirm:
+        return _OnlyConfirmFooter(
+          onConfirm: onConfirm,
+          isLoading: isLoading,
+        );
+      case DialogFooterType.cancelAndConfirm:
+        return _CancelAndConfirmFooter(
+          onCancel: onCancel ?? () => Navigator.of(context).pop(),
+          onConfirm: onConfirm,
+          isLoading: isLoading,
+        );
+      case DialogFooterType.deleteWithBoth:
+        return _DeleteWithBothFooter(
+          onDelete: onDelete,
+          onCancel: onCancel ?? () => Navigator.of(context).pop(),
+          onConfirm: onConfirm,
+          isLoading: isLoading,
+        );
+    }
+  }
+}
+
+class _OnlyConfirmFooter extends StatelessWidget {
+  final VoidCallback? onConfirm;
+  final bool isLoading;
+
+  const _OnlyConfirmFooter({
+    required this.onConfirm,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _ConfirmButton(
+          onPressed: onConfirm,
+          isLoading: isLoading,
+        ),
+      ],
+    );
+  }
+}
+
+class _CancelAndConfirmFooter extends StatelessWidget {
+  final VoidCallback? onCancel;
+  final VoidCallback? onConfirm;
+  final bool isLoading;
+
+  const _CancelAndConfirmFooter({
+    required this.onCancel,
+    required this.onConfirm,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        _CancelButton(
+          onPressed: onCancel,
+        ),
+        SizedBox(width: 16.0.scale),
+        _ConfirmButton(
+          onPressed: onConfirm,
+          isLoading: isLoading,
+        ),
+      ],
+    );
+  }
+}
+
+class _DeleteWithBothFooter extends StatelessWidget {
+  final VoidCallback? onDelete;
+  final VoidCallback? onCancel;
+  final VoidCallback? onConfirm;
+  final bool isLoading;
+
+  const _DeleteWithBothFooter({
+    required this.onDelete,
+    required this.onCancel,
+    required this.onConfirm,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _DeleteButton(
+          onPressed: onDelete,
+          isLoading: isLoading,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            _CancelButton(
+              onPressed: onCancel,
+            ),
+            SizedBox(width: 16.0.scale),
+            _ConfirmButton(
+              onPressed: onConfirm,
+              isLoading: isLoading,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _BaseFooterButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final Widget child;
+  final Color? backgroundColor;
+  final BorderSide? side;
+
+  const _BaseFooterButton({
+    required this.onPressed,
+    required this.child,
+    this.backgroundColor,
+    this.side,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: 180.0.scale,
       child: ElevatedButton(
@@ -62,33 +186,93 @@ class DialogFooter extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             vertical: 24.0.scale,
           ),
-          backgroundColor: isConfirm
-              ? EnumColor.backgroundButton.color
-              : EnumColor.backgroundPrimary.color,
-          side: isConfirm
-              ? null
-              : BorderSide(
-                  width: 2.0.scale,
-                  color: EnumColor.lineBorder.color,
-                ),
+          backgroundColor: backgroundColor ?? EnumColor.backgroundPrimary.color,
+          side: side,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0.scale),
           ),
         ),
-        child: (isConfirm && isLoading)
-            ? WidgetUtil.shimmerWidget(
-                highlightColor: EnumColor.textPrimary.color,
-                child: WidgetUtil.textWidget(
-                  EnumLocale.commonProcessing.tr,
-                  size: 26.0.scale,
-                ),
-              )
-            : WidgetUtil.textWidget(
-                isConfirm
-                    ? EnumLocale.commonConfirm.tr
-                    : EnumLocale.commonCancel.tr,
+        child: child,
+      ),
+    );
+  }
+}
+
+class _CancelButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+
+  const _CancelButton({
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _BaseFooterButton(
+      onPressed: onPressed,
+      side: BorderSide(
+        width: 2.0.scale,
+        color: EnumColor.lineBorder.color,
+      ),
+      child: WidgetUtil.textWidget(
+        EnumLocale.commonCancel.tr,
+        size: 26.0.scale,
+      ),
+    );
+  }
+}
+
+class _ConfirmButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final bool isLoading;
+
+  const _ConfirmButton({
+    required this.onPressed,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _BaseFooterButton(
+      onPressed: onPressed,
+      backgroundColor: EnumColor.backgroundButton.color,
+      child: isLoading
+          ? WidgetUtil.shimmerWidget(
+              highlightColor: EnumColor.textPrimary.color,
+              child: WidgetUtil.textWidget(
+                EnumLocale.commonProcessing.tr,
                 size: 26.0.scale,
               ),
+            )
+          : WidgetUtil.textWidget(
+              EnumLocale.commonConfirm.tr,
+              size: 26.0.scale,
+            ),
+    );
+  }
+}
+
+class _DeleteButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  final bool isLoading;
+
+  const _DeleteButton({
+    required this.onPressed,
+    required this.isLoading,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDisabled = isLoading || onPressed == null;
+    return _BaseFooterButton(
+      onPressed: isDisabled ? null : onPressed,
+      side: BorderSide(
+        width: 2.0.scale,
+        color: isDisabled ? EnumColor.lineBorder.color : EnumColor.accentRed.color,
+      ),
+      child: WidgetUtil.textWidget(
+        EnumLocale.warehouseOperateTypeDelete.tr,
+        size: 26.0.scale,
+        color: isDisabled ? EnumColor.textSecondary.color : EnumColor.accentRed.color,
       ),
     );
   }

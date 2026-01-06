@@ -23,6 +23,7 @@ class PositionCabinetRequestModel with _$PositionCabinetRequestModel {
   factory PositionCabinetRequestModel({
     @JsonKey(name: 'old_cabinet_id') String? oldCabinetId,
     @JsonKey(name: 'new_cabinet_id') String? newCabinetId,
+    @JsonKey(name: 'is_delete') bool? isDelete,
     int? quantity,
   }) = _PositionCabinetRequestModel;
 

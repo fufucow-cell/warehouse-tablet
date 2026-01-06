@@ -33,6 +33,7 @@ _$PositionCabinetRequestModelImpl _$$PositionCabinetRequestModelImplFromJson(
     _$PositionCabinetRequestModelImpl(
       oldCabinetId: json['old_cabinet_id'] as String?,
       newCabinetId: json['new_cabinet_id'] as String?,
+      isDelete: json['is_delete'] as bool?,
       quantity: (json['quantity'] as num?)?.toInt(),
     );
 
@@ -41,5 +42,6 @@ Map<String, dynamic> _$$PositionCabinetRequestModelImplToJson(
     <String, dynamic>{
       'old_cabinet_id': instance.oldCabinetId,
       'new_cabinet_id': instance.newCabinetId,
+      'is_delete': instance.isDelete,
       'quantity': instance.quantity,
     };

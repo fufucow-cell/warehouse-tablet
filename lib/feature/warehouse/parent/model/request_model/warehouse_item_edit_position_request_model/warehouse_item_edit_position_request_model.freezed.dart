@@ -262,6 +262,8 @@ mixin _$PositionCabinetRequestModel {
   String? get oldCabinetId => throw _privateConstructorUsedError;
   @JsonKey(name: 'new_cabinet_id')
   String? get newCabinetId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_delete')
+  bool? get isDelete => throw _privateConstructorUsedError;
   int? get quantity => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -281,6 +283,7 @@ abstract class $PositionCabinetRequestModelCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'old_cabinet_id') String? oldCabinetId,
       @JsonKey(name: 'new_cabinet_id') String? newCabinetId,
+      @JsonKey(name: 'is_delete') bool? isDelete,
       int? quantity});
 }
 
@@ -300,6 +303,7 @@ class _$PositionCabinetRequestModelCopyWithImpl<$Res,
   $Res call({
     Object? oldCabinetId = freezed,
     Object? newCabinetId = freezed,
+    Object? isDelete = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_value.copyWith(
@@ -311,6 +315,10 @@ class _$PositionCabinetRequestModelCopyWithImpl<$Res,
           ? _value.newCabinetId
           : newCabinetId // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDelete: freezed == isDelete
+          ? _value.isDelete
+          : isDelete // ignore: cast_nullable_to_non_nullable
+              as bool?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -331,6 +339,7 @@ abstract class _$$PositionCabinetRequestModelImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'old_cabinet_id') String? oldCabinetId,
       @JsonKey(name: 'new_cabinet_id') String? newCabinetId,
+      @JsonKey(name: 'is_delete') bool? isDelete,
       int? quantity});
 }
 
@@ -349,6 +358,7 @@ class __$$PositionCabinetRequestModelImplCopyWithImpl<$Res>
   $Res call({
     Object? oldCabinetId = freezed,
     Object? newCabinetId = freezed,
+    Object? isDelete = freezed,
     Object? quantity = freezed,
   }) {
     return _then(_$PositionCabinetRequestModelImpl(
@@ -360,6 +370,10 @@ class __$$PositionCabinetRequestModelImplCopyWithImpl<$Res>
           ? _value.newCabinetId
           : newCabinetId // ignore: cast_nullable_to_non_nullable
               as String?,
+      isDelete: freezed == isDelete
+          ? _value.isDelete
+          : isDelete // ignore: cast_nullable_to_non_nullable
+              as bool?,
       quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -375,6 +389,7 @@ class _$PositionCabinetRequestModelImpl
   _$PositionCabinetRequestModelImpl(
       {@JsonKey(name: 'old_cabinet_id') this.oldCabinetId,
       @JsonKey(name: 'new_cabinet_id') this.newCabinetId,
+      @JsonKey(name: 'is_delete') this.isDelete,
       this.quantity});
 
   factory _$PositionCabinetRequestModelImpl.fromJson(
@@ -388,11 +403,14 @@ class _$PositionCabinetRequestModelImpl
   @JsonKey(name: 'new_cabinet_id')
   final String? newCabinetId;
   @override
+  @JsonKey(name: 'is_delete')
+  final bool? isDelete;
+  @override
   final int? quantity;
 
   @override
   String toString() {
-    return 'PositionCabinetRequestModel(oldCabinetId: $oldCabinetId, newCabinetId: $newCabinetId, quantity: $quantity)';
+    return 'PositionCabinetRequestModel(oldCabinetId: $oldCabinetId, newCabinetId: $newCabinetId, isDelete: $isDelete, quantity: $quantity)';
   }
 
   @override
@@ -404,6 +422,8 @@ class _$PositionCabinetRequestModelImpl
                 other.oldCabinetId == oldCabinetId) &&
             (identical(other.newCabinetId, newCabinetId) ||
                 other.newCabinetId == newCabinetId) &&
+            (identical(other.isDelete, isDelete) ||
+                other.isDelete == isDelete) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity));
   }
@@ -411,7 +431,7 @@ class _$PositionCabinetRequestModelImpl
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, oldCabinetId, newCabinetId, quantity);
+      Object.hash(runtimeType, oldCabinetId, newCabinetId, isDelete, quantity);
 
   @JsonKey(ignore: true)
   @override
@@ -433,6 +453,7 @@ abstract class _PositionCabinetRequestModel
   factory _PositionCabinetRequestModel(
       {@JsonKey(name: 'old_cabinet_id') final String? oldCabinetId,
       @JsonKey(name: 'new_cabinet_id') final String? newCabinetId,
+      @JsonKey(name: 'is_delete') final bool? isDelete,
       final int? quantity}) = _$PositionCabinetRequestModelImpl;
 
   factory _PositionCabinetRequestModel.fromJson(Map<String, dynamic> json) =
@@ -444,6 +465,9 @@ abstract class _PositionCabinetRequestModel
   @override
   @JsonKey(name: 'new_cabinet_id')
   String? get newCabinetId;
+  @override
+  @JsonKey(name: 'is_delete')
+  bool? get isDelete;
   @override
   int? get quantity;
   @override

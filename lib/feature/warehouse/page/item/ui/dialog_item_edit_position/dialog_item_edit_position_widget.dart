@@ -11,6 +11,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
 class DialogItemEditPositionWidget extends StatelessWidget {
@@ -49,7 +50,7 @@ class DialogItemEditPositionWidget extends StatelessWidget {
                   );
                   final outputData = controller.checkOutputData();
 
-                  if (outputData.isEmpty) {
+                  if (outputData?.isEmpty ?? true) {
                     controller.interactive(
                       EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
                       data: false,
@@ -57,7 +58,7 @@ class DialogItemEditPositionWidget extends StatelessWidget {
                     return;
                   }
 
-                  final isSuccess = await onConfirm(outputData);
+                  final isSuccess = await onConfirm(outputData!);
 
                   if (isSuccess) {
                     controller.interactive(
@@ -224,6 +225,10 @@ class _ChangeQuantitySection extends StatelessWidget {
               eImage: EnumImage.cPlus,
               textController: textController,
             ),
+            if (model.quantity == 0) ...[
+              SizedBox(width: 16.0.scale),
+              _DeleteButton(model: model),
+            ],
           ],
         ),
       ],
@@ -278,6 +283,43 @@ class _QuantityButton extends StatelessWidget {
   }
 }
 
+class _DeleteButton extends StatelessWidget {
+  final DisplayPositionModel model;
+
+  const _DeleteButton({
+    required this.model,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<DialogItemEditPositionWidgetController>();
+    bool isDelete = model.isDelete;
+    final eImage = isDelete ? EnumImage.cRecover : EnumImage.cTrash3;
+    return Material(
+      color: EnumColor.backgroundPrimary.color,
+      child: InkWell(
+        onTap: () => controller.interactive(
+          isDelete ? EnumDialogItemEditPositionWidgetInteractive.tapRestoreButton : EnumDialogItemEditPositionWidgetInteractive.tapDeleteButton,
+          data: model,
+        ),
+        borderRadius: BorderRadius.circular(20.0.scale),
+        child: Ink(
+          child: Container(
+            padding: EdgeInsets.all(
+              15.0.scale,
+            ),
+            width: 70.0.scale,
+            height: 70.0.scale,
+            child: eImage.image(
+              color: EnumColor.iconSecondary.color,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _DropdownSection extends StatelessWidget {
   final DisplayPositionModel model;
 
@@ -300,7 +342,7 @@ class _DropdownSection extends StatelessWidget {
             Expanded(
               child: _ChangePositionField(
                 title: EnumLocale.warehouseChangeRoom.tr,
-                values: controller.getRoomNameList(),
+                values: controller.getRoomNameList,
                 selectedValue: selectedRoomName,
                 onValueSelected: (str) {
                   final room = controller.getRoomByName(str);
@@ -309,7 +351,7 @@ class _DropdownSection extends StatelessWidget {
                       EnumDialogItemEditPositionWidgetInteractive.tapUpdateRoom,
                       data: UpdatePositionModel(
                         index: model.index,
-                        position: room,
+                        position: WarehouseNameIdModel(id: room.roomId, name: room.roomName),
                       ),
                     );
                   }
@@ -329,7 +371,7 @@ class _DropdownSection extends StatelessWidget {
                       EnumDialogItemEditPositionWidgetInteractive.tapUpdateCabinet,
                       data: UpdatePositionModel(
                         index: model.index,
-                        position: cabinet,
+                        position: WarehouseNameIdModel(id: cabinet.cabinetId, name: cabinet.cabinetName),
                       ),
                     );
                   }

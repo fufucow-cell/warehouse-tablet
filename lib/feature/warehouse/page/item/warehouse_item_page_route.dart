@@ -13,10 +13,13 @@ extension WarehouseItemPageRouteExtension on WarehouseItemPageController {
       case EnumWarehouseItemPageRoute.showDialogItemNormalEdit:
         if (data is Item) {
           _service.showAlert(
-            DialogItemNormalEditWidget(
+            DialogItemEditNormalWidget(
               itemId: data.id!,
               onConfirm: (outputModel) async {
                 return await _updateItemNormal(data, outputModel);
+              },
+              onDelete: (itemId) async {
+                return await _deleteItem(itemId);
               },
             ),
           );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/cabinet_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
@@ -18,13 +19,20 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   String get getItemName => _model.combineItem?.name ?? '';
   int get getOldQuantity => _model.combineItem?.quantity ?? 0;
   int get getMaxNewPositions => _model.maxNewPositions;
-  List<RoomCabinetInfo> get getRoomCabinetInfos => _service.roomCabinetInfos;
   List<ItemPositionModel> get getOldPositions => _model.oldPositions ?? [];
   List<ItemPositionModel> get getNewPositions => _model.newPositions.value;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<int> get newQuantityRx => _model.newQuantity.readonly;
   RxReadonly<List<ItemPositionModel>> get newPositionsRx => _model.newPositions.readonly;
   final List<TextEditingController> quantityControllers = [];
+  List<String> get getRoomNameList => CabinetUtil.getRoomNameList();
+  List<CabinetInfo> get getFlattenAllCabinets => CabinetUtil.flattenAllCabinets();
+  RoomCabinetInfo? getRoomByName(String? roomName) => CabinetUtil.getRoomByName(roomName);
+  CabinetInfo? getCabinetByName(String? cabinetName) => CabinetUtil.getCabinetByName(cabinetName);
+  List<String> getVisibleCabinetNameList(String? roomName) => CabinetUtil.getVisibleCabinetNameList(
+        roomName,
+        includeUnboundRoom: true,
+      );
 
   // MARK: - Init
 
@@ -59,7 +67,7 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
   void genNewPosition() {
     final roomCount = _service.rooms.length;
-    final cabinetCount = _flattenAllCabinets().length;
+    final cabinetCount = getFlattenAllCabinets.length;
     final model = ItemPositionModel(
       roomId: '',
       roomName: roomCount > 0 ? EnumLocale.optionPleaseSelectRoom.tr : EnumLocale.optionNoData.tr,
@@ -177,37 +185,6 @@ class DialogItemEditQuantityWidgetController extends GetxController {
       );
       _model.oldPositions = oldList;
     }
-  }
-
-  // 取得所有房間名稱
-  List<String> getRoomNameList() {
-    return _model.allRoomCabinetInfo.value.where((room) => room.roomId.isNotEmpty).map((room) => room.roomName).toList();
-  }
-
-  // 比對房間
-  RoomCabinetInfo? getRoomByName(String? roomName) {
-    return getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
-  }
-
-  // // 比對櫃位
-  CabinetInfo? getCabinetByName(String? cabinetName) {
-    return _flattenAllCabinets().firstWhereOrNull((cabinet) => cabinet.cabinetName == cabinetName);
-  }
-
-  // 取得可顯示的櫃位名稱
-  List<String> getVisibleCabinetNameList(String? roomName) {
-    if ((roomName?.isEmpty ?? true) || roomName == EnumLocale.optionPleaseSelectRoom.tr) {
-      return _flattenAllCabinets().map((cabinet) => cabinet.cabinetName).toList();
-    }
-
-    final matchRoom = getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
-    final visibleCabinets = matchRoom?.cabinets.map((cabinet) => cabinet.cabinetName).toList() ?? [];
-    return visibleCabinets;
-  }
-
-  // 扁平化所有櫥櫃
-  List<CabinetInfo> _flattenAllCabinets() {
-    return getRoomCabinetInfos.where((room) => room.roomId.isNotEmpty).expand<CabinetInfo>((room) => room.cabinets).toList();
   }
 
   List<DisplayPositionModel> get getOldDisplayPositionList {

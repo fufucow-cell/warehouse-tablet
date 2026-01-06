@@ -13,9 +13,23 @@ class FilterInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseRecordPageController>();
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
+        Obx(
+          () {
+            if (controller.allLogsRx.value == null) {
+              return WidgetUtil.shimmerWidget(width: 200.0.scale, height: 32.0.scale);
+            }
+
+            return WidgetUtil.textWidget(
+              '${EnumLocale.warehouseRecordTotal.tr}: ${controller.visibleLogsRx.value.length}',
+              size: 32.0.scale,
+            );
+          },
+        ),
+        const Spacer(),
         _FilterDropdown(),
         SizedBox(width: 24.0.scale),
         _RefreshButton(),

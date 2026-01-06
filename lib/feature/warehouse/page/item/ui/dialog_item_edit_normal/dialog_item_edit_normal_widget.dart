@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_normal_edit/dialog_item_normal_edit_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
@@ -14,20 +14,22 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
-class DialogItemNormalEditWidget extends StatelessWidget {
+class DialogItemEditNormalWidget extends StatelessWidget {
   final String itemId;
-  final Future<bool> Function(DialogItemNormalEditOutputModel) onConfirm;
+  final Future<bool> Function(DialogItemEditNormalOutputModel) onConfirm;
+  final Future<bool> Function(String itemId) onDelete;
 
-  const DialogItemNormalEditWidget({
+  const DialogItemEditNormalWidget({
     super.key,
     required this.itemId,
     required this.onConfirm,
+    required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<DialogItemNormalEditWidgetController>(
-      init: DialogItemNormalEditWidgetController(itemId),
+    return GetBuilder<DialogItemEditNormalWidgetController>(
+      init: DialogItemEditNormalWidgetController(itemId),
       builder: (controller) {
         return DialogFrame(
           width: 962.0.scale,
@@ -37,41 +39,18 @@ class DialogItemNormalEditWidget extends StatelessWidget {
             () {
               return DialogFooter(
                 isLoading: controller.isLoadingRx.value,
-                type: DialogFooterType.cancelAndConfirm,
+                type: DialogFooterType.deleteWithBoth,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogItemNormalEditWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogItemEditNormalWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
                 onConfirm: () async {
-                  controller.interactive(
-                    EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                    data: true,
-                  );
-                  final outputModel = await controller.checkOutputModel();
-
-                  if (outputModel == null) {
-                    controller.interactive(
-                      EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                      data: false,
-                    );
-                    return;
-                  }
-
-                  final isSuccess = await onConfirm(outputModel);
-
-                  if (isSuccess) {
-                    controller.interactive(
-                      EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                      data: context,
-                    );
-                  }
-
-                  controller.interactive(
-                    EnumDialogItemNormalEditWidgetInteractive.tapDialogConfirmButton,
-                    data: false,
-                  );
+                  await controller.handleConfirm(onConfirm, context);
+                },
+                onDelete: () async {
+                  await controller.handleDelete(onDelete, context);
                 },
               );
             },
@@ -88,7 +67,7 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -116,7 +95,7 @@ class _Body extends StatelessWidget {
                   selectedValue: selectedLevel1?.name,
                   visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
-                    EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel1,
+                    EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel1,
                     data: str,
                   ),
                 ),
@@ -127,7 +106,7 @@ class _Body extends StatelessWidget {
                     selectedValue: selectedLevel2?.name,
                     visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
-                      EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel2,
+                      EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel2,
                       data: str,
                     ),
                   ),
@@ -139,7 +118,7 @@ class _Body extends StatelessWidget {
                     selectedValue: selectedLevel3?.name,
                     visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
-                      EnumDialogItemNormalEditWidgetInteractive.tapCategoryLevel3,
+                      EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel3,
                       data: str,
                     ),
                   ),
@@ -156,7 +135,7 @@ class _Body extends StatelessWidget {
 class _PhotoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return Obx(
       () {
         final filePath = controller.filePathRx.value;
@@ -179,10 +158,10 @@ class _PhotoSection extends StatelessWidget {
             return DialogWithPhotoWidget(
               imageWidget: imageWidget,
               onReplacePhoto: () => controller.interactive(
-                EnumDialogItemNormalEditWidgetInteractive.replacePhoto,
+                EnumDialogItemEditNormalWidgetInteractive.replacePhoto,
               ),
               onDeletePhoto: () => controller.interactive(
-                EnumDialogItemNormalEditWidgetInteractive.deletePhoto,
+                EnumDialogItemEditNormalWidgetInteractive.deletePhoto,
               ),
             );
           }
@@ -190,7 +169,7 @@ class _PhotoSection extends StatelessWidget {
 
         return DialogWithoutPhotoWidget(
           onTap: () => controller.interactive(
-            EnumDialogItemNormalEditWidgetInteractive.tapPhoto,
+            EnumDialogItemEditNormalWidgetInteractive.tapPhoto,
           ),
         );
       },
@@ -203,7 +182,7 @@ class _NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       isRequired: true,
       title: EnumLocale.createItemName.tr,
@@ -220,7 +199,7 @@ class _DescriptionField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.warehouseDescriptionLabel.tr,
       child: WidgetUtil.textField(
@@ -240,7 +219,7 @@ class _MinStockAlertField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.createMinStockAlert.tr,
       child: WidgetUtil.textField(
@@ -268,7 +247,7 @@ class _DropdownField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<DialogItemNormalEditWidgetController>();
+    final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: title,
       child: WidgetUtil.textDropdownButton(
@@ -278,7 +257,7 @@ class _DropdownField extends StatelessWidget {
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(
-          EnumDialogItemNormalEditWidgetInteractive.tapDropdownButton,
+          EnumDialogItemEditNormalWidgetInteractive.tapDropdownButton,
         ),
       ),
     );
