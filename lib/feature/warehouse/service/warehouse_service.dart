@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/environment_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
@@ -30,6 +31,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
@@ -48,6 +50,7 @@ class WarehouseService {
   final _themeService = ThemeUtil.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
+  String get userAvatar => _model.userAvatar ?? '';
   String get accessToken => _model.accessToken ?? '';
   String get refreshToken => _model.refreshToken ?? '';
   int get userRoleType => _model.userRoleType ?? -1;
@@ -160,6 +163,7 @@ class WarehouseService {
 
   void updateData(WarehouseMainPageRouterData data) {
     _model.userName = data.userName;
+    _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;
     _model.refreshToken = data.refreshToken;
     _model.userRoleType = data.userRoleType;
@@ -177,6 +181,7 @@ class WarehouseService {
         .toList();
     LocaleUtil.instance.switchFromCode(data.language);
     ThemeUtil.instance.switchFromString(data.theme);
+    EnvironmentUtil.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
     final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
     _registerWarehouseApiUtil(domain);
   }

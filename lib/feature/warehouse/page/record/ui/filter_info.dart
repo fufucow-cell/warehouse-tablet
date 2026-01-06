@@ -32,7 +32,7 @@ class FilterInfo extends StatelessWidget {
         const Spacer(),
         _FilterDropdown(),
         SizedBox(width: 24.0.scale),
-        _RefreshButton(),
+        const _RefreshButton(),
       ],
     );
   }
@@ -66,6 +66,8 @@ class _FilterDropdown extends StatelessWidget {
 }
 
 class _RefreshButton extends StatelessWidget {
+  const _RefreshButton();
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseRecordPageController>();

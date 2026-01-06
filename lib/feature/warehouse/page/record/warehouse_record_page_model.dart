@@ -10,7 +10,6 @@ class WarehouseRecordPageModel {
   final isShowFilterMenu = false.obs;
   final filterType = Rx<EnumFilterType>(EnumFilterType.all);
   final columnRatio = [170, 705, 280, 280];
-  final avatarUrl = '';
 }
 
 enum EnumFilterType {

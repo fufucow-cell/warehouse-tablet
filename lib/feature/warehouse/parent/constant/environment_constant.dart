@@ -30,4 +30,11 @@ enum EnumEnvironment {
       EnumEnvironment.prd => '',
     };
   }
+
+  static EnumEnvironment fromString(String? env) {
+    return EnumEnvironment.values.firstWhere(
+      (e) => e.name == env?.toLowerCase(),
+      orElse: () => EnumEnvironment.prd,
+    );
+  }
 }

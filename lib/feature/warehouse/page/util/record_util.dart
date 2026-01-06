@@ -50,7 +50,7 @@ class RecordUtil {
                 content = _genCabinetContent(record);
                 entityName = record.cabinetName?.lastOrNull ?? '';
               case EnumEntityType.category:
-                content = _genCategoryContent(record);
+                content = _genCategoryContent(record, operateType);
                 entityName = record.categoryName?.lastOrNull ?? '';
               default:
                 break;
@@ -63,15 +63,15 @@ class RecordUtil {
                 entityName = record.itemName?.lastOrNull ?? '';
               case EnumEntityType.itemQuantity:
                 content += _genItemQuantityContent(record);
-                entityName = record.cabinetName?.lastOrNull ?? '';
+                entityName = record.itemName?.lastOrNull ?? '';
               case EnumEntityType.itemPosition:
                 content += _genItemPositionContent(record);
-                entityName = record.cabinetName?.lastOrNull ?? '';
+                entityName = record.itemName?.lastOrNull ?? '';
               case EnumEntityType.cabinet:
                 content = _genCabinetContent(record);
                 entityName = record.cabinetName?.lastOrNull ?? '';
               case EnumEntityType.category:
-                content = _genCategoryContent(record);
+                content = _genCategoryContent(record, operateType);
                 entityName = record.categoryName?.lastOrNull ?? '';
               default:
                 break;
@@ -87,7 +87,7 @@ class RecordUtil {
         content = content.substring(1);
       }
 
-      if (!isItemLog) {
+      if (!isItemLog && (tagType == EnumTagType.updateItem || tagType == EnumTagType.updatePosition || tagType == EnumTagType.updateQuantity)) {
         content = '$entityName\n$content';
       }
 
@@ -242,8 +242,8 @@ class RecordUtil {
     final cabinetName = record.cabinetName?.firstOrNull ?? '-';
     final oldQuantity = record.quantityCount?.firstOrNull ?? 0;
     final newQuantity = record.quantityCount?.lastOrNull ?? 0;
-    final str = EnumLocale.warehouseAdjustQuantity.tr;
-    return '\n$cabinetName $str:${oldQuantity.toString()} -> ${newQuantity.toString()}';
+
+    return '\n$cabinetName ${EnumLocale.warehouseAdjustQuantity.tr}: ${oldQuantity.toString()} -> ${newQuantity.toString()}';
   }
 
   static String _genItemPositionContent(ItemRecord record) {
@@ -284,10 +284,13 @@ class RecordUtil {
     return result;
   }
 
-  static String _genCategoryContent(ItemRecord record) {
+  static String _genCategoryContent(ItemRecord record, EnumOperateType eOpType) {
     String result = '';
 
-    if (record.categoryName?.length == 2) {
+    if (record.categoryName?.length == 1) {
+      final newValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
+      result += '\n${(eOpType == EnumOperateType.create) ? EnumLocale.createCategory.tr : EnumLocale.deleteCategory.tr}: $newValue';
+    } else if (record.categoryName?.length == 2) {
       final oldValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
       final newValue = (record.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.lastOrNull!;
       result += EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue]);

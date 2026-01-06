@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
@@ -17,8 +19,9 @@ class WarehouseRecordPageController extends GetxController {
   final _model = WarehouseRecordPageModel();
   final _service = WarehouseService.instance;
   final scrollController = ScrollController();
+  Timer? _refreshDebounceTimer;
   List<int> get columnRatioRx => _model.columnRatio;
-  String get avatarUrl => _model.avatarUrl;
+  String get avatarUrl => _service.userAvatar;
   RxReadonly<List<CombineRecord>?> get allLogsRx => _model.allLogs.readonly;
   RxReadonly<List<CombineRecord>> get visibleLogsRx => _model.visibleLogs.readonly;
   RxReadonly<bool> get isShowFilterMenuRx => _model.isShowFilterMenu.readonly;
@@ -42,6 +45,7 @@ class WarehouseRecordPageController extends GetxController {
       EnumLogType.debug,
       '[WarehouseRecordPageController] onClose - $hashCode',
     );
+    _refreshDebounceTimer?.cancel();
     scrollController.dispose();
     super.onClose();
   }

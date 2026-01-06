@@ -3,6 +3,7 @@ part of 'warehouse_service.dart';
 class WarehouseServiceModel {
   String? userId;
   String? userName;
+  String? userAvatar;
   String? accessToken;
   String? refreshToken;
   WarehouseNameIdModel? household;

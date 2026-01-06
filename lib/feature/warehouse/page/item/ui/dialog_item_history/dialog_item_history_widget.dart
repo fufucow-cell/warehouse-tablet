@@ -41,10 +41,18 @@ class DialogItemHistoryWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ItemInfoCard(
-                itemName: controller.getItemName,
-                count: controller.getRecordCount,
-                isHistory: true,
+              Obx(
+                () {
+                  if (controller.recordsRx.value == null) {
+                    return WidgetUtil.shimmerWidget(height: 250.0.scale);
+                  }
+
+                  return ItemInfoCard(
+                    itemName: controller.getItemName,
+                    count: controller.getRecordCount,
+                    isHistory: true,
+                  );
+                },
               ),
               SizedBox(height: 24.0.scale),
               _RecordsList(),

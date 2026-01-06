@@ -10,9 +10,7 @@ class ApiMockUtil {
   // MARK: - Properties
 
   static const bool isAllMock = false;
-  static List<EnumApiInfo> get mockApiList => [
-        // EnumApiInfo.cabinetRead,
-      ];
+  static List<EnumApiInfo> get mockApiList => [];
 
   // MARK: - Method
 

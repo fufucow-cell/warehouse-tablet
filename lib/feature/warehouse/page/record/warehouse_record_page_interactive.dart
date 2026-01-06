@@ -23,7 +23,10 @@ extension WarehouseRecordPageUserEventExtension on WarehouseRecordPageController
 
         _model.isShowFilterMenu.value = !_model.isShowFilterMenu.value;
       case EnumWarehouseRecordPageInteractive.tapRefreshButton:
-        _queryApiData();
+        _refreshDebounceTimer?.cancel();
+        _refreshDebounceTimer = Timer(const Duration(seconds: 1), () {
+          _queryApiData();
+        });
     }
   }
 }

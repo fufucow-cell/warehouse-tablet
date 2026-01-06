@@ -202,6 +202,7 @@ class WarehouseCategoryPageController extends GetxController {
       categoryId: categoryId,
       name: outputModel.name,
       parentId: outputModel.parentId,
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqUpdateCategory(request);
@@ -218,6 +219,7 @@ class WarehouseCategoryPageController extends GetxController {
     final request = WarehouseCategoryDeleteRequestModel(
       householdId: _service.getHouseholdId,
       categoryId: outputModel.categoryId,
+      userName: _service.userName,
     );
 
     final response = await _service.apiReqDeleteCategory(request);
