@@ -9,6 +9,7 @@ class WarehouseCabinetCreateRequestModel with _$WarehouseCabinetCreateRequestMod
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'room_id') String? roomId,
     @JsonKey(name: 'user_name') String? userName,
+    @JsonKey(name: 'room_name') String? roomName,
     String? name,
   }) = _WarehouseCabinetCreateRequestModel;
 

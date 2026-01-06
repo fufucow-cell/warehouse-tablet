@@ -301,7 +301,7 @@ class DialogItemEditQuantityWidgetController extends GetxController {
       return;
     }
 
-    _model.allRoomCabinetInfo.value = _service.roomCabinetInfos;
+    _model.allRoomCabinetInfo.value = _service.getRoomCabinetInfos;
     _model.combineItem = item;
     _model.oldPositions = _service.genItemPositionsFromRoomCabinet(item);
     _model.newQuantity.value = _model.oldPositions

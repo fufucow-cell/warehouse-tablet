@@ -7,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/loca
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_delete_request_model/warehouse_cabinet_delete_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_update_request_model/warehouse_cabinet_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
@@ -64,7 +65,7 @@ class WarehouseService {
   // 櫃位
   List<Room> get getAllRoomCabinets => _model.allRoomCabinets.value ?? [];
   RxReadonly<List<Room>?> get allRoomCabinetsRx => _model.allRoomCabinets.readonly;
-  List<RoomCabinetInfo> get roomCabinetInfos => _model.roomCabinetInfos;
+  List<RoomCabinetInfo> get getRoomCabinetInfos => _model.roomCabinetInfos;
   // 分類
   RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
   List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
@@ -489,6 +490,17 @@ class WarehouseService {
   }) {
     return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.cabinetUpdate,
+      requestModel: request,
+      onError: onError,
+    );
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqDeleteCabinet(
+    WarehouseCabinetDeleteRequestModel request, {
+    ApiErrorHandler? onError,
+  }) {
+    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.cabinetDelete,
       requestModel: request,
       onError: onError,
     );

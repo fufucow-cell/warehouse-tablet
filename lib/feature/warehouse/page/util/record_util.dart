@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
@@ -47,7 +48,7 @@ class RecordUtil {
                 content = _genItemNormalContent(record);
                 entityName = record.itemName?.lastOrNull ?? '';
               case EnumEntityType.cabinet:
-                content = _genCabinetContent(record);
+                content += _genCabinetContent(record, operateType);
                 entityName = record.cabinetName?.lastOrNull ?? '';
               case EnumEntityType.category:
                 content = _genCategoryContent(record, operateType);
@@ -68,7 +69,7 @@ class RecordUtil {
                 content += _genItemPositionContent(record);
                 entityName = record.itemName?.lastOrNull ?? '';
               case EnumEntityType.cabinet:
-                content = _genCabinetContent(record);
+                content += _genCabinetContent(record, operateType);
                 entityName = record.cabinetName?.lastOrNull ?? '';
               case EnumEntityType.category:
                 content = _genCategoryContent(record, operateType);
@@ -108,24 +109,24 @@ class RecordUtil {
   static Map<int, List<ItemRecord>> _groupRecords(List<ItemRecord> records) {
     final groupedMap = <int, List<ItemRecord>>{};
 
-    // 先按 created_at 分组 itemQuantity 和 itemPosition 类型的记录
+    // 依照時間分組；若同一個 createdAt 內出現不同 operateType，則用 createdAt + 1 (若仍衝突再 +1...) 拆成不同組別
     for (final record in records) {
-      final entityType = EnumEntityType.fromInt(record.entityType);
+      final createdAt = record.createdAt ?? 0;
+      final operateType = record.operateType ?? -1;
 
-      if (entityType == EnumEntityType.itemQuantity || entityType == EnumEntityType.itemPosition) {
-        if (groupedMap.containsKey(record.createdAt ?? 0)) {
-          groupedMap[record.createdAt ?? 0]!.add(record);
-        } else {
-          groupedMap[record.createdAt ?? 0] = [record];
+      int key = createdAt;
+      while (groupedMap.containsKey(key)) {
+        final existingOperateType = groupedMap[key]!.first.operateType ?? -1;
+        if (existingOperateType == operateType) {
+          break;
         }
+        key++;
+      }
+
+      if (groupedMap.containsKey(key)) {
+        groupedMap[key]!.add(record);
       } else {
-        int num = record.createdAt ?? 0;
-
-        while (groupedMap.containsKey(num)) {
-          num++;
-        }
-
-        groupedMap[num] = [record];
+        groupedMap[key] = [record];
       }
     }
 
@@ -261,16 +262,22 @@ class RecordUtil {
     }
   }
 
-  static String _genCabinetContent(ItemRecord record) {
+  static String _genCabinetContent(ItemRecord record, EnumOperateType eOpType) {
     String result = '';
 
     if (record.cabinetName?.length == 1) {
-      final oldValue = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
-      result += oldValue;
+      final roomName = record.cabinetRoomName?.firstOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
+      final cabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
+      result +=
+          '\n${(eOpType == EnumOperateType.create) ? EnumLocale.warehouseTagTypeCreateCabinet.tr : EnumLocale.warehouseTagTypeDeleteCabinet.tr}: $roomName > $cabinetName';
     } else if (record.cabinetName?.length == 2) {
-      final oldValue = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
-      final newValue = (record.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.lastOrNull!;
-      result += EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue]);
+      final oldRoomName = record.cabinetRoomName?.firstOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
+      final newRoomName = record.cabinetRoomName?.lastOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
+      final oldCabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
+      final newCabinetName = (record.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.lastOrNull!;
+      final oldValue = '$oldRoomName > $oldCabinetName';
+      final newValue = '$newRoomName > $newCabinetName';
+      result += '\n${EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue])}';
     }
 
     if (record.cabinetRoomName?.length == 2) {

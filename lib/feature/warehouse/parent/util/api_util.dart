@@ -32,7 +32,7 @@ class ApiUtil extends GetxService {
   static final Map<String, _RequestCache> _requestCache = {};
   static final Map<String, dynamic> _responseCache = {};
   static Timer? _cacheCleanupTimer;
-  static const int _cacheExpirationSeconds = 5;
+  static const int _cacheExpirationSeconds = 10;
   static const String _cacheKeyExtra = 'cache_key';
 
   // Init

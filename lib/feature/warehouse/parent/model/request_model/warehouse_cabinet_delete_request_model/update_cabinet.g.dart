@@ -1,24 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'request_cabinet.dart';
+part of 'update_cabinet.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RequestCabinetImpl _$$RequestCabinetImplFromJson(Map<String, dynamic> json) =>
-    _$RequestCabinetImpl(
+_$UpdateCabinetImpl _$$UpdateCabinetImplFromJson(Map<String, dynamic> json) =>
+    _$UpdateCabinetImpl(
       cabinetId: json['cabinet_id'] as String?,
-      newRequestCabinetName: json['new_cabinet_name'] as String?,
+      newUpdateCabinetName: json['new_cabinet_name'] as String?,
       newRoomId: json['new_room_id'] as String?,
-      isDelete: json['is_delete'] as bool?,
     );
 
-Map<String, dynamic> _$$RequestCabinetImplToJson(
-        _$RequestCabinetImpl instance) =>
+Map<String, dynamic> _$$UpdateCabinetImplToJson(_$UpdateCabinetImpl instance) =>
     <String, dynamic>{
       'cabinet_id': instance.cabinetId,
-      'new_cabinet_name': instance.newRequestCabinetName,
+      'new_cabinet_name': instance.newUpdateCabinetName,
       'new_room_id': instance.newRoomId,
-      'is_delete': instance.isDelete,
     };

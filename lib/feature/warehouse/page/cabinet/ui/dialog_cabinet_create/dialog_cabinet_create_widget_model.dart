@@ -9,9 +9,11 @@ class DialogCabinetCreateWidgetModel {
 class DialogCabinetCreateOutputModel {
   String name;
   String? roomId;
+  String? roomName;
 
   DialogCabinetCreateOutputModel({
     required this.name,
     this.roomId,
+    this.roomName,
   });
 }

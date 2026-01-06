@@ -13,6 +13,7 @@ _$WarehouseCabinetCreateRequestModelImpl
           householdId: json['household_id'] as String?,
           roomId: json['room_id'] as String?,
           userName: json['user_name'] as String?,
+          roomName: json['room_name'] as String?,
           name: json['name'] as String?,
         );
 
@@ -22,5 +23,6 @@ Map<String, dynamic> _$$WarehouseCabinetCreateRequestModelImplToJson(
       'household_id': instance.householdId,
       'room_id': instance.roomId,
       'user_name': instance.userName,
+      'room_name': instance.roomName,
       'name': instance.name,
     };

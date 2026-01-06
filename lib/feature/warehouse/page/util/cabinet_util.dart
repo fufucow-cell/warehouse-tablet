@@ -9,24 +9,49 @@ class CabinetUtil {
   // 取得所有房間名稱
   static List<String> getRoomNameList({bool includeUnboundRoom = false}) {
     if (includeUnboundRoom) {
-      return _service.roomCabinetInfos.map((room) => room.roomName).toList();
+      return _service.getRoomCabinetInfos.map((room) => room.roomName).toList();
     } else {
-      return _service.roomCabinetInfos.where((room) => room.roomId.isNotEmpty).map((room) => room.roomName).toList();
+      return _service.getRoomCabinetInfos.where((room) => room.roomId.isNotEmpty).map((room) => room.roomName).toList();
     }
   }
 
   // 扁平化所有櫥櫃
   static List<CabinetInfo> flattenAllCabinets({bool includeUnboundRoom = false}) {
     if (includeUnboundRoom) {
-      return _service.roomCabinetInfos.expand<CabinetInfo>((room) => room.cabinets).toList();
+      return _service.getRoomCabinetInfos.expand<CabinetInfo>((room) => room.cabinets).toList();
     } else {
-      return _service.roomCabinetInfos.where((room) => room.roomId.isNotEmpty).expand<CabinetInfo>((room) => room.cabinets).toList();
+      return _service.getRoomCabinetInfos.where((room) => room.roomId.isNotEmpty).expand<CabinetInfo>((room) => room.cabinets).toList();
     }
+  }
+
+  // 指定房間下所有櫥櫃
+  static List<CabinetInfo> getAllCabinetsFromRoom({String? roomId, String? roomName}) {
+    RoomCabinetInfo? roomCabinetInfos;
+
+    if (roomName?.isNotEmpty ?? false) {
+      roomCabinetInfos = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
+    }
+
+    roomCabinetInfos = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomId == (roomId ?? ''));
+    return roomCabinetInfos?.cabinets ?? [];
+  }
+
+  // 取得房間名稱經由櫃位 ID
+  static String? getRoomNameByCabinetId(String? cabinetId) {
+    for (final room in _service.getRoomCabinetInfos) {
+      for (final cabinet in room.cabinets) {
+        if (cabinet.cabinetId == cabinetId) {
+          return room.roomName;
+        }
+      }
+    }
+
+    return null;
   }
 
   // 比對房間
   static RoomCabinetInfo? getRoomByName(String? roomName) {
-    return _service.roomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
+    return _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
   }
 
   // 比對櫃位
@@ -40,7 +65,7 @@ class CabinetUtil {
       return flattenAllCabinets(includeUnboundRoom: includeUnboundRoom).map((cabinet) => cabinet.cabinetName).toList();
     }
 
-    final matchRoom = _service.roomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
+    final matchRoom = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
     final visibleCabinets = matchRoom?.cabinets.map((cabinet) => cabinet.cabinetName).toList() ?? [];
     return visibleCabinets;
   }

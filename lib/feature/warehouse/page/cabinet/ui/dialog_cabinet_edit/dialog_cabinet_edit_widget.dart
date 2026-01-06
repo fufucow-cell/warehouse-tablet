@@ -47,42 +47,7 @@ class DialogCabinetEditWidget extends StatelessWidget {
                   );
                 },
                 onConfirm: () async {
-                  final outputModel = await controller.checkOutputModel();
-
-                  if (outputModel?.isEmpty ?? true) {
-                    return;
-                  }
-
-                  final isConfirmDelete = await controller.showDeleteHint();
-
-                  if (!isConfirmDelete) {
-                    return;
-                  }
-
-                  unawaited(
-                    controller.interactive(
-                      EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                      data: true,
-                    ),
-                  );
-
-                  final isSuccess = await onConfirm(outputModel!);
-
-                  if (isSuccess) {
-                    unawaited(
-                      controller.interactive(
-                        EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                        data: context,
-                      ),
-                    );
-                  }
-
-                  unawaited(
-                    controller.interactive(
-                      EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
-                      data: false,
-                    ),
-                  );
+                  await controller.handleConfirm(onConfirm, context);
                 },
               );
             },

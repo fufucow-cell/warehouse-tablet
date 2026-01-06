@@ -23,7 +23,7 @@ extension WarehouseCabinetPageRouteExtension on WarehouseCabinetPageController {
             DialogCabinetEditWidget(
               room: data,
               onConfirm: (outputModel) async {
-                return await _updateCabinet(outputModel);
+                return await _groupCabinets(outputModel);
               },
             ),
           );

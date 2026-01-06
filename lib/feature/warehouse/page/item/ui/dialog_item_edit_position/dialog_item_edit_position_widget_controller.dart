@@ -20,7 +20,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
   String get getItemName => _model.combineItem?.name ?? '';
   int get getOriginQuantity => _model.combineItem?.quantity ?? 0;
   List<DisplayPositionModel> get getPositions => _model.positions;
-  List<RoomCabinetInfo> get getRoomCabinetInfos => _service.roomCabinetInfos;
+  List<RoomCabinetInfo> get getRoomCabinetInfos => _service.getRoomCabinetInfos;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeCabinetsRx => _model.changeCabinets.readonly;

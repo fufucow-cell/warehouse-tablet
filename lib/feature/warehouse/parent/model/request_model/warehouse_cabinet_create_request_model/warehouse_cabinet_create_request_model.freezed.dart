@@ -27,6 +27,8 @@ mixin _$WarehouseCabinetCreateRequestModel {
   String? get roomId => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_name')
   String? get userName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'room_name')
+  String? get roomName => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,6 +50,7 @@ abstract class $WarehouseCabinetCreateRequestModelCopyWith<$Res> {
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'room_id') String? roomId,
       @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'room_name') String? roomName,
       String? name});
 }
 
@@ -68,6 +71,7 @@ class _$WarehouseCabinetCreateRequestModelCopyWithImpl<$Res,
     Object? householdId = freezed,
     Object? roomId = freezed,
     Object? userName = freezed,
+    Object? roomName = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
@@ -82,6 +86,10 @@ class _$WarehouseCabinetCreateRequestModelCopyWithImpl<$Res,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      roomName: freezed == roomName
+          ? _value.roomName
+          : roomName // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -104,6 +112,7 @@ abstract class _$$WarehouseCabinetCreateRequestModelImplCopyWith<$Res>
       {@JsonKey(name: 'household_id') String? householdId,
       @JsonKey(name: 'room_id') String? roomId,
       @JsonKey(name: 'user_name') String? userName,
+      @JsonKey(name: 'room_name') String? roomName,
       String? name});
 }
 
@@ -123,6 +132,7 @@ class __$$WarehouseCabinetCreateRequestModelImplCopyWithImpl<$Res>
     Object? householdId = freezed,
     Object? roomId = freezed,
     Object? userName = freezed,
+    Object? roomName = freezed,
     Object? name = freezed,
   }) {
     return _then(_$WarehouseCabinetCreateRequestModelImpl(
@@ -137,6 +147,10 @@ class __$$WarehouseCabinetCreateRequestModelImplCopyWithImpl<$Res>
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      roomName: freezed == roomName
+          ? _value.roomName
+          : roomName // ignore: cast_nullable_to_non_nullable
               as String?,
       name: freezed == name
           ? _value.name
@@ -154,6 +168,7 @@ class _$WarehouseCabinetCreateRequestModelImpl
       {@JsonKey(name: 'household_id') this.householdId,
       @JsonKey(name: 'room_id') this.roomId,
       @JsonKey(name: 'user_name') this.userName,
+      @JsonKey(name: 'room_name') this.roomName,
       this.name});
 
   factory _$WarehouseCabinetCreateRequestModelImpl.fromJson(
@@ -170,11 +185,14 @@ class _$WarehouseCabinetCreateRequestModelImpl
   @JsonKey(name: 'user_name')
   final String? userName;
   @override
+  @JsonKey(name: 'room_name')
+  final String? roomName;
+  @override
   final String? name;
 
   @override
   String toString() {
-    return 'WarehouseCabinetCreateRequestModel(householdId: $householdId, roomId: $roomId, userName: $userName, name: $name)';
+    return 'WarehouseCabinetCreateRequestModel(householdId: $householdId, roomId: $roomId, userName: $userName, roomName: $roomName, name: $name)';
   }
 
   @override
@@ -187,13 +205,15 @@ class _$WarehouseCabinetCreateRequestModelImpl
             (identical(other.roomId, roomId) || other.roomId == roomId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
+            (identical(other.roomName, roomName) ||
+                other.roomName == roomName) &&
             (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, householdId, roomId, userName, name);
+      Object.hash(runtimeType, householdId, roomId, userName, roomName, name);
 
   @JsonKey(ignore: true)
   @override
@@ -217,6 +237,7 @@ abstract class _WarehouseCabinetCreateRequestModel
       {@JsonKey(name: 'household_id') final String? householdId,
       @JsonKey(name: 'room_id') final String? roomId,
       @JsonKey(name: 'user_name') final String? userName,
+      @JsonKey(name: 'room_name') final String? roomName,
       final String? name}) = _$WarehouseCabinetCreateRequestModelImpl;
 
   factory _WarehouseCabinetCreateRequestModel.fromJson(
@@ -232,6 +253,9 @@ abstract class _WarehouseCabinetCreateRequestModel
   @override
   @JsonKey(name: 'user_name')
   String? get userName;
+  @override
+  @JsonKey(name: 'room_name')
+  String? get roomName;
   @override
   String? get name;
   @override

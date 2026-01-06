@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/cabinet_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
@@ -73,6 +73,7 @@ class DialogCabinetEditWidgetController extends GetxController {
           DialogCabinetEditOutputModel(
             cabinetId: model.oldCabinet.id!,
             isDelete: model.isDelete,
+            newRoomName: newRoom?.name,
             newCabinetName: hasNewName ? newName : null,
             newRoomId: newRoom?.id,
           ),
@@ -116,14 +117,7 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   void _checkData() {
-    final cabinets = _service.getAllRoomCabinetItems.firstWhereOrNull((e) {
-          if ((_model.room?.roomId.isEmpty ?? true) && (e.roomId?.isEmpty ?? true)) {
-            return true;
-          }
-
-          return e.roomId == _model.room?.roomId;
-        })?.cabinets ??
-        [];
+    final cabinets = CabinetUtil.getAllCabinetsFromRoom(roomId: _model.room?.roomId);
 
     if (cabinets.isEmpty) {
       return;
@@ -133,10 +127,10 @@ class DialogCabinetEditWidgetController extends GetxController {
         .map(
           (e) => EditModel(
             oldCabinet: WarehouseNameIdModel(
-              id: e.id,
-              name: e.name,
+              id: e.cabinetId,
+              name: e.cabinetName,
             ),
-            textController: TextEditingController(text: e.name),
+            textController: TextEditingController(text: e.cabinetName),
           ),
         )
         .toList();
@@ -158,5 +152,48 @@ class DialogCabinetEditWidgetController extends GetxController {
   String _genDeleteHintMessage(List<EditModel> editModels) {
     final names = editModels.map((editModel) => editModel.oldCabinet.name).map((e) => '「$e」').join(', ');
     return EnumLocale.editCabinetDeleteMultipleMessage.trArgs([names]);
+  }
+
+  // 處理確認操作
+  Future<void> handleConfirm(
+    Future<bool> Function(List<DialogCabinetEditOutputModel>) onConfirm,
+    BuildContext context,
+  ) async {
+    final outputModel = await checkOutputModel();
+
+    if (outputModel?.isEmpty ?? true) {
+      return;
+    }
+
+    final isConfirmDelete = await showDeleteHint();
+
+    if (!isConfirmDelete) {
+      return;
+    }
+
+    unawaited(
+      interactive(
+        EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
+        data: true,
+      ),
+    );
+
+    final isSuccess = await onConfirm(outputModel!);
+
+    if (isSuccess) {
+      unawaited(
+        interactive(
+          EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
+          data: context,
+        ),
+      );
+    }
+
+    unawaited(
+      interactive(
+        EnumDialogCabinetEditWidgetInteractive.tapDialogConfirmButton,
+        data: false,
+      ),
+    );
   }
 }

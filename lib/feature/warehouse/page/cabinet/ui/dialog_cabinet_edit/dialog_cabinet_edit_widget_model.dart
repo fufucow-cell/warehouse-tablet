@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -38,12 +37,14 @@ class ChangeRoomModel {
 class DialogCabinetEditOutputModel {
   String cabinetId;
   bool isDelete;
+  String? newRoomName;
   String? newRoomId;
   String? newCabinetName;
 
   DialogCabinetEditOutputModel({
     required this.cabinetId,
     required this.isDelete,
+    required this.newRoomName,
     required this.newRoomId,
     required this.newCabinetName,
   });
