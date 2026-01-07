@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-06T16:37:06.367459
+/// 生成时间: 2026-01-07T15:25:49.853513
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
@@ -165,7 +165,6 @@ enum EnumLocale {
   warehouseMoveFromTo,
   warehouseMoveQuantity,
   warehouseMoveQuantityInsufficient,
-  warehouseRemoveItemFromCabinet,
   warehouseMoveToSameCabinet,
   warehouseNameLabel,
   warehouseNameUpdate,
@@ -186,6 +185,7 @@ enum EnumLocale {
   warehouseRecordCount,
   warehouseRecordTotal,
   warehouseRefresh,
+  warehouseRemoveItemFromCabinet,
   warehouseRoomUpdate,
   warehouseSubCategoryCount,
   warehouseTabAlarm,
@@ -207,19 +207,30 @@ enum EnumLocale {
   warehouseUnnamed;
 
   String get key => name;
-  String get tr => key.tr;
+  
+  // Get 版本
+  // String get tr => key.tr;
+  // String trArgs(List<String> params) {
+  //   Map<String, String> namedParams = {};
+  //   for (int i = 0; i < params.length; i++) {
+  //     namedParams['para${i + 1}'] = params[i];
+  //   }
+  //   return key.trParams(namedParams);
+  // }
 
-  String trArgs(List<String> params) {
-    Map<String, String> namedParams = {};
-    for (int i = 0; i < params.length; i++) {
-      namedParams['para${i + 1}'] = params[i];
-    }
-    return key.trParams(namedParams);
-  }
-
-  static LocaleTranslation? get currentTranslation => _currentTranslation;
-
-  static LocaleTranslation _currentTranslation = LocaleTranslation.defaultTranslation;
-
+  // Module 版本
+  static LocaleTranslation? _currentTranslation;
+  
   static void setCurrentTranslation(LocaleTranslation translation) => _currentTranslation = translation;
+  
+  String get tr => _currentTranslation?.translationMap[key] ?? key;
+  
+  String trArgs(List<String> params) {
+    String strTr = _currentTranslation?.translationMap[key] ?? key;
+    for (int i = 0; i < params.length; i++) {
+      final keyPara = '@para${i + 1}';
+      strTr = strTr.replaceFirst(keyPara, params[i]);
+    }
+    return strTr;
+  }
 }
