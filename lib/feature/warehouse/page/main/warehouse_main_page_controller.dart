@@ -17,6 +17,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
@@ -60,6 +61,7 @@ class WarehouseMainPageController extends GetxController {
     _disposeTabController();
     _disposeTabPageControllers();
     WarehouseService.unregister();
+    DeviceUtil.unregister();
     super.onClose();
   }
 
@@ -71,6 +73,7 @@ class WarehouseMainPageController extends GetxController {
   }
 
   void setRootContext(BuildContext context) {
+    DeviceUtil.register(context);
     BuildContext? rootContext;
 
     try {

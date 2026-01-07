@@ -47,7 +47,6 @@ class WarehouseService {
 
   final _model = WarehouseServiceModel();
   final _logService = LogUtil.instance;
-  final _deviceService = DeviceUtil.instance;
   final _themeService = ThemeUtil.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
@@ -135,11 +134,11 @@ class WarehouseService {
   }
 
   Future<String?> openCamera() async {
-    return await _deviceService.openCamera();
+    return await DeviceUtil.instance.openCamera();
   }
 
   Future<String?> openGallery() async {
-    return await _deviceService.openGallery();
+    return await DeviceUtil.instance.openGallery();
   }
 
   Future<String?> compressImage(String imagePath, {int maxSide = 100}) async {

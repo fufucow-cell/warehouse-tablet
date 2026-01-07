@@ -53,7 +53,8 @@ dependencies:
   json_annotation: ^4.9.0
   freezed_annotation: ^2.4.4
   collection: ^1.18.0
-  skeletonizer: ^1.4.3
+  shimmer: ^3.0.0
+  image_picker: ^1.0.7
 ```
 
 ### 3.3 新增開發依賴項（如需要）
