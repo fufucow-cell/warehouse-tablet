@@ -5,7 +5,8 @@ part 'warehouse_cabinet_update_request_model.freezed.dart';
 part 'warehouse_cabinet_update_request_model.g.dart';
 
 @freezed
-class WarehouseCabinetUpdateRequestModel with _$WarehouseCabinetUpdateRequestModel {
+class WarehouseCabinetUpdateRequestModel
+    with _$WarehouseCabinetUpdateRequestModel {
   factory WarehouseCabinetUpdateRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'user_name') String? userName,

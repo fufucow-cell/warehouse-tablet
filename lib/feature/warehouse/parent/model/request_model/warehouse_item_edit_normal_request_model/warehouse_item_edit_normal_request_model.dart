@@ -4,7 +4,8 @@ part 'warehouse_item_edit_normal_request_model.freezed.dart';
 part 'warehouse_item_edit_normal_request_model.g.dart';
 
 @freezed
-class WarehouseItemEditNormalRequestModel with _$WarehouseItemEditNormalRequestModel {
+class WarehouseItemEditNormalRequestModel
+    with _$WarehouseItemEditNormalRequestModel {
   factory WarehouseItemEditNormalRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'item_id') String? itemId,

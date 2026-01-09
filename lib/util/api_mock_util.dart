@@ -62,7 +62,8 @@ class ApiMockUtil {
     RequestInterceptorHandler handler,
     EnumApiInfo apiInfo,
   ) async {
-    final isEmptyResponse = options.extra[BaseApiResponseModel.name] as bool? ?? false;
+    final isEmptyResponse =
+        options.extra[BaseApiResponseModel.name] as bool? ?? false;
 
     if (isEmptyResponse) {
       final successResponse = Response<dynamic>(

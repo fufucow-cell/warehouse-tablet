@@ -71,7 +71,7 @@ class LocaleTranslation extends Translations {
     languageCode: 'en',
     countryCode: 'US',
     displayName: 'English',
-      translationMap: en_us.zhTW,
+    translationMap: en_us.zhTW,
   );
 
   /// 日文
@@ -79,7 +79,7 @@ class LocaleTranslation extends Translations {
     languageCode: 'ja',
     countryCode: 'JP',
     displayName: '日本語',
-      translationMap: ja_jp.zhTW,
+    translationMap: ja_jp.zhTW,
   );
 
   /// 韓文
@@ -87,7 +87,7 @@ class LocaleTranslation extends Translations {
     languageCode: 'ko',
     countryCode: 'KR',
     displayName: '한국어',
-      translationMap: ko_kr.zhTW,
+    translationMap: ko_kr.zhTW,
   );
 
   // MARK: - Public Methods

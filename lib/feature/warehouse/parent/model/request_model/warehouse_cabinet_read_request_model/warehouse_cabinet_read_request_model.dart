@@ -11,5 +11,7 @@ class WarehouseCabinetReadRequestModel with _$WarehouseCabinetReadRequestModel {
     @JsonKey(name: 'household_id') String? householdId,
   }) = _WarehouseCabinetReadRequestModel;
 
-  factory WarehouseCabinetReadRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseCabinetReadRequestModelFromJson(json);
+  factory WarehouseCabinetReadRequestModel.fromJson(
+          Map<String, dynamic> json) =>
+      _$WarehouseCabinetReadRequestModelFromJson(json);
 }

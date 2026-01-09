@@ -16,7 +16,9 @@ class WarehouseAlarmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseAlarmPageController>(
-      init: Get.isRegistered<WarehouseAlarmPageController>() ? null : WarehouseAlarmPageController(),
+      init: Get.isRegistered<WarehouseAlarmPageController>()
+          ? null
+          : WarehouseAlarmPageController(),
       builder: (controller) {
         return const SecondBackgroundCard(
           child: Column(

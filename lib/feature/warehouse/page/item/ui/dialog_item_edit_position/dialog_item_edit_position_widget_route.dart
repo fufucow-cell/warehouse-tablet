@@ -5,7 +5,8 @@ enum EnumDialogItemEditPositionWidgetRoute {
   showErrorSnackBar,
 }
 
-extension DialogItemEditPositionWidgetRouteExtension on DialogItemEditPositionWidgetController {
+extension DialogItemEditPositionWidgetRouteExtension
+    on DialogItemEditPositionWidgetController {
   void _routerHandle(
     EnumDialogItemEditPositionWidgetRoute type, {
     dynamic data,

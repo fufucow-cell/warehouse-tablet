@@ -44,12 +44,14 @@ class MajorListWidget extends StatelessWidget {
                   return Obx(
                     () {
                       controller.expandedCategoryIdsRx.value;
-                      final isExpanded = controller.isCategoryExpanded(category);
+                      final isExpanded =
+                          controller.isCategoryExpanded(category);
                       bool isPreviousExpanded = false;
 
                       if (index > 0) {
                         final previousCategory = level1Cats[index - 1];
-                        isPreviousExpanded = controller.isCategoryExpanded(previousCategory);
+                        isPreviousExpanded =
+                            controller.isCategoryExpanded(previousCategory);
                       }
 
                       return Column(
@@ -64,7 +66,9 @@ class MajorListWidget extends StatelessWidget {
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                             margin: EdgeInsets.only(
-                              top: (isExpanded && isPreviousExpanded) ? 20.0.scale : 0.0.scale,
+                              top: (isExpanded && isPreviousExpanded)
+                                  ? 20.0.scale
+                                  : 0.0.scale,
                             ),
                             padding: EdgeInsets.only(
                               left: 32.0.scale,
@@ -73,7 +77,9 @@ class MajorListWidget extends StatelessWidget {
                               bottom: 24.0.scale,
                             ),
                             decoration: BoxDecoration(
-                              color: isExpanded ? EnumColor.menuBgFocused.color : EnumColor.backgroundPrimary.color,
+                              color: isExpanded
+                                  ? EnumColor.menuBgFocused.color
+                                  : EnumColor.backgroundPrimary.color,
                               borderRadius: BorderRadius.circular(20.0.scale),
                             ),
                             child: _MajorRowWithChildren(
@@ -103,7 +109,8 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent => 78.0.scale;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      false;
 
   @override
   Widget build(

@@ -12,5 +12,6 @@ class WarehouseCategoryResponseModel with _$WarehouseCategoryResponseModel {
     List<Category>? data,
   }) = _WarehouseCategoryResponseModel;
 
-  factory WarehouseCategoryResponseModel.fromJson(Map<String, dynamic> json) => _$WarehouseCategoryResponseModelFromJson(json);
+  factory WarehouseCategoryResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$WarehouseCategoryResponseModelFromJson(json);
 }

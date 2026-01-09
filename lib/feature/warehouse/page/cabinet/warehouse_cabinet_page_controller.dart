@@ -30,7 +30,8 @@ class WarehouseCabinetPageController extends GetxController {
   final _service = WarehouseService.instance;
   int get getTotalRoomsCount => _service.rooms.length;
   bool get hasRoom => _service.rooms.isNotEmpty;
-  RxReadonly<List<RoomCabinetInfo>?> get allVisibleCabinetsRx => _model.allVisibleCabinets.readonly;
+  RxReadonly<List<RoomCabinetInfo>?> get allVisibleCabinetsRx =>
+      _model.allVisibleCabinets.readonly;
 
   // MARK: - Init
 
@@ -93,7 +94,8 @@ class WarehouseCabinetPageController extends GetxController {
             cabinetId: e.cabinetId,
             newCabinetName: e.newCabinetName,
             newRoomId: e.newRoomId,
-            oldRoomName: CabinetUtil.getRoomNameByCabinetId(e.cabinetId) ?? EnumLocale.warehouseUnboundRoom.tr,
+            oldRoomName: CabinetUtil.getRoomNameByCabinetId(e.cabinetId) ??
+                EnumLocale.warehouseUnboundRoom.tr,
             newRoomName: e.newRoomName,
           ),
         )
@@ -103,7 +105,8 @@ class WarehouseCabinetPageController extends GetxController {
         .map(
           (e) => DeleteCabinet(
             cabinetId: e.cabinetId,
-            oldRoomName: CabinetUtil.getRoomNameByCabinetId(e.cabinetId) ?? EnumLocale.warehouseUnboundRoom.tr,
+            oldRoomName: CabinetUtil.getRoomNameByCabinetId(e.cabinetId) ??
+                EnumLocale.warehouseUnboundRoom.tr,
           ),
         )
         .toList();

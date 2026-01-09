@@ -12,5 +12,6 @@ class ItemCategory with _$ItemCategory {
     ItemCategory? child,
   }) = _ItemCategory;
 
-  factory ItemCategory.fromJson(Map<String, dynamic> json) => _$ItemCategoryFromJson(json);
+  factory ItemCategory.fromJson(Map<String, dynamic> json) =>
+      _$ItemCategoryFromJson(json);
 }

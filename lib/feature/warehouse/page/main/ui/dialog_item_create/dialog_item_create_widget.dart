@@ -47,14 +47,16 @@ class DialogItemCreateWidget extends StatelessWidget {
                 },
                 onConfirm: () async {
                   controller.interactive(
-                    EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogItemCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final outputModel = await controller.checkOutputModel();
 
                   if (outputModel == null) {
                     controller.interactive(
-                      EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogItemCreateWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: false,
                     );
                     return;
@@ -63,7 +65,8 @@ class DialogItemCreateWidget extends StatelessWidget {
                   final isSuccess = await onConfirm(outputModel);
 
                   controller.interactive(
-                    EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogItemCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: isSuccess ? context : false,
                   );
                 },
@@ -151,9 +154,12 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null
+                      ? EnumLocale.category.tr
+                      : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
-                  visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
+                  visibleValues:
+                      visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
                     EnumDialogItemCreateWidgetInteractive.tapCategoryLevel1,
                     data: str,
@@ -164,7 +170,8 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel2Category.tr,
                     selectedValue: selectedLevel2?.name,
-                    visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
+                    visibleValues:
+                        visibleLevel2.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemCreateWidgetInteractive.tapCategoryLevel2,
                       data: str,
@@ -176,7 +183,8 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel3Category.tr,
                     selectedValue: selectedLevel3?.name,
-                    visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
+                    visibleValues:
+                        visibleLevel3.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemCreateWidgetInteractive.tapCategoryLevel3,
                       data: str,
@@ -198,7 +206,8 @@ class _SmartAddButton extends StatelessWidget {
     final controller = Get.find<DialogItemCreateWidgetController>();
 
     return OutlinedButton(
-      onPressed: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.tapSmartAddButton),
+      onPressed: () => controller
+          .interactive(EnumDialogItemCreateWidgetInteractive.tapSmartAddButton),
       style: OutlinedButton.styleFrom(
         padding: EdgeInsets.symmetric(
           vertical: 16.0.scale,
@@ -246,11 +255,13 @@ class _PhotoSection extends StatelessWidget {
             onReplacePhoto: () => controller.interactive(
               EnumDialogItemCreateWidgetInteractive.replacePhoto,
             ),
-            onDeletePhoto: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.deletePhoto),
+            onDeletePhoto: () => controller
+                .interactive(EnumDialogItemCreateWidgetInteractive.deletePhoto),
           );
         } else {
           return DialogWithoutPhotoWidget(
-            onTap: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.tapPhoto),
+            onTap: () => controller
+                .interactive(EnumDialogItemCreateWidgetInteractive.tapPhoto),
           );
         }
       },
@@ -411,7 +422,8 @@ class _DropdownField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor:
+            selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(

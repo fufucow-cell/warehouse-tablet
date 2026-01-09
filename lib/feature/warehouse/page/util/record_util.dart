@@ -25,7 +25,8 @@ class CombineRecord {
 }
 
 class RecordUtil {
-  static List<CombineRecord> combineItemRecords(List<ItemRecord> records, {bool isItemLog = false}) {
+  static List<CombineRecord> combineItemRecords(List<ItemRecord> records,
+      {bool isItemLog = false}) {
     final result = <CombineRecord>[];
     final groupRecords = _groupRecords(records);
 
@@ -88,7 +89,10 @@ class RecordUtil {
         content = content.substring(1);
       }
 
-      if (!isItemLog && (tagType == EnumTagType.updateItem || tagType == EnumTagType.updatePosition || tagType == EnumTagType.updateQuantity)) {
+      if (!isItemLog &&
+          (tagType == EnumTagType.updateItem ||
+              tagType == EnumTagType.updatePosition ||
+              tagType == EnumTagType.updateQuantity)) {
         content = '$entityName\n$content';
       }
 
@@ -170,46 +174,65 @@ class RecordUtil {
     String result = '';
 
     if (record.itemName?.length == 1) {
-      result = (record.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.itemName!.firstOrNull!;
+      result = (record.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.itemName!.firstOrNull!;
       return result;
     } else if (record.itemName?.length == 2) {
-      final oldValue = (record.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.itemName!.firstOrNull!;
-      final newValue = (record.itemName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.itemName!.lastOrNull!;
-      final str = '\n${EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (record.itemName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.itemName!.firstOrNull!;
+      final newValue = (record.itemName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.itemName!.lastOrNull!;
+      final str =
+          '\n${EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue])}';
       result += str;
     }
 
     // 處理物品描述
     if (record.itemDescription?.length == 1) {
-      final newValue =
-          (record.itemDescription?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : record.itemDescription!.firstOrNull!;
+      final newValue = (record.itemDescription?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : record.itemDescription!.firstOrNull!;
       result += '\n${EnumLocale.warehouseDescriptionAdd.tr}: $newValue';
     } else if (record.itemDescription?.length == 2) {
-      final oldValue =
-          (record.itemDescription?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUndescribed.tr : record.itemDescription!.firstOrNull!;
+      final oldValue = (record.itemDescription?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUndescribed.tr
+          : record.itemDescription!.firstOrNull!;
       final lastValue = record.itemDescription?.lastOrNull;
 
       if (lastValue?.isEmpty ?? true) {
         result += '\n${EnumLocale.warehouseDescriptionRemove.tr}: $oldValue';
       } else {
         final newValue = lastValue!;
-        result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([oldValue, newValue])}';
+        result += '\n${EnumLocale.warehouseDescriptionUpdate.trArgs([
+              oldValue,
+              newValue
+            ])}';
       }
     }
 
     // 處理分類
     if (record.categoryName?.length == 1) {
-      final newValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
+      final newValue = (record.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.categoryName!.firstOrNull!;
       result += '\n${EnumLocale.createCategory.tr}: $newValue';
     } else if (record.categoryName?.length == 2) {
-      final oldValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
+      final oldValue = (record.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.categoryName!.firstOrNull!;
       final lastValue = record.categoryName?.lastOrNull;
 
       if (lastValue?.isEmpty ?? true) {
         result += '\n${EnumLocale.warehouseCategoryRemove.tr}: $oldValue';
       } else {
         final newValue = lastValue!;
-        result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue])}';
+        result += '\n${EnumLocale.warehouseCategoryUpdate.trArgs([
+              oldValue,
+              newValue
+            ])}';
       }
     }
 
@@ -251,7 +274,8 @@ class RecordUtil {
     if (record.cabinetName?.length == 1) {
       final itemName = record.itemName?.firstOrNull ?? '-';
       final cabinetName = record.cabinetName?.firstOrNull ?? '-';
-      final str = EnumLocale.warehouseRemoveItemFromCabinet.trArgs([cabinetName, itemName]);
+      final str = EnumLocale.warehouseRemoveItemFromCabinet
+          .trArgs([cabinetName, itemName]);
       return '\n$str';
     } else {
       final oldCabinetName = record.cabinetName?.firstOrNull ?? '-';
@@ -266,40 +290,61 @@ class RecordUtil {
     String result = '';
 
     if (record.cabinetName?.length == 1) {
-      final roomName = record.cabinetRoomName?.firstOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
-      final cabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
+      final roomName = record.cabinetRoomName?.firstOrNull ??
+          EnumLocale.warehouseUnboundRoom.tr;
+      final cabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.cabinetName!.firstOrNull!;
       result +=
           '\n${(eOpType == EnumOperateType.create) ? EnumLocale.warehouseTagTypeCreateCabinet.tr : EnumLocale.warehouseTagTypeDeleteCabinet.tr}: $roomName > $cabinetName';
     } else if (record.cabinetName?.length == 2) {
-      final oldRoomName = record.cabinetRoomName?.firstOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
-      final newRoomName = record.cabinetRoomName?.lastOrNull ?? EnumLocale.warehouseUnboundRoom.tr;
-      final oldCabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.firstOrNull!;
-      final newCabinetName = (record.cabinetName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.cabinetName!.lastOrNull!;
+      final oldRoomName = record.cabinetRoomName?.firstOrNull ??
+          EnumLocale.warehouseUnboundRoom.tr;
+      final newRoomName = record.cabinetRoomName?.lastOrNull ??
+          EnumLocale.warehouseUnboundRoom.tr;
+      final oldCabinetName = (record.cabinetName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.cabinetName!.firstOrNull!;
+      final newCabinetName = (record.cabinetName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUnnamed.tr
+          : record.cabinetName!.lastOrNull!;
       final oldValue = '$oldRoomName > $oldCabinetName';
       final newValue = '$newRoomName > $newCabinetName';
-      result += '\n${EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue])}';
+      result +=
+          '\n${EnumLocale.warehouseNameUpdate.trArgs([oldValue, newValue])}';
     }
 
     if (record.cabinetRoomName?.length == 2) {
-      final oldValue =
-          (record.cabinetRoomName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.cabinetRoomName!.firstOrNull!;
-      final newValue =
-          (record.cabinetRoomName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.cabinetRoomName!.lastOrNull!;
-      result += '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
+      final oldValue = (record.cabinetRoomName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.cabinetRoomName!.firstOrNull!;
+      final newValue = (record.cabinetRoomName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.cabinetRoomName!.lastOrNull!;
+      result +=
+          '\n${EnumLocale.warehouseRoomUpdate.trArgs([oldValue, newValue])}';
     }
 
     return result;
   }
 
-  static String _genCategoryContent(ItemRecord record, EnumOperateType eOpType) {
+  static String _genCategoryContent(
+      ItemRecord record, EnumOperateType eOpType) {
     String result = '';
 
     if (record.categoryName?.length == 1) {
-      final newValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
-      result += '\n${(eOpType == EnumOperateType.create) ? EnumLocale.createCategory.tr : EnumLocale.deleteCategory.tr}: $newValue';
+      final newValue = (record.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.categoryName!.firstOrNull!;
+      result +=
+          '\n${(eOpType == EnumOperateType.create) ? EnumLocale.createCategory.tr : EnumLocale.deleteCategory.tr}: $newValue';
     } else if (record.categoryName?.length == 2) {
-      final oldValue = (record.categoryName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.firstOrNull!;
-      final newValue = (record.categoryName?.lastOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUncategorized.tr : record.categoryName!.lastOrNull!;
+      final oldValue = (record.categoryName?.firstOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.categoryName!.firstOrNull!;
+      final newValue = (record.categoryName?.lastOrNull?.isEmpty ?? true)
+          ? EnumLocale.warehouseUncategorized.tr
+          : record.categoryName!.lastOrNull!;
       result += EnumLocale.warehouseCategoryUpdate.trArgs([oldValue, newValue]);
     }
 

@@ -331,7 +331,7 @@ class ApiUtil extends GetxService {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
         // Add user_id header with UUID
-        options.headers['user_id'] = '00000000-0000-0000-0000-000000000000';
+        options.headers['current-member-id'] = '00000000-0000-0000-0000-000000000000';
 
         final isGet = options.method.toUpperCase() == 'GET';
 

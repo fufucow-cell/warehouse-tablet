@@ -14,10 +14,8 @@ class LocaleUtil extends GetxService {
   LocaleTranslation _currentTranslation = LocaleTranslation.system;
   LocaleTranslation get currentTranslation => _currentTranslation;
   LocaleTranslation _systemTranslation = LocaleTranslation.defaultTranslation;
-  LocaleTranslation get getDefaultTranslation =>
-      LocaleTranslation.defaultTranslation;
-  Locale get getCurrentLocale =>
-      _convertLocaleFromTranslation(currentTranslation);
+  LocaleTranslation get getDefaultTranslation => LocaleTranslation.defaultTranslation;
+  Locale get getCurrentLocale => _convertLocaleFromTranslation(currentTranslation);
   String get getCurrentLocaleCode => _convertCodeFromLocale(getCurrentLocale);
   Locale get getDefaultLocale => _convertLocaleFromTranslation(
         LocaleTranslation.defaultTranslation,
@@ -87,9 +85,7 @@ class LocaleUtil extends GetxService {
   List<Locale> get getSupportedLocales {
     return LocaleTranslation.getAvalibleLocales
         .map(
-          (e) => e.countryCode != null
-              ? Locale(e.languageCode, e.countryCode)
-              : Locale(e.languageCode),
+          (e) => e.countryCode != null ? Locale(e.languageCode, e.countryCode) : Locale(e.languageCode),
         )
         .toList();
   }
@@ -162,9 +158,7 @@ class LocaleUtil extends GetxService {
     final parts = code.split('_');
     final language = parts[0];
     final country = parts.length > 1 ? parts[1] : null;
-    final sameLanguage = LocaleTranslation.getAvalibleLocales
-        .where((e) => e.languageCode == language)
-        .toList();
+    final sameLanguage = LocaleTranslation.getAvalibleLocales.where((e) => e.languageCode == language).toList();
 
     if (sameLanguage.isEmpty) {
       return LocaleTranslation.defaultTranslation;
@@ -207,9 +201,7 @@ class LocaleUtil extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     // 保存完整的 languageCode，包括 'system' 特殊值
-    final codeToSave = newTranslation == LocaleTranslation.system
-        ? 'system'
-        : newTranslation.languageCode;
+    final codeToSave = newTranslation == LocaleTranslation.system ? 'system' : newTranslation.languageCode;
     await StorageUtil.write(
       EnumStorageKey.locale,
       codeToSave,

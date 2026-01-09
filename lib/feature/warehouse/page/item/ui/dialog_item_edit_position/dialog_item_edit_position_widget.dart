@@ -16,7 +16,8 @@ import 'package:get/get.dart';
 
 class DialogItemEditPositionWidget extends StatelessWidget {
   final String itemId;
-  final Future<bool> Function(List<DialogItemEditPositionOutputModel>) onConfirm;
+  final Future<bool> Function(List<DialogItemEditPositionOutputModel>)
+      onConfirm;
 
   const DialogItemEditPositionWidget({
     super.key,
@@ -39,20 +40,23 @@ class DialogItemEditPositionWidget extends StatelessWidget {
                 type: DialogFooterType.cancelAndConfirm,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogItemEditPositionWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
                 onConfirm: () async {
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogItemEditPositionWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final outputData = controller.checkOutputData();
 
                   if (outputData?.isEmpty ?? true) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogItemEditPositionWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: false,
                     );
                     return;
@@ -62,13 +66,15 @@ class DialogItemEditPositionWidget extends StatelessWidget {
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogItemEditPositionWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogItemEditPositionWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogItemEditPositionWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -256,8 +262,10 @@ class _QuantityButton extends StatelessWidget {
         onTap: () {
           controller.interactive(
             (eImage == EnumImage.cPlus)
-                ? EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity
-                : EnumDialogItemEditPositionWidgetInteractive.tapDecrementQuantity,
+                ? EnumDialogItemEditPositionWidgetInteractive
+                    .tapIncrementQuantity
+                : EnumDialogItemEditPositionWidgetInteractive
+                    .tapDecrementQuantity,
             data: textController,
           );
         },
@@ -299,7 +307,9 @@ class _DeleteButton extends StatelessWidget {
       color: EnumColor.backgroundPrimary.color,
       child: InkWell(
         onTap: () => controller.interactive(
-          isDelete ? EnumDialogItemEditPositionWidgetInteractive.tapRestoreButton : EnumDialogItemEditPositionWidgetInteractive.tapDeleteButton,
+          isDelete
+              ? EnumDialogItemEditPositionWidgetInteractive.tapRestoreButton
+              : EnumDialogItemEditPositionWidgetInteractive.tapDeleteButton,
           data: model,
         ),
         borderRadius: BorderRadius.circular(20.0.scale),
@@ -351,7 +361,8 @@ class _DropdownSection extends StatelessWidget {
                       EnumDialogItemEditPositionWidgetInteractive.tapUpdateRoom,
                       data: UpdatePositionModel(
                         index: model.index,
-                        position: WarehouseNameIdModel(id: room.roomId, name: room.roomName),
+                        position: WarehouseNameIdModel(
+                            id: room.roomId, name: room.roomName),
                       ),
                     );
                   }
@@ -368,10 +379,12 @@ class _DropdownSection extends StatelessWidget {
                   final cabinet = controller.getCabinetByName(str);
                   if (cabinet != null) {
                     controller.interactive(
-                      EnumDialogItemEditPositionWidgetInteractive.tapUpdateCabinet,
+                      EnumDialogItemEditPositionWidgetInteractive
+                          .tapUpdateCabinet,
                       data: UpdatePositionModel(
                         index: model.index,
-                        position: WarehouseNameIdModel(id: cabinet.cabinetId, name: cabinet.cabinetName),
+                        position: WarehouseNameIdModel(
+                            id: cabinet.cabinetId, name: cabinet.cabinetName),
                       ),
                     );
                   }

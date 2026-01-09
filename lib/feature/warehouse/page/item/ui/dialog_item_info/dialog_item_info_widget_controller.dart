@@ -19,8 +19,10 @@ class DialogItemInfoWidgetController extends GetxController {
   String get getTitle => _model.combineItem?.name ?? '';
   String get getDescription => _model.combineItem?.description ?? '';
   String get getPhoto => _model.combineItem?.photo ?? '';
-  String get getMinStockAlert => _model.combineItem?.minStockAlert?.toString() ?? '0';
-  String get getCategoryName => _service.convertCategoriesName(_model.combineItem);
+  String get getMinStockAlert =>
+      _model.combineItem?.minStockAlert?.toString() ?? '0';
+  String get getCategoryName =>
+      _service.convertCategoriesName(_model.combineItem);
   List<ItemPositionModel> get getPositions => _model.positions ?? [];
 
   // MARK: - Init
@@ -51,7 +53,8 @@ class DialogItemInfoWidgetController extends GetxController {
   // MARK: - Private Method
 
   void _loadItemData() {
-    final item = _service.getAllCombineItems.firstWhereOrNull((item) => item.id == _model.itemId);
+    final item = _service.getAllCombineItems
+        .firstWhereOrNull((item) => item.id == _model.itemId);
 
     if (item == null) {
       return;

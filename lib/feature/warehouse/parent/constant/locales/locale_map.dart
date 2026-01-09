@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-07T15:25:49.853513
+/// 生成时间: 2026-01-09T21:45:51.646535
 library;
 
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
@@ -83,11 +83,6 @@ enum EnumLocale {
   registerButton,
   registerFailed,
   room,
-  roomChildrenRoom,
-  roomKitchen,
-  roomMasterBedroom,
-  roomMeetingRoom,
-  roomOffice,
   searchClearResult,
   searchItemNameOrDescriptionHint,
   searchResultCount,
@@ -121,13 +116,18 @@ enum EnumLocale {
   warehouseAlarmProductName,
   warehouseAlarmProductPhoto,
   warehouseAlertQuantityLabel,
-  warehouseCabinetQuantityChange,
+  warehouseCabinetCreate,
+  warehouseCabinetDelete,
   warehouseCabinetTotal,
+  warehouseCabinetUpdateMessage,
   warehouseCategoryCount,
+  warehouseCategoryCreate,
+  warehouseCategoryDelete,
   warehouseCategoryRemove,
   warehouseCategoryTotal,
   warehouseCategoryTotalCount,
   warehouseCategoryUpdate,
+  warehouseCategoryUpdateMessage,
   warehouseChangeCabinet,
   warehouseChangePhoto,
   warehouseChangeRoom,
@@ -143,11 +143,11 @@ enum EnumLocale {
   warehouseEntityTypePosition,
   warehouseFilterDateLastWeek,
   warehouseFilterDateToday,
-  warehouseItemCategory,
+  warehouseImageRecognitionComplete,
   warehouseItemClickToViewRecord,
   warehouseItemCollapse,
-  warehouseItemCreateFailed,
-  warehouseItemCreateSuccess,
+  warehouseItemCreate,
+  warehouseItemDelete,
   warehouseItemEdit,
   warehouseItemInfo,
   warehouseItemLowStock,
@@ -156,13 +156,10 @@ enum EnumLocale {
   warehouseItemPhoto,
   warehouseItemStockInsufficient,
   warehouseItemTotal,
-  warehouseItemTotalQuantityChange,
-  warehouseItemUpdateFailed,
-  warehouseItemUpdateSuccess,
+  warehouseItemUpdateMessage,
   warehouseLocationsLabel,
   warehouseMaxNewPositionsReached,
   warehouseMinStockUpdate,
-  warehouseMoveFromTo,
   warehouseMoveQuantity,
   warehouseMoveQuantityInsufficient,
   warehouseMoveToSameCabinet,
@@ -199,7 +196,6 @@ enum EnumLocale {
   warehouseTotalCabinetAndItem,
   warehouseTotalQuantityAfterAdjustment,
   warehouseTotalRoomAndCabinet,
-  warehouseUnbound,
   warehouseUnboundCabinet,
   warehouseUnboundRoom,
   warehouseUncategorized,
@@ -207,30 +203,30 @@ enum EnumLocale {
   warehouseUnnamed;
 
   String get key => name;
-  
+
   // Get 版本
-  // String get tr => key.tr;
-  // String trArgs(List<String> params) {
-  //   Map<String, String> namedParams = {};
-  //   for (int i = 0; i < params.length; i++) {
-  //     namedParams['para${i + 1}'] = params[i];
-  //   }
-  //   return key.trParams(namedParams);
-  // }
+  String get tr => key.tr;
+  String trArgs(List<String> params) {
+    Map<String, String> namedParams = {};
+    for (int i = 0; i < params.length; i++) {
+      namedParams['para${i + 1}'] = params[i];
+    }
+    return key.trParams(namedParams);
+  }
 
   // Module 版本
   static LocaleTranslation? _currentTranslation;
-  
+
   static void setCurrentTranslation(LocaleTranslation translation) => _currentTranslation = translation;
-  
-  String get tr => _currentTranslation?.translationMap[key] ?? key;
-  
-  String trArgs(List<String> params) {
-    String strTr = _currentTranslation?.translationMap[key] ?? key;
-    for (int i = 0; i < params.length; i++) {
-      final keyPara = '@para${i + 1}';
-      strTr = strTr.replaceFirst(keyPara, params[i]);
-    }
-    return strTr;
-  }
+
+  // String get tr => _currentTranslation?.translationMap[key] ?? key;
+
+  // String trArgs(List<String> params) {
+  //   String strTr = _currentTranslation?.translationMap[key] ?? key;
+  //   for (int i = 0; i < params.length; i++) {
+  //     final keyPara = '@para${i + 1}';
+  //     strTr = strTr.replaceFirst(keyPara, params[i]);
+  //   }
+  //   return strTr;
+  // }
 }

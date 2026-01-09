@@ -18,7 +18,8 @@ class SmartHomeSettingPageController extends BasePageController {
   Future<void> apiProcessing() async {}
 
   /// 檢查是否為當前語言
-  bool isCurrentLocale(LocaleTranslation translation) => _localeUtil.currentTranslation == translation;
+  bool isCurrentLocale(LocaleTranslation translation) =>
+      _localeUtil.currentTranslation == translation;
 
   /// 切換語言
   Future<void> switchLocale(

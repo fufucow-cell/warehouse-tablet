@@ -27,13 +27,19 @@ class WarehouseAlarmPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[WarehouseAlarmPageController] onInit - $hashCode',
+    );
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[WarehouseAlarmPageController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[WarehouseAlarmPageController] onClose - $hashCode',
+    );
     super.onClose();
   }
 
@@ -61,26 +67,28 @@ class WarehouseAlarmPageController extends GetxController {
     return false;
   }
 
-  Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
+  Future<bool> _updateItemQuantity(
+    Item item,
+    List<DialogItemEditQuantityOutputModel> models,
+  ) async {
     String errMsg = '';
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
-      cabinets: models.map((model) => QuantityCabinetRequestModel(cabinetId: model.cabinetId, quantity: model.quantity)).toList(),
+      cabinets: models
+          .map(
+            (model) => QuantityCabinetRequestModel(
+              cabinetId: model.cabinetId,
+              quantity: model.quantity,
+            ),
+          )
+          .toList(),
     );
 
     final response = await _service.apiReqUpdateItemQuantity(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
-    final isSuccess = response != null;
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
-      message: errMsg,
-    );
-    return isSuccess;
+    return response != null;
   }
 }

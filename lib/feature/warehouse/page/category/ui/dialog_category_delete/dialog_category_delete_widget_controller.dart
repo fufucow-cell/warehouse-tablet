@@ -14,7 +14,8 @@ part 'dialog_category_delete_widget_route.dart';
 class DialogCategoryDeleteWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCategoryDeleteWidgetModel _model = DialogCategoryDeleteWidgetModel();
+  final DialogCategoryDeleteWidgetModel _model =
+      DialogCategoryDeleteWidgetModel();
   final _service = WarehouseService.instance;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   String get categoryName => _model.category?.name ?? '';
@@ -59,7 +60,8 @@ class DialogCategoryDeleteWidgetController extends GetxController {
   String getMessage() {
     final hasChildren = _model.category?.children?.isNotEmpty ?? false;
     if (hasChildren) {
-      return EnumLocale.deleteCategoryMessageWithChildren.trArgs([categoryName]);
+      return EnumLocale.deleteCategoryMessageWithChildren
+          .trArgs([categoryName]);
     } else {
       return EnumLocale.deleteCategoryMessageNoChildren.trArgs([categoryName]);
     }

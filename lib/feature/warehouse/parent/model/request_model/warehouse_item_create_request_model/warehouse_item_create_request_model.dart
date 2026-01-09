@@ -17,5 +17,6 @@ class WarehouseItemCreateRequestModel with _$WarehouseItemCreateRequestModel {
     @JsonKey(name: 'user_name') String? userName,
   }) = _WarehouseItemCreateRequestModel;
 
-  factory WarehouseItemCreateRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemCreateRequestModelFromJson(json);
+  factory WarehouseItemCreateRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$WarehouseItemCreateRequestModelFromJson(json);
 }

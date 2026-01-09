@@ -12,7 +12,8 @@ class SmartHomeService {
   final _model = SmartHomeServiceModel();
   UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
   HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
-  Map<String, HomeHouseholdResponseModel> get allHouseholdDataMap => _model.allHouseholdDataMap;
+  Map<String, HomeHouseholdResponseModel> get allHouseholdDataMap =>
+      _model.allHouseholdDataMap;
 
   // MARK: - Init
 

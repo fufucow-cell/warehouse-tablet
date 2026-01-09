@@ -13,5 +13,6 @@ class UpdateCabinet with _$UpdateCabinet {
     @JsonKey(name: 'new_room_name') String? newRoomName,
   }) = _UpdateCabinet;
 
-  factory UpdateCabinet.fromJson(Map<String, dynamic> json) => _$UpdateCabinetFromJson(json);
+  factory UpdateCabinet.fromJson(Map<String, dynamic> json) =>
+      _$UpdateCabinetFromJson(json);
 }

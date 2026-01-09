@@ -5,7 +5,8 @@ enum EnumDialogItemEditQuantityWidgetRoute {
   showDuplicateCabinetNameSnackBar,
 }
 
-extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWidgetController {
+extension DialogItemEditQuantityWidgetRouteExtension
+    on DialogItemEditQuantityWidgetController {
   void routerHandle(
     EnumDialogItemEditQuantityWidgetRoute type, {
     dynamic data,
@@ -16,7 +17,8 @@ extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWi
           Navigator.of(data).pop();
         }
         break;
-      case EnumDialogItemEditQuantityWidgetRoute.showDuplicateCabinetNameSnackBar:
+      case EnumDialogItemEditQuantityWidgetRoute
+            .showDuplicateCabinetNameSnackBar:
         if (data is String) {
           _service.showSnackBar(
             title: EnumLocale.commonError.tr,

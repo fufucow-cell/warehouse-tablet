@@ -41,7 +41,8 @@ class DialogCategoryEditWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryEditWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCategoryEditWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -53,20 +54,23 @@ class DialogCategoryEditWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryEditWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogCategoryEditWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryEditWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryEditWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -180,15 +184,19 @@ class _DropdownField extends StatelessWidget {
           child: DialogSectionWidget(
             title: title,
             child: WidgetUtil.textDropdownButton(
-              selectedValue: isMax ? EnumLocale.editCategoryMaxLevelReached.tr : selectedValue,
+              selectedValue: isMax
+                  ? EnumLocale.editCategoryMaxLevelReached.tr
+                  : selectedValue,
               values: isMax ? [] : visibleValues,
-              buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+              buttonTextColor:
+                  selectedValue == null ? EnumColor.textSecondary.color : null,
               menuMaxHeight: 290.0.scale,
               onValueSelected: onValueSelected,
             ),
           ),
         ),
-        if (selectedValue != null && selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
+        if (selectedValue != null &&
+            selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
           SizedBox(width: 12.0.scale),
           ActionButton(
             eImage: EnumImage.cTrash3,

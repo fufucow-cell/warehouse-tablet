@@ -78,11 +78,15 @@ class ThemeUtil extends GetxService {
     return false;
   }
 
-  Future<bool> switchFromString(String? strMode) async => switchFromMode(_convertThemeFromString(strMode));
+  Future<bool> switchFromString(String? strMode) async =>
+      switchFromMode(_convertThemeFromString(strMode));
 
   EnumThemeMode get getThemeFromSystem {
-    final platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    return platformBrightness == Brightness.dark ? EnumThemeMode.dark : EnumThemeMode.light;
+    final platformBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    return platformBrightness == Brightness.dark
+        ? EnumThemeMode.dark
+        : EnumThemeMode.light;
   }
 
   /// 取得圖片路徑

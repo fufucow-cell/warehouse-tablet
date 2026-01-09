@@ -137,9 +137,19 @@ class WarehouseMainPageController extends GetxController {
 
   Future<void> _queryApiData() async {
     final responses = await Future.wait([
-      _service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)),
-      _service.apiReqReadCabinets(WarehouseCabinetReadRequestModel(householdId: _service.getHouseholdId)),
-      _service.apiReqReadCategory(WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId)),
+      _service.apiReqReadItems(
+        WarehouseItemRequestModel(householdId: _service.getHouseholdId),
+      ),
+      _service.apiReqReadCabinets(
+        WarehouseCabinetReadRequestModel(
+          householdId: _service.getHouseholdId,
+        ),
+      ),
+      _service.apiReqReadCategory(
+        WarehouseCategoryReadRequestModel(
+          householdId: _service.getHouseholdId,
+        ),
+      ),
     ]);
 
     final items = responses[0];
@@ -219,9 +229,6 @@ class WarehouseMainPageController extends GetxController {
 
     final response = await _service.apiReqCreateItem(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
@@ -230,10 +237,6 @@ class WarehouseMainPageController extends GetxController {
       unawaited(_queryApiData());
     }
 
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemCreateSuccess.tr : EnumLocale.warehouseItemCreateFailed.tr,
-      message: errMsg,
-    );
     return isSuccess;
   }
 }

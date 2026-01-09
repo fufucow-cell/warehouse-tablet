@@ -21,7 +21,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
@@ -73,35 +72,6 @@ class WarehouseItemPageController extends GetxController {
 
   int getTotalCabinetCount() {
     return _model.allRoomCabinets.value?.fold<int>(0, (sum, room) => sum + (room.cabinets?.length ?? 0)) ?? 0;
-  }
-
-  int getTotalCategoryCount() {
-    final lv1Count = allCategoriesRx.value?.length ?? 0;
-    final lv2Count = _service.flattenAllLevel2Categories().length;
-    final lv3Count = _service.flattenAllLevel3Categories().length;
-    return lv1Count + lv2Count + lv3Count;
-  }
-
-  int getTotalCategoryCountOnItemsUse() {
-    final allItems = _service.getAllCombineItems;
-    final Set<String> allCategoryIds = {};
-
-    void extractCategory(ItemCategory? category) {
-      if (category?.id?.isEmpty ?? true) {
-        return;
-      }
-
-      allCategoryIds.add(category!.id!);
-      if (category.child != null) {
-        extractCategory(category.child);
-      }
-    }
-
-    for (var item in allItems) {
-      extractCategory(item.category);
-    }
-
-    return allCategoryIds.length;
   }
 
   List<String> getFilterRoomNameList() {
@@ -205,9 +175,6 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemNormal(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
@@ -216,10 +183,6 @@ class WarehouseItemPageController extends GetxController {
       unawaited(_queryApiData());
     }
 
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
-      message: errMsg,
-    );
     return isSuccess;
   }
 
@@ -233,9 +196,6 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqDeleteItem(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
@@ -244,10 +204,6 @@ class WarehouseItemPageController extends GetxController {
       unawaited(_queryApiData());
     }
 
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
-      message: errMsg,
-    );
     return isSuccess;
   }
 
@@ -262,16 +218,9 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemQuantity(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
-      message: errMsg,
-    );
 
     if (isSuccess) {
       unawaited(_queryApiData());
@@ -300,16 +249,9 @@ class WarehouseItemPageController extends GetxController {
 
     final response = await _service.apiReqUpdateItemPosition(
       requestModel,
-      onError: (error) {
-        errMsg = '[${error.code}] ${error.message ?? ''}';
-      },
     );
 
     final isSuccess = response != null;
-    _service.showSnackBar(
-      title: isSuccess ? EnumLocale.warehouseItemUpdateSuccess.tr : EnumLocale.warehouseItemUpdateFailed.tr,
-      message: errMsg,
-    );
 
     if (isSuccess) {
       unawaited(_queryApiData());

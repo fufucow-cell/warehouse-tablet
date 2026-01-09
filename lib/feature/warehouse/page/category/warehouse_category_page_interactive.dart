@@ -7,7 +7,8 @@ enum EnumWarehouseCategoryPageInteractive {
   tapExpandCategory,
 }
 
-extension WarehouseCategoryPageUserEventExtension on WarehouseCategoryPageController {
+extension WarehouseCategoryPageUserEventExtension
+    on WarehouseCategoryPageController {
   void interactive(EnumWarehouseCategoryPageInteractive type, {dynamic data}) {
     switch (type) {
       case EnumWarehouseCategoryPageInteractive.tapCreateCategory:

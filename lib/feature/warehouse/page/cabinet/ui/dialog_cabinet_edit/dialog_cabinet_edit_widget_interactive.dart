@@ -9,7 +9,8 @@ enum EnumDialogCabinetEditWidgetInteractive {
 }
 
 /// DialogCabinetEditWidget 用户事件处理扩展
-extension DialogCabinetEditWidgetUserEventExtension on DialogCabinetEditWidgetController {
+extension DialogCabinetEditWidgetUserEventExtension
+    on DialogCabinetEditWidgetController {
   /// 处理用户事件
   Future<void> interactive(
     EnumDialogCabinetEditWidgetInteractive type, {

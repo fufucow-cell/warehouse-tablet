@@ -3,7 +3,8 @@ part of 'smart_home_warehouse_page.dart';
 class SmartHomeWarehousePageController extends BasePageController {
   // MARK: - Properties
 
-  WarehouseMainPageRouterData getMockData() => WarehouseMainPageRouterData.mock();
+  WarehouseMainPageRouterData getMockData() =>
+      WarehouseMainPageRouterData.mock();
 
   // MARK: - Init
 

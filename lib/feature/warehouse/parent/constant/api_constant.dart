@@ -18,6 +18,7 @@ enum EnumApiInfo {
   roomDelete('room', EnumApiMethod.delete),
   // Warehouse Item
   itemCreate('item', EnumApiMethod.post),
+  itemSmartCreate('item/smart', EnumApiMethod.post),
   itemRead('item', EnumApiMethod.get),
   itemUpdateNormal('item/normal', EnumApiMethod.put),
   itemUpdatePosition('item/position', EnumApiMethod.put),

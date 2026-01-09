@@ -5,6 +5,7 @@ enum EnumDialogItemEditNormalWidgetRoute {
   openCamera,
   openGallery,
   showDialogDeleteHint,
+  showErrorSnackBar,
 }
 
 extension DialogItemEditNormalWidgetRouteExtension on DialogItemEditNormalWidgetController {
@@ -30,6 +31,13 @@ extension DialogItemEditNormalWidgetRouteExtension on DialogItemEditNormalWidget
             onCancel: () => false,
           ),
         ) as T?;
+      case EnumDialogItemEditNormalWidgetRoute.showErrorSnackBar:
+        if (data is String) {
+          _service.showSnackBar(
+            title: EnumLocale.commonHint.tr,
+            message: data,
+          );
+        }
     }
 
     return null;

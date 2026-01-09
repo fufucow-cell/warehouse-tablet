@@ -18,7 +18,8 @@ enum EnumDialogItemCreateWidgetInteractive {
 }
 
 /// DialogItemCreateWidget 用户事件处理扩展
-extension DialogItemCreateWidgetUserEventExtension on DialogItemCreateWidgetController {
+extension DialogItemCreateWidgetUserEventExtension
+    on DialogItemCreateWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemCreateWidgetInteractive type, {

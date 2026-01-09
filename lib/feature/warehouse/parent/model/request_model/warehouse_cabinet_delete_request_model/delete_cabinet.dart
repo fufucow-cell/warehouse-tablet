@@ -10,5 +10,6 @@ class DeleteCabinet with _$DeleteCabinet {
     @JsonKey(name: 'old_room_name') String? oldRoomName,
   }) = _DeleteCabinet;
 
-  factory DeleteCabinet.fromJson(Map<String, dynamic> json) => _$DeleteCabinetFromJson(json);
+  factory DeleteCabinet.fromJson(Map<String, dynamic> json) =>
+      _$DeleteCabinetFromJson(json);
 }

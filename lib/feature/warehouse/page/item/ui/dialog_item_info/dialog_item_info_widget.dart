@@ -173,7 +173,9 @@ class _PositionsInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               for (int roomIdx = 0; roomIdx < rooms.length; roomIdx++)
-                for (int cabinetIdx = 0; cabinetIdx < rooms[roomIdx].cabinets.length; cabinetIdx++)
+                for (int cabinetIdx = 0;
+                    cabinetIdx < rooms[roomIdx].cabinets.length;
+                    cabinetIdx++)
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -183,7 +185,9 @@ class _PositionsInfo extends StatelessWidget {
                         quantity: rooms[roomIdx].cabinets[cabinetIdx].quantity,
                         showRoomName: cabinetIdx == 0,
                       ),
-                      if (!(roomIdx == rooms.length - 1 && cabinetIdx == rooms[roomIdx].cabinets.length - 1)) SizedBox(height: 16.0.scale),
+                      if (!(roomIdx == rooms.length - 1 &&
+                          cabinetIdx == rooms[roomIdx].cabinets.length - 1))
+                        SizedBox(height: 16.0.scale),
                     ],
                   ),
             ],
@@ -262,7 +266,9 @@ class _RecordButton extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () => controller.interactive(EnumDialogItemInfoWidgetInteractive.tapRecordButton, data: context),
+            onTap: () => controller.interactive(
+                EnumDialogItemInfoWidgetInteractive.tapRecordButton,
+                data: context),
             child: Row(
               children: [
                 EnumImage.cHistory.image(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_history/dialog_item_history_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_record_read_request_model/warehouse_record_read_request_model.dart';
@@ -32,13 +31,19 @@ class DialogItemHistoryWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogItemHistoryWidgetController] onInit - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogItemHistoryWidgetController] onInit - $hashCode',
+    );
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogItemHistoryWidgetController] onClose - $hashCode');
+    LogUtil.i(
+      EnumLogType.debug,
+      '[DialogItemHistoryWidgetController] onClose - $hashCode',
+    );
     super.onClose();
   }
 
@@ -50,9 +55,6 @@ class DialogItemHistoryWidgetController extends GetxController {
         householdId: _service.getHouseholdId,
         itemId: _model.combineItem?.id,
       ),
-      onError: (error) {
-        _service.showSnackBar(title: EnumLocale.commonRequestFailed.tr, message: '[${error.code}] ${error.message ?? ''}');
-      },
     );
 
     if (response != null) {

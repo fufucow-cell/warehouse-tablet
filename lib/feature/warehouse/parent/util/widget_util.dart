@@ -106,7 +106,9 @@ class WidgetUtil {
           ),
       height: height ?? 70.0.scale,
       decoration: BoxDecoration(
-        color: isReadOnly ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
+        color: isReadOnly
+            ? EnumColor.backgroundSecondary.color
+            : EnumColor.backgroundDropdown.color,
         border: Border.all(
           width: 1.0.scale,
           color: EnumColor.lineBorder.color,
@@ -228,10 +230,15 @@ class WidgetUtil {
     );
   }
 
-  static Widget shimmerWidget({double width = double.infinity, double height = double.infinity, Widget? child, Color? highlightColor}) {
+  static Widget shimmerWidget(
+      {double width = double.infinity,
+      double height = double.infinity,
+      Widget? child,
+      Color? highlightColor}) {
     return Shimmer.fromColors(
       baseColor: EnumColor.backgroundLoadingBase.color,
-      highlightColor: highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
+      highlightColor:
+          highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
       child: child ??
           Container(
             height: height,
@@ -280,7 +287,8 @@ class WidgetUtil {
       ),
     );
 
-    return ClipRRect(borderRadius: BorderRadius.circular(20.0.scale), child: imageWidget);
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(20.0.scale), child: imageWidget);
   }
 
   static Widget emptyImage({
@@ -300,7 +308,8 @@ class WidgetUtil {
     );
   }
 
-  static Widget emptyWidget({double width = double.infinity, double height = double.infinity}) {
+  static Widget emptyWidget(
+      {double width = double.infinity, double height = double.infinity}) {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -358,14 +367,17 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
     final primaryFocus = FocusManager.instance.primaryFocus;
     final hasKeyboard = primaryFocus != null &&
         primaryFocus.context != null &&
-        (primaryFocus.context!.widget is TextField || primaryFocus.context!.findAncestorWidgetOfExactType<TextField>() != null);
+        (primaryFocus.context!.widget is TextField ||
+            primaryFocus.context!.findAncestorWidgetOfExactType<TextField>() !=
+                null);
 
     // 先调用 onMenuOpened（释放键盘）
     widget.onMenuOpened?.call();
 
     // 根据是否有键盘来设置延迟时间
     // 如果有键盘，延迟等待键盘消失动画完成；如果没有键盘，立即显示
-    final delayDuration = hasKeyboard ? const Duration(milliseconds: 400) : Duration.zero;
+    final delayDuration =
+        hasKeyboard ? const Duration(milliseconds: 400) : Duration.zero;
 
     Future.delayed(delayDuration, () {
       if (!mounted) {
@@ -373,7 +385,8 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
       }
 
       // 重新获取 button 的位置和大小（如果有键盘，键盘消失后位置会变化）
-      final RenderBox? renderBox = _buttonKey.currentContext?.findRenderObject() as RenderBox?;
+      final RenderBox? renderBox =
+          _buttonKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox == null) {
         return;
       }
@@ -412,14 +425,18 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+                color: isSelected
+                    ? EnumColor.menuBgFocused.color
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(12.0.scale),
               ),
               padding: EdgeInsets.all(16.0.scale),
               child: WidgetUtil.textWidget(
                 value,
                 size: textSize,
-                color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+                color: isSelected
+                    ? EnumColor.textPrimary.color
+                    : EnumColor.textSecondary.color,
               ),
             ),
           );
@@ -457,7 +474,9 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
         if (widget.buttonTextColor != null) {
           btnTextColor = widget.buttonTextColor!;
         } else {
-          if (widget.values.isEmpty || widget.selectedValue == null || !widget.values.contains(widget.selectedValue)) {
+          if (widget.values.isEmpty ||
+              widget.selectedValue == null ||
+              !widget.values.contains(widget.selectedValue)) {
             btnTextColor = EnumColor.textSecondary.color;
           } else {
             btnTextColor = EnumColor.textPrimary.color;
@@ -479,11 +498,15 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
             ),
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: widget.values.isEmpty ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
+              color: widget.values.isEmpty
+                  ? EnumColor.backgroundSecondary.color
+                  : EnumColor.backgroundDropdown.color,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.0.scale,
-                  color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
+                  color: _isMenuOpen
+                      ? EnumColor.lineProduct.color
+                      : EnumColor.lineBorder.color,
                 ),
                 borderRadius: BorderRadius.circular(16.0.scale),
               ),
@@ -495,7 +518,10 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
               children: [
                 Expanded(
                   child: WidgetUtil.textWidget(
-                    widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
+                    widget.selectedValue ??
+                        (widget.values.isEmpty
+                            ? EnumLocale.optionNoData.tr
+                            : EnumLocale.optionPleaseSelect.tr),
                     size: textSize,
                     color: btnTextColor,
                   ),
@@ -587,14 +613,18 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
           child: Container(
             width: double.infinity,
             decoration: BoxDecoration(
-              color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+              color: isSelected
+                  ? EnumColor.menuBgFocused.color
+                  : Colors.transparent,
               borderRadius: BorderRadius.circular(12.0.scale),
             ),
             padding: EdgeInsets.all(16.0.scale),
             child: WidgetUtil.textWidget(
               value,
               size: textSize,
-              color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+              color: isSelected
+                  ? EnumColor.textPrimary.color
+                  : EnumColor.textSecondary.color,
             ),
           ),
         );
@@ -609,7 +639,9 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
           shape: RoundedRectangleBorder(
             side: BorderSide(
               width: 1.0.scale,
-              color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
+              color: _isMenuOpen
+                  ? EnumColor.lineProduct.color
+                  : EnumColor.lineBorder.color,
             ),
             borderRadius: BorderRadius.circular(16.0.scale),
           ),
@@ -621,7 +653,10 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
           children: [
             Expanded(
               child: WidgetUtil.textWidget(
-                widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
+                widget.selectedValue ??
+                    (widget.values.isEmpty
+                        ? EnumLocale.optionNoData.tr
+                        : EnumLocale.optionPleaseSelect.tr),
                 size: textSize,
                 color: widget.buttonTextColor ?? EnumColor.textPrimary.color,
               ),
@@ -664,9 +699,10 @@ class _TextDropdownButtonAuto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 检测是否在弹窗中
-    final isInDialog = context.findAncestorWidgetOfExactType<Dialog>() != null ||
-        context.findAncestorWidgetOfExactType<AlertDialog>() != null ||
-        context.findAncestorWidgetOfExactType<SimpleDialog>() != null;
+    final isInDialog =
+        context.findAncestorWidgetOfExactType<Dialog>() != null ||
+            context.findAncestorWidgetOfExactType<AlertDialog>() != null ||
+            context.findAncestorWidgetOfExactType<SimpleDialog>() != null;
 
     if (isInDialog) {
       // 在弹窗中，使用 popupMenuButtonInDialog

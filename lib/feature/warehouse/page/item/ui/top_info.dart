@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_controller.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/category_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
@@ -43,7 +44,7 @@ class TopInfo extends StatelessWidget {
               TopInfoItem(
                 eImage: EnumImage.cMember,
                 title: EnumLocale.warehouseCategoryTotal.tr,
-                count: '${controller.getTotalCategoryCount()}',
+                count: '${CategoryUtil.getTotalCategoryCount()}',
                 isLoading: allCategories == null,
               ),
               TopInfoItem(
@@ -88,7 +89,11 @@ class TopInfoItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 32.0.scale),
-            SizedBox(width: 64.0.scale, height: 64.0.scale, child: eImage.image()),
+            SizedBox(
+              width: 64.0.scale,
+              height: 64.0.scale,
+              child: eImage.image(),
+            ),
             SizedBox(width: 32.0.scale),
             WidgetUtil.textWidget(
               title,

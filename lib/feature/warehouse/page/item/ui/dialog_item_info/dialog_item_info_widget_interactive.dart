@@ -5,7 +5,8 @@ enum EnumDialogItemInfoWidgetInteractive {
 }
 
 /// DialogItemInfoWidget 用户事件处理扩展
-extension DialogItemInfoWidgetUserEventExtension on DialogItemInfoWidgetController {
+extension DialogItemInfoWidgetUserEventExtension
+    on DialogItemInfoWidgetController {
   void interactive(
     EnumDialogItemInfoWidgetInteractive type, {
     dynamic data,

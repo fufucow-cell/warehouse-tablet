@@ -33,10 +33,14 @@ class DialogWithoutPhotoWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              EnumImage.cPhoto.image(size: Size.square(40.0.scale), color: EnumColor.iconSecondary.color),
+              EnumImage.cPhoto.image(
+                  size: Size.square(40.0.scale),
+                  color: EnumColor.iconSecondary.color),
               SizedBox(height: 16.0.scale),
               WidgetUtil.textWidget(
-                isError ? EnumLocale.warehousePhotoReadFailed.tr : EnumLocale.warehousePhotoTapToUpload.tr,
+                isError
+                    ? EnumLocale.warehousePhotoReadFailed.tr
+                    : EnumLocale.warehousePhotoTapToUpload.tr,
                 size: 22.0.scale,
                 color: EnumColor.textSecondary.color,
               ),

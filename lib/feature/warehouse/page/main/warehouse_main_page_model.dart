@@ -78,7 +78,7 @@ class WarehouseMainPageRouterData {
       theme: 'light',
       userAvatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858485.png',
       userRoleType: 0,
-      domain: 'http://127.0.0.1:8000/api/v1/warehouse/',
+      domain: 'http://192.168.31.159:8000/api/v1/warehouse/',
       environment: 'dev',
       accessToken:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzEwZTliNmEtNGEwOC00ZjUyLWEwNzEtZjIwMDFjMTRmZDIyIiwiZXhwIjoxNzY1NTI1NjkyLCJ0eXBlIjoiYWNjZXNzIn0.ygWKs1dgE085D-v7AH8QlowrOn_dPu-VlDW0t1fD-Bg',

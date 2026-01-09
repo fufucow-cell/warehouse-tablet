@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
@@ -110,9 +112,11 @@ class DialogItemEditNormalWidgetController extends GetxController {
 
     // 檢查所有字段是否都為 null（表示沒有變更）
     if (newName == null && newMinStockAlert == null && newDescription == null && newPhoto == null && newCategoryId == null) {
-      _service.showSnackBar(
-        title: EnumLocale.commonHint.tr,
-        message: EnumLocale.warehouseItemNoChange.tr,
+      unawaited(
+        _routerHandle(
+          EnumDialogItemEditNormalWidgetRoute.showErrorSnackBar,
+          data: EnumLocale.warehouseItemNoChange.tr,
+        ),
       );
       return null;
     }

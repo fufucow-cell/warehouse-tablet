@@ -11,28 +11,40 @@ class CabinetUtil {
     if (includeUnboundRoom) {
       return _service.getRoomCabinetInfos.map((room) => room.roomName).toList();
     } else {
-      return _service.getRoomCabinetInfos.where((room) => room.roomId.isNotEmpty).map((room) => room.roomName).toList();
+      return _service.getRoomCabinetInfos
+          .where((room) => room.roomId.isNotEmpty)
+          .map((room) => room.roomName)
+          .toList();
     }
   }
 
   // 扁平化所有櫥櫃
-  static List<CabinetInfo> flattenAllCabinets({bool includeUnboundRoom = false}) {
+  static List<CabinetInfo> flattenAllCabinets(
+      {bool includeUnboundRoom = false}) {
     if (includeUnboundRoom) {
-      return _service.getRoomCabinetInfos.expand<CabinetInfo>((room) => room.cabinets).toList();
+      return _service.getRoomCabinetInfos
+          .expand<CabinetInfo>((room) => room.cabinets)
+          .toList();
     } else {
-      return _service.getRoomCabinetInfos.where((room) => room.roomId.isNotEmpty).expand<CabinetInfo>((room) => room.cabinets).toList();
+      return _service.getRoomCabinetInfos
+          .where((room) => room.roomId.isNotEmpty)
+          .expand<CabinetInfo>((room) => room.cabinets)
+          .toList();
     }
   }
 
   // 指定房間下所有櫥櫃
-  static List<CabinetInfo> getAllCabinetsFromRoom({String? roomId, String? roomName}) {
+  static List<CabinetInfo> getAllCabinetsFromRoom(
+      {String? roomId, String? roomName}) {
     RoomCabinetInfo? roomCabinetInfos;
 
     if (roomName?.isNotEmpty ?? false) {
-      roomCabinetInfos = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
+      roomCabinetInfos = _service.getRoomCabinetInfos
+          .firstWhereOrNull((room) => room.roomName == roomName);
     }
 
-    roomCabinetInfos = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomId == (roomId ?? ''));
+    roomCabinetInfos = _service.getRoomCabinetInfos
+        .firstWhereOrNull((room) => room.roomId == (roomId ?? ''));
     return roomCabinetInfos?.cabinets ?? [];
   }
 
@@ -51,26 +63,37 @@ class CabinetUtil {
 
   // 比對房間
   static RoomCabinetInfo? getRoomByName(String? roomName) {
-    return _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
+    return _service.getRoomCabinetInfos
+        .firstWhereOrNull((room) => room.roomName == roomName);
   }
 
   // 比對櫃位
   static CabinetInfo? getCabinetByName(String? cabinetName) {
-    return flattenAllCabinets(includeUnboundRoom: true).firstWhereOrNull((cabinet) => cabinet.cabinetName == cabinetName);
+    return flattenAllCabinets(includeUnboundRoom: true)
+        .firstWhereOrNull((cabinet) => cabinet.cabinetName == cabinetName);
   }
 
   // 取得可顯示的櫃位名稱
-  static List<String> getVisibleCabinetNameList(String? roomName, {bool includeUnboundRoom = false}) {
-    if ((roomName?.isEmpty ?? true) || roomName == EnumLocale.optionPleaseSelectRoom.tr || roomName == EnumLocale.optionPleaseSelect.tr) {
-      return flattenAllCabinets(includeUnboundRoom: includeUnboundRoom).map((cabinet) => cabinet.cabinetName).toList();
+  static List<String> getVisibleCabinetNameList(String? roomName,
+      {bool includeUnboundRoom = false}) {
+    if ((roomName?.isEmpty ?? true) ||
+        roomName == EnumLocale.optionPleaseSelectRoom.tr ||
+        roomName == EnumLocale.optionPleaseSelect.tr) {
+      return flattenAllCabinets(includeUnboundRoom: includeUnboundRoom)
+          .map((cabinet) => cabinet.cabinetName)
+          .toList();
     }
 
-    final matchRoom = _service.getRoomCabinetInfos.firstWhereOrNull((room) => room.roomName == roomName);
-    final visibleCabinets = matchRoom?.cabinets.map((cabinet) => cabinet.cabinetName).toList() ?? [];
+    final matchRoom = _service.getRoomCabinetInfos
+        .firstWhereOrNull((room) => room.roomName == roomName);
+    final visibleCabinets =
+        matchRoom?.cabinets.map((cabinet) => cabinet.cabinetName).toList() ??
+            [];
     return visibleCabinets;
   }
 
-  static List<WarehouseNameIdModel> getCabinetsFromRoomNameId(WarehouseNameIdModel? room) {
+  static List<WarehouseNameIdModel> getCabinetsFromRoomNameId(
+      WarehouseNameIdModel? room) {
     if (room == null) {
       return flattenAllCabinets()
           .map(

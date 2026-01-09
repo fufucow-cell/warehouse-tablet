@@ -3,6 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/environment_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/error_map_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_smart_request_model/warehouse_item_create_smart_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_delete_request_model/warehouse_item_delete_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_normal_request_model/warehouse_item_edit_normal_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_position_request_model/warehouse_item_edit_position_request_model.dart';
@@ -28,6 +30,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item_category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/warehouse_item_response_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_smart_response_model/warehouse_item_smart_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
@@ -55,6 +58,7 @@ class WarehouseService {
   String get refreshToken => _model.refreshToken ?? '';
   int get userRoleType => _model.userRoleType ?? -1;
   String get getHouseholdId => _model.household?.id ?? '';
+  String get getLocaleCode => LocaleUtil.instance.getCurrentLocaleCode;
 
   // 搜尋條件
   DialogItemSearchOutputModel? get getSearchCondition => _model.searchCondition;
@@ -115,6 +119,11 @@ class WarehouseService {
     _model.rootContext = context;
   }
 
+  void addNewCategory(WarehouseNameIdModel category) {
+    final newCategory = Category(id: category.id!, name: category.name!);
+    _model.allCategories.value = [..._model.allCategories.value ?? [], newCategory];
+  }
+
   Future<T?> showAlert<T>(Widget dialog) async {
     final context = _model.rootContext;
 
@@ -133,6 +142,26 @@ class WarehouseService {
     _logService.showSnackBar(title: title, message: message ?? '');
   }
 
+  // 默认错误处理函数
+  void _defaultErrorHandler(BaseApiResponseModel<void> error) {
+    if (error.code == EnumErrorMap.code106.code) {
+      return;
+    }
+
+    showSnackBar(
+      title: EnumLocale.commonRequestFailed.tr,
+      message: '[${error.code}] ${error.message}',
+    );
+  }
+
+  // 默认成功处理函数
+  void _defaultSuccessHandler([String? message]) {
+    showSnackBar(
+      title: EnumLocale.commonSuccess.tr,
+      message: message ?? '',
+    );
+  }
+
   Future<String?> openCamera() async {
     return await DeviceUtil.instance.openCamera();
   }
@@ -141,7 +170,7 @@ class WarehouseService {
     return await DeviceUtil.instance.openGallery();
   }
 
-  Future<String?> compressImage(String imagePath, {int maxSide = 100}) async {
+  Future<String?> compressImage(String imagePath, {int maxSide = 200}) async {
     return await _themeService.compressImageFile(imagePath, maxSide: maxSide);
   }
 
@@ -325,109 +354,9 @@ class WarehouseService {
     return newItems;
   }
 
-  List<Category> flattenAllLevel2Categories() {
-    final result = <Category>[];
-
-    for (final cat in getAllCategories) {
-      if (cat.children?.isNotEmpty ?? false) {
-        result.addAll(cat.children!);
-      }
-    }
-
-    return result;
-  }
-
-  List<Category> flattenAllLevel3Categories() {
-    final result = <Category>[];
-
-    for (final cat in flattenAllLevel2Categories()) {
-      if (cat.children?.isNotEmpty ?? false) {
-        result.addAll(cat.children!);
-      }
-    }
-
-    return result;
-  }
-
   // 取得所有櫃位
   List<Cabinet> getAllCabinets() {
     return _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).toList() ?? [];
-  }
-
-  // MARK: - Item APIs
-
-  Future<List<Room>?> apiReqReadItems(
-    WarehouseItemRequestModel request, {
-    ApiErrorHandler? onError,
-  }) async {
-    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
-      EnumApiInfo.itemRead,
-      requestModel: request,
-      fromJson: WarehouseItemResponseModel.fromJson,
-      onError: onError,
-    );
-
-    if (response?.data != null && request.roomId == null && request.cabinetId == null && request.categoryId == null && request.itemId == null) {
-      _model.allRoomCabinetItems.value = response?.data;
-      _genAllCombineItems();
-    }
-
-    return response?.data;
-  }
-
-  Future<BaseApiResponseModel<void>?> apiReqCreateItem(
-    WarehouseItemCreateRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.itemCreate,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<BaseApiResponseModel<void>?> apiReqUpdateItemNormal(
-    WarehouseItemEditNormalRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.itemUpdateNormal,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<BaseApiResponseModel<void>?> apiReqUpdateItemPosition(
-    WarehouseItemEditPositionRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.itemUpdatePosition,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<BaseApiResponseModel<void>?> apiReqUpdateItemQuantity(
-    WarehouseItemEditQuantityRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.itemUpdateQuantity,
-      requestModel: request,
-      onError: onError,
-    );
-  }
-
-  Future<BaseApiResponseModel<void>?> apiReqDeleteItem(
-    WarehouseItemDeleteRequestModel request, {
-    ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
-      EnumApiInfo.itemDelete,
-      requestModel: request,
-      onError: onError,
-    );
   }
 
   void clearSearchCabinetId() {
@@ -450,6 +379,117 @@ class WarehouseService {
     _model.mainPageSelectedTabItem.value = item;
   }
 
+  // MARK: - Item APIs
+
+  Future<List<Room>?> apiReqReadItems(
+    WarehouseItemRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
+      EnumApiInfo.itemRead,
+      requestModel: request,
+      fromJson: WarehouseItemResponseModel.fromJson,
+      onError: onError ?? _defaultErrorHandler,
+    );
+
+    if (response?.data != null && request.roomId == null && request.cabinetId == null && request.categoryId == null && request.itemId == null) {
+      _model.allRoomCabinetItems.value = response?.data;
+      _genAllCombineItems();
+    }
+
+    return response?.data;
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqCreateItem(
+    WarehouseItemCreateRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.itemCreate,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseItemCreate.tr);
+    }
+    return result;
+  }
+
+  Future<WarehouseItemSmartResponseModel?> apiReqCreateItemSmart(
+    WarehouseItemCreateSmartRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<WarehouseItemSmartResponseModel?>(
+      EnumApiInfo.itemSmartCreate,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseImageRecognitionComplete.tr);
+    }
+    return result;
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemNormal(
+    WarehouseItemEditNormalRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.itemUpdateNormal,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseItemUpdateMessage.tr);
+    }
+    return result;
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemPosition(
+    WarehouseItemEditPositionRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.itemUpdatePosition,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseItemUpdateMessage.tr);
+    }
+    return result;
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqUpdateItemQuantity(
+    WarehouseItemEditQuantityRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.itemUpdateQuantity,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseItemUpdateMessage.tr);
+    }
+    return result;
+  }
+
+  Future<BaseApiResponseModel<void>?> apiReqDeleteItem(
+    WarehouseItemDeleteRequestModel request, {
+    ApiErrorHandler? onError,
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+      EnumApiInfo.itemDelete,
+      requestModel: request,
+      onError: onError ?? _defaultErrorHandler,
+    );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseItemDelete.tr);
+    }
+    return result;
+  }
+
   // MARK: - Cabinet APIs
 
   Future<List<Room>?> apiReqReadCabinets(
@@ -460,7 +500,7 @@ class WarehouseService {
       EnumApiInfo.cabinetRead,
       requestModel: request,
       fromJson: WarehouseItemResponseModel.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
 
     if (response?.data != null && request.roomId == null && request.cabinetId == null) {
@@ -474,35 +514,47 @@ class WarehouseService {
   Future<Cabinet?> apiReqCreateCabinet(
     WarehouseCabinetCreateRequestModel request, {
     ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<Cabinet?>(
+  }) async {
+    final result = await ApiUtil.sendRequest<Cabinet?>(
       EnumApiInfo.cabinetCreate,
       requestModel: request,
       fromJson: Cabinet.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCabinetCreate.tr);
+    }
+    return result;
   }
 
   Future<BaseApiResponseModel<void>?> apiReqUpdateCabinet(
     WarehouseCabinetUpdateRequestModel request, {
     ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.cabinetUpdate,
       requestModel: request,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCabinetUpdateMessage.tr);
+    }
+    return result;
   }
 
   Future<BaseApiResponseModel<void>?> apiReqDeleteCabinet(
     WarehouseCabinetDeleteRequestModel request, {
     ApiErrorHandler? onError,
-  }) {
-    return ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+  }) async {
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.cabinetDelete,
       requestModel: request,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCabinetDelete.tr);
+    }
+    return result;
   }
 
   // MARK: - Category APIs
@@ -511,12 +563,16 @@ class WarehouseService {
     WarehouseCategoryCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    return await ApiUtil.sendRequest<Category?>(
+    final result = await ApiUtil.sendRequest<Category?>(
       EnumApiInfo.categoryCreate,
       requestModel: request,
       fromJson: Category.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCategoryCreate.tr);
+    }
+    return result;
   }
 
   Future<List<Category>?> apiReqReadCategory(
@@ -527,7 +583,7 @@ class WarehouseService {
       EnumApiInfo.categoryRead,
       requestModel: request,
       fromJson: WarehouseCategoryResponseModel.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
 
     if (request.categoryId == null && response?.data != null) {
@@ -541,23 +597,31 @@ class WarehouseService {
     WarehouseCategoryUpdateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    return await ApiUtil.sendRequest<Category?>(
+    final result = await ApiUtil.sendRequest<Category?>(
       EnumApiInfo.categoryUpdate,
       requestModel: request,
       fromJson: Category.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCategoryUpdateMessage.tr);
+    }
+    return result;
   }
 
   Future<BaseApiResponseModel<void>?> apiReqDeleteCategory(
     WarehouseCategoryDeleteRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    return await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.categoryDelete,
       requestModel: request,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
+    if (result != null) {
+      _defaultSuccessHandler(EnumLocale.warehouseCategoryDelete.tr);
+    }
+    return result;
   }
 
   // MARK: - Log APIs
@@ -570,7 +634,7 @@ class WarehouseService {
       EnumApiInfo.recordRead,
       requestModel: request,
       fromJson: WarehouseRecordResponseModel.fromJson,
-      onError: onError,
+      onError: onError ?? _defaultErrorHandler,
     );
 
     if (response?.data != null && request.itemId == null) {

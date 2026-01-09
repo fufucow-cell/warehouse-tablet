@@ -11,5 +11,6 @@ class WarehouseItemDeleteRequestModel with _$WarehouseItemDeleteRequestModel {
     @JsonKey(name: 'user_name') String? userName,
   }) = _WarehouseItemDeleteRequestModel;
 
-  factory WarehouseItemDeleteRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemDeleteRequestModelFromJson(json);
+  factory WarehouseItemDeleteRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$WarehouseItemDeleteRequestModelFromJson(json);
 }

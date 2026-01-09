@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_create/dialog_item_create_widget_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/category_util.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_smart_request_model/warehouse_item_create_smart_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
@@ -21,6 +25,7 @@ class DialogItemCreateWidgetController extends GetxController {
   final quantityController = TextEditingController(text: '0');
   final minStockAlertController = TextEditingController(text: '0');
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
+  RxReadonly<bool> get isRecognizingRx => _model.isRecognizing.readonly;
   RxReadonly<int> get quantityRx => _model.quantity.readonly;
   RxReadonly<String?> get filePathRx => _model.filePath.readonly;
   RxReadonly<WarehouseNameIdModel?> get selectedRoomRx => _model.selectedRoom.readonly;
@@ -120,6 +125,7 @@ class DialogItemCreateWidgetController extends GetxController {
 
     if (filePath != null) {
       _model.filePath.value = filePath;
+      unawaited(_startRecognition());
     }
   }
 
@@ -223,5 +229,67 @@ class DialogItemCreateWidgetController extends GetxController {
   void _changeSelectedCategoryLevel3(String? categoryName) {
     final category = _model.visibleCategoryLevel3.value.firstWhereOrNull((cat) => cat.name == categoryName);
     _model.selectedCategoryLevel3.value = category != null ? WarehouseNameIdModel(id: category.id ?? '', name: category.name ?? '') : null;
+  }
+
+  Future<void> _startRecognition() async {
+    final imagePath = _model.filePath.value;
+    _model.isRecognizing.value = true;
+
+    if (imagePath == null) {
+      _model.isRecognizing.value = false;
+      return;
+    }
+
+    final compressedImagePath = await _service.compressImage(imagePath);
+
+    if (compressedImagePath == null) {
+      _model.isRecognizing.value = false;
+      return;
+    }
+
+    final base64Image = await _service.convertFileToBase64(compressedImagePath);
+
+    if (base64Image == null) {
+      _model.isRecognizing.value = false;
+      return;
+    }
+
+    final result = await _service.apiReqCreateItemSmart(
+      WarehouseItemCreateSmartRequestModel(
+        image: base64Image,
+        householdId: _service.getHouseholdId,
+        language: _service.getLocaleCode,
+        userName: _service.userName,
+      ),
+    );
+
+    if (result != null) {
+      nameController.text = result.name ?? nameController.text;
+      descriptionController.text = result.description ?? descriptionController.text;
+
+      if ((result.categoryId?.isNotEmpty ?? false) && (result.category?.isNotEmpty ?? false)) {
+        if (result.isNewCategory ?? false) {
+          _service.addNewCategory(WarehouseNameIdModel(id: result.categoryId ?? '', name: result.category ?? ''));
+        }
+
+        final categories = CategoryUtil.findCategoryLevelsById(result.categoryId ?? '');
+
+        if (categories.isNotEmpty) {
+          _model.selectedCategoryLevel1.value = categories.first;
+          _genCategoryLevel2List();
+
+          if (categories.length >= 2) {
+            _model.selectedCategoryLevel2.value = categories[1];
+            _genCategoryLevel3List();
+
+            if (categories.length >= 3) {
+              _model.selectedCategoryLevel3.value = categories[2];
+            }
+          }
+        }
+      }
+    }
+
+    _model.isRecognizing.value = false;
   }
 }

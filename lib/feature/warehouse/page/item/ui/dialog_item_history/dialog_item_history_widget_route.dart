@@ -4,13 +4,15 @@ enum EnumDialogItemHistoryWidgetRoute {
   showDialogInfo,
 }
 
-extension DialogItemHistoryWidgetRouteExtension on DialogItemHistoryWidgetController {
+extension DialogItemHistoryWidgetRouteExtension
+    on DialogItemHistoryWidgetController {
   void _routerHandle(EnumDialogItemHistoryWidgetRoute type, dynamic data) {
     switch (type) {
       case EnumDialogItemHistoryWidgetRoute.showDialogInfo:
         if (data is BuildContext) {
           Navigator.of(data).pop();
-          _service.showAlert(DialogItemInfoWidget(itemId: _model.combineItem!.id!));
+          _service
+              .showAlert(DialogItemInfoWidget(itemId: _model.combineItem!.id!));
         }
     }
   }

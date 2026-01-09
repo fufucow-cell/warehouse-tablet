@@ -42,7 +42,8 @@ class DialogCabinetEditWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCabinetEditWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -110,7 +111,8 @@ class _CabinetListField extends StatelessWidget {
                   return Column(
                     children: [
                       _CabinetField(editModel: model),
-                      if (index < editModels.length - 1) SizedBox(height: 12.0.scale),
+                      if (index < editModels.length - 1)
+                        SizedBox(height: 12.0.scale),
                     ],
                   );
                 },
@@ -147,7 +149,10 @@ class _CabinetField extends StatelessWidget {
                 child: WidgetUtil.textField(
                   textColor: isDelete ? EnumColor.textSecondary.color : null,
                   isReadOnly: isDelete,
-                  controller: isDelete ? TextEditingController(text: EnumLocale.editCabinetWillDelete.tr) : editModel.textController,
+                  controller: isDelete
+                      ? TextEditingController(
+                          text: EnumLocale.editCabinetWillDelete.tr)
+                      : editModel.textController,
                 ),
               ),
             ),
@@ -166,10 +171,12 @@ class _CabinetField extends StatelessWidget {
                       title: EnumLocale.editCabinetMoveToNewRoom.tr,
                       child: WidgetUtil.textDropdownButton(
                         selectedValue: editModel.newRoom?.name,
-                        values: controller.getRoomNameList(isExcludeOldRoomName: true),
+                        values: controller.getRoomNameList(
+                            isExcludeOldRoomName: true),
                         onValueSelected: (value) => controller.interactive(
                           EnumDialogCabinetEditWidgetInteractive.tapRoomButton,
-                          data: ChangeRoomModel(editModel: editModel, newRoomName: value),
+                          data: ChangeRoomModel(
+                              editModel: editModel, newRoomName: value),
                         ),
                       ),
                     ),
@@ -198,12 +205,16 @@ class _ActionTool extends StatelessWidget {
       children: [
         _ActionButton(
           eImage: isExpanded ? EnumImage.cArrowUp2 : EnumImage.cArrowDown2,
-          onTap: () => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapExpandButton, data: editModel),
+          onTap: () => controller.interactive(
+              EnumDialogCabinetEditWidgetInteractive.tapExpandButton,
+              data: editModel),
         ),
         SizedBox(width: 12.0.scale),
         _ActionButton(
           eImage: isDelete ? EnumImage.cRecover : EnumImage.cTrash3,
-          onTap: () => controller.interactive(EnumDialogCabinetEditWidgetInteractive.tapDeleteButton, data: editModel),
+          onTap: () => controller.interactive(
+              EnumDialogCabinetEditWidgetInteractive.tapDeleteButton,
+              data: editModel),
         ),
       ],
     );

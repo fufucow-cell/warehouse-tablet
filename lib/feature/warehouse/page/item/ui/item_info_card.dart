@@ -38,7 +38,9 @@ class ItemInfoCard extends StatelessWidget {
           ),
           SizedBox(height: 24.0.scale),
           _InfoRow(
-            label: isHistory ? EnumLocale.warehouseRecordCount.tr : EnumLocale.warehouseCurrentQuantityLabel.tr,
+            label: isHistory
+                ? EnumLocale.warehouseRecordCount.tr
+                : EnumLocale.warehouseCurrentQuantityLabel.tr,
             value: count.toString(),
             fontSize: 28.0.scale,
           ),

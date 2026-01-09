@@ -13,5 +13,6 @@ class WarehouseItemRequestModel with _$WarehouseItemRequestModel {
     @JsonKey(name: 'household_id') String? householdId,
   }) = _WarehouseItemRequestModel;
 
-  factory WarehouseItemRequestModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemRequestModelFromJson(json);
+  factory WarehouseItemRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$WarehouseItemRequestModelFromJson(json);
 }

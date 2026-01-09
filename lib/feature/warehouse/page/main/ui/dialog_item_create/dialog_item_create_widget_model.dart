@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 class DialogItemCreateWidgetModel {
   final isLoading = false.obs;
+  final isRecognizing = false.obs;
   final name = ''.obs;
   final description = ''.obs;
   final quantity = 0.obs;

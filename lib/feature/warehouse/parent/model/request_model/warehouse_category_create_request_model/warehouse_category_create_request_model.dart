@@ -4,7 +4,8 @@ part 'warehouse_category_create_request_model.freezed.dart';
 part 'warehouse_category_create_request_model.g.dart';
 
 @freezed
-class WarehouseCategoryCreateRequestModel with _$WarehouseCategoryCreateRequestModel {
+class WarehouseCategoryCreateRequestModel
+    with _$WarehouseCategoryCreateRequestModel {
   factory WarehouseCategoryCreateRequestModel({
     required String name,
     @JsonKey(name: 'household_id') required String householdId,

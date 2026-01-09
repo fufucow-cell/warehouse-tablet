@@ -25,7 +25,8 @@ class EnvironmentUtil extends GetxService {
 
   // MARK: - Init
 
-  EnvironmentUtil._internal({EnumEnvironment? environment}) : _currentEnvironment = (environment ?? EnumEnvironment.prd).obs;
+  EnvironmentUtil._internal({EnumEnvironment? environment})
+      : _currentEnvironment = (environment ?? EnumEnvironment.prd).obs;
 
   // MARK: - Public Method
 

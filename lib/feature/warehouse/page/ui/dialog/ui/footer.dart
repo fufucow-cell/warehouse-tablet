@@ -267,12 +267,15 @@ class _DeleteButton extends StatelessWidget {
       onPressed: isDisabled ? null : onPressed,
       side: BorderSide(
         width: 2.0.scale,
-        color: isDisabled ? EnumColor.lineBorder.color : EnumColor.accentRed.color,
+        color:
+            isDisabled ? EnumColor.lineBorder.color : EnumColor.accentRed.color,
       ),
       child: WidgetUtil.textWidget(
         EnumLocale.warehouseOperateTypeDelete.tr,
         size: 26.0.scale,
-        color: isDisabled ? EnumColor.textSecondary.color : EnumColor.accentRed.color,
+        color: isDisabled
+            ? EnumColor.textSecondary.color
+            : EnumColor.accentRed.color,
       ),
     );
   }

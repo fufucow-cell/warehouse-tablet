@@ -14,7 +14,8 @@ part 'dialog_item_edit_quantity_widget_route.dart';
 class DialogItemEditQuantityWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogItemEditQuantityWidgetModel _model = DialogItemEditQuantityWidgetModel();
+  final DialogItemEditQuantityWidgetModel _model =
+      DialogItemEditQuantityWidgetModel();
   final _service = WarehouseService.instance;
   String get getItemName => _model.combineItem?.name ?? '';
   int get getOldQuantity => _model.combineItem?.quantity ?? 0;
@@ -23,13 +24,18 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   List<ItemPositionModel> get getNewPositions => _model.newPositions.value;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<int> get newQuantityRx => _model.newQuantity.readonly;
-  RxReadonly<List<ItemPositionModel>> get newPositionsRx => _model.newPositions.readonly;
+  RxReadonly<List<ItemPositionModel>> get newPositionsRx =>
+      _model.newPositions.readonly;
   final List<TextEditingController> quantityControllers = [];
   List<String> get getRoomNameList => CabinetUtil.getRoomNameList();
-  List<CabinetInfo> get getFlattenAllCabinets => CabinetUtil.flattenAllCabinets();
-  RoomCabinetInfo? getRoomByName(String? roomName) => CabinetUtil.getRoomByName(roomName);
-  CabinetInfo? getCabinetByName(String? cabinetName) => CabinetUtil.getCabinetByName(cabinetName);
-  List<String> getVisibleCabinetNameList(String? roomName) => CabinetUtil.getVisibleCabinetNameList(
+  List<CabinetInfo> get getFlattenAllCabinets =>
+      CabinetUtil.flattenAllCabinets();
+  RoomCabinetInfo? getRoomByName(String? roomName) =>
+      CabinetUtil.getRoomByName(roomName);
+  CabinetInfo? getCabinetByName(String? cabinetName) =>
+      CabinetUtil.getCabinetByName(cabinetName);
+  List<String> getVisibleCabinetNameList(String? roomName) =>
+      CabinetUtil.getVisibleCabinetNameList(
         roomName,
         includeUnboundRoom: true,
       );
@@ -70,11 +76,15 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     final cabinetCount = getFlattenAllCabinets.length;
     final model = ItemPositionModel(
       roomId: '',
-      roomName: roomCount > 0 ? EnumLocale.optionPleaseSelectRoom.tr : EnumLocale.optionNoData.tr,
+      roomName: roomCount > 0
+          ? EnumLocale.optionPleaseSelectRoom.tr
+          : EnumLocale.optionNoData.tr,
       cabinets: [
         ItemPositionCabinetModel(
           id: '',
-          name: cabinetCount > 0 ? EnumLocale.optionPleaseSelectCabinet.tr : EnumLocale.optionNoData.tr,
+          name: cabinetCount > 0
+              ? EnumLocale.optionPleaseSelectCabinet.tr
+              : EnumLocale.optionNoData.tr,
           quantity: 1,
         ),
       ],
@@ -103,7 +113,9 @@ class DialogItemEditQuantityWidgetController extends GetxController {
           cabinets: [
             ItemPositionCabinetModel(
               id: '',
-              name: cabinetCount > 0 ? EnumLocale.optionPleaseSelectCabinet.tr : EnumLocale.optionNoData.tr,
+              name: cabinetCount > 0
+                  ? EnumLocale.optionPleaseSelectCabinet.tr
+                  : EnumLocale.optionNoData.tr,
               quantity: 1,
             ),
           ],
@@ -146,7 +158,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   ) {
     final newList = List<ItemPositionModel>.from(_model.newPositions.value);
 
-    if (positionIndex < newList.length && cabinetIndex < newList[positionIndex].cabinets.length) {
+    if (positionIndex < newList.length &&
+        cabinetIndex < newList[positionIndex].cabinets.length) {
       final position = newList[positionIndex];
       final cabinets = List<ItemPositionCabinetModel>.from(position.cabinets);
       cabinets[cabinetIndex] = ItemPositionCabinetModel(
@@ -170,7 +183,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   ) {
     final oldList = List<ItemPositionModel>.from(_model.oldPositions ?? []);
 
-    if (positionIndex < oldList.length && cabinetIndex < oldList[positionIndex].cabinets.length) {
+    if (positionIndex < oldList.length &&
+        cabinetIndex < oldList[positionIndex].cabinets.length) {
       final position = oldList[positionIndex];
       final cabinets = List<ItemPositionCabinetModel>.from(position.cabinets);
       cabinets[cabinetIndex] = ItemPositionCabinetModel(
@@ -235,11 +249,18 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
   List<DialogItemEditQuantityOutputModel>? checkOutputData() {
     final outputData = <DialogItemEditQuantityOutputModel>[];
-    final oldCabinets = getOldPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
-    final newCabinets = getNewPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
+    final oldCabinets = getOldPositions
+        .expand<ItemPositionCabinetModel>((position) => position.cabinets)
+        .toList();
+    final newCabinets = getNewPositions
+        .expand<ItemPositionCabinetModel>((position) => position.cabinets)
+        .toList();
 
     // 取得所有 oldCabinets 的 ID 集合
-    final oldCabinetIds = oldCabinets.map((cabinet) => cabinet.id).where((id) => id.isNotEmpty).toSet();
+    final oldCabinetIds = oldCabinets
+        .map((cabinet) => cabinet.id)
+        .where((id) => id.isNotEmpty)
+        .toSet();
 
     // 找出第一個重複的 cabinet name
     final duplicateCabinet = newCabinets.firstWhereOrNull(
@@ -258,7 +279,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     // 處理 oldCabinets：如果 quantity 與 textfield 的 quantity 一樣，代表沒變，所以不用加到 outputData 內
     for (int i = 0; i < oldCabinets.length; i++) {
       final cabinet = oldCabinets[i];
-      final textFieldQuantity = int.tryParse(quantityControllers[i].text.trim()) ?? 0;
+      final textFieldQuantity =
+          int.tryParse(quantityControllers[i].text.trim()) ?? 0;
       final originalQuantity = cabinet.quantity;
 
       // 如果 quantity 有變化，才加入 outputData
@@ -276,7 +298,9 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     final oldCabinetsCount = oldCabinets.length;
     for (int i = 0; i < newCabinets.length; i++) {
       final cabinet = newCabinets[i];
-      final textFieldQuantity = int.tryParse(quantityControllers[oldCabinetsCount + i].text.trim()) ?? 0;
+      final textFieldQuantity =
+          int.tryParse(quantityControllers[oldCabinetsCount + i].text.trim()) ??
+              0;
 
       // 如果 quantity 不為 0，才加入 outputData
       if (textFieldQuantity > 0) {
@@ -295,7 +319,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
   // MARK: - Private Methods
 
   void _loadData() {
-    final item = _service.getAllCombineItems.firstWhereOrNull((item) => item.id == _model.itemId);
+    final item = _service.getAllCombineItems
+        .firstWhereOrNull((item) => item.id == _model.itemId);
 
     if (item == null) {
       return;
@@ -311,7 +336,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
     final displayList = getOldDisplayPositionList;
     for (var i = 0; i < displayList.length; i++) {
-      final controller = TextEditingController(text: displayList[i].quantity.toString());
+      final controller =
+          TextEditingController(text: displayList[i].quantity.toString());
       quantityControllers.add(controller);
       _listen(controller);
     }
