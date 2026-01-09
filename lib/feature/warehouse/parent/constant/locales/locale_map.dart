@@ -143,7 +143,7 @@ enum EnumLocale {
   warehouseEntityTypePosition,
   warehouseFilterDateLastWeek,
   warehouseFilterDateToday,
-  warehouseImageRecognitionComplete,
+  warehouseImageRecognizing,
   warehouseItemClickToViewRecord,
   warehouseItemCollapse,
   warehouseItemCreate,

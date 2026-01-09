@@ -25,31 +25,26 @@ class ItemList extends StatelessWidget {
               return WidgetUtil.emptyWidget();
             }
 
-            return GridView.builder(
+            final itemCount = isLoading ? 3 : items.length;
+
+            return WidgetUtil.customGridView(
+              itemCount: itemCount,
+              itemBuilder: (context, index) {
+                return isLoading
+                    ? WidgetUtil.shimmerWidget()
+                    : _ItemCard(
+                        item: items[index],
+                      );
+              },
+              crossAxisCount: 3,
               padding: EdgeInsets.only(
-                left: 16.0.scale, // blurRadius for shadow
-                right: 16.0.scale, // blurRadius for shadow
-                top: 16.0.scale, // blurRadius for shadow
+                left: 16.0.scale,
+                right: 16.0.scale,
+                top: 16.0.scale,
                 bottom: 40.0.scale,
               ),
-              physics: const ClampingScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 32.0.scale,
-                mainAxisSpacing: 32.0.scale,
-                childAspectRatio: 524 / 724,
-              ),
-              itemCount: isLoading ? 3 : items.length,
-              itemBuilder: (context, index) {
-                if (isLoading) {
-                  return WidgetUtil.shimmerWidget();
-                }
-
-                final item = items[index];
-                return _ItemCard(
-                  item: item,
-                );
-              },
+              crossAxisSpacing: 32.0.scale,
+              mainAxisSpacing: 32.0.scale,
             );
           },
         );

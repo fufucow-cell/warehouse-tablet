@@ -121,7 +121,8 @@ class DialogItemCreateWidgetController extends GetxController {
 
   // 開啟相機
   Future<void> _openCamera() async {
-    final filePath = await _service.openCamera();
+    // final filePath = await _service.openCamera();
+    final filePath = await _service.openGallery();
 
     if (filePath != null) {
       _model.filePath.value = filePath;
@@ -270,6 +271,9 @@ class DialogItemCreateWidgetController extends GetxController {
       if ((result.categoryId?.isNotEmpty ?? false) && (result.category?.isNotEmpty ?? false)) {
         if (result.isNewCategory ?? false) {
           _service.addNewCategory(WarehouseNameIdModel(id: result.categoryId ?? '', name: result.category ?? ''));
+          final newCategories = List<Category>.from(_model.visibleCategoryLevel1.value);
+          newCategories.add(Category(id: result.categoryId ?? '', name: result.category ?? ''));
+          _model.visibleCategoryLevel1.value = newCategories;
         }
 
         final categories = CategoryUtil.findCategoryLevelsById(result.categoryId ?? '');

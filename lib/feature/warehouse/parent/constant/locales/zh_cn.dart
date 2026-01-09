@@ -34,8 +34,7 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子类别数量',
   'warehouseCategoryCount': '分类量',
-  'warehouseCategoryTotalCount':
-      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount': '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名称',
   'warehouseAlarmBelowStockLevel': '低于库存水位',
@@ -130,7 +129,6 @@ const Map<String, String> zhTW = {
   'deviceTablet': '平板设备',
   'deviceUnsupported': '不支持的装置',
   'deviceUnsupportedMessage': '此应用程序不支持您的装置类型',
-
   'environmentDev': '开发环境',
   'environmentStg': '测试环境',
   'environmentUat': '预发布环境',
@@ -185,9 +183,8 @@ const Map<String, String> zhTW = {
   'languageSystem': '系统',
   'successUpdate': '更新成功',
   'errorUnknown': '未知错误',
-
   'warehouseItemCreate': '新增物品',
-  'warehouseImageRecognitionComplete': '图片辨识完成',
+  'warehouseImageRecognizing': '辨识中',
   'warehouseItemUpdateMessage': '更新物品',
   'warehouseItemDelete': '删除物品',
   'warehouseCabinetCreate': '新增柜位',

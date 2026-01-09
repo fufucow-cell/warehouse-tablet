@@ -12,6 +12,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/text_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
@@ -31,47 +32,52 @@ class DialogItemCreateWidget extends StatelessWidget {
         return Obx(
           () {
             final isLoading = controller.isLoadingRx.value;
+            final isRecognizing = controller.isRecognizingRx.value;
 
-            return DialogFrame(
-              width: 962.0.scale,
-              minHeight: 1024.0.scale,
-              header: DialogHeader(title: EnumLocale.createItem.tr),
-              footer: DialogFooter(
-                type: DialogFooterType.cancelAndConfirm,
-                isLoading: isLoading,
-                onCancel: () {
-                  controller.interactive(
-                    EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton,
-                    data: context,
-                  );
-                },
-                onConfirm: () async {
-                  controller.interactive(
-                    EnumDialogItemCreateWidgetInteractive
-                        .tapDialogConfirmButton,
-                    data: true,
-                  );
-                  final outputModel = await controller.checkOutputModel();
+            return AbsorbPointer(
+              absorbing: isRecognizing,
+              child: DialogFrame(
+                width: 962.0.scale,
+                minHeight: 1024.0.scale,
+                header: DialogHeader(title: EnumLocale.createItem.tr),
+                footer: DialogFooter(
+                  type: DialogFooterType.cancelAndConfirm,
+                  isLoading: isLoading,
+                  onCancel: isRecognizing
+                      ? null
+                      : () {
+                          controller.interactive(
+                            EnumDialogItemCreateWidgetInteractive.tapDialogCancelButton,
+                            data: context,
+                          );
+                        },
+                  onConfirm: isRecognizing
+                      ? null
+                      : () async {
+                          controller.interactive(
+                            EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                            data: true,
+                          );
+                          final outputModel = await controller.checkOutputModel();
 
-                  if (outputModel == null) {
-                    controller.interactive(
-                      EnumDialogItemCreateWidgetInteractive
-                          .tapDialogConfirmButton,
-                      data: false,
-                    );
-                    return;
-                  }
+                          if (outputModel == null) {
+                            controller.interactive(
+                              EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                              data: false,
+                            );
+                            return;
+                          }
 
-                  final isSuccess = await onConfirm(outputModel);
+                          final isSuccess = await onConfirm(outputModel);
 
-                  controller.interactive(
-                    EnumDialogItemCreateWidgetInteractive
-                        .tapDialogConfirmButton,
-                    data: isSuccess ? context : false,
-                  );
-                },
+                          controller.interactive(
+                            EnumDialogItemCreateWidgetInteractive.tapDialogConfirmButton,
+                            data: isSuccess ? context : false,
+                          );
+                        },
+                ),
+                child: const _Body(),
               ),
-              child: const _Body(),
             );
           },
         );
@@ -154,12 +160,9 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null
-                      ? EnumLocale.category.tr
-                      : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
-                  visibleValues:
-                      visibleLevel1.map((e) => e.name ?? '').toList(),
+                  visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
                     EnumDialogItemCreateWidgetInteractive.tapCategoryLevel1,
                     data: str,
@@ -170,8 +173,7 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel2Category.tr,
                     selectedValue: selectedLevel2?.name,
-                    visibleValues:
-                        visibleLevel2.map((cat) => cat.name ?? '').toList(),
+                    visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemCreateWidgetInteractive.tapCategoryLevel2,
                       data: str,
@@ -183,8 +185,7 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel3Category.tr,
                     selectedValue: selectedLevel3?.name,
-                    visibleValues:
-                        visibleLevel3.map((cat) => cat.name ?? '').toList(),
+                    visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
                       EnumDialogItemCreateWidgetInteractive.tapCategoryLevel3,
                       data: str,
@@ -206,8 +207,7 @@ class _SmartAddButton extends StatelessWidget {
     final controller = Get.find<DialogItemCreateWidgetController>();
 
     return OutlinedButton(
-      onPressed: () => controller
-          .interactive(EnumDialogItemCreateWidgetInteractive.tapSmartAddButton),
+      onPressed: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.tapSmartAddButton),
       style: OutlinedButton.styleFrom(
         padding: EdgeInsets.symmetric(
           vertical: 16.0.scale,
@@ -255,13 +255,11 @@ class _PhotoSection extends StatelessWidget {
             onReplacePhoto: () => controller.interactive(
               EnumDialogItemCreateWidgetInteractive.replacePhoto,
             ),
-            onDeletePhoto: () => controller
-                .interactive(EnumDialogItemCreateWidgetInteractive.deletePhoto),
+            onDeletePhoto: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.deletePhoto),
           );
         } else {
           return DialogWithoutPhotoWidget(
-            onTap: () => controller
-                .interactive(EnumDialogItemCreateWidgetInteractive.tapPhoto),
+            onTap: () => controller.interactive(EnumDialogItemCreateWidgetInteractive.tapPhoto),
           );
         }
       },
@@ -275,13 +273,22 @@ class _NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemCreateWidgetController>();
-    return DialogSectionWidget(
-      isRequired: true,
-      title: EnumLocale.createItemName.tr,
-      child: WidgetUtil.textField(
-        controller: controller.nameController,
-        maxLength: 100,
-      ),
+    return Obx(
+      () {
+        final isRecognizing = controller.isRecognizingRx.value;
+        return DialogSectionWidget(
+          isRequired: true,
+          title: EnumLocale.createItemName.tr,
+          child: isRecognizing
+              ? TextFieldShimmerWidget(
+                  '${EnumLocale.warehouseImageRecognizing.tr}...',
+                )
+              : WidgetUtil.textField(
+                  controller: controller.nameController,
+                  maxLength: 100,
+                ),
+        );
+      },
     );
   }
 }
@@ -292,16 +299,25 @@ class _DescriptionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemCreateWidgetController>();
-    return DialogSectionWidget(
-      title: EnumLocale.warehouseDescriptionLabel.tr,
-      child: WidgetUtil.textField(
-        height: 197.0.scale,
-        controller: controller.descriptionController,
-        keyboardType: TextInputType.multiline,
-        maxLength: 200,
-        expands: true,
-        textAlignVertical: TextAlignVertical.top,
-      ),
+    return Obx(
+      () {
+        final isRecognizing = controller.isRecognizingRx.value;
+        return DialogSectionWidget(
+          title: EnumLocale.warehouseDescriptionLabel.tr,
+          child: isRecognizing
+              ? TextFieldShimmerWidget(
+                  '${EnumLocale.warehouseImageRecognizing.tr}...',
+                )
+              : WidgetUtil.textField(
+                  height: 197.0.scale,
+                  controller: controller.descriptionController,
+                  keyboardType: TextInputType.multiline,
+                  maxLength: 200,
+                  expands: true,
+                  textAlignVertical: TextAlignVertical.top,
+                ),
+        );
+      },
     );
   }
 }
@@ -422,8 +438,7 @@ class _DropdownField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor:
-            selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(

@@ -71,7 +71,7 @@ class WarehouseService {
   List<RoomCabinetInfo> get getRoomCabinetInfos => _model.roomCabinetInfos;
   // 分類
   RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
-  List<Category> get getAllCategories => allCategoriesRx.value ?? <Category>[];
+  List<Category> get getAllCategories => _model.allCategories.value ?? <Category>[];
 
   // 物品
   List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
@@ -120,8 +120,9 @@ class WarehouseService {
   }
 
   void addNewCategory(WarehouseNameIdModel category) {
-    final newCategory = Category(id: category.id!, name: category.name!);
-    _model.allCategories.value = [..._model.allCategories.value ?? [], newCategory];
+    final newCategories = List<Category>.from(_model.allCategories.value ?? []);
+    newCategories.add(Category(id: category.id!, name: category.name!));
+    _model.allCategories.value = newCategories;
   }
 
   Future<T?> showAlert<T>(Widget dialog) async {
@@ -422,10 +423,11 @@ class WarehouseService {
     final result = await ApiUtil.sendRequest<WarehouseItemSmartResponseModel?>(
       EnumApiInfo.itemSmartCreate,
       requestModel: request,
+      fromJson: WarehouseItemSmartResponseModel.fromJson,
       onError: onError ?? _defaultErrorHandler,
     );
     if (result != null) {
-      _defaultSuccessHandler(EnumLocale.warehouseImageRecognitionComplete.tr);
+      _defaultSuccessHandler(EnumLocale.warehouseItemCreate.tr);
     }
     return result;
   }

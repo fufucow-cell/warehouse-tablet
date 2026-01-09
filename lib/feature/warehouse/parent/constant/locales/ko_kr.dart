@@ -34,8 +34,7 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '새로고침',
   'warehouseSubCategoryCount': '하위 카테고리 수',
   'warehouseCategoryCount': '카테고리 수',
-  'warehouseCategoryTotalCount':
-      '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
+  'warehouseCategoryTotalCount': '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
   'warehouseAlarmProductPhoto': '상품 사진',
   'warehouseAlarmProductName': '상품명',
   'warehouseAlarmBelowStockLevel': '재고 수위 이하',
@@ -49,16 +48,13 @@ const Map<String, String> zhTW = {
   'searchClearResult': '검색 결과 지우기',
   'searchResultCount': '검색 결과: @para1 개',
   'editCabinetTitle': '캐비닛 편집',
-  'editCabinetDeleteMultipleMessage':
-      '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'editCabinetDeleteMultipleMessage': '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'editCabinetMoveToNewRoom': '새 방으로 이동',
   'editCabinetRoomName': '방 이름',
   'editCabinetWillDelete': '이 캐비닛은 삭제됩니다',
   'createCategoryCurrentCategory': '현재 카테고리: @para1',
-  'deleteCategoryMessageNoChildren':
-      '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
-  'deleteCategoryMessageWithChildren':
-      '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageNoChildren': '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageWithChildren': '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'deleteItemMessage': '이 항목을 삭제하시겠습니까?',
   'editCategoryTitle': '카테고리 편집',
   'editCategoryMaxLevelReached': '최대 계층 수에 도달했습니다',
@@ -102,8 +98,7 @@ const Map<String, String> zhTW = {
   'warehouseRemoveItemFromCabinet': '@para1에서 @para2 제거',
   'warehouseMoveQuantityInsufficient': '이동 수량 부족',
   'warehouseMoveToSameCabinet': '같은 캐비닛으로 이동할 수 없습니다',
-  'warehouseDeleteCabinetItemMustMoveFirst':
-      '캐비닛 항목을 삭제하려면 먼저 항목을 다른 캐비닛으로 이동해야 합니다',
+  'warehouseDeleteCabinetItemMustMoveFirst': '캐비닛 항목을 삭제하려면 먼저 항목을 다른 캐비닛으로 이동해야 합니다',
   'warehouseAdjustQuantity': '수량 조정',
   'warehouseNameUpdate': '이름 업데이트: @para1 -> @para2',
   'warehouseDescriptionUpdate': '설명 업데이트: @para1 -> @para2',
@@ -134,7 +129,6 @@ const Map<String, String> zhTW = {
   'deviceTablet': '태블릿 기기',
   'deviceUnsupported': '지원되지 않는 장치',
   'deviceUnsupportedMessage': '이 애플리케이션은 사용자의 장치 유형을 지원하지 않습니다',
-
   'environmentDev': '개발 환경',
   'environmentStg': '스테이징 환경',
   'environmentUat': 'UAT 환경',
@@ -189,9 +183,8 @@ const Map<String, String> zhTW = {
   'languageSystem': '시스템',
   'successUpdate': '업데이트 성공',
   'errorUnknown': '알 수 없는 오류',
-
   'warehouseItemCreate': '항목 추가',
-  'warehouseImageRecognitionComplete': '이미지 인식 완료',
+  'warehouseImageRecognizing': '인식 중',
   'warehouseItemUpdateMessage': '항목 업데이트',
   'warehouseItemDelete': '항목 삭제',
   'warehouseCabinetCreate': '캐비닛 추가',

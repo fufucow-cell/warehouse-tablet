@@ -34,8 +34,7 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '更新',
   'warehouseSubCategoryCount': 'サブカテゴリ数',
   'warehouseCategoryCount': 'カテゴリ数',
-  'warehouseCategoryTotalCount':
-      '第1階分類: @para1 件, 第2階分類: @para2 件, 第3階分類: @para3 件',
+  'warehouseCategoryTotalCount': '第1階分類: @para1 件, 第2階分類: @para2 件, 第3階分類: @para3 件',
   'warehouseAlarmProductPhoto': '商品写真',
   'warehouseAlarmProductName': '商品名',
   'warehouseAlarmBelowStockLevel': '在庫水位以下',
@@ -49,16 +48,13 @@ const Map<String, String> zhTW = {
   'searchClearResult': '検索結果をクリア',
   'searchResultCount': '検索結果: @para1 件',
   'editCabinetTitle': 'キャビネット編集',
-  'editCabinetDeleteMultipleMessage':
-      '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
+  'editCabinetDeleteMultipleMessage': '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'editCabinetMoveToNewRoom': '新しい部屋に移動',
   'editCabinetRoomName': '部屋名',
   'editCabinetWillDelete': 'このキャビネットは削除されます',
   'createCategoryCurrentCategory': '現在のカテゴリ: @para1',
-  'deleteCategoryMessageNoChildren':
-      'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
-  'deleteCategoryMessageWithChildren':
-      'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageNoChildren': 'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageWithChildren': 'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
   'deleteItemMessage': 'このアイテムを削除してもよろしいですか？',
   'editCategoryTitle': 'カテゴリ編集',
   'editCategoryMaxLevelReached': '最大階層数に達しました',
@@ -102,8 +98,7 @@ const Map<String, String> zhTW = {
   'warehouseRemoveItemFromCabinet': '@para1 から @para2 を削除',
   'warehouseMoveQuantityInsufficient': '移動数量不足',
   'warehouseMoveToSameCabinet': '同じキャビネットに移動できません',
-  'warehouseDeleteCabinetItemMustMoveFirst':
-      'キャビネットのアイテムを削除するには、まずアイテムを他のキャビネットに移動する必要があります',
+  'warehouseDeleteCabinetItemMustMoveFirst': 'キャビネットのアイテムを削除するには、まずアイテムを他のキャビネットに移動する必要があります',
   'warehouseAdjustQuantity': '調整数量',
   'warehouseNameUpdate': '名称更新: @para1 -> @para2',
   'warehouseDescriptionUpdate': '説明更新: @para1 -> @para2',
@@ -134,7 +129,6 @@ const Map<String, String> zhTW = {
   'deviceTablet': 'タブレットデバイス',
   'deviceUnsupported': 'サポートされていないデバイス',
   'deviceUnsupportedMessage': 'このアプリケーションはお使いのデバイスタイプをサポートしていません',
-
   'environmentDev': '開発環境',
   'environmentStg': 'ステージング環境',
   'environmentUat': 'UAT環境',
@@ -189,9 +183,8 @@ const Map<String, String> zhTW = {
   'languageSystem': 'システム',
   'successUpdate': '更新成功',
   'errorUnknown': '不明なエラー',
-
   'warehouseItemCreate': '物品を追加',
-  'warehouseImageRecognitionComplete': '画像認識完了',
+  'warehouseImageRecognizing': '認識中',
   'warehouseItemUpdateMessage': '物品を更新',
   'warehouseItemDelete': '物品を削除',
   'warehouseCabinetCreate': 'キャビネットを追加',

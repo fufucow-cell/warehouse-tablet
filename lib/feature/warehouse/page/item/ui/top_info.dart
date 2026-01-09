@@ -6,6 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/them
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/grid_view_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
 
@@ -20,40 +21,42 @@ class TopInfo extends StatelessWidget {
           final allItems = controller.allItemsRx.value;
           final allCabinets = controller.allCabinetsRx.value;
           final allCategories = controller.allCategoriesRx.value;
-          return GridView.count(
-            padding: EdgeInsets.zero,
+          final items = [
+            TopInfoItem(
+              eImage: EnumImage.cItem,
+              title: EnumLocale.warehouseItemTotal.tr,
+              count: '${controller.getTotalItemCount()}',
+              isLoading: allItems == null,
+            ),
+            TopInfoItem(
+              eImage: EnumImage.cRoom,
+              title: EnumLocale.warehouseCabinetTotal.tr,
+              count: '${controller.getTotalCabinetCount()}',
+              isLoading: allCabinets == null,
+            ),
+            TopInfoItem(
+              eImage: EnumImage.cMember,
+              title: EnumLocale.warehouseCategoryTotal.tr,
+              count: '${CategoryUtil.getTotalCategoryCount()}',
+              isLoading: allCategories == null,
+            ),
+            TopInfoItem(
+              eImage: EnumImage.cStockItem,
+              title: EnumLocale.warehouseItemLowStock.tr,
+              count: '${controller.getTotalLowStockCount}',
+              isLoading: allItems == null,
+            ),
+          ];
+
+          return CustomGridView(
+            itemCount: items.length,
+            itemBuilder: (context, index) => items[index],
             crossAxisCount: 4,
+            padding: EdgeInsets.zero,
             crossAxisSpacing: 32.0.scale,
             mainAxisSpacing: 0,
-            shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            childAspectRatio: 393 / 112,
-            children: [
-              TopInfoItem(
-                eImage: EnumImage.cItem,
-                title: EnumLocale.warehouseItemTotal.tr,
-                count: '${controller.getTotalItemCount()}',
-                isLoading: allItems == null,
-              ),
-              TopInfoItem(
-                eImage: EnumImage.cRoom,
-                title: EnumLocale.warehouseCabinetTotal.tr,
-                count: '${controller.getTotalCabinetCount()}',
-                isLoading: allCabinets == null,
-              ),
-              TopInfoItem(
-                eImage: EnumImage.cMember,
-                title: EnumLocale.warehouseCategoryTotal.tr,
-                count: '${CategoryUtil.getTotalCategoryCount()}',
-                isLoading: allCategories == null,
-              ),
-              TopInfoItem(
-                eImage: EnumImage.cStockItem,
-                title: EnumLocale.warehouseItemLowStock.tr,
-                count: '${controller.getTotalLowStockCount}',
-                isLoading: allItems == null,
-              ),
-            ],
+            shrinkWrap: true,
           );
         });
       },
@@ -102,7 +105,7 @@ class TopInfoItem extends StatelessWidget {
             ),
             SizedBox(width: 16.0.scale),
             if (isLoading)
-              WidgetUtil.shimmerWidget(width: 52.0.scale, height: 34.0.scale)
+              WidgetUtil.shimmerWidget(width: 34.0.scale, height: 34.0.scale)
             else
               WidgetUtil.textWidget(
                 count,

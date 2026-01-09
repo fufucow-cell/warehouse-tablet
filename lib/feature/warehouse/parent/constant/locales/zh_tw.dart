@@ -129,7 +129,6 @@ const Map<String, String> zhTW = {
   'deviceTablet': '平板裝置',
   'deviceUnsupported': '不支援的裝置',
   'deviceUnsupportedMessage': '此應用程式不支援您的裝置類型',
-
   'environmentDev': '開發環境',
   'environmentStg': '測試環境',
   'environmentUat': '預發布環境',
@@ -184,9 +183,8 @@ const Map<String, String> zhTW = {
   'languageSystem': '系統',
   'successUpdate': '更新成功',
   'errorUnknown': '未知錯誤',
-
   'warehouseItemCreate': '新增物品',
-  'warehouseImageRecognitionComplete': '圖片辨識完成',
+  'warehouseImageRecognizing': '辨識中',
   'warehouseItemUpdateMessage': '更新物品',
   'warehouseItemDelete': '刪除物品',
   'warehouseCabinetCreate': '新增櫃位',
