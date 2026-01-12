@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -14,8 +15,7 @@ part 'dialog_category_create_widget_route.dart';
 class DialogCategoryCreateWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCategoryCreateWidgetModel _model =
-      DialogCategoryCreateWidgetModel();
+  final DialogCategoryCreateWidgetModel _model = DialogCategoryCreateWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
@@ -28,7 +28,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogCategoryCreateWidgetController] onInit - $hashCode',
     );
@@ -38,7 +38,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogCategoryCreateWidgetController] onClose - $hashCode',
     );
@@ -59,8 +59,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
 
     return DialogCategoryCreateOutputModel(
       name: name,
-      parentId:
-          _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
+      parentId: _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
     );
   }
 
@@ -94,8 +93,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
   }
 
   Category? _getLevel1CategoryByName(String name) {
-    return _service.getAllCategories
-        .firstWhereOrNull((cat) => cat.name == name);
+    return _service.getAllCategories.firstWhereOrNull((cat) => cat.name == name);
   }
 
   Category? _getLevel2CategoryByName(String name) {
@@ -121,8 +119,7 @@ class DialogCategoryCreateWidgetController extends GetxController {
           : (level1Name != null)
               ? level1Name
               : null;
-      final resultName =
-          (parentName != null) ? '$parentName > $newName' : newName;
+      final resultName = (parentName != null) ? '$parentName > $newName' : newName;
       result = EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
     }
 

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/environment_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/error_map_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_create_request_model/warehouse_cabinet_create_request_model.dart';
@@ -33,12 +30,15 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_smart_response_model/warehouse_item_smart_response_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_record_response_model/warehouse_record_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/api_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/api_service/api_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_service_model.dart';
@@ -49,8 +49,8 @@ class WarehouseService {
   // MARK: - Properties
 
   final _model = WarehouseServiceModel();
-  final _logService = LogUtil.instance;
-  final _themeService = ThemeUtil.instance;
+  final _logService = LogService.instance;
+  final _themeService = ThemeService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
   String get userAvatar => _model.userAvatar ?? '';
@@ -58,10 +58,11 @@ class WarehouseService {
   String get refreshToken => _model.refreshToken ?? '';
   int get userRoleType => _model.userRoleType ?? -1;
   String get getHouseholdId => _model.household?.id ?? '';
-  String get getLocaleCode => LocaleUtil.instance.getCurrentLocaleCode;
+  String get getLocaleCode => LocaleService.instance.getCurrentLocaleCode;
 
   // 搜尋條件
-  DialogItemSearchOutputModel? get getSearchCondition => _model.searchCondition;
+  DialogItemSearchOutputModel? get getSearchCondition => _model.searchCondition.value;
+  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
   String get getSearchCabinetId => _model.searchCabinetId ?? '';
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
@@ -94,6 +95,7 @@ class WarehouseService {
       return Get.find<WarehouseService>();
     } else {
       final service = WarehouseService._internal();
+      LogService.register();
       Get.put<WarehouseService>(service, permanent: true);
       return service;
     }
@@ -101,7 +103,7 @@ class WarehouseService {
 
   static void unregister() {
     if (Get.isRegistered<WarehouseService>()) {
-      ApiUtil.unregister();
+      ApiService.unregister();
       Get.delete<WarehouseService>(force: true);
     }
   }
@@ -164,11 +166,11 @@ class WarehouseService {
   }
 
   Future<String?> openCamera() async {
-    return await DeviceUtil.instance.openCamera();
+    return await DeviceService.instance.openCamera();
   }
 
   Future<String?> openGallery() async {
-    return await DeviceUtil.instance.openGallery();
+    return await DeviceService.instance.openGallery();
   }
 
   Future<String?> compressImage(String imagePath, {int maxSide = 200}) async {
@@ -209,11 +211,11 @@ class WarehouseService {
           ),
         )
         .toList();
-    LocaleUtil.instance.switchFromCode(data.language);
-    ThemeUtil.instance.switchFromString(data.theme);
-    EnvironmentUtil.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
+    LocaleService.instance.switchFromCode(data.language);
+    ThemeService.instance.switchFromString(data.theme);
+    EnvironmentService.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
     final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
-    _registerWarehouseApiUtil(domain);
+    _registerWarehouseApiService(domain);
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -316,14 +318,14 @@ class WarehouseService {
   // 添加搜尋條件
   void addSearchCondition(DialogItemSearchOutputModel model) {
     if ((model.searchText?.isNotEmpty ?? false) || model.categoryLevel1 != null) {
-      _model.searchCondition = model;
+      _model.searchCondition.value = model;
       changeMainPageSelectedTabItem(EnumWarehouseTabItem.item);
     }
   }
 
   // 清除搜尋條件
   void clearSearchCondition() {
-    _model.searchCondition = null;
+    _model.searchCondition.value = null;
   }
 
   List<Item> combineItems(List<Item> oldItems) {
@@ -386,7 +388,7 @@ class WarehouseService {
     WarehouseItemRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
+    final response = await ApiService.sendRequest<WarehouseItemResponseModel>(
       EnumApiInfo.itemRead,
       requestModel: request,
       fromJson: WarehouseItemResponseModel.fromJson,
@@ -405,7 +407,7 @@ class WarehouseService {
     WarehouseItemCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemCreate,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -420,7 +422,7 @@ class WarehouseService {
     WarehouseItemCreateSmartRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<WarehouseItemSmartResponseModel?>(
+    final result = await ApiService.sendRequest<WarehouseItemSmartResponseModel?>(
       EnumApiInfo.itemSmartCreate,
       requestModel: request,
       fromJson: WarehouseItemSmartResponseModel.fromJson,
@@ -436,7 +438,7 @@ class WarehouseService {
     WarehouseItemEditNormalRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdateNormal,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -451,7 +453,7 @@ class WarehouseService {
     WarehouseItemEditPositionRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdatePosition,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -466,7 +468,7 @@ class WarehouseService {
     WarehouseItemEditQuantityRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemUpdateQuantity,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -481,7 +483,7 @@ class WarehouseService {
     WarehouseItemDeleteRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.itemDelete,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -498,7 +500,7 @@ class WarehouseService {
     WarehouseCabinetReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiUtil.sendRequest<WarehouseItemResponseModel>(
+    final response = await ApiService.sendRequest<WarehouseItemResponseModel>(
       EnumApiInfo.cabinetRead,
       requestModel: request,
       fromJson: WarehouseItemResponseModel.fromJson,
@@ -517,7 +519,7 @@ class WarehouseService {
     WarehouseCabinetCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<Cabinet?>(
+    final result = await ApiService.sendRequest<Cabinet?>(
       EnumApiInfo.cabinetCreate,
       requestModel: request,
       fromJson: Cabinet.fromJson,
@@ -533,7 +535,7 @@ class WarehouseService {
     WarehouseCabinetUpdateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.cabinetUpdate,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -548,7 +550,7 @@ class WarehouseService {
     WarehouseCabinetDeleteRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.cabinetDelete,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -565,7 +567,7 @@ class WarehouseService {
     WarehouseCategoryCreateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<Category?>(
+    final result = await ApiService.sendRequest<Category?>(
       EnumApiInfo.categoryCreate,
       requestModel: request,
       fromJson: Category.fromJson,
@@ -581,7 +583,7 @@ class WarehouseService {
     WarehouseCategoryReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiUtil.sendRequest<WarehouseCategoryResponseModel>(
+    final response = await ApiService.sendRequest<WarehouseCategoryResponseModel>(
       EnumApiInfo.categoryRead,
       requestModel: request,
       fromJson: WarehouseCategoryResponseModel.fromJson,
@@ -599,7 +601,7 @@ class WarehouseService {
     WarehouseCategoryUpdateRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<Category?>(
+    final result = await ApiService.sendRequest<Category?>(
       EnumApiInfo.categoryUpdate,
       requestModel: request,
       fromJson: Category.fromJson,
@@ -615,7 +617,7 @@ class WarehouseService {
     WarehouseCategoryDeleteRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiUtil.sendRequest<BaseApiResponseModel<void>?>(
+    final result = await ApiService.sendRequest<BaseApiResponseModel<void>?>(
       EnumApiInfo.categoryDelete,
       requestModel: request,
       onError: onError ?? _defaultErrorHandler,
@@ -632,7 +634,7 @@ class WarehouseService {
     WarehouseRecordReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiUtil.sendRequest<WarehouseRecordResponseModel>(
+    final response = await ApiService.sendRequest<WarehouseRecordResponseModel>(
       EnumApiInfo.recordRead,
       requestModel: request,
       fromJson: WarehouseRecordResponseModel.fromJson,
@@ -706,7 +708,7 @@ class WarehouseService {
     _model.allCombineItems = combineItems(flattenItems);
   }
 
-  void _registerWarehouseApiUtil(String baseUrl) {
-    ApiUtil.register(baseUrl);
+  void _registerWarehouseApiService(String baseUrl) {
+    ApiService.register(baseUrl);
   }
 }

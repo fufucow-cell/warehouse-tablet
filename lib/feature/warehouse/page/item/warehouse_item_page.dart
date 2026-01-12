@@ -4,8 +4,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/item_li
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/search_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
 import 'package:get/get.dart';
 
 class WarehouseItemPage extends StatelessWidget {
@@ -14,9 +14,7 @@ class WarehouseItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseItemPageController>(
-      init: Get.isRegistered<WarehouseItemPageController>()
-          ? null
-          : WarehouseItemPageController(),
+      init: Get.isRegistered<WarehouseItemPageController>() ? null : WarehouseItemPageController(),
       builder: (controller) {
         return Column(
           children: [

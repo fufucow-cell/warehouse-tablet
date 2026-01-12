@@ -9,8 +9,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_delete_request_model/warehouse_item_delete_request_model.dart';
@@ -22,7 +20,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/respons
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/room.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +50,7 @@ class WarehouseItemPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
+    LogService.i(EnumLogType.debug, '[WarehouseItemPageController] onInit - $hashCode');
     _addListeners();
     _genFilterRuleForRoom();
     _checkData();
@@ -58,9 +58,10 @@ class WarehouseItemPageController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
+    LogService.i(EnumLogType.debug, '[WarehouseItemPageController] onClose - $hashCode');
     _model.allRoomCabinetItemsWorker?.dispose();
     _model.allRoomCabinetsWorker?.dispose();
+    _model.searchConditionWorker?.dispose();
     super.onClose();
   }
 
@@ -459,6 +460,12 @@ class WarehouseItemPageController extends GetxController {
       _model.allRoomCabinets.value = rooms;
       if (_model.allRoomCabinetItems.value != null) {
         _initData();
+      }
+    });
+    _model.searchConditionWorker = ever(_service.searchConditionRx.rx, (searchCondition) {
+      _model.searchCondition.value = searchCondition;
+      if (searchCondition != null) {
+        _genVisibleItemsBySearchCondition();
       }
     });
   }

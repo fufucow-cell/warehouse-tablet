@@ -2,7 +2,6 @@ part of 'app_main_page.dart';
 
 enum EnumAppMainPageInteractive {
   selectItem,
-  tapTitleWidget,
   tapLogout,
 }
 
@@ -18,8 +17,6 @@ extension AppMainPageUserEventExtension on AppMainPageController {
         if (data is EnumAppMainTabItem) {
           _selectItem(data);
         }
-      case EnumAppMainPageInteractive.tapTitleWidget:
-        routerHandle(EnumAppMainPageRoute.showDialog);
       case EnumAppMainPageInteractive.tapLogout:
         routerHandle(EnumAppMainPageRoute.logout);
     }

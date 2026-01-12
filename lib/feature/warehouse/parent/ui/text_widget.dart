@@ -1,23 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:shimmer/shimmer.dart';
-
-/// 创建文本样式
-TextStyle _textStyle({
-  double? size,
-  EnumFontWeightType weightType = EnumFontWeightType.regular,
-  Color? color,
-}) {
-  return TextStyle(
-    color: color ?? EnumColor.textPrimary.color,
-    fontSize: size ?? 32.0.scale,
-    fontWeight: weightType.weight,
-    height: 1.4,
-    letterSpacing: 0,
-  );
-}
 
 /// 自定义文本 Widget
 class CustTextWidget extends StatelessWidget {
@@ -106,14 +91,14 @@ class CustTextRequiredWidget extends StatelessWidget {
   }
 }
 
-class TextFieldShimmerWidget extends StatelessWidget {
+class TextShimmerWidget extends StatelessWidget {
   final String text;
   final double? size;
   final TextAlign align;
   final EnumFontWeightType weightType;
   final Color? color;
 
-  const TextFieldShimmerWidget(
+  const TextShimmerWidget(
     this.text, {
     super.key,
     this.size,
@@ -136,4 +121,19 @@ class TextFieldShimmerWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+/// 创建文本样式
+TextStyle _textStyle({
+  double? size,
+  EnumFontWeightType weightType = EnumFontWeightType.regular,
+  Color? color,
+}) {
+  return TextStyle(
+    color: color ?? EnumColor.textPrimary.color,
+    fontSize: size ?? 32.0.scale,
+    fontWeight: weightType.weight,
+    height: 1.4,
+    letterSpacing: 0,
+  );
 }

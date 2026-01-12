@@ -10,14 +10,14 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -43,7 +43,7 @@ class WarehouseMainPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseMainPageController] onInit - $hashCode',
     );
@@ -52,7 +52,7 @@ class WarehouseMainPageController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseMainPageController] onClose - $hashCode',
     );
@@ -60,7 +60,7 @@ class WarehouseMainPageController extends GetxController {
     _disposeTabController();
     _disposeTabPageControllers();
     WarehouseService.unregister();
-    DeviceUtil.unregister();
+    DeviceService.unregister();
     super.onClose();
   }
 
@@ -72,7 +72,7 @@ class WarehouseMainPageController extends GetxController {
   }
 
   void setRootContext(BuildContext context) {
-    DeviceUtil.register(context);
+    DeviceService.register(context);
     BuildContext? rootContext;
 
     try {
@@ -111,7 +111,7 @@ class WarehouseMainPageController extends GetxController {
         }
       }
     } on Object catch (e) {
-      LogUtil.e(
+      LogService.e(
         '[WarehouseMainPageController] Error setting root context: $e',
       );
     }
@@ -176,7 +176,7 @@ class WarehouseMainPageController extends GetxController {
         _tabController!.removeListener(_onTabChanged);
         _tabController!.dispose();
       } on Object catch (e) {
-        LogUtil.d(
+        LogService.d(
           '[WarehouseMainPageController] Error disposing TabController: $e',
         );
       }

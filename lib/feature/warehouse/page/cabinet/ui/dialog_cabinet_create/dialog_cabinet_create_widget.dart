@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_create/dialog_cabinet_create_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_section_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_section_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
@@ -27,8 +27,7 @@ class DialogCabinetCreateWidget extends StatelessWidget {
         return DialogFrame(
           width: 720.0.scale,
           minHeight: 346.0.scale,
-          header:
-              DialogHeader(title: EnumLocale.warehouseTagTypeCreateCabinet.tr),
+          header: DialogHeader(title: EnumLocale.warehouseTagTypeCreateCabinet.tr),
           footer: Obx(
             () {
               final isLoading = controller.isLoadingRx.value;
@@ -37,8 +36,7 @@ class DialogCabinetCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -50,23 +48,20 @@ class DialogCabinetCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCabinetCreateWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCabinetCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCabinetCreateWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -143,8 +138,7 @@ class _RoomField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor:
-            selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
       ),

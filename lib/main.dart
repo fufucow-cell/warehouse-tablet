@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/device_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/environment_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
-import 'package:flutter_smart_home_tablet/util/api_util.dart';
-import 'package:flutter_smart_home_tablet/util/router_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
+import 'package:flutter_smart_home_tablet/service/api_service/api_service.dart';
+import 'package:flutter_smart_home_tablet/service/router_service/router_service.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -18,12 +19,26 @@ void main() async {
 }
 
 Future<void> _registerServices() async {
-  final envUtil = EnvironmentUtil.register();
-  ApiUtil.register(envUtil.apiBaseUrl);
-  await StorageUtil.register();
-  await LocaleUtil.register();
-  ThemeUtil.register();
-  RouterUtil.register();
+  // 1. 基础服务 - 最早注册，不依赖其他服务
+  LogService.register();
+
+  // 2. 环境服务 - 提供 API 基础 URL
+  final envUtil = EnvironmentService.register();
+
+  // 3. API 服务 - 依赖环境服务
+  ApiService.register(envUtil.apiBaseUrl);
+
+  // 4. 存储服务 - 异步初始化，需要先注册
+  await StorageService.register();
+
+  // 5. 本地化服务 - 依赖存储服务
+  await LocaleService.register();
+
+  // 6. 主题服务 - 依赖存储服务
+  ThemeService.register();
+
+  // 7. 路由服务 - 最后注册
+  RouterService.register();
 }
 
 class MyApp extends StatelessWidget {
@@ -31,13 +46,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routerUtil = RouterUtil.instance;
-    final localeUtil = LocaleUtil.instance;
-    final themeUtil = ThemeUtil.instance;
-    final deviceUtil = DeviceUtil.register(context);
+    final routerUtil = RouterService.instance;
+    final localeUtil = LocaleService.instance;
+    final themeUtil = ThemeService.instance;
+    DeviceService.register(context);
 
     // 如果設備不支援，顯示不支援頁面
-    if (!deviceUtil.isSupportedDevice) {
+    final deviceService = DeviceService.instance;
+    if (!deviceService.isSupportedDevice) {
       return const _UnsupportedDevicePage();
     }
 
@@ -80,11 +96,11 @@ class _UnsupportedDevicePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final deviceUtil = DeviceUtil.instance;
     // 初始化 scale 值
-    scaleMin = deviceUtil.minScale;
-    scaleWidth = deviceUtil.scaleWidget;
-    scaleHeight = deviceUtil.scaleWidgetHeight;
+    final deviceService = DeviceService.instance;
+    scaleMin = deviceService.minScale;
+    scaleWidth = deviceService.scaleWidthValue;
+    scaleHeight = deviceService.scaleHeightValue;
 
     return MaterialApp(
       title: '智管家',

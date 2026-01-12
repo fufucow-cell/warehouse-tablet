@@ -5,11 +5,26 @@ class AppMainPageModel {
   static const EnumAppMainRouter rootRouter = EnumAppMainRouter.household;
 }
 
+enum EnumAppMainRouter {
+  household,
+  gateway,
+  warehouse,
+  setting;
+
+  static EnumAppMainRouter get defaultRouter => EnumAppMainRouter.household;
+  String get path => this == defaultRouter ? '/' : '/home_$name';
+
+  Widget Function() get page => () => switch (this) {
+        household => const SmartHomeHouseholdPage(),
+        gateway => const SmartHomeGatewayPage(),
+        warehouse => const SmartHomeWarehousePage(),
+        setting => const SmartHomeSettingPage(),
+      };
+}
+
 enum EnumAppMainTabItem {
   household(Icons.home),
-  scene(Icons.auto_awesome),
-  message(Icons.message),
-  repair(Icons.build),
+  gateway(Icons.gas_meter),
   warehouse(Icons.warehouse),
   setting(Icons.settings);
 
@@ -19,9 +34,7 @@ enum EnumAppMainTabItem {
 
   EnumLocale get titleLocale => switch (this) {
         household => EnumLocale.smartHomeTabHousehold,
-        scene => EnumLocale.smartHomeTabScene,
-        message => EnumLocale.smartHomeTabMessage,
-        repair => EnumLocale.smartHomeTabRepair,
+        gateway => EnumLocale.smartHomeTabGateway,
         warehouse => EnumLocale.smartHomeTabWarehouse,
         setting => EnumLocale.smartHomeTabSetting,
       };
@@ -30,9 +43,7 @@ enum EnumAppMainTabItem {
 
   EnumAppMainRouter get router => switch (this) {
         household => EnumAppMainRouter.household,
-        scene => EnumAppMainRouter.scene,
-        message => EnumAppMainRouter.message,
-        repair => EnumAppMainRouter.repair,
+        gateway => EnumAppMainRouter.gateway,
         warehouse => EnumAppMainRouter.warehouse,
         setting => EnumAppMainRouter.setting,
       };

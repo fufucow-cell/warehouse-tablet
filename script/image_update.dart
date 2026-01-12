@@ -7,7 +7,7 @@ import 'dart:io';
 /// - light/ 或 dark/ 目录下的文件：t + 文件名（PascalCase），例如 tCow
 void main() {
   final imagesDir = Directory('lib/feature/warehouse/parent/assets/images');
-  final outputFile = File('lib/feature/warehouse/parent/constant/theme/image_map.dart');
+  final outputFile = File('lib/feature/warehouse/parent/service/theme_service/theme/image_map.dart');
 
   if (!imagesDir.existsSync()) {
     print('Error: images directory not found');
@@ -144,7 +144,7 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';");
   buffer.writeln('');
 
   // 收集所有 enum 名称并排序
@@ -159,14 +159,14 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
     buffer.writeln('  $enumName${isLast ? ';' : ','}');
   }
   buffer.writeln('');
-  buffer.writeln('  ThemeUtil get _themeUtil => ThemeUtil.instance;');
+  buffer.writeln('  ThemeService get _themeService => ThemeService.instance;');
   buffer.writeln('');
   buffer.writeln('  /// 取得圖片路徑');
-  buffer.writeln('  String get path => _themeUtil.getImagePath(this);');
+  buffer.writeln('  String get path => _themeService.getImagePath(this);');
   buffer.writeln('');
   buffer.writeln('  /// 取得圖片 Widget');
   buffer.writeln('  Widget image({Size? size, Color? color}) =>');
-  buffer.writeln('      _themeUtil.getImageWidget(this, size: size, color: color);');
+  buffer.writeln('      _themeService.getImageWidget(this, size: size, color: color);');
   buffer.writeln('');
   buffer.writeln('  /// 取得裝飾圖片');
   buffer.writeln('  DecorationImage get decorationImage => DecorationImage(');

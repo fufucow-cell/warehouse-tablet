@@ -3,8 +3,8 @@ import 'dart:io';
 /// 生成 locale_map.dart 的脚本
 /// 从多语系文件中提取所有 key，生成 EnumLocale enum 和 tr 方法
 void main() {
-  final localesDir = Directory('lib/feature/warehouse/parent/constant/locales');
-  final outputFile = File('lib/feature/warehouse/parent/constant/locales/locale_map.dart');
+  final localesDir = Directory('lib/feature/warehouse/parent/service/locale_service/locale');
+  final outputFile = File('lib/feature/warehouse/parent/service/locale_service/locale/locale_map.dart');
 
   // 读取 zh_tw.dart 作为基准，提取所有 key
   final zhTWFile = File('${localesDir.path}/zh_tw.dart');
@@ -57,7 +57,7 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('/// 生成时间: ${DateTime.now().toIso8601String()}');
   buffer.writeln('library;');
   buffer.writeln('');
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';");
   buffer.writeln("import 'package:get/get.dart';");
   buffer.writeln('');
 

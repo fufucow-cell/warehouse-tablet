@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_history/dialog_item_history_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/util/record_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_record_read_request_model/warehouse_record_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -31,7 +32,7 @@ class DialogItemHistoryWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogItemHistoryWidgetController] onInit - $hashCode',
     );
@@ -40,7 +41,7 @@ class DialogItemHistoryWidgetController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogItemHistoryWidgetController] onClose - $hashCode',
     );

@@ -12,7 +12,7 @@ class WarehouseServiceModel {
   int? userRoleType;
   BuildContext? rootContext;
   // 搜尋條件
-  DialogItemSearchOutputModel? searchCondition;
+  final searchCondition = Rxn<DialogItemSearchOutputModel>();
   String? searchCabinetId;
   // 房間櫃位物品
   final allRoomCabinetItems = Rxn<List<Room>>();

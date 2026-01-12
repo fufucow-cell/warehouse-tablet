@@ -19,4 +19,5 @@ class WarehouseItemPageModel {
   final searchCondition = Rxn<DialogItemSearchOutputModel>();
   Worker? allRoomCabinetItemsWorker;
   Worker? allRoomCabinetsWorker;
+  Worker? searchConditionWorker;
 }

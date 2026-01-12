@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/actions.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_section_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_section_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 import 'package:get/get.dart';
@@ -38,8 +38,7 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogCategoryCreateWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -51,23 +50,20 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryCreateWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -124,8 +120,7 @@ class _Body extends StatelessWidget {
                   data: str,
                 ),
                 onDelete: () => controller.interactive(
-                  EnumDialogCategoryCreateWidgetInteractive
-                      .tapClearLevel2Button,
+                  EnumDialogCategoryCreateWidgetInteractive.tapClearLevel2Button,
                 ),
               ),
             ],
@@ -179,15 +174,13 @@ class _DropdownField extends StatelessWidget {
             child: WidgetUtil.textDropdownButton(
               selectedValue: selectedValue,
               values: visibleValues,
-              buttonTextColor:
-                  selectedValue == null ? EnumColor.textSecondary.color : null,
+              buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
               menuMaxHeight: 290.0.scale,
               onValueSelected: onValueSelected,
             ),
           ),
         ),
-        if (selectedValue != null &&
-            selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
+        if (selectedValue != null && selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
           SizedBox(width: 12.0.scale),
           ActionButton(
             eImage: EnumImage.cTrash3,

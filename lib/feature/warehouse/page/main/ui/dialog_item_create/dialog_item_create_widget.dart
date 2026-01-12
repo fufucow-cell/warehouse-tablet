@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_create/dialog_item_create_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_create/dialog_item_create_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_section_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_with_photo_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_without_photo_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/text_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_section_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_with_photo_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_without_photo_widget.dart';
 import 'package:get/get.dart';
 
 class DialogItemCreateWidget extends StatelessWidget {
@@ -280,7 +280,7 @@ class _NameField extends StatelessWidget {
           isRequired: true,
           title: EnumLocale.createItemName.tr,
           child: isRecognizing
-              ? TextFieldShimmerWidget(
+              ? TextShimmerWidget(
                   '${EnumLocale.warehouseImageRecognizing.tr}...',
                 )
               : WidgetUtil.textField(
@@ -305,7 +305,7 @@ class _DescriptionField extends StatelessWidget {
         return DialogSectionWidget(
           title: EnumLocale.warehouseDescriptionLabel.tr,
           child: isRecognizing
-              ? TextFieldShimmerWidget(
+              ? TextShimmerWidget(
                   '${EnumLocale.warehouseImageRecognizing.tr}...',
                 )
               : WidgetUtil.textField(

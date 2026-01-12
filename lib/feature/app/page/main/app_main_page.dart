@@ -1,20 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/constant/root_router_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_router_util.dart';
+import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
+import 'package:flutter_smart_home_tablet/feature/smart_home/page/gateway/smart_home_gateway_page.dart';
+import 'package:flutter_smart_home_tablet/feature/smart_home/page/household/smart_home_household_page.dart';
+import 'package:flutter_smart_home_tablet/feature/smart_home/page/setting/smart_home_setting_page.dart';
+import 'package:flutter_smart_home_tablet/feature/smart_home/page/warehouse/smart_home_warehouse_page.dart';
 import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/storage_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/storage_util.dart';
-import 'package:flutter_smart_home_tablet/ui/cust_dialog.dart';
-import 'package:flutter_smart_home_tablet/util/api_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/service/api_service/api_service.dart';
+import 'package:flutter_smart_home_tablet/service/router_service/router_service_model.dart';
 import 'package:get/get.dart';
 
 part 'app_main_page_controller.dart';
@@ -68,18 +69,11 @@ class _TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<AppMainPageController>();
-
-    return GestureDetector(
-      onTap: () => controller.interactive(
-        EnumAppMainPageInteractive.tapTitleWidget,
-      ),
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.0.scale),
-        child: EnumImage.tCow.image(
-          size: Size.square(200.0.scale),
-          color: Theme.of(context).colorScheme.onPrimaryContainer,
-        ),
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 20.0.scale),
+      child: EnumImage.tCow.image(
+        size: Size.square(200.0.scale),
+        color: Theme.of(context).colorScheme.onPrimaryContainer,
       ),
     );
   }
@@ -100,17 +94,13 @@ class _TabListWidget extends StatelessWidget {
             selected: isSelected,
             leading: Icon(
               item.icon,
-              color: isSelected
-                  ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onSurface,
+              color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               item.title,
               style: TextStyle(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.onSurface,
+                color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
               ),
             ),
             onTap: () => controller.interactive(

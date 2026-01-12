@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_section_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_with_photo_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog_without_photo_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_section_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_with_photo_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_without_photo_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
@@ -42,8 +42,7 @@ class DialogItemEditNormalWidget extends StatelessWidget {
                 type: DialogFooterType.deleteWithBoth,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogItemEditNormalWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogItemEditNormalWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -92,12 +91,9 @@ class _Body extends StatelessWidget {
             return Column(
               children: [
                 _DropdownField(
-                  title: selectedLevel1 == null
-                      ? EnumLocale.category.tr
-                      : EnumLocale.createLevel1Category.tr,
+                  title: selectedLevel1 == null ? EnumLocale.category.tr : EnumLocale.createLevel1Category.tr,
                   selectedValue: selectedLevel1?.name,
-                  visibleValues:
-                      visibleLevel1.map((e) => e.name ?? '').toList(),
+                  visibleValues: visibleLevel1.map((e) => e.name ?? '').toList(),
                   onValueSelected: (str) => controller.interactive(
                     EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel1,
                     data: str,
@@ -108,11 +104,9 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel2Category.tr,
                     selectedValue: selectedLevel2?.name,
-                    visibleValues:
-                        visibleLevel2.map((cat) => cat.name ?? '').toList(),
+                    visibleValues: visibleLevel2.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
-                      EnumDialogItemEditNormalWidgetInteractive
-                          .tapCategoryLevel2,
+                      EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel2,
                       data: str,
                     ),
                   ),
@@ -122,11 +116,9 @@ class _Body extends StatelessWidget {
                   _DropdownField(
                     title: EnumLocale.createLevel3Category.tr,
                     selectedValue: selectedLevel3?.name,
-                    visibleValues:
-                        visibleLevel3.map((cat) => cat.name ?? '').toList(),
+                    visibleValues: visibleLevel3.map((cat) => cat.name ?? '').toList(),
                     onValueSelected: (str) => controller.interactive(
-                      EnumDialogItemEditNormalWidgetInteractive
-                          .tapCategoryLevel3,
+                      EnumDialogItemEditNormalWidgetInteractive.tapCategoryLevel3,
                       data: str,
                     ),
                   ),
@@ -148,8 +140,7 @@ class _PhotoSection extends StatelessWidget {
       () {
         final filePath = controller.filePathRx.value;
         final photoUrl = controller.photoUrlRx.value;
-        final hasPhoto =
-            (photoUrl?.isNotEmpty ?? false) || (filePath?.isNotEmpty ?? false);
+        final hasPhoto = (photoUrl?.isNotEmpty ?? false) || (filePath?.isNotEmpty ?? false);
 
         if (hasPhoto) {
           Widget? imageWidget;
@@ -262,8 +253,7 @@ class _DropdownField extends StatelessWidget {
       child: WidgetUtil.textDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
-        buttonTextColor:
-            selectedValue == null ? EnumColor.textSecondary.color : null,
+        buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
         menuMaxHeight: 290.0.scale,
         onValueSelected: onValueSelected,
         onMenuOpened: () => controller.interactive(

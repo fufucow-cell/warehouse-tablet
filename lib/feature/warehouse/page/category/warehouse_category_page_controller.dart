@@ -8,7 +8,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dia
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
@@ -16,7 +15,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -45,7 +45,7 @@ class WarehouseCategoryPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseCategoryPageController] onInit - $hashCode',
     );
@@ -56,7 +56,7 @@ class WarehouseCategoryPageController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseCategoryPageController] onClose - $hashCode',
     );

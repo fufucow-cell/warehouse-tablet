@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/actions.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/patch_list.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
@@ -39,15 +39,12 @@ class MinorListWidget extends StatelessWidget {
               final index = entry.key;
               final category = entry.value;
               final isExpanded = controller.isCategoryExpanded(category);
-              final lastPadding = ((index == children.length - 1) && isExpanded)
-                  ? 24.0.scale
-                  : 0.0.scale;
+              final lastPadding = ((index == children.length - 1) && isExpanded) ? 24.0.scale : 0.0.scale;
               bool isPreviousExpanded = false;
 
               if (index > 0) {
                 final previousCategory = children[index - 1];
-                isPreviousExpanded =
-                    controller.isCategoryExpanded(previousCategory);
+                isPreviousExpanded = controller.isCategoryExpanded(previousCategory);
               }
 
               return Column(

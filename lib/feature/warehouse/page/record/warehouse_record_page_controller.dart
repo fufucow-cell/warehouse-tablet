@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/record_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_record_read_request_model/warehouse_record_read_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/util/record_util.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_record_page_interactive.dart';
@@ -23,8 +23,7 @@ class WarehouseRecordPageController extends GetxController {
   List<int> get columnRatioRx => _model.columnRatio;
   String get avatarUrl => _service.userAvatar;
   RxReadonly<List<CombineRecord>?> get allLogsRx => _model.allLogs.readonly;
-  RxReadonly<List<CombineRecord>> get visibleLogsRx =>
-      _model.visibleLogs.readonly;
+  RxReadonly<List<CombineRecord>> get visibleLogsRx => _model.visibleLogs.readonly;
   RxReadonly<bool> get isShowFilterMenuRx => _model.isShowFilterMenu.readonly;
   RxReadonly<EnumFilterType> get filterTypeRx => _model.filterType.readonly;
 
@@ -33,7 +32,7 @@ class WarehouseRecordPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseRecordPageController] onInit - $hashCode',
     );
@@ -42,7 +41,7 @@ class WarehouseRecordPageController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[WarehouseRecordPageController] onClose - $hashCode',
     );

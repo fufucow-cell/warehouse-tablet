@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_normal/dialog_item_edit_normal_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/dialog_message_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -43,13 +44,13 @@ class DialogItemEditNormalWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onInit - $hashCode');
+    LogService.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onInit - $hashCode');
     _loadData();
   }
 
   @override
   void onClose() {
-    LogUtil.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onClose - $hashCode');
+    LogService.i(EnumLogType.debug, '[DialogItemEditNormalWidgetController] onClose - $hashCode');
     nameController.dispose();
     descriptionController.dispose();
     minStockAlertController.dispose();

@@ -13,7 +13,7 @@ class CustScaffold extends StatelessWidget {
     this.leading,
     this.title,
     this.actions,
-    this.showBackButton = true,
+    this.showBackButton = false,
   });
 
   @override

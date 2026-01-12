@@ -1,20 +1,18 @@
 part of 'app_main_page.dart';
 
-class AppMainPageController extends BasePageController {
+class AppMainPageController extends GetxController {
   // MARK: - Properties
 
   final _model = AppMainPageModel();
+  final _appService = AppService.instance;
   EnumAppMainTabItem get getSelectedItem => _model.selectedItem.value;
-  String get getInitRoutePath => AppMainRouterUtil.rootRouter.path;
-  GlobalKey<NavigatorState> get getNavigatorKey =>
-      AppMainRouterUtil.instance.nestedNavigatorKey;
-  AppMainRouterUtil get getRouterUtil => AppMainRouterUtil.instance;
+  String get getInitRoutePath => AppService.rootRouter.path;
+  GlobalKey<NavigatorState> get getNavigatorKey => _appService.nestedNavigatorKey;
+  AppService get getRouterUtil => _appService;
 
   // MARK: - Init
 
   AppMainPageController() {
-    super.init(isCallApiWhenInit: false);
-    AppMainRouterUtil.register();
     SmartHomeService.register();
   }
 
@@ -23,7 +21,6 @@ class AppMainPageController extends BasePageController {
   @override
   void onClose() {
     SmartHomeService.unregister();
-    AppMainRouterUtil.unregister();
     super.onClose();
   }
 

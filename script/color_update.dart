@@ -3,8 +3,8 @@ import 'dart:io';
 /// 生成 color_map.dart 的脚本
 /// 从 color_data.dart 中提取所有 color key，生成 EnumColor enum
 void main() {
-  final colorDataFile = File('lib/feature/warehouse/parent/constant/theme/color_data.dart');
-  final outputFile = File('lib/feature/warehouse/parent/constant/theme/color_map.dart');
+  final colorDataFile = File('lib/feature/warehouse/parent/service/theme_service/theme/color_data.dart');
+  final outputFile = File('lib/feature/warehouse/parent/service/theme_service/theme/color_map.dart');
 
   if (!colorDataFile.existsSync()) {
     print('Error: color_data.dart not found');
@@ -99,9 +99,8 @@ String _generateColorMap(
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_data.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/theme_constant.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_data.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';");
   buffer.writeln('');
 
   // 收集所有枚举值
@@ -156,12 +155,12 @@ String _generateColorMap(
   buffer.writeln('      return Colors.transparent;');
   buffer.writeln('    }');
   buffer.writeln('');
-  buffer.writeln('    final themeUtil = ThemeUtil.instance;');
-  buffer.writeln('    return switch (themeUtil.currentTheme) {');
+  buffer.writeln('    final themeService = ThemeService.instance;');
+  buffer.writeln('    return switch (themeService.currentTheme) {');
   buffer.writeln('      EnumThemeMode.light => data.light,');
   buffer.writeln('      EnumThemeMode.dark => data.dark,');
   buffer.writeln('      EnumThemeMode.system =>');
-  buffer.writeln('        themeUtil.getThemeFromSystem == EnumThemeMode.light');
+  buffer.writeln('        themeService.getThemeFromSystem == EnumThemeMode.light');
   buffer.writeln('            ? data.light');
   buffer.writeln('            : data.dark,');
   buffer.writeln('    };');

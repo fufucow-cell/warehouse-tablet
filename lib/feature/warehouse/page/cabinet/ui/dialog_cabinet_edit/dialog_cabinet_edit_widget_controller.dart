@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/dialog_message_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/util/cabinet_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/dialog_message_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/util/cabinet_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/log_util.dart';
+
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -33,7 +34,7 @@ class DialogCabinetEditWidgetController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogCabinetEditWidgetController] onInit - $hashCode',
     );
@@ -42,7 +43,7 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   @override
   void onClose() {
-    LogUtil.i(
+    LogService.i(
       EnumLogType.debug,
       '[DialogCabinetEditWidgetController] onClose - $hashCode',
     );
@@ -86,10 +87,7 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   List<String> getRoomNameList({bool isExcludeOldRoomName = false}) {
     if (isExcludeOldRoomName) {
-      return _service.rooms
-          .where((room) => room.name != getRoom.roomName)
-          .map((room) => room.name ?? '')
-          .toList();
+      return _service.rooms.where((room) => room.name != getRoom.roomName).map((room) => room.name ?? '').toList();
     }
 
     return _service.rooms.map((room) => room.name ?? '').toList();
@@ -100,8 +98,7 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   Future<bool> showDeleteHint() async {
-    final deleteCabnites =
-        getEditModels.where((editModel) => editModel.isDelete).toList();
+    final deleteCabnites = getEditModels.where((editModel) => editModel.isDelete).toList();
 
     if (deleteCabnites.isNotEmpty) {
       final isConfirm = await _routerHandle<bool>(
@@ -121,8 +118,7 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   void _checkData() {
-    final cabinets =
-        CabinetUtil.getAllCabinetsFromRoom(roomId: _model.room?.roomId);
+    final cabinets = CabinetUtil.getAllCabinetsFromRoom(roomId: _model.room?.roomId);
 
     if (cabinets.isEmpty) {
       return;
@@ -148,18 +144,14 @@ class DialogCabinetEditWidgetController extends GetxController {
     final newRoomId = getRoomIdByName(newRoomName);
 
     if (newRoomId != null) {
-      editModel.newRoom =
-          WarehouseNameIdModel(id: newRoomId, name: newRoomName);
+      editModel.newRoom = WarehouseNameIdModel(id: newRoomId, name: newRoomName);
     }
 
     _model.editModels.value = copyEditModels;
   }
 
   String _genDeleteHintMessage(List<EditModel> editModels) {
-    final names = editModels
-        .map((editModel) => editModel.oldCabinet.name)
-        .map((e) => '「$e」')
-        .join(', ');
+    final names = editModels.map((editModel) => editModel.oldCabinet.name).map((e) => '「$e」').join(', ');
     return EnumLocale.editCabinetDeleteMultipleMessage.trArgs([names]);
   }
 

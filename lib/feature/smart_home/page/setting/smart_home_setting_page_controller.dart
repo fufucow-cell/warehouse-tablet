@@ -1,21 +1,17 @@
 part of 'smart_home_setting_page.dart';
 
-class SmartHomeSettingPageController extends BasePageController {
+class SmartHomeSettingPageController extends GetxController {
   // MARK: - Properties
 
-  final _localeUtil = LocaleUtil.instance;
-  final _themeUtil = ThemeUtil.instance;
+  final _localeUtil = LocaleService.instance;
+  final _themeUtil = ThemeService.instance;
 
   // MARK: - Init
 
   SmartHomeSettingPageController() {
-    super.init();
   }
 
   // MARK: - Method
-
-  @override
-  Future<void> apiProcessing() async {}
 
   /// 檢查是否為當前語言
   bool isCurrentLocale(LocaleTranslation translation) =>

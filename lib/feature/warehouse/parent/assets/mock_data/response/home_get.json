@@ -2,8 +2,8 @@
   "code": 200,
   "message": "Success",
   "data": {
-    "household_id": "550e8400-e29b-41d4-a716-446655440000",
-    "home_name": "My Home",
+    "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
+    "home_name": "牛窩",
     "users": [
       {
         "id": "770e8400-e29b-41d4-a716-446655440002",
@@ -16,29 +16,29 @@
     ],
     "rooms": [
       {
-        "id": "1",
-        "household_id": "550e8400-e29b-41d4-a716-446655440000",
-        "room_name": "辦公室"
+        "id": "b92f3a4c-d5e6-4172-8394-a5b6c7d8e9f0",
+        "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
+        "room_name": "客廳"
       },
       {
-        "id": "2",
-        "household_id": "550e8400-e29b-41d4-a716-446655440000",
-        "room_name": "主臥"
-      },
-      {
-        "id": "3",
-        "household_id": "550e8400-e29b-41d4-a716-446655440000",
-        "room_name": "會議室"
-      },
-      {
-        "id": "4",
-        "household_id": "550e8400-e29b-41d4-a716-446655440000",
+        "id": "1a2b3c4d-5e6f-4001-9123-456789abcdef",
+        "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
         "room_name": "廚房"
       },
       {
-        "id": "5",
-        "household_id": "550e8400-e29b-41d4-a716-446655440000",
-        "room_name": "兒童房"
+        "id": "f8e7d6c5-b4a3-4210-9988-776655443322",
+        "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
+        "room_name": "主臥"
+      },
+      {
+        "id": "c0a80101-3b2a-4c5d-8e9f-0123456789ab",
+        "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
+        "room_name": "客房"
+      },
+      {
+        "id": "d9b8a7c6-e5f4-4321-b0a1-9c8d7e6f5a4b",
+        "household_id": "47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b",
+        "room_name": "浴室"
       }
     ]
   }

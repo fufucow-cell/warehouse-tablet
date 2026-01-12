@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/app/page/login/app_login_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:get/get.dart';
 
 enum LoginActionButtonType {
@@ -25,9 +25,7 @@ class LoginUIButton extends StatelessWidget {
         final onPressed = isDisabled
             ? null
             : () => controller.interactive(
-                  type == LoginActionButtonType.login
-                      ? EnumAppLoginPageInteractive.tapLogin
-                      : EnumAppLoginPageInteractive.tapRegister,
+                  type == LoginActionButtonType.login ? EnumAppLoginPageInteractive.tapLogin : EnumAppLoginPageInteractive.tapRegister,
                 );
 
         if (type == LoginActionButtonType.login) {

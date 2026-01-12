@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse_alarm_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/second_background_card.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
@@ -16,9 +16,7 @@ class WarehouseAlarmPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseAlarmPageController>(
-      init: Get.isRegistered<WarehouseAlarmPageController>()
-          ? null
-          : WarehouseAlarmPageController(),
+      init: Get.isRegistered<WarehouseAlarmPageController>() ? null : WarehouseAlarmPageController(),
       builder: (controller) {
         return const SecondBackgroundCard(
           child: Column(

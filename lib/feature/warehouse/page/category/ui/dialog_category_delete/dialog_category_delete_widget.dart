@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/dialog/ui/header.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
@@ -38,8 +38,7 @@ class DialogCategoryDeleteWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive
-                        .tapDialogCancelButton,
+                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -51,23 +50,20 @@ class DialogCategoryDeleteWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryDeleteWidgetInteractive
-                          .tapDialogConfirmButton,
+                      EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryDeleteWidgetInteractive
-                        .tapDialogConfirmButton,
+                    EnumDialogCategoryDeleteWidgetInteractive.tapDialogConfirmButton,
                     data: false,
                   );
                 },

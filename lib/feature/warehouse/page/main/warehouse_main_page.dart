@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/tab_bar.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/top_tool.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/ui/first_background_card.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/first_background_card.dart';
 import 'package:get/get.dart';
 
 class WarehouseMainPage extends StatefulWidget {
@@ -46,6 +47,10 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
     final controller = Get.find<WarehouseMainPageController>();
     controller.setRootContext(context);
 
+    // 获取当前主题的亮度
+    final brightness = Theme.of(context).brightness;
+    final isDark = brightness == Brightness.dark;
+
     return Obx(() {
       if (!controller.isTabControllerReadyRx.value) {
         return _shimmerScaffold;
@@ -56,26 +61,38 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
         children: controller.tabViews,
       );
 
-      return Scaffold(
-        appBar: AppBar(toolbarHeight: 0),
-        body: Column(
-          children: [
-            _TopBar(),
-            Expanded(
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: ColoredBox(
-                      color: EnumColor.backgroundPrimary.color,
+      return AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle(
+          statusBarColor: EnumColor.backgroundPrimary.color,
+          statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          systemNavigationBarColor: EnumColor.backgroundPrimary.color,
+          systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+        ),
+        child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 0,
+            backgroundColor: EnumColor.backgroundPrimary.color,
+            elevation: 0,
+          ),
+          body: Column(
+            children: [
+              _TopBar(),
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: ColoredBox(
+                        color: EnumColor.backgroundPrimary.color,
+                      ),
                     ),
-                  ),
-                  FirstBackgroundCard(
-                    child: controller.isLoadingRx.value ? _shimmerContent : tabBarView,
-                  ),
-                ],
+                    FirstBackgroundCard(
+                      child: controller.isLoadingRx.value ? _shimmerContent : tabBarView,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       );
     });

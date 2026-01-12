@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locale_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/theme/theme_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/locale_util.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/theme_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +34,7 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<SmartHomeSettingPageController>();
-    final localeUtil = LocaleUtil.instance;
+    final localeUtil = LocaleService.instance;
 
     return ListView(
       padding: const EdgeInsets.all(16.0),
@@ -52,7 +51,7 @@ class _Body extends StatelessWidget {
   /// 語言設置區塊
   Widget _buildLanguageSection(
     SmartHomeSettingPageController controller,
-    LocaleUtil localeUtil,
+    LocaleService localeUtil,
   ) {
     return Card(
       child: Column(
@@ -92,7 +91,7 @@ class _Body extends StatelessWidget {
   /// 語言選項 Tile
   Widget _buildLanguageTile(
     SmartHomeSettingPageController controller,
-    LocaleUtil localeUtil,
+    LocaleService localeUtil,
     LocaleTranslation locale,
     String displayName,
   ) {

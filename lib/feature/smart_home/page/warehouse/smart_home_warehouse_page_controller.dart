@@ -1,21 +1,16 @@
 part of 'smart_home_warehouse_page.dart';
 
-class SmartHomeWarehousePageController extends BasePageController {
+class SmartHomeWarehousePageController extends GetxController {
   // MARK: - Properties
 
   WarehouseMainPageRouterData getMockData() =>
-      WarehouseMainPageRouterData.mock(theme: ThemeUtil.instance.currentTheme.name, locale: LocaleUtil.instance.getCurrentLocaleCode);
+      WarehouseMainPageRouterData.mock(theme: ThemeService.instance.currentTheme.name, locale: LocaleService.instance.getCurrentLocaleCode);
 
   // MARK: - Init
 
-  SmartHomeWarehousePageController() {
-    super.init(isCallApiWhenInit: false);
-  }
+  SmartHomeWarehousePageController();
 
   // MARK: - Methods
-
-  @override
-  Future<void> apiProcessing() async {}
 
   WarehouseMainPageRouterData getWarehouseMainPageRouterData() {
     final service = SmartHomeService.instance;
@@ -26,9 +21,9 @@ class SmartHomeWarehousePageController extends BasePageController {
       domain: service.getDomain,
       userId: userData?.id ?? '',
       userName: userData?.userName ?? '',
-      language: LocaleUtil.instance.getCurrentLocaleCode,
-      theme: ThemeUtil.instance.currentTheme.name,
-      environment: EnvironmentUtil.instance.currentEnvironment.name,
+      language: LocaleService.instance.getCurrentLocaleCode,
+      theme: ThemeService.instance.currentTheme.name,
+      environment: EnvironmentService.instance.currentEnvironment.name,
       // language: userData?.preferences?.languageCode ?? '',
       // theme: userData?.preferences?.theme ?? '',
       accessToken: userData?.accessToken ?? '',

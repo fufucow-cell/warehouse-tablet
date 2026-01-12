@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/api_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/home_household_request_model/home_household_request_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/household.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/room.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
-import 'package:flutter_smart_home_tablet/util/api_util.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_household_page_controller.dart';
@@ -25,7 +21,6 @@ class SmartHomeHouseholdPage extends GetView<SmartHomeHouseholdPageController> {
       builder: (controller) {
         return CustScaffold(
           title: EnumLocale.smartHomeTabHousehold.tr,
-          showBackButton: false,
           child: _Body(),
         );
       },
@@ -38,25 +33,12 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<SmartHomeHouseholdPageController>(
       builder: (controller) {
-        if (controller.hasHousehold) {
-          return _HouseholdContent();
-        } else {
-          return _EmptyHouseholdContent();
-        }
-      },
-    );
-  }
-}
-
-class _HouseholdContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<SmartHomeHouseholdPageController>(
-      builder: (controller) {
         final householdData = controller.householdData;
 
         if (householdData == null) {
-          return const SizedBox.shrink();
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return SingleChildScrollView(
@@ -64,119 +46,61 @@ class _HouseholdContent extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 家庭切换下拉菜单
-              if (controller.householdList != null &&
-                  controller.householdList!.length > 1)
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.home,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                EnumLocale.smartHomeSwitchHousehold.tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurfaceVariant,
-                                    ),
-                              ),
-                              const SizedBox(height: 8),
-                              GetBuilder<SmartHomeHouseholdPageController>(
-                                builder: (controller) =>
-                                    DropdownButton<Household>(
-                                  value: controller.currentHousehold,
-                                  isExpanded: true,
-                                  underline: Container(),
-                                  items: controller.householdList!
-                                      .map((household) {
-                                    return DropdownMenuItem<Household>(
-                                      value: household,
-                                      child: Text(
-                                        household.homeName ??
-                                            EnumLocale
-                                                .smartHomeUnnamedHousehold.tr,
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.titleMedium,
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (
-                                    Household? newHousehold,
-                                  ) {
-                                    if (newHousehold != null) {
-                                      controller.interactive(
-                                        EnumSmartHomeHouseholdPageInteractive
-                                            .tapHomeItem,
-                                        data: newHousehold,
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+              // Home Info
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Home Info',
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      const SizedBox(height: 12),
+                      _InfoRow(
+                        label: 'Household ID',
+                        value: householdData.householdId ?? '-',
+                      ),
+                      _InfoRow(
+                        label: 'Home Name',
+                        value: householdData.homeName ?? EnumLocale.smartHomeUnnamed.tr,
+                      ),
+                    ],
                   ),
                 ),
-              if (controller.householdList != null &&
-                  controller.householdList!.length > 1)
-                const SizedBox(height: 16),
-              // 家庭名称
-              Text(
-                '${EnumLocale.smartHomeHouseholdName.tr}: ${householdData.homeName ?? EnumLocale.smartHomeUnnamed.tr}',
-                style: Theme.of(context).textTheme.headlineSmall,
               ),
-              const SizedBox(height: 24),
-              // 房间列表
-              if (householdData.rooms != null &&
-                  householdData.rooms!.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${EnumLocale.smartHomeRoomList.tr}：',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(height: 12),
-                    ...householdData.rooms!.map(
-                      (room) => Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 8.0,
-                        ),
-                        child: Card(
-                          child: ListTile(
-                            title: Text(
-                              room.roomName ??
-                                  EnumLocale.smartHomeUnnamedRoom.tr,
-                            ),
-                          ),
-                        ),
+              const SizedBox(height: 16),
+              // Room List Info
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Room List Info',
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                    ),
-                  ],
-                )
-              else
-                Text(
-                  EnumLocale.smartHomeNoRoom.tr,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                      const SizedBox(height: 12),
+                      if (householdData.rooms != null && householdData.rooms!.isNotEmpty)
+                        ...householdData.rooms!.asMap().entries.map(
+                              (entry) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: _RoomInfoCard(room: entry.value, index: entry.key),
+                              ),
+                            )
+                      else
+                        Text(
+                          EnumLocale.smartHomeNoRoom.tr,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                              ),
+                        ),
+                    ],
+                  ),
                 ),
+              ),
             ],
           ),
         );
@@ -185,56 +109,81 @@ class _HouseholdContent extends StatelessWidget {
   }
 }
 
-class _EmptyHouseholdContent extends StatelessWidget {
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _InfoRow({
+    required this.label,
+    required this.value,
+  });
+
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SmartHomeHouseholdPageController>();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 120,
+            child: Text(
+              '$label:',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.home_outlined,
-              size: 64,
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-            const SizedBox(height: 24),
-            Text(
-              EnumLocale.smartHomeNoHouseholdYet.tr,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            const SizedBox(height: 32),
-            // 家庭名称输入框
-            TextField(
-              controller: controller.homeNameController,
-              decoration: InputDecoration(
-                labelText: EnumLocale.smartHomeHouseholdName.tr,
-                hintText: EnumLocale.smartHomeHouseholdNameHint.tr,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 24),
-            // 建立家庭按钮
-            ElevatedButton(
-              onPressed:
-                  controller.isLoading ? null : () => controller.createHome(),
-              child: controller.isLoading
-                  ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    )
-                  : Text(
-                      EnumLocale.smartHomeCreateHousehold.tr,
-                    ),
-            ),
-          ],
+class _RoomInfoCard extends StatelessWidget {
+  final Room room;
+  final int index;
+
+  const _RoomInfoCard({
+    required this.room,
+    required this.index,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12.0),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
         ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Room ${index + 1}',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          const SizedBox(height: 8),
+          _InfoRow(
+            label: 'Room ID',
+            value: room.id?.toString() ?? '-',
+          ),
+          _InfoRow(
+            label: 'Room Name',
+            value: room.roomName ?? EnumLocale.smartHomeUnnamedRoom.tr,
+          ),
+        ],
       ),
     );
   }
