@@ -14,8 +14,7 @@ enum EnumDialogItemEditNormalWidgetInteractive {
 }
 
 /// DialogItemEditNormalWidget 用户事件处理扩展
-extension DialogItemEditNormalWidgetUserEventExtension
-    on DialogItemEditNormalWidgetController {
+extension DialogItemEditNormalWidgetUserEventExtension on DialogItemEditNormalWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditNormalWidgetInteractive type, {
@@ -43,23 +42,29 @@ extension DialogItemEditNormalWidgetUserEventExtension
           _changeSelectedCategoryLevel3(data);
         }
       case EnumDialogItemEditNormalWidgetInteractive.tapDialogCancelButton:
-        _routerHandle(EnumDialogItemEditNormalWidgetRoute.closeDialog,
-            data: data);
+        _routerHandle(
+          EnumDialogItemEditNormalWidgetRoute.closeDialog,
+          data: data,
+        );
       case EnumDialogItemEditNormalWidgetInteractive.tapDialogConfirmButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
           _setLoadingStatus(false);
-          _routerHandle(EnumDialogItemEditNormalWidgetRoute.closeDialog,
-              data: data);
+          _routerHandle(
+            EnumDialogItemEditNormalWidgetRoute.closeDialog,
+            data: data,
+          );
         }
       case EnumDialogItemEditNormalWidgetInteractive.tapDialogDeleteButton:
         if (data is bool) {
           _setLoadingStatus(data);
         } else if (data is BuildContext) {
           _setLoadingStatus(false);
-          _routerHandle(EnumDialogItemEditNormalWidgetRoute.closeDialog,
-              data: data);
+          _routerHandle(
+            EnumDialogItemEditNormalWidgetRoute.closeDialog,
+            data: data,
+          );
         }
       default:
         break;

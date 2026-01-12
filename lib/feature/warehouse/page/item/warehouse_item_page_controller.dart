@@ -161,7 +161,6 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _updateItemNormal(Item item, DialogItemEditNormalOutputModel model) async {
-    String errMsg = '';
     final requestModel = WarehouseItemEditNormalRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -187,7 +186,6 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _deleteItem(String itemId) async {
-    String errMsg = '';
     final requestModel = WarehouseItemDeleteRequestModel(
       householdId: _service.getHouseholdId,
       id: itemId,
@@ -208,7 +206,6 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _updateItemQuantity(Item item, List<DialogItemEditQuantityOutputModel> models) async {
-    String errMsg = '';
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -230,7 +227,6 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<bool> _updateItemPosition(Item item, List<DialogItemEditPositionOutputModel> models) async {
-    String errMsg = '';
     final requestModel = WarehouseItemEditPositionRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
@@ -278,11 +274,6 @@ class WarehouseItemPageController extends GetxController {
 
   // 扁平化所有櫥櫃包含物品
   List<Cabinet> _flattenAllCabinetsWithItems() {
-    return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
-  }
-
-  // 扁平化所有物品
-  List<Cabinet> _flattenAllCabinetItems() {
     return _model.allRoomCabinetItems.value?.expand<Cabinet>((room) => room.cabinets ?? []).toList() ?? [];
   }
 

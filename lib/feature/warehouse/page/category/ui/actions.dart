@@ -73,9 +73,7 @@ class ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = (eImage == EnumImage.cArrowUp2)
-        ? EnumColor.backgroundProduct.color
-        : EnumColor.backgroundSecondary.color;
+    final backgroundColor = (eImage == EnumImage.cArrowUp2) ? EnumColor.backgroundProduct.color : EnumColor.backgroundSecondary.color;
 
     return Material(
       color: backgroundColor,
@@ -94,8 +92,9 @@ class ActionButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0.scale),
           ),
           child: eImage.image(
-              size: Size.square(40.0.scale),
-              color: EnumColor.iconSecondary.color),
+            size: Size.square(40.0.scale),
+            color: EnumColor.iconSecondary.color,
+          ),
         ),
       ),
     );

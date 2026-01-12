@@ -12,6 +12,7 @@ class WarehouseCabinetReadRequestModel with _$WarehouseCabinetReadRequestModel {
   }) = _WarehouseCabinetReadRequestModel;
 
   factory WarehouseCabinetReadRequestModel.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$WarehouseCabinetReadRequestModelFromJson(json);
 }

@@ -4,7 +4,7 @@ class SmartHomeWarehousePageController extends BasePageController {
   // MARK: - Properties
 
   WarehouseMainPageRouterData getMockData() =>
-      WarehouseMainPageRouterData.mock();
+      WarehouseMainPageRouterData.mock(theme: ThemeUtil.instance.currentTheme.name, locale: LocaleUtil.instance.getCurrentLocaleCode);
 
   // MARK: - Init
 

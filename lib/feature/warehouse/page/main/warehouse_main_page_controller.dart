@@ -10,7 +10,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/ui/dialog_item_search/dialog_item_search_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_cabinet_read_request_model/warehouse_cabinet_read_request_model.dart';
@@ -214,7 +213,6 @@ class WarehouseMainPageController extends GetxController {
   }
 
   Future<bool> _createItem(DialogItemCreateOutputModel model) async {
-    String errMsg = '';
     final requestModel = WarehouseItemCreateRequestModel(
       name: model.name,
       description: model.description,

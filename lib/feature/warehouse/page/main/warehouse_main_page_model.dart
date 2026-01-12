@@ -69,13 +69,13 @@ class WarehouseMainPageRouterData {
 
   /// Factory method to create mock data from mock_data files
   /// Uses data from assets/mock_data/response/home_get.json
-  factory WarehouseMainPageRouterData.mock() {
+  factory WarehouseMainPageRouterData.mock({String? theme, String? locale}) {
     // Mock data based on home_get.json
     return WarehouseMainPageRouterData(
       userId: 'cow_test_user_Id',
       userName: 'Cow',
-      language: 'zh_TW',
-      theme: 'light',
+      language: locale ?? 'zh_TW',
+      theme: theme ?? 'light',
       userAvatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858485.png',
       userRoleType: 0,
       domain: 'http://192.168.31.159:8000/api/v1/warehouse/',

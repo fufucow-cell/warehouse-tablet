@@ -2,7 +2,6 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_quantity/dialog_item_edit_quantity_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/locales/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/log_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
@@ -71,7 +70,6 @@ class WarehouseAlarmPageController extends GetxController {
     Item item,
     List<DialogItemEditQuantityOutputModel> models,
   ) async {
-    String errMsg = '';
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,

@@ -21,7 +21,9 @@ class FilterInfo extends StatelessWidget {
           () {
             if (controller.allLogsRx.value == null) {
               return WidgetUtil.shimmerWidget(
-                  width: 200.0.scale, height: 32.0.scale);
+                width: 200.0.scale,
+                height: 32.0.scale,
+              );
             }
 
             return WidgetUtil.textWidget(
@@ -59,8 +61,7 @@ class _FilterDropdown extends StatelessWidget {
           }
         },
         onMenuOpened: () {
-          controller
-              .interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
+          controller.interactive(EnumWarehouseRecordPageInteractive.tapFilterButton);
         },
       ),
     );
@@ -78,8 +79,7 @@ class _RefreshButton extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.0.scale),
       child: InkWell(
         onTap: () {
-          controller
-              .interactive(EnumWarehouseRecordPageInteractive.tapRefreshButton);
+          controller.interactive(EnumWarehouseRecordPageInteractive.tapRefreshButton);
         },
         borderRadius: BorderRadius.circular(16.0.scale),
         child: Container(
