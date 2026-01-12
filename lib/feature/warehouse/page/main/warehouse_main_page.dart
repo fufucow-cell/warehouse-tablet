@@ -21,8 +21,7 @@ class WarehouseMainPage extends StatefulWidget {
   State<WarehouseMainPage> createState() => _WarehouseMainPageState();
 }
 
-class _WarehouseMainPageState extends State<WarehouseMainPage>
-    with SingleTickerProviderStateMixin {
+class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -58,40 +57,23 @@ class _WarehouseMainPageState extends State<WarehouseMainPage>
       );
 
       return Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 0,
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(94.0.scale),
-            child: Container(
-              color: EnumColor.backgroundPrimary.color,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0.scale),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CustomTabBar(
-                        controller: controller.tabController!,
-                        tabs: controller.tabs,
-                      ),
-                    ),
-                    const TopTool(),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-        body: Stack(
+        appBar: AppBar(toolbarHeight: 0),
+        body: Column(
           children: [
-            Positioned.fill(
-              child: ColoredBox(
-                color: EnumColor.backgroundPrimary.color,
+            _TopBar(),
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: ColoredBox(
+                      color: EnumColor.backgroundPrimary.color,
+                    ),
+                  ),
+                  FirstBackgroundCard(
+                    child: controller.isLoadingRx.value ? _shimmerContent : tabBarView,
+                  ),
+                ],
               ),
-            ),
-            FirstBackgroundCard(
-              child:
-                  controller.isLoadingRx.value ? _shimmerContent : tabBarView,
             ),
           ],
         ),
@@ -144,6 +126,31 @@ class _WarehouseMainPageState extends State<WarehouseMainPage>
           ),
         ),
         margin: EdgeInsets.symmetric(horizontal: 10.0.scale),
+      ),
+    );
+  }
+}
+
+class _TopBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseMainPageController>();
+    return Container(
+      color: EnumColor.backgroundPrimary.color,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 40.0.scale),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: CustomTabBar(
+                controller: controller.tabController!,
+                tabs: controller.tabs,
+              ),
+            ),
+            const TopTool(),
+          ],
+        ),
       ),
     );
   }

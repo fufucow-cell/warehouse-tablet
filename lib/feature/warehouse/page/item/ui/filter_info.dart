@@ -23,8 +23,7 @@ class FilterInfo extends StatelessWidget {
         Obx(
           () => _ExpandButton(
             isExpanded: controller.isFilterExpandedRx.value,
-            onPressed: () => controller
-                .interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
+            onPressed: () => controller.interactive(EnumWarehouseItemPageInteractive.tapFilterExpand),
           ),
         ),
       ],
@@ -44,6 +43,7 @@ class _FilterLists extends StatelessWidget {
             return FilterTextListSingle(
               items: controller.getFilterRoomNameList(),
               selectedIndex: controller.filterIndexForRoomsRx.value,
+              isFillColor: true,
               onTap: (index) => controller.interactive(
                 EnumWarehouseItemPageInteractive.tapRoomFilter,
                 data: index,
@@ -54,8 +54,7 @@ class _FilterLists extends StatelessWidget {
         final cabinetFilter = Obx(() {
           final isLoading = controller.allItemsRx.value == null;
           if (isLoading) {
-            return WidgetUtil.shimmerWidget(
-                width: 112.0.scale, height: 70.0.scale);
+            return WidgetUtil.shimmerWidget(width: 112.0.scale, height: 70.0.scale);
           }
 
           return FilterTextListSingle(
@@ -71,8 +70,7 @@ class _FilterLists extends StatelessWidget {
           () {
             final isLoading = controller.allItemsRx.value == null;
             if (isLoading) {
-              return WidgetUtil.shimmerWidget(
-                  width: 160.0.scale, height: 70.0.scale);
+              return WidgetUtil.shimmerWidget(width: 160.0.scale, height: 70.0.scale);
             }
 
             return FilterTextListMulti(
@@ -137,9 +135,7 @@ class _ExpandButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            isExpanded
-                ? EnumLocale.warehouseItemCollapse.tr
-                : EnumLocale.warehouseItemMoreOptions.tr,
+            isExpanded ? EnumLocale.warehouseItemCollapse.tr : EnumLocale.warehouseItemMoreOptions.tr,
             style: TextStyle(
               color: EnumColor.textSecondary.color,
             ),
@@ -150,8 +146,7 @@ class _ExpandButton extends StatelessWidget {
             height: 40.0.scale,
             child: isExpanded
                 ? EnumImage.cArrowUp.image(color: EnumColor.iconSecondary.color)
-                : EnumImage.cArrowDown
-                    .image(color: EnumColor.iconSecondary.color),
+                : EnumImage.cArrowDown.image(color: EnumColor.iconSecondary.color),
           ),
         ],
       ),

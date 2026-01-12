@@ -5,12 +5,14 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 class FilterTextListSingle extends StatelessWidget {
   final List<String> items;
   final int? selectedIndex;
+  final bool isFillColor;
   final ValueChanged<int>? onTap;
 
   const FilterTextListSingle({
     super.key,
     required this.items,
     this.selectedIndex,
+    this.isFillColor = false,
     this.onTap,
   });
 
@@ -24,6 +26,7 @@ class FilterTextListSingle extends StatelessWidget {
             FilterTextListSingleItem(
               title: items[index],
               isSelected: selectedIndex == index,
+              isFillColor: isFillColor,
               onPressed: onTap == null ? null : () => onTap!(index),
             ),
             if (index < items.length - 1) SizedBox(width: 32.0.scale),
@@ -37,12 +40,14 @@ class FilterTextListSingle extends StatelessWidget {
 class FilterTextListSingleItem extends StatelessWidget {
   final String title;
   final bool isSelected;
+  final bool isFillColor;
   final VoidCallback? onPressed;
 
   const FilterTextListSingleItem({
     super.key,
     required this.title,
     required this.isSelected,
+    required this.isFillColor,
     this.onPressed,
   });
 
@@ -51,18 +56,14 @@ class FilterTextListSingleItem extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: EdgeInsets.symmetric(
           horizontal: 24.0.scale,
-          vertical: 16.0.scale,
         ),
-        backgroundColor:
-            isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
-        foregroundColor: isSelected
-            ? EnumColor.textProduct.color
-            : EnumColor.textSecondary.color,
+        backgroundColor: isSelected ? (isFillColor ? EnumColor.backgroundButtonFill.color : EnumColor.menuBgFocused.color) : Colors.transparent,
+        foregroundColor: isSelected ? (isFillColor ? EnumColor.textWhite.color : EnumColor.textProduct.color) : EnumColor.textSecondary.color,
         side: BorderSide(
-          color:
-              isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
+          color: isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
           width: 1.0,
         ),
         shape: RoundedRectangleBorder(

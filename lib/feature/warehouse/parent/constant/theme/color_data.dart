@@ -119,6 +119,10 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFF6F6F6),
     dark: Color(0xFF444651),
   ),
+  'backgroundButtonFill': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
   'lineDivider': ColorData(
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),

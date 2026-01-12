@@ -23,13 +23,11 @@ class TopTool extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             _button(EnumImage.cAdd, () {
-              controller
-                  .interactive(EnumWarehouseMainPageInteractive.tapCreate);
+              controller.interactive(EnumWarehouseMainPageInteractive.tapCreate);
             }),
             SizedBox(width: 32.0.scale),
             _button(EnumImage.cSearch, () {
-              controller
-                  .interactive(EnumWarehouseMainPageInteractive.tapSearch);
+              controller.interactive(EnumWarehouseMainPageInteractive.tapSearch);
             }),
           ],
         );

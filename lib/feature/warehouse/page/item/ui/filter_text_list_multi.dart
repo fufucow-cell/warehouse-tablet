@@ -60,9 +60,9 @@ class _FilterItem extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: EdgeInsets.symmetric(
           horizontal: 24.0.scale,
-          vertical: 16.0.scale,
         ),
       ),
       child: Row(

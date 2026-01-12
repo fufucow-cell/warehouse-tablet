@@ -115,9 +115,17 @@ class DeviceUtil extends GetxService {
         systemVersion.toLowerCase().contains('simulator');
   }
 
-  /// 螢幕尺寸資訊
+  /// 螢幕尺寸資訊（邏輯像素）
   Size _screenSize = Size.zero;
   Size get screenSize => _screenSize;
+
+  /// 設備像素比
+  double _devicePixelRatio = 1.0;
+  double get devicePixelRatio => _devicePixelRatio;
+
+  /// 螢幕物理解析度（物理像素）
+  Size _physicalSize = Size.zero;
+  Size get physicalSize => _physicalSize;
 
   /// 狀態列高度
   double _statusBarHeight = 0.0;
@@ -221,8 +229,17 @@ class DeviceUtil extends GetxService {
   void _initDeviceInfo(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
-    // 存儲螢幕尺寸
+    // 存儲螢幕尺寸（邏輯像素）
     _screenSize = mediaQuery.size;
+
+    // 存儲設備像素比
+    _devicePixelRatio = mediaQuery.devicePixelRatio;
+
+    // 存儲螢幕物理解析度（物理像素）
+    _physicalSize = Size(
+      _screenSize.width * _devicePixelRatio,
+      _screenSize.height * _devicePixelRatio,
+    );
 
     // 存儲狀態列和底部安全區域高度
     _statusBarHeight = mediaQuery.padding.top;
@@ -233,7 +250,7 @@ class DeviceUtil extends GetxService {
 
     // 判斷是否為平板或手機設備（平板通常最短邊 >= 600）
     if (!isWeb && !isDesktop && (isIOS || isAndroid)) {
-      _isTablet = _screenSize.shortestSide >= 600;
+      _isTablet = _physicalSize.shortestSide >= 600;
       _isIPad = isIOS && isTablet;
       _isAndroidPad = isAndroid && isTablet;
       _isMobile = !isTablet;

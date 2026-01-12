@@ -15,15 +15,13 @@ class WarehouseRecordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseRecordPageController>(
-      init: Get.isRegistered<WarehouseRecordPageController>()
-          ? null
-          : WarehouseRecordPageController(),
+      init: Get.isRegistered<WarehouseRecordPageController>() ? null : WarehouseRecordPageController(),
       builder: (controller) {
         return SecondBackgroundCard(
           child: Column(
             children: [
               const FilterInfo(),
-              SizedBox(height: 16.0.scale),
+              SizedBox(height: 32.0.scale),
               const Expanded(child: RecordList()),
             ],
           ),

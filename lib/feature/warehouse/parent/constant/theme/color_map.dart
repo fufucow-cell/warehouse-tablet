@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-26T12:14:37.241861
+/// 生成时间: 2026-01-12T14:34:43.762912
 library;
 
 import 'package:flutter/material.dart';
@@ -18,6 +18,7 @@ enum EnumColor {
   backgroundAccentRed,
   backgroundAccentYellow,
   backgroundButton,
+  backgroundButtonFill,
   backgroundDropdown,
   backgroundGhost,
   backgroundItemGradient,
@@ -55,7 +56,7 @@ enum EnumColor {
     final result = <Color>[];
 
     for (var num = 1; num <= 100; num++) {
-      final colorData = colorDataMap['$key$num'];
+      final colorData = colorDataMap['${key}$num'];
 
       if (colorData == null) {
         break;
