@@ -44,7 +44,7 @@ class ItemList extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: 16.0.scale,
                 right: 16.0.scale,
-                top: 32.0.scale,
+                top: 16.0.scale,
                 bottom: 40.0.scale,
               ),
               crossAxisSpacing: 32.0.scale,

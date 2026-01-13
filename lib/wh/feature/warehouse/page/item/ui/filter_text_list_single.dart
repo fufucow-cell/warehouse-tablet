@@ -53,25 +53,27 @@ class FilterTextListSingleItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        padding: EdgeInsets.symmetric(
-          horizontal: 24.0.scale,
-          vertical: 16.0.scale,
+    return SizedBox(
+      height: 72.0.scale,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.0.scale,
+          ),
+          backgroundColor: isSelected ? (isFillColor ? EnumColor.backgroundButtonFill.color : EnumColor.menuBgFocused.color) : Colors.transparent,
+          foregroundColor: isSelected ? (isFillColor ? EnumColor.textWhite.color : EnumColor.textProduct.color) : EnumColor.textSecondary.color,
+          side: BorderSide(
+            color: isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
+            width: 1.0,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0.scale),
+          ),
         ),
-        backgroundColor: isSelected ? (isFillColor ? EnumColor.backgroundButtonFill.color : EnumColor.menuBgFocused.color) : Colors.transparent,
-        foregroundColor: isSelected ? (isFillColor ? EnumColor.textWhite.color : EnumColor.textProduct.color) : EnumColor.textSecondary.color,
-        side: BorderSide(
-          color: isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
-          width: 1.0,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0.scale),
-        ),
+        child: Text(title),
       ),
-      child: Text(title),
     );
   }
 }

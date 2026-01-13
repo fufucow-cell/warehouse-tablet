@@ -135,7 +135,6 @@ class WarehouseItemPageController extends GetxController {
     if (searchCondition != null) {
       _model.searchCondition.value = searchCondition;
       _genVisibleItemsBySearchCondition();
-      _service.clearSearchCondition();
     } else if (searchCabinetId.isNotEmpty) {
       interactive(EnumWarehouseItemPageInteractive.tapRoomFilter, data: 0);
       final List<WarehouseNameIdModel> cabinets = _model.filterRuleForCabinets.value;
@@ -150,7 +149,10 @@ class WarehouseItemPageController extends GetxController {
     }
 
     _genFilterRuleForCabinet();
-    _genAllFilterRuleAndItemForCategory();
+
+    if (searchCondition == null) {
+      _genAllFilterRuleAndItemForCategory();
+    }
   }
 
   Future<void> _queryApiData() async {

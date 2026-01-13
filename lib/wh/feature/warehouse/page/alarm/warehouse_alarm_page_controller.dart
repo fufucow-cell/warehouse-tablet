@@ -4,6 +4,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/page/item/ui/dialog_item
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/item/ui/dialog_item_info/dialog_item_info_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_edit_quantity_request_model/warehouse_item_edit_quantity_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
@@ -73,6 +74,7 @@ class WarehouseAlarmPageController extends GetxController {
     final requestModel = WarehouseItemEditQuantityRequestModel(
       householdId: _service.getHouseholdId,
       itemId: item.id,
+      userName: _service.userName,
       cabinets: models
           .map(
             (model) => QuantityCabinetRequestModel(
@@ -87,6 +89,18 @@ class WarehouseAlarmPageController extends GetxController {
       requestModel,
     );
 
-    return response != null;
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      await _service.apiReqReadItems(
+        WarehouseItemRequestModel(
+          householdId: _service.getHouseholdId,
+        ),
+      );
+
+      _loadData();
+    }
+
+    return isSuccess;
   }
 }

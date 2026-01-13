@@ -74,9 +74,8 @@ extension WarehouseItemPageUserEventExtension on WarehouseItemPageController {
         }
         break;
       case EnumWarehouseItemPageInteractive.tapClearSearch:
-        _genVisibleItems();
-        _model.searchCondition.value = null;
         _service.clearSearchCondition();
+        _initData();
     }
   }
 }

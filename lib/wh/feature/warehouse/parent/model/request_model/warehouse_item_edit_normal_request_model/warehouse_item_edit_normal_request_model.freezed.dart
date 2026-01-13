@@ -32,6 +32,7 @@ mixin _$WarehouseItemEditNormalRequestModel {
   String? get photo => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -57,7 +58,7 @@ abstract class $WarehouseItemEditNormalRequestModelCopyWith<$Res> {
       String? photo,
       String? name,
       String? description,
-      int? minStockAlert});
+      @JsonKey(name: 'min_stock_alert') int? minStockAlert});
 }
 
 /// @nodoc
@@ -137,7 +138,7 @@ abstract class _$$WarehouseItemEditNormalRequestModelImplCopyWith<$Res>
       String? photo,
       String? name,
       String? description,
-      int? minStockAlert});
+      @JsonKey(name: 'min_stock_alert') int? minStockAlert});
 }
 
 /// @nodoc
@@ -211,7 +212,7 @@ class _$WarehouseItemEditNormalRequestModelImpl
       this.photo,
       this.name,
       this.description,
-      this.minStockAlert});
+      @JsonKey(name: 'min_stock_alert') this.minStockAlert});
 
   factory _$WarehouseItemEditNormalRequestModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -236,6 +237,7 @@ class _$WarehouseItemEditNormalRequestModelImpl
   @override
   final String? description;
   @override
+  @JsonKey(name: 'min_stock_alert')
   final int? minStockAlert;
 
   @override
@@ -287,14 +289,15 @@ class _$WarehouseItemEditNormalRequestModelImpl
 abstract class _WarehouseItemEditNormalRequestModel
     implements WarehouseItemEditNormalRequestModel {
   factory _WarehouseItemEditNormalRequestModel(
-      {@JsonKey(name: 'household_id') final String? householdId,
-      @JsonKey(name: 'item_id') final String? itemId,
-      @JsonKey(name: 'category_id') final String? categoryId,
-      @JsonKey(name: 'user_name') final String? userName,
-      final String? photo,
-      final String? name,
-      final String? description,
-      final int? minStockAlert}) = _$WarehouseItemEditNormalRequestModelImpl;
+          {@JsonKey(name: 'household_id') final String? householdId,
+          @JsonKey(name: 'item_id') final String? itemId,
+          @JsonKey(name: 'category_id') final String? categoryId,
+          @JsonKey(name: 'user_name') final String? userName,
+          final String? photo,
+          final String? name,
+          final String? description,
+          @JsonKey(name: 'min_stock_alert') final int? minStockAlert}) =
+      _$WarehouseItemEditNormalRequestModelImpl;
 
   factory _WarehouseItemEditNormalRequestModel.fromJson(
           Map<String, dynamic> json) =
@@ -319,6 +322,7 @@ abstract class _WarehouseItemEditNormalRequestModel
   @override
   String? get description;
   @override
+  @JsonKey(name: 'min_stock_alert')
   int? get minStockAlert;
   @override
   @JsonKey(ignore: true)

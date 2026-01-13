@@ -94,8 +94,8 @@ class _FilterLists extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   roomFilter,
+                  SizedBox(height: 16.0.scale),
                   if (controller.isFilterExpandedRx.value) ...[
-                    SizedBox(height: 16.0.scale),
                     cabinetFilter,
                     SizedBox(height: 16.0.scale),
                     categoryFilter,
@@ -121,37 +121,39 @@ class _ExpandButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-        backgroundColor: EnumColor.backgroundSecondary.color,
-        padding: EdgeInsets.symmetric(
-          horizontal: 32.0.scale,
-          vertical: 16.0.scale,
+    return SizedBox(
+      height: 72.0.scale,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: EnumColor.backgroundSecondary.color,
+          padding: EdgeInsets.symmetric(
+            horizontal: 32.0.scale,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100.0.scale),
+          ),
         ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100.0.scale),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            isExpanded ? EnumLocale.warehouseItemCollapse.tr : EnumLocale.warehouseItemMoreOptions.tr,
-            style: TextStyle(
-              color: EnumColor.textSecondary.color,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              isExpanded ? EnumLocale.warehouseItemCollapse.tr : EnumLocale.warehouseItemMoreOptions.tr,
+              style: TextStyle(
+                color: EnumColor.textSecondary.color,
+              ),
             ),
-          ),
-          SizedBox(width: 6.0.scale),
-          SizedBox(
-            width: 40.0.scale,
-            height: 40.0.scale,
-            child: isExpanded
-                ? EnumImage.cArrowUp.image(color: EnumColor.iconSecondary.color)
-                : EnumImage.cArrowDown.image(color: EnumColor.iconSecondary.color),
-          ),
-        ],
+            SizedBox(width: 6.0.scale),
+            SizedBox(
+              width: 40.0.scale,
+              height: 40.0.scale,
+              child: isExpanded
+                  ? EnumImage.cArrowUp.image(color: EnumColor.iconSecondary.color)
+                  : EnumImage.cArrowDown.image(color: EnumColor.iconSecondary.color),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -116,11 +116,11 @@ class _AlarmList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseAlarmPageController>();
-    final items = controller.allAlarmItemsRx;
     return Obx(
       () {
-        final isLoading = controller.allAlarmItemsRx.value == null;
-        final isEmpty = controller.allAlarmItemsRx.value?.isEmpty ?? true;
+        final items = controller.allAlarmItemsRx.value;
+        final isLoading = items == null;
+        final isEmpty = (items?.isEmpty ?? false);
 
         if (isLoading) {
           return const _AlarmListShimmer();
@@ -130,7 +130,7 @@ class _AlarmList extends StatelessWidget {
 
         return SingleChildScrollView(
           child: Column(
-            children: items.value!
+            children: items
                 .expand(
                   (item) => [
                     _CellWidget(item: item),

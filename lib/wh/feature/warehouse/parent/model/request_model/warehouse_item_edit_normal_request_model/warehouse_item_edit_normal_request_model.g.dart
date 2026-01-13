@@ -17,7 +17,7 @@ _$WarehouseItemEditNormalRequestModelImpl
           photo: json['photo'] as String?,
           name: json['name'] as String?,
           description: json['description'] as String?,
-          minStockAlert: (json['minStockAlert'] as num?)?.toInt(),
+          minStockAlert: (json['min_stock_alert'] as num?)?.toInt(),
         );
 
 Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
@@ -30,5 +30,5 @@ Map<String, dynamic> _$$WarehouseItemEditNormalRequestModelImplToJson(
       'photo': instance.photo,
       'name': instance.name,
       'description': instance.description,
-      'minStockAlert': instance.minStockAlert,
+      'min_stock_alert': instance.minStockAlert,
     };

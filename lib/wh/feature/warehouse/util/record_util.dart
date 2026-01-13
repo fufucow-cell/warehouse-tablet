@@ -171,8 +171,9 @@ class RecordUtil {
 
   static String _genItemNormalContent(ItemRecord record) {
     String result = '';
+    final opType = EnumOperateType.fromInt(record.operateType);
 
-    if (record.itemName?.length == 1) {
+    if ((record.itemName?.length == 1) && (opType == EnumOperateType.create || opType == EnumOperateType.delete)) {
       result = (record.itemName?.firstOrNull?.isEmpty ?? true) ? EnumLocale.warehouseUnnamed.tr : record.itemName!.firstOrNull!;
       return result;
     } else if (record.itemName?.length == 2) {
