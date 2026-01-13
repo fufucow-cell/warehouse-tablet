@@ -10,7 +10,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:get/get.dart';
 
 class DialogItemHistoryWidget extends StatelessWidget {
@@ -44,7 +46,7 @@ class DialogItemHistoryWidget extends StatelessWidget {
               Obx(
                 () {
                   if (controller.recordsRx.value == null) {
-                    return WidgetUtil.shimmerWidget(height: 250.0.scale);
+                    return ShimmerWidget(height: 250.0.scale);
                   }
 
                   return ItemInfoCard(
@@ -74,11 +76,11 @@ class _RecordsList extends StatelessWidget {
         final isLoading = records == null;
 
         if (isLoading) {
-          return WidgetUtil.shimmerWidget(
+          return ShimmerWidget(
             height: 100.0.scale,
           );
         } else if (records.isEmpty) {
-          return WidgetUtil.emptyWidget();
+          return const CustEmptyWidget();
         }
 
         return Column(
@@ -125,7 +127,7 @@ class _RecordItem extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: EdgeInsets.only(top: 12.0.scale),
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 record.content,
                 size: 28.0.scale,
               ),
@@ -134,7 +136,7 @@ class _RecordItem extends StatelessWidget {
           SizedBox(width: 24.0.scale),
           Padding(
             padding: EdgeInsets.only(top: 12.0.scale),
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               record.date,
               size: 28.0.scale,
             ),
@@ -165,7 +167,7 @@ class _RecordTag extends StatelessWidget {
         color: operateType.tagBgColor,
         borderRadius: BorderRadius.circular(100.0.scale),
       ),
-      child: WidgetUtil.textWidget(
+      child: CustTextWidget(
         tag,
         size: 28.0.scale,
         color: operateType.tagTextColor,

@@ -37,8 +37,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/envir
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/router_service/router_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:get/get.dart';
 
 part 'warehouse_service_model.dart';
@@ -49,7 +50,6 @@ class WarehouseService {
   // MARK: - Properties
 
   final _model = WarehouseServiceModel();
-  final _logService = LogService.instance;
   final _themeService = ThemeService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
@@ -95,8 +95,10 @@ class WarehouseService {
       return Get.find<WarehouseService>();
     } else {
       final service = WarehouseService._internal();
-      LogService.register();
       Get.put<WarehouseService>(service, permanent: true);
+      LocaleService.register();
+      EnvironmentService.register();
+      RouterService.register();
       return service;
     }
   }
@@ -119,6 +121,7 @@ class WarehouseService {
 
   void setRootContext(BuildContext context) {
     _model.rootContext = context;
+    RouterService.instance.findNavigatorContext(context);
   }
 
   void addNewCategory(WarehouseNameIdModel category) {
@@ -142,7 +145,11 @@ class WarehouseService {
   }
 
   void showSnackBar({required String title, String? message}) {
-    _logService.showSnackBar(title: title, message: message ?? '');
+    CustSnackBar.show(
+      context: _model.rootContext,
+      title: title,
+      message: message ?? '',
+    );
   }
 
   // 默认错误处理函数

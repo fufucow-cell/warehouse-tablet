@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/alarm/warehouse_alarm_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_network_image.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
 import 'package:get/get.dart';
 
 class WarehouseAlarmPage extends StatelessWidget {
@@ -59,7 +62,7 @@ class _HeaderWidget extends StatelessWidget {
               Expanded(
                 flex: controller.columnRatio[0],
                 child: SizedBox(
-                  child: WidgetUtil.textWidget(
+                  child: CustTextWidget(
                     EnumLocale.warehouseAlarmProductPhoto.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
@@ -70,7 +73,7 @@ class _HeaderWidget extends StatelessWidget {
               Expanded(
                 flex: controller.columnRatio[1],
                 child: SizedBox(
-                  child: WidgetUtil.textWidget(
+                  child: CustTextWidget(
                     EnumLocale.warehouseAlarmProductName.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
@@ -81,7 +84,7 @@ class _HeaderWidget extends StatelessWidget {
               Expanded(
                 flex: controller.columnRatio[2],
                 child: SizedBox(
-                  child: WidgetUtil.textWidget(
+                  child: CustTextWidget(
                     EnumLocale.warehouseAlarmBelowStockLevel.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
@@ -92,7 +95,7 @@ class _HeaderWidget extends StatelessWidget {
               Expanded(
                 flex: controller.columnRatio[3],
                 child: SizedBox(
-                  child: WidgetUtil.textWidget(
+                  child: CustTextWidget(
                     EnumLocale.warehouseAlarmOperation.tr,
                     size: 28.0.scale,
                     color: EnumColor.textSecondary.color,
@@ -122,7 +125,7 @@ class _AlarmList extends StatelessWidget {
         if (isLoading) {
           return const _AlarmListShimmer();
         } else if (isEmpty) {
-          return WidgetUtil.emptyWidget();
+          return const CustEmptyWidget();
         }
 
         return SingleChildScrollView(
@@ -166,7 +169,7 @@ class _CellWidget extends StatelessWidget {
             children: [
               Expanded(
                 flex: controller.columnRatio[0],
-                child: WidgetUtil.networkImage(
+                child: CustNetworkImage(
                   url: item.photo.toString(),
                   width: 114.0.scale,
                   height: 100.0.scale,
@@ -176,7 +179,7 @@ class _CellWidget extends StatelessWidget {
               SizedBox(width: 44.0.scale),
               Expanded(
                 flex: controller.columnRatio[1],
-                child: WidgetUtil.textWidget(
+                child: CustTextWidget(
                   item.name ?? '-',
                   size: 28.0.scale,
                   color: EnumColor.textPrimary.color,
@@ -199,7 +202,7 @@ class _CellWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100.0.scale),
                       ),
                     ),
-                    child: WidgetUtil.textWidget(
+                    child: CustTextWidget(
                       '${controller.getStockDifference(item)}',
                       size: 28.0.scale,
                       color: EnumColor.accentRed.color,
@@ -272,7 +275,7 @@ class _AlarmListShimmer extends StatelessWidget {
         return SizedBox(height: 16.0.scale);
       },
       itemBuilder: (context, index) {
-        return WidgetUtil.shimmerWidget(height: 112.0.scale);
+        return ShimmerWidget(height: 112.0.scale);
       },
     );
   }

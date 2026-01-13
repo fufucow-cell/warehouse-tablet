@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
 
 class CustomTabBar extends StatelessWidget {
   final itemSpacing = 40.0; // 每個 tab Item 之間的間距
@@ -30,8 +30,8 @@ class CustomTabBar extends StatelessWidget {
       ),
       labelColor: EnumColor.accentBlue.color,
       unselectedLabelColor: EnumColor.textSecondary.color,
-      labelStyle: WidgetUtil.textStyle(),
-      unselectedLabelStyle: WidgetUtil.textStyle(),
+      labelStyle: CustTextStyle(),
+      unselectedLabelStyle: CustTextStyle(),
       dividerColor: Colors.transparent,
       indicator: BoxDecoration(
         border: Border(

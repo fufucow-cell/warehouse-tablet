@@ -6,8 +6,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/text_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
@@ -224,7 +226,7 @@ class _SmartAddButton extends StatelessWidget {
         children: [
           EnumImage.cCamera.image(size: Size.square(38.0.scale)),
           SizedBox(width: 16.0.scale),
-          WidgetUtil.textWidget(
+          CustTextWidget(
             EnumLocale.createSmartAddItem.tr,
             size: 28.0.scale,
             color: EnumColor.accentBlue.color,
@@ -280,10 +282,10 @@ class _NameField extends StatelessWidget {
           isRequired: true,
           title: EnumLocale.createItemName.tr,
           child: isRecognizing
-              ? TextShimmerWidget(
+              ? ShimmerTextWidget(
                   '${EnumLocale.warehouseImageRecognizing.tr}...',
                 )
-              : WidgetUtil.textField(
+              : CustTextField(
                   controller: controller.nameController,
                   maxLength: 100,
                 ),
@@ -305,10 +307,10 @@ class _DescriptionField extends StatelessWidget {
         return DialogSectionWidget(
           title: EnumLocale.warehouseDescriptionLabel.tr,
           child: isRecognizing
-              ? TextShimmerWidget(
+              ? ShimmerTextWidget(
                   '${EnumLocale.warehouseImageRecognizing.tr}...',
                 )
-              : WidgetUtil.textField(
+              : CustTextField(
                   height: 197.0.scale,
                   controller: controller.descriptionController,
                   keyboardType: TextInputType.multiline,
@@ -341,7 +343,7 @@ class _QuantityField extends StatelessWidget {
           ),
           SizedBox(width: 16.0.scale),
           Expanded(
-            child: WidgetUtil.textField(
+            child: CustTextField(
               controller: controller.quantityController,
               textFieldType: EnumTextFieldType.integer,
               maxLength: 7,
@@ -407,7 +409,7 @@ class _MinStockAlertField extends StatelessWidget {
     final controller = Get.find<DialogItemCreateWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.createMinStockAlert.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: controller.minStockAlertController,
         textFieldType: EnumTextFieldType.integer,
         maxLength: 7,
@@ -435,7 +437,7 @@ class _DropdownField extends StatelessWidget {
     final controller = Get.find<DialogItemCreateWidgetController>();
     return DialogSectionWidget(
       title: title,
-      child: WidgetUtil.textDropdownButton(
+      child: CustTextDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,

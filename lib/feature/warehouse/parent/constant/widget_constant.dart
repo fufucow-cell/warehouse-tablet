@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 
 enum EnumFontWeightType {
   regular,
@@ -25,8 +28,7 @@ enum EnumTextFieldType {
     return switch (this) {
       EnumTextFieldType.normal => TextInputType.text,
       EnumTextFieldType.integer => TextInputType.number,
-      EnumTextFieldType.decimal =>
-        const TextInputType.numberWithOptions(decimal: true),
+      EnumTextFieldType.decimal => const TextInputType.numberWithOptions(decimal: true),
     };
   }
 
@@ -79,4 +81,19 @@ class _RemoveLeadingZerosFormatter extends TextInputFormatter {
     }
     return newValue;
   }
+}
+
+/// 创建文本样式
+TextStyle CustTextStyle({
+  double? size,
+  EnumFontWeightType weightType = EnumFontWeightType.regular,
+  Color? color,
+}) {
+  return TextStyle(
+    color: color ?? EnumColor.textPrimary.color,
+    fontSize: size ?? 32.0.scale,
+    fontWeight: weightType.weight,
+    height: 1.4,
+    letterSpacing: 0,
+  );
 }

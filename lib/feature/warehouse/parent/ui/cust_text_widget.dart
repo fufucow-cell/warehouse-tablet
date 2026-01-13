@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:shimmer/shimmer.dart';
 
 /// 自定义文本 Widget
 class CustTextWidget extends StatelessWidget {
@@ -91,49 +89,15 @@ class CustTextRequiredWidget extends StatelessWidget {
   }
 }
 
-class TextShimmerWidget extends StatelessWidget {
-  final String text;
-  final double? size;
-  final TextAlign align;
-  final EnumFontWeightType weightType;
-  final Color? color;
-
-  const TextShimmerWidget(
-    this.text, {
-    super.key,
-    this.size,
-    this.align = TextAlign.start,
-    this.weightType = EnumFontWeightType.regular,
-    this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Shimmer.fromColors(
-      baseColor: EnumColor.backgroundLoadingBase.color,
-      highlightColor: EnumColor.backgroundLoadingHighlight.color,
-      child: CustTextWidget(
-        text,
-        size: size,
-        align: align,
-        weightType: weightType,
-        color: color ?? EnumColor.textSecondary.color,
-      ),
-    );
-  }
-}
-
-/// 创建文本样式
+/// 创建文本样式（私有方法）
 TextStyle _textStyle({
   double? size,
   EnumFontWeightType weightType = EnumFontWeightType.regular,
   Color? color,
 }) {
-  return TextStyle(
-    color: color ?? EnumColor.textPrimary.color,
-    fontSize: size ?? 32.0.scale,
-    fontWeight: weightType.weight,
-    height: 1.4,
-    letterSpacing: 0,
+  return CustTextStyle(
+    size: size,
+    weightType: weightType,
+    color: color,
   );
 }

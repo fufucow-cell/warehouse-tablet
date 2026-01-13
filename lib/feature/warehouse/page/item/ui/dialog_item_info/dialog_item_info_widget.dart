@@ -6,7 +6,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_network_image.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +51,7 @@ class _PhotoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemInfoWidgetController>();
-    return WidgetUtil.networkImage(
+    return CustNetworkImage(
       url: controller.getPhoto,
       width: 320.0.scale,
       height: 225.0.scale,
@@ -128,7 +129,7 @@ class _InfoRow extends StatelessWidget {
           flex: 2,
           child: ConstrainedBox(
             constraints: BoxConstraints(minWidth: 112.0.scale),
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               label,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -138,7 +139,7 @@ class _InfoRow extends StatelessWidget {
         SizedBox(width: 24.0.scale),
         Expanded(
           flex: 3,
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             value,
             size: 28.0.scale,
           ),
@@ -160,7 +161,7 @@ class _PositionsInfo extends StatelessWidget {
       children: [
         SizedBox(
           width: 112.0.scale,
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             EnumLocale.warehouseLocationsLabel.tr,
             size: 28.0.scale,
             color: EnumColor.textSecondary.color,
@@ -216,12 +217,12 @@ class _PositionItem extends StatelessWidget {
           maintainSize: true,
           maintainAnimation: true,
           maintainState: true,
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             '$roomName → ',
             size: 28.0.scale,
           ),
         ),
-        WidgetUtil.textWidget(
+        CustTextWidget(
           cabinetName,
           size: 28.0.scale,
         ),
@@ -232,7 +233,7 @@ class _PositionItem extends StatelessWidget {
             color: EnumColor.accentBlue.color,
             borderRadius: BorderRadius.circular(12.0.scale),
           ),
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             '$quantity',
             size: 28.0.scale,
             color: EnumColor.textWhite.color,
@@ -252,7 +253,7 @@ class _RecordButton extends StatelessWidget {
       children: [
         SizedBox(
           width: 112.0.scale,
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             EnumLocale.record.tr,
             size: 28.0.scale,
             color: EnumColor.textSecondary.color,
@@ -273,7 +274,7 @@ class _RecordButton extends StatelessWidget {
                   color: EnumColor.textLink.color,
                 ),
                 SizedBox(width: 10.0.scale),
-                WidgetUtil.textWidget(
+                CustTextWidget(
                   EnumLocale.warehouseItemClickToViewRecord.tr,
                   size: 28.0.scale,
                   color: EnumColor.textLink.color,

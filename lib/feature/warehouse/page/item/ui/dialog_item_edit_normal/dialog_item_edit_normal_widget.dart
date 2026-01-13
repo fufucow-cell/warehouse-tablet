@@ -11,7 +11,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_network_image.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:get/get.dart';
 
 class DialogItemEditNormalWidget extends StatelessWidget {
@@ -148,7 +150,7 @@ class _PhotoSection extends StatelessWidget {
           if (filePath?.isNotEmpty ?? false) {
             imageWidget = controller.convertFileToImage;
           } else if (photoUrl?.isNotEmpty ?? false) {
-            imageWidget = WidgetUtil.networkImage(
+            imageWidget = CustNetworkImage(
               url: photoUrl!,
               height: 200.0.scale,
             );
@@ -186,7 +188,7 @@ class _NameField extends StatelessWidget {
     return DialogSectionWidget(
       isRequired: true,
       title: EnumLocale.createItemName.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: controller.nameController,
         maxLength: 100,
       ),
@@ -202,7 +204,7 @@ class _DescriptionField extends StatelessWidget {
     final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.warehouseDescriptionLabel.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         height: 197.0.scale,
         controller: controller.descriptionController,
         keyboardType: TextInputType.multiline,
@@ -222,7 +224,7 @@ class _MinStockAlertField extends StatelessWidget {
     final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.createMinStockAlert.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: controller.minStockAlertController,
         textFieldType: EnumTextFieldType.integer,
         maxLength: 7,
@@ -250,7 +252,7 @@ class _DropdownField extends StatelessWidget {
     final controller = Get.find<DialogItemEditNormalWidgetController>();
     return DialogSectionWidget(
       title: title,
-      child: WidgetUtil.textDropdownButton(
+      child: CustTextDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,

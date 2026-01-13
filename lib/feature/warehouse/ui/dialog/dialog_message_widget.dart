@@ -4,7 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.d
 import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 
 class DialogMessageWidget extends StatelessWidget {
   final bool Function()? onCancel;
@@ -39,7 +39,7 @@ class DialogMessageWidget extends StatelessWidget {
       ),
       child: SizedBox(
         width: double.infinity,
-        child: WidgetUtil.textWidget(
+        child: CustTextWidget(
           message,
           size: 28.0.scale,
           color: EnumColor.textPrimary.color,

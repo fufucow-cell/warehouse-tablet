@@ -3,7 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehou
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -51,7 +51,7 @@ class CabinetRowCard extends StatelessWidget {
         horizontal: 32.0.scale,
         vertical: 22.0.scale,
       ),
-      child: WidgetUtil.textWidget(
+      child: CustTextWidget(
         EnumLocale.warehouseNoCabinetInRoom.tr,
         size: 26.0.scale,
         color: EnumColor.textSecondary.color,
@@ -91,7 +91,7 @@ class _CabinetCard extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                child: WidgetUtil.textWidget(
+                child: CustTextWidget(
                   cabinet.cabinetName,
                   size: 26.0.scale,
                   color: EnumColor.textSecondary.color,
@@ -107,7 +107,7 @@ class _CabinetCard extends StatelessWidget {
                   color: EnumColor.backgroundAccentBlue.color,
                   borderRadius: BorderRadius.circular(12.0.scale),
                 ),
-                child: WidgetUtil.textWidget(
+                child: CustTextWidget(
                   '${cabinet.quantity}',
                   size: 28.0.scale,
                   color: EnumColor.accentBlue.color,

@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service_model.dart';
 import 'package:get/get.dart';
 
 class LocaleService extends GetxService {
@@ -32,7 +29,6 @@ class LocaleService extends GetxService {
     final LocaleService service = LocaleService._internal();
     Get.put<LocaleService>(service, permanent: true);
     service._genSystemLocale();
-    await service._readFromStorage();
     return service;
   }
 
@@ -48,7 +44,6 @@ class LocaleService extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     try {
-      await _saveToStorage(newTranslation);
       _currentTranslation = newTranslation;
       final locale = getCurrentLocale;
       EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
@@ -168,36 +163,5 @@ class LocaleService extends GetxService {
     }
 
     return sameLanguage.first;
-  }
-
-  /// 從存儲中讀取語言設置
-  Future<void> _readFromStorage() async {
-    try {
-      final savedCode = StorageService.instance.read<String?>(
-        EnumStorageKey.locale,
-      );
-      _currentTranslation = _convertTranslationfromCode(savedCode);
-      final locale = getCurrentLocale;
-      EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
-      await Get.updateLocale(locale);
-      LogService.i(
-        EnumLogType.storage,
-        '載入用戶語系: ${currentTranslation.displayName}',
-      );
-    } on Exception catch (e) {
-      LogService.e('載入語系失敗', e);
-    }
-  }
-
-  /// 保存語言設置到存儲
-  Future<void> _saveToStorage(
-    LocaleTranslation newTranslation,
-  ) async {
-    // 保存完整的 languageCode，包括 'system' 特殊值
-    final codeToSave = newTranslation == LocaleTranslation.system ? 'system' : newTranslation.languageCode;
-    await StorageService.instance.write(
-      EnumStorageKey.locale,
-      codeToSave,
-    );
   }
 }

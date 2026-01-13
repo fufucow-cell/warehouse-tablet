@@ -4,7 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/wareho
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:get/get.dart';
 
 class PatchListWidget extends StatelessWidget {
@@ -72,7 +72,7 @@ class _PatchRow extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               category.name ?? '',
               size: 28.0.scale,
             ),

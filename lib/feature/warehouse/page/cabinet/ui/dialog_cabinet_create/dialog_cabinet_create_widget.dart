@@ -8,7 +8,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog_section_wi
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:get/get.dart';
 
 class DialogCabinetCreateWidget extends StatelessWidget {
@@ -112,7 +113,7 @@ class _NameField extends StatelessWidget {
     return DialogSectionWidget(
       isRequired: true,
       title: EnumLocale.createCabinetName.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: controller.nameController,
         maxLength: 100,
       ),
@@ -135,7 +136,7 @@ class _RoomField extends StatelessWidget {
   Widget build(BuildContext context) {
     return DialogSectionWidget(
       title: EnumLocale.room.tr,
-      child: WidgetUtil.textDropdownButton(
+      child: CustTextDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,

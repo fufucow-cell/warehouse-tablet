@@ -18,6 +18,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -43,6 +45,9 @@ class WarehouseMainPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    LogService.register();
+    ThemeService.register();
+    StorageService.register();
     LogService.i(
       EnumLogType.debug,
       '[WarehouseMainPageController] onInit - $hashCode',
@@ -60,7 +65,6 @@ class WarehouseMainPageController extends GetxController {
     _disposeTabController();
     _disposeTabPageControllers();
     WarehouseService.unregister();
-    DeviceService.unregister();
     super.onClose();
   }
 

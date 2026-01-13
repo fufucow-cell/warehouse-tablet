@@ -10,7 +10,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -128,7 +130,7 @@ class _PositionInfo extends StatelessWidget {
     final controller = Get.find<DialogItemEditQuantityWidgetController>();
     return Row(
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           EnumLocale.warehouseTotalQuantityAfterAdjustment.tr,
           size: 28.0.scale,
         ),
@@ -141,7 +143,7 @@ class _PositionInfo extends StatelessWidget {
           ),
           child: Obx(
             () {
-              return WidgetUtil.textWidget(
+              return CustTextWidget(
                 controller.newQuantityRx.value.toString(),
                 size: 28.0.scale,
                 color: EnumColor.textWhite.color,
@@ -176,7 +178,7 @@ class _PositionInfo extends StatelessWidget {
                 ),
               ),
               child: (!isEnabled)
-                  ? WidgetUtil.textWidget(
+                  ? CustTextWidget(
                       EnumLocale.warehouseMaxNewPositionsReached.tr,
                       size: 28.0.scale,
                       color: EnumColor.accentBlue.color,
@@ -189,7 +191,7 @@ class _PositionInfo extends StatelessWidget {
                           color: EnumColor.accentBlue.color,
                         ),
                         SizedBox(width: 3.0.scale),
-                        WidgetUtil.textWidget(
+                        CustTextWidget(
                           EnumLocale.warehouseAddStorageLocation.tr,
                           size: 28.0.scale,
                           color: EnumColor.accentBlue.color,
@@ -303,7 +305,7 @@ class _OldPositionItem extends StatelessWidget {
 
     return Row(
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           locationName,
           size: 28.0.scale,
         ),
@@ -319,7 +321,7 @@ class _OldPositionItem extends StatelessWidget {
             SizedBox(width: 16.0.scale),
             SizedBox(
               width: 180.0.scale,
-              child: WidgetUtil.textField(
+              child: CustTextField(
                 controller: textController,
                 textFieldType: EnumTextFieldType.integer,
                 maxLength: 7,
@@ -371,7 +373,7 @@ class _NewPositionItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: WidgetUtil.textDropdownButton(
+            child: CustTextDropdownButton(
               selectedValue: model.roomName,
               values: roomNames,
               menuMaxHeight: 290.0.scale,
@@ -397,7 +399,7 @@ class _NewPositionItem extends StatelessWidget {
           ),
           SizedBox(width: 32.0.scale),
           Expanded(
-            child: WidgetUtil.textDropdownButton(
+            child: CustTextDropdownButton(
               selectedValue: model.cabinetName,
               values: visibleCabinetNames,
               menuMaxHeight: 290.0.scale,
@@ -432,7 +434,7 @@ class _NewPositionItem extends StatelessWidget {
               SizedBox(width: 16.0.scale),
               SizedBox(
                 width: 180.0.scale,
-                child: WidgetUtil.textField(
+                child: CustTextField(
                   controller: textController,
                   textFieldType: EnumTextFieldType.integer,
                   maxLength: 7,

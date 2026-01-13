@@ -3,7 +3,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:get/get.dart';
 
 class TopTool extends StatelessWidget {
@@ -55,7 +55,7 @@ class _ShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetUtil.shimmerWidget(
+    return ShimmerWidget(
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

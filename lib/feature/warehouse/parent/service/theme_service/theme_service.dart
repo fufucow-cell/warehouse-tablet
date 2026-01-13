@@ -8,11 +8,10 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/exten
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_data.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:get/get.dart';
 
 /// 主題管理工具類
@@ -37,7 +36,6 @@ class ThemeService extends GetxService {
     }
     final ThemeService service = ThemeService._internal();
     Get.put<ThemeService>(service, permanent: true);
-    service._readFromStorage();
     return service;
   }
 
@@ -54,7 +52,6 @@ class ThemeService extends GetxService {
     EnumThemeMode newTheme,
   ) async {
     try {
-      await _writeToStorage(newTheme);
       _currentTheme.value = newTheme;
       Get.changeThemeMode(getCurrentThemeMode);
       LogService.i(
@@ -130,7 +127,7 @@ class ThemeService extends GetxService {
         fit: BoxFit.contain,
       );
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.errorReadImageFileFailed.tr,
         message: e.toString(),
       );
@@ -204,7 +201,7 @@ class ThemeService extends GetxService {
 
       return tempPath;
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.errorCompressImageFailed.tr,
         message: e.toString(),
       );
@@ -224,7 +221,7 @@ class ThemeService extends GetxService {
       final Uint8List imageBytes = await file.readAsBytes();
       return base64Encode(imageBytes);
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.errorConvertFileToBase64Failed.tr,
         message: e.toString(),
       );
@@ -255,7 +252,7 @@ class ThemeService extends GetxService {
         },
       );
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.errorConvertBase64ToImageFailed.tr,
         message: e.toString(),
       );
@@ -289,7 +286,7 @@ class ThemeService extends GetxService {
 
       return base64String;
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.errorConvertImageToBase64Failed.tr,
         message: e.toString(),
       );
@@ -305,32 +302,5 @@ class ThemeService extends GetxService {
           (e) => e.name == str,
         ) ??
         defaultTheme;
-  }
-
-  /// 讀取主題
-  void _readFromStorage() {
-    try {
-      final savedTheme = StorageService.instance.read<String?>(
-        EnumStorageKey.theme,
-      );
-      _currentTheme.value = _convertThemeFromString(savedTheme);
-      Get.changeThemeMode(getCurrentThemeMode);
-      LogService.i(
-        EnumLogType.storage,
-        '載入主題成功: ${currentTheme.displayName}',
-      );
-    } on Exception catch (e) {
-      LogService.e('載入主題失敗', e);
-    }
-  }
-
-  /// 寫入主題
-  Future<void> _writeToStorage(
-    EnumThemeMode newTheme,
-  ) async {
-    await StorageService.instance.write(
-      EnumStorageKey.theme,
-      newTheme.name,
-    );
   }
 }

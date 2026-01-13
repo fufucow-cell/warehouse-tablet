@@ -10,7 +10,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:get/get.dart';
 
 class DialogCategoryCreateWidget extends StatelessWidget {
@@ -91,7 +93,7 @@ class _Body extends StatelessWidget {
           children: [
             const _NameField(),
             SizedBox(height: 24.0.scale),
-            WidgetUtil.textWidget(
+            CustTextWidget(
               hintText,
               size: 28.0.scale,
               color: EnumColor.textPrimary.color,
@@ -140,7 +142,7 @@ class _NameField extends StatelessWidget {
     return DialogSectionWidget(
       isRequired: true,
       title: EnumLocale.createCategoryName.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: controller.nameController,
         maxLength: 100,
       ),
@@ -171,7 +173,7 @@ class _DropdownField extends StatelessWidget {
         Expanded(
           child: DialogSectionWidget(
             title: title,
-            child: WidgetUtil.textDropdownButton(
+            child: CustTextDropdownButton(
               selectedValue: selectedValue,
               values: visibleValues,
               buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,

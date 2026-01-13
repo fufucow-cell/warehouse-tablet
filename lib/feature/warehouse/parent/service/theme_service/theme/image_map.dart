@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2025-12-31T03:01:47.371856
+/// 生成时间: 2026-01-13T02:35:53.049540
 library;
 
 import 'package:flutter/material.dart';
@@ -44,14 +44,14 @@ enum EnumImage {
   tBgContent,
   tCow;
 
-  ThemeService get _themeUtil => ThemeService.instance;
+  ThemeService get _themeService => ThemeService.instance;
 
   /// 取得圖片路徑
-  String get path => _themeUtil.getImagePath(this);
+  String get path => _themeService.getImagePath(this);
 
   /// 取得圖片 Widget
   Widget image({Size? size, Color? color}) =>
-      _themeUtil.getImageWidget(this, size: size, color: color);
+      _themeService.getImageWidget(this, size: size, color: color);
 
   /// 取得裝飾圖片
   DecorationImage get decorationImage => DecorationImage(

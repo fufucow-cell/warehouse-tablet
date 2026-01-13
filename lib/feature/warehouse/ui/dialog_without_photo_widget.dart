@@ -4,7 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 
 class DialogWithoutPhotoWidget extends StatelessWidget {
   final bool isError;
@@ -38,7 +38,7 @@ class DialogWithoutPhotoWidget extends StatelessWidget {
                 color: EnumColor.iconSecondary.color,
               ),
               SizedBox(height: 16.0.scale),
-              WidgetUtil.textWidget(
+              CustTextWidget(
                 isError ? EnumLocale.warehousePhotoReadFailed.tr : EnumLocale.warehousePhotoTapToUpload.tr,
                 size: 22.0.scale,
                 color: EnumColor.textSecondary.color,

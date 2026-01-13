@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 
 class DialogSectionWidget extends StatelessWidget {
   final bool isRequired;
@@ -21,12 +21,12 @@ class DialogSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         isRequired
-            ? WidgetUtil.textRequiredWidget(
+            ? CustTextRequiredWidget(
                 title,
                 size: 26.0.scale,
                 color: EnumColor.textSecondary.color,
               )
-            : WidgetUtil.textWidget(
+            : CustTextWidget(
                 title,
                 size: 26.0.scale,
                 color: EnumColor.textSecondary.color,

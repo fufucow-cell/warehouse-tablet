@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 
@@ -98,15 +99,21 @@ class _Body extends StatelessWidget {
     return GetBuilder<SmartHomeSettingPageController>(
       builder: (_) {
         final isSelected = controller.isCurrentLocale(locale);
-        return ListTile(
-          title: Text(displayName),
-          trailing: isSelected
-              ? Icon(
-                  Icons.check,
-                  color: Theme.of(Get.context!).colorScheme.primary,
-                )
-              : null,
-          onTap: () => controller.switchLocale(locale),
+        return Builder(
+          builder: (context) => ListTile(
+            title: Text(displayName),
+            trailing: isSelected
+                ? Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                : null,
+            onTap: () => controller.interactive(
+              EnumSmartHomeSettingPageInteractive.tapLocale,
+              context: context,
+              data: locale,
+            ),
+          ),
         );
       },
     );
@@ -150,15 +157,21 @@ class _Body extends StatelessWidget {
     return GetBuilder<SmartHomeSettingPageController>(
       builder: (_) {
         final isSelected = controller.isCurrentTheme(theme);
-        return ListTile(
-          title: Text(theme.displayName),
-          trailing: isSelected
-              ? Icon(
-                  Icons.check,
-                  color: Theme.of(Get.context!).colorScheme.primary,
-                )
-              : null,
-          onTap: () => controller.switchTheme(theme),
+        return Builder(
+          builder: (context) => ListTile(
+            title: Text(theme.displayName),
+            trailing: isSelected
+                ? Icon(
+                    Icons.check,
+                    color: Theme.of(context).colorScheme.primary,
+                  )
+                : null,
+            onTap: () => controller.interactive(
+              EnumSmartHomeSettingPageInteractive.tapTheme,
+              context: context,
+              data: theme,
+            ),
+          ),
         );
       },
     );

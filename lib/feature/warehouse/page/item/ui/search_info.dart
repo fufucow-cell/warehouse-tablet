@@ -4,7 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:get/get.dart';
 
 class SearchInfo extends StatelessWidget {
@@ -23,7 +23,7 @@ class SearchInfo extends StatelessWidget {
             child: Obx(
               () {
                 final count = controller.visibleItemsRx.value.length;
-                return WidgetUtil.textWidget(
+                return CustTextWidget(
                   EnumLocale.searchResultCount.trArgs(['$count']),
                 );
               },
@@ -56,7 +56,7 @@ class SearchInfo extends StatelessWidget {
                   color: EnumColor.accentBlue.color,
                 ),
                 SizedBox(width: 10.0.scale),
-                WidgetUtil.textWidget(
+                CustTextWidget(
                   EnumLocale.searchClearResult.tr,
                   color: EnumColor.accentBlue.color,
                 ),

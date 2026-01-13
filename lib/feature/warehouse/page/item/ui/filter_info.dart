@@ -6,7 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:get/get.dart';
 
 class FilterInfo extends StatelessWidget {
@@ -54,7 +54,7 @@ class _FilterLists extends StatelessWidget {
         final cabinetFilter = Obx(() {
           final isLoading = controller.allItemsRx.value == null;
           if (isLoading) {
-            return WidgetUtil.shimmerWidget(width: 112.0.scale, height: 70.0.scale);
+            return ShimmerWidget(width: 112.0.scale, height: 70.0.scale);
           }
 
           return FilterTextListSingle(
@@ -70,7 +70,7 @@ class _FilterLists extends StatelessWidget {
           () {
             final isLoading = controller.allItemsRx.value == null;
             if (isLoading) {
-              return WidgetUtil.shimmerWidget(width: 160.0.scale, height: 70.0.scale);
+              return ShimmerWidget(width: 160.0.scale, height: 70.0.scale);
             }
 
             return FilterTextListMulti(

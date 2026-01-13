@@ -5,7 +5,9 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:get/get.dart';
 
 class FilterInfo extends StatelessWidget {
@@ -20,13 +22,13 @@ class FilterInfo extends StatelessWidget {
         Obx(
           () {
             if (controller.allLogsRx.value == null) {
-              return WidgetUtil.shimmerWidget(
+              return ShimmerWidget(
                 width: 200.0.scale,
                 height: 32.0.scale,
               );
             }
 
-            return WidgetUtil.textWidget(
+            return CustTextWidget(
               '${EnumLocale.warehouseRecordTotal.tr}: ${controller.visibleLogsRx.value.length}',
               size: 32.0.scale,
             );
@@ -47,7 +49,7 @@ class _FilterDropdown extends StatelessWidget {
     final controller = Get.find<WarehouseRecordPageController>();
 
     return Obx(
-      () => WidgetUtil.textDropdownButton(
+      () => CustTextDropdownButton(
         width: 280.0.scale,
         height: 70.0.scale,
         selectedValue: controller.filterTypeRx.value.title,
@@ -107,7 +109,7 @@ class _RefreshButton extends StatelessWidget {
                 color: EnumColor.accentBlue.color,
               ),
               SizedBox(width: 10.0.scale),
-              WidgetUtil.textWidget(
+              CustTextWidget(
                 EnumLocale.warehouseRefresh.tr,
                 size: 32.0.scale,
                 color: EnumColor.accentBlue.color,

@@ -1,36 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
-import 'package:get/get.dart';
 import 'package:flutter_smart_home_tablet/service/router_service/router_service_model.dart';
+import 'package:get/get.dart';
 
 class RouterService extends GetxService implements NavigatorObserver {
   // MARK: - Properties
 
   final _model = RouterServiceModel();
+  static const String _tagName = 'smart_home';
   BuildContext? get rootContext => _model.rootNavigatorKey.currentContext;
   NavigatorState? get rootNavigator => _model.rootNavigatorKey.currentState;
   GlobalKey<NavigatorState> get rootNavigatorKey => _model.rootNavigatorKey;
   String get initRouterPath => EnumRootRouter.splash.path;
   List<GetPage<dynamic>> get getRouterPages => EnumRootRouter.pages;
-  static RouterService get instance => Get.find<RouterService>();
+  static RouterService get instance => Get.find<RouterService>(tag: _tagName);
 
   // MARK: - Init
 
   RouterService._internal();
 
   static RouterService register() {
-    if (Get.isRegistered<RouterService>()) {
-      return Get.find<RouterService>();
+    if (Get.isRegistered<RouterService>(tag: _tagName)) {
+      return instance;
     }
     final RouterService service = RouterService._internal();
-    Get.put<RouterService>(service, permanent: true);
+    Get.put<RouterService>(
+      service,
+      tag: _tagName,
+      permanent: true,
+    );
     return service;
   }
 
   static void unregister() {
-    if (Get.isRegistered<RouterService>()) {
-      Get.delete<RouterService>(force: true);
+    if (Get.isRegistered<RouterService>(tag: _tagName)) {
+      Get.delete<RouterService>(
+        tag: _tagName,
+        force: true,
+      );
     }
   }
 

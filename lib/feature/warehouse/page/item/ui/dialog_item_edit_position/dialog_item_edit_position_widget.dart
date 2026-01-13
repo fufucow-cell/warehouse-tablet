@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_controller.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/dialog_item_edit_position/dialog_item_edit_position_widget_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/ui/item_info_card.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/footer.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/frame.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/dialog/ui/header.dart';
 import 'package:get/get.dart';
 
 class DialogItemEditPositionWidget extends StatelessWidget {
@@ -158,7 +160,7 @@ class _OriginalPositionInfo extends StatelessWidget {
     final controller = Get.find<DialogItemEditPositionWidgetController>();
     return Row(
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           controller.getPositionName(model),
           size: 28.0.scale,
           weightType: EnumFontWeightType.bold,
@@ -170,7 +172,7 @@ class _OriginalPositionInfo extends StatelessWidget {
             color: EnumColor.accentBlue.color,
             borderRadius: BorderRadius.circular(12.0.scale),
           ),
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             model.quantity.toString(),
             size: 28.0.scale,
             color: EnumColor.textWhite.color,
@@ -195,7 +197,7 @@ class _ChangeQuantitySection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           EnumLocale.warehouseMoveQuantity.tr,
           size: 26.0.scale,
           color: EnumColor.textSecondary.color,
@@ -212,7 +214,7 @@ class _ChangeQuantitySection extends StatelessWidget {
             SizedBox(
               width: 180.0.scale,
               height: 70.0.scale,
-              child: WidgetUtil.textField(
+              child: CustTextField(
                 controller: textController,
                 textFieldType: EnumTextFieldType.integer,
                 maxLength: 7,
@@ -410,13 +412,13 @@ class _ChangePositionField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           title,
           size: 26.0.scale,
           color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 12.0.scale),
-        WidgetUtil.textDropdownButton(
+        CustTextDropdownButton(
           selectedValue: selectedValue,
           values: values,
           onValueSelected: onValueSelected,

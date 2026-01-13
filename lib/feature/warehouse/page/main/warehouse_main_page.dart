@@ -6,7 +6,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/ui/first_background_card.dart';
 import 'package:get/get.dart';
 
@@ -99,7 +99,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
   }
 
   Widget get _shimmerScaffold {
-    return WidgetUtil.shimmerWidget(
+    return ShimmerWidget(
       child: SafeArea(
         top: true,
         bottom: false,
@@ -134,7 +134,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
   }
 
   Widget get _shimmerContent {
-    return WidgetUtil.shimmerWidget(
+    return ShimmerWidget(
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

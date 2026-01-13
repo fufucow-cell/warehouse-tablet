@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// 自定义网格视图，支持自适应高度的懒加载网格布局
-class CustomGridView extends StatelessWidget {
+class CustGridView extends StatelessWidget {
   /// 总 item 数量
   final int itemCount;
 
@@ -26,7 +26,7 @@ class CustomGridView extends StatelessWidget {
   /// 是否收缩包装
   final bool shrinkWrap;
 
-  const CustomGridView({
+  const CustGridView({
     super.key,
     required this.itemCount,
     required this.itemBuilder,

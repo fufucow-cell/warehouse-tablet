@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/util/category_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/grid_view_widget.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_grid_view.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/util/category_util.dart';
 import 'package:get/get.dart';
 
 class TopInfo extends StatelessWidget {
@@ -48,7 +49,7 @@ class TopInfo extends StatelessWidget {
             ),
           ];
 
-          return CustomGridView(
+          return CustGridView(
             itemCount: items.length,
             itemBuilder: (context, index) => items[index],
             crossAxisCount: 4,
@@ -98,16 +99,16 @@ class TopInfoItem extends StatelessWidget {
               child: eImage.image(),
             ),
             SizedBox(width: 32.0.scale),
-            WidgetUtil.textWidget(
+            CustTextWidget(
               title,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
             ),
             SizedBox(width: 16.0.scale),
             if (isLoading)
-              WidgetUtil.shimmerWidget(width: 34.0.scale, height: 34.0.scale)
+              ShimmerWidget(width: 34.0.scale, height: 34.0.scale)
             else
-              WidgetUtil.textWidget(
+              CustTextWidget(
                 count,
                 weightType: EnumFontWeightType.bold,
               ),

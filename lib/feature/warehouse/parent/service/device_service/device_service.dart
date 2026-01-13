@@ -7,6 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/devic
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -71,7 +72,7 @@ class DeviceService extends GetxService {
   Future<String?> openCamera() async {
     // 如果是模擬器，顯示提示並返回
     if (isSimulator) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.deviceCameraNotAvailable.tr,
         message: '',
       );
@@ -88,7 +89,7 @@ class DeviceService extends GetxService {
       );
       return image?.path;
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.deviceCameraFailed.tr,
         message: e.toString(),
       );
@@ -107,7 +108,7 @@ class DeviceService extends GetxService {
       );
       return image?.path;
     } on Object catch (e) {
-      _logService.showSnackBar(
+      CustSnackBar.show(
         title: EnumLocale.deviceGalleryFailed.tr,
         message: e.toString(),
       );

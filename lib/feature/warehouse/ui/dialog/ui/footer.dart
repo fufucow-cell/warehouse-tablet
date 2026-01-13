@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 
 enum DialogFooterType {
   onlyConfirm,
@@ -213,7 +214,7 @@ class _CancelButton extends StatelessWidget {
         width: 2.0.scale,
         color: EnumColor.lineBorder.color,
       ),
-      child: WidgetUtil.textWidget(
+      child: CustTextWidget(
         EnumLocale.commonCancel.tr,
         size: 26.0.scale,
       ),
@@ -236,14 +237,14 @@ class _ConfirmButton extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor: EnumColor.backgroundButton.color,
       child: isLoading
-          ? WidgetUtil.shimmerWidget(
+          ? ShimmerWidget(
               highlightColor: EnumColor.textPrimary.color,
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 EnumLocale.commonProcessing.tr,
                 size: 26.0.scale,
               ),
             )
-          : WidgetUtil.textWidget(
+          : CustTextWidget(
               EnumLocale.commonConfirm.tr,
               size: 26.0.scale,
             ),
@@ -269,7 +270,7 @@ class _DeleteButton extends StatelessWidget {
         width: 2.0.scale,
         color: isDisabled ? EnumColor.lineBorder.color : EnumColor.accentRed.color,
       ),
-      child: WidgetUtil.textWidget(
+      child: CustTextWidget(
         EnumLocale.warehouseOperateTypeDelete.tr,
         size: 26.0.scale,
         color: isDisabled ? EnumColor.textSecondary.color : EnumColor.accentRed.color,

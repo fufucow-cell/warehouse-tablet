@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/actions.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/ui/minor_list.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/category/warehouse_category_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:get/get.dart';
 
 class MajorListWidget extends StatelessWidget {
@@ -26,7 +28,7 @@ class MajorListWidget extends StatelessWidget {
         if (isLoading) {
           return const _MajorRowShimmer();
         } else if (isEmpty) {
-          return WidgetUtil.emptyWidget();
+          return const CustEmptyWidget();
         }
 
         return ClipRRect(
@@ -134,7 +136,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
       child: Row(
         children: [
           Expanded(
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseNameLabel.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -143,7 +145,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
           SizedBox(width: 44.0.scale),
           SizedBox(
             width: controller.rowCountWidth,
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseSubCategoryCount.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -152,7 +154,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
           SizedBox(width: 44.0.scale),
           SizedBox(
             width: controller.rowActionWidth,
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseAlarmOperation.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -218,7 +220,7 @@ class _MajorRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             category.name ?? '',
             weightType: EnumFontWeightType.bold,
           ),
@@ -226,7 +228,7 @@ class _MajorRow extends StatelessWidget {
         SizedBox(width: 44.0.scale),
         SizedBox(
           width: controller.rowCountWidth,
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             '$childrenCount',
             size: 28.0.scale,
           ),
@@ -255,7 +257,7 @@ class _MajorRowShimmer extends StatelessWidget {
         return SizedBox(height: 16.0.scale);
       },
       itemBuilder: (context, index) {
-        return WidgetUtil.shimmerWidget(height: 112.0.scale);
+        return ShimmerWidget(height: 112.0.scale);
       },
     );
   }

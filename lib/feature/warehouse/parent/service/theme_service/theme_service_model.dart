@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 
 /// 主題版本
-final themeVersion = '1.0.0';
+const themeVersion = '1.0.0';
 
 /// 圖片根路徑
 const String imageRootPath = 'lib/feature/warehouse/parent/assets/images';

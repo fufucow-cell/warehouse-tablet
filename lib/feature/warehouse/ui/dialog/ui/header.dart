@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 
 class DialogHeader extends StatelessWidget {
   final String title;
@@ -30,7 +30,7 @@ class DialogHeader extends StatelessWidget {
           ),
         ),
       ),
-      child: WidgetUtil.textWidget(
+      child: CustTextWidget(
         title,
         size: 32.0.scale,
         weightType: EnumFontWeightType.bold,

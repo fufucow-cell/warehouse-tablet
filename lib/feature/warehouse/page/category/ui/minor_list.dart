@@ -7,7 +7,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:get/get.dart';
 
 class MinorListWidget extends StatelessWidget {
@@ -89,7 +89,7 @@ class _MinorHeader extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseNameLabel.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -98,7 +98,7 @@ class _MinorHeader extends StatelessWidget {
           SizedBox(width: 44.0.scale),
           SizedBox(
             width: controller.rowCountWidth,
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseCategoryCount.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -107,7 +107,7 @@ class _MinorHeader extends StatelessWidget {
           SizedBox(width: 44.0.scale),
           SizedBox(
             width: controller.rowActionWidth,
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               EnumLocale.warehouseAlarmOperation.tr,
               size: 28.0.scale,
               color: EnumColor.textSecondary.color,
@@ -178,7 +178,7 @@ class _MinorRow extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               category.name ?? '',
               size: 28.0.scale,
               weightType: EnumFontWeightType.medium,
@@ -187,7 +187,7 @@ class _MinorRow extends StatelessWidget {
           SizedBox(width: 44.0.scale),
           SizedBox(
             width: controller.rowCountWidth,
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               '$childrenCount',
               size: 28.0.scale,
             ),

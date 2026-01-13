@@ -101,6 +101,7 @@ String _generateColorMap(
   buffer.writeln("import 'package:flutter/material.dart';");
   buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_data.dart';");
   buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';");
+  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';");
   buffer.writeln('');
 
   // 收集所有枚举值

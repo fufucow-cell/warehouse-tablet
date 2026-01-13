@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/ui/filter_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/record/warehouse_record_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/util/record_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_network_image.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/util/record_util.dart';
 import 'package:get/get.dart';
 
 class WarehouseRecordPage extends StatelessWidget {
@@ -45,7 +48,7 @@ class RecordList extends StatelessWidget {
             if (controller.allLogsRx.value == null) {
               return const _RecordHeaderShimmer();
             } else if (records.isEmpty) {
-              return WidgetUtil.emptyWidget();
+              return const CustEmptyWidget();
             }
 
             final columnRatio = controller.columnRatioRx;
@@ -111,7 +114,7 @@ class _RecordHeader extends StatelessWidget {
             flex: columnRatio[0],
             child: SizedBox(
               height: 42.0.scale,
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 EnumLocale.warehouseRecordColumnType.tr,
                 size: 28.0.scale,
                 color: EnumColor.textSecondary.color,
@@ -123,7 +126,7 @@ class _RecordHeader extends StatelessWidget {
             flex: columnRatio[1],
             child: SizedBox(
               height: 42.0.scale,
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 EnumLocale.warehouseRecordColumnContent.tr,
                 size: 28.0.scale,
                 color: EnumColor.textSecondary.color,
@@ -135,7 +138,7 @@ class _RecordHeader extends StatelessWidget {
             flex: columnRatio[2],
             child: SizedBox(
               height: 42.0.scale,
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 EnumLocale.warehouseRecordColumnTime.tr,
                 size: 28.0.scale,
                 color: EnumColor.textSecondary.color,
@@ -147,7 +150,7 @@ class _RecordHeader extends StatelessWidget {
             flex: columnRatio[3],
             child: SizedBox(
               height: 42.0.scale,
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 EnumLocale.warehouseRecordColumnPerson.tr,
                 size: 28.0.scale,
                 color: EnumColor.textSecondary.color,
@@ -194,7 +197,7 @@ class _RecordItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100.0.scale),
                 ),
               ),
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 record.tagType.title,
                 size: 28.0.scale,
                 color: record.tagType.operateType.tagTextColor,
@@ -207,7 +210,7 @@ class _RecordItem extends StatelessWidget {
             flex: columnRatio[1],
             child: Padding(
               padding: EdgeInsets.only(top: 12.0.scale),
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 record.content,
                 size: 28.0.scale,
                 color: EnumColor.textPrimary.color,
@@ -217,7 +220,7 @@ class _RecordItem extends StatelessWidget {
           SizedBox(width: 44.0.scale),
           Expanded(
             flex: columnRatio[2],
-            child: WidgetUtil.textWidget(
+            child: CustTextWidget(
               record.date,
               size: 28.0.scale,
               color: EnumColor.textPrimary.color,
@@ -233,7 +236,7 @@ class _RecordItem extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(32.0.scale),
-                  child: WidgetUtil.networkImage(
+                  child: CustNetworkImage(
                     url: avatarUrl,
                     width: 64.0.scale,
                     height: 64.0.scale,
@@ -241,7 +244,7 @@ class _RecordItem extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 24.0.scale),
-                WidgetUtil.textWidget(
+                CustTextWidget(
                   record.userName,
                   size: 28.0.scale,
                   color: EnumColor.textPrimary.color,
@@ -266,7 +269,7 @@ class _RecordHeaderShimmer extends StatelessWidget {
         return SizedBox(height: 16.0.scale);
       },
       itemBuilder: (context, index) {
-        return WidgetUtil.shimmerWidget(height: 112.0.scale);
+        return ShimmerWidget(height: 112.0.scale);
       },
     );
   }

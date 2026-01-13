@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
@@ -23,10 +24,10 @@ Future<void> _registerServices() async {
   LogService.register();
 
   // 2. 环境服务 - 提供 API 基础 URL
-  final envUtil = EnvironmentService.register();
+  final envService = EnvironmentService.register();
 
   // 3. API 服务 - 依赖环境服务
-  ApiService.register(envUtil.apiBaseUrl);
+  ApiService.register(envService.apiBaseUrl);
 
   // 4. 存储服务 - 异步初始化，需要先注册
   await StorageService.register();
@@ -46,9 +47,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routerUtil = RouterService.instance;
-    final localeUtil = LocaleService.instance;
-    final themeUtil = ThemeService.instance;
+    final routerService = RouterService.instance;
+    final localeService = LocaleService.instance;
+    final themeService = ThemeService.instance;
     DeviceService.register(context);
 
     // 如果設備不支援，顯示不支援頁面
@@ -58,34 +59,34 @@ class MyApp extends StatelessWidget {
     }
 
     return GetMaterialApp(
-      navigatorKey: routerUtil.rootNavigatorKey,
-      navigatorObservers: [routerUtil],
+      navigatorKey: routerService.rootNavigatorKey,
+      navigatorObservers: [routerService],
       title: '智管家',
       debugShowCheckedModeBanner: false,
-      translations: localeUtil.getDefaultTranslation,
-      locale: localeUtil.getCurrentLocale,
-      fallbackLocale: localeUtil.getDefaultLocale,
-      supportedLocales: localeUtil.getSupportedLocales,
+      translations: localeService.getDefaultTranslation,
+      locale: LocaleTranslation.zhTW.getLocale,
+      fallbackLocale: localeService.getDefaultLocale,
+      supportedLocales: localeService.getSupportedLocales,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      themeMode: themeUtil.getCurrentThemeMode,
+      themeMode: themeService.getCurrentThemeMode,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: themeUtil.getLightSeedColor,
+          seedColor: themeService.getLightSeedColor,
         ),
         useMaterial3: true,
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: themeUtil.getDarkSeedColor,
+          seedColor: themeService.getDarkSeedColor,
         ),
         useMaterial3: true,
       ),
-      initialRoute: routerUtil.initRouterPath,
-      getPages: routerUtil.getRouterPages,
+      initialRoute: routerService.initRouterPath,
+      getPages: routerService.getRouterPages,
     );
   }
 }

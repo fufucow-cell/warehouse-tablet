@@ -9,7 +9,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:get/get.dart';
 
 class DialogItemSearchWidget extends StatelessWidget {
@@ -58,7 +59,7 @@ class _Body extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WidgetUtil.textField(
+        CustTextField(
           controller: controller.searchController,
           hintText: EnumLocale.searchItemNameOrDescriptionHint.tr,
           prefixIcon: EnumImage.cSearch2.image(
@@ -140,7 +141,7 @@ class _DropdownField extends StatelessWidget {
     final controller = Get.find<DialogItemSearchWidgetController>();
     return DialogSectionWidget(
       title: title,
-      child: WidgetUtil.textDropdownButton(
+      child: CustTextDropdownButton(
         selectedValue: selectedValue,
         values: visibleValues,
         buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,

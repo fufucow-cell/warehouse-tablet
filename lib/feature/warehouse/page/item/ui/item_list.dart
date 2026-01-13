@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/item/warehouse_item_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/warehouse_item_response_model/item.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_grid_view.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_network_image.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
 import 'package:get/get.dart';
 
 class ItemList extends StatelessWidget {
@@ -22,16 +26,16 @@ class ItemList extends StatelessWidget {
             final isLoading = controller.allItemsRx.value == null;
 
             if (items.isEmpty) {
-              return WidgetUtil.emptyWidget();
+              return const CustEmptyWidget();
             }
 
             final itemCount = isLoading ? 3 : items.length;
 
-            return WidgetUtil.customGridView(
+            return CustGridView(
               itemCount: itemCount,
               itemBuilder: (context, index) {
                 return isLoading
-                    ? WidgetUtil.shimmerWidget()
+                    ? const ShimmerWidget()
                     : _ItemCard(
                         item: items[index],
                       );
@@ -104,7 +108,7 @@ class _ItemPhotoWidget extends StatelessWidget {
       height: 335.0.scale,
       child: Stack(
         children: [
-          WidgetUtil.networkImage(
+          CustNetworkImage(
             url: item.photo?.toString() ?? '',
             width: double.infinity,
             height: photoHeight,
@@ -124,7 +128,7 @@ class _ItemPhotoWidget extends StatelessWidget {
                   color: EnumColor.accentRed.color,
                   borderRadius: BorderRadius.circular(100.0.scale),
                 ),
-                child: WidgetUtil.textWidget(
+                child: CustTextWidget(
                   EnumLocale.warehouseItemStockInsufficient.tr,
                   size: 22.0.scale,
                   color: EnumColor.textWhite.color,
@@ -154,7 +158,7 @@ class _ItemInfo extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: WidgetUtil.textWidget(
+              child: CustTextWidget(
                 item.name ?? '',
                 weightType: EnumFontWeightType.bold,
                 color: EnumColor.textPrimary.color,
@@ -167,7 +171,7 @@ class _ItemInfo extends StatelessWidget {
           ],
         ),
         SizedBox(height: 16.0.scale),
-        WidgetUtil.textWidget(
+        CustTextWidget(
           item.description ?? '',
           size: 22.0.scale,
           color: EnumColor.textSecondary.color,
@@ -175,7 +179,7 @@ class _ItemInfo extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         SizedBox(height: 16.0.scale),
-        WidgetUtil.textWidget(
+        CustTextWidget(
           controller.getItemCategoriesName(item),
           size: 26.0.scale,
           color: EnumColor.textLink.color,
@@ -198,13 +202,13 @@ class _ItemInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          WidgetUtil.textWidget(
+          CustTextWidget(
             '${EnumLocale.quantity.tr}：',
             size: 22.0.scale,
             color: EnumColor.accentBlue.color,
           ),
           SizedBox(width: 12.0.scale),
-          WidgetUtil.textWidget(
+          CustTextWidget(
             item.quantity?.toString() ?? '',
             size: 28.0.scale,
             weightType: EnumFontWeightType.bold,
@@ -306,7 +310,7 @@ class _ItemTools extends StatelessWidget {
                 color: EnumColor.iconSecondary.color,
               ),
               SizedBox(height: 8.0.scale),
-              WidgetUtil.textWidget(
+              CustTextWidget(
                 title,
                 size: 18.0.scale,
                 color: EnumColor.textSecondary.color,

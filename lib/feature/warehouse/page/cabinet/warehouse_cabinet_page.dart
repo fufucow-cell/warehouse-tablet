@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/cabinet_row_card.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/ui/top_info.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_empty_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/ui/second_background_card.dart';
 import 'package:get/get.dart';
 
 class WarehouseCabinetPage extends StatelessWidget {
@@ -25,7 +27,7 @@ class WarehouseCabinetPage extends StatelessWidget {
             children: [
               const TopInfo(),
               if (!controller.hasRoom)
-                Expanded(child: WidgetUtil.emptyWidget())
+                const Expanded(child: CustEmptyWidget())
               else
                 Expanded(
                   child: Obx(
@@ -132,7 +134,7 @@ class _RoomTitleInfo extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: WidgetUtil.textWidget(
+          child: CustTextWidget(
             roomCabinetInfo.roomName,
             weightType: EnumFontWeightType.bold,
           ),
@@ -178,7 +180,7 @@ class _RoomItemCountInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final roomQuantity = roomCabinetInfo.cabinets.fold(0, (sum, cabinet) => sum + (cabinet.quantity));
     final cabinetsCount = roomCabinetInfo.cabinets.length;
-    return WidgetUtil.textWidget(
+    return CustTextWidget(
       EnumLocale.warehouseTotalCabinetAndItem.trArgs(['$cabinetsCount', '$roomQuantity']),
       size: 22.0.scale,
     );
@@ -241,11 +243,11 @@ class _RoomCardShimmer extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      WidgetUtil.shimmerWidget(height: 38.0.scale),
+                      ShimmerWidget(height: 38.0.scale),
                       SizedBox(height: 16.0.scale),
-                      WidgetUtil.shimmerWidget(height: 26.0.scale),
+                      ShimmerWidget(height: 26.0.scale),
                       SizedBox(height: 32.0.scale),
-                      WidgetUtil.shimmerWidget(height: 156.0.scale),
+                      ShimmerWidget(height: 156.0.scale),
                     ],
                   ),
                 ),

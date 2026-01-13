@@ -6,66 +6,48 @@ class RouterService extends GetxService {
   // MARK: - Properties
 
   final _model = RouterServiceModel();
-  static RouterService get instance => Get.find<RouterService>();
+  static const String _tagName = 'warehouse';
+  static RouterService get instance => Get.find<RouterService>(tag: _tagName);
+  BuildContext? get getNavigatorContext => _model.navigatorContext;
 
   // MARK: - Init
 
   RouterService._internal();
 
   static RouterService register() {
-    if (Get.isRegistered<RouterService>()) {
-      return Get.find<RouterService>();
+    if (Get.isRegistered<RouterService>(tag: _tagName)) {
+      return instance;
     }
     final RouterService service = RouterService._internal();
-    Get.put<RouterService>(service, permanent: true);
+    Get.put<RouterService>(
+      service,
+      tag: _tagName,
+      permanent: true,
+    );
     return service;
   }
 
   static void unregister() {
-    if (Get.isRegistered<RouterService>()) {
-      Get.delete<RouterService>(force: true);
+    if (Get.isRegistered<RouterService>(tag: _tagName)) {
+      instance._model.navigatorContext = null;
+      Get.delete<RouterService>(
+        tag: _tagName,
+        force: true,
+      );
     }
   }
 
   // MARK: - Public Method
 
-  BuildContext? getRootContext([
-    BuildContext? context,
-  ]) {
-    if (_model.cachedRootContext != null) {
-      return _model.cachedRootContext;
-    }
-
-    // 如果 cachedRootContext == null 且提供了 context，執行初始化
-    if (context != null) {
-      _initializeFromContext(context);
-      return _model.cachedRootContext;
-    }
-
-    return null;
-  }
-
-  /// 設置 root context
-  void setRootContext(BuildContext? context) {
-    _model.cachedRootContext = context;
-  }
-
-  /// 清除緩存的 root context（用於測試或重置）
-  void clear() {
-    _model.cachedRootContext = null;
-  }
-
-  // MARK: - Private Method
-
-  void _initializeFromContext(BuildContext context) {
-    if (_model.cachedRootContext != null) {
+  void findNavigatorContext(BuildContext context) {
+    if (_model.navigatorContext != null) {
       return;
     }
 
     try {
       final rootNavigator = Navigator.maybeOf(context, rootNavigator: true);
       if (rootNavigator != null) {
-        _model.cachedRootContext = rootNavigator.context;
+        _model.navigatorContext = rootNavigator.context;
         return;
       }
 
@@ -78,10 +60,10 @@ class RouterService extends GetxService {
             rootNavigator: true,
           );
           if (navigator != null) {
-            _model.cachedRootContext = navigator.context;
+            _model.navigatorContext = navigator.context;
             return;
           }
-          _model.cachedRootContext = currentContext;
+          _model.navigatorContext = currentContext;
           return;
         }
         // 向上查找父 widget
@@ -93,10 +75,10 @@ class RouterService extends GetxService {
         }
       }
     } on Object {
-      _model.cachedRootContext ??= context;
+      _model.navigatorContext ??= context;
       rethrow;
     }
 
-    _model.cachedRootContext ??= context;
+    _model.navigatorContext ??= context;
   }
 }

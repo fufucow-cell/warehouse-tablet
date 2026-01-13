@@ -4,7 +4,7 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:get/get.dart';
 
 class TopInfo extends StatelessWidget {
@@ -19,7 +19,7 @@ class TopInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        WidgetUtil.textWidget(
+        CustTextWidget(
           EnumLocale.warehouseCategoryTotalCount.trArgs([
             eachLevelCount[0].toString(),
             eachLevelCount[1].toString(),
@@ -60,7 +60,7 @@ class TopInfo extends StatelessWidget {
                     color: EnumColor.accentBlue.color,
                   ),
                   SizedBox(width: 10.0.scale),
-                  WidgetUtil.textWidget(
+                  CustTextWidget(
                     EnumLocale.category.tr,
                     size: 32.0.scale,
                     color: EnumColor.accentBlue.color,

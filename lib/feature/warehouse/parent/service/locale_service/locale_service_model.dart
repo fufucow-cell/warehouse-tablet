@@ -1,13 +1,14 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/en_us.dart' as en_us;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/ja_jp.dart' as ja_jp;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/ko_kr.dart' as ko_kr;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/zh_cn.dart' as zh_cn;
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/zh_tw.dart' as zh_tw;
+import 'package:get/get.dart';
 
 /// 語系版本
-final localeVersion = '1.0.0';
+const localeVersion = '1.0.0';
 
 class LocaleTranslation extends Translations {
   // MARK: - Properties
@@ -107,4 +108,6 @@ class LocaleTranslation extends Translations {
 
     return result;
   }
+
+  Locale get getLocale => Locale(languageCode, countryCode);
 }

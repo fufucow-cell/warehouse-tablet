@@ -11,7 +11,8 @@ import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/local
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/util/widget_util.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:flutter_smart_home_tablet/feature/warehouse/service/warehouse_service.dart';
 import 'package:get/get.dart';
 
@@ -81,7 +82,7 @@ class _CurrentField extends StatelessWidget {
     final controller = Get.find<DialogCabinetEditWidgetController>();
     return DialogSectionWidget(
       title: EnumLocale.editCabinetRoomName.tr,
-      child: WidgetUtil.textField(
+      child: CustTextField(
         controller: TextEditingController(text: controller.getRoom.roomName),
         isReadOnly: true,
       ),
@@ -144,7 +145,7 @@ class _CabinetField extends StatelessWidget {
               child: DialogSectionWidget(
                 title: editModel.oldCabinet.name ?? '',
                 isRequired: true,
-                child: WidgetUtil.textField(
+                child: CustTextField(
                   textColor: isDelete ? EnumColor.textSecondary.color : null,
                   isReadOnly: isDelete,
                   controller: isDelete
@@ -168,7 +169,7 @@ class _CabinetField extends StatelessWidget {
                     SizedBox(height: 12.0.scale),
                     DialogSectionWidget(
                       title: EnumLocale.editCabinetMoveToNewRoom.tr,
-                      child: WidgetUtil.textDropdownButton(
+                      child: CustTextDropdownButton(
                         selectedValue: editModel.newRoom?.name,
                         values: controller.getRoomNameList(
                           isExcludeOldRoomName: true,
