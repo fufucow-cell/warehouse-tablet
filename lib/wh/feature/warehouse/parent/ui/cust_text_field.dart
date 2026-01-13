@@ -62,46 +62,62 @@ class CustTextField extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(16.0.scale),
       ),
-      child: TextField(
-        readOnly: isReadOnly,
-        controller: controller,
-        keyboardType: keyboardType ?? textFieldType.keyboardType,
-        maxLines: maxLines ?? (expands == true ? null : 1),
-        expands: expands ?? false,
-        textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
-        textAlign: textAlign,
-        maxLength: maxLength,
-        inputFormatters: () {
-          final formatters = textFieldType.inputFormatters;
-
-          if (maxLength != null) {
-            formatters.add(LengthLimitingTextInputFormatter(maxLength));
-          }
-
-          return formatters.isNotEmpty ? formatters : null;
-        }(),
-        style: TextStyle(
-          fontSize: fontSize ?? 32.0.scale,
-          color: textColor ?? EnumColor.textPrimary.color,
-        ),
-        decoration: InputDecoration(
-          hintText: hintText ?? EnumLocale.commonInputHint.tr,
-          hintStyle: TextStyle(
-            fontSize: fontSize ?? 32.0.scale,
-            color: hintColor ?? EnumColor.textSecondary.color,
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          inputDecorationTheme: const InputDecorationTheme(
+            filled: false,
+            fillColor: Colors.transparent,
+            contentPadding: EdgeInsets.zero,
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            focusedErrorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            isDense: true,
           ),
-          prefixIcon: prefixIcon != null
-              ? Container(
-                  width: prefixIconSize,
-                  height: prefixIconSize,
-                  margin: EdgeInsets.only(right: 16.0.scale),
-                  alignment: Alignment.center,
-                  child: prefixIcon,
-                )
-              : null,
-          border: InputBorder.none,
-          isDense: true,
-          counterText: '', // 隱藏字符計數器
+        ),
+        child: TextField(
+          readOnly: isReadOnly,
+          controller: controller,
+          keyboardType: keyboardType ?? textFieldType.keyboardType,
+          maxLines: maxLines ?? (expands == true ? null : 1),
+          expands: expands ?? false,
+          textAlignVertical: textAlignVertical ?? TextAlignVertical.center,
+          textAlign: textAlign,
+          maxLength: maxLength,
+          inputFormatters: () {
+            final formatters = textFieldType.inputFormatters;
+
+            if (maxLength != null) {
+              formatters.add(LengthLimitingTextInputFormatter(maxLength));
+            }
+
+            return formatters.isNotEmpty ? formatters : null;
+          }(),
+          style: TextStyle(
+            fontSize: fontSize ?? 32.0.scale,
+            color: textColor ?? EnumColor.textPrimary.color,
+          ),
+          decoration: InputDecoration(
+            hintText: hintText ?? EnumLocale.commonInputHint.tr,
+            hintStyle: TextStyle(
+              fontSize: fontSize ?? 32.0.scale,
+              color: hintColor ?? EnumColor.textSecondary.color,
+            ),
+            prefixIcon: prefixIcon != null
+                ? Container(
+                    width: prefixIconSize,
+                    height: prefixIconSize,
+                    margin: EdgeInsets.only(right: 16.0.scale),
+                    alignment: Alignment.center,
+                    child: prefixIcon,
+                  )
+                : null,
+            border: InputBorder.none,
+            isDense: true,
+            counterText: '', // 隱藏字符計數器
+          ),
         ),
       ),
     );

@@ -63,6 +63,7 @@ class _FilterItem extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: EdgeInsets.symmetric(
           horizontal: 24.0.scale,
+          vertical: 16.0.scale,
         ),
       ),
       child: Row(

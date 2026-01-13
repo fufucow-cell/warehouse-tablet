@@ -59,6 +59,7 @@ class FilterTextListSingleItem extends StatelessWidget {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: EdgeInsets.symmetric(
           horizontal: 24.0.scale,
+          vertical: 16.0.scale,
         ),
         backgroundColor: isSelected ? (isFillColor ? EnumColor.backgroundButtonFill.color : EnumColor.menuBgFocused.color) : Colors.transparent,
         foregroundColor: isSelected ? (isFillColor ? EnumColor.textWhite.color : EnumColor.textProduct.color) : EnumColor.textSecondary.color,

@@ -125,7 +125,10 @@ class _ExpandButton extends StatelessWidget {
       onPressed: onPressed,
       style: TextButton.styleFrom(
         backgroundColor: EnumColor.backgroundSecondary.color,
-        padding: EdgeInsets.symmetric(horizontal: 32.0.scale),
+        padding: EdgeInsets.symmetric(
+          horizontal: 32.0.scale,
+          vertical: 16.0.scale,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.0.scale),
         ),
