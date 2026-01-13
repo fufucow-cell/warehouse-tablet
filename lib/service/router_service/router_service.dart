@@ -1,7 +1,7 @@
+import 'package:engo_terminal_app3/service/router_service/router_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
-import 'package:flutter_smart_home_tablet/service/router_service/router_service_model.dart';
 import 'package:get/get.dart';
 
 class RouterService extends GetxService implements NavigatorObserver {
@@ -9,6 +9,7 @@ class RouterService extends GetxService implements NavigatorObserver {
 
   final _model = RouterServiceModel();
   static const String _tagName = 'smart_home';
+  final _logService = LogService.instance;
   BuildContext? get rootContext => _model.rootNavigatorKey.currentContext;
   NavigatorState? get rootNavigator => _model.rootNavigatorKey.currentState;
   GlobalKey<NavigatorState> get rootNavigatorKey => _model.rootNavigatorKey;
@@ -52,7 +53,7 @@ class RouterService extends GetxService implements NavigatorObserver {
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) {
-    LogService.i(
+    _logService.i(
       EnumLogType.navigation,
       '路由推入: ${route.settings.name} (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -63,7 +64,7 @@ class RouterService extends GetxService implements NavigatorObserver {
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) {
-    LogService.i(
+    _logService.i(
       EnumLogType.navigation,
       '路由彈出: ${route.settings.name} (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -74,7 +75,7 @@ class RouterService extends GetxService implements NavigatorObserver {
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) {
-    LogService.i(
+    _logService.i(
       EnumLogType.navigation,
       '路由移除: ${route.settings.name} (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -85,7 +86,7 @@ class RouterService extends GetxService implements NavigatorObserver {
     Route<dynamic>? newRoute,
     Route<dynamic>? oldRoute,
   }) {
-    LogService.i(
+    _logService.i(
       EnumLogType.navigation,
       '路由替換: ${oldRoute?.settings.name ?? '無'} -> ${newRoute?.settings.name ?? '無'}',
     );
@@ -96,11 +97,11 @@ class RouterService extends GetxService implements NavigatorObserver {
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) {
-    LogService.d('用戶開始手勢導航: ${route.settings.name}');
+    _logService.d('用戶開始手勢導航: ${route.settings.name}');
   }
 
   @override
   void didStopUserGesture() {
-    LogService.d('用戶停止手勢導航');
+    _logService.d('用戶停止手勢導航');
   }
 }

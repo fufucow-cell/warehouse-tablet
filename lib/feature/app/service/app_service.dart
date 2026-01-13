@@ -1,8 +1,8 @@
+import 'package:engo_terminal_app3/feature/app/page/main/app_main_page.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:get/get.dart';
 
 part 'app_service_model.dart';
@@ -105,7 +105,7 @@ class AppService extends GetxService implements NavigatorObserver {
     if (Get.isRegistered<AppService>()) {
       Get.find<AppService>().printRouteStack();
     } else {
-      LogService.i(
+      LogService.instance.i(
         EnumLogType.navigation,
         '[Nested] 堆疊狀況: AppService 尚未註冊',
       );
@@ -116,7 +116,7 @@ class AppService extends GetxService implements NavigatorObserver {
   void printRouteStack() {
     final navigator = nestedNavigator;
     if (navigator == null) {
-      LogService.i(
+      LogService.instance.i(
         EnumLogType.navigation,
         '[Nested] 堆疊狀況: Navigator 尚未初始化',
       );
@@ -145,7 +145,7 @@ class AppService extends GetxService implements NavigatorObserver {
     stackInfo.writeln('Navigator.canPop(): ${navigator.canPop()}');
     stackInfo.writeln('═══════════════════════════════════════════════════');
 
-    LogService.i(EnumLogType.navigation, stackInfo.toString());
+    LogService.instance.i(EnumLogType.navigation, stackInfo.toString());
   }
 
   // MARK: - NavigatorObserver
@@ -157,7 +157,7 @@ class AppService extends GetxService implements NavigatorObserver {
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = route.settings.name ?? '未知路由';
     _model.routeStack.add(routeName);
-    LogService.i(
+    LogService.instance.i(
       EnumLogType.navigation,
       '[Nested] 路由推入: $routeName (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -169,7 +169,7 @@ class AppService extends GetxService implements NavigatorObserver {
     if (_model.routeStack.isNotEmpty && _model.routeStack.last == routeName) {
       _model.routeStack.removeLast();
     }
-    LogService.i(
+    LogService.instance.i(
       EnumLogType.navigation,
       '[Nested] 路由彈出: $routeName (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -179,7 +179,7 @@ class AppService extends GetxService implements NavigatorObserver {
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = route.settings.name ?? '未知路由';
     _model.routeStack.remove(routeName);
-    LogService.i(
+    LogService.instance.i(
       EnumLogType.navigation,
       '[Nested] 路由移除: $routeName (前一個路由: ${previousRoute?.settings.name ?? '無'})',
     );
@@ -196,7 +196,7 @@ class AppService extends GetxService implements NavigatorObserver {
     }
     _model.routeStack.add(newRouteName);
 
-    LogService.i(
+    LogService.instance.i(
       EnumLogType.navigation,
       '[Nested] 路由替換: $oldRouteName -> $newRouteName',
     );
@@ -207,11 +207,11 @@ class AppService extends GetxService implements NavigatorObserver {
     Route<dynamic> route,
     Route<dynamic>? previousRoute,
   ) {
-    LogService.d('[Nested] 用戶開始手勢導航: ${route.settings.name}');
+    LogService.instance.d('[Nested] 用戶開始手勢導航: ${route.settings.name}');
   }
 
   @override
   void didStopUserGesture() {
-    LogService.d('[Nested] 用戶停止手勢導航');
+    LogService.instance.d('[Nested] 用戶停止手勢導航');
   }
 }

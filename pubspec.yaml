@@ -1,4 +1,4 @@
-name: flutter_smart_home_tablet
+name: engo_terminal_app3
 description: Flutter ARS BANK Tablet Application.
 publish_to: 'none'
 
@@ -34,8 +34,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/feature/warehouse/parent/assets/images/
-    - lib/feature/warehouse/parent/assets/images/common/
-    - lib/feature/warehouse/parent/assets/images/light/
-    - lib/feature/warehouse/parent/assets/images/dark/
-    - lib/feature/warehouse/parent/assets/mock_data/response/
+    - lib/wh/feature/warehouse/parent/assets/images/
+    - lib/wh/feature/warehouse/parent/assets/images/common/
+    - lib/wh/feature/warehouse/parent/assets/images/light/
+    - lib/wh/feature/warehouse/parent/assets/images/dark/
+    - lib/wh/feature/warehouse/parent/assets/mock_data/response/

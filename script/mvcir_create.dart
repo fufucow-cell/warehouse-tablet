@@ -56,7 +56,7 @@ bool _createFile(String path) {
 }
 
 void _createPageFolder() {
-  String featureDirectoryPath = 'lib/feature/$_featureFileName';
+  String featureDirectoryPath = 'lib/wh/feature/$_featureFileName';
   String pageDirectoryPath = '$featureDirectoryPath/page/$_pageFileName';
   String filePath = '$pageDirectoryPath/${_featureFileName}_${_pageFileName}';
   String pageFilePath = '${filePath}_page.dart';
@@ -118,7 +118,7 @@ void _createPageFolder() {
 void _createPageContent(String path) {
   // 计算 controller 文件的导入路径
   String controllerImportPath =
-      'package:flutter_smart_home_tablet/feature/$_featureFileName/page/$_pageFileName/${_featureFileName}_${_pageFileName}_page_controller.dart';
+      'package:engo_terminal_app3/wh/feature/$_featureFileName/page/$_pageFileName/${_featureFileName}_${_pageFileName}_page_controller.dart';
   String content = '''
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -170,7 +170,7 @@ class $_featureClassName${_pageClassName}PageModel {}
 void _createPageControllerContent(String path) {
   // Controller 导入 model，并使用 part 包含 interactive 和 route
   String modelImportPath =
-      'package:flutter_smart_home_tablet/feature/$_featureFileName/page/$_pageFileName/${_featureFileName}_${_pageFileName}_page_model.dart';
+      'package:engo_terminal_app3/wh/feature/$_featureFileName/page/$_pageFileName/${_featureFileName}_${_pageFileName}_page_model.dart';
   String content = '''
 import 'package:get/get.dart';
 import '$modelImportPath';

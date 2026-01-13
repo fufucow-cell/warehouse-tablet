@@ -1,16 +1,15 @@
+import 'package:engo_terminal_app3/service/api_service/api_service.dart';
+import 'package:engo_terminal_app3/service/router_service/router_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/storage_service/storage_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/device_service/device_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/storage_service/storage_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
-import 'package:flutter_smart_home_tablet/service/api_service/api_service.dart';
-import 'package:flutter_smart_home_tablet/service/router_service/router_service.dart';
 import 'package:get/get.dart';
 
 void main() async {
@@ -20,25 +19,13 @@ void main() async {
 }
 
 Future<void> _registerServices() async {
-  // 1. 基础服务 - 最早注册，不依赖其他服务
   LogService.register();
-
-  // 2. 环境服务 - 提供 API 基础 URL
   final envService = EnvironmentService.register();
-
-  // 3. API 服务 - 依赖环境服务
+  envService.setModuleMode(false);
   ApiService.register(envService.apiBaseUrl);
-
-  // 4. 存储服务 - 异步初始化，需要先注册
   await StorageService.register();
-
-  // 5. 本地化服务 - 依赖存储服务
   await LocaleService.register();
-
-  // 6. 主题服务 - 依赖存储服务
   ThemeService.register();
-
-  // 7. 路由服务 - 最后注册
   RouterService.register();
 }
 
@@ -54,7 +41,7 @@ class MyApp extends StatelessWidget {
 
     // 如果設備不支援，顯示不支援頁面
     final deviceService = DeviceService.instance;
-    if (!deviceService.isSupportedDevice) {
+    if (!deviceService.getIsSupportedDevice) {
       return const _UnsupportedDevicePage();
     }
 
@@ -63,8 +50,8 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [routerService],
       title: '智管家',
       debugShowCheckedModeBanner: false,
-      translations: localeService.getDefaultTranslation,
-      locale: LocaleTranslation.zhTW.getLocale,
+      translations: localeService.getCurrentTranslation,
+      locale: localeService.getCurrentLocale,
       fallbackLocale: localeService.getDefaultLocale,
       supportedLocales: localeService.getSupportedLocales,
       localizationsDelegates: const [
@@ -99,9 +86,9 @@ class _UnsupportedDevicePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // 初始化 scale 值
     final deviceService = DeviceService.instance;
-    scaleMin = deviceService.minScale;
-    scaleWidth = deviceService.scaleWidthValue;
-    scaleHeight = deviceService.scaleHeightValue;
+    scaleMin = deviceService.getMinScale;
+    scaleWidth = deviceService.getScaleWidthValue;
+    scaleHeight = deviceService.getScaleHeightValue;
 
     return MaterialApp(
       title: '智管家',

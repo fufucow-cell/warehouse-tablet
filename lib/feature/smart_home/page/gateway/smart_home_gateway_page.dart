@@ -1,8 +1,8 @@
+import 'package:engo_terminal_app3/ui/cust_scaffold.dart';
+import 'package:engo_terminal_app3/feature/smart_home/page/gateway/smart_home_gateway_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/smart_home/page/gateway/smart_home_gateway_page_controller.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_text_widget.dart';
-import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 
 class SmartHomeGatewayPage extends GetView<SmartHomeGatewayPageController> {

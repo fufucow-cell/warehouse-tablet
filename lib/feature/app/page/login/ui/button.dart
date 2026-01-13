@@ -1,6 +1,6 @@
+import 'package:engo_terminal_app3/feature/app/page/login/app_login_page.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/login/app_login_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:get/get.dart';
 
 enum LoginActionButtonType {

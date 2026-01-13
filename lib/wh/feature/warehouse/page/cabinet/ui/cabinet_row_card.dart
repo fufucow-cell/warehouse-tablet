@@ -1,0 +1,122 @@
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class CabinetRowCard extends StatelessWidget {
+  final List<CabinetInfo> cabinets;
+
+  const CabinetRowCard({
+    super.key,
+    required this.cabinets,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (cabinets.isEmpty) {
+      return _buildEmptyCard();
+    }
+
+    return Expanded(
+      child: ListView.separated(
+        padding: EdgeInsets.zero,
+        physics: const ClampingScrollPhysics(),
+        itemCount: cabinets.length,
+        separatorBuilder: (context, index) => SizedBox(height: 16.0.scale),
+        itemBuilder: (context, index) {
+          return Row(
+            children: [
+              Expanded(
+                child: _CabinetCard(cabinet: cabinets[index]),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildEmptyCard() {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: EnumColor.backgroundSecondary.color,
+        borderRadius: BorderRadius.circular(20.0.scale),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: 32.0.scale,
+        vertical: 22.0.scale,
+      ),
+      child: CustTextWidget(
+        EnumLocale.warehouseNoCabinetInRoom.tr,
+        size: 26.0.scale,
+        color: EnumColor.textSecondary.color,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+}
+
+class _CabinetCard extends StatelessWidget {
+  final CabinetInfo cabinet;
+
+  const _CabinetCard({
+    required this.cabinet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<WarehouseCabinetPageController>();
+    return Material(
+      color: EnumColor.backgroundSecondary.color,
+      borderRadius: BorderRadius.circular(20.0.scale),
+      child: InkWell(
+        onTap: () {
+          controller.interactive(
+            EnumWarehouseCabinetPageInteractive.tapCabinet,
+            data: cabinet,
+          );
+        },
+        borderRadius: BorderRadius.circular(20.0.scale),
+        child: Ink(
+          padding: EdgeInsets.symmetric(
+            vertical: 22.0.scale,
+            horizontal: 32.0.scale,
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: CustTextWidget(
+                  cabinet.cabinetName,
+                  size: 26.0.scale,
+                  color: EnumColor.textSecondary.color,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 18.0.scale,
+                ),
+                decoration: BoxDecoration(
+                  color: EnumColor.backgroundAccentBlue.color,
+                  borderRadius: BorderRadius.circular(12.0.scale),
+                ),
+                child: CustTextWidget(
+                  '${cabinet.quantity}',
+                  size: 28.0.scale,
+                  color: EnumColor.accentBlue.color,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

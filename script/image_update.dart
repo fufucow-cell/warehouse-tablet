@@ -6,8 +6,8 @@ import 'dart:io';
 /// - common/ 目录下的文件：c + 文件名（PascalCase），例如 cCow, cHouse
 /// - light/ 或 dark/ 目录下的文件：t + 文件名（PascalCase），例如 tCow
 void main() {
-  final imagesDir = Directory('lib/feature/warehouse/parent/assets/images');
-  final outputFile = File('lib/feature/warehouse/parent/service/theme_service/theme/image_map.dart');
+  final imagesDir = Directory('lib/wh/feature/warehouse/parent/assets/images');
+  final outputFile = File('lib/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart');
 
   if (!imagesDir.existsSync()) {
     print('Error: images directory not found');
@@ -144,7 +144,7 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';");
   buffer.writeln('');
 
   // 收集所有 enum 名称并排序

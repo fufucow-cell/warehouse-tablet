@@ -1,0 +1,256 @@
+import 'dart:async';
+
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_create/dialog_category_create_widget_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_delete/dialog_category_delete_widget_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/dialog_category_edit/dialog_category_edit_widget_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/warehouse_category_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_category_create_request_model/warehouse_category_create_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_category_delete_request_model/warehouse_category_delete_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_category_update_request_model/warehouse_category_update_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+part 'warehouse_category_page_interactive.dart';
+part 'warehouse_category_page_route.dart';
+
+class WarehouseCategoryPageController extends GetxController {
+  // MARK: - Properties
+
+  final _model = WarehouseCategoryPageModel();
+  final _service = WarehouseService.instance;
+  final ScrollController scrollController = ScrollController();
+  final Map<GlobalKey, double> _subHeaderPositions = {};
+  final _showSubHeader = Rx<bool>(false);
+  RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
+  RxReadonly<Set<String>> get expandedCategoryIdsRx => _model.expandedCategoryIds.readonly;
+  RxReadonly<bool> get showSubHeaderRx => _showSubHeader.readonly;
+  Set<String> get getExpandedCategoryIds => _model.expandedCategoryIds.value;
+  double get rowActionWidth => 280.0.scale;
+  double get rowCountWidth => 400.0.scale;
+  double get rowRightGap => 32.0.scale;
+  double get rowLeftGap => 24.0.scale;
+
+  // MARK: - Init
+
+  @override
+  void onInit() {
+    super.onInit();
+    LogService.instance.i(
+      EnumLogType.debug,
+      '[WarehouseCategoryPageController] onInit - $hashCode',
+    );
+    scrollController.addListener(_onScroll);
+    _addListeners();
+    _checkData();
+  }
+
+  @override
+  void onClose() {
+    LogService.instance.i(
+      EnumLogType.debug,
+      '[WarehouseCategoryPageController] onClose - $hashCode',
+    );
+    scrollController.removeListener(_onScroll);
+    scrollController.dispose();
+    _model.allCategoriesWorker?.dispose();
+    super.onClose();
+  }
+
+  void _onScroll() {
+    final scrollOffset = scrollController.offset;
+    // 检查是否有任何第二层 header 滚动到顶部
+    bool shouldShowSubHeader = false;
+
+    for (final position in _subHeaderPositions.values) {
+      if (position > 0 && scrollOffset >= position - 100.0.scale) {
+        shouldShowSubHeader = true;
+        break;
+      }
+    }
+
+    if (shouldShowSubHeader != _showSubHeader.value) {
+      _showSubHeader.value = shouldShowSubHeader;
+    }
+  }
+
+  void updateSubHeaderPosition(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      final RenderBox? box = context.findRenderObject() as RenderBox?;
+      if (box != null) {
+        final position = box.localToGlobal(Offset.zero);
+        _subHeaderPositions[key] = position.dy;
+        _onScroll();
+      }
+    }
+  }
+
+  // MARK: - Public Method
+
+  int getTotalCategoryCount() {
+    final categories = _model.allCategories.value;
+
+    if (categories == null) {
+      return 0;
+    }
+
+    int countRecursive(List<Category> cats) {
+      int count = 0;
+      for (final cat in cats) {
+        count++; // Count current category
+        if (cat.children?.isNotEmpty ?? false) {
+          count += countRecursive(cat.children!);
+        }
+      }
+      return count;
+    }
+
+    return countRecursive(categories);
+  }
+
+  List<int> getEachLevelCategoryCount() {
+    final categories = _model.allCategories.value;
+    if (categories == null) {
+      return [0, 0, 0];
+    }
+
+    final lv1 = categories.length;
+    final lv2 = categories.fold<int>(
+      0,
+      (sum, category) => sum + (category.children?.length ?? 0),
+    );
+    final lv3 = categories.fold<int>(
+      0,
+      (sum, category) =>
+          sum +
+          (category.children?.fold<int>(
+                0,
+                (sum, category) => sum + (category.children?.length ?? 0),
+              ) ??
+              0),
+    );
+    return [lv1, lv2, lv3];
+  }
+
+  List<Category> getChildrenList([Category? category]) {
+    if (category == null) {
+      return _service.getAllCategories;
+    } else {
+      return category.children ?? [];
+    }
+  }
+
+  bool isCategoryExpanded(Category category) {
+    return getExpandedCategoryIds.contains(category.id ?? '');
+  }
+
+  void toggleCategoryExpanded(Category category) {
+    final expandedCategoryIds = Set<String>.from(getExpandedCategoryIds);
+
+    if (getExpandedCategoryIds.contains(category.id)) {
+      expandedCategoryIds.remove(category.id);
+    } else {
+      expandedCategoryIds.add(category.id!);
+    }
+
+    _model.expandedCategoryIds.value = expandedCategoryIds;
+  }
+
+  // MARK: - Private Method
+
+  void _checkData() {
+    final allCategories = _service.allCategoriesRx.value;
+
+    if (allCategories == null) {
+      _readCategory();
+    } else {
+      _model.allCategories.value = allCategories;
+    }
+  }
+
+  void _addListeners() {
+    _model.allCategoriesWorker = ever(_service.allCategoriesRx.rx, (value) {
+      _model.allCategories.value = value;
+    });
+  }
+
+  Future<bool> _createCategory(
+    DialogCategoryCreateOutputModel outputModel,
+  ) async {
+    final request = WarehouseCategoryCreateRequestModel(
+      name: outputModel.name,
+      householdId: _service.getHouseholdId,
+      parentId: outputModel.parentId,
+      userName: _service.userName,
+    );
+
+    final response = await _service.apiReqCreateCategory(request);
+
+    final isSuccess = response != null;
+
+    if (isSuccess) {
+      unawaited(_readCategory());
+    }
+
+    return isSuccess;
+  }
+
+  Future<void> _readCategory() async {
+    unawaited(
+      _service.apiReqReadCategory(
+        WarehouseCategoryReadRequestModel(householdId: _service.getHouseholdId),
+      ),
+    );
+  }
+
+  Future<bool> _updateCategory(
+    DialogCategoryEditOutputModel outputModel,
+    String categoryId,
+  ) async {
+    final request = WarehouseCategoryUpdateRequestModel(
+      householdId: _service.getHouseholdId,
+      categoryId: categoryId,
+      name: outputModel.name,
+      parentId: outputModel.parentId,
+      userName: _service.userName,
+    );
+
+    final response = await _service.apiReqUpdateCategory(request);
+
+    if (response != null) {
+      unawaited(_readCategory());
+      return true;
+    }
+
+    return false;
+  }
+
+  Future<bool> _deleteCategory(
+    DialogCategoryDeleteOutputModel outputModel,
+  ) async {
+    final request = WarehouseCategoryDeleteRequestModel(
+      householdId: _service.getHouseholdId,
+      categoryId: outputModel.categoryId,
+      userName: _service.userName,
+    );
+
+    final response = await _service.apiReqDeleteCategory(request);
+
+    if (response != null) {
+      unawaited(_readCategory());
+      return true;
+    }
+
+    return false;
+  }
+}

@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import 'package:engo_terminal_app3/service/router_service/router_service_model.dart';
+import 'package:engo_terminal_app3/feature/app/service/app_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
-import 'package:flutter_smart_home_tablet/service/router_service/router_service_model.dart';
 import 'package:get/get.dart';
 
 part 'app_splash_page_controller.dart';

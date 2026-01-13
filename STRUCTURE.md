@@ -64,7 +64,7 @@ dart script/mvcir_create.dart warehouse record
 **脚本：** `script/color_update.dart`
 
 **功能：**
-- 从 `lib/feature/warehouse/parent/constant/theme/color_data.dart` 中提取所有颜色 key
+- 从 `lib/wh/feature/warehouse/parent/constant/theme/color_data.dart` 中提取所有颜色 key
 - 自动生成 `EnumColor` enum 到 `color_map.dart`
 - 支持普通颜色和渐变颜色（Gradient）的自动识别和分组
 
@@ -104,7 +104,7 @@ dart script/color_update.dart
 **脚本：** `script/image_update.dart`
 
 **功能：**
-- 扫描 `lib/feature/warehouse/parent/assets/images/` 目录下的所有图片文件
+- 扫描 `lib/wh/feature/warehouse/parent/assets/images/` 目录下的所有图片文件
 - 自动生成 `EnumImage` enum 到 `image_map.dart`
 - 根据图片所在目录自动添加前缀：
   - `common/` 目录 → `c` 前缀（如 `cCow`, `cHouse`）
@@ -122,7 +122,7 @@ dart script/image_update.dart
 
 **目录结构：**
 ```
-lib/feature/warehouse/parent/assets/images/
+lib/wh/feature/warehouse/parent/assets/images/
 ├── common/          # 通用图片（不随主题变化）
 │   ├── cow.png      → EnumImage.cCow
 │   └── house.png    → EnumImage.cHouse
@@ -137,7 +137,7 @@ lib/feature/warehouse/parent/assets/images/
 **示例：**
 ```bash
 # 1. 添加新图片到 common/ 目录
-# lib/feature/warehouse/parent/assets/images/common/new_icon.png
+# lib/wh/feature/warehouse/parent/assets/images/common/new_icon.png
 
 # 2. 运行脚本
 dart script/image_update.dart
@@ -156,7 +156,7 @@ dart script/image_update.dart
 **脚本：** `script/locale_update.dart`
 
 **功能：**
-- 从 `lib/feature/warehouse/parent/constant/locales/zh_tw.dart` 中提取所有 key
+- 从 `lib/wh/feature/warehouse/parent/constant/locales/zh_tw.dart` 中提取所有 key
 - 自动生成 `EnumLocale` enum 到 `locale_map.dart`
 - 提供 `tr` getter 和 `trArgs()` 方法用于多语系翻译
 
@@ -353,7 +353,7 @@ enum EnumApiInfo {
 
 ```dart
 // api_service.dart
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
 import 'package:get/get.dart';
 
 class ApiService extends GetxService {

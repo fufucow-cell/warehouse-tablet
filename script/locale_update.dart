@@ -3,8 +3,8 @@ import 'dart:io';
 /// 生成 locale_map.dart 的脚本
 /// 从多语系文件中提取所有 key，生成 EnumLocale enum 和 tr 方法
 void main() {
-  final localesDir = Directory('lib/feature/warehouse/parent/service/locale_service/locale');
-  final outputFile = File('lib/feature/warehouse/parent/service/locale_service/locale/locale_map.dart');
+  final localesDir = Directory('lib/wh/feature/warehouse/parent/service/locale_service/locale');
+  final outputFile = File('lib/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart');
 
   // 读取 zh_tw.dart 作为基准，提取所有 key
   final zhTWFile = File('${localesDir.path}/zh_tw.dart');
@@ -57,7 +57,8 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('/// 生成时间: ${DateTime.now().toIso8601String()}');
   buffer.writeln('library;');
   buffer.writeln('');
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service_model.dart';");
   buffer.writeln("import 'package:get/get.dart';");
   buffer.writeln('');
 
@@ -71,32 +72,38 @@ String _generateLocaleMap(List<String> keys) {
   }
   buffer.writeln('');
   buffer.writeln('  String get key => name;');
-  buffer.writeln('  ');
+  buffer.writeln('  EnvironmentService get _envService => EnvironmentService.instance;');
+  buffer.writeln('');
   buffer.writeln('  // Get 版本');
-  buffer.writeln('  // String get tr => key.tr;');
-  buffer.writeln('  // String trArgs(List<String> params) {');
-  buffer.writeln('  //   Map<String, String> namedParams = {};');
-  buffer.writeln('  //   for (int i = 0; i < params.length; i++) {');
-  buffer.writeln("  //     namedParams['para\${i + 1}'] = params[i];");
-  buffer.writeln('  //   }');
-  buffer.writeln('  //   return key.trParams(namedParams);');
-  buffer.writeln('  // }');
+  buffer.writeln('  String get tr {');
+  buffer.writeln('    if (_envService.isModuleMode) {');
+  buffer.writeln('      return _currentTranslation?.translationMap[key] ?? key;');
+  buffer.writeln('    } else {');
+  buffer.writeln('      return key.tr;');
+  buffer.writeln('    }');
+  buffer.writeln('  }');
+  buffer.writeln('');
+  buffer.writeln('  String trArgs(List<String> params) {');
+  buffer.writeln('    if (_envService.isModuleMode) {');
+  buffer.writeln('      String strTr = _currentTranslation?.translationMap[key] ?? key;');
+  buffer.writeln('      for (int i = 0; i < params.length; i++) {');
+  buffer.writeln("        final keyPara = '@para\${i + 1}';");
+  buffer.writeln('        strTr = strTr.replaceFirst(keyPara, params[i]);');
+  buffer.writeln('      }');
+  buffer.writeln('      return strTr;');
+  buffer.writeln('    } else {');
+  buffer.writeln('      Map<String, String> namedParams = {};');
+  buffer.writeln('      for (int i = 0; i < params.length; i++) {');
+  buffer.writeln("        namedParams['para\${i + 1}'] = params[i];");
+  buffer.writeln('      }');
+  buffer.writeln('      return key.trParams(namedParams);');
+  buffer.writeln('    }');
+  buffer.writeln('  }');
   buffer.writeln('');
   buffer.writeln('  // Module 版本');
   buffer.writeln('  static LocaleTranslation? _currentTranslation;');
-  buffer.writeln('  ');
+  buffer.writeln('');
   buffer.writeln('  static void setCurrentTranslation(LocaleTranslation translation) => _currentTranslation = translation;');
-  buffer.writeln('  ');
-  buffer.writeln('  String get tr => _currentTranslation?.translationMap[key] ?? key;');
-  buffer.writeln('  ');
-  buffer.writeln('  String trArgs(List<String> params) {');
-  buffer.writeln('    String strTr = _currentTranslation?.translationMap[key] ?? key;');
-  buffer.writeln('    for (int i = 0; i < params.length; i++) {');
-  buffer.writeln("      final keyPara = '@para\${i + 1}';");
-  buffer.writeln('      strTr = strTr.replaceFirst(keyPara, params[i]);');
-  buffer.writeln('    }');
-  buffer.writeln('    return strTr;');
-  buffer.writeln('  }');
   buffer.writeln('}');
 
   return buffer.toString();

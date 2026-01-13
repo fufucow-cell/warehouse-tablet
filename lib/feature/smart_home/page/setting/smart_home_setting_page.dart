@@ -1,11 +1,11 @@
+import 'package:engo_terminal_app3/ui/cust_scaffold.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/ui/cust_snack_bar.dart';
-import 'package:flutter_smart_home_tablet/ui/cust_scaffold.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_setting_page_controller.dart';
@@ -72,18 +72,18 @@ class _Body extends StatelessWidget {
           _buildLanguageTile(
             controller,
             localeUtil,
-            LocaleTranslation.system,
+            EnumLocaleType.system.model,
             EnumLocale.languageSystem.tr,
           ),
           // 所有可用語言
-          ...LocaleTranslation.getAvalibleLocales.map(
-            (locale) => _buildLanguageTile(
-              controller,
-              localeUtil,
-              locale,
-              locale.displayName,
-            ),
-          ),
+          ...controller.getAvailableLocales().map(
+                (locale) => _buildLanguageTile(
+                  controller,
+                  localeUtil,
+                  locale,
+                  locale.displayName,
+                ),
+              ),
         ],
       ),
     );

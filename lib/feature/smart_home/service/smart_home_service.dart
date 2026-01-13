@@ -1,11 +1,11 @@
-import 'package:flutter_smart_home_tablet/feature/app/service/app_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/inherit/base_api_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/request_model/home_household_request_model/home_household_request_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/api_service/api_service_model.dart';
-import 'package:flutter_smart_home_tablet/service/api_service/api_service.dart';
-import 'package:flutter_smart_home_tablet/service/api_service/api_service_model.dart' as api_model;
+import 'package:engo_terminal_app3/service/api_service/api_service.dart';
+import 'package:engo_terminal_app3/service/api_service/api_service_model.dart' as api_model;
+import 'package:engo_terminal_app3/feature/app/service/app_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/base_api_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/home_household_request_model/home_household_request_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_service_model.dart';

@@ -1,0 +1,85 @@
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/cabinet/warehouse_cabinet_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class TopInfo extends StatelessWidget {
+  const TopInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<WarehouseCabinetPageController>(
+      builder: (controller) {
+        final totalRooms = controller.getTotalRoomsCount;
+
+        return SizedBox(
+          width: double.infinity,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(
+                () {
+                  controller.allVisibleCabinetsRx.value;
+                  return CustTextWidget(
+                    EnumLocale.warehouseTotalRoomAndCabinet.trArgs([
+                      '$totalRooms',
+                      '${controller.getTotalCabinetsCount()}',
+                    ]),
+                    size: 32.0.scale,
+                  );
+                },
+              ),
+              const Spacer(),
+              Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    controller.interactive(
+                      EnumWarehouseCabinetPageInteractive.tapCreateCabinet,
+                    );
+                  },
+                  borderRadius: BorderRadius.circular(16.0.scale),
+                  child: Container(
+                    height: 70.0.scale,
+                    padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
+                    decoration: BoxDecoration(
+                      color: EnumColor.backgroundPrimary.color,
+                      border: Border.all(
+                        width: 1.0.scale,
+                        color: EnumColor.accentBlue.color,
+                      ),
+                      borderRadius: BorderRadius.circular(16.0.scale),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        EnumImage.cPlus2.image(
+                          size: Size.square(48.0.scale),
+                          color: EnumColor.accentBlue.color,
+                        ),
+                        SizedBox(width: 10.0.scale),
+                        CustTextWidget(
+                          EnumLocale.cabinet.tr,
+                          size: 32.0.scale,
+                          color: EnumColor.accentBlue.color,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}

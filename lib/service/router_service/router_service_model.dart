@@ -1,7 +1,7 @@
+import 'package:engo_terminal_app3/feature/app/page/login/app_login_page.dart';
+import 'package:engo_terminal_app3/feature/app/page/main/app_main_page.dart';
+import 'package:engo_terminal_app3/feature/app/page/splash/app_splash_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/login/app_login_page.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/main/app_main_page.dart';
-import 'package:flutter_smart_home_tablet/feature/app/page/splash/app_splash_page.dart';
 import 'package:get/get.dart';
 
 /// Router Service Model
@@ -33,6 +33,5 @@ enum EnumRootRouter {
         },
       );
 
-  static List<GetPage<dynamic>> get pages =>
-      EnumRootRouter.values.map((e) => e.page).toList();
+  static List<GetPage<dynamic>> get pages => EnumRootRouter.values.map((e) => e.page).toList();
 }

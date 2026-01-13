@@ -1,10 +1,8 @@
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/main/warehouse_main_page.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/page/main/warehouse_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_home_tablet/feature/smart_home/service/smart_home_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/page/main/warehouse_main_page_model.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/environment_service/environment_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/locale_service/locale_service.dart';
-import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:get/get.dart';
 
 part 'smart_home_warehouse_page_controller.dart';
@@ -21,7 +19,7 @@ class SmartHomeWarehousePage extends GetView<SmartHomeWarehousePageController> {
       init: SmartHomeWarehousePageController(),
       builder: (controller) {
         return WarehouseMainPage(
-          routerData: controller.getMockData(),
+          routerData: controller.getWarehouseMainPageRouterData,
         );
       },
     );

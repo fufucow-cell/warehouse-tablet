@@ -3,8 +3,8 @@ import 'dart:io';
 /// 生成 color_map.dart 的脚本
 /// 从 color_data.dart 中提取所有 color key，生成 EnumColor enum
 void main() {
-  final colorDataFile = File('lib/feature/warehouse/parent/service/theme_service/theme/color_data.dart');
-  final outputFile = File('lib/feature/warehouse/parent/service/theme_service/theme/color_map.dart');
+  final colorDataFile = File('lib/wh/feature/warehouse/parent/service/theme_service/theme/color_data.dart');
+  final outputFile = File('lib/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart');
 
   if (!colorDataFile.existsSync()) {
     print('Error: color_data.dart not found');
@@ -99,9 +99,9 @@ String _generateColorMap(
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme/color_data.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service.dart';");
-  buffer.writeln("import 'package:flutter_smart_home_tablet/feature/warehouse/parent/service/theme_service/theme_service_model.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_data.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service_model.dart';");
   buffer.writeln('');
 
   // 收集所有枚举值
