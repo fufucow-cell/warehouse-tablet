@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-13T02:35:53.049540
+/// 生成时间: 2026-01-14T16:10:15.597536
 library;
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
@@ -10,6 +10,8 @@ enum EnumImage {
   cAdd,
   cArrowDown,
   cArrowDown2,
+  cArrowLeft,
+  cArrowRight,
   cArrowUp,
   cArrowUp2,
   cCamera,
@@ -22,12 +24,18 @@ enum EnumImage {
   cEditQuantity,
   cEmpty,
   cEmptyPhoto,
+  cGatewayCircle,
+  cGatewayDevice,
+  cGatewayMore,
+  cGatewayStatusOff,
+  cGatewayStatusOn,
   cHistory,
   cHouse,
   cInfo,
   cItem,
   cMember,
   cMinus,
+  cPencilLine,
   cPhoto,
   cPlus,
   cPlus2,
@@ -50,7 +58,7 @@ enum EnumImage {
   String get path => _themeService.getImagePath(this);
 
   /// 取得圖片 Widget
-  Widget image({Size? size, Color? color}) => _themeService.getImageWidget(this, size: size, color: color);
+  Widget image({Size? size, Color? color, BoxFit? fit}) => _themeService.getImageWidget(this, size: size, color: color, fit: fit);
 
   /// 取得裝飾圖片
   DecorationImage get decorationImage => DecorationImage(

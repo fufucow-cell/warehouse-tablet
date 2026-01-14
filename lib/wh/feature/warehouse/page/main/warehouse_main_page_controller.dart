@@ -15,11 +15,8 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_mod
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/storage_service/storage_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,7 +62,7 @@ class WarehouseMainPageController extends GetxController {
   // MARK: - Public Method
 
   void setRouterData(WarehouseMainPageRouterData routerData) {
-    WarehouseService.register().updateData(routerData);
+    WarehouseService.register().initData(routerData);
     _queryApiData();
   }
 

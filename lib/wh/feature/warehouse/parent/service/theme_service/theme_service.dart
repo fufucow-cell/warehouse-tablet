@@ -58,7 +58,12 @@ class ThemeService extends GetxService {
   ) async {
     try {
       _model.currentTheme.value = newTheme;
-      await _writeToStorage(newTheme);
+
+      if (!_envService.isModuleMode) {
+        Get.changeThemeMode(newTheme.themeMode);
+        await _writeToStorage(newTheme);
+      }
+
       LogService.instance.i(
         EnumLogType.storage,
         '切換主題成功: ${newTheme.displayName}',
@@ -102,12 +107,14 @@ class ThemeService extends GetxService {
     EnumImage img, {
     Size? size,
     Color? color,
+    BoxFit? fit,
   }) {
     return Image.asset(
       getImagePath(img),
       width: size?.width,
       height: size?.height,
       color: color,
+      fit: fit,
     );
   }
 
@@ -341,7 +348,6 @@ class ThemeService extends GetxService {
     }
 
     try {
-      Get.changeThemeMode(getCurrentThemeMode);
       await _storageService.write<String>(EnumStorageKey.theme, theme.name);
       LogService.instance.i(
         EnumLogType.storage,

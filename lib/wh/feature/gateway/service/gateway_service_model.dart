@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Router Service Model
-class RouterServiceModel {
+class GatewayServiceModel {
   BuildContext? rootNavigatorContext;
   BuildContext? nestedNavigatorContext;
 }

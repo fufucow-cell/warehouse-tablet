@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 class CustSnackBar {
   static void show({
     BuildContext? context,
-    required String title,
-    required String message,
+    String? title,
+    String? message,
   }) {
-    final ctx = context ?? RouterService.instance.getNavigatorContext;
+    final ctx = context ?? RouterService.instance.getRootNavigatorContext;
     if (ctx == null) {
       return;
     }
@@ -48,14 +48,14 @@ class CustSnackBar {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustTextWidget(
-                    title,
+                    title ?? '',
                     size: 32.0.scale,
                     weightType: EnumFontWeightType.bold,
                   ),
-                  if (message.isNotEmpty) ...[
+                  if (message?.isNotEmpty ?? false) ...[
                     SizedBox(height: 16.0.scale),
                     CustTextWidget(
-                      message,
+                      message ?? '',
                       size: 28.0.scale,
                       color: EnumColor.textSecondary.color,
                     ),
@@ -70,7 +70,7 @@ class CustSnackBar {
   }
 
   static void close(BuildContext? context) {
-    final ctx = context ?? RouterService.instance.getNavigatorContext;
+    final ctx = context ?? RouterService.instance.getRootNavigatorContext;
     if (ctx == null) {
       return;
     }

@@ -194,4 +194,11 @@ const Map<String, String> zhTW = {
   'warehouseCategoryCreate': 'Create Category',
   'warehouseCategoryUpdateMessage': 'Update Category',
   'warehouseCategoryDelete': 'Delete Category',
+  'gatewayNetworkStatusGood': 'Network Status Connected',
+  'gatewayOnlineChildDevicesCount': '@para1 Online Child Devices',
+  'gatewayChildDevicesTitle': 'Child Devices',
+  'gatewayChildDevicesSummary': '@para1 Child Devices',
+  'gatewayDeviceManagement': 'Device Management',
+  'gatewayScanQrCodeAdd': 'Scan QR Code Add',
+  'gatewayQuickAdd': 'Quick Add',
 };

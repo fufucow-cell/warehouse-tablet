@@ -120,7 +120,7 @@ class WarehouseService {
 
   void setRootContext(BuildContext context) {
     _model.rootContext = context;
-    RouterService.instance.findNavigatorContext(context);
+    RouterService.instance.findRootNavigatorContext(context);
   }
 
   void addNewCategory(WarehouseNameIdModel category) {
@@ -199,7 +199,7 @@ class WarehouseService {
     return await _themeService.convertFileToBase64(imagePath);
   }
 
-  void updateData(WarehouseMainPageRouterData data) {
+  void initData(WarehouseMainPageRouterData data) {
     EnvironmentService.register().setModuleMode(data.isModuleMode);
     LogService.register();
     ThemeService.register();
@@ -223,8 +223,12 @@ class WarehouseService {
           ),
         )
         .toList();
-    LocaleService.instance.switchFromCode(data.language);
-    ThemeService.instance.switchFromString(data.theme);
+
+    if (data.isModuleMode) {
+      LocaleService.instance.switchFromCode(data.language);
+      ThemeService.instance.switchFromString(data.theme);
+    }
+
     EnvironmentService.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
     final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
     _registerWarehouseApiService(domain);

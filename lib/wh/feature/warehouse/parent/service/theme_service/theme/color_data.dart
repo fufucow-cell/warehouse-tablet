@@ -171,4 +171,32 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x1F292929),
     dark: Color(0x1F292929),
   ),
+  'engoIconBackButton': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoTextPrimary': ColorData(
+    light: Color(0xFF292929),
+    dark: Color(0xFFFFFFFF),
+  ),
+  'engoTextSecondary': ColorData(
+    light: Color(0xFF7C7C7C),
+    dark: Color(0xFFDCDCDC),
+  ),
+  'engoDeviceCardBackgroundGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99FFFFFF),
+  ),
+  'engoDeviceCardBackgroundGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoButtonBackground': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoBottomSheetBackground': ColorData(
+    light: Color(0xFFEFEFEF),
+    dark: Color(0xFFBDBDBD),
+  ),
 };

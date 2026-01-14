@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-13T22:21:47.909785
+/// 生成时间: 2026-01-14T18:02:20.641127
 library;
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
@@ -64,6 +64,13 @@ enum EnumLocale {
   errorConvertImageToBase64Failed,
   errorReadImageFileFailed,
   errorUnknown,
+  gatewayChildDevicesSummary,
+  gatewayChildDevicesTitle,
+  gatewayDeviceManagement,
+  gatewayNetworkStatusGood,
+  gatewayOnlineChildDevicesCount,
+  gatewayQuickAdd,
+  gatewayScanQrCodeAdd,
   item,
   languageFollowSystem,
   languageSystem,

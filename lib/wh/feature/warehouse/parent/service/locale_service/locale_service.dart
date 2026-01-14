@@ -48,10 +48,16 @@ class LocaleService extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     try {
-      _model.currentTranslation = newTranslation;
-      final locale = getCurrentLocale;
-      EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
-      await _writeToStorage(newTranslation);
+      final translation = _convertTranslationFromLocale(newTranslation.getLocale);
+
+      if (_envService.isModuleMode) {
+        _model.currentTranslation = newTranslation;
+        EnumLocale.setCurrentTranslation(translation);
+      } else {
+        final locale = _convertLocaleFromTranslation(translation);
+        await Get.updateLocale(locale);
+        await _writeToStorage(newTranslation);
+      }
       return true;
     } on Exception catch (e) {
       LogService.instance.e('切換語系失敗', e);
@@ -129,7 +135,6 @@ class LocaleService extends GetxService {
     }
 
     try {
-      await Get.updateLocale(translation.getLocale);
       final localeCode = _convertCodeFromLocale(getCurrentLocale);
       await _storageService.write<String>(EnumStorageKey.locale, localeCode);
       LogService.instance.i(
@@ -168,7 +173,7 @@ class LocaleService extends GetxService {
   Locale _convertLocaleFromTranslation(
     LocaleTranslation translation,
   ) {
-    if (translation == EnumLocaleType.system.model) {
+    if (translation.getLocale == EnumLocaleType.system.model.getLocale) {
       return _model.currentTranslation.countryCode != null
           ? Locale(
               _model.currentTranslation.languageCode,
