@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class WarehouseMainPageModel {
   final isTabControllerReady = false.obs;
   final isLoading = false.obs;
+  WarehouseMainPageRouterData? routerData;
 }
 
 enum EnumWarehouseTabItem {

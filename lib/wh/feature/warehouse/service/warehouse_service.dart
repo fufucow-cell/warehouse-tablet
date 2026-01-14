@@ -118,11 +118,6 @@ class WarehouseService {
 
   // MARK: - Public Method
 
-  void setRootContext(BuildContext context) {
-    _model.rootContext = context;
-    RouterService.instance.findRootNavigatorContext(context);
-  }
-
   void addNewCategory(WarehouseNameIdModel category) {
     final newCategories = List<Category>.from(_model.allCategories.value ?? []);
     newCategories.add(Category(id: category.id!, name: category.name!));
@@ -199,13 +194,20 @@ class WarehouseService {
     return await _themeService.convertFileToBase64(imagePath);
   }
 
-  void initData(WarehouseMainPageRouterData data) {
-    EnvironmentService.register().setModuleMode(data.isModuleMode);
+  void setContext(BuildContext context) {
+    final service = RouterService.register();
+    service.findRootNavigatorContext(context);
+    DeviceService.register(context);
+  }
+
+  void registerServices(WarehouseMainPageRouterData data) {
     LogService.register();
+    EnvironmentService.register().setModuleMode(data.isModuleMode);
     ThemeService.register();
-    StorageService.register();
     LocaleService.register();
-    RouterService.register();
+    StorageService.register();
+    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
+    ApiService.register(domain);
     _model.userName = data.userName;
     _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;
@@ -230,8 +232,6 @@ class WarehouseService {
     }
 
     EnvironmentService.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
-    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
-    _registerWarehouseApiService(domain);
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -722,9 +722,5 @@ class WarehouseService {
         _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
             [];
     _model.allCombineItems = combineItems(flattenItems);
-  }
-
-  void _registerWarehouseApiService(String baseUrl) {
-    ApiService.register(baseUrl);
   }
 }

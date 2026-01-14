@@ -14,7 +14,6 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_mod
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_category_read_request_model/warehouse_category_read_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_create_request_model/warehouse_item_create_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_request_model/warehouse_item_request_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
@@ -40,10 +39,16 @@ class WarehouseMainPageController extends GetxController {
 
   // MARK: - Init
 
+  WarehouseMainPageController(WarehouseMainPageRouterData routerData) {
+    _model.routerData = routerData;
+    WarehouseService.register().registerServices(routerData);
+  }
+
   @override
   void onInit() {
     super.onInit();
     _addListeners();
+    _queryApiData();
   }
 
   @override
@@ -61,58 +66,8 @@ class WarehouseMainPageController extends GetxController {
 
   // MARK: - Public Method
 
-  void setRouterData(WarehouseMainPageRouterData routerData) {
-    WarehouseService.register().initData(routerData);
-    _queryApiData();
-  }
-
-  void setRootContext(BuildContext context) {
-    DeviceService.register(context);
-    BuildContext? rootContext;
-
-    try {
-      final rootNavigator = Navigator.maybeOf(context, rootNavigator: true);
-
-      if (rootNavigator != null) {
-        rootContext = rootNavigator.context;
-      } else {
-        BuildContext? currentContext = context;
-
-        while (currentContext != null) {
-          final materialApp = currentContext.findAncestorWidgetOfExactType<MaterialApp>();
-
-          if (materialApp != null) {
-            final navigator = Navigator.maybeOf(
-              currentContext,
-              rootNavigator: true,
-            );
-
-            if (navigator != null) {
-              rootContext = navigator.context;
-              break;
-            }
-
-            rootContext = currentContext;
-            break;
-          }
-
-          final parent = currentContext.findAncestorStateOfType<State>();
-
-          if (parent != null && parent.mounted) {
-            currentContext = parent.context;
-          } else {
-            break;
-          }
-        }
-      }
-    } on Object catch (e) {
-      LogService.instance.e(
-        '[WarehouseMainPageController] Error setting root context: $e',
-      );
-    }
-
-    rootContext ??= context;
-    _service.setRootContext(rootContext);
+  void setContext(BuildContext context) {
+    _service.setContext(context);
   }
 
   void initTabController(TickerProvider vsync) {

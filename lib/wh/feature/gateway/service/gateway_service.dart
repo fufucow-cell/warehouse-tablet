@@ -1,8 +1,11 @@
 import 'package:engo_terminal_app3/wh/feature/gateway/page/main/gateway_main_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/service/gateway_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/router_service/router_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/storage_service/storage_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +28,6 @@ class GatewayService extends GetxService {
       return instance;
     }
 
-    RouterService.register();
     final GatewayService service = GatewayService._internal();
     Get.put<GatewayService>(service, permanent: true);
     return service;
@@ -46,16 +48,23 @@ class GatewayService extends GetxService {
   // MARK: - Public Method
 
   void setContext(BuildContext context) {
-    _routerService.findRootNavigatorContext(context);
-    _routerService.findNestedNavigatorContext(context);
-    _model.rootNavigatorContext = _routerService.getRootNavigatorContext;
-    _model.nestedNavigatorContext = _routerService.getNestedNavigatorContext;
+    final service = RouterService.register();
+    _model.rootNavigatorContext = service.findRootNavigatorContext(context);
+    _model.nestedNavigatorContext = service.findNestedNavigatorContext(context);
+    DeviceService.register(context);
   }
 
-  void initRouterData(GatewayMainPageRouterData data) {
+  void registerServices(GatewayMainPageRouterData data) {
+    LogService.register();
     EnvironmentService.register().setModuleMode(false);
-    RouterService.register();
-    LocaleService.register().then((value) => value.switchFromCode(data.language));
-    ThemeService.register().switchFromString(data.theme);
+    EnvironmentService.register().setModuleMode(data.isModuleMode);
+    ThemeService.register();
+    LocaleService.register();
+    StorageService.register();
+
+    if (data.isModuleMode) {
+      LocaleService.instance.switchFromCode(data.language);
+      ThemeService.instance.switchFromString(data.theme);
+    }
   }
 }

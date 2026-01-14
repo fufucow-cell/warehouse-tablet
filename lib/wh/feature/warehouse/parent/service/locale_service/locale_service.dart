@@ -48,6 +48,10 @@ class LocaleService extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     try {
+      if (_model.currentTranslation.getLocale == newTranslation.getLocale) {
+        return true;
+      }
+
       final translation = _convertTranslationFromLocale(newTranslation.getLocale);
 
       if (_envService.isModuleMode) {

@@ -20,9 +20,9 @@ class GatewayMainPageController extends GetxController {
   // MARK: - Init
 
   GatewayMainPageController(GatewayMainPageRouterData routerData) {
-    GatewayService.register();
     _model.routerData = routerData;
-    _model.gatewayName.value = routerData.gatewayName;
+    GatewayService.register().registerServices(routerData);
+    GatewayService.instance.registerServices(routerData);
   }
 
   @override

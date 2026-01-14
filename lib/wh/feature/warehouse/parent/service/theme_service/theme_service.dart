@@ -57,6 +57,10 @@ class ThemeService extends GetxService {
     EnumThemeMode newTheme,
   ) async {
     try {
+      if (_model.currentTheme.value == newTheme) {
+        return true;
+      }
+
       _model.currentTheme.value = newTheme;
 
       if (!_envService.isModuleMode) {
