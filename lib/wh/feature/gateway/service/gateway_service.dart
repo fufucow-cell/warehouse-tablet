@@ -14,7 +14,6 @@ class GatewayService extends GetxService {
   // MARK: - Properties
 
   final _model = GatewayServiceModel();
-  RouterService get _routerService => RouterService.instance;
   BuildContext? get getRootNavigatorContext => _model.rootNavigatorContext;
   BuildContext? get getNestedNavigatorContext => _model.nestedNavigatorContext;
   static GatewayService get instance => Get.find<GatewayService>();
@@ -56,8 +55,7 @@ class GatewayService extends GetxService {
 
   void registerServices(GatewayMainPageRouterData data) {
     LogService.register();
-    EnvironmentService.register().setModuleMode(false);
-    EnvironmentService.register().setModuleMode(data.isModuleMode);
+    EnvironmentService.register().initData(isModuleMode: data.isModuleMode);
     ThemeService.register();
     LocaleService.register();
     StorageService.register();

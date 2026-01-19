@@ -15,15 +15,21 @@ class FirstBackgroundCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: EnumColor.backgroundPrimary.color,
-      padding: EdgeInsets.symmetric(
-        horizontal: 32.0.scale,
-        vertical: 48.0.scale,
+      padding: EdgeInsets.only(
+        top: 12.0.scale,
       ),
       child: ClipRRect(
         clipBehavior: Clip.hardEdge,
-        borderRadius: BorderRadius.all(Radius.circular(32.0.scale)),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32.0.scale),
+          topRight: Radius.circular(32.0.scale),
+        ),
         child: Container(
-          padding: EdgeInsets.all(32.0.scale),
+          padding: EdgeInsets.only(
+            left: 32.0.scale,
+            right: 32.0.scale,
+            top: 32.0.scale,
+          ),
           decoration: BoxDecoration(
             image: EnumImage.tBgContent.decorationImage,
           ),

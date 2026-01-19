@@ -30,13 +30,13 @@ class TopInfo extends StatelessWidget {
               isLoading: allItems == null,
             ),
             TopInfoItem(
-              eImage: EnumImage.cRoom,
+              eImage: EnumImage.cCabinet,
               title: EnumLocale.warehouseCabinetTotal.tr,
               count: '${controller.getTotalCabinetCount()}',
               isLoading: allCabinets == null,
             ),
             TopInfoItem(
-              eImage: EnumImage.cMember,
+              eImage: EnumImage.cCategory,
               title: EnumLocale.warehouseCategoryTotal.tr,
               count: '${CategoryUtil.getTotalCategoryCount()}',
               isLoading: allCategories == null,

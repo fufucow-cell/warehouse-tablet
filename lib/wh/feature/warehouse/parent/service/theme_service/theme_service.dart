@@ -63,7 +63,7 @@ class ThemeService extends GetxService {
 
       _model.currentTheme.value = newTheme;
 
-      if (!_envService.isModuleMode) {
+      if (!_envService.getIsModuleMode) {
         Get.changeThemeMode(newTheme.themeMode);
         await _writeToStorage(newTheme);
       }
@@ -313,7 +313,7 @@ class ThemeService extends GetxService {
   // MARK: - Private Method
 
   void _readFromStorage() {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 
@@ -324,7 +324,7 @@ class ThemeService extends GetxService {
         final savedTheme = _convertThemeFromString(themeString);
         _model.currentTheme.value = savedTheme;
 
-        if (!_envService.isModuleMode) {
+        if (!_envService.getIsModuleMode) {
           Get.changeThemeMode(getCurrentThemeMode);
         }
 
@@ -347,7 +347,7 @@ class ThemeService extends GetxService {
 
   /// 寫入主題到 Storage
   Future<void> _writeToStorage(EnumThemeMode theme) async {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 

@@ -53,6 +53,7 @@ class WarehouseService {
 
   final _model = WarehouseServiceModel();
   ThemeService get _themeService => ThemeService.instance;
+  RouterService get _routerService => RouterService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
   String get userAvatar => _model.userAvatar ?? '';
@@ -125,7 +126,7 @@ class WarehouseService {
   }
 
   Future<T?> showAlert<T>(Widget dialog) async {
-    final context = _model.rootContext;
+    final context = _routerService.getRootNavigatorContext;
 
     if (context == null) {
       return null;
@@ -140,7 +141,7 @@ class WarehouseService {
 
   void showSnackBar({required String title, String? message}) {
     CustSnackBar.show(
-      context: _model.rootContext,
+      context: _routerService.getRootNavigatorContext,
       title: title,
       message: message ?? '',
     );
@@ -202,12 +203,17 @@ class WarehouseService {
 
   void registerServices(WarehouseMainPageRouterData data) {
     LogService.register();
-    EnvironmentService.register().setModuleMode(data.isModuleMode);
+    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
+    EnvironmentService.register().initData(
+      isModuleMode: data.isModuleMode,
+      domainUrl: domain,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    );
     ThemeService.register();
     LocaleService.register();
     StorageService.register();
-    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
-    ApiService.register(domain);
+    ApiService.register();
     _model.userName = data.userName;
     _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;

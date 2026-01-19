@@ -54,7 +54,7 @@ class LocaleService extends GetxService {
 
       final translation = _convertTranslationFromLocale(newTranslation.getLocale);
 
-      if (_envService.isModuleMode) {
+      if (_envService.getIsModuleMode) {
         _model.currentTranslation = newTranslation;
         EnumLocale.setCurrentTranslation(translation);
       } else {
@@ -96,7 +96,7 @@ class LocaleService extends GetxService {
 
   /// 從 Storage 讀取語系
   void _readFromStorage() {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 
@@ -109,7 +109,7 @@ class LocaleService extends GetxService {
         final locale = getCurrentLocale;
         EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
 
-        if (!_envService.isModuleMode) {
+        if (!_envService.getIsModuleMode) {
           Get.updateLocale(locale);
         }
 
@@ -134,7 +134,7 @@ class LocaleService extends GetxService {
 
   /// 寫入語系到 Storage
   Future<void> _writeToStorage(LocaleTranslation translation) async {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 

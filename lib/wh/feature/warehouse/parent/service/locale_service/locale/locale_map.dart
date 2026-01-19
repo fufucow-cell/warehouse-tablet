@@ -215,7 +215,7 @@ enum EnumLocale {
 
   // Get 版本
   String get tr {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return _currentTranslation?.translationMap[key] ?? key;
     } else {
       return key.tr;
@@ -223,7 +223,7 @@ enum EnumLocale {
   }
 
   String trArgs(List<String> params) {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       String strTr = _currentTranslation?.translationMap[key] ?? key;
       for (int i = 0; i < params.length; i++) {
         final keyPara = '@para${i + 1}';

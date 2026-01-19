@@ -10,7 +10,6 @@ class WarehouseServiceModel {
   List<WarehouseNameIdModel> rooms = [];
   List<RoomCabinetInfo> roomCabinetInfos = [];
   int? userRoleType;
-  BuildContext? rootContext;
   // 搜尋條件
   final searchCondition = Rxn<DialogItemSearchOutputModel>();
   String? searchCabinetId;

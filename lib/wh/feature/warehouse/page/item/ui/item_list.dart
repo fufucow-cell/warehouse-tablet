@@ -114,7 +114,6 @@ class _ItemPhotoWidget extends StatelessWidget {
             height: photoHeight,
             fit: BoxFit.cover,
           ),
-          // leftTopWarningTagWidget
           if (hasWarning)
             Positioned(
               top: 16.0.scale,

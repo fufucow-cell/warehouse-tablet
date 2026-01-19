@@ -83,6 +83,12 @@ class AppLoginPageController extends GetxController {
 
   // MARK: - Private Method
 
+  Future<void> _callHealthApi() async {
+    await ApiService.sendRequest<BaseApiResponseModel<void>>(
+      EnumApiInfo.serverHealth,
+    );
+  }
+
   void _prepareToCallApi({required bool isLogin}) {
     if (_model.isButtonEnabled.value) {
       _model.isLoginProcess = isLogin;
