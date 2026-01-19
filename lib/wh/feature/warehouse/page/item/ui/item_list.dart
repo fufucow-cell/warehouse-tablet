@@ -22,23 +22,25 @@ class ItemList extends StatelessWidget {
       builder: (controller) {
         return Obx(
           () {
-            final items = controller.visibleItemsRx.value;
             final isLoading = controller.allItemsRx.value == null;
+            final items = controller.visibleItemsRx.value;
+
+            if (isLoading) {
+              return const ShimmerWidget();
+            }
 
             if (items.isEmpty) {
               return const CustEmptyWidget();
             }
 
-            final itemCount = isLoading ? 3 : items.length;
+            final itemCount = items.length;
 
             return CustGridView(
               itemCount: itemCount,
               itemBuilder: (context, index) {
-                return isLoading
-                    ? const ShimmerWidget()
-                    : _ItemCard(
-                        item: items[index],
-                      );
+                return _ItemCard(
+                  item: items[index],
+                );
               },
               crossAxisCount: 3,
               padding: EdgeInsets.only(

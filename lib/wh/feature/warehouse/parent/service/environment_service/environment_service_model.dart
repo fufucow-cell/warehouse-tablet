@@ -12,20 +12,11 @@ class EnvironmentServiceModel {
   /// 從 launch.json 讀取環境參數的 key
   final launchEnvironmentKey = 'ENVIRONMENT';
 
-  /// 預設環境
-  String defaultEnvironment = EnumEnvironment.dev.name;
+  /// 後端網域
+  String domainUrl = '';
 
   /// 調試模式判斷
   bool get isDebugMode => kDebugMode;
-
-  /// API Domain Url
-  String? domainUrl;
-
-  /// API Access Token
-  String? accessToken;
-
-  /// API Refresh Token
-  String? refreshToken;
 }
 
 enum EnumEnvironment {
@@ -41,12 +32,12 @@ enum EnumEnvironment {
         EnumEnvironment.prd => EnumLocale.environmentPrd.tr,
       };
 
-  String get apiBaseUrl {
+  String get domainUrl {
     return switch (this) {
-      EnumEnvironment.dev => 'http://127.0.0.1:8000',
+      EnumEnvironment.dev => 'http://localhost:8003/api/v1/warehouse',
       EnumEnvironment.stg => '',
       EnumEnvironment.uat => '',
-      EnumEnvironment.prd => '',
+      EnumEnvironment.prd => 'https://warehouseserver-l866q1mqn-fufucows-projects.vercel.app/api/v1/warehouse',
     };
   }
 
