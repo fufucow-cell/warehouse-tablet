@@ -48,7 +48,6 @@
     "**/.packages": true,
     "**/.pub-cache": true,
     "**/.pub": true,
-    "**/build": true,
     "**/*.g.dart": false,
     "**/*.freezed.dart": false
   },

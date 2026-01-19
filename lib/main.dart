@@ -21,7 +21,8 @@ void main() async {
 Future<void> _registerServices() async {
   LogService.register();
   final envService = EnvironmentService.register();
-  envService.initData(isModuleMode: false, domainUrl: 'http://10.95.1.112:8003/api/v1/warehouse');
+  const strEnv = String.fromEnvironment('ENVIRONMENT', defaultValue: 'DEV');
+  envService.initData(isModuleMode: false, environment: strEnv);
   ApiService.register();
   await StorageService.register();
   await LocaleService.register();
