@@ -13,14 +13,17 @@ class FirstBackgroundCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      clipBehavior: Clip.hardEdge,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(32.0.scale),
-        topRight: Radius.circular(32.0.scale),
+    return Container(
+      color: EnumColor.backgroundPrimary.color,
+      padding: EdgeInsets.only(
+        top: 12.0.scale,
       ),
-      child: Container(
-        color: EnumColor.backgroundPrimary.color,
+      child: ClipRRect(
+        clipBehavior: Clip.hardEdge,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32.0.scale),
+          topRight: Radius.circular(32.0.scale),
+        ),
         child: Container(
           padding: EdgeInsets.only(
             left: 32.0.scale,

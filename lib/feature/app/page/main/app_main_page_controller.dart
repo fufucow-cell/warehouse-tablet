@@ -26,8 +26,7 @@ class AppMainPageController extends GetxController {
 
   // MARK: - Public Method
 
-  Route<dynamic> generateRoute(RouteSettings settings) =>
-      getRouterUtil.generateRoute(settings);
+  Route<dynamic> generateRoute(RouteSettings settings) => getRouterUtil.generateRoute(settings);
 
   // MARK: - Private Method
 

@@ -156,10 +156,6 @@ class WarehouseItemPageController extends GetxController {
   }
 
   Future<void> _queryApiData() async {
-    // _model.allRoomCabinetItems.value = null;
-    // _model.filterIndexForRooms.value = 0;
-    // _model.filterIndexForCabinets.value = 0;
-    // _model.filterIndexForCategories.value = {};
     unawaited(_service.apiReqReadItems(WarehouseItemRequestModel(householdId: _service.getHouseholdId)));
   }
 

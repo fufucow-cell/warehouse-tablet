@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 class WarehouseMainPageModel {
   final isTabControllerReady = false.obs;
   final isLoading = false.obs;
+  WarehouseMainPageRouterData? routerData;
 }
 
 enum EnumWarehouseTabItem {
@@ -80,7 +81,7 @@ class WarehouseMainPageRouterData {
       theme: theme ?? 'light',
       userAvatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858485.png',
       userRoleType: 0,
-      domain: 'http://192.168.31.159:8000/api/v1/warehouse/',
+      domain: 'http://10.95.1.112:8003/api/v1/warehouse',
       environment: 'dev',
       isModuleMode: isModuleMode ?? true,
       accessToken:

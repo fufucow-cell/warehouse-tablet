@@ -165,8 +165,8 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
   buffer.writeln('  String get path => _themeService.getImagePath(this);');
   buffer.writeln('');
   buffer.writeln('  /// 取得圖片 Widget');
-  buffer.writeln('  Widget image({Size? size, Color? color}) =>');
-  buffer.writeln('      _themeService.getImageWidget(this, size: size, color: color);');
+  buffer.writeln('  Widget image({Size? size, Color? color, BoxFit? fit}) =>');
+  buffer.writeln('      _themeService.getImageWidget(this, size: size, color: color, fit: fit);');
   buffer.writeln('');
   buffer.writeln('  /// 取得裝飾圖片');
   buffer.writeln('  DecorationImage get decorationImage => DecorationImage(');

@@ -78,9 +78,11 @@ class CustGridView extends StatelessWidget {
                   padding: EdgeInsets.only(
                     bottom: rowIndex < rowCount - 1 ? mainAxisSpacing : 0,
                   ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: rowItems,
+                  child: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: rowItems,
+                    ),
                   ),
                 );
               },

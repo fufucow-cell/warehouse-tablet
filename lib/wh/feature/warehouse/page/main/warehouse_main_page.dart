@@ -27,11 +27,10 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
   void initState() {
     super.initState();
     if (!Get.isRegistered<WarehouseMainPageController>()) {
-      Get.put(WarehouseMainPageController(), permanent: false);
+      Get.put(WarehouseMainPageController(widget.routerData), permanent: false);
     }
 
     final controller = Get.find<WarehouseMainPageController>();
-    controller.setRouterData(widget.routerData);
     controller.initTabController(this);
   }
 
@@ -45,7 +44,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WarehouseMainPageController>();
-    controller.setRootContext(context);
+    controller.setContext(context);
 
     // 获取当前主题的亮度
     final brightness = Theme.of(context).brightness;

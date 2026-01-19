@@ -53,6 +53,7 @@ class WarehouseService {
 
   final _model = WarehouseServiceModel();
   ThemeService get _themeService => ThemeService.instance;
+  RouterService get _routerService => RouterService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
   String get userAvatar => _model.userAvatar ?? '';
@@ -118,11 +119,6 @@ class WarehouseService {
 
   // MARK: - Public Method
 
-  void setRootContext(BuildContext context) {
-    _model.rootContext = context;
-    RouterService.instance.findNavigatorContext(context);
-  }
-
   void addNewCategory(WarehouseNameIdModel category) {
     final newCategories = List<Category>.from(_model.allCategories.value ?? []);
     newCategories.add(Category(id: category.id!, name: category.name!));
@@ -130,7 +126,7 @@ class WarehouseService {
   }
 
   Future<T?> showAlert<T>(Widget dialog) async {
-    final context = _model.rootContext;
+    final context = _routerService.getRootNavigatorContext;
 
     if (context == null) {
       return null;
@@ -145,7 +141,7 @@ class WarehouseService {
 
   void showSnackBar({required String title, String? message}) {
     CustSnackBar.show(
-      context: _model.rootContext,
+      context: _routerService.getRootNavigatorContext,
       title: title,
       message: message ?? '',
     );
@@ -199,13 +195,25 @@ class WarehouseService {
     return await _themeService.convertFileToBase64(imagePath);
   }
 
-  void updateData(WarehouseMainPageRouterData data) {
-    EnvironmentService.register().setModuleMode(data.isModuleMode);
+  void setContext(BuildContext context) {
+    final service = RouterService.register();
+    service.findRootNavigatorContext(context);
+    DeviceService.register(context);
+  }
+
+  void registerServices(WarehouseMainPageRouterData data) {
     LogService.register();
+    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
+    EnvironmentService.register().initData(
+      isModuleMode: data.isModuleMode,
+      domainUrl: domain,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    );
     ThemeService.register();
-    StorageService.register();
     LocaleService.register();
-    RouterService.register();
+    StorageService.register();
+    ApiService.register();
     _model.userName = data.userName;
     _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;
@@ -223,11 +231,13 @@ class WarehouseService {
           ),
         )
         .toList();
-    LocaleService.instance.switchFromCode(data.language);
-    ThemeService.instance.switchFromString(data.theme);
+
+    if (data.isModuleMode) {
+      LocaleService.instance.switchFromCode(data.language);
+      ThemeService.instance.switchFromString(data.theme);
+    }
+
     EnvironmentService.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
-    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
-    _registerWarehouseApiService(domain);
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -718,9 +728,5 @@ class WarehouseService {
         _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
             [];
     _model.allCombineItems = combineItems(flattenItems);
-  }
-
-  void _registerWarehouseApiService(String baseUrl) {
-    ApiService.register(baseUrl);
   }
 }

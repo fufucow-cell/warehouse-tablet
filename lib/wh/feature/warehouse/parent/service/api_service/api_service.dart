@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/error_map_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/base_api_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ class ApiService extends GetxService {
   // MARK: - Properties
 
   final _model = ApiServiceModel();
+  EnvironmentService get _envService => EnvironmentService.instance;
   static const String _tagName = 'warehouse';
   static ApiService get instance => Get.find<ApiService>(tag: _tagName);
   String get getDomain => _model.dio.options.baseUrl;
@@ -22,12 +24,17 @@ class ApiService extends GetxService {
 
   ApiService._internal();
 
-  static ApiService register(String baseUrl) {
+  static ApiService register() {
     if (Get.isRegistered<ApiService>(tag: _tagName)) {
       return instance;
     }
     final ApiService service = ApiService._internal();
-    service._model.dio.options.baseUrl = baseUrl;
+    service._model.dio.options.baseUrl = service._envService.getDomainUrl;
+    service._model.dio.options.connectTimeout = const Duration(seconds: 30);
+    service._model.dio.options.receiveTimeout = const Duration(seconds: 30);
+    service._model.dio.options.sendTimeout = const Duration(seconds: 30);
+    service._model.dio.options.followRedirects = true;
+    service._model.dio.options.maxRedirects = 3;
     service._model.dio.interceptors.add(service._mockInterceptor());
     service._model.dio.interceptors.add(service._apiRequestInterceptor());
     service._model.dio.interceptors.add(service._apiResponseInterceptor());
@@ -158,6 +165,10 @@ class ApiService extends GetxService {
   Map<String, dynamic>? _convertRequestModelToJson(
     dynamic requestModel,
   ) {
+    if (requestModel == null) {
+      return null;
+    }
+
     Map<String, dynamic>? result;
 
     if (requestModel is Map<String, dynamic>) {
@@ -208,10 +219,13 @@ class ApiService extends GetxService {
 
   void _startCacheCleanupTimer() {
     _stopCacheCleanupTimer();
-    _model.cacheCleanupTimer = Timer.periodic(
-      const Duration(seconds: ApiServiceModel.cacheExpirationSeconds),
-      (_) => _cleanupExpiredCache(),
-    );
+    // Skip timer if cache is disabled (cacheExpirationSeconds = 0)
+    if (_model.cacheExpirationSeconds > 0) {
+      _model.cacheCleanupTimer = Timer.periodic(
+        Duration(seconds: _model.cacheExpirationSeconds),
+        (_) => _cleanupExpiredCache(),
+      );
+    }
   }
 
   void _stopCacheCleanupTimer() {
@@ -224,7 +238,7 @@ class ApiService extends GetxService {
 
     _model.requestCache.forEach((key, cache) {
       final age = DateTime.now().difference(cache.timestamp).inSeconds;
-      if (age >= ApiServiceModel.cacheExpirationSeconds) {
+      if (age >= _model.cacheExpirationSeconds) {
         expiredRequestKeys.add(key);
         if (!cache.cancelToken.isCancelled) {
           cache.cancelToken.cancel('Cache expired');
@@ -421,13 +435,14 @@ class ApiService extends GetxService {
   InterceptorsWrapper _apiRequestInterceptor() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        // Add user_id header with UUID
+        options.headers['Content-Type'] = 'application/json';
+        options.headers['App-Code'] = 'APP_MEMBER';
+        // options.headers['Authorization'] = _envService.getAccessToken;
         options.headers['current-member-id'] = '00000000-0000-0000-0000-000000000000';
-
         final isGet = options.method.toUpperCase() == 'GET';
 
-        // Only apply cache mechanism for GET requests
-        if (isGet) {
+        // Only apply cache mechanism for GET requests and when cache is enabled
+        if (isGet && _model.cacheExpirationSeconds > 0) {
           // Generate cache key
           final cacheKey = _generateCacheKey(
             options.method,
@@ -436,7 +451,7 @@ class ApiService extends GetxService {
           );
 
           // Store cache key in options extra for later use
-          options.extra[ApiServiceModel.cacheKeyExtra] = cacheKey;
+          options.extra[_model.cacheKeyExtra] = cacheKey;
 
           // Check if response cache exists
           if (_model.responseCache.containsKey(cacheKey)) {
@@ -508,8 +523,8 @@ class ApiService extends GetxService {
         }
 
         final method = options.method.toUpperCase();
-        final url = '${options.baseUrl}${options.path}';
         final queryParams = options.queryParameters.isNotEmpty ? '?${Uri(queryParameters: options.queryParameters).query}' : '';
+        final fullUrl = '${options.baseUrl}${options.path}$queryParams';
 
         String dataStr = '';
         if (options.data != null) {
@@ -533,9 +548,20 @@ class ApiService extends GetxService {
           }
         }
 
+        final logMessage = StringBuffer();
+        logMessage.writeln('[$method] $fullUrl');
+        if (headerStr.isNotEmpty) {
+          logMessage.writeln('Headers:');
+          logMessage.writeln(headerStr);
+        }
+        if (dataStr.isNotEmpty) {
+          logMessage.writeln('Parameters:');
+          logMessage.writeln(dataStr);
+        }
+
         LogService.instance.i(
           EnumLogType.apiRequest,
-          '[$method] $url$queryParams${dataStr.isNotEmpty ? '\nData: $dataStr' : ''}${headerStr.isNotEmpty ? '\nHeaders: $headerStr' : ''}',
+          logMessage.toString(),
         );
 
         handler.next(options);
@@ -546,7 +572,7 @@ class ApiService extends GetxService {
   InterceptorsWrapper _apiResponseInterceptor() {
     return InterceptorsWrapper(
       onResponse: (response, handler) {
-        final cacheKey = response.requestOptions.extra[ApiServiceModel.cacheKeyExtra] as String?;
+        final cacheKey = response.requestOptions.extra[_model.cacheKeyExtra] as String?;
         final isGet = response.requestOptions.method.toUpperCase() == 'GET';
 
         // Only cache GET requests
@@ -588,7 +614,7 @@ class ApiService extends GetxService {
       },
       onError: (error, handler) {
         // Remove from cache if request was cancelled or failed
-        final cacheKey = error.requestOptions.extra[ApiServiceModel.cacheKeyExtra] as String?;
+        final cacheKey = error.requestOptions.extra[_model.cacheKeyExtra] as String?;
         if (cacheKey != null) {
           _model.requestCache.remove(cacheKey);
         }
@@ -612,9 +638,24 @@ class ApiService extends GetxService {
           }
         }
 
+        final logMessage = StringBuffer();
+        logMessage.writeln('[$statusCode] $url');
+
+        if (errorMessage.isNotEmpty) {
+          logMessage.writeln('Error: $errorMessage');
+        }
+        if (error.response != null) {
+          logMessage.writeln('Response Headers:');
+          logMessage.writeln(error.response!.headers.map.toString());
+        }
+        if (responseDataStr.isNotEmpty) {
+          logMessage.writeln('Response:');
+          logMessage.writeln(responseDataStr);
+        }
+
         LogService.instance.i(
           EnumLogType.apiResponse,
-          '[$statusCode] $url\nError: $errorMessage${responseDataStr.isNotEmpty ? '\nResponse: $responseDataStr' : ''}',
+          logMessage.toString(),
         );
 
         handler.next(error);
