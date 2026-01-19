@@ -193,4 +193,11 @@ const Map<String, String> zhTW = {
   'warehouseCategoryCreate': '新增分類',
   'warehouseCategoryUpdateMessage': '更新分類',
   'warehouseCategoryDelete': '刪除分類',
+  'gatewayNetworkStatusGood': '網路狀態連線良好',
+  'gatewayOnlineChildDevicesCount': '在線子設備@para1台',
+  'gatewayChildDevicesTitle': '子設備',
+  'gatewayChildDevicesSummary': '@para1子設備',
+  'gatewayDeviceManagement': '設備管理',
+  'gatewayScanQrCodeAdd': '掃Qr Code添加',
+  'gatewayQuickAdd': '快速添加',
 };

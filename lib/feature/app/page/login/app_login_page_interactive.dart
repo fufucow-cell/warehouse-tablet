@@ -14,7 +14,7 @@ extension AppLoginPageUserEventExtension on AppLoginPageController {
       case EnumAppLoginPageInteractive.tapLogin:
         _prepareToCallApi(isLogin: true);
       case EnumAppLoginPageInteractive.tapRegister:
-        _prepareToCallApi(isLogin: false);
+        _callHealthApi();
       case EnumAppLoginPageInteractive.tapPasswordVisibility:
         _togglePasswordVisibility();
     }

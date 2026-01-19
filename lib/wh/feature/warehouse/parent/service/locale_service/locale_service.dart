@@ -48,10 +48,20 @@ class LocaleService extends GetxService {
     LocaleTranslation newTranslation,
   ) async {
     try {
-      _model.currentTranslation = newTranslation;
-      final locale = getCurrentLocale;
-      EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
-      await _writeToStorage(newTranslation);
+      if (_model.currentTranslation.getLocale == newTranslation.getLocale) {
+        return true;
+      }
+
+      final translation = _convertTranslationFromLocale(newTranslation.getLocale);
+
+      if (_envService.getIsModuleMode) {
+        _model.currentTranslation = newTranslation;
+        EnumLocale.setCurrentTranslation(translation);
+      } else {
+        final locale = _convertLocaleFromTranslation(translation);
+        await Get.updateLocale(locale);
+        await _writeToStorage(newTranslation);
+      }
       return true;
     } on Exception catch (e) {
       LogService.instance.e('切換語系失敗', e);
@@ -86,7 +96,7 @@ class LocaleService extends GetxService {
 
   /// 從 Storage 讀取語系
   void _readFromStorage() {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 
@@ -99,7 +109,7 @@ class LocaleService extends GetxService {
         final locale = getCurrentLocale;
         EnumLocale.setCurrentTranslation(_convertTranslationFromLocale(locale));
 
-        if (!_envService.isModuleMode) {
+        if (!_envService.getIsModuleMode) {
           Get.updateLocale(locale);
         }
 
@@ -124,12 +134,11 @@ class LocaleService extends GetxService {
 
   /// 寫入語系到 Storage
   Future<void> _writeToStorage(LocaleTranslation translation) async {
-    if (_envService.isModuleMode) {
+    if (_envService.getIsModuleMode) {
       return;
     }
 
     try {
-      await Get.updateLocale(translation.getLocale);
       final localeCode = _convertCodeFromLocale(getCurrentLocale);
       await _storageService.write<String>(EnumStorageKey.locale, localeCode);
       LogService.instance.i(
@@ -168,7 +177,7 @@ class LocaleService extends GetxService {
   Locale _convertLocaleFromTranslation(
     LocaleTranslation translation,
   ) {
-    if (translation == EnumLocaleType.system.model) {
+    if (translation.getLocale == EnumLocaleType.system.model.getLocale) {
       return _model.currentTranslation.countryCode != null
           ? Locale(
               _model.currentTranslation.languageCode,

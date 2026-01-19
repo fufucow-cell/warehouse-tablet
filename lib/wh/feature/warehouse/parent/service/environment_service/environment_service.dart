@@ -12,8 +12,11 @@ class EnvironmentService extends GetxService {
   bool get isStg => _model.currentEnvironment == EnumEnvironment.stg;
   bool get isUat => _model.currentEnvironment == EnumEnvironment.uat;
   bool get isPrd => _model.currentEnvironment == EnumEnvironment.prd;
-  bool get enableMockApi => !isPrd;
-  bool get isModuleMode => _model.isModuleMode;
+  bool get getEnableMockApi => !isPrd;
+  bool get getIsModuleMode => _model.isModuleMode;
+  String get getDomainUrl => _model.domainUrl ?? '';
+  String get getAccessToken => _model.accessToken ?? '';
+  String get getRefreshToken => _model.refreshToken ?? '';
   static EnvironmentService get instance => Get.find<EnvironmentService>();
 
   // MARK: - Init
@@ -55,8 +58,11 @@ class EnvironmentService extends GetxService {
     }
   }
 
-  void setModuleMode(bool isModuleMode) {
+  void initData({required bool isModuleMode, String? domainUrl, String? accessToken, String? refreshToken}) {
     _model.isModuleMode = isModuleMode;
+    _model.domainUrl = domainUrl;
+    _model.accessToken = accessToken;
+    _model.refreshToken = refreshToken;
   }
 
   // MARK: - Private Method

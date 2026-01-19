@@ -121,8 +121,7 @@ class DialogItemCreateWidgetController extends GetxController {
 
   // 開啟相機
   Future<void> _openCamera() async {
-    // final filePath = await _service.openCamera();
-    final filePath = await _service.openGallery();
+    final filePath = await _service.openCamera();
 
     if (filePath != null) {
       _model.filePath.value = filePath;

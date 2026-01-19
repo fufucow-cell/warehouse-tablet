@@ -17,6 +17,15 @@ class EnvironmentServiceModel {
 
   /// 調試模式判斷
   bool get isDebugMode => kDebugMode;
+
+  /// API Domain Url
+  String? domainUrl;
+
+  /// API Access Token
+  String? accessToken;
+
+  /// API Refresh Token
+  String? refreshToken;
 }
 
 enum EnumEnvironment {

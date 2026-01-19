@@ -21,8 +21,11 @@ class ApiServiceModel {
   final Map<String, RequestCache> requestCache = {};
   final Map<String, dynamic> responseCache = {};
   Timer? cacheCleanupTimer;
-  static const int cacheExpirationSeconds = 10;
-  static const String cacheKeyExtra = 'cache_key';
+  String? accessToken;
+  String? refreshToken;
+  String? domainUrl;
+  final int cacheExpirationSeconds = 0;
+  final String cacheKeyExtra = 'cache_key';
 
   // Mock properties
   static const bool isAllMock = false;
@@ -30,6 +33,7 @@ class ApiServiceModel {
 }
 
 enum EnumApiInfo {
+  serverHealth('health', EnumApiMethod.get),
   // Auth APIs
   userLogin('auth/login', EnumApiMethod.post),
   userRegister('auth/register', EnumApiMethod.post),
