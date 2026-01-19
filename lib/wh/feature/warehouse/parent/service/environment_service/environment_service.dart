@@ -6,7 +6,6 @@ class EnvironmentService extends GetxService {
 
   final _model = EnvironmentServiceModel();
   EnumEnvironment get getCurrentEnvironment => _model.currentEnvironment;
-  String get apiBaseUrl => _model.currentEnvironment.apiBaseUrl;
   String get environmentName => _model.currentEnvironment.displayName;
   bool get isDev => _model.currentEnvironment == EnumEnvironment.dev;
   bool get isStg => _model.currentEnvironment == EnumEnvironment.stg;
@@ -14,9 +13,7 @@ class EnvironmentService extends GetxService {
   bool get isPrd => _model.currentEnvironment == EnumEnvironment.prd;
   bool get getEnableMockApi => !isPrd;
   bool get getIsModuleMode => _model.isModuleMode;
-  String get getDomainUrl => _model.domainUrl ?? '';
-  String get getAccessToken => _model.accessToken ?? '';
-  String get getRefreshToken => _model.refreshToken ?? '';
+  String get getDomainUrl => _model.domainUrl;
   static EnvironmentService get instance => Get.find<EnvironmentService>();
 
   // MARK: - Init
@@ -58,11 +55,10 @@ class EnvironmentService extends GetxService {
     }
   }
 
-  void initData({required bool isModuleMode, String? domainUrl, String? accessToken, String? refreshToken}) {
+  void initData({required bool isModuleMode, String? domainUrl, String? environment}) {
     _model.isModuleMode = isModuleMode;
-    _model.domainUrl = domainUrl;
-    _model.accessToken = accessToken;
-    _model.refreshToken = refreshToken;
+    _model.currentEnvironment = EnumEnvironment.fromString(environment);
+    _model.domainUrl = domainUrl ?? _model.currentEnvironment.domainUrl;
   }
 
   // MARK: - Private Method

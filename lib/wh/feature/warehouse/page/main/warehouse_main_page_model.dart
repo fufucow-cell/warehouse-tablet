@@ -5,6 +5,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/page/cabinet/warehouse_c
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/warehouse_category_page.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/item/warehouse_item_page.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/record/warehouse_record_page.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,7 +73,7 @@ class WarehouseMainPageRouterData {
 
   /// Factory method to create mock data from mock_data files
   /// Uses data from assets/mock_data/response/home_get.json
-  factory WarehouseMainPageRouterData.mock({String? theme, String? locale, bool? isModuleMode}) {
+  factory WarehouseMainPageRouterData.mock({required EnumEnvironment env, String? theme, String? locale, bool? isModuleMode}) {
     // Mock data based on home_get.json
     return WarehouseMainPageRouterData(
       userId: 'cow_test_user_Id',
@@ -81,8 +82,8 @@ class WarehouseMainPageRouterData {
       theme: theme ?? 'light',
       userAvatar: 'https://cdn-icons-png.flaticon.com/512/6858/6858485.png',
       userRoleType: 0,
-      domain: 'http://10.95.1.112:8003/api/v1/warehouse',
-      environment: 'dev',
+      domain: env.domainUrl,
+      environment: env.name,
       isModuleMode: isModuleMode ?? true,
       accessToken:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzEwZTliNmEtNGEwOC00ZjUyLWEwNzEtZjIwMDFjMTRmZDIyIiwiZXhwIjoxNzY1NTI1NjkyLCJ0eXBlIjoiYWNjZXNzIn0.ygWKs1dgE085D-v7AH8QlowrOn_dPu-VlDW0t1fD-Bg',

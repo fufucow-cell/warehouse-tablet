@@ -206,9 +206,8 @@ class WarehouseService {
     final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
     EnvironmentService.register().initData(
       isModuleMode: data.isModuleMode,
+      environment: data.environment,
       domainUrl: domain,
-      accessToken: data.accessToken,
-      refreshToken: data.refreshToken,
     );
     ThemeService.register();
     LocaleService.register();

@@ -84,7 +84,7 @@ class _RemoveLeadingZerosFormatter extends TextInputFormatter {
 }
 
 /// 创建文本样式
-TextStyle CustTextStyle({
+TextStyle custTextStyle({
   double? size,
   EnumFontWeightType weightType = EnumFontWeightType.regular,
   Color? color,

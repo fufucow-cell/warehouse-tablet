@@ -30,8 +30,8 @@ class CustomTabBar extends StatelessWidget {
       ),
       labelColor: EnumColor.accentBlue.color,
       unselectedLabelColor: EnumColor.textSecondary.color,
-      labelStyle: CustTextStyle(),
-      unselectedLabelStyle: CustTextStyle(),
+      labelStyle: custTextStyle(),
+      unselectedLabelStyle: custTextStyle(),
       dividerColor: Colors.transparent,
       indicator: BoxDecoration(
         border: Border(
