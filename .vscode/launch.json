@@ -2,34 +2,34 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Flutter (Dev)",
+      "name": "Launch Dev",
       "request": "launch",
       "type": "dart",
-      "args": [
+      "toolArgs": [
         "--dart-define=ENVIRONMENT=DEV"
       ]
     },
     {
-      "name": "Flutter (Stg)",
+      "name": "Launch Stg",
       "request": "launch",
       "type": "dart",
-      "args": [
+      "toolArgs": [
         "--dart-define=ENVIRONMENT=STG"
       ]
     },
     {
-      "name": "Flutter (Uat)",
+      "name": "Launch Uat",
       "request": "launch",
       "type": "dart",
-      "args": [
+      "toolArgs": [
         "--dart-define=ENVIRONMENT=UAT"
       ]
     },
     {
-      "name": "Flutter (Prd)",
+      "name": "Launch Prd",
       "request": "launch",
       "type": "dart",
-      "args": [
+      "toolArgs": [
         "--dart-define=ENVIRONMENT=PRD"
       ]
     }

@@ -3,10 +3,10 @@
 /// 生成时间: 2026-01-15T02:29:51.231492
 library;
 
-import 'package:flutter/material.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_data.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
+import 'package:flutter/material.dart';
 
 enum EnumColor {
   accentBlue,
@@ -62,7 +62,7 @@ enum EnumColor {
     final result = <Color>[];
 
     for (var num = 1; num <= 100; num++) {
-      final colorData = colorDataMap['${key}$num'];
+      final colorData = colorDataMap['$key$num'];
 
       if (colorData == null) {
         break;
@@ -83,10 +83,7 @@ enum EnumColor {
     return switch (themeService.currentTheme) {
       EnumThemeMode.light => data.light,
       EnumThemeMode.dark => data.dark,
-      EnumThemeMode.system =>
-        themeService.getThemeFromSystem == EnumThemeMode.light
-            ? data.light
-            : data.dark,
+      EnumThemeMode.system => themeService.getThemeFromSystem == EnumThemeMode.light ? data.light : data.dark,
     };
   }
 }

@@ -7,6 +7,8 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_mod
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/home_household_response_model/home_household_response_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/user_login_response_model/user_login_response_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
@@ -26,10 +28,14 @@ class SmartHomeService {
   ThemeService get _themeService => ThemeService.instance;
   LocaleTranslation get getCurrentLocale => _localeService.getCurrentTranslation;
   RouterService get _homeRouterService => RouterService.instance;
+  EnvironmentService get _envService => EnvironmentService.instance;
   EnumThemeMode get getCurrentTheme => _themeService.currentTheme;
   List<LocaleTranslation> get getAvalibleLocales => _localeService.getAvalibleLocales;
   UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
   HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
+  EnumEnvironment get getCurrentEnvironment => _envService.getCurrentEnvironment;
+  String get getCurrentThemeName => _themeService.currentTheme.name;
+  String get getCurrentLocaleCode => _localeService.getCurrentLocaleCode;
   static SmartHomeService get instance => Get.find<SmartHomeService>();
 
   // MARK: - Init

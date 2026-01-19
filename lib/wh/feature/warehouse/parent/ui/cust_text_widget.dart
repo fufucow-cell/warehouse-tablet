@@ -95,7 +95,7 @@ TextStyle _textStyle({
   EnumFontWeightType weightType = EnumFontWeightType.regular,
   Color? color,
 }) {
-  return CustTextStyle(
+  return custTextStyle(
     size: size,
     weightType: weightType,
     color: color,
