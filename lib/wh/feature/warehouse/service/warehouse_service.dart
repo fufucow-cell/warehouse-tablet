@@ -212,7 +212,7 @@ class WarehouseService {
     ThemeService.register();
     LocaleService.register();
     StorageService.register();
-    ApiService.register();
+    ApiService.register().updateToken(data.accessToken);
     _model.userName = data.userName;
     _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;

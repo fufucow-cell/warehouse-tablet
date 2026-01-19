@@ -22,7 +22,6 @@ class ApiServiceModel {
   final Map<String, dynamic> responseCache = {};
   Timer? cacheCleanupTimer;
   String? accessToken;
-  String? refreshToken;
   String? domainUrl;
   final int cacheExpirationSeconds = 0;
   final String cacheKeyExtra = 'cache_key';

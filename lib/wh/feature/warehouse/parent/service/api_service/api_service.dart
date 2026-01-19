@@ -65,8 +65,8 @@ class ApiService extends GetxService {
 
   // MARK: - Public Method
 
-  void updateDomain(String domain) {
-    _model.dio.options.baseUrl = domain;
+  void updateToken(String accessToken) {
+    _model.accessToken = accessToken;
   }
 
   static Future<T?> sendRequest<T>(
@@ -437,9 +437,7 @@ class ApiService extends GetxService {
       onRequest: (options, handler) {
         options.headers['Content-Type'] = 'application/json';
         options.headers['App-Code'] = 'APP_MEMBER';
-        // options.headers['Authorization'] = _envService.getAccessToken;
-        options.headers['current-member-id'] = '00000000-0000-0000-0000-000000000000';
-        options.headers['x-vercel-protection-bypass'] = 'U2AclWgol9FDBdStaXThZi9d8r0uaHfx';
+        options.headers['Authorization'] = _model.accessToken;
         final isGet = options.method.toUpperCase() == 'GET';
 
         // Only apply cache mechanism for GET requests and when cache is enabled
