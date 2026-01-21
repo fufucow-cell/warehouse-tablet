@@ -9,6 +9,7 @@ enum EnumAppMainRouter {
   household,
   gateway,
   warehouse,
+  circuitBreaker,
   setting;
 
   static EnumAppMainRouter get defaultRouter => EnumAppMainRouter.household;
@@ -18,6 +19,7 @@ enum EnumAppMainRouter {
         household => const SmartHomeHouseholdPage(),
         gateway => const SmartHomeGatewayPage(),
         warehouse => const SmartHomeWarehousePage(),
+        circuitBreaker => const SmartHomeCircuitBreakerPage(),
         setting => const SmartHomeSettingPage(),
       };
 }
@@ -26,6 +28,7 @@ enum EnumAppMainTabItem {
   household(Icons.home),
   gateway(Icons.gas_meter),
   warehouse(Icons.warehouse),
+  circuitBreaker(Icons.power_settings_new),
   setting(Icons.settings);
 
   const EnumAppMainTabItem(this.icon);
@@ -36,6 +39,7 @@ enum EnumAppMainTabItem {
         household => EnumLocale.smartHomeTabHousehold,
         gateway => EnumLocale.smartHomeTabGateway,
         warehouse => EnumLocale.smartHomeTabWarehouse,
+        circuitBreaker => EnumLocale.smartHomeTabCircuitBreaker,
         setting => EnumLocale.smartHomeTabSetting,
       };
 
@@ -45,6 +49,7 @@ enum EnumAppMainTabItem {
         household => EnumAppMainRouter.household,
         gateway => EnumAppMainRouter.gateway,
         warehouse => EnumAppMainRouter.warehouse,
+        circuitBreaker => EnumAppMainRouter.circuitBreaker,
         setting => EnumAppMainRouter.setting,
       };
 }

@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-14T18:02:20.641127
+/// 生成时间: 2026-01-21T02:26:17.955744
 library;
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
@@ -54,6 +54,36 @@ enum EnumLocale {
   editCategoryMaxLevelReached,
   editCategoryTitle,
   editPosition,
+  engo110VOverVoltage,
+  engo110VUnderVoltage,
+  engo220VOverVoltage,
+  engo220VUnderVoltage,
+  engoAlertRecord,
+  engoAlertSetting,
+  engoCircuitBreakerTrip,
+  engoCumulativePowerConsumption,
+  engoCurrent,
+  engoCurrentTemperature,
+  engoDataRecord,
+  engoHighPower,
+  engoHighTemperature,
+  engoKWhUnit,
+  engoNotificationRecord,
+  engoOverCurrent,
+  engoPower,
+  engoRemoveDevice,
+  engoSendAlert,
+  engoSetValue,
+  engoSettingChangeRecord,
+  engoSwitch,
+  engoSwitchRecord,
+  engoTabDay,
+  engoTabMonth,
+  engoTabYear,
+  engoTemperatureUnit,
+  engoTodayPowerConsumption,
+  engoTotalPowerConsumption,
+  engoVoltage,
   environmentDev,
   environmentPrd,
   environmentStg,
@@ -101,6 +131,7 @@ enum EnumLocale {
   smartHomeNoRoom,
   smartHomeRoomList,
   smartHomeSwitchHousehold,
+  smartHomeTabCircuitBreaker,
   smartHomeTabGateway,
   smartHomeTabHousehold,
   smartHomeTabMessage,

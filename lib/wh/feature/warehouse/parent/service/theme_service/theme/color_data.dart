@@ -119,10 +119,6 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFF6F6F6),
     dark: Color(0xFF444651),
   ),
-  'backgroundButtonFill': ColorData(
-    light: Color(0xFFFB9B51),
-    dark: Color(0xFFFB9B51),
-  ),
   'lineDivider': ColorData(
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),
@@ -171,10 +167,6 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x1F292929),
     dark: Color(0x1F292929),
   ),
-  'engoIconBackButton': ColorData(
-    light: Color(0xFFFB9B51),
-    dark: Color(0xFFFB9B51),
-  ),
   'engoTextPrimary': ColorData(
     light: Color(0xFF292929),
     dark: Color(0xFFFFFFFF),
@@ -198,5 +190,45 @@ const Map<String, ColorData> colorDataMap = {
   'engoBottomSheetBackground': ColorData(
     light: Color(0xFFEFEFEF),
     dark: Color(0xFFBDBDBD),
+  ),
+  'engoButtonBorderReverse': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFDB874),
+  ),
+  'engoCircuitBreakerSwitchOffThumbBackground': ColorData(
+    light: Color(0xFFDCDCDC),
+    dark: Color(0xFFDCDCDC),
+  ),
+  'engoCircuitBreakerSwitchBackgroundGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99FFFFFF),
+  ),
+  'engoCircuitBreakerSwitchBackgroundGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoCircuitBreakerAlertCardBorder': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFFB880),
+  ),
+  'engoCircuitBreakerAlertCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99424242),
+  ),
+  'engoCircuitBreakerAlertCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FFC28A),
+  ),
+  'engoCircuitBreakerInputValue': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFFA86B),
+  ),
+  'engoBackgroundOrange400': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoBackgroundButton': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFB9B51),
   ),
 };

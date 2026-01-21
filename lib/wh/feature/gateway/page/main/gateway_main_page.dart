@@ -40,6 +40,7 @@ class GatewayMainPage extends GetView<GatewayMainPageController> {
                   ),
                 ),
                 const _BottomButton(),
+                SizedBox(height: 32.0.scale),
               ],
             ),
           ),
@@ -60,7 +61,7 @@ class _TopBar extends StatelessWidget {
         CustIconButton(
           icon: EnumImage.cArrowLeft,
           size: 80.0.scale,
-          color: EnumColor.engoIconBackButton.color,
+          color: EnumColor.engoBackgroundOrange400.color,
           onTap: () {
             controller.interactive(EnumGatewayMainPageInteractive.tapBackButton);
           },
