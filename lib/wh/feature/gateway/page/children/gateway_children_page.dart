@@ -53,7 +53,7 @@ class _TopBar extends StatelessWidget {
         CustIconButton(
           icon: EnumImage.cArrowLeft,
           size: 80.0.scale,
-          color: EnumColor.engoIconBackButton.color,
+          color: EnumColor.engoBackgroundOrange400.color,
           onTap: () {
             controller.interactive(EnumGatewayChildrenPageInteractive.tapBackButton);
           },

@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-16T19:59:58.258632
+/// 生成时间: 2026-01-21T00:54:23.696087
 library;
 
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ enum EnumImage {
   cChangeImage,
   cCheckboxOff,
   cCheckboxOn,
+  cCircuit,
   cCow,
   cEditNormal,
   cEditPosition,

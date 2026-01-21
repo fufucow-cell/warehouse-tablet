@@ -1,12 +1,12 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-15T02:29:51.231492
+/// 生成时间: 2026-01-21T02:30:43.888700
 library;
 
+import 'package:flutter/material.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_data.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
-import 'package:flutter/material.dart';
 
 enum EnumColor {
   accentBlue,
@@ -18,7 +18,6 @@ enum EnumColor {
   backgroundAccentRed,
   backgroundAccentYellow,
   backgroundButton,
-  backgroundButtonFill,
   backgroundDropdown,
   backgroundGhost,
   backgroundItemGradient,
@@ -30,10 +29,17 @@ enum EnumColor {
   backgroundSecondary,
   backgroundTertiary,
   brand,
+  engoBackgroundButton,
+  engoBackgroundOrange400,
   engoBottomSheetBackground,
   engoButtonBackground,
+  engoButtonBorderReverse,
+  engoCircuitBreakerAlertCardBorder,
+  engoCircuitBreakerAlertCardGradient,
+  engoCircuitBreakerInputValue,
+  engoCircuitBreakerSwitchBackgroundGradient,
+  engoCircuitBreakerSwitchOffThumbBackground,
   engoDeviceCardBackgroundGradient,
-  engoIconBackButton,
   engoTextPrimary,
   engoTextSecondary,
   iconPrimary,
@@ -62,7 +68,7 @@ enum EnumColor {
     final result = <Color>[];
 
     for (var num = 1; num <= 100; num++) {
-      final colorData = colorDataMap['$key$num'];
+      final colorData = colorDataMap['${key}$num'];
 
       if (colorData == null) {
         break;
@@ -83,7 +89,10 @@ enum EnumColor {
     return switch (themeService.currentTheme) {
       EnumThemeMode.light => data.light,
       EnumThemeMode.dark => data.dark,
-      EnumThemeMode.system => themeService.getThemeFromSystem == EnumThemeMode.light ? data.light : data.dark,
+      EnumThemeMode.system =>
+        themeService.getThemeFromSystem == EnumThemeMode.light
+            ? data.light
+            : data.dark,
     };
   }
 }

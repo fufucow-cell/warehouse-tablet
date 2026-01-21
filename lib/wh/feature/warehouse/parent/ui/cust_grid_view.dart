@@ -79,9 +79,9 @@ class CustGridView extends StatelessWidget {
                     bottom: rowIndex < rowCount - 1 ? mainAxisSpacing : 0,
                   ),
                   child: IntrinsicHeight(
-                    child: Row(
+                  child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: rowItems,
+                    children: rowItems,
                     ),
                   ),
                 );
