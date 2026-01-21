@@ -103,7 +103,7 @@ class ApiService extends GetxService {
       final queryParams = isGet && reqData != null ? _removeNullValues(reqData) : null;
 
       final response = await dio.request<dynamic>(
-        '/${apiInfo.path}',
+        '/${apiInfo.path}/',
         data: isGet ? null : reqData,
         queryParameters: isGet ? queryParams : null,
         options: options,
