@@ -1,5 +1,3 @@
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
@@ -8,6 +6,9 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_timer.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -143,9 +144,7 @@ class _TabBar extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedTab == 0
-                          ? EnumColor.engoWaterValueFunctionCardBorder.color
-                          : Colors.transparent,
+                      color: selectedTab == 0 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12.0.scale),
                         bottomLeft: Radius.circular(12.0.scale),
@@ -155,9 +154,7 @@ class _TabBar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueOpen.tr,
                       size: 32.0.scale,
-                      color: selectedTab == 0
-                          ? EnumColor.textWhite.color
-                          : EnumColor.textSecondary.color,
+                      color: selectedTab == 0 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -169,9 +166,7 @@ class _TabBar extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedTab == 1
-                          ? EnumColor.engoWaterValueFunctionCardBorder.color
-                          : Colors.transparent,
+                      color: selectedTab == 1 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12.0.scale),
                         bottomRight: Radius.circular(12.0.scale),
@@ -181,9 +176,7 @@ class _TabBar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueClose.tr,
                       size: 32.0.scale,
-                      color: selectedTab == 1
-                          ? EnumColor.textWhite.color
-                          : EnumColor.textSecondary.color,
+                      color: selectedTab == 1 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -212,13 +205,9 @@ class _TimePickerSection extends StatelessWidget {
         return Center(
           child: SizedBox(
             width: 593.0.scale,
-            child: _TimePicker(
-              title: isOpenTime
-                  ? EnumLocale.waterValueTimerOpenTime.tr
-                  : EnumLocale.waterValueTimerCloseTime.tr,
-              time: isOpenTime
-                  ? controller.openTimeRx.value
-                  : controller.closeTimeRx.value,
+            child: CustTimer(
+              title: isOpenTime ? EnumLocale.waterValueTimerOpenTime.tr : EnumLocale.waterValueTimerCloseTime.tr,
+              time: isOpenTime ? controller.openTimeRx.value : controller.closeTimeRx.value,
               onTimeChanged: (time) {
                 if (isOpenTime) {
                   controller.interactive(
@@ -241,185 +230,6 @@ class _TimePickerSection extends StatelessWidget {
   }
 }
 
-class _TimePicker extends StatelessWidget {
-  final String title;
-  final TimeOfDay? time;
-  final Function(TimeOfDay?) onTimeChanged;
-
-  const _TimePicker({
-    required this.title,
-    required this.time,
-    required this.onTimeChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final hour = time?.hour ?? 8;
-    final minute = time?.minute ?? 0;
-    final isAM = hour < 12;
-
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 593.0.scale,
-          child: CustTextWidget(
-            title,
-            size: 32.0.scale,
-            color: EnumColor.textPrimary.color,
-            align: TextAlign.center,
-          ),
-        ),
-        SizedBox(height: 48.0.scale),
-        SizedBox(
-          width: double.infinity,
-          height: 228.0.scale,
-          child: Stack(
-            children: [
-              // 选中背景条
-              Positioned(
-                left: 0,
-                top: 61.0.scale,
-                child: Opacity(
-                  opacity: 0.30,
-                  child: Container(
-                    width: 594.0.scale,
-                    height: 46.0.scale,
-                    padding: EdgeInsets.all(10.0.scale),
-                    decoration: BoxDecoration(
-                      color: EnumColor.textSecondary.color.withOpacity(0.3),
-                    ),
-                  ),
-                ),
-              ),
-              // 时间选择器内容
-              Positioned(
-                left: 164.0.scale,
-                top: 0,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // 上午/下午选择
-                    SizedBox(
-                      width: 65.0.scale,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              final newTime = TimeOfDay(
-                                hour: isAM ? hour : hour - 12,
-                                minute: minute,
-                              );
-                              onTimeChanged(newTime);
-                            },
-                            child: CustTextWidget(
-                              EnumLocale.waterValueTimerAM.tr,
-                              size: 32.0.scale,
-                              color: isAM
-                                  ? EnumColor.engoWaterValueStatusOpening.color
-                                  : EnumColor.textSecondary.color,
-                            ),
-                          ),
-                          SizedBox(height: 24.0.scale),
-                          GestureDetector(
-                            onTap: () {
-                              final newTime = TimeOfDay(
-                                hour: isAM ? hour + 12 : hour,
-                                minute: minute,
-                              );
-                              onTimeChanged(newTime);
-                            },
-                            child: CustTextWidget(
-                              EnumLocale.waterValueTimerPM.tr,
-                              size: 32.0.scale,
-                              color: !isAM
-                                  ? EnumColor.engoWaterValueStatusOpening.color
-                                  : EnumColor.textSecondary.color,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 88.0.scale),
-                    // 小时选择
-                    SizedBox(
-                      width: 38.0.scale,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (int h = 8; h <= 11; h++) ...[
-                            GestureDetector(
-                              onTap: () {
-                                final newTime = TimeOfDay(
-                                  hour: isAM ? h : h + 12,
-                                  minute: minute,
-                                );
-                                onTimeChanged(newTime);
-                              },
-                              child: CustTextWidget(
-                                h.toString().padLeft(2, '0'),
-                                size: 32.0.scale,
-                                color: (isAM ? h : h + 12) == hour
-                                    ? EnumColor.engoWaterValueStatusOpening.color
-                                    : EnumColor.textSecondary.color,
-                              ),
-                            ),
-                            if (h < 11) SizedBox(height: 24.0.scale),
-                          ],
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 88.0.scale),
-                    // 分钟选择
-                    SizedBox(
-                      width: 38.0.scale,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (int m in [55, 0, 5, 10]) ...[
-                            GestureDetector(
-                              onTap: () {
-                                final newTime = TimeOfDay(
-                                  hour: hour,
-                                  minute: m,
-                                );
-                                onTimeChanged(newTime);
-                              },
-                              child: CustTextWidget(
-                                m.toString().padLeft(2, '0'),
-                                size: 32.0.scale,
-                                color: m == minute
-                                    ? EnumColor.engoWaterValueStatusOpening.color
-                                    : EnumColor.textSecondary.color,
-                              ),
-                            ),
-                            if (m != 10) SizedBox(height: 24.0.scale),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _RepeatSection extends StatelessWidget {
   const _RepeatSection();
 
@@ -429,7 +239,7 @@ class _RepeatSection extends StatelessWidget {
     return Obx(
       () {
         final isEnabled = controller.isRepeatEnabledRx.value;
-        return Container(
+        return SizedBox(
           width: 1195.0.scale,
           height: 74.0.scale,
           child: Column(
@@ -450,7 +260,7 @@ class _RepeatSection extends StatelessWidget {
                     onTap: () {
                       controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapRepeatToggle);
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: 101.0.scale,
                       height: 58.0.scale,
                       child: Stack(
@@ -458,9 +268,7 @@ class _RepeatSection extends StatelessWidget {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: isEnabled
-                                    ? EnumColor.engoWaterValueStatusOpening.color
-                                    : EnumColor.textSecondary.color,
+                                color: isEnabled ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
                                 borderRadius: BorderRadius.circular(30.0.scale),
                               ),
                             ),
@@ -544,9 +352,7 @@ class _WeekdaySelector extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedWeekday == 0
-                          ? EnumColor.engoWaterValueFunctionCardBorder.color
-                          : Colors.transparent,
+                      color: selectedWeekday == 0 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12.0.scale),
                         bottomLeft: Radius.circular(12.0.scale),
@@ -556,9 +362,7 @@ class _WeekdaySelector extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerWeekday.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 0
-                          ? EnumColor.textWhite.color
-                          : EnumColor.textSecondary.color,
+                      color: selectedWeekday == 0 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -573,9 +377,7 @@ class _WeekdaySelector extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerEveryday.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 1
-                          ? EnumColor.textWhite.color
-                          : EnumColor.textSecondary.color,
+                      color: selectedWeekday == 1 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -587,9 +389,7 @@ class _WeekdaySelector extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedWeekday == 2
-                          ? EnumColor.engoWaterValueFunctionCardBorder.color
-                          : Colors.transparent,
+                      color: selectedWeekday == 2 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12.0.scale),
                         bottomRight: Radius.circular(12.0.scale),
@@ -599,9 +399,7 @@ class _WeekdaySelector extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerCustom.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 2
-                          ? EnumColor.textWhite.color
-                          : EnumColor.textSecondary.color,
+                      color: selectedWeekday == 2 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -652,18 +450,14 @@ class _WeekdayList extends StatelessWidget {
                   width: 100.0.scale,
                   height: 100.0.scale,
                   decoration: ShapeDecoration(
-                    color: isSelected
-                        ? EnumColor.engoWaterValueStatusOpening.color
-                        : EnumColor.engoBottomSheetBackground.color,
+                    color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.engoBottomSheetBackground.color,
                     shape: const OvalBorder(),
                   ),
                   child: Center(
                     child: CustTextWidget(
                       weekdayLabels[index].tr,
                       size: 26.0.scale,
-                    color: isSelected
-                        ? EnumColor.textWhite.color
-                        : EnumColor.textSecondary.color,
+                      color: isSelected ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                       align: TextAlign.center,
                     ),
                   ),
@@ -709,7 +503,7 @@ class _NoteSectionState extends State<_NoteSection> {
   @override
   Widget build(BuildContext context) {
     final pageController = Get.find<WaterValueTimerSettingPageController>();
-    return Container(
+    return SizedBox(
       width: 1195.0.scale,
       height: 74.0.scale,
       child: Column(
@@ -784,7 +578,7 @@ class _NotificationSection extends StatelessWidget {
     return Obx(
       () {
         final isEnabled = controller.isNotificationEnabledRx.value;
-        return Container(
+        return SizedBox(
           width: 1195.0.scale,
           height: 74.0.scale,
           child: Column(
@@ -805,7 +599,7 @@ class _NotificationSection extends StatelessWidget {
                     onTap: () {
                       controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapNotificationToggle);
                     },
-                    child: Container(
+                    child: SizedBox(
                       width: 101.0.scale,
                       height: 58.0.scale,
                       child: Stack(
@@ -813,9 +607,7 @@ class _NotificationSection extends StatelessWidget {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: isEnabled
-                                    ? EnumColor.engoWaterValueStatusOpening.color
-                                    : EnumColor.textSecondary.color,
+                                color: isEnabled ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
                                 borderRadius: BorderRadius.circular(30.0.scale),
                               ),
                             ),

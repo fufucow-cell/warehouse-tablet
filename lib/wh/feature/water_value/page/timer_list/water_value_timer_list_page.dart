@@ -1,5 +1,3 @@
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
@@ -9,6 +7,8 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_empty_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +18,7 @@ class WaterValueTimerListPage extends GetView<WaterValueTimerListPageController>
 
   @override
   Widget build(BuildContext context) {
-        return GetBuilder<WaterValueTimerListPageController>(
+    return GetBuilder<WaterValueTimerListPageController>(
       init: WaterValueTimerListPageController(routerData),
       builder: (controller) {
         controller.setContext(context);
@@ -35,7 +35,7 @@ class WaterValueTimerListPage extends GetView<WaterValueTimerListPageController>
                       if (items.isEmpty) {
                         return const CustEmptyWidget();
                       }
-                      return _TimerList();
+                      return const _TimerList();
                     },
                   ),
                 ),
@@ -160,8 +160,7 @@ class _TimerItemCell extends StatelessWidget {
           EnumLocale.waterValueTimerSaturday.tr,
           EnumLocale.waterValueTimerSunday.tr,
         ];
-        final selectedDayNames = item.selectedDays.toList()
-          ..sort();
+        final selectedDayNames = item.selectedDays.toList()..sort();
         return selectedDayNames.map((day) => dayNames[day]).join('、');
       default:
         return EnumLocale.waterValueTimerExecuteOnce.tr;

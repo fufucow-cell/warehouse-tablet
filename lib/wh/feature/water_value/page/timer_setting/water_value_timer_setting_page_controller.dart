@@ -44,12 +44,6 @@ class WaterValueTimerSettingPageController extends GetxController {
     );
   }
 
-  @override
-  void onClose() {
-    WaterValueService.unregister();
-    super.onClose();
-  }
-
   // MARK: - Public Method
 
   void setContext(BuildContext context) {

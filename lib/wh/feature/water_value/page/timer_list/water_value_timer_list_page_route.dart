@@ -20,8 +20,13 @@ extension WaterValueTimerListPageRouteExtension on WaterValueTimerListPageContro
       case EnumWaterValueTimerListPageRoute.pop:
         Navigator.of(_service.getRootNavigatorContext ?? Get.context!).pop();
       case EnumWaterValueTimerListPageRoute.goToTimerSettingPage:
-        // 这个路由会在 interactive 中处理，通过 callback 跳转
-        break;
+        if (data is WaterValueTimerSettingPageRouterData) {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => WaterValueTimerSettingPage(routerData: data),
+            ),
+          );
+        }
     }
   }
 }

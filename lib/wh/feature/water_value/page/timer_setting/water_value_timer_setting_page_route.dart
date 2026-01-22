@@ -1,7 +1,7 @@
 part of 'water_value_timer_setting_page_controller.dart';
 
 enum EnumWaterValueTimerSettingPageRoute {
-  pop,
+  goBack,
   showTimePicker,
 }
 
@@ -11,8 +11,8 @@ extension WaterValueTimerSettingPageRouteExtension on WaterValueTimerSettingPage
     dynamic data,
   }) {
     switch (type) {
-      case EnumWaterValueTimerSettingPageRoute.pop:
-        Navigator.of(_service.getRootNavigatorContext ?? Get.context!).pop();
+      case EnumWaterValueTimerSettingPageRoute.goBack:
+        Navigator.of(_service.getNestedNavigatorContext!).pop();
       case EnumWaterValueTimerSettingPageRoute.showTimePicker:
         _showTimePicker(data as bool); // true = openTime, false = closeTime
     }

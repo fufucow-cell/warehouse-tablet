@@ -55,7 +55,7 @@ extension WaterValueTimerSettingPageUserEventExtension on WaterValueTimerSetting
     if (callback != null) {
       callback();
     } else {
-      routerHandle(EnumWaterValueTimerSettingPageRoute.pop);
+      routerHandle(EnumWaterValueTimerSettingPageRoute.goBack);
     }
   }
 

@@ -43,7 +43,7 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
   void _handleSettingButton() {
     // 切换编辑模式
     _model.isEditMode.value = !_model.isEditMode.value;
-    
+
     final callback = _model.routerData?.onSettingButtonTap;
     if (callback != null) {
       callback();
@@ -54,6 +54,20 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
     final callback = _model.routerData?.onAddTimer;
     if (callback != null) {
       await callback();
+    } else {
+      // 如果没有 callback，跳转到定时设定页面（新建模式）
+      routerHandle(
+        EnumWaterValueTimerListPageRoute.goToTimerSettingPage,
+        data: const WaterValueTimerSettingPageRouterData(
+          initialOpenTime: null,
+          initialCloseTime: null,
+          initialRepeatEnabled: false,
+          initialNotificationEnabled: false,
+          initialSelectedWeekday: 0,
+          initialSelectedTab: 0,
+          initialSelectedDays: null,
+        ),
+      );
     }
   }
 
@@ -74,7 +88,7 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
     if (item == null) return;
 
     final newEnabled = !item.isEnabled;
-    
+
     // 更新本地状态
     final index = currentList.indexWhere((item) => item.id == itemId);
     if (index != -1) {

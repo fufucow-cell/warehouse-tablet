@@ -1,6 +1,8 @@
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/service/water_value_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,17 +24,11 @@ class WaterValueTimerListPageController extends GetxController {
     _model.routerData = routerData;
     _model.timerItems.value = List<WaterValueTimerItem>.from(routerData.initialTimerItems);
     WaterValueService.register().registerServices(
-      WaterValueMainPageRouterData(
+      const WaterValueMainPageRouterData(
         waterValueName: '',
         initialSwitchState: false,
       ),
     );
-  }
-
-  @override
-  void onClose() {
-    WaterValueService.unregister();
-    super.onClose();
   }
 
   // MARK: - Public Method
