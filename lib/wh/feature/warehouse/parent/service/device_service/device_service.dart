@@ -1,9 +1,13 @@
 import 'dart:io';
 
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/router_service/router_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -72,10 +76,33 @@ class DeviceService extends GetxService {
       return null;
     }
 
+    // 如果是 Android 平板，顯示選擇器讓用戶選擇相機或相簿
+    if (_model.isAndroidPad) {
+      final context = RouterService.instance.getRootNavigatorContext;
+      if (context != null) {
+        final ImageSource? selectedSource = await showModalBottomSheet<ImageSource>(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context) => _ImageSourceBottomSheet(),
+        );
+
+        if (selectedSource == null) {
+          return null;
+        }
+
+        return await _pickImage(selectedSource);
+      }
+    }
+
+    // 非 Android 平板直接打開相機
+    return await _pickImage(ImageSource.camera);
+  }
+
+  Future<String?> _pickImage(ImageSource source) async {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(
-        source: ImageSource.camera,
+        source: source,
         imageQuality: 85,
         maxWidth: 1920,
         maxHeight: 1920,
@@ -108,14 +135,16 @@ class DeviceService extends GetxService {
       return imagePath;
     } on PlatformException catch (e) {
       // 處理平台特定的異常（如權限被拒絕）
+      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
       CustSnackBar.show(
-        title: EnumLocale.deviceCameraFailed.tr,
+        title: errorMessage,
         message: e.message ?? e.toString(),
       );
       return null;
     } on Object catch (e) {
+      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
       CustSnackBar.show(
-        title: EnumLocale.deviceCameraFailed.tr,
+        title: errorMessage,
         message: e.toString(),
       );
       return null;
@@ -221,5 +250,123 @@ class DeviceService extends GetxService {
     scaleMin = _model.minScale;
     scaleWidth = _model.scaleWidth; // Top-level variable from extension_double.dart
     scaleHeight = _model.scaleHeight; // Top-level variable from extension_double.dart
+  }
+}
+
+/// 圖片來源選擇底部選擇器（用於 Android 平板）
+class _ImageSourceBottomSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 24.0.scale,
+        right: 24.0.scale,
+        top: 24.0.scale,
+        bottom: 32.0.scale,
+      ),
+      decoration: BoxDecoration(
+        color: EnumColor.engoBottomSheetBackground.color,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0.scale),
+          topRight: Radius.circular(24.0.scale),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustTextWidget(
+            EnumLocale.commonReminder.tr,
+            size: 40.0.scale,
+            weightType: EnumFontWeightType.bold,
+            color: EnumColor.engoTextPrimary.color,
+            align: TextAlign.center,
+          ),
+          SizedBox(height: 32.0.scale),
+          _OptionItem(
+            text: EnumLocale.deviceOpenCamera.tr,
+            onTap: () {
+              Navigator.of(context).pop(ImageSource.camera);
+            },
+          ),
+          SizedBox(height: 16.0.scale),
+          Divider(
+            height: 1.0.scale,
+            thickness: 1.0.scale,
+            color: EnumColor.textSecondary.color,
+          ),
+          SizedBox(height: 16.0.scale),
+          _OptionItem(
+            text: EnumLocale.deviceOpenGallery.tr,
+            onTap: () {
+              Navigator.of(context).pop(ImageSource.gallery);
+            },
+          ),
+          SizedBox(height: 32.0.scale),
+          Material(
+            color: EnumColor.engoButtonBackground.color,
+            borderRadius: BorderRadius.circular(12.0.scale),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              borderRadius: BorderRadius.circular(12.0.scale),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 24.0.scale,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1.0.scale,
+                    color: Colors.black,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0.scale),
+                ),
+                child: Center(
+                  child: CustTextWidget(
+                    EnumLocale.commonCancel.tr,
+                    size: 32.0.scale,
+                    weightType: EnumFontWeightType.regular,
+                    color: EnumColor.engoTextPrimary.color,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OptionItem extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+
+  const _OptionItem({
+    required this.text,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.scale),
+            child: CustTextWidget(
+              text,
+              size: 32.0.scale,
+              weightType: EnumFontWeightType.regular,
+              color: EnumColor.engoTextPrimary.color,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

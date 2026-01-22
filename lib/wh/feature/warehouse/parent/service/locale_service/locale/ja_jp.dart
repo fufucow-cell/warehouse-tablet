@@ -10,6 +10,8 @@ const Map<String, String> zhTW = {
   'deviceCameraFailed': 'カメラを開くのに失敗しました',
   'deviceCameraNotAvailable': 'カメラ機能がありません',
   'deviceGalleryFailed': 'ギャラリーを開くのに失敗しました',
+  'deviceOpenCamera': 'カメラを開く',
+  'deviceOpenGallery': 'ギャラリーを開く',
   'warehouseItemTotal': 'アイテム総数',
   'warehouseCabinetTotal': 'キャビネット総数',
   'warehouseCategoryTotal': 'カテゴリ総数',

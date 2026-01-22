@@ -17,6 +17,7 @@ class ApiService extends GetxService {
   final _model = ApiServiceModel();
   EnvironmentService get _envService => EnvironmentService.instance;
   static const String _tagName = 'warehouse';
+  String get getAccessToken => _model.accessToken ?? '';
   static ApiService get instance => Get.find<ApiService>(tag: _tagName);
   String get getDomain => _model.dio.options.baseUrl;
 

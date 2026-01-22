@@ -189,7 +189,7 @@ const Map<String, ColorData> colorDataMap = {
   ),
   'engoBottomSheetBackground': ColorData(
     light: Color(0xFFEFEFEF),
-    dark: Color(0xFFBDBDBD),
+    dark: Color(0xFF7C7C7C),
   ),
   'engoButtonBorderReverse': ColorData(
     light: Color(0xFFFB9B51),
