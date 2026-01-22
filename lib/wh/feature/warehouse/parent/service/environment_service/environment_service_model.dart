@@ -34,7 +34,7 @@ enum EnumEnvironment {
 
   String get domainUrl {
     return switch (this) {
-      EnumEnvironment.dev => 'http://localhost:8003',
+      EnumEnvironment.dev => 'http://192.168.31.159:8003',
       EnumEnvironment.stg => 'https://warehouseserver-l866q1mqn-fufucows-projects.vercel.app',
       EnumEnvironment.uat => '',
       EnumEnvironment.prd => 'http://tapp.smtengo.com/v1/wh',

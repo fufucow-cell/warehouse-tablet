@@ -294,6 +294,12 @@ class ApiService extends GetxService {
 }
 ```
 
+**Service MARK 注释规范：**
+- `// MARK: - Properties` - 属性部分（静态常量、instance getter 等）
+- `// MARK: - Init` - 初始化部分（构造函数、register、unregister）
+- `// MARK: - Public Method` - 公共方法部分（供外部调用的方法）
+- `// MARK: - Private Method` - 私有方法部分（内部使用的辅助方法）
+
 **Service Model 文件结构规范：**
 
 Service Model 文件必须遵循以下结构：
@@ -516,17 +522,24 @@ class WarehouseMainPage extends StatefulWidget {
 - 调用 Service 获取数据和处理 API 事件
 - 通过 `part` 引入 Interactive 和 Route
 
-**文件结构：**
+**Controller 文件结构规范：**
+
+Controller 文件必须遵循以下结构，使用 `// MARK:` 注释进行分段：
+
 ```dart
 part '{page_name}_page_interactive.dart';
 part '{page_name}_page_route.dart';
 
 class WarehouseMainPageController extends GetxController {
+  // MARK: - Properties
+
   final _model = WarehouseMainPageModel();
   WarehouseService get _service => WarehouseService.instance;
 
   // 通过 service 获取数据
   RxReadonly<List<Item>> get itemsRx => _service.allItemsRx;
+
+  // MARK: - Init
 
   @override
   void onInit() {
@@ -534,12 +547,36 @@ class WarehouseMainPageController extends GetxController {
     _loadData();
   }
 
+  @override
+  void onClose() {
+    // 清理资源
+    super.onClose();
+  }
+
+  // MARK: - Public Method
+
+  // 公共方法...
+
+  // MARK: - Private Method
+
   void _loadData() {
     // 调用 service 获取数据
     _service.apiReqReadItem(...);
   }
 }
 ```
+
+**关键规范：**
+
+1. **MARK 注释规范**：
+   - `// MARK: - Properties` - 属性部分（Model、Service、响应式变量等）
+   - `// MARK: - Init` - 初始化部分（构造函数、onInit、onClose 等生命周期方法）
+   - `// MARK: - Public Method` - 公共方法部分（供 View 或其他 Controller 调用的方法）
+   - `// MARK: - Private Method` - 私有方法部分（内部使用的辅助方法）
+
+2. **复杂逻辑处理**：
+   - 如果 Interactive 或 Route 中的逻辑超过 10 行代码，应该将复杂逻辑提取到 Controller 的私有方法中
+   - Interactive 和 Route 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
 
 #### I - Interactive（交互处理）
 **文件：** `{page_name}_page_interactive.dart`（使用 `part of`）
@@ -549,7 +586,8 @@ class WarehouseMainPageController extends GetxController {
 - 定义交互事件枚举
 - 将事件转发给 Route 或执行相应逻辑
 
-**示例：**
+**Interactive 文件结构规范：**
+
 ```dart
 part of 'warehouse_main_page_controller.dart';
 
@@ -569,9 +607,46 @@ extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
         routerHandle(EnumWarehouseMainPageRoute.showSearchDialog);
       case EnumWarehouseMainPageInteractive.tapCreate:
         routerHandle(EnumWarehouseMainPageRoute.showCreateItemDialog);
+      case EnumWarehouseMainPageInteractive.selectTabItem:
+        // 如果逻辑超过 10 行，应该调用 Controller 的私有方法
+        _handleTabItemSelection(data);
     }
   }
 }
+```
+
+**关键规范：**
+
+1. **复杂逻辑处理**：
+   - `interactive()` 方法中的逻辑应该保持简洁
+   - **如果单个 case 的逻辑超过 10 行代码**，应该将复杂逻辑提取到 Controller 的私有方法中
+   - Interactive 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
+
+2. **示例（复杂逻辑应移到 Controller）**：
+```dart
+// ❌ 错误示例：在 Interactive 中写复杂逻辑
+case EnumWarehouseMainPageInteractive.tapCreate:
+  // 超过 10 行的复杂逻辑...
+  final item = data as Item;
+  if (item.status == 'active') {
+    _model.isLoading.value = true;
+    try {
+      final result = await _service.apiReqCreateItem(item);
+      if (result.success) {
+        _model.items.add(result.data);
+        _updateStatistics();
+        _refreshList();
+      }
+    } catch (e) {
+      // 错误处理...
+    } finally {
+      _model.isLoading.value = false;
+    }
+  }
+
+// ✅ 正确示例：调用 Controller 的私有方法
+case EnumWarehouseMainPageInteractive.tapCreate:
+  _handleCreateItem(data);
 ```
 
 #### R - Route（路由处理）
@@ -583,13 +658,15 @@ extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
 - 页面跳转和导航
 - 所有需要 `BuildContext` 的操作
 
-**示例：**
+**Route 文件结构规范：**
+
 ```dart
 part of 'warehouse_main_page_controller.dart';
 
 enum EnumWarehouseMainPageRoute {
   showCreateItemDialog,
   showSearchDialog,
+  navigateToDetailPage,
 }
 
 extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
@@ -612,9 +689,65 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
             onConfirm: _service.addSearchCondition,
           ),
         );
+      case EnumWarehouseMainPageRoute.navigateToDetailPage:
+        // 如果逻辑超过 10 行，应该调用 Controller 的私有方法
+        _handleNavigateToDetail(data);
     }
   }
 }
+```
+
+**关键规范：**
+
+1. **复杂逻辑处理**：
+   - `routerHandle()` 方法中的逻辑应该保持简洁
+   - **如果单个 case 的逻辑超过 10 行代码**，应该将复杂逻辑提取到 Controller 的私有方法中
+   - **例外情况**：如果是 `showDialog` 需要传入较多参数（如多个 callback、复杂配置等），这种情况不算复杂逻辑，可以保留在 Route 中
+   - Route 主要负责简单的弹窗显示、页面跳转等，复杂的数据处理、业务逻辑都在 Controller 中处理
+
+2. **示例（复杂逻辑应移到 Controller）**：
+```dart
+// ❌ 错误示例：在 Route 中写复杂的数据处理逻辑
+case EnumWarehouseMainPageRoute.navigateToDetailPage:
+  final item = data as Item;
+  // 超过 10 行的复杂逻辑...
+  _model.isLoading.value = true;
+  try {
+    final detail = await _service.apiReqGetItemDetail(item.id);
+    final relatedItems = await _service.apiReqGetRelatedItems(item.categoryId);
+    final statistics = await _service.apiReqGetItemStatistics(item.id);
+    _model.currentItem.value = detail;
+    _model.relatedItems.value = relatedItems;
+    _model.statistics.value = statistics;
+    _prepareNavigationData();
+  } catch (e) {
+    // 错误处理...
+  } finally {
+    _model.isLoading.value = false;
+  }
+  Navigator.push(...);
+
+// ✅ 正确示例：调用 Controller 的私有方法
+case EnumWarehouseMainPageRoute.navigateToDetailPage:
+  _handleNavigateToDetail(data);
+
+// ✅ 正确示例：showDialog 传入较多参数不算复杂逻辑
+case EnumWarehouseMainPageRoute.showCreateItemDialog:
+  _service.showAlert(
+    DialogItemCreateWidget(
+      initialData: data,
+      onConfirm: (outputModel) async {
+        return await _createItem(outputModel);
+      },
+      onCancel: () {
+        _handleCancelCreate();
+      },
+      onDelete: (itemId) async {
+        return await _deleteItem(itemId);
+      },
+      validationRules: _getValidationRules(),
+    ),
+  );
 ```
 
 ## 数据流向
@@ -696,6 +829,15 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 5. **Model 使用响应式变量**（`Rx`, `Rxn`）管理状态
 6. **Interactive 和 Route 使用 `part of`** 引入到 Controller 中
 7. **优先使用脚本创建页面**，确保结构一致性和规范性
+8. **Controller 和 Service 必须使用 MARK 注释**：
+   - `// MARK: - Properties` - 属性部分
+   - `// MARK: - Init` - 初始化部分
+   - `// MARK: - Public Method` - 公共方法部分
+   - `// MARK: - Private Method` - 私有方法部分
+9. **Interactive 和 Route 的复杂逻辑处理**：
+   - 如果 `interactive()` 或 `routerHandle()` 中单个 case 的逻辑超过 10 行代码，应该将复杂逻辑提取到 Controller 的私有方法中
+   - Interactive 和 Route 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
+   - **例外**：Route 中 `showDialog` 需要传入较多参数（如多个 callback、复杂配置等）的情况不算复杂逻辑，可以保留在 Route 中
 
 ## 示例结构
 
