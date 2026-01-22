@@ -54,6 +54,7 @@ class WarehouseService {
   final _model = WarehouseServiceModel();
   ThemeService get _themeService => ThemeService.instance;
   RouterService get _routerService => RouterService.instance;
+  EnvironmentService get _envService => EnvironmentService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
   String get userAvatar => _model.userAvatar ?? '';
@@ -145,6 +146,11 @@ class WarehouseService {
       title: title,
       message: message ?? '',
     );
+  }
+
+  String assembleImageUrl(String photoPath) {
+    final photoUrl = '${_envService.getServerBaseUrl}$photoPath';
+    return photoUrl.replaceAll('\\', '/');
   }
 
   // 默认错误处理函数

@@ -111,7 +111,7 @@ class _ItemPhotoWidget extends StatelessWidget {
       child: Stack(
         children: [
           CustNetworkImage(
-            url: item.photo?.toString() ?? '',
+            url: controller.assembleImageUrl(item.photo?.toString() ?? ''),
             width: double.infinity,
             height: photoHeight,
             fit: BoxFit.cover,

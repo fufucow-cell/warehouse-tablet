@@ -6,6 +6,9 @@ class EnvironmentServiceModel {
   /// 倉儲 path
   final warehousePath = 'api/v1/warehouse';
 
+  // 伺服器網域
+  String serverBaseUrl = '';
+
   /// 當前運行環境
   EnumEnvironment currentEnvironment = EnumEnvironment.prd;
 
@@ -34,7 +37,7 @@ enum EnumEnvironment {
 
   String get domainUrl {
     return switch (this) {
-      EnumEnvironment.dev => 'http://localhost:8003',
+      EnumEnvironment.dev => 'http://192.168.31.159:8003',
       EnumEnvironment.stg => 'https://warehouseserver-l866q1mqn-fufucows-projects.vercel.app',
       EnumEnvironment.uat => '',
       EnumEnvironment.prd => 'http://tapp.smtengo.com/v1/wh',
