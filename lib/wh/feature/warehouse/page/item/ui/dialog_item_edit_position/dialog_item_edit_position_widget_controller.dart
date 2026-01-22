@@ -25,6 +25,15 @@ class DialogItemEditPositionWidgetController extends GetxController {
   RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;
   RxReadonly<List<WarehouseNameIdModel>> get changeCabinetsRx => _model.changeCabinets.readonly;
   List<TextEditingController> get getQuantityControllers => _model.quantityControllers;
+
+  /// 獲取指定 controller 索引對應的最大數量（DisplayPositionModel 的 quantity）
+  int getMaxQuantityForController(int controllerIndex) {
+    if (controllerIndex >= 0 && controllerIndex < _model.positions.length) {
+      return _model.positions[controllerIndex].quantity;
+    }
+    return 0;
+  }
+
   List<String> get getRoomNameList => CabinetUtil.getRoomNameList();
   List<CabinetInfo> get getFlattenAllCabinets => CabinetUtil.flattenAllCabinets();
   RoomCabinetInfo? getRoomByName(String? roomName) => CabinetUtil.getRoomByName(roomName);

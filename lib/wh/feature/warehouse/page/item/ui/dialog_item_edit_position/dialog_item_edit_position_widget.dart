@@ -220,6 +220,9 @@ class _ChangeQuantitySection extends StatelessWidget {
                 maxLength: 7,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
+                additionalInputFormatters: [
+                  MaxValueTextInputFormatter(model.quantity),
+                ],
               ),
             ),
             SizedBox(width: 16.0.scale),

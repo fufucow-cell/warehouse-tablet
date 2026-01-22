@@ -25,6 +25,7 @@ class CustTextField extends StatelessWidget {
     this.prefixIcon,
     this.prefixIconSize,
     this.isReadOnly = false,
+    this.additionalInputFormatters,
   });
 
   final TextEditingController controller;
@@ -44,6 +45,7 @@ class CustTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final double? prefixIconSize;
   final bool isReadOnly;
+  final List<TextInputFormatter>? additionalInputFormatters;
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +89,14 @@ class CustTextField extends StatelessWidget {
           textAlign: textAlign,
           maxLength: maxLength,
           inputFormatters: () {
-            final formatters = textFieldType.inputFormatters;
+            final formatters = List<TextInputFormatter>.from(textFieldType.inputFormatters);
 
             if (maxLength != null) {
               formatters.add(LengthLimitingTextInputFormatter(maxLength));
+            }
+
+            if (additionalInputFormatters != null) {
+              formatters.addAll(additionalInputFormatters!);
             }
 
             return formatters.isNotEmpty ? formatters : null;
