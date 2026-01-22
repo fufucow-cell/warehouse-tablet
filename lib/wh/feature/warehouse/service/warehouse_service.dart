@@ -203,11 +203,10 @@ class WarehouseService {
 
   void registerServices(WarehouseMainPageRouterData data) {
     LogService.register();
-    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
     EnvironmentService.register().initData(
       isModuleMode: data.isModuleMode,
       environment: data.environment,
-      domainUrl: domain,
+      domainUrl: data.domain,
     );
     ThemeService.register();
     LocaleService.register();

@@ -63,9 +63,15 @@ class DialogCategoryEditWidgetController extends GetxController {
       return null;
     }
 
+    String? parentId = _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id;
+
+    if (parentId == null && (_model.category?.parentId?.isNotEmpty ?? false)) {
+      parentId = '';
+    }
+
     return DialogCategoryEditOutputModel(
       name: name,
-      parentId: _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id,
+      parentId: parentId,
     );
   }
 

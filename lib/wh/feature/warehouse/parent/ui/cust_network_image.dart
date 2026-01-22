@@ -42,8 +42,8 @@ class CustNetworkImage extends StatelessWidget {
         );
       },
       errorBuilder: (context, error, stackTrace) => CustEmptyImage(
-        width: width,
-        height: height,
+        width: width ?? loadingSize,
+        height: height ?? loadingSize,
       ),
     );
 

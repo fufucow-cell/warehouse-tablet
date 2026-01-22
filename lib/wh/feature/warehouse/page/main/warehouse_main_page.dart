@@ -38,6 +38,7 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
   void dispose() {
     final controller = Get.find<WarehouseMainPageController>();
     controller.onClose();
+    Get.delete<WarehouseMainPageController>();
     super.dispose();
   }
 
