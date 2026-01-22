@@ -6,6 +6,9 @@ class EnvironmentServiceModel {
   /// 倉儲 path
   final warehousePath = 'api/v1/warehouse';
 
+  // 伺服器網域
+  String serverBaseUrl = '';
+
   /// 當前運行環境
   EnumEnvironment currentEnvironment = EnumEnvironment.prd;
 

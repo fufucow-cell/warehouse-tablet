@@ -2,11 +2,10 @@ part of 'dialog_item_edit_position_widget_controller.dart';
 
 enum EnumDialogItemEditPositionWidgetRoute {
   closeDialog,
-  showErrorSnackBar,
+  showSnackBar,
 }
 
-extension DialogItemEditPositionWidgetRouteExtension
-    on DialogItemEditPositionWidgetController {
+extension DialogItemEditPositionWidgetRouteExtension on DialogItemEditPositionWidgetController {
   void _routerHandle(
     EnumDialogItemEditPositionWidgetRoute type, {
     dynamic data,
@@ -16,7 +15,7 @@ extension DialogItemEditPositionWidgetRouteExtension
         if (data is BuildContext) {
           Navigator.of(data).pop();
         }
-      case EnumDialogItemEditPositionWidgetRoute.showErrorSnackBar:
+      case EnumDialogItemEditPositionWidgetRoute.showSnackBar:
         if (data is String) {
           _service.showSnackBar(
             title: EnumLocale.commonError.tr,

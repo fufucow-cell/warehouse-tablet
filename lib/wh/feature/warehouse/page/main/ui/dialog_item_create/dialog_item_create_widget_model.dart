@@ -7,7 +7,7 @@ class DialogItemCreateWidgetModel {
   final isRecognizing = false.obs;
   final name = ''.obs;
   final description = ''.obs;
-  final quantity = 0.obs;
+  final quantity = 1.obs;
   final minStockAlert = 0.obs;
   final filePath = Rxn<String>();
   final selectedRoom = Rxn<WarehouseNameIdModel>();

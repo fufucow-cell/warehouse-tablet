@@ -44,6 +44,7 @@ class WarehouseItemPageController extends GetxController {
   RxReadonly<int> get cabinetFilterSelectedIndexRx => _model.filterIndexForCabinets.readonly;
   RxReadonly<Set<int>> get categoryFilterSelectedIndicesRx => _model.filterIndexForCategories.readonly;
   RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
+  String assembleImageUrl(String photoPath) => _service.assembleImageUrl(photoPath);
 
   // MARK: - Init
 

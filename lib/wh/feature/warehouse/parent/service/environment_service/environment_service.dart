@@ -13,6 +13,7 @@ class EnvironmentService extends GetxService {
   bool get isPrd => _model.currentEnvironment == EnumEnvironment.prd;
   bool get getEnableMockApi => !isPrd;
   bool get getIsModuleMode => _model.isModuleMode;
+  String get getServerBaseUrl => _model.serverBaseUrl;
   String get getDomainUrl => _model.domainUrl;
   static EnvironmentService get instance => Get.find<EnvironmentService>();
 
@@ -63,9 +64,12 @@ class EnvironmentService extends GetxService {
     }
 
     if (domainUrl != null) {
+      _model.serverBaseUrl = domainUrl;
       _model.domainUrl = _appendWarehousePath(domainUrl);
     } else if (_model.domainUrl.isEmpty) {
-      _model.domainUrl = _appendWarehousePath(_model.currentEnvironment.domainUrl);
+      final url = _model.currentEnvironment.domainUrl;
+      _model.serverBaseUrl = url;
+      _model.domainUrl = _appendWarehousePath(url);
     }
   }
 

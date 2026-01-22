@@ -83,6 +83,42 @@ class _RemoveLeadingZerosFormatter extends TextInputFormatter {
   }
 }
 
+/// 限制輸入的最大值
+class MaxValueTextInputFormatter extends TextInputFormatter {
+  final int maxValue;
+
+  MaxValueTextInputFormatter(this.maxValue);
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    // 如果輸入為空，允許（會由其他 formatter 處理）
+    if (newValue.text.isEmpty) {
+      return newValue;
+    }
+
+    // 嘗試解析為整數
+    final intValue = int.tryParse(newValue.text);
+    if (intValue == null) {
+      // 如果不是有效數字，返回舊值
+      return oldValue;
+    }
+
+    // 如果超過最大值，限制為最大值
+    if (intValue > maxValue) {
+      final maxValueText = maxValue.toString();
+      return TextEditingValue(
+        text: maxValueText,
+        selection: TextSelection.collapsed(offset: maxValueText.length),
+      );
+    }
+
+    return newValue;
+  }
+}
+
 /// 创建文本样式
 TextStyle custTextStyle({
   double? size,
