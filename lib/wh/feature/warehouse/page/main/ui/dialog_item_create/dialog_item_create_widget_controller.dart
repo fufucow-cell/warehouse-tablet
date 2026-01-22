@@ -23,7 +23,7 @@ class DialogItemCreateWidgetController extends GetxController {
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
-  final quantityController = TextEditingController(text: '0');
+  final quantityController = TextEditingController(text: '1');
   final minStockAlertController = TextEditingController(text: '0');
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<bool> get isRecognizingRx => _model.isRecognizing.readonly;

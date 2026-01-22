@@ -372,6 +372,7 @@ class _DropdownSection extends StatelessWidget {
                 title: EnumLocale.warehouseChangeCabinet.tr,
                 values: controller.getVisibleCabinetNameList(selectedRoomName),
                 selectedValue: selectedCabinetName,
+                enable: selectedRoomName != EnumLocale.optionPleaseSelect.tr,
                 onValueSelected: (str) {
                   final cabinet = controller.getCabinetByName(str);
                   if (cabinet != null) {
@@ -401,12 +402,14 @@ class _ChangePositionField extends StatelessWidget {
   final List<String> values;
   final String selectedValue;
   final Function(String?) onValueSelected;
+  final bool enable;
 
   const _ChangePositionField({
     required this.title,
     required this.values,
     required this.selectedValue,
     required this.onValueSelected,
+    this.enable = true,
   });
 
   @override
@@ -425,6 +428,7 @@ class _ChangePositionField extends StatelessWidget {
           selectedValue: selectedValue,
           values: values,
           onValueSelected: onValueSelected,
+          enable: enable,
           onMenuOpened: () => controller.interactive(
             EnumDialogItemEditPositionWidgetInteractive.tapDropdownButton,
           ),

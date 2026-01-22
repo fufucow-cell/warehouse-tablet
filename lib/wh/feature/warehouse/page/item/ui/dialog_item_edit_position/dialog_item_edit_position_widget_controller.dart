@@ -90,6 +90,15 @@ class DialogItemEditPositionWidgetController extends GetxController {
       if (newName != oldName) {
         changeRooms[model.index] = model.position;
         final availableCabinets = getCabinetsFromRoomNameId(model.position);
+
+        if (availableCabinets.isEmpty) {
+          _routerHandle(
+            EnumDialogItemEditPositionWidgetRoute.showSnackBar,
+            data: EnumLocale.warehouseNoCabinetInRoom.tr,
+          );
+          return;
+        }
+
         changeCabinets[model.index] = WarehouseNameIdModel(
           id: '',
           name: availableCabinets.isNotEmpty ? EnumLocale.optionPleaseSelect.tr : EnumLocale.optionNoData.tr,
@@ -138,7 +147,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
       if (oldCabinetModel.isDelete) {
         if (oldCabinetModel.quantity > 0 && (newCabinet.id?.isEmpty ?? true)) {
           _routerHandle(
-            EnumDialogItemEditPositionWidgetRoute.showErrorSnackBar,
+            EnumDialogItemEditPositionWidgetRoute.showSnackBar,
             data: '${oldCabinetModel.cabinetName}${EnumLocale.warehouseDeleteCabinetItemMustMoveFirst.tr}',
           );
           return null;
@@ -152,10 +161,18 @@ class DialogItemEditPositionWidgetController extends GetxController {
             ),
           );
         }
-      } else if ((newCabinet.id?.isNotEmpty ?? false) && (newQuantity > 0)) {
+      } else if (newQuantity > 0) {
+        if (newCabinet.id?.isEmpty ?? true) {
+          _routerHandle(
+            EnumDialogItemEditPositionWidgetRoute.showSnackBar,
+            data: EnumLocale.warehouseCabinetNotSelected.tr,
+          );
+          return null;
+        }
+
         if (oldCabinetModel.quantity < newQuantity) {
           _routerHandle(
-            EnumDialogItemEditPositionWidgetRoute.showErrorSnackBar,
+            EnumDialogItemEditPositionWidgetRoute.showSnackBar,
             data: '${oldCabinetModel.cabinetName}${EnumLocale.warehouseMoveQuantityInsufficient.tr}',
           );
           return null;
@@ -163,8 +180,8 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
         if (newCabinet.id == oldCabinetModel.cabinetId) {
           _routerHandle(
-            EnumDialogItemEditPositionWidgetRoute.showErrorSnackBar,
-            data: '${oldCabinetModel.cabinetName}${EnumLocale.warehouseMoveToSameCabinet.tr}',
+            EnumDialogItemEditPositionWidgetRoute.showSnackBar,
+            data: EnumLocale.warehouseMoveToSameCabinet.tr,
           );
           return null;
         }
@@ -182,7 +199,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
     if (outputData.isEmpty) {
       _routerHandle(
-        EnumDialogItemEditPositionWidgetRoute.showErrorSnackBar,
+        EnumDialogItemEditPositionWidgetRoute.showSnackBar,
         data: EnumLocale.warehouseNoChange.tr,
       );
       return null;
