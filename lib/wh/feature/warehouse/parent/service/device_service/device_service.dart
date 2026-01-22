@@ -80,7 +80,39 @@ class DeviceService extends GetxService {
         maxWidth: 1920,
         maxHeight: 1920,
       );
-      return image?.path;
+
+      if (image == null) {
+        return null;
+      }
+
+      // 確保文件路徑有效
+      final String imagePath = image.path;
+      if (imagePath.isEmpty) {
+        return null;
+      }
+
+      // 使用 microtask 確保相機界面完全關閉後再繼續
+      // 這可以確保相機資源釋放的時序正確，避免在拍照後立即處理圖片時出現相機停止運作的問題
+      await Future.microtask(() {});
+
+      // 等待一小段時間，確保相機資源完全釋放
+      // 特別是在 iOS 設備或 Release 模式下，相機資源釋放可能需要更多時間
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      // 驗證文件是否存在（確保文件已完全寫入）
+      final File file = File(imagePath);
+      if (!file.existsSync()) {
+        return null;
+      }
+
+      return imagePath;
+    } on PlatformException catch (e) {
+      // 處理平台特定的異常（如權限被拒絕）
+      CustSnackBar.show(
+        title: EnumLocale.deviceCameraFailed.tr,
+        message: e.message ?? e.toString(),
+      );
+      return null;
     } on Object catch (e) {
       CustSnackBar.show(
         title: EnumLocale.deviceCameraFailed.tr,
