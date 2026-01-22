@@ -96,7 +96,7 @@ class DialogItemCreateWidgetController extends GetxController {
     }
 
     if (_model.selectedRoom.value != null && _model.selectedCabinet.value == null) {
-      _routerHandle(EnumDialogItemCreateWidgetRoute.showSnackBar, EnumLocale.optionPleaseSelectRoom.tr);
+      _routerHandle(EnumDialogItemCreateWidgetRoute.showSnackBar, EnumLocale.warehouseCabinetNotSelected.tr);
       return null;
     }
 
