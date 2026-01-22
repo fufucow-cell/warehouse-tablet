@@ -143,6 +143,7 @@ class _Body extends StatelessWidget {
                     EnumDialogItemCreateWidgetInteractive.tapCabinet,
                     data: str,
                   ),
+                  enable: (controller.selectedRoomRx.value != null),
                 ),
               ),
             ),
@@ -424,12 +425,14 @@ class _DropdownField extends StatelessWidget {
   final String? selectedValue;
   final List<String> visibleValues;
   final Function(String?) onValueSelected;
+  final bool enable;
 
   const _DropdownField({
     required this.title,
     required this.selectedValue,
     required this.visibleValues,
     required this.onValueSelected,
+    this.enable = true,
   });
 
   @override
@@ -446,6 +449,7 @@ class _DropdownField extends StatelessWidget {
         onMenuOpened: () => controller.interactive(
           EnumDialogItemCreateWidgetInteractive.tapDropdownButton,
         ),
+        enable: enable,
       ),
     );
   }
