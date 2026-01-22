@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-21T02:30:43.888700
+/// 生成时间: 2026-01-22T16:11:05.472189
 library;
 
 import 'package:flutter/material.dart';
@@ -42,6 +42,11 @@ enum EnumColor {
   engoDeviceCardBackgroundGradient,
   engoTextPrimary,
   engoTextSecondary,
+  engoWaterValueButtonBorder,
+  engoWaterValueFunctionCardBorder,
+  engoWaterValueFunctionCardGradient,
+  engoWaterValueStatusClosing,
+  engoWaterValueStatusOpening,
   iconPrimary,
   iconSecondary,
   iconWhite,

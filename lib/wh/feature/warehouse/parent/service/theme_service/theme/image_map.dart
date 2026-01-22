@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-21T00:54:23.696087
+/// 生成时间: 2026-01-22T15:57:13.508115
 library;
 
 import 'package:flutter/material.dart';
@@ -21,6 +21,7 @@ enum EnumImage {
   cCheckboxOff,
   cCheckboxOn,
   cCircuit,
+  cClock,
   cCow,
   cEditNormal,
   cEditPosition,
@@ -51,7 +52,9 @@ enum EnumImage {
   cTrash2,
   cTrash3,
   tBgContent,
-  tCow;
+  tCow,
+  tWaterValueOff,
+  tWaterValueOn;
 
   ThemeService get _themeService => ThemeService.instance;
 
