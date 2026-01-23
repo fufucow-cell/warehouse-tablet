@@ -103,8 +103,8 @@ extension WaterValueMainPageUserEventExtension on WaterValueMainPageController {
       // 如果没有 callback，跳转到定时列表页面
       routerHandle(
         EnumWaterValueMainPageRoute.goToTimerListPage,
-        data: WaterValueTimerListPageRouterData(
-          initialTimerItems: const [],
+        data: const WaterValueTimerListPageRouterData(
+          initialTimerItems: [],
         ),
       );
     }

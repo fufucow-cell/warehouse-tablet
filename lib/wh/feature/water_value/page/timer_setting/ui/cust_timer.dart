@@ -1,20 +1,25 @@
+import 'dart:async';
+
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class CustTimer extends StatefulWidget {
-  final String title;
   final TimeOfDay? time;
   final Function(TimeOfDay?) onTimeChanged;
+  final double itemExtent;
+  final Color? selectionOverlayColor;
 
   const CustTimer({
     super.key,
-    required this.title,
     required this.time,
     required this.onTimeChanged,
+    this.itemExtent = 75.0,
+    this.selectionOverlayColor,
   });
 
   @override
@@ -28,11 +33,72 @@ class _CustTimerState extends State<CustTimer> {
   int _selectedAmPmIndex = 0;
   int _selectedHourIndex = 0;
   int _selectedMinuteIndex = 0;
+  Timer? _scrollEndTimer;
 
   @override
   void initState() {
     super.initState();
     _updateControllers();
+    _setupScrollListeners();
+  }
+
+  void _setupScrollListeners() {
+    _amPmController.addListener(_onScroll);
+    _hourController.addListener(_onScroll);
+    _minuteController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (!mounted) {
+      return;
+    }
+
+    // 取消之前的定时器
+    _scrollEndTimer?.cancel();
+
+    // 设置新的定时器，在滚动停止后更新状态
+    _scrollEndTimer = Timer(const Duration(milliseconds: 150), () {
+      if (mounted) {
+        _updateSelectedIndicesFromControllers();
+        _onSelectionChanged();
+      }
+    });
+  }
+
+  void _updateSelectedIndicesFromControllers() {
+    if (!mounted) {
+      return;
+    }
+
+    bool needsUpdate = false;
+
+    if (_amPmController.hasClients) {
+      final index = _amPmController.selectedItem;
+      if (index != _selectedAmPmIndex) {
+        _selectedAmPmIndex = index;
+        needsUpdate = true;
+      }
+    }
+
+    if (_hourController.hasClients) {
+      final index = _hourController.selectedItem;
+      if (index != _selectedHourIndex) {
+        _selectedHourIndex = index;
+        needsUpdate = true;
+      }
+    }
+
+    if (_minuteController.hasClients) {
+      final index = _minuteController.selectedItem;
+      if (index != _selectedMinuteIndex) {
+        _selectedMinuteIndex = index;
+        needsUpdate = true;
+      }
+    }
+
+    if (needsUpdate) {
+      setState(() {});
+    }
   }
 
   @override
@@ -48,15 +114,18 @@ class _CustTimerState extends State<CustTimer> {
       _selectedHourIndex = displayHour - 1;
       _selectedMinuteIndex = minute;
 
-      if (_amPmController.hasClients) {
-        _amPmController.jumpToItem(_selectedAmPmIndex);
-      }
-      if (_hourController.hasClients) {
-        _hourController.jumpToItem(_selectedHourIndex);
-      }
-      if (_minuteController.hasClients) {
-        _minuteController.jumpToItem(_selectedMinuteIndex);
-      }
+      // 使用 SchedulerBinding 确保在下一帧更新，避免在构建过程中直接操作滚动控制器
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _amPmController.hasClients) {
+          _amPmController.jumpToItem(_selectedAmPmIndex);
+        }
+        if (mounted && _hourController.hasClients) {
+          _hourController.jumpToItem(_selectedHourIndex);
+        }
+        if (mounted && _minuteController.hasClients) {
+          _minuteController.jumpToItem(_selectedMinuteIndex);
+        }
+      });
     }
   }
 
@@ -77,6 +146,10 @@ class _CustTimerState extends State<CustTimer> {
 
   @override
   void dispose() {
+    _scrollEndTimer?.cancel();
+    _amPmController.removeListener(_onScroll);
+    _hourController.removeListener(_onScroll);
+    _minuteController.removeListener(_onScroll);
     _amPmController.dispose();
     _hourController.dispose();
     _minuteController.dispose();
@@ -84,24 +157,18 @@ class _CustTimerState extends State<CustTimer> {
   }
 
   void _onAmPmChanged(int index) {
-    setState(() {
-      _selectedAmPmIndex = index;
-    });
-    _onSelectionChanged();
+    // 只更新索引，不触发 setState，避免滚动时频繁重建
+    _selectedAmPmIndex = index;
   }
 
   void _onHourChanged(int index) {
-    setState(() {
-      _selectedHourIndex = index;
-    });
-    _onSelectionChanged();
+    // 只更新索引，不触发 setState，避免滚动时频繁重建
+    _selectedHourIndex = index;
   }
 
   void _onMinuteChanged(int index) {
-    setState(() {
-      _selectedMinuteIndex = index;
-    });
-    _onSelectionChanged();
+    // 只更新索引，不触发 setState，避免滚动时频繁重建
+    _selectedMinuteIndex = index;
   }
 
   void _onSelectionChanged() {
@@ -115,103 +182,96 @@ class _CustTimerState extends State<CustTimer> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          width: 593.0.scale,
-          child: CustTextWidget(
-            widget.title,
-            size: 32.0.scale,
-            color: EnumColor.textPrimary.color,
-            align: TextAlign.center,
+    return SizedBox(
+      width: double.infinity,
+      height: 228.0.scale,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // 上午/下午选择
+          Expanded(
+            child: CupertinoPicker(
+              scrollController: _amPmController,
+              itemExtent: widget.itemExtent.scale,
+              useMagnifier: false,
+              looping: false,
+              diameterRatio: 2.0,
+              squeeze: 0.8,
+              selectionOverlay: widget.selectionOverlayColor != null
+                  ? CupertinoPickerDefaultSelectionOverlay(
+                      background: widget.selectionOverlayColor!,
+                    )
+                  : null,
+              onSelectedItemChanged: _onAmPmChanged,
+              children: [
+                _PickerItem(
+                  text: EnumLocale.waterValueTimerAM.tr,
+                  isSelected: _selectedAmPmIndex == 0,
+                ),
+                _PickerItem(
+                  text: EnumLocale.waterValueTimerPM.tr,
+                  isSelected: _selectedAmPmIndex == 1,
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 48.0.scale),
-        SizedBox(
-          width: double.infinity,
-          height: 228.0.scale,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // 上午/下午选择
-              SizedBox(
-                width: 65.0.scale,
-                child: CupertinoPicker(
-                  scrollController: _amPmController,
-                  itemExtent: 46.0.scale,
-                  useMagnifier: false,
-                  looping: false,
-                  onSelectedItemChanged: _onAmPmChanged,
-                  children: [
-                    Center(
-                      child: _PickerItem(
-                        text: EnumLocale.waterValueTimerAM.tr,
-                        isSelected: _selectedAmPmIndex == 0,
-                      ),
-                    ),
-                    Center(
-                      child: _PickerItem(
-                        text: EnumLocale.waterValueTimerPM.tr,
-                        isSelected: _selectedAmPmIndex == 1,
-                      ),
-                    ),
-                  ],
-                ),
+          SizedBox(width: 88.0.scale),
+          // 小时选择 (1-12)
+          Expanded(
+            child: CupertinoPicker(
+              scrollController: _hourController,
+              itemExtent: widget.itemExtent.scale,
+              useMagnifier: false,
+              looping: false,
+              diameterRatio: 2.0,
+              squeeze: 0.8,
+              selectionOverlay: widget.selectionOverlayColor != null
+                  ? CupertinoPickerDefaultSelectionOverlay(
+                      background: widget.selectionOverlayColor!,
+                    )
+                  : null,
+              onSelectedItemChanged: _onHourChanged,
+              children: List.generate(
+                12,
+                (index) {
+                  final hour = index + 1;
+                  return _PickerItem(
+                    text: hour.toString().padLeft(2, '0'),
+                    isSelected: _selectedHourIndex == index,
+                  );
+                },
               ),
-              SizedBox(width: 88.0.scale),
-              // 小时选择 (1-12)
-              SizedBox(
-                width: 38.0.scale,
-                child: CupertinoPicker(
-                  scrollController: _hourController,
-                  itemExtent: 46.0.scale,
-                  useMagnifier: false,
-                  looping: false,
-                  onSelectedItemChanged: _onHourChanged,
-                  children: List.generate(
-                    12,
-                    (index) {
-                      final hour = index + 1;
-                      return Center(
-                        child: _PickerItem(
-                          text: hour.toString().padLeft(2, '0'),
-                          isSelected: _selectedHourIndex == index,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(width: 88.0.scale),
-              // 分钟选择 (0-59)
-              SizedBox(
-                width: 38.0.scale,
-                child: CupertinoPicker(
-                  scrollController: _minuteController,
-                  itemExtent: 46.0.scale,
-                  useMagnifier: false,
-                  looping: false,
-                  onSelectedItemChanged: _onMinuteChanged,
-                  children: List.generate(
-                    60,
-                    (index) {
-                      return Center(
-                        child: _PickerItem(
-                          text: index.toString().padLeft(2, '0'),
-                          isSelected: _selectedMinuteIndex == index,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ],
+          SizedBox(width: 88.0.scale),
+          // 分钟选择 (0-59)
+          Expanded(
+            child: CupertinoPicker(
+              scrollController: _minuteController,
+              itemExtent: widget.itemExtent.scale,
+              useMagnifier: false,
+              looping: false,
+              diameterRatio: 2.0,
+              squeeze: 0.8,
+              selectionOverlay: widget.selectionOverlayColor != null
+                  ? CupertinoPickerDefaultSelectionOverlay(
+                      background: widget.selectionOverlayColor!,
+                    )
+                  : null,
+              onSelectedItemChanged: _onMinuteChanged,
+              children: List.generate(
+                60,
+                (index) {
+                  return _PickerItem(
+                    text: index.toString().padLeft(2, '0'),
+                    isSelected: _selectedMinuteIndex == index,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -227,10 +287,21 @@ class _PickerItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustTextWidget(
-      text,
-      size: 32.0.scale,
-      color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
+    return OverflowBox(
+      minWidth: 0.0,
+      minHeight: 0.0,
+      maxWidth: double.infinity,
+      maxHeight: double.infinity,
+      child: Center(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: CustTextWidget(
+            text,
+            size: 64.0.scale,
+            color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -85,7 +85,10 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
   Future<void> _handleToggleSwitch(String itemId) async {
     final currentList = _model.timerItems.value;
     final item = currentList.firstWhereOrNull((item) => item.id == itemId);
-    if (item == null) return;
+
+    if (item == null) {
+      return;
+    }
 
     final newEnabled = !item.isEnabled;
 

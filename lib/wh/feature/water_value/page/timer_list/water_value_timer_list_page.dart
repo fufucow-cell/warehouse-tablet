@@ -78,7 +78,7 @@ class _TopBar extends StatelessWidget {
           ),
         ),
         CustIconButton(
-          icon: EnumImage.cSetting,
+          icon: EnumImage.cPencilLine,
           size: 62.0.scale,
           color: EnumColor.engoTextPrimary.color,
           onTap: () {
@@ -129,7 +129,9 @@ class _TimerItemCell extends StatelessWidget {
   });
 
   String _formatTime(TimeOfDay? time) {
-    if (time == null) return '-';
+    if (time == null) {
+      return '-';
+    }
     final hour = time.hour;
     final minute = time.minute;
     final period = hour < 12 ? EnumLocale.waterValueTimerAM.tr : EnumLocale.waterValueTimerPM.tr;
@@ -299,29 +301,26 @@ class _AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WaterValueTimerListPageController>();
-    return SizedBox(
-      width: double.infinity,
-      child: Material(
-        color: EnumColor.engoWaterValueStatusOpening.color,
-        borderRadius: BorderRadius.circular(12.0.scale),
-        child: InkWell(
-          onTap: () {
-            controller.interactive(EnumWaterValueTimerListPageInteractive.tapAddTimerButton);
-          },
-          borderRadius: BorderRadius.circular(12.0.scale),
-          child: Ink(
-            padding: EdgeInsets.symmetric(
-              horizontal: 235.0.scale,
-              vertical: 24.0.scale,
-            ),
-            child: Center(
-              child: CustTextWidget(
-                EnumLocale.waterValueTimerAddNew.tr,
-                size: 32.0.scale,
-                color: EnumColor.textWhite.color,
-              ),
-            ),
+    return GestureDetector(
+      onTap: () {
+        controller.interactive(EnumWaterValueTimerListPageInteractive.tapAddTimerButton);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 235.0.scale,
+          vertical: 24.0.scale,
+        ),
+        decoration: ShapeDecoration(
+          color: EnumColor.engoWaterValueStatusOpening.color,
+          shape: RoundedRectangleBorder(
+            side: const BorderSide(width: 1),
+            borderRadius: BorderRadius.circular(12.0.scale),
           ),
+        ),
+        child: CustTextWidget(
+          EnumLocale.waterValueTimerAddNew.tr,
+          size: 32.0.scale,
+          color: EnumColor.textWhite.color,
         ),
       ),
     );

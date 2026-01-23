@@ -30,15 +30,14 @@ class WaterValueTimerSettingPage extends GetView<WaterValueTimerSettingPageContr
                 SizedBox(height: 48.0.scale),
                 const _TabBar(),
                 SizedBox(height: 48.0.scale),
+                const _TimePickerSection(),
+                SizedBox(height: 48.0.scale),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const _TimePickerSection(),
-                        SizedBox(height: 48.0.scale),
-                        const _RepeatSection(),
                         SizedBox(height: 32.0.scale),
-                        const _WeekdaySelector(),
+                        const _RepeatAndWeekdaySection(),
                         Obx(
                           () {
                             final controller = Get.find<WaterValueTimerSettingPageController>();
@@ -54,17 +53,30 @@ class WaterValueTimerSettingPage extends GetView<WaterValueTimerSettingPageContr
                             return const SizedBox.shrink();
                           },
                         ),
+                        SizedBox(height: 16.0.scale),
+                        Container(
+                          width: 1195.0.scale,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                color: EnumColor.textSecondary.color,
+                              ),
+                            ),
+                          ),
+                        ),
                         SizedBox(height: 32.0.scale),
                         const _NoteSection(),
                         SizedBox(height: 32.0.scale),
                         const _NotificationSection(),
+                        SizedBox(height: 32.0.scale),
+                        const _SaveButton(),
+                        SizedBox(height: 48.0.scale),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 48.0.scale),
-                const _SaveButton(),
-                SizedBox(height: 48.0.scale),
               ],
             ),
           ),
@@ -100,14 +112,7 @@ class _TopBar extends StatelessWidget {
             ),
           ),
         ),
-        CustIconButton(
-          icon: EnumImage.cSetting,
-          size: 62.0.scale,
-          color: EnumColor.engoTextPrimary.color,
-          onTap: () {
-            controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapSettingButton);
-          },
-        ),
+        SizedBox(width: 80.0.scale),
       ],
     );
   }
@@ -206,7 +211,6 @@ class _TimePickerSection extends StatelessWidget {
           child: SizedBox(
             width: 593.0.scale,
             child: CustTimer(
-              title: isOpenTime ? EnumLocale.waterValueTimerOpenTime.tr : EnumLocale.waterValueTimerCloseTime.tr,
               time: isOpenTime ? controller.openTimeRx.value : controller.closeTimeRx.value,
               onTimeChanged: (time) {
                 if (isOpenTime) {
@@ -230,8 +234,8 @@ class _TimePickerSection extends StatelessWidget {
   }
 }
 
-class _RepeatSection extends StatelessWidget {
-  const _RepeatSection();
+class _RepeatAndWeekdaySection extends StatelessWidget {
+  const _RepeatAndWeekdaySection();
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +245,6 @@ class _RepeatSection extends StatelessWidget {
         final isEnabled = controller.isRepeatEnabledRx.value;
         return SizedBox(
           width: 1195.0.scale,
-          height: 74.0.scale,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -300,19 +303,10 @@ class _RepeatSection extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 16.0.scale),
-              Container(
-                width: double.infinity,
-                decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      width: 1,
-                      strokeAlign: BorderSide.strokeAlignCenter,
-                      color: EnumColor.textSecondary.color,
-                    ),
-                  ),
-                ),
-              ),
+              if (isEnabled) ...[
+                SizedBox(height: 32.0.scale),
+                const _WeekdaySelector(),
+              ],
             ],
           ),
         );
@@ -373,6 +367,10 @@ class _WeekdaySelector extends StatelessWidget {
                     controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapWeekday, data: 1);
                   },
                   child: Container(
+                    decoration: BoxDecoration(
+                      color: selectedWeekday == 1 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      borderRadius: BorderRadius.zero,
+                    ),
                     alignment: Alignment.center,
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerEveryday.tr,
@@ -505,50 +503,53 @@ class _NoteSectionState extends State<_NoteSection> {
     final pageController = Get.find<WaterValueTimerSettingPageController>();
     return SizedBox(
       width: 1195.0.scale,
-      height: 74.0.scale,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CustTextWidget(
-                EnumLocale.waterValueTimerNote.tr,
-                size: 32.0.scale,
-                color: EnumColor.textPrimary.color,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 32.0.scale),
-                  child: TextField(
-                    controller: _textController,
-                    onChanged: (value) {
-                      pageController.updateNoteText(value);
-                    },
-                    style: TextStyle(
-                      fontSize: 26.0.scale,
-                      color: EnumColor.textSecondary.color,
-                    ),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      disabledBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                      isDense: true,
-                      hintText: '',
-                      hintStyle: TextStyle(
+          SizedBox(
+            height: 58.0.scale,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CustTextWidget(
+                  EnumLocale.waterValueTimerNote.tr,
+                  size: 32.0.scale,
+                  color: EnumColor.textPrimary.color,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 32.0.scale),
+                    child: TextField(
+                      controller: _textController,
+                      onChanged: (value) {
+                        pageController.updateNoteText(value);
+                      },
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
                         fontSize: 26.0.scale,
                         color: EnumColor.textSecondary.color,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        disabledBorder: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                        isDense: true,
+                        hintText: '',
+                        hintStyle: TextStyle(
+                          fontSize: 26.0.scale,
+                          color: EnumColor.textSecondary.color,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(height: 16.0.scale),
           Container(
@@ -580,64 +581,66 @@ class _NotificationSection extends StatelessWidget {
         final isEnabled = controller.isNotificationEnabledRx.value;
         return SizedBox(
           width: 1195.0.scale,
-          height: 74.0.scale,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CustTextWidget(
-                    EnumLocale.waterValueTimerExecuteNotification.tr,
-                    size: 32.0.scale,
-                    color: EnumColor.textPrimary.color,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapNotificationToggle);
-                    },
-                    child: SizedBox(
-                      width: 101.0.scale,
-                      height: 58.0.scale,
-                      child: Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: isEnabled ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
-                                borderRadius: BorderRadius.circular(30.0.scale),
+              SizedBox(
+                height: 58.0.scale,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustTextWidget(
+                      EnumLocale.waterValueTimerExecuteNotification.tr,
+                      size: 32.0.scale,
+                      color: EnumColor.textPrimary.color,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapNotificationToggle);
+                      },
+                      child: SizedBox(
+                        width: 101.0.scale,
+                        height: 58.0.scale,
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: isEnabled ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
+                                  borderRadius: BorderRadius.circular(30.0.scale),
+                                ),
                               ),
                             ),
-                          ),
-                          AnimatedPositioned(
-                            duration: const Duration(milliseconds: 300),
-                            left: isEnabled ? 50.50.scale : 7.31.scale,
-                            top: 8.44.scale,
-                            child: Container(
-                              width: 42.08.scale,
-                              height: 42.18.scale,
-                              decoration: ShapeDecoration(
-                                color: EnumColor.textWhite.color,
-                                shape: const OvalBorder(),
-                                shadows: [
-                                  BoxShadow(
-                                    color: EnumColor.shadowCard.color,
-                                    blurRadius: 6.0.scale,
-                                    offset: Offset(0, 5.0.scale),
-                                    spreadRadius: 0,
-                                  ),
-                                ],
+                            AnimatedPositioned(
+                              duration: const Duration(milliseconds: 300),
+                              left: isEnabled ? 50.50.scale : 7.31.scale,
+                              top: 8.44.scale,
+                              child: Container(
+                                width: 42.08.scale,
+                                height: 42.18.scale,
+                                decoration: ShapeDecoration(
+                                  color: EnumColor.textWhite.color,
+                                  shape: const OvalBorder(),
+                                  shadows: [
+                                    BoxShadow(
+                                      color: EnumColor.shadowCard.color,
+                                      blurRadius: 6.0.scale,
+                                      offset: Offset(0, 5.0.scale),
+                                      spreadRadius: 0,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(height: 16.0.scale),
               Container(
