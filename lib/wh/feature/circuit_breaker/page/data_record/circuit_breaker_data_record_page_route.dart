@@ -59,6 +59,6 @@ extension CircuitBreakerDataRecordPageRouteExtension on CircuitBreakerDataRecord
               : DatePickerMode.day,
     );
 
-    _updateDate(picked);
+    unawaited(_updateDate(picked));
   }
 }

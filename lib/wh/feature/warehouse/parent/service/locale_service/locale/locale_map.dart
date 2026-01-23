@@ -44,6 +44,7 @@ enum EnumLocale {
   deviceGalleryFailed,
   deviceOpenCamera,
   deviceOpenGallery,
+  deviceTakePhotoFailed,
   deviceMobile,
   deviceTablet,
   deviceUnsupported,
