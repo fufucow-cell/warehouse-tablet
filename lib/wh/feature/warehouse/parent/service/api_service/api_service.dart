@@ -439,6 +439,7 @@ class ApiService extends GetxService {
         options.headers['Content-Type'] = 'application/json';
         options.headers['App-Code'] = 'APP_MEMBER';
         options.headers['Authorization'] = _model.accessToken;
+        options.headers['current-member-id'] = 1;
         final isGet = options.method.toUpperCase() == 'GET';
 
         // Only apply cache mechanism for GET requests and when cache is enabled

@@ -140,7 +140,7 @@ class DialogItemCreateWidgetController extends GetxController {
       // 使用 microtask 將圖片處理延遲到下一個事件循環
       // 並額外等待一段時間，確保相機資源完全釋放後再開始處理圖片
       // 這可以避免在 Release 模式下或集成到其他項目時出現相機停止運作的問題
-      Future.microtask(() async {
+      await Future.microtask(() async {
         await Future.delayed(const Duration(milliseconds: 300));
         await _startRecognition();
       });

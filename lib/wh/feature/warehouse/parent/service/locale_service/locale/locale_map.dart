@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-21T02:26:17.955744
+/// 生成时间: 2026-01-22T17:00:49.573466
 library;
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
@@ -44,6 +44,7 @@ enum EnumLocale {
   deviceGalleryFailed,
   deviceOpenCamera,
   deviceOpenGallery,
+  deviceTakePhotoFailed,
   deviceMobile,
   deviceTablet,
   deviceUnsupported,
@@ -142,6 +143,7 @@ enum EnumLocale {
   smartHomeTabScene,
   smartHomeTabSetting,
   smartHomeTabWarehouse,
+  smartHomeTabWaterValue,
   smartHomeUnnamed,
   smartHomeUnnamedHousehold,
   smartHomeUnnamedRoom,
@@ -242,7 +244,47 @@ enum EnumLocale {
   warehouseUnboundRoom,
   warehouseUncategorized,
   warehouseUndescribed,
-  warehouseUnnamed;
+  warehouseUnnamed,
+  waterValue,
+  waterValueClose,
+  waterValueClosing,
+  waterValueControlSwitch,
+  waterValueCountdown,
+  waterValueOpen,
+  waterValueOpening,
+  waterValueSetting,
+  waterValueStatus,
+  waterValueSwitch,
+  waterValueTimer,
+  waterValueTimerAM,
+  waterValueTimerAddNew,
+  waterValueTimerAirConditioner,
+  waterValueTimerClose,
+  waterValueTimerCloseTime,
+  waterValueTimerCustom,
+  waterValueTimerEveryday,
+  waterValueTimerExecuteNotification,
+  waterValueTimerExecuteOnce,
+  waterValueTimerFriday,
+  waterValueTimerLabel,
+  waterValueTimerList,
+  waterValueTimerMonday,
+  waterValueTimerNote,
+  waterValueTimerOpen,
+  waterValueTimerOpenAndClose,
+  waterValueTimerOpenTime,
+  waterValueTimerPM,
+  waterValueTimerRepeat,
+  waterValueTimerSaturday,
+  waterValueTimerSave,
+  waterValueTimerSetting,
+  waterValueTimerSettingLabel,
+  waterValueTimerSunday,
+  waterValueTimerThursday,
+  waterValueTimerTuesday,
+  waterValueTimerUnnamed,
+  waterValueTimerWednesday,
+  waterValueTimerWeekday;
 
   String get key => name;
   EnvironmentService get _envService => EnvironmentService.instance;

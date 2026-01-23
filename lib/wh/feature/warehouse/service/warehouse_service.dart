@@ -174,7 +174,7 @@ class WarehouseService {
   }
 
   Future<String?> openCamera() async {
-    return await DeviceService.instance.openCamera();
+    return await DeviceService.instance.openCameraChoise();
   }
 
   Future<String?> openGallery() async {

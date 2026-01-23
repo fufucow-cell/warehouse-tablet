@@ -6,6 +6,7 @@ import 'package:engo_terminal_app3/feature/smart_home/page/gateway/smart_home_ga
 import 'package:engo_terminal_app3/feature/smart_home/page/household/smart_home_household_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/setting/smart_home_setting_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/warehouse/smart_home_warehouse_page.dart';
+import 'package:engo_terminal_app3/feature/smart_home/page/water_value/smart_home_water_value_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/service/smart_home_service.dart';
 import 'package:engo_terminal_app3/service/api_service/api_service.dart';
 import 'package:engo_terminal_app3/service/router_service/router_service_model.dart';

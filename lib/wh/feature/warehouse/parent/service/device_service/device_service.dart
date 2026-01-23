@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service_model.dart';
@@ -66,7 +67,7 @@ class DeviceService extends GetxService {
     return false;
   }
 
-  Future<String?> openCamera() async {
+  Future<String?> openCameraChoise() async {
     // 如果是模擬器，顯示提示並返回
     if (isSimulator) {
       CustSnackBar.show(
@@ -77,7 +78,7 @@ class DeviceService extends GetxService {
     }
 
     // 如果是 Android 平板，顯示選擇器讓用戶選擇相機或相簿
-    if (_model.isAndroidPad) {
+    if (_model.isAndroid) {
       final context = RouterService.instance.getRootNavigatorContext;
       if (context != null) {
         final ImageSource? selectedSource = await showModalBottomSheet<ImageSource>(
@@ -86,16 +87,54 @@ class DeviceService extends GetxService {
           builder: (context) => _ImageSourceBottomSheet(),
         );
 
-        if (selectedSource == null) {
-          return null;
+        if (selectedSource == ImageSource.camera) {
+          final result = await _takePhoto();
+          return result?.path;
+        } else if (selectedSource == ImageSource.gallery) {
+          return await _pickImage(ImageSource.gallery);
         }
 
-        return await _pickImage(selectedSource);
+        return null;
       }
     }
 
     // 非 Android 平板直接打開相機
     return await _pickImage(ImageSource.camera);
+  }
+
+  Future<XFile?> _takePhoto() async {
+    final context = RouterService.instance.getRootNavigatorContext;
+    try {
+      final cameras = await _availableCameras();
+
+      if (cameras.isEmpty) {
+        CustSnackBar.show(
+          title: EnumLocale.deviceCameraNotAvailable.tr,
+          message: '',
+        );
+        return null;
+      }
+
+      final camera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.back,
+        orElse: () => cameras.first,
+      );
+
+      final result = await Navigator.push<XFile>(
+        context!,
+        MaterialPageRoute(
+          builder: (context) => _CameraPage(camera: camera),
+        ),
+      );
+
+      return result;
+    } on Object catch (e) {
+      CustSnackBar.show(
+        title: EnumLocale.deviceCameraFailed.tr,
+        message: e.toString(),
+      );
+      return null;
+    }
   }
 
   Future<String?> _pickImage(ImageSource source) async {
@@ -195,6 +234,15 @@ class DeviceService extends GetxService {
         Platform.environment.containsKey('SIMULATOR_ROOT') ||
         Platform.environment.containsKey('SIMULATOR_UDID') ||
         _model.systemVersion.toLowerCase().contains('simulator');
+  }
+
+  /// 獲取可用的相機列表
+  Future<List<CameraDescription>> _availableCameras() async {
+    try {
+      return await availableCameras();
+    } on Object catch (_) {
+      return [];
+    }
   }
 
   void _initDeviceInfo(BuildContext context) {
@@ -366,6 +414,141 @@ class _OptionItem extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _CameraPage extends StatefulWidget {
+  final CameraDescription camera;
+
+  const _CameraPage({required this.camera});
+
+  @override
+  State<_CameraPage> createState() => _CameraPageState();
+}
+
+class _CameraPageState extends State<_CameraPage> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+  bool _isTakingPicture = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(
+      widget.camera,
+      ResolutionPreset.high,
+      imageFormatGroup: ImageFormatGroup.jpeg,
+    );
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _takePicture() async {
+    if (_isTakingPicture) {
+      return;
+    }
+
+    try {
+      setState(() => _isTakingPicture = true);
+
+      await _initializeControllerFuture;
+
+      final image = await _controller.takePicture();
+
+      if (mounted) {
+        Navigator.pop(context, image);
+      }
+    } on Object catch (e) {
+      if (mounted) {
+        CustSnackBar.show(
+          title: EnumLocale.deviceTakePhotoFailed.tr,
+          message: e.toString(),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isTakingPicture = false);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                CameraPreview(_controller),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 16,
+                  left: 16,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                Positioned(
+                  bottom: 40,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: _isTakingPicture ? null : _takePicture,
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 4,
+                          ),
+                        ),
+                        child: _isTakingPicture
+                            ? const Padding(
+                                padding: EdgeInsets.all(15),
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            : Container(
+                                margin: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
+        },
       ),
     );
   }

@@ -231,4 +231,28 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFFDB874),
     dark: Color(0xFFFB9B51),
   ),
+  'engoWaterValueFunctionCardBorder': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFDB874),
+  ),
+  'engoWaterValueFunctionCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99FFFFFF),
+  ),
+  'engoWaterValueFunctionCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoWaterValueButtonBorder': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoWaterValueStatusOpening': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoWaterValueStatusClosing': ColorData(
+    light: Color(0xFF7C7C7C),
+    dark: Color(0xFFDCDCDC),
+  ),
 };
