@@ -4,8 +4,7 @@ enum EnumWaterValueTimerSettingPageInteractive {
   tapBackButton,
   tapSettingButton,
   tapTab,
-  tapOpenTime,
-  tapCloseTime,
+  tapTime,
   tapRepeatToggle,
   tapWeekday,
   tapDay,
@@ -27,10 +26,8 @@ extension WaterValueTimerSettingPageUserEventExtension on WaterValueTimerSetting
         _handleSettingButton();
       case EnumWaterValueTimerSettingPageInteractive.tapTab:
         _handleTabChanged(data as int);
-      case EnumWaterValueTimerSettingPageInteractive.tapOpenTime:
-        _handleOpenTimeChanged(data as TimeOfDay?);
-      case EnumWaterValueTimerSettingPageInteractive.tapCloseTime:
-        _handleCloseTimeChanged(data as TimeOfDay?);
+      case EnumWaterValueTimerSettingPageInteractive.tapTime:
+        _handleTimeChanged(data as TimeOfDay?);
       case EnumWaterValueTimerSettingPageInteractive.tapRepeatToggle:
         _handleRepeatToggle();
       case EnumWaterValueTimerSettingPageInteractive.tapWeekday:
@@ -74,17 +71,9 @@ extension WaterValueTimerSettingPageUserEventExtension on WaterValueTimerSetting
     }
   }
 
-  Future<void> _handleOpenTimeChanged(TimeOfDay? time) async {
-    _model.openTime.value = time;
-    final callback = _model.routerData?.onOpenTimeChanged;
-    if (callback != null) {
-      await callback(time);
-    }
-  }
-
-  Future<void> _handleCloseTimeChanged(TimeOfDay? time) async {
-    _model.closeTime.value = time;
-    final callback = _model.routerData?.onCloseTimeChanged;
+  Future<void> _handleTimeChanged(TimeOfDay? time) async {
+    _model.time.value = time;
+    final callback = _model.routerData?.onTimeChanged;
     if (callback != null) {
       await callback(time);
     }
@@ -149,8 +138,7 @@ extension WaterValueTimerSettingPageUserEventExtension on WaterValueTimerSetting
     final callback = _model.routerData?.onSave;
     if (callback != null) {
       await callback(
-        _model.openTime.value,
-        _model.closeTime.value,
+        _model.time.value,
         _model.isRepeatEnabled.value,
         _model.selectedWeekday.value,
         _model.selectedTab.value,

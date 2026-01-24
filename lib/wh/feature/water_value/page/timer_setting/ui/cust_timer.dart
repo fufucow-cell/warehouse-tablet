@@ -18,7 +18,7 @@ class CustTimer extends StatefulWidget {
   // MARK: - Init
   const CustTimer({
     super.key,
-    required this.time,
+    this.time,
     required this.onTimeChanged,
     this.textSize,
     this.selectionOverlayColor,
@@ -50,8 +50,9 @@ class _CustTimerState extends State<CustTimer> {
   void didUpdateWidget(CustTimer oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.time != widget.time) {
-      final hour = widget.time?.hour ?? 8;
-      final minute = widget.time?.minute ?? 0;
+      final currentTime = widget.time ?? TimeOfDay.now();
+      final hour = currentTime.hour;
+      final minute = currentTime.minute;
       final isAM = hour < 12;
       final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
 
@@ -88,7 +89,7 @@ class _CustTimerState extends State<CustTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final textSize = widget.textSize ?? 70.0.scale;
+    final textSize = widget.textSize ?? 40.0.scale;
     const itemExtentToTextSizeRatio = 3;
     const diameterRatio = 2.0;
     const squeeze = 1.05;
@@ -265,8 +266,9 @@ class _CustTimerState extends State<CustTimer> {
   }
 
   void _updateControllers() {
-    final hour = widget.time?.hour ?? 8;
-    final minute = widget.time?.minute ?? 0;
+    final currentTime = widget.time ?? TimeOfDay.now();
+    final hour = currentTime.hour;
+    final minute = currentTime.minute;
     final isAM = hour < 12;
     final displayHour = hour > 12 ? hour - 12 : (hour == 0 ? 12 : hour);
 

@@ -28,14 +28,13 @@ extension SmartHomeWaterValuePageRouteExtension on SmartHomeWaterValuePageContro
                 language: _service.getCurrentLocaleCode,
                 theme: _service.getCurrentThemeName,
                 isModuleMode: false,
-                initialOpenTime: null,
-                initialCloseTime: null,
+                initialTime: null,
                 initialRepeatEnabled: false,
                 initialNotificationEnabled: false,
                 initialSelectedWeekday: 0,
                 initialSelectedTab: 0,
                 initialSelectedDays: null,
-                onSave: (openTime, closeTime, repeatEnabled, weekday, tab, selectedDays) async {
+                onSave: (time, repeatEnabled, weekday, tab, selectedDays) async {
                   routerHandle(
                     EnumSmartHomeWaterValuePageRoute.showSnackBar,
                     data: SnackBarData('儲存定時設定'),

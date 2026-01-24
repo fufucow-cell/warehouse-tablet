@@ -18,8 +18,7 @@ class WaterValueTimerSettingPageController extends GetxController {
   RxReadonly<bool> get isRepeatEnabledRx => _model.isRepeatEnabled.readonly;
   RxReadonly<int> get selectedWeekdayRx => _model.selectedWeekday.readonly;
   RxReadonly<Set<int>> get selectedDaysRx => RxReadonly<Set<int>>(_model.selectedDays);
-  RxReadonly<TimeOfDay?> get openTimeRx => _model.openTime.readonly;
-  RxReadonly<TimeOfDay?> get closeTimeRx => _model.closeTime.readonly;
+  RxReadonly<TimeOfDay?> get timeRx => _model.time.readonly;
   RxReadonly<String> get noteTextRx => _model.noteText.readonly;
   RxReadonly<bool> get isNotificationEnabledRx => _model.isNotificationEnabled.readonly;
 
@@ -34,8 +33,7 @@ class WaterValueTimerSettingPageController extends GetxController {
     _model.isNotificationEnabled.value = routerData.initialNotificationEnabled;
     _model.selectedWeekday.value = routerData.initialSelectedWeekday;
     _model.selectedDays.value = routerData.initialSelectedDays ?? <int>{};
-    _model.openTime.value = routerData.initialOpenTime;
-    _model.closeTime.value = routerData.initialCloseTime;
+    _model.time.value = routerData.initialTime;
     WaterValueService.register().registerServices(
       WaterValueMainPageRouterData(
         waterValueName: EnumLocale.waterValueControlSwitch.tr,

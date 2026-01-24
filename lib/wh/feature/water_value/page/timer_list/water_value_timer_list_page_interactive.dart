@@ -59,8 +59,7 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
       routerHandle(
         EnumWaterValueTimerListPageRoute.goToTimerSettingPage,
         data: const WaterValueTimerSettingPageRouterData(
-          initialOpenTime: null,
-          initialCloseTime: null,
+          initialTime: null,
           initialRepeatEnabled: false,
           initialNotificationEnabled: false,
           initialSelectedWeekday: 0,
