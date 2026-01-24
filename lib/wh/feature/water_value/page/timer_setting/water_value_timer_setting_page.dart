@@ -210,6 +210,7 @@ class _TimePickerSection extends StatelessWidget {
         return Center(
           child: SizedBox(
             width: 593.0.scale,
+            height: 300.0.scale,
             child: CustTimer(
               time: isOpenTime ? controller.openTimeRx.value : controller.closeTimeRx.value,
               onTimeChanged: (time) {
