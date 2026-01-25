@@ -176,7 +176,7 @@ const Map<String, String> zhTW = {
   'waterValueOpening': 'Opening',
   'waterValueClosing': 'Closing',
   'waterValueSetting': 'Setting',
-  'waterValueTimer': 'Timer',
+  'waterValueTimer': 'Timer Info',
   'waterValueCountdown': 'Countdown',
   'waterValueTimerSetting': 'Timer Setting',
   'waterValueTimerOpenAndClose': 'Open and Close',

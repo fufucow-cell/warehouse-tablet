@@ -1,5 +1,3 @@
-import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
@@ -8,6 +6,8 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -112,10 +112,7 @@ class _SwitchControl extends StatelessWidget {
               child: Stack(
                 children: [
                   // 使用图片资源
-                  if (isOn)
-                    EnumImage.tWaterValueOn.image(fit: BoxFit.contain)
-                  else
-                    EnumImage.tWaterValueOff.image(fit: BoxFit.contain),
+                  if (isOn) EnumImage.tWaterValueOn.image(fit: BoxFit.contain) else EnumImage.tWaterValueOff.image(fit: BoxFit.contain),
                 ],
               ),
             ),
@@ -130,7 +127,10 @@ class _SwitchControl extends StatelessWidget {
                 _AnimatedButton(
                   isSelected: !isOn,
                   onTap: () {
-                    controller.interactive(EnumWaterValueMainPageInteractive.tapCloseButton);
+                    controller.interactive(
+                      EnumWaterValueMainPageInteractive.tapSwitchToggle,
+                      data: false,
+                    );
                   },
                   child: Container(
                     width: 200.0.scale,
@@ -184,9 +184,7 @@ class _SwitchControl extends StatelessWidget {
                       isOn ? EnumLocale.waterValueOpening.tr : EnumLocale.waterValueClosing.tr,
                       size: 48.0.scale,
                       weightType: EnumFontWeightType.bold,
-                      color: isOn
-                          ? EnumColor.engoWaterValueStatusOpening.color
-                          : EnumColor.engoWaterValueStatusClosing.color,
+                      color: isOn ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.engoWaterValueStatusClosing.color,
                       align: TextAlign.center,
                     ),
                   ],
@@ -196,7 +194,10 @@ class _SwitchControl extends StatelessWidget {
                 _AnimatedButton(
                   isSelected: isOn,
                   onTap: () {
-                    controller.interactive(EnumWaterValueMainPageInteractive.tapOpenButton);
+                    controller.interactive(
+                      EnumWaterValueMainPageInteractive.tapSwitchToggle,
+                      data: true,
+                    );
                   },
                   child: Container(
                     width: 200.0.scale,
@@ -253,8 +254,7 @@ class _AnimatedButton extends StatefulWidget {
   State<_AnimatedButton> createState() => _AnimatedButtonState();
 }
 
-class _AnimatedButtonState extends State<_AnimatedButton>
-    with SingleTickerProviderStateMixin {
+class _AnimatedButtonState extends State<_AnimatedButton> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 
@@ -314,55 +314,48 @@ class _FunctionCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<WaterValueMainPageController>();
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // "定時"卡片
-        GestureDetector(
-          onTap: () {
-            controller.interactive(EnumWaterValueMainPageInteractive.tapTimerButton);
-          },
-          child: Container(
-            width: 400.0.scale,
-            padding: EdgeInsets.symmetric(
-              horizontal: 88.0.scale,
-              vertical: 16.0.scale,
+    return GestureDetector(
+      onTap: () {
+        controller.interactive(EnumWaterValueMainPageInteractive.tapTimerButton);
+      },
+      child: Container(
+        width: 400.0.scale,
+        padding: EdgeInsets.symmetric(
+          horizontal: 88.0.scale,
+          vertical: 16.0.scale,
+        ),
+        decoration: ShapeDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: EnumColor.engoWaterValueFunctionCardGradient.colors,
+          ),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1,
+              color: EnumColor.engoWaterValueFunctionCardBorder.color,
             ),
-            decoration: ShapeDecoration(
-              gradient: RadialGradient(
-                center: const Alignment(0.00, 0.00),
-                radius: 1.41,
-                colors: EnumColor.engoWaterValueFunctionCardGradient.colors,
-              ),
-              shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  width: 1,
-                  color: EnumColor.engoWaterValueFunctionCardBorder.color,
-                ),
-                borderRadius: BorderRadius.circular(12.0.scale),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                EnumImage.cClock.image(
-                  size: Size.square(70.0.scale),
-                  color: EnumColor.textPrimary.color,
-                ),
-                SizedBox(width: 16.0.scale),
-                CustTextWidget(
-                  EnumLocale.waterValueTimer.tr,
-                  size: 32.0.scale,
-                  color: EnumColor.textPrimary.color,
-                ),
-              ],
-            ),
+            borderRadius: BorderRadius.circular(12.0.scale),
           ),
         ),
-      ],
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            EnumImage.cClock.image(
+              size: Size.square(70.0.scale),
+              color: EnumColor.textPrimary.color,
+            ),
+            SizedBox(width: 16.0.scale),
+            CustTextWidget(
+              EnumLocale.waterValueTimer.tr,
+              size: 32.0.scale,
+              color: EnumColor.textPrimary.color,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -1,60 +1,73 @@
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WaterValueTimerListPageModel {
   WaterValueTimerListPageRouterData? routerData;
-  final timerItems = Rx<List<WaterValueTimerItem>>(<WaterValueTimerItem>[]);
+  final timerItems = Rx<List<WaterValueTimerInfo>>(<WaterValueTimerInfo>[]);
   final isEditMode = false.obs; // 编辑模式：显示删除按钮
 }
 
-class WaterValueTimerItem {
-  final String id;
-  final String name;
-  final TimeOfDay? openTime;
-  final TimeOfDay? closeTime;
-  final bool isRepeatEnabled;
-  final int selectedWeekday; // 0: 工作日, 1: 每天, 2: 自定義
-  final Set<int> selectedDays; // 0-6: 周一到周日
-  final bool isNotificationEnabled;
-  final String note;
-  final bool isEnabled;
+class WaterValueTimerListPageRouterData {
+  final List<WaterValueTimerInfo> timerInfoList;
+  final Future<WaterValueTimerInfo> Function(WaterValueTimerInfo info) itemUpdate;
+  final Future<bool> Function(WaterValueTimerInfo info) itemDelete;
 
-  WaterValueTimerItem({
-    required this.id,
-    required this.name,
-    this.openTime,
-    this.closeTime,
-    required this.isRepeatEnabled,
-    required this.selectedWeekday,
-    required this.selectedDays,
-    required this.isNotificationEnabled,
-    required this.note,
-    required this.isEnabled,
+  const WaterValueTimerListPageRouterData({
+    this.timerInfoList = const [],
+    required this.itemUpdate,
+    required this.itemDelete,
   });
 }
 
-class WaterValueTimerListPageRouterData {
-  final String? language;
-  final String? theme;
-  final bool? isModuleMode;
-  final List<WaterValueTimerItem> initialTimerItems;
-  final Future<void> Function()? onAddTimer; // 添加新定时，跳转到定时设定页面
-  final Future<void> Function(WaterValueTimerItem item)? onEditTimer; // 编辑定时，跳转到定时设定页面
-  final Future<void> Function(String itemId)? onDeleteTimer; // 删除定时
-  final Future<void> Function(String itemId, bool enabled)? onToggleTimer; // 切换定时开关
-  final VoidCallback? onBackButtonTap;
-  final VoidCallback? onSettingButtonTap; // 设置按钮，切换编辑模式
+class WaterValueTimerInfo {
+  String? id;
+  TimeOfDay? time;
+  bool? isEnable;
+  bool? isRepeat;
+  bool? isNotify;
+  EnumStatusTab? enumStatus;
+  EnumRepeatDay? enumRepeatDay;
+  Set<int>? selectedDays;
+  String? note;
 
-  const WaterValueTimerListPageRouterData({
-    this.language,
-    this.theme,
-    this.isModuleMode,
-    this.initialTimerItems = const [],
-    this.onAddTimer,
-    this.onEditTimer,
-    this.onDeleteTimer,
-    this.onToggleTimer,
-    this.onBackButtonTap,
-    this.onSettingButtonTap,
+  WaterValueTimerInfo({
+    this.id,
+    this.time,
+    this.isEnable,
+    this.isRepeat,
+    this.isNotify,
+    this.enumStatus,
+    this.enumRepeatDay,
+    this.selectedDays,
+    this.note,
   });
+}
+
+enum EnumStatusTab {
+  open,
+  close;
+
+  String get title => switch (this) {
+        EnumStatusTab.open => EnumLocale.waterValueTimerOpen.tr,
+        EnumStatusTab.close => EnumLocale.waterValueTimerClose.tr,
+      };
+}
+
+enum EnumRepeatDay {
+  weekday,
+  everyday,
+  custom;
+
+  String get title => switch (this) {
+        EnumRepeatDay.weekday => EnumLocale.waterValueTimerWeekday.tr,
+        EnumRepeatDay.everyday => EnumLocale.waterValueTimerEveryday.tr,
+        EnumRepeatDay.custom => EnumLocale.waterValueTimerCustom.tr,
+      };
+
+  Set<int> get selectedDays => switch (this) {
+        EnumRepeatDay.weekday => <int>{1, 2, 3, 4, 5},
+        EnumRepeatDay.everyday => <int>{1, 2, 3, 4, 5, 6, 7},
+        EnumRepeatDay.custom => <int>{},
+      };
 }

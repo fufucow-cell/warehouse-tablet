@@ -4,8 +4,7 @@ enum EnumWaterValueTimerSettingPageInteractive {
   tapBackButton,
   tapSettingButton,
   tapTab,
-  tapOpenTime,
-  tapCloseTime,
+  tapTime,
   tapRepeatToggle,
   tapWeekday,
   tapDay,
@@ -22,140 +21,52 @@ extension WaterValueTimerSettingPageUserEventExtension on WaterValueTimerSetting
   }) {
     switch (type) {
       case EnumWaterValueTimerSettingPageInteractive.tapBackButton:
-        _handleBackButton();
+        _routerHandle(EnumWaterValueTimerSettingPageRoute.goBack);
       case EnumWaterValueTimerSettingPageInteractive.tapSettingButton:
-        _handleSettingButton();
+        break;
       case EnumWaterValueTimerSettingPageInteractive.tapTab:
-        _handleTabChanged(data as int);
-      case EnumWaterValueTimerSettingPageInteractive.tapOpenTime:
-        _handleOpenTimeChanged(data as TimeOfDay?);
-      case EnumWaterValueTimerSettingPageInteractive.tapCloseTime:
-        _handleCloseTimeChanged(data as TimeOfDay?);
+        _model.enumStatus.value = data as EnumStatusTab;
+      case EnumWaterValueTimerSettingPageInteractive.tapTime:
+        final time = data as TimeOfDay?;
+        if (time != null) {
+          _model.time.value = time;
+        }
       case EnumWaterValueTimerSettingPageInteractive.tapRepeatToggle:
-        _handleRepeatToggle();
+        _model.isRepeat.value = !_model.isRepeat.value;
       case EnumWaterValueTimerSettingPageInteractive.tapWeekday:
-        _handleWeekdayChanged(data as int);
+        final weekday = data as EnumRepeatDay;
+        _model.enumRepeatDay.value = weekday;
+        if (weekday != EnumRepeatDay.custom) {
+          _model.selectedDays.value = weekday.selectedDays;
+        }
       case EnumWaterValueTimerSettingPageInteractive.tapDay:
-        _handleDayToggled(data as int);
+        final day = data as int;
+        final currentSet = Set<int>.from(_model.selectedDays.value);
+        if (currentSet.contains(day)) {
+          currentSet.remove(day);
+        } else {
+          currentSet.add(day);
+        }
+        _model.selectedDays.value = currentSet;
       case EnumWaterValueTimerSettingPageInteractive.tapSetting:
-        _handleSettingTap();
+        break;
       case EnumWaterValueTimerSettingPageInteractive.tapLabel:
-        _handleLabelTap();
+        break;
       case EnumWaterValueTimerSettingPageInteractive.tapNotificationToggle:
-        _handleNotificationToggle();
+        _model.isNotify.value = !_model.isNotify.value;
       case EnumWaterValueTimerSettingPageInteractive.tapSave:
-        _handleSave();
-    }
-  }
-
-  // MARK: - Private Method
-
-  void _handleBackButton() {
-    final callback = _model.routerData?.onBackButtonTap;
-    if (callback != null) {
-      callback();
-    } else {
-      routerHandle(EnumWaterValueTimerSettingPageRoute.goBack);
-    }
-  }
-
-  void _handleSettingButton() {
-    final callback = _model.routerData?.onSettingButtonTap;
-    if (callback != null) {
-      callback();
-    }
-  }
-
-  Future<void> _handleTabChanged(int tab) async {
-    _model.selectedTab.value = tab;
-    final callback = _model.routerData?.onTabChanged;
-    if (callback != null) {
-      await callback(tab);
-    }
-  }
-
-  Future<void> _handleOpenTimeChanged(TimeOfDay? time) async {
-    _model.openTime.value = time;
-    final callback = _model.routerData?.onOpenTimeChanged;
-    if (callback != null) {
-      await callback(time);
-    }
-  }
-
-  Future<void> _handleCloseTimeChanged(TimeOfDay? time) async {
-    _model.closeTime.value = time;
-    final callback = _model.routerData?.onCloseTimeChanged;
-    if (callback != null) {
-      await callback(time);
-    }
-  }
-
-  Future<void> _handleRepeatToggle() async {
-    final newValue = !_model.isRepeatEnabled.value;
-    _model.isRepeatEnabled.value = newValue;
-    final callback = _model.routerData?.onRepeatToggle;
-    if (callback != null) {
-      await callback(newValue);
-    }
-  }
-
-  Future<void> _handleWeekdayChanged(int weekday) async {
-    _model.selectedWeekday.value = weekday;
-    final callback = _model.routerData?.onWeekdayChanged;
-    if (callback != null) {
-      await callback(weekday);
-    }
-  }
-
-  Future<void> _handleDayToggled(int day) async {
-    // day: 0-6 代表周一到周日
-    final currentSet = Set<int>.from(_model.selectedDays.value);
-    if (currentSet.contains(day)) {
-      currentSet.remove(day);
-    } else {
-      currentSet.add(day);
-    }
-    _model.selectedDays.value = currentSet;
-    final callback = _model.routerData?.onDaysChanged;
-    if (callback != null) {
-      await callback(_model.selectedDays.value);
-    }
-  }
-
-  void _handleSettingTap() {
-    final callback = _model.routerData?.onSettingTap;
-    if (callback != null) {
-      callback();
-    }
-  }
-
-  void _handleLabelTap() {
-    final callback = _model.routerData?.onLabelTap;
-    if (callback != null) {
-      callback();
-    }
-  }
-
-  Future<void> _handleNotificationToggle() async {
-    final newValue = !_model.isNotificationEnabled.value;
-    _model.isNotificationEnabled.value = newValue;
-    final callback = _model.routerData?.onNotificationToggle;
-    if (callback != null) {
-      await callback(newValue);
-    }
-  }
-
-  Future<void> _handleSave() async {
-    final callback = _model.routerData?.onSave;
-    if (callback != null) {
-      await callback(
-        _model.openTime.value,
-        _model.closeTime.value,
-        _model.isRepeatEnabled.value,
-        _model.selectedWeekday.value,
-        _model.selectedTab.value,
-        _model.selectedDays.value,
-      );
+        final timerInfo = WaterValueTimerInfo(
+          id: _model.id.value?.isEmpty ?? true ? null : _model.id.value,
+          time: _model.time.value,
+          isEnable: true,
+          isRepeat: _model.isRepeat.value,
+          isNotify: _model.isNotify.value,
+          enumStatus: _model.enumStatus.value,
+          enumRepeatDay: _model.enumRepeatDay.value,
+          selectedDays: _model.selectedDays.value,
+          note: textController.text.isEmpty ? null : textController.text,
+        );
+        _routerHandle(EnumWaterValueTimerSettingPageRoute.goBack, data: timerInfo);
     }
   }
 }

@@ -9,6 +9,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widg
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,6 @@ class WaterValueTimerListPage extends GetView<WaterValueTimerListPageController>
     return GetBuilder<WaterValueTimerListPageController>(
       init: WaterValueTimerListPageController(routerData),
       builder: (controller) {
-        controller.setContext(context);
         return Scaffold(
           body: FirstBackgroundCard(
             child: Column(
@@ -120,7 +120,7 @@ class _TimerList extends StatelessWidget {
 }
 
 class _TimerItemCell extends StatelessWidget {
-  final WaterValueTimerItem item;
+  final WaterValueTimerInfo item;
   final bool isEditMode;
 
   const _TimerItemCell({
@@ -140,45 +140,34 @@ class _TimerItemCell extends StatelessWidget {
   }
 
   String _formatRepeatCycle() {
-    if (!item.isRepeatEnabled) {
+    if (item.isRepeat != true) {
       return EnumLocale.waterValueTimerExecuteOnce.tr;
     }
-
-    switch (item.selectedWeekday) {
-      case 0: // 工作日
-        return EnumLocale.waterValueTimerWeekday.tr;
-      case 1: // 每天
-        return EnumLocale.waterValueTimerEveryday.tr;
-      case 2: // 自定義
-        if (item.selectedDays.isEmpty) {
-          return EnumLocale.waterValueTimerExecuteOnce.tr;
-        }
-        final dayNames = [
-          EnumLocale.waterValueTimerMonday.tr,
-          EnumLocale.waterValueTimerTuesday.tr,
-          EnumLocale.waterValueTimerWednesday.tr,
-          EnumLocale.waterValueTimerThursday.tr,
-          EnumLocale.waterValueTimerFriday.tr,
-          EnumLocale.waterValueTimerSaturday.tr,
-          EnumLocale.waterValueTimerSunday.tr,
-        ];
-        final selectedDayNames = item.selectedDays.toList()..sort();
-        return selectedDayNames.map((day) => dayNames[day]).join('、');
-      default:
-        return EnumLocale.waterValueTimerExecuteOnce.tr;
+    final ed = item.enumRepeatDay;
+    if (ed == EnumRepeatDay.weekday) {
+      return EnumLocale.waterValueTimerWeekday.tr;
     }
+    if (ed == EnumRepeatDay.everyday) {
+      return EnumLocale.waterValueTimerEveryday.tr;
+    }
+    final days = item.selectedDays ?? <int>{};
+    if (days.isEmpty) {
+      return EnumLocale.waterValueTimerExecuteOnce.tr;
+    }
+    final dayNames = [
+      EnumLocale.waterValueTimerMonday.tr,
+      EnumLocale.waterValueTimerTuesday.tr,
+      EnumLocale.waterValueTimerWednesday.tr,
+      EnumLocale.waterValueTimerThursday.tr,
+      EnumLocale.waterValueTimerFriday.tr,
+      EnumLocale.waterValueTimerSaturday.tr,
+      EnumLocale.waterValueTimerSunday.tr,
+    ];
+    final sorted = days.toList()..sort();
+    return sorted.map((day) => dayNames[day - 1]).join('、');
   }
 
-  String _getActionText() {
-    if (item.openTime != null && item.closeTime != null) {
-      return '${EnumLocale.waterValueOpen.tr}/${EnumLocale.waterValueClose.tr}';
-    } else if (item.openTime != null) {
-      return EnumLocale.waterValueOpen.tr;
-    } else if (item.closeTime != null) {
-      return EnumLocale.waterValueClose.tr;
-    }
-    return '-';
-  }
+  String _getActionText() => item.enumStatus?.title ?? '-';
 
   @override
   Widget build(BuildContext context) {
@@ -188,66 +177,54 @@ class _TimerItemCell extends StatelessWidget {
         vertical: 24.0.scale,
         horizontal: 32.0.scale,
       ),
-      color: EnumColor.backgroundSecondary.color,
       child: Row(
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 时间
-                Row(
-                  children: [
-                    if (item.openTime != null) ...[
-                      CustTextWidget(
-                        _formatTime(item.openTime),
-                        size: 28.0.scale,
-                        color: EnumColor.textPrimary.color,
-                      ),
+            child: GestureDetector(
+              onTap: () {
+                controller.interactive(
+                  EnumWaterValueTimerListPageInteractive.tapCell,
+                  data: item,
+                );
+              },
+              behavior: HitTestBehavior.opaque,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      if (item.time != null)
+                        CustTextWidget(
+                          _formatTime(item.time),
+                          size: 28.0.scale,
+                          color: EnumColor.textPrimary.color,
+                        ),
                     ],
-                    if (item.openTime != null && item.closeTime != null) ...[
-                      SizedBox(width: 16.0.scale),
+                  ),
+                  SizedBox(height: 12.0.scale),
+                  CustTextWidget(
+                    _formatRepeatCycle(),
+                    size: 24.0.scale,
+                    color: EnumColor.textSecondary.color,
+                  ),
+                  SizedBox(height: 12.0.scale),
+                  Row(
+                    children: [
                       CustTextWidget(
-                        '/',
-                        size: 28.0.scale,
+                        '${EnumLocale.waterValueStatus.tr}: ${_getActionText()}',
+                        size: 24.0.scale,
                         color: EnumColor.textSecondary.color,
                       ),
-                      SizedBox(width: 16.0.scale),
-                    ],
-                    if (item.closeTime != null) ...[
+                      SizedBox(width: 24.0.scale),
                       CustTextWidget(
-                        _formatTime(item.closeTime),
-                        size: 28.0.scale,
-                        color: EnumColor.textPrimary.color,
+                        '${EnumLocale.waterValueTimerExecuteNotification.tr}: ${(item.isNotify ?? false) ? EnumLocale.waterValueOpen.tr : EnumLocale.waterValueClose.tr}',
+                        size: 24.0.scale,
+                        color: EnumColor.textSecondary.color,
                       ),
                     ],
-                  ],
-                ),
-                SizedBox(height: 12.0.scale),
-                // 重复周期
-                CustTextWidget(
-                  _formatRepeatCycle(),
-                  size: 24.0.scale,
-                  color: EnumColor.textSecondary.color,
-                ),
-                SizedBox(height: 12.0.scale),
-                // 水閥狀態和通知狀態
-                Row(
-                  children: [
-                    CustTextWidget(
-                      '${EnumLocale.waterValueStatus.tr}: ${_getActionText()}',
-                      size: 24.0.scale,
-                      color: EnumColor.textSecondary.color,
-                    ),
-                    SizedBox(width: 24.0.scale),
-                    CustTextWidget(
-                      '${EnumLocale.waterValueTimerExecuteNotification.tr}: ${item.isNotificationEnabled ? EnumLocale.waterValueOpen.tr : EnumLocale.waterValueClose.tr}',
-                      size: 24.0.scale,
-                      color: EnumColor.textSecondary.color,
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(width: 16.0.scale),
@@ -262,7 +239,7 @@ class _TimerItemCell extends StatelessWidget {
                     onTap: () {
                       controller.interactive(
                         EnumWaterValueTimerListPageInteractive.tapDeleteButton,
-                        data: item.id,
+                        data: item,
                       );
                     },
                     borderRadius: BorderRadius.circular(20.0.scale),
@@ -276,15 +253,14 @@ class _TimerItemCell extends StatelessWidget {
                   ),
                 );
               } else {
-                return Switch(
-                  value: item.isEnabled,
-                  onChanged: (value) {
+                return CustToggleSwitch(
+                  value: item.isEnable ?? false,
+                  onTap: () {
                     controller.interactive(
                       EnumWaterValueTimerListPageInteractive.tapToggleSwitch,
-                      data: item.id,
+                      data: item,
                     );
                   },
-                  activeColor: EnumColor.engoWaterValueStatusOpening.color,
                 );
               }
             },

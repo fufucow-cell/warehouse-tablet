@@ -175,7 +175,7 @@ const Map<String, String> zhTW = {
   'waterValueOpening': '開啟中',
   'waterValueClosing': '關閉中',
   'waterValueSetting': '設置',
-  'waterValueTimer': '定時',
+  'waterValueTimer': '定時資訊',
   'waterValueCountdown': '倒計時',
   'waterValueTimerSetting': '定時設定',
   'waterValueTimerOpenAndClose': '開啟和關閉',
