@@ -30,6 +30,18 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
 
     if (isInit) {
       Get.put(WarehouseMainPageController(widget.routerData), permanent: false);
+      final controller = Get.find<WarehouseMainPageController>();
+      controller.initTabController(this);
+    }
+  }
+
+  @override
+  void didUpdateWidget(WarehouseMainPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final isInit = !Get.isRegistered<WarehouseMainPageController>();
+
+    if (isInit) {
+      Get.put(WarehouseMainPageController(widget.routerData), permanent: false);
     }
 
     final controller = Get.find<WarehouseMainPageController>();
