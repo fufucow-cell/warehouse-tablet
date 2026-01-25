@@ -6,31 +6,25 @@ enum EnumWaterValueTimerSettingPageRoute {
 }
 
 extension WaterValueTimerSettingPageRouteExtension on WaterValueTimerSettingPageController {
-  void routerHandle(
+  Future<void> _routerHandle(
     EnumWaterValueTimerSettingPageRoute type, {
+    // ignore: unused_element
     dynamic data,
-  }) {
+  }) async {
     switch (type) {
       case EnumWaterValueTimerSettingPageRoute.goBack:
-        Navigator.of(_service.getNestedNavigatorContext!).pop();
+        Navigator.of(_service.getNestedNavigatorContext!).pop(data);
       case EnumWaterValueTimerSettingPageRoute.showTimePicker:
-        _showTimePicker();
-    }
-  }
+        final initialTime = _model.time.value;
 
-  // MARK: - Private Method
+        final pickedTime = await showTimePicker(
+          context: _service.getRootNavigatorContext!,
+          initialTime: initialTime,
+        );
 
-  Future<void> _showTimePicker() async {
-    final context = _service.getRootNavigatorContext ?? Get.context!;
-    final initialTime = _model.time.value ?? const TimeOfDay(hour: 8, minute: 0);
-
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: initialTime,
-    );
-
-    if (pickedTime != null) {
-      interactive(EnumWaterValueTimerSettingPageInteractive.tapTime, data: pickedTime);
+        if (pickedTime != null) {
+          interactive(EnumWaterValueTimerSettingPageInteractive.tapTime, data: pickedTime);
+        }
     }
   }
 }

@@ -6,23 +6,22 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_timer.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_toggle_switch.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class WaterValueTimerSettingPage extends GetView<WaterValueTimerSettingPageController> {
-  final WaterValueTimerSettingPageRouterData routerData;
-  const WaterValueTimerSettingPage({super.key, required this.routerData});
+  final WaterValueTimerInfo info;
+  const WaterValueTimerSettingPage({super.key, required this.info});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WaterValueTimerSettingPageController>(
-      init: WaterValueTimerSettingPageController(routerData),
+      init: WaterValueTimerSettingPageController(info),
       builder: (controller) {
-        controller.setContext(context);
         return Scaffold(
           body: FirstBackgroundCard(
             child: Column(
@@ -108,7 +107,7 @@ class _TabBar extends StatelessWidget {
     final controller = Get.find<WaterValueTimerSettingPageController>();
     return Obx(
       () {
-        final selectedTab = controller.selectedTabRx.value;
+        final enumStatus = controller.enumStatusRx.value;
         return Container(
           height: 68.0.scale,
           decoration: ShapeDecoration(
@@ -126,11 +125,14 @@ class _TabBar extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapTab, data: 0);
+                    controller.interactive(
+                      EnumWaterValueTimerSettingPageInteractive.tapTab,
+                      data: EnumStatusTab.open,
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedTab == 0 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      color: enumStatus == EnumStatusTab.open ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12.0.scale),
                         bottomLeft: Radius.circular(12.0.scale),
@@ -140,7 +142,7 @@ class _TabBar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueOpen.tr,
                       size: 32.0.scale,
-                      color: selectedTab == 0 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
+                      color: enumStatus == EnumStatusTab.open ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -148,11 +150,14 @@ class _TabBar extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapTab, data: 1);
+                    controller.interactive(
+                      EnumWaterValueTimerSettingPageInteractive.tapTab,
+                      data: EnumStatusTab.close,
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedTab == 1 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      color: enumStatus == EnumStatusTab.close ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12.0.scale),
                         bottomRight: Radius.circular(12.0.scale),
@@ -162,7 +167,7 @@ class _TabBar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueClose.tr,
                       size: 32.0.scale,
-                      color: selectedTab == 1 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
+                      color: enumStatus == EnumStatusTab.close ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -211,7 +216,7 @@ class _RepeatAndWeekdaySection extends StatelessWidget {
     final controller = Get.find<WaterValueTimerSettingPageController>();
     return Obx(
       () {
-        final isEnabled = controller.isRepeatEnabledRx.value;
+        final isEnabled = controller.isRepeatRx.value;
         return Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -237,7 +242,7 @@ class _RepeatAndWeekdaySection extends StatelessWidget {
             if (isEnabled) ...[
               SizedBox(height: 32.0.scale),
               const _RepeatTabbar(),
-              if (controller.isRepeatEnabledRx.value && controller.selectedWeekdayRx.value == 2) ...[
+              if (controller.isRepeatRx.value && controller.enumRepeatDayRx.value == EnumRepeatDay.custom) ...[
                 SizedBox(height: 32.0.scale),
                 const _WeekdayList(),
               ],
@@ -259,7 +264,7 @@ class _RepeatTabbar extends StatelessWidget {
     final controller = Get.find<WaterValueTimerSettingPageController>();
     return Obx(
       () {
-        final selectedWeekday = controller.selectedWeekdayRx.value;
+        final enumRepeatDay = controller.enumRepeatDayRx.value;
         return Container(
           height: 68.0.scale,
           decoration: ShapeDecoration(
@@ -277,11 +282,14 @@ class _RepeatTabbar extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapWeekday, data: 0);
+                    controller.interactive(
+                      EnumWaterValueTimerSettingPageInteractive.tapWeekday,
+                      data: EnumRepeatDay.weekday,
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedWeekday == 0 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      color: enumRepeatDay == EnumRepeatDay.weekday ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(12.0.scale),
                         bottomLeft: Radius.circular(12.0.scale),
@@ -291,7 +299,7 @@ class _RepeatTabbar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerWeekday.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 0 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
+                      color: enumRepeatDay == EnumRepeatDay.weekday ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -299,18 +307,21 @@ class _RepeatTabbar extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapWeekday, data: 1);
+                    controller.interactive(
+                      EnumWaterValueTimerSettingPageInteractive.tapWeekday,
+                      data: EnumRepeatDay.everyday,
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedWeekday == 1 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      color: enumRepeatDay == EnumRepeatDay.everyday ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.zero,
                     ),
                     alignment: Alignment.center,
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerEveryday.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 1 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
+                      color: enumRepeatDay == EnumRepeatDay.everyday ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -318,11 +329,14 @@ class _RepeatTabbar extends StatelessWidget {
               Expanded(
                 child: GestureDetector(
                   onTap: () {
-                    controller.interactive(EnumWaterValueTimerSettingPageInteractive.tapWeekday, data: 2);
+                    controller.interactive(
+                      EnumWaterValueTimerSettingPageInteractive.tapWeekday,
+                      data: EnumRepeatDay.custom,
+                    );
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: selectedWeekday == 2 ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
+                      color: enumRepeatDay == EnumRepeatDay.custom ? EnumColor.engoWaterValueFunctionCardBorder.color : Colors.transparent,
                       borderRadius: BorderRadius.only(
                         topRight: Radius.circular(12.0.scale),
                         bottomRight: Radius.circular(12.0.scale),
@@ -332,7 +346,7 @@ class _RepeatTabbar extends StatelessWidget {
                     child: CustTextWidget(
                       EnumLocale.waterValueTimerCustom.tr,
                       size: 32.0.scale,
-                      color: selectedWeekday == 2 ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
+                      color: enumRepeatDay == EnumRepeatDay.custom ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
                     ),
                   ),
                 ),
@@ -369,14 +383,15 @@ class _WeekdayList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(7, (index) {
-            final isSelected = selectedDays.contains(index);
+            final day = index + 1; // 1-7: 周一到周日
+            final isSelected = selectedDays.contains(day);
             return Padding(
               padding: EdgeInsets.only(right: index < 6 ? 48.0.scale : 0),
               child: GestureDetector(
                 onTap: () {
                   controller.interactive(
                     EnumWaterValueTimerSettingPageInteractive.tapDay,
-                    data: index,
+                    data: day,
                   );
                 },
                 child: Container(
@@ -416,34 +431,8 @@ class _Divider extends StatelessWidget {
   }
 }
 
-class _NoteSection extends StatefulWidget {
+class _NoteSection extends StatelessWidget {
   const _NoteSection();
-
-  @override
-  State<_NoteSection> createState() => _NoteSectionState();
-}
-
-class _NoteSectionState extends State<_NoteSection> {
-  late final TextEditingController _textController;
-
-  @override
-  void initState() {
-    super.initState();
-    final pageController = Get.find<WaterValueTimerSettingPageController>();
-    _textController = TextEditingController(text: pageController.noteTextRx.value);
-    // 监听 model 的变化，同步到 controller
-    ever(pageController.noteTextRx.rx, (value) {
-      if (_textController.text != value) {
-        _textController.text = value;
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -468,10 +457,7 @@ class _NoteSectionState extends State<_NoteSection> {
                 child: Padding(
                   padding: EdgeInsets.only(left: 32.0.scale),
                   child: TextField(
-                    controller: _textController,
-                    onChanged: (value) {
-                      pageController.updateNoteText(value);
-                    },
+                    controller: pageController.textController,
                     textAlign: TextAlign.right,
                     style: TextStyle(
                       fontSize: 26.0.scale,
@@ -522,7 +508,7 @@ class _NotificationSection extends StatelessWidget {
     final controller = Get.find<WaterValueTimerSettingPageController>();
     return Obx(
       () {
-        final isEnabled = controller.isNotificationEnabledRx.value;
+        final isEnabled = controller.isNotifyRx.value;
         return Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

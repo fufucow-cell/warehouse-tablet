@@ -1,3 +1,4 @@
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,11 +14,12 @@ class WaterValueMainPageRouterData {
   final bool? isModuleMode;
   final String waterValueName;
   final bool initialSwitchState;
-  final Future<void> Function(bool newValue)? onSwitchToggle;
+  final void Function(bool newValue)? onSwitchToggle;
   final VoidCallback? onBackButtonTap;
   final Future<String?> Function(String oldName)? onEditButtonTap;
   final VoidCallback? onSettingButtonTap;
   final VoidCallback? onTimerButtonTap;
+  final Future<WaterValueTimerListPageRouterData?> Function()? onTimerListButtonTap;
 
   const WaterValueMainPageRouterData({
     this.language,
@@ -30,5 +32,6 @@ class WaterValueMainPageRouterData {
     this.onEditButtonTap,
     this.onSettingButtonTap,
     this.onTimerButtonTap,
+    this.onTimerListButtonTap,
   });
 }

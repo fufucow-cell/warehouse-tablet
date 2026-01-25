@@ -1,16 +1,11 @@
 part of 'water_value_main_page_controller.dart';
 
 enum EnumWaterValueMainPageRoute {
-  pop,
-  goToTimerSettingPage,
   goToTimerListPage,
 }
 
 extension WaterValueMainPageRouteExtension on WaterValueMainPageController {
-  void routerHandle(
-    EnumWaterValueMainPageRoute type, {
-    dynamic data,
-  }) {
+  Future<void> _routerHandle(EnumWaterValueMainPageRoute type) async {
     final context = _service.getNestedNavigatorContext;
 
     if (context == null) {
@@ -18,24 +13,14 @@ extension WaterValueMainPageRouteExtension on WaterValueMainPageController {
     }
 
     switch (type) {
-      case EnumWaterValueMainPageRoute.pop:
-        Navigator.of(_service.getRootNavigatorContext ?? Get.context!).pop();
-      case EnumWaterValueMainPageRoute.goToTimerSettingPage:
-        if (data is WaterValueTimerSettingPageRouterData) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => WaterValueTimerSettingPage(routerData: data),
-            ),
-          );
-        }
       case EnumWaterValueMainPageRoute.goToTimerListPage:
-        if (data is WaterValueTimerListPageRouterData) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => WaterValueTimerListPage(routerData: data),
-            ),
-          );
+        final routerData = await _model.routerData?.onTimerListButtonTap?.call();
+        if (routerData == null) {
+          return;
         }
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => WaterValueTimerListPage(routerData: routerData)),
+        );
     }
   }
 }

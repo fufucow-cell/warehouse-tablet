@@ -1,6 +1,7 @@
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/main/water_value_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/service/water_value_service.dart';
 import 'package:flutter/material.dart';
@@ -12,28 +13,22 @@ part 'water_value_timer_setting_page_route.dart';
 class WaterValueTimerSettingPageController extends GetxController {
   // MARK: - Properties
 
-  final _model = WaterValueTimerSettingPageModel();
+  late final WaterValueTimerSettingPageModel _model;
   WaterValueService get _service => WaterValueService.instance;
-  RxReadonly<int> get selectedTabRx => _model.selectedTab.readonly;
-  RxReadonly<bool> get isRepeatEnabledRx => _model.isRepeatEnabled.readonly;
-  RxReadonly<int> get selectedWeekdayRx => _model.selectedWeekday.readonly;
+  RxReadonly<EnumStatusTab> get enumStatusRx => _model.enumStatus.readonly;
+  RxReadonly<bool> get isRepeatRx => _model.isRepeat.readonly;
+  RxReadonly<EnumRepeatDay> get enumRepeatDayRx => _model.enumRepeatDay.readonly;
   RxReadonly<Set<int>> get selectedDaysRx => RxReadonly<Set<int>>(_model.selectedDays);
-  RxReadonly<TimeOfDay?> get timeRx => _model.time.readonly;
+  RxReadonly<TimeOfDay> get timeRx => _model.time.readonly;
   RxReadonly<String> get noteTextRx => _model.noteText.readonly;
-  RxReadonly<bool> get isNotificationEnabledRx => _model.isNotificationEnabled.readonly;
+  RxReadonly<bool> get isNotifyRx => _model.isNotify.readonly;
+  final textController = TextEditingController();
 
   // MARK: - Init
 
-  WaterValueTimerSettingPageController(WaterValueTimerSettingPageRouterData routerData) {
-    _model.routerData = routerData;
-    // 将旧的 tab 值映射到新的值：0->0(開啟), 1->0(開啟), 2->1(關閉)
-    final oldTab = routerData.initialSelectedTab;
-    _model.selectedTab.value = oldTab == 2 ? 1 : 0;
-    _model.isRepeatEnabled.value = routerData.initialRepeatEnabled;
-    _model.isNotificationEnabled.value = routerData.initialNotificationEnabled;
-    _model.selectedWeekday.value = routerData.initialSelectedWeekday;
-    _model.selectedDays.value = routerData.initialSelectedDays ?? <int>{};
-    _model.time.value = routerData.initialTime;
+  WaterValueTimerSettingPageController(WaterValueTimerInfo info) {
+    _model = WaterValueTimerSettingPageModel(info);
+    textController.text = _model.noteText.value;
     WaterValueService.register().registerServices(
       WaterValueMainPageRouterData(
         waterValueName: EnumLocale.waterValueControlSwitch.tr,
@@ -42,15 +37,20 @@ class WaterValueTimerSettingPageController extends GetxController {
     );
   }
 
-  // MARK: - Public Method
-
-  void setContext(BuildContext context) {
-    WaterValueService.instance.setContext(context);
+  @override
+  void onInit() {
+    super.onInit();
+    // 监听 model 的变化，同步到 controller
+    ever(_model.noteText, (value) {
+      if (textController.text != value) {
+        textController.text = value;
+      }
+    });
   }
 
-  void updateNoteText(String value) {
-    _model.noteText.value = value;
+  @override
+  void onClose() {
+    textController.dispose();
+    super.onClose();
   }
-
-  // MARK: - Private Method
 }
