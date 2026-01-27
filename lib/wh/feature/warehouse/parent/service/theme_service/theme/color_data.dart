@@ -255,4 +255,28 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),
   ),
+  'airBoxDataCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x4DFFFFFF),
+  ),
+  'airBoxDataCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoTabBarBackground': ColorData(
+    light: Color(0x80FFFFFF),
+    dark: Color(0x80FFFFFF),
+  ),
+  'airBoxStatusGood': ColorData(
+    light: Color(0xFF40CE5F),
+    dark: Color(0xFF40CE5F),
+  ),
+  'airBoxStatusBad': ColorData(
+    light: Color(0xFFF88125),
+    dark: Color(0xFFF88125),
+  ),
+  'airBoxStatusVeryBad': ColorData(
+    light: Color(0xFFEF4425),
+    dark: Color(0xFFEF4425),
+  ),
 };
