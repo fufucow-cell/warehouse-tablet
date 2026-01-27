@@ -92,7 +92,7 @@ class _ParameterSelector extends StatelessWidget {
     final controller = Get.find<AirBoxReferencePageController>();
     return Obx(
       () => CustTextDropdownButton(
-        width: 380.0.scale,
+        width: 480.0.scale,
         height: 70.0.scale,
         selectedValue: controller.getDataTypeNames()[controller.selectedDataTypeRx.value.index],
         values: controller.getDataTypeNames(),

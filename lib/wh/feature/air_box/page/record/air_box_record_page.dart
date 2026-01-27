@@ -200,12 +200,11 @@ class _StatisticsSection extends StatelessWidget {
 
         return Container(
           padding: EdgeInsets.symmetric(vertical: 32.0.scale),
-          height: 151.0.scale,
           child: Row(
             children: [
               CustDropdownMenuButton.popupMenuButton(
-                width: 400.0.scale,
-                height: 200.0.scale,
+                width: 480.0.scale,
+                height: 80.0.scale,
                 selectedValue: selectedType.title,
                 values: options,
                 onValueSelected: (value) {
@@ -334,8 +333,8 @@ class _DatePicker extends StatelessWidget {
           controller.interactive(EnumAirBoxRecordPageInteractive.tapDatePicker);
         },
         child: Container(
-          width: 400.0.scale,
-          height: 200.0.scale,
+          width: 480.0.scale,
+          height: 80.0.scale,
           padding: EdgeInsets.symmetric(
             horizontal: 24.0.scale,
             vertical: 16.0.scale,
