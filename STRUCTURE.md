@@ -574,8 +574,9 @@ class WarehouseMainPageController extends GetxController {
    - `// MARK: - Public Method` - 公共方法部分（供 View 或其他 Controller 调用的方法）
    - `// MARK: - Private Method` - 私有方法部分（内部使用的辅助方法）
 
-2. **复杂逻辑处理**：
-   - 如果 Interactive 或 Route 中的逻辑超过 10 行代码，应该将复杂逻辑提取到 Controller 的私有方法中
+2. **Switch Case 代码行数规则**：
+   - **单个 switch case 内的代码超过十行**：必须移到 page controller 的私有方法（func）中处理
+   - **单个 switch case 内的代码未超过十行**：可以在 case 内直接处理
    - Interactive 和 Route 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
 
 #### I - Interactive（交互处理）
@@ -598,18 +599,18 @@ enum EnumWarehouseMainPageInteractive {
 }
 
 extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
-  void interactive(
+  Future<void> _interactive(
     EnumWarehouseMainPageInteractive type, {
     dynamic data,
-  }) {
+  }) async {
     switch (type) {
       case EnumWarehouseMainPageInteractive.tapSearch:
-        routerHandle(EnumWarehouseMainPageRoute.showSearchDialog);
+        await _routerHandle(EnumWarehouseMainPageRoute.showSearchDialog);
       case EnumWarehouseMainPageInteractive.tapCreate:
-        routerHandle(EnumWarehouseMainPageRoute.showCreateItemDialog);
+        await _routerHandle(EnumWarehouseMainPageRoute.showCreateItemDialog);
       case EnumWarehouseMainPageInteractive.selectTabItem:
-        // 如果逻辑超过 10 行，应该调用 Controller 的私有方法
-        _handleTabItemSelection(data);
+        // 如果 case 内代码超过十行，必须移到 Controller 的私有方法处理
+        await _handleTabItemSelection(data);
     }
   }
 }
@@ -617,9 +618,14 @@ extension WarehouseMainPageUserEventExtension on WarehouseMainPageController {
 
 **关键规范：**
 
-1. **复杂逻辑处理**：
-   - `interactive()` 方法中的逻辑应该保持简洁
-   - **如果单个 case 的逻辑超过 10 行代码**，应该将复杂逻辑提取到 Controller 的私有方法中
+1. **方法签名规范**：
+   - `_interactive()` 必须是 **private async func**：`Future<void> _interactive(...) async`
+   - 方法名使用下划线前缀表示私有方法
+
+2. **Switch Case 代码行数规则**：
+   - **单个 switch case 内的代码超过十行**：必须移到 page controller 的私有方法（func）中处理
+   - **单个 switch case 内的代码未超过十行**：可以在 case 内直接处理
+   - `_interactive()` 方法中的逻辑应该保持简洁
    - Interactive 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
 
 2. **示例（复杂逻辑应移到 Controller）**：
@@ -646,7 +652,7 @@ case EnumWarehouseMainPageInteractive.tapCreate:
 
 // ✅ 正确示例：调用 Controller 的私有方法
 case EnumWarehouseMainPageInteractive.tapCreate:
-  _handleCreateItem(data);
+  await _handleCreateItem(data);
 ```
 
 #### R - Route（路由处理）
@@ -670,10 +676,10 @@ enum EnumWarehouseMainPageRoute {
 }
 
 extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
-  void routerHandle(
+  Future<void> _routerHandle(
     EnumWarehouseMainPageRoute type, {
     dynamic data,
-  }) {
+  }) async {
     switch (type) {
       case EnumWarehouseMainPageRoute.showCreateItemDialog:
         _service.showAlert(
@@ -690,8 +696,8 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
           ),
         );
       case EnumWarehouseMainPageRoute.navigateToDetailPage:
-        // 如果逻辑超过 10 行，应该调用 Controller 的私有方法
-        _handleNavigateToDetail(data);
+        // 如果 case 内代码超过十行，必须移到 Controller 的私有方法处理
+        await _handleNavigateToDetail(data);
     }
   }
 }
@@ -699,9 +705,14 @@ extension WarehouseMainPageRouteExtension on WarehouseMainPageController {
 
 **关键规范：**
 
-1. **复杂逻辑处理**：
-   - `routerHandle()` 方法中的逻辑应该保持简洁
-   - **如果单个 case 的逻辑超过 10 行代码**，应该将复杂逻辑提取到 Controller 的私有方法中
+1. **方法签名规范**：
+   - `_routerHandle()` 必须是 **private async func**：`Future<void> _routerHandle(...) async`
+   - 方法名使用下划线前缀表示私有方法
+
+2. **Switch Case 代码行数规则**：
+   - **单个 switch case 内的代码超过十行**：必须移到 page controller 的私有方法（func）中处理
+   - **单个 switch case 内的代码未超过十行**：可以在 case 内直接处理
+   - `_routerHandle()` 方法中的逻辑应该保持简洁
    - **例外情况**：如果是 `showDialog` 需要传入较多参数（如多个 callback、复杂配置等），这种情况不算复杂逻辑，可以保留在 Route 中
    - Route 主要负责简单的弹窗显示、页面跳转等，复杂的数据处理、业务逻辑都在 Controller 中处理
 
@@ -729,7 +740,7 @@ case EnumWarehouseMainPageRoute.navigateToDetailPage:
 
 // ✅ 正确示例：调用 Controller 的私有方法
 case EnumWarehouseMainPageRoute.navigateToDetailPage:
-  _handleNavigateToDetail(data);
+  await _handleNavigateToDetail(data);
 
 // ✅ 正确示例：showDialog 传入较多参数不算复杂逻辑
 case EnumWarehouseMainPageRoute.showCreateItemDialog:
@@ -792,7 +803,8 @@ case EnumWarehouseMainPageRoute.showCreateItemDialog:
 ### View → Controller
 - View 通过 `GetBuilder` 或 `Get.find` 获取 Controller
 - 通过 `Obx` 监听响应式数据变化
-- 点击事件调用 `controller.interactive(EnumInteractiveType)`
+- 点击事件调用 `controller._interactive(EnumInteractiveType)` 或 `await controller._interactive(EnumInteractiveType)`（如果需要等待结果）
+- `_interactive()` 是 private async func，但由于 extension 方法在同一个 library 中（通过 `part of`），View 可以调用它
 
 ### Controller → Service
 - Controller 通过 `Service.instance` 获取 Service
@@ -800,8 +812,9 @@ case EnumWarehouseMainPageRoute.showCreateItemDialog:
 - Service 负责从外部 service/util 获取数据后返回给 Controller
 
 ### Interactive → Route
-- Interactive 处理用户事件后，需要 context 相关操作时调用 `routerHandle(EnumRouteType)`
+- Interactive 处理用户事件后，需要 context 相关操作时调用 `_routerHandle(EnumRouteType)`
 - Route 负责所有弹窗、导航等 context 操作
+- `_routerHandle()` 是 private async func，使用 `await` 调用
 
 ## 可选目录
 
@@ -823,7 +836,7 @@ case EnumWarehouseMainPageRoute.showCreateItemDialog:
 ## 注意事项
 
 1. **View 只能与 Controller 交互**，不能直接调用 Service
-2. **所有点击事件**必须通过 `Interactive` 处理
+2. **所有点击事件**必须通过 `Interactive` 的 `_interactive()` 方法处理，该方法是 private async func
 3. **所有 context 相关操作**（弹窗、导航）必须在 `Route` 中处理
 4. **Service 是数据中介**，负责从外部获取数据后传递给 Controller
 5. **Model 使用响应式变量**（`Rx`, `Rxn`）管理状态
@@ -834,10 +847,35 @@ case EnumWarehouseMainPageRoute.showCreateItemDialog:
    - `// MARK: - Init` - 初始化部分
    - `// MARK: - Public Method` - 公共方法部分
    - `// MARK: - Private Method` - 私有方法部分
-9. **Interactive 和 Route 的复杂逻辑处理**：
-   - 如果 `interactive()` 或 `routerHandle()` 中单个 case 的逻辑超过 10 行代码，应该将复杂逻辑提取到 Controller 的私有方法中
+9. **Interactive 方法规范**：
+   - `_interactive()` 必须是 **private async func**：`Future<void> _interactive(...) async`
+   - 方法名使用下划线前缀表示私有方法
+   - 调用时使用 `await _interactive(...)` 或 `_interactive(...)`（如果不需要等待结果）
+
+10. **Route 方法规范**：
+   - `_routerHandle()` 必须是 **private async func**：`Future<void> _routerHandle(...) async`
+   - 方法名使用下划线前缀表示私有方法
+   - 调用时使用 `await _routerHandle(...)` 或 `_routerHandle(...)`（如果不需要等待结果）
+
+11. **Interactive 和 Route 的 Switch Case 代码行数规则**：
+   - **单个 switch case 内的代码超过十行**：必须移到 page controller 的私有方法（func）中处理
+   - **单个 switch case 内的代码未超过十行**：可以在 case 内直接处理
    - Interactive 和 Route 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
    - **例外**：Route 中 `showDialog` 需要传入较多参数（如多个 callback、复杂配置等）的情况不算复杂逻辑，可以保留在 Route 中
+
+12. **if / for 程式碼風格規範**：
+   - 所有 `if` 條件必須使用大括號：
+     - ✅ `if (condition) { ... }`
+     - ❌ `if (condition) doSomething();`
+   - `if` 區塊**上下各保留一行空行**，以增加可讀性（巢狀 `if` 亦建議遵守，除非明顯影響段落結構）
+   - 所有 `for` / `for in` 迴圈同樣必須使用大括號，且迴圈區塊上下各保留一行空行：
+     - ✅
+       ```dart
+       for (final item in items) {
+         // ...
+       }
+       ```
+     - ❌ `for (final item in items) doSomething(item);`
 
 ## 示例结构
 

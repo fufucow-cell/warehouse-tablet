@@ -204,7 +204,7 @@ enum Enum$_featureClassName${_pageClassName}PageInteractive {
 }
 
 extension $_featureClassName${_pageClassName}PageUserEventExtension on $_featureClassName${_pageClassName}PageController {
-  void interactive(Enum$_featureClassName${_pageClassName}PageInteractive type, {dynamic data}) {
+  Future<void> _interactive(Enum$_featureClassName${_pageClassName}PageInteractive type, {dynamic data}) async {
     switch (type) {
       case Enum$_featureClassName${_pageClassName}PageInteractive.tapSomeWidget:
         break;
@@ -227,7 +227,7 @@ enum Enum$_featureClassName${_pageClassName}PageRoute {
 }
 
 extension $_featureClassName${_pageClassName}PageRouteExtension on $_featureClassName${_pageClassName}PageController {
-  void routerHandle(Enum$_featureClassName${_pageClassName}PageRoute type, {dynamic data}) {
+  Future<void> _routerHandle(Enum$_featureClassName${_pageClassName}PageRoute type, {dynamic data}) async {
     switch (type) {
       case Enum$_featureClassName${_pageClassName}PageRoute.goOtherPage:
         break;

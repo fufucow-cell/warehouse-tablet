@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-22T15:57:13.508115
+/// 生成时间: 2026-01-27T16:39:48.087869
 library;
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,8 @@ enum EnumImage {
   cArrowRight,
   cArrowUp,
   cArrowUp2,
+  cBackgroundWind1,
+  cBackgroundWind2,
   cCabinet,
   cCamera,
   cCategory,
@@ -33,6 +35,7 @@ enum EnumImage {
   cGatewayMore,
   cGatewayStatusOff,
   cGatewayStatusOn,
+  cHelp,
   cHistory,
   cHouse,
   cInfo,

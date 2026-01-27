@@ -11,6 +11,7 @@ enum EnumAppMainRouter {
   warehouse,
   circuitBreaker,
   waterValue,
+  airBox,
   setting;
 
   static EnumAppMainRouter get defaultRouter => EnumAppMainRouter.household;
@@ -22,6 +23,7 @@ enum EnumAppMainRouter {
         warehouse => const SmartHomeWarehousePage(),
         circuitBreaker => const SmartHomeCircuitBreakerPage(),
         waterValue => const SmartHomeWaterValuePage(),
+        airBox => const SmartHomeAirBoxPage(),
         setting => const SmartHomeSettingPage(),
       };
 }
@@ -32,6 +34,7 @@ enum EnumAppMainTabItem {
   warehouse(Icons.warehouse),
   circuitBreaker(Icons.power_settings_new),
   waterValue(Icons.water_drop),
+  airBox(Icons.air),
   setting(Icons.settings);
 
   const EnumAppMainTabItem(this.icon);
@@ -44,6 +47,7 @@ enum EnumAppMainTabItem {
         warehouse => EnumLocale.smartHomeTabWarehouse,
         circuitBreaker => EnumLocale.smartHomeTabCircuitBreaker,
         waterValue => EnumLocale.smartHomeTabWaterValue,
+        airBox => EnumLocale.smartHomeTabAirBox,
         setting => EnumLocale.smartHomeTabSetting,
       };
 
@@ -55,6 +59,7 @@ enum EnumAppMainTabItem {
         warehouse => EnumAppMainRouter.warehouse,
         circuitBreaker => EnumAppMainRouter.circuitBreaker,
         waterValue => EnumAppMainRouter.waterValue,
+        airBox => EnumAppMainRouter.airBox,
         setting => EnumAppMainRouter.setting,
       };
 }
