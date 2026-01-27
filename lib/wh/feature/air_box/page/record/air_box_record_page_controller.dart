@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:engo_terminal_app3/wh/feature/air_box/page/record/air_box_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/air_box/page/reference/air_box_reference_page.dart';
 import 'package:engo_terminal_app3/wh/feature/air_box/page/reference/air_box_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_box/service/air_box_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_date_format.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
@@ -17,6 +18,7 @@ class AirBoxRecordPageController extends GetxController {
   // MARK: - Properties
 
   final _model = AirBoxRecordPageModel();
+  final _service = AirBoxService.instance;
   List<EnumAirBoxDataType> get dataTypeList => EnumAirBoxDataType.values;
   RxReadonly<EnumTimeFilter> get selectedTimeFilterRx => _model.selectedTimeFilter.readonly;
   RxReadonly<EnumAirBoxDataType> get selectedDataTypeRx => _model.selectedDataType.readonly;

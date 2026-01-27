@@ -1,5 +1,7 @@
 import 'package:engo_terminal_app3/wh/feature/air_box/page/main/air_box_main_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/air_box/page/main/air_box_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_box/page/reference/air_box_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_box/service/air_box_service.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
@@ -20,7 +22,7 @@ class AirBoxMainPage extends GetView<AirBoxMainPageController> {
     return GetBuilder<AirBoxMainPageController>(
       init: AirBoxMainPageController(routerData),
       builder: (controller) {
-        controller.setContext(context);
+        AirBoxService.register().setContext(context);
         return Scaffold(
           body: AirBackgroundCard(
             child: Stack(
@@ -38,17 +40,15 @@ class AirBoxMainPage extends GetView<AirBoxMainPageController> {
                 Column(
                   children: [
                     const _TopBar(),
-                    Container(
-                      alignment: Alignment.center,
-                      height: 600.0.scale,
-                      child: const _Pm25Display(),
-                    ),
+                    const _FirstDisplay(),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
                           children: [
-                            const _DataCard(),
-                            SizedBox(height: 48.0.scale),
+                            if (controller.visibleDataTypes.length > 1) ...[
+                              _SensorDataSection(),
+                              SizedBox(height: 48.0.scale),
+                            ],
                             const _DataRecordSection(),
                             SizedBox(height: 32.0.scale),
                           ],
@@ -119,127 +119,136 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-class _Pm25Display extends StatelessWidget {
-  const _Pm25Display();
+class _FirstDisplay extends StatelessWidget {
+  const _FirstDisplay();
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirBoxMainPageController>();
-    return Obx(
-      () => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+    return Container(
+      alignment: Alignment.center,
+      height: 600.0.scale,
+      child: Obx(
+        () {
+          final visibleDataTypes = controller.visibleDataTypes;
+          if (visibleDataTypes.isEmpty) {
+            return const SizedBox.shrink();
+          }
+
+          final type = visibleDataTypes.first;
+          final value = controller.getValueForDataType(type);
+          Color color = EnumColor.accentBlue.color;
+          final level = type.getReferenceLevelByValue(null, value);
+
+          if (level != null) {
+            color = level.color;
+          }
+
+          return Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 33.0.scale,
-                height: 33.0.scale,
-                decoration: ShapeDecoration(
-                  color: EnumColor.accentGreen.color,
-                  shape: const OvalBorder(),
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 33.0.scale,
+                    height: 33.0.scale,
+                    decoration: ShapeDecoration(
+                      color: EnumColor.accentBlue.color,
+                      shape: const OvalBorder(),
+                    ),
+                  ),
+                  SizedBox(width: 20.0.scale),
+                  CustTextWidget(
+                    type.title.tr,
+                    size: 40.0.scale,
+                    weightType: EnumFontWeightType.regular,
+                    color: EnumColor.accentBlue.color,
+                  ),
+                ],
               ),
-              SizedBox(width: 20.0.scale),
-              CustTextWidget(
-                'PM2.5 ',
-                size: 40.0.scale,
-                weightType: EnumFontWeightType.regular,
-                color: EnumColor.accentGreen.color,
+              SizedBox(height: 8.0.scale),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CustTextWidget(
+                    value,
+                    size: 180.0.scale,
+                    weightType: EnumFontWeightType.bold,
+                    color: color,
+                  ),
+                  if (level != null) ...[
+                    SizedBox(width: 24.0.scale),
+                    CustTextWidget(
+                      level.statusLocale.tr,
+                      size: 40.0.scale,
+                      weightType: EnumFontWeightType.regular,
+                      color: color,
+                    ),
+                  ],
+                ],
               ),
             ],
-          ),
-          SizedBox(height: 8.0.scale),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              CustTextWidget(
-                controller.pm25Rx.value.isNotEmpty ? controller.pm25Rx.value : '0',
-                size: 180.0.scale,
-                weightType: EnumFontWeightType.bold,
-                color: EnumColor.accentBlue.color,
-              ),
-              SizedBox(width: 24.0.scale),
-              CustTextWidget(
-                controller.pm25StatusRx.value.isNotEmpty ? controller.pm25StatusRx.value : '良好',
-                size: 40.0.scale,
-                weightType: EnumFontWeightType.regular,
-                color: EnumColor.accentBlue.color,
-              ),
-            ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
-class _DataCard extends StatelessWidget {
-  const _DataCard();
-
+class _SensorDataSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirBoxMainPageController>();
     return Obx(
-      () => Container(
-        width: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 32.0.scale, vertical: 16.0.scale),
-        decoration: ShapeDecoration(
-          gradient: RadialGradient(
-            center: Alignment.topCenter,
-            radius: 15.0.scale,
-            colors: EnumColor.airBoxDataCardGradient.colors,
+      () {
+        final visibleDataTypes = controller.visibleDataTypes;
+        if (visibleDataTypes.length <= 1) {
+          return const SizedBox.shrink();
+        }
+
+        final List<Widget> widgets = [];
+        final remainingDataTypes = visibleDataTypes.skip(1).toList();
+
+        for (int i = 0; i < remainingDataTypes.length; i++) {
+          if (i > 0) {
+            widgets.add(const _Divider());
+          }
+          widgets.add(
+            Expanded(
+              child: _DataItem(
+                type: remainingDataTypes[i],
+                value: controller.getValueForDataType(remainingDataTypes[i]),
+              ),
+            ),
+          );
+        }
+
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 32.0.scale, vertical: 16.0.scale),
+          decoration: ShapeDecoration(
+            gradient: RadialGradient(
+              center: Alignment.topCenter,
+              radius: 15.0.scale,
+              colors: EnumColor.airBoxDataCardGradient.colors,
+            ),
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                width: 1.0.scale,
+                color: EnumColor.engoButtonBorderReverse.color,
+              ),
+              borderRadius: BorderRadius.circular(12.0.scale),
+            ),
           ),
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 1.0.scale,
-              color: EnumColor.engoButtonBorderReverse.color,
-            ),
-            borderRadius: BorderRadius.circular(12.0.scale),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: widgets,
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: _DataItem(
-                label: EnumLocale.airBoxCurrentTemperature.tr,
-                value: controller.temperatureRx.value.isNotEmpty ? '${controller.temperatureRx.value}°C' : '--',
-              ),
-            ),
-            const _Divider(),
-            Expanded(
-              child: _DataItem(
-                label: EnumLocale.airBoxCurrentHumidity.tr,
-                value: controller.humidityRx.value.isNotEmpty ? '${controller.humidityRx.value}%' : '--',
-              ),
-            ),
-            const _Divider(),
-            Expanded(
-              child: _DataItem(
-                label: EnumLocale.airBoxFormaldehydeValue.tr,
-                value: controller.formaldehydeRx.value.isNotEmpty ? controller.formaldehydeRx.value : '--',
-              ),
-            ),
-            const _Divider(),
-            Expanded(
-              child: _DataItem(
-                label: EnumLocale.airBoxVocValue.tr,
-                value: controller.vocRx.value.isNotEmpty ? controller.vocRx.value : '--',
-              ),
-            ),
-            const _Divider(),
-            Expanded(
-              child: _DataItem(
-                label: EnumLocale.airBoxCo2Value.tr,
-                value: controller.co2Rx.value.isNotEmpty ? controller.co2Rx.value : '--',
-              ),
-            ),
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -258,16 +267,23 @@ class _Divider extends StatelessWidget {
 }
 
 class _DataItem extends StatelessWidget {
-  final String label;
+  final EnumAirBoxDataType type;
   final String value;
 
   const _DataItem({
-    required this.label,
+    required this.type,
     required this.value,
   });
 
   @override
   Widget build(BuildContext context) {
+    Color color = EnumColor.accentBlue.color;
+    final level = type.getReferenceLevelByValue(null, value);
+
+    if (level != null) {
+      color = level.color;
+    }
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -275,7 +291,7 @@ class _DataItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustTextWidget(
-            label,
+            type.title.tr,
             size: 26.0.scale,
             weightType: EnumFontWeightType.regular,
             color: EnumColor.textPrimary.color,
@@ -283,10 +299,10 @@ class _DataItem extends StatelessWidget {
           ),
           SizedBox(height: 16.0.scale),
           CustTextWidget(
-            value,
+            '$value ${type.unit}',
             size: 38.0.scale,
             weightType: EnumFontWeightType.bold,
-            color: EnumColor.accentBlue.color,
+            color: color,
             align: TextAlign.center,
           ),
         ],

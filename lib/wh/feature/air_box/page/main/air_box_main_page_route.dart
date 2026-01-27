@@ -6,25 +6,20 @@ enum EnumAirBoxMainPageRoute {
 
 extension AirBoxMainPageRouteExtension on AirBoxMainPageController {
   void _routerHandle(EnumAirBoxMainPageRoute type, {dynamic data}) {
-    print('_routerHandle called: type=$type, data=$data');
-    final context = _model.nestedNavigatorContext;
+    final context = _service.getNestedNavigatorContext;
 
     if (context == null) {
-      print('Error: nestedNavigatorContext is null');
       return;
     }
 
     switch (type) {
       case EnumAirBoxMainPageRoute.goToRecordPage:
-        print('Navigating to record page');
         if (data is AirBoxRecordPageRouterData) {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AirBoxRecordPage(routerData: data),
             ),
           );
-        } else {
-          print('Error: data is not AirBoxRecordPageRouterData, type: ${data.runtimeType}');
         }
     }
   }

@@ -8,7 +8,7 @@ enum EnumAirBoxRecordPageRoute {
 
 extension AirBoxRecordPageRouteExtension on AirBoxRecordPageController {
   Future<void> _routerHandle(EnumAirBoxRecordPageRoute type, {dynamic data}) async {
-    final context = _model.nestedNavigatorContext;
+    final context = _service.getNestedNavigatorContext;
 
     if (context == null) {
       return;
@@ -18,13 +18,9 @@ extension AirBoxRecordPageRouteExtension on AirBoxRecordPageController {
       case EnumAirBoxRecordPageRoute.goBack:
         Navigator.of(context).pop();
       case EnumAirBoxRecordPageRoute.goHelpPage:
-        if (data is AirBoxReferencePageRouterData) {
-          await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AirBoxReferencePage(routerData: data),
-            ),
-          );
-        }
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => AirBoxReferencePage(type: _model.selectedDataType.value)),
+        );
       case EnumAirBoxRecordPageRoute.showDatePicker:
         final selectedDate = _model.selectedDate.value;
         final timeFilter = _model.selectedTimeFilter.value;

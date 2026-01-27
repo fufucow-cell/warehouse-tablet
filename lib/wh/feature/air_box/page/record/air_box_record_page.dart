@@ -392,106 +392,130 @@ class _ChartSection extends StatelessWidget {
         final yAxisInterval = (yAxisMax - yAxisMin) / 5;
         final unit = controller.getUnit;
 
-        return LineChart(
-          LineChartData(
-            maxY: yAxisMax,
-            minY: yAxisMin,
-            lineTouchData: const LineTouchData(enabled: false),
-            titlesData: FlTitlesData(
-              show: true,
-              rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  getTitlesWidget: (value, meta) {
-                    if (timeFilter == EnumTimeFilter.day) {
-                      final hour = value.toInt();
-                      if (hour >= 0 && hour < 24 && hour % 4 == 0) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 8.0.scale),
-                          child: CustTextWidget(
-                            '${hour.toString().padLeft(2, '0')}:00',
-                            size: 24.0.scale,
-                            color: EnumColor.textSecondary.color,
-                          ),
-                        );
-                      }
-                    } else if (timeFilter == EnumTimeFilter.month) {
-                      final day = value.toInt() + 1;
-                      if (day >= 1 && day <= 31 && day % 5 == 1) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 8.0.scale),
-                          child: CustTextWidget(
-                            day.toString(),
-                            size: 24.0.scale,
-                            color: EnumColor.textSecondary.color,
-                          ),
-                        );
-                      }
-                    } else {
-                      final month = value.toInt() + 1;
-                      if (month >= 1 && month <= 12) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 8.0.scale),
-                          child: CustTextWidget(
-                            month.toString(),
-                            size: 24.0.scale,
-                            color: EnumColor.textSecondary.color,
-                          ),
-                        );
-                      }
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  reservedSize: 40.0.scale,
-                ),
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: CustTextWidget(
+                unit,
+                size: 24.0.scale,
+                color: EnumColor.textSecondary.color,
+                align: TextAlign.center,
               ),
-              leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 60.0.scale,
-                  interval: yAxisInterval,
-                  getTitlesWidget: (value, meta) {
-                    // 根據數據類型決定小數位數
-                    final isIntegerType = dataType == EnumAirBoxDataType.pm25 ||
-                        dataType == EnumAirBoxDataType.temperature ||
-                        dataType == EnumAirBoxDataType.humidity ||
-                        dataType == EnumAirBoxDataType.co2;
-                    final displayValue = isIntegerType ? value.toInt().toString() : value.toStringAsFixed(2);
-                    return Padding(
-                      padding: EdgeInsets.only(right: 8.0.scale),
-                      child: CustTextWidget(
-                        '$displayValue $unit',
-                        size: 24.0.scale,
-                        color: EnumColor.textSecondary.color,
-                        align: TextAlign.right,
+            ),
+            Expanded(
+              child: LineChart(
+                LineChartData(
+                  maxY: yAxisMax,
+                  minY: yAxisMin,
+                  lineTouchData: const LineTouchData(enabled: false),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    bottomTitles: AxisTitles(
+                      axisNameWidget: Padding(
+                        padding: EdgeInsets.only(top: 8.0.scale),
+                        child: CustTextWidget(
+                          timeFilter == EnumTimeFilter.day
+                              ? EnumLocale.airBoxChartAxisUnitHour.tr
+                              : timeFilter == EnumTimeFilter.month
+                                  ? EnumLocale.engoTabDay.tr
+                                  : EnumLocale.engoTabMonth.tr,
+                          size: 24.0.scale,
+                          color: EnumColor.textSecondary.color,
+                          align: TextAlign.center,
+                        ),
                       ),
-                    );
-                  },
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          if (timeFilter == EnumTimeFilter.day) {
+                            final hour = value.toInt();
+                            if (hour >= 0 && hour < 24 && hour % 4 == 0) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  '${hour.toString().padLeft(2, '0')}:00',
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          } else if (timeFilter == EnumTimeFilter.month) {
+                            final day = value.toInt() + 1;
+                            if (day >= 1 && day <= 31 && day % 5 == 1) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  day.toString(),
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          } else {
+                            final month = value.toInt() + 1;
+                            if (month >= 1 && month <= 12) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  month.toString(),
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          }
+                          return const SizedBox.shrink();
+                        },
+                        reservedSize: 40.0.scale,
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 60.0.scale,
+                        interval: yAxisInterval,
+                        getTitlesWidget: (value, meta) {
+                          // 根據數據類型決定小數位數
+                          final displayValue = dataType.isIntegerType ? value.toInt().toString() : value.toStringAsFixed(2);
+                          return Padding(
+                            padding: EdgeInsets.only(right: 8.0.scale),
+                            child: CustTextWidget(
+                              displayValue,
+                              size: 24.0.scale,
+                              color: EnumColor.textSecondary.color,
+                              align: TextAlign.right,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: false,
+                    horizontalInterval: yAxisInterval,
+                    getDrawingHorizontalLine: (value) {
+                      return FlLine(
+                        color: EnumColor.lineDivider.color,
+                        strokeWidth: 1.0.scale,
+                      );
+                    },
+                  ),
+                  borderData: FlBorderData(
+                    show: true,
+                    border: Border.all(
+                      color: EnumColor.lineBorder.color,
+                      width: 1.0.scale,
+                    ),
+                  ),
+                  lineBarsData: controller.getLineChartBars,
                 ),
               ),
             ),
-            gridData: FlGridData(
-              show: true,
-              drawVerticalLine: false,
-              horizontalInterval: yAxisInterval,
-              getDrawingHorizontalLine: (value) {
-                return FlLine(
-                  color: EnumColor.lineDivider.color,
-                  strokeWidth: 1.0.scale,
-                );
-              },
-            ),
-            borderData: FlBorderData(
-              show: true,
-              border: Border.all(
-                color: EnumColor.lineBorder.color,
-                width: 1.0.scale,
-              ),
-            ),
-            lineBarsData: controller.getLineChartBars,
-          ),
+          ],
         );
       },
     );

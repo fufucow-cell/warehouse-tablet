@@ -13,13 +13,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AirBoxReferencePage extends GetView<AirBoxReferencePageController> {
-  final AirBoxReferencePageRouterData routerData;
-  const AirBoxReferencePage({super.key, required this.routerData});
+  final EnumAirBoxDataType? type;
+  const AirBoxReferencePage({super.key, this.type});
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AirBoxReferencePageController>(
-      init: AirBoxReferencePageController(routerData),
+      init: AirBoxReferencePageController(type),
       builder: (controller) {
         controller.setContext(context);
         return Scaffold(
@@ -27,8 +27,6 @@ class AirBoxReferencePage extends GetView<AirBoxReferencePageController> {
             child: Column(
               children: [
                 const _TopBar(),
-                SizedBox(height: 48.0.scale),
-                _DeviceName(),
                 SizedBox(height: 48.0.scale),
                 Expanded(
                   child: SingleChildScrollView(
@@ -75,36 +73,15 @@ class _TopBar extends StatelessWidget {
         Expanded(
           child: Center(
             child: CustTextWidget(
-              EnumLocale.airBoxTitle.tr,
+              EnumLocale.airBoxReferenceTitle.tr,
               size: 40.0.scale,
               weightType: EnumFontWeightType.bold,
               color: EnumColor.textPrimary.color,
             ),
           ),
         ),
-        CustIconButton(
-          icon: EnumImage.cSetting,
-          size: 62.0.scale,
-          color: EnumColor.engoTextPrimary.color,
-          onTap: () {
-            controller.interactive(EnumAirBoxReferencePageInteractive.tapSettingButton);
-          },
-        ),
+        SizedBox(width: 80.0.scale),
       ],
-    );
-  }
-}
-
-class _DeviceName extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<AirBoxReferencePageController>();
-    return CustTextWidget(
-      controller.deviceName,
-      size: 32.0.scale,
-      weightType: EnumFontWeightType.regular,
-      color: EnumColor.textPrimary.color,
-      align: TextAlign.center,
     );
   }
 }
@@ -115,7 +92,7 @@ class _ParameterSelector extends StatelessWidget {
     final controller = Get.find<AirBoxReferencePageController>();
     return Obx(
       () => CustTextDropdownButton(
-        width: 280.0.scale,
+        width: 380.0.scale,
         height: 70.0.scale,
         selectedValue: controller.getDataTypeNames()[controller.selectedDataTypeRx.value.index],
         values: controller.getDataTypeNames(),
@@ -143,7 +120,7 @@ class _ParameterInfo extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Container(
+        return SizedBox(
           width: 768.0.scale,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -186,17 +163,12 @@ class _LevelList extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Container(
-          width: 683.0.scale,
+        return ConstrainedBox(
+          constraints: BoxConstraints(minWidth: 683.0.scale),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _UnitDisplay(
-                unit: standard.unit,
-                parameterName: standard.titleLocale.tr,
-              ),
-              SizedBox(height: 48.0.scale),
               ...standard.levels.map((level) => _LevelItem(level: level)),
             ],
           ),
@@ -217,7 +189,7 @@ class _UnitDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 227.0.scale,
       height: 74.0.scale,
       child: Stack(
@@ -226,7 +198,7 @@ class _UnitDisplay extends StatelessWidget {
             left: 0,
             top: 18,
             child: CustTextWidget(
-              '$parameterName規格($unit)',
+              '$parameterName($unit)',
               size: 32.0.scale,
               weightType: EnumFontWeightType.regular,
               color: EnumColor.textPrimary.color,
@@ -249,7 +221,7 @@ class _LevelItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -8,11 +8,9 @@ extension AirBoxReferencePageRouteExtension on AirBoxReferencePageController {
   void routerHandle(EnumAirBoxReferencePageRoute type, {dynamic data}) {
     switch (type) {
       case EnumAirBoxReferencePageRoute.goBack:
-        final context = _model.nestedNavigatorContext;
+        final context = _service.getNestedNavigatorContext;
         if (context != null && Navigator.of(context).canPop()) {
           Navigator.of(context).pop();
-        } else {
-          _model.routerData?.onBackButtonTap?.call();
         }
     }
   }

@@ -1,4 +1,5 @@
 import 'package:engo_terminal_app3/wh/feature/air_box/page/reference/air_box_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_box/service/air_box_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter/material.dart';
@@ -11,19 +12,21 @@ class AirBoxReferencePageController extends GetxController {
   // MARK: - Properties
 
   final _model = AirBoxReferencePageModel();
+  AirBoxService get _service => AirBoxService.instance;
   RxReadonly<EnumAirBoxDataType> get selectedDataTypeRx => _model.selectedDataType.readonly;
-  String get deviceName => _model.routerData?.deviceName ?? '';
 
   // MARK: - Init
 
-  AirBoxReferencePageController(AirBoxReferencePageRouterData routerData) {
-    _model.routerData = routerData;
+  AirBoxReferencePageController(EnumAirBoxDataType? type) {
+    if (type != null) {
+      _model.selectedDataType.value = type;
+    }
   }
 
   // MARK: - Public Method
 
   void setContext(BuildContext context) {
-    _model.nestedNavigatorContext = context;
+    _service.setContext(context);
   }
 
   ReferenceStandard? getCurrentStandard() {

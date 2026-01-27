@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-27T16:59:54.230012
+/// 生成时间: 2026-01-27T21:35:18.218137
 library;
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,9 @@ enum EnumColor {
   accentRed,
   accentYellow,
   airBoxDataCardGradient,
+  airBoxStatusBad,
+  airBoxStatusGood,
+  airBoxStatusVeryBad,
   backgroundAccentBlue,
   backgroundAccentGreen,
   backgroundAccentRed,

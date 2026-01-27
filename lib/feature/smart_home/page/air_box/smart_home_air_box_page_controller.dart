@@ -15,8 +15,40 @@ part 'smart_home_air_box_page_route.dart';
 class SmartHomeAirBoxPageController extends GetxController {
   final _model = SmartHomeAirBoxPageModel();
   final _service = SmartHomeService.instance;
+  final _random = Random();
 
   SmartHomeAirBoxPageController();
+
+  AirBoxSensorDataModel _generateRandomData() {
+    double generateValue(EnumAirBoxDataType dataType) {
+      final min = dataType.defaultMin;
+      final max = dataType.defaultMax;
+      return min + _random.nextDouble() * (max - min);
+    }
+
+    String formatValue(EnumAirBoxDataType dataType, double value) {
+      if (dataType.isIntegerType) {
+        return value.toInt().toString();
+      } else {
+        // 根據不同類型決定小數位數
+        return switch (dataType) {
+          EnumAirBoxDataType.formaldehyde => value.toStringAsFixed(3),
+          EnumAirBoxDataType.voc => value.toStringAsFixed(2),
+          EnumAirBoxDataType.co2 => value.toStringAsFixed(3),
+          _ => value.toStringAsFixed(1),
+        };
+      }
+    }
+
+    return AirBoxSensorDataModel(
+      pm25: formatValue(EnumAirBoxDataType.pm25, generateValue(EnumAirBoxDataType.pm25)),
+      temperature: formatValue(EnumAirBoxDataType.temperature, generateValue(EnumAirBoxDataType.temperature)),
+      humidity: formatValue(EnumAirBoxDataType.humidity, generateValue(EnumAirBoxDataType.humidity)),
+      formaldehyde: formatValue(EnumAirBoxDataType.formaldehyde, generateValue(EnumAirBoxDataType.formaldehyde)),
+      voc: formatValue(EnumAirBoxDataType.voc, generateValue(EnumAirBoxDataType.voc)),
+      co2: formatValue(EnumAirBoxDataType.co2, generateValue(EnumAirBoxDataType.co2)),
+    );
+  }
 
   void setContext(BuildContext context) {
     _model.context = context;
@@ -36,13 +68,6 @@ class SmartHomeAirBoxPageController extends GetxController {
         EnumAirBoxDataType.voc,
         EnumAirBoxDataType.co2,
       ],
-      pm25: '5',
-      pm25Status: '良好',
-      temperature: '26.6',
-      humidity: '60',
-      formaldehyde: '0.02',
-      voc: '0.3',
-      co2: '0.05',
       onBackButtonTap: () {
         routerHandle(EnumSmartHomeAirBoxPageRoute.showSnackBar, data: SnackBarData('點擊返回'));
       },
@@ -56,8 +81,8 @@ class SmartHomeAirBoxPageController extends GetxController {
       onDataRecordItemTap: () async {
         return Future.value(getAirBoxRecordPageRouterData);
       },
-      onDataUpdate: (AirBoxDataModel data) {
-        // 数据更新处理
+      onDataUpdate: () {
+        return _generateRandomData();
       },
     );
   }
@@ -73,34 +98,29 @@ class SmartHomeAirBoxPageController extends GetxController {
     );
   }
 
-  AirBoxReferencePageRouterData get getAirBoxReferencePageRouterData {
-    return AirBoxReferencePageRouterData(
-      deviceName: '中山區-臥室1',
-      onBackButtonTap: () {
-        final context = _model.context;
-        if (context != null && Navigator.of(context).canPop()) {
-          Navigator.of(context).pop();
-        }
-      },
-      onSettingButtonTap: () {
-        routerHandle(EnumSmartHomeAirBoxPageRoute.showSnackBar, data: SnackBarData('點擊設定'));
-      },
-    );
+  EnumAirBoxDataType? get getAirBoxReferencePageRouterData {
+    // 返回 null 表示使用預設類型，或可以返回特定類型
+    return null;
   }
 
   List<ChartDataModel> _getChartData(EnumTimeFilter timeFilter, EnumAirBoxDataType dataType) {
     final random = Random();
     final now = DateTime.now();
+    final min = dataType.defaultMin;
+    final max = dataType.defaultMax;
+    final range = max - min;
 
     switch (timeFilter) {
       case EnumTimeFilter.day:
         return List.generate(24, (index) {
           final hour = index;
           final date = DateTime(now.year, now.month, now.day, hour);
-          final baseValue = 20.0 + (hour * 2.0) + random.nextDouble() * 10.0;
+          // 根據小時產生變化，加上隨機波動
+          final hourFactor = hour / 23.0; // 0.0 到 1.0
+          final baseValue = min + (hourFactor * range * 0.6) + (random.nextDouble() * range * 0.4);
           return ChartDataModel(
             date: date,
-            number: baseValue.clamp(15.0, 35.0),
+            number: baseValue.clamp(min, max),
           );
         });
       case EnumTimeFilter.month:
@@ -108,20 +128,24 @@ class SmartHomeAirBoxPageController extends GetxController {
         return List.generate(daysInMonth, (index) {
           final day = index + 1;
           final date = DateTime(now.year, now.month, day);
-          final baseValue = 25.0 + random.nextDouble() * 10.0;
+          // 根據日期產生變化，加上隨機波動
+          final dayFactor = day / daysInMonth; // 0.0 到 1.0
+          final baseValue = min + (dayFactor * range * 0.5) + (random.nextDouble() * range * 0.5);
           return ChartDataModel(
             date: date,
-            number: baseValue.clamp(20.0, 35.0),
+            number: baseValue.clamp(min, max),
           );
         });
       case EnumTimeFilter.year:
         return List.generate(12, (index) {
           final month = index + 1;
           final date = DateTime(now.year, month, 15);
-          final baseValue = 25.0 + random.nextDouble() * 8.0;
+          // 根據月份產生變化，加上隨機波動
+          final monthFactor = month / 12.0; // 0.0 到 1.0
+          final baseValue = min + (monthFactor * range * 0.5) + (random.nextDouble() * range * 0.5);
           return ChartDataModel(
             date: date,
-            number: baseValue.clamp(20.0, 33.0),
+            number: baseValue.clamp(min, max),
           );
         });
     }

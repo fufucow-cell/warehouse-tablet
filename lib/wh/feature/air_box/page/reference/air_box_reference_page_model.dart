@@ -1,23 +1,10 @@
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AirBoxReferencePageModel {
-  AirBoxReferencePageRouterData? routerData;
-  BuildContext? nestedNavigatorContext;
   final selectedDataType = EnumAirBoxDataType.pm25.obs;
-}
-
-class AirBoxReferencePageRouterData {
-  final String deviceName;
-  final VoidCallback? onBackButtonTap;
-  final VoidCallback? onSettingButtonTap;
-
-  const AirBoxReferencePageRouterData({
-    required this.deviceName,
-    this.onBackButtonTap,
-    this.onSettingButtonTap,
-  });
 }
 
 /// 级距标准模型
@@ -26,7 +13,7 @@ class ReferenceLevel {
   final Color color;
   final EnumLocale statusLocale;
 
-  const ReferenceLevel({
+  ReferenceLevel({
     required this.range,
     required this.color,
     required this.statusLocale,
@@ -78,6 +65,16 @@ enum EnumAirBoxDataType {
         EnumAirBoxDataType.co2 => '%',
       };
 
+  /// 是否為整數類型（用於圖表顯示）
+  bool get isIntegerType => switch (this) {
+        EnumAirBoxDataType.pm25 => true,
+        EnumAirBoxDataType.temperature => true,
+        EnumAirBoxDataType.humidity => true,
+        EnumAirBoxDataType.formaldehyde => false,
+        EnumAirBoxDataType.voc => false,
+        EnumAirBoxDataType.co2 => true,
+      };
+
   /// 取得預設最大值（用於圖表 Y 軸）
   double get defaultMax => switch (this) {
         EnumAirBoxDataType.pm25 => 150.0,
@@ -108,135 +105,145 @@ enum EnumAirBoxDataType {
   /// 取得參考級距列表
   List<ReferenceLevel> get referenceLevels => switch (this) {
         EnumAirBoxDataType.pm25 => [
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0-35',
-              color: Color(0xFF40CE5F),
+              color: EnumColor.airBoxStatusGood.color,
               statusLocale: EnumLocale.airBoxStatusGood,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '36-53',
-              color: Color(0xFFFFCF21),
+              color: EnumColor.accentYellow.color,
               statusLocale: EnumLocale.airBoxStatusModerate,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '54-70',
-              color: Color(0xFFF88125),
+              color: EnumColor.airBoxStatusBad.color,
               statusLocale: EnumLocale.airBoxStatusBad,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '71-150',
-              color: Color(0xFFEF4425),
+              color: EnumColor.airBoxStatusVeryBad.color,
               statusLocale: EnumLocale.airBoxStatusVeryBad,
             ),
           ],
         EnumAirBoxDataType.temperature => [
-            const ReferenceLevel(
-              range: '22-26',
-              color: Color(0xFF40CE5F),
+            ReferenceLevel(
+              range: '<16',
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxTemperatureStatusCold,
+            ),
+            ReferenceLevel(
+              range: '16-20',
+              color: EnumColor.accentYellow.color,
+              statusLocale: EnumLocale.airBoxTemperatureStatusCool,
+            ),
+            ReferenceLevel(
+              range: '20-26',
+              color: EnumColor.airBoxStatusGood.color,
               statusLocale: EnumLocale.airBoxTemperatureStatusComfortable,
             ),
-            const ReferenceLevel(
-              range: '18-22|26-28',
-              color: Color(0xFFFFCF21),
-              statusLocale: EnumLocale.airBoxTemperatureStatusModerate,
+            ReferenceLevel(
+              range: '26-30',
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxTemperatureStatusHot,
             ),
-            const ReferenceLevel(
-              range: '16-18|28-30',
-              color: Color(0xFFF88125),
-              statusLocale: EnumLocale.airBoxTemperatureStatusUncomfortable,
-            ),
-            const ReferenceLevel(
-              range: '<16|>30',
-              color: Color(0xFFEF4425),
-              statusLocale: EnumLocale.airBoxTemperatureStatusVeryUncomfortable,
+            ReferenceLevel(
+              range: '>30',
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxTemperatureStatusVeryHot,
             ),
           ],
         EnumAirBoxDataType.humidity => [
-            const ReferenceLevel(
-              range: '40-60',
-              color: Color(0xFF40CE5F),
-              statusLocale: EnumLocale.airBoxHumidityStatusGood,
+            ReferenceLevel(
+              range: '<30',
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxHumidityStatusDry,
             ),
-            const ReferenceLevel(
-              range: '30-40|60-70',
-              color: Color(0xFFFFCF21),
+            ReferenceLevel(
+              range: '30-50',
+              color: EnumColor.airBoxStatusGood.color,
+              statusLocale: EnumLocale.airBoxHumidityStatusComfortable,
+            ),
+            ReferenceLevel(
+              range: '50-70',
+              color: EnumColor.accentYellow.color,
               statusLocale: EnumLocale.airBoxHumidityStatusModerate,
             ),
-            const ReferenceLevel(
-              range: '20-30|70-80',
-              color: Color(0xFFF88125),
-              statusLocale: EnumLocale.airBoxHumidityStatusBad,
+            ReferenceLevel(
+              range: '70-80',
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxHumidityStatusHumid,
             ),
-            const ReferenceLevel(
-              range: '<20|>80',
-              color: Color(0xFFEF4425),
-              statusLocale: EnumLocale.airBoxHumidityStatusVeryBad,
+            ReferenceLevel(
+              range: '>80',
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxHumidityStatusVeryHumid,
             ),
           ],
         EnumAirBoxDataType.formaldehyde => [
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0-0.03',
-              color: Color(0xFF40CE5F),
-              statusLocale: EnumLocale.airBoxStatusGood,
+              color: EnumColor.airBoxStatusGood.color,
+              statusLocale: EnumLocale.airBoxFormaldehydeStatusSafe,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.03-0.05',
-              color: Color(0xFFFFCF21),
-              statusLocale: EnumLocale.airBoxStatusModerate,
+              color: EnumColor.accentYellow.color,
+              statusLocale: EnumLocale.airBoxFormaldehydeStatusModerate,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.05-0.08',
-              color: Color(0xFFF88125),
-              statusLocale: EnumLocale.airBoxStatusBad,
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxFormaldehydeStatusExceeded,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '>0.08',
-              color: Color(0xFFEF4425),
-              statusLocale: EnumLocale.airBoxStatusVeryBad,
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxFormaldehydeStatusDangerous,
             ),
           ],
         EnumAirBoxDataType.voc => [
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0-0.3',
-              color: Color(0xFF40CE5F),
-              statusLocale: EnumLocale.airBoxStatusGood,
+              color: EnumColor.airBoxStatusGood.color,
+              statusLocale: EnumLocale.airBoxVocStatusExcellent,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.3-0.5',
-              color: Color(0xFFFFCF21),
-              statusLocale: EnumLocale.airBoxStatusModerate,
+              color: EnumColor.accentYellow.color,
+              statusLocale: EnumLocale.airBoxVocStatusAcceptable,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.5-0.6',
-              color: Color(0xFFF88125),
-              statusLocale: EnumLocale.airBoxStatusBad,
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxVocStatusPoor,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '>0.6',
-              color: Color(0xFFEF4425),
-              statusLocale: EnumLocale.airBoxStatusVeryBad,
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxVocStatusHarmful,
             ),
           ],
         EnumAirBoxDataType.co2 => [
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0-0.05',
-              color: Color(0xFF40CE5F),
-              statusLocale: EnumLocale.airBoxStatusGood,
+              color: EnumColor.airBoxStatusGood.color,
+              statusLocale: EnumLocale.airBoxCo2StatusFresh,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.05-0.08',
-              color: Color(0xFFFFCF21),
-              statusLocale: EnumLocale.airBoxStatusModerate,
+              color: EnumColor.accentYellow.color,
+              statusLocale: EnumLocale.airBoxCo2StatusModerate,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '0.08-0.10',
-              color: Color(0xFFF88125),
-              statusLocale: EnumLocale.airBoxStatusBad,
+              color: EnumColor.airBoxStatusBad.color,
+              statusLocale: EnumLocale.airBoxCo2StatusStuffy,
             ),
-            const ReferenceLevel(
+            ReferenceLevel(
               range: '>0.10',
-              color: Color(0xFFEF4425),
-              statusLocale: EnumLocale.airBoxStatusVeryBad,
+              color: EnumColor.airBoxStatusVeryBad.color,
+              statusLocale: EnumLocale.airBoxCo2StatusVeryStuffy,
             ),
           ],
       };
@@ -246,46 +253,100 @@ enum EnumAirBoxDataType {
     return [
       ReferenceStandard(
         dataType: EnumAirBoxDataType.pm25,
-        titleLocale: EnumLocale.airBoxReferenceTitlePm25,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainPm25,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionPm25,
         unit: EnumAirBoxDataType.pm25.unit,
         levels: EnumAirBoxDataType.pm25.referenceLevels,
       ),
       ReferenceStandard(
         dataType: EnumAirBoxDataType.temperature,
-        titleLocale: EnumLocale.airBoxReferenceTitleTemperature,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainTemperature,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionTemperature,
         unit: EnumAirBoxDataType.temperature.unit,
         levels: EnumAirBoxDataType.temperature.referenceLevels,
       ),
       ReferenceStandard(
         dataType: EnumAirBoxDataType.humidity,
-        titleLocale: EnumLocale.airBoxReferenceTitleHumidity,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainHumidity,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionHumidity,
         unit: EnumAirBoxDataType.humidity.unit,
         levels: EnumAirBoxDataType.humidity.referenceLevels,
       ),
       ReferenceStandard(
         dataType: EnumAirBoxDataType.formaldehyde,
-        titleLocale: EnumLocale.airBoxReferenceTitleFormaldehyde,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainFormaldehyde,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionFormaldehyde,
         unit: EnumAirBoxDataType.formaldehyde.unit,
         levels: EnumAirBoxDataType.formaldehyde.referenceLevels,
       ),
       ReferenceStandard(
         dataType: EnumAirBoxDataType.voc,
-        titleLocale: EnumLocale.airBoxReferenceTitleVoc,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainVoc,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionVoc,
         unit: EnumAirBoxDataType.voc.unit,
         levels: EnumAirBoxDataType.voc.referenceLevels,
       ),
       ReferenceStandard(
         dataType: EnumAirBoxDataType.co2,
-        titleLocale: EnumLocale.airBoxReferenceTitleCo2,
+        titleLocale: EnumLocale.airBoxReferenceTitleExplainCo2,
         descriptionLocale: EnumLocale.airBoxReferenceDescriptionCo2,
         unit: EnumAirBoxDataType.co2.unit,
         levels: EnumAirBoxDataType.co2.referenceLevels,
       ),
     ];
+  }
+
+  /// 根據數值取得級距標準
+  ReferenceLevel? getReferenceLevelByValue(double? numValue, String? strValue) {
+    double? value;
+
+    if (numValue != null) {
+      value = numValue;
+    } else if (strValue != null && strValue.isNotEmpty && strValue != '-') {
+      value = double.tryParse(strValue.split(' ').first);
+    }
+
+    if (value == null) {
+      return null;
+    }
+
+    final levels = referenceLevels;
+    final finalValue = value;
+    for (final level in levels) {
+      if (_isValueInRange(finalValue, level.range)) {
+        return level;
+      }
+    }
+    return levels.last;
+  }
+
+  bool _isValueInRange(double value, String range) {
+    if (range.contains('-')) {
+      final parts = range.split('-');
+      if (parts.length == 2) {
+        final min = double.tryParse(parts[0]);
+        final max = double.tryParse(parts[1]);
+        if (min != null && max != null) {
+          return value >= min && value <= max;
+        }
+      }
+    }
+    if (range.contains('|')) {
+      final parts = range.split('|');
+      return parts.any((part) => _isValueInRange(value, part.trim()));
+    }
+    if (range.startsWith('<')) {
+      final max = double.tryParse(range.substring(1));
+      if (max != null) {
+        return value < max;
+      }
+    }
+    if (range.startsWith('>')) {
+      final min = double.tryParse(range.substring(1));
+      if (min != null) {
+        return value > min;
+      }
+    }
+    return false;
   }
 }

@@ -16,18 +16,18 @@ extension AirBoxMainPageInteractiveExtension on AirBoxMainPageController {
 
     switch (type) {
       case EnumAirBoxMainPageInteractive.tapBackButton:
-        routerData.onBackButtonTap?.call();
+        routerData.onBackButtonTap();
       case EnumAirBoxMainPageInteractive.tapEditButton:
-        routerData.onEditButtonTap?.call(_model.title.value).then((newName) {
+        routerData.onEditButtonTap(_model.title.value).then((newName) {
           if (newName != null) {
             _model.title.value = newName;
             update();
           }
         });
       case EnumAirBoxMainPageInteractive.tapSettingButton:
-        routerData.onSettingButtonTap?.call();
+        routerData.onSettingButtonTap();
       case EnumAirBoxMainPageInteractive.tapDataRecordButton:
-        routerData.onDataRecordItemTap?.call().then((recordRouterData) {
+        routerData.onDataRecordItemTap().then((recordRouterData) {
           _routerHandle(
             EnumAirBoxMainPageRoute.goToRecordPage,
             data: recordRouterData,
