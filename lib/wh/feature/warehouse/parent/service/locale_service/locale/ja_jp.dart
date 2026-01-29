@@ -176,6 +176,8 @@ const Map<String, String> zhTW = {
   'purifierFanSpeedWeak': '弱風',
   'purifierFanSpeedStrong': '強風',
   'purifierFilterLife': 'フィルター寿命',
+  'purifierFilterReset': 'フィルターリセット',
+  'purifierFilterSettings': 'フィルター設定',
   'purifierTabData': 'データ',
   'purifierTimerHour': '時間',
   'purifierTimerMinute': '分',

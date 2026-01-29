@@ -1,6 +1,6 @@
 /// 多语系 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-30T00:56:49.007793
+/// 生成时间: 2026-01-30T03:10:43.634119
 library;
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
@@ -180,6 +180,8 @@ enum EnumLocale {
   purifierFanSpeedStrong,
   purifierFanSpeedWeak,
   purifierFilterLife,
+  purifierFilterReset,
+  purifierFilterSettings,
   purifierModeAuto,
   purifierModeClose,
   purifierModeManual,

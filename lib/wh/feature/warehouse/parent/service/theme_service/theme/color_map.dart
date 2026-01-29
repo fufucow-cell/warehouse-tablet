@@ -65,6 +65,7 @@ enum EnumColor {
   menuBgFocused,
   menuIconDefault,
   menuIconFocused,
+  progressTrack,
   shadowCard,
   textLink,
   textPrimary,

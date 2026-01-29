@@ -163,6 +163,10 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x4DF1D0AD),
     dark: Color(0x4DF1D0AD),
   ),
+  'progressTrack': ColorData(
+    light: Color(0xFFD9D9D9),
+    dark: Color(0xFFD9D9D9),
+  ),
   'shadowCard': ColorData(
     light: Color(0x1F292929),
     dark: Color(0x1F292929),

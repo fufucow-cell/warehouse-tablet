@@ -46,7 +46,7 @@ class SmartHomeAirPurifierPageController extends GetxController {
       deviceName: '空氣清淨機',
       roomName: '客廳',
       isOn: true,
-      filterLifePercent: 75,
+      lifePercent: 75,
       initModel: EnumPurifierMode.auto,
       initFanSpeeds: EnumPurifierFanSpeed.weak,
       visibleDataTypes: [
@@ -78,22 +78,25 @@ class SmartHomeAirPurifierPageController extends GetxController {
       onTimerChanged: (int hours) {
         routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('計時變更: $hours 小時'));
       },
-      onFilterButtonTap: () async {
-        routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('點擊濾網'));
-        return AirQualityFilterPageRouterData(
-          lifeDays: 1,
-          lifePercent: 75,
-          onlifeDaysChanged: (days) {},
-          onFilterReset: () {},
-          onBackButtonTap: () {},
-        );
-      },
       onDataRecordButtonTap: () async {
         routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('點擊數據按鈕'));
         return getAirPurifierRecordPageRouterData;
       },
       onDataUpdate: () {
         return _generateRandomData();
+      },
+      onFilterButtonTap: () async {
+        routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('點擊濾網'));
+        return AirQualityFilterPageRouterData(
+          lifeDays: 1,
+          lifePercent: 75,
+          onlifeDaysChanged: (days) {
+            routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('濾網天數變更: $days 天'));
+          },
+          onFilterReset: () {
+            routerHandle(EnumSmartHomeAirPurifierPageRoute.showSnackBar, data: SnackBarData('濾網重置'));
+          },
+        );
       },
     );
   }

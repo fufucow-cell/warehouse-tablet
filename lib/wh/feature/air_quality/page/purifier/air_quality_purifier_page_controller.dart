@@ -56,7 +56,7 @@ class AirQualityPurifierPageController extends GetxController {
 
     _model.title.value = routerData.deviceName;
     _model.isOn.value = routerData.isOn;
-    _model.filterLifePercent.value = routerData.filterLifePercent;
+    _model.filterLifePercent.value = routerData.lifePercent;
     _model.currentMode.value = routerData.initModel;
     _model.currentFanSpeed.value = routerData.initFanSpeeds;
     _model.timerMinutes.value = 0;

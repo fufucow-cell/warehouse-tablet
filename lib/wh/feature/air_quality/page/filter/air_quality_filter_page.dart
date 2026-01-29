@@ -4,6 +4,7 @@ import 'package:engo_terminal_app3/wh/feature/air_quality/service/air_quality_se
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_field.dart';
@@ -25,47 +26,19 @@ class AirQualityFilterPage extends GetView<AirQualityFilterPageController> {
         AirQualityService.register().setContext(context);
         return Scaffold(
           body: AirBackgroundCard(
-            child: Stack(
+            child: Column(
               children: [
-                Positioned.fill(
-                  top: -50.0.scale,
-                  child: Container(
-                    alignment: Alignment.topCenter,
-                    child: EnumImage.cBackgroundWind2.image(
-                      size: Size.square(900.0.scale),
-                      fit: BoxFit.fill,
-                    ),
+                const _TopBar(),
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(child: _LeftInfoSection()),
+                      Expanded(child: _CircularProgress()),
+                    ],
                   ),
                 ),
-                Column(
-                  children: [
-                    const _TopBar(),
-                    SizedBox(height: 48.0.scale),
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            right: 0,
-                            top: 0,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: 757.0.scale,
-                                top: 175.0.scale,
-                              ),
-                              child: _CircularProgress(),
-                            ),
-                          ),
-                          Positioned(
-                            left: 123.0.scale,
-                            top: 467.0.scale,
-                            child: _LeftInfoSection(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 32.0.scale),
-                  ],
-                ),
+                SizedBox(height: 32.0.scale),
               ],
             ),
           ),
@@ -96,7 +69,7 @@ class _TopBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustTextWidget(
-                '濾網設定',
+                EnumLocale.purifierFilterSettings.tr,
                 size: 40.0.scale,
                 weightType: EnumFontWeightType.bold,
                 color: EnumColor.textPrimary.color,
@@ -114,55 +87,51 @@ class _CircularProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GetBuilder<AirQualityFilterPageController>(
-      builder: (_) {
-        final percent = controller.filterLifePercent;
-
-        return SizedBox(
-          width: 830.90.scale,
-          height: 830.90.scale,
-          child: Stack(
-            children: [
-              // 外层圆形（背景）
-              Positioned(
-                left: 2.90.scale,
-                top: 830.89.scale,
-                child: Transform.rotate(
-                  angle: -1.57, // -90度
+    // Expanded 會壓縮子組件，用 FittedBox 讓內部固定 700*700 再縮放適應，painter 才能拿到 700*700
+    return Obx(
+      () {
+        controller.isResetRx.value;
+        return FittedBox(
+          fit: BoxFit.contain,
+          child: SizedBox(
+            width: 700.0.scale,
+            height: 700.0.scale,
+            child: Stack(
+              children: [
+                // 圓形背景
+                Positioned.fill(
                   child: Container(
-                    width: 828.0.scale,
-                    height: 828.0.scale,
-                    decoration: ShapeDecoration(
-                      color: EnumColor.accentBlue.color,
-                      shape: const OvalBorder(),
+                    decoration: BoxDecoration(
+                      color: EnumColor.progressTrack.color,
+                      shape: BoxShape.circle,
                     ),
                   ),
                 ),
-              ),
-              // 进度条（使用 CustomPaint）
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _CircularProgressPainter(
-                    percent: percent,
-                    color: EnumColor.accentBlue.color,
+                // 圓圈進度條（中間層）
+                Positioned.fill(
+                  child: CustomPaint(
+                    painter: _CircularProgressPainter(
+                      percent: controller.filterLifePercent,
+                    ),
                   ),
                 ),
-              ),
-              // 内层内容
-              Positioned(
-                left: 45.45.scale,
-                top: 45.45.scale,
-                child: Container(
-                  width: 740.0.scale,
-                  height: 740.0.scale,
-                  decoration: BoxDecoration(
-                    color: EnumColor.backgroundSecondary.color,
-                    shape: BoxShape.circle,
+                // 圓形上的圖片（內縮，最上層）
+                Positioned.fill(
+                  child: Padding(
+                    padding: EdgeInsets.all(30.0.scale),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(EnumImage.cAirFilter.path),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
-                  // TODO: 添加图片或图标
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -172,24 +141,21 @@ class _CircularProgress extends StatelessWidget {
 
 class _CircularProgressPainter extends CustomPainter {
   final int percent;
-  final Color color;
 
   _CircularProgressPainter({
     required this.percent,
-    required this.color,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
-    // 进度条绘制在整个容器的中心
-    // 外层圆形尺寸：828x828，容器尺寸：830.90x830.90
+    final strokeWidth = 30.0.scale;
     final paint = Paint()
-      ..color = color
+      ..color = EnumColor.accentBlue.color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 20.0.scale; // 进度条宽度
+      ..strokeWidth = strokeWidth;
 
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = 828.0.scale / 2 - paint.strokeWidth / 2;
+    final radius = 350.0.scale - strokeWidth / 2;
 
     // 绘制进度条（从顶部开始，顺时针）
     final progressAngle = (percent / 100) * 2 * 3.14159;
@@ -206,7 +172,7 @@ class _CircularProgressPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _CircularProgressPainter oldDelegate) {
-    return oldDelegate.percent != percent || oldDelegate.color != color;
+    return oldDelegate.percent != percent;
   }
 }
 
@@ -214,33 +180,26 @@ class _LeftInfoSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GetBuilder<AirQualityFilterPageController>(
-      builder: (_) {
-        final filterLifePercent = controller.filterLifePercent;
-
-        return SizedBox(
-          width: 493.0.scale,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _FilterLifeDaysInput(),
-              SizedBox(height: 48.0.scale),
-              SizedBox(
-                width: 493.0.scale,
-                child: CustTextWidget(
-                  '濾網壽命:$filterLifePercent%',
-                  size: 32.0.scale,
-                  weightType: EnumFontWeightType.bold,
-                  color: EnumColor.textPrimary.color,
-                  align: TextAlign.center,
-                ),
-              ),
-              SizedBox(height: 48.0.scale),
-              _ResetButton(),
-            ],
-          ),
-        );
-      },
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Obx(
+          () {
+            controller.isResetRx.value;
+            return CustTextWidget(
+              '${EnumLocale.purifierFilterLife.tr}:${controller.filterLifePercent}%',
+              size: 32.0.scale,
+              weightType: EnumFontWeightType.bold,
+              color: EnumColor.textPrimary.color,
+              align: TextAlign.center,
+            );
+          },
+        ),
+        SizedBox(height: 48.0.scale),
+        _ResetButton(),
+        SizedBox(height: 48.0.scale),
+        _FilterLifeDaysInput(),
+      ],
     );
   }
 }
@@ -281,45 +240,38 @@ class _FilterLifeDaysInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GetBuilder<AirQualityFilterPageController>(
-      builder: (_) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 123.0.scale, vertical: 16.0.scale),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    width: 200.0.scale, // 固定宽度，可以根据需要调整
-                    child: CustTextField(
-                      controller: controller.filterLifeDaysController,
-                      textFieldType: EnumTextFieldType.integer,
-                      isReadOnly: !controller.isEditing,
-                      additionalInputFormatters: [
-                        _PositiveIntegerFormatter(),
-                      ],
-                      fontSize: 32.0.scale,
-                    ),
-                  ),
-                  SizedBox(width: 8.0.scale),
-                  CustTextWidget(
-                    '天',
-                    size: 32.0.scale,
-                    weightType: EnumFontWeightType.regular,
-                    color: EnumColor.textPrimary.color,
-                  ),
-                  SizedBox(width: 16.0.scale),
-                  _EditButton(),
-                  if (controller.isEditing) ...[
-                    SizedBox(width: 8.0.scale),
-                    _CancelButton(),
-                  ],
+    return Obx(
+      () {
+        final isEditing = controller.isEditingRx.value;
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 150.0.scale,
+              child: CustTextField(
+                controller: controller.textController,
+                height: 90.0.scale,
+                textAlign: TextAlign.center,
+                textFieldType: EnumTextFieldType.integer,
+                isReadOnly: !isEditing,
+                additionalInputFormatters: [
+                  _PositiveIntegerFormatter(),
                 ],
+                fontSize: 32.0.scale,
               ),
+            ),
+            SizedBox(width: 8.0.scale),
+            CustTextWidget(
+              EnumLocale.engoTabDay.tr,
+              size: 32.0.scale,
+            ),
+            SizedBox(width: 32.0.scale),
+            _EditButton(),
+            if (isEditing) ...[
+              SizedBox(width: 8.0.scale),
+              _CancelButton(),
             ],
-          ),
+          ],
         );
       },
     );
@@ -330,31 +282,35 @@ class _EditButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GetBuilder<AirQualityFilterPageController>(
-      builder: (_) {
-        return GestureDetector(
+    final borderRadius = BorderRadius.circular(8.0.scale);
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: EnumColor.engoBackgroundOrange400.color,
+          borderRadius: borderRadius,
+        ),
+        child: InkWell(
           onTap: () {
-            if (controller.isEditing) {
+            if (controller.isEditingRx.value) {
               controller.interactive(EnumAirQualityFilterPageInteractive.tapConfirmButton);
             } else {
               controller.interactive(EnumAirQualityFilterPageInteractive.tapEditButton);
             }
           },
+          borderRadius: borderRadius,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24.0.scale, vertical: 12.0.scale),
-            decoration: BoxDecoration(
-              color: EnumColor.engoBackgroundOrange400.color,
-              borderRadius: BorderRadius.circular(8.0.scale),
-            ),
+            alignment: Alignment.center,
+            height: 90.0.scale,
+            padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
             child: CustTextWidget(
-              controller.isEditing ? '確認' : '編輯',
+              controller.isEditingRx.value ? EnumLocale.commonConfirm.tr : EnumLocale.warehouseItemEdit.tr,
               size: 32.0.scale,
-              weightType: EnumFontWeightType.regular,
-              color: Colors.white,
+              color: EnumColor.engoTextPrimary.color,
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }
@@ -363,24 +319,32 @@ class _CancelButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GestureDetector(
-      onTap: () {
-        controller.interactive(EnumAirQualityFilterPageInteractive.tapCancelButton);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 24.0.scale, vertical: 12.0.scale),
+    final borderRadius = BorderRadius.circular(8.0.scale);
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
         decoration: BoxDecoration(
           border: Border.all(
             width: 1.0.scale,
             color: EnumColor.engoBackgroundOrange400.color,
           ),
-          borderRadius: BorderRadius.circular(8.0.scale),
+          borderRadius: borderRadius,
         ),
-        child: CustTextWidget(
-          '取消',
-          size: 32.0.scale,
-          weightType: EnumFontWeightType.regular,
-          color: EnumColor.engoBackgroundOrange400.color,
+        child: InkWell(
+          onTap: () {
+            controller.interactive(EnumAirQualityFilterPageInteractive.tapCancelButton);
+          },
+          borderRadius: borderRadius,
+          child: Container(
+            alignment: Alignment.center,
+            height: 90.0.scale,
+            padding: EdgeInsets.symmetric(horizontal: 24.0.scale),
+            child: CustTextWidget(
+              EnumLocale.commonCancel.tr,
+              size: 32.0.scale,
+              color: EnumColor.engoBackgroundOrange400.color,
+            ),
+          ),
         ),
       ),
     );
@@ -391,46 +355,48 @@ class _ResetButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityFilterPageController>();
-    return GestureDetector(
-      onTap: () {
-        controller.interactive(EnumAirQualityFilterPageInteractive.tapResetButton);
-      },
-      child: Container(
-        width: 493.0.scale,
-        padding: EdgeInsets.symmetric(horizontal: 88.0.scale, vertical: 16.0.scale),
+    final borderRadius = BorderRadius.circular(12.0.scale);
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
         decoration: BoxDecoration(
-          gradient: RadialGradient(
-            center: Alignment.center,
-            radius: 1.41,
-            colors: [
-              Colors.white.withOpacity(0.60),
-              const Color(0x00FBBB84),
-            ],
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: EnumColor.backgroundItemGradient.colors,
           ),
           border: Border.all(
             width: 1.0.scale,
             color: EnumColor.engoBackgroundOrange400.color,
           ),
-          borderRadius: BorderRadius.circular(12.0.scale),
+          borderRadius: borderRadius,
         ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 70.0.scale,
-              height: 70.0.scale,
-              // TODO: 添加重置图标
+        child: InkWell(
+          onTap: () {
+            controller.interactive(EnumAirQualityFilterPageInteractive.tapResetButton);
+          },
+          borderRadius: borderRadius,
+          child: Container(
+            width: 493.0.scale,
+            padding: EdgeInsets.symmetric(horizontal: 88.0.scale, vertical: 16.0.scale),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                EnumImage.cReset.image(
+                  size: Size.square(70.0.scale),
+                  color: EnumColor.engoTextPrimary.color,
+                ),
+                SizedBox(width: 16.0.scale),
+                CustTextWidget(
+                  EnumLocale.purifierFilterReset.tr,
+                  size: 32.0.scale,
+                  color: EnumColor.engoTextPrimary.color,
+                ),
+              ],
             ),
-            SizedBox(width: 16.0.scale),
-            CustTextWidget(
-              '濾網更換重置',
-              size: 32.0.scale,
-              weightType: EnumFontWeightType.regular,
-              color: EnumColor.textPrimary.color,
-            ),
-          ],
+          ),
         ),
       ),
     );

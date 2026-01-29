@@ -32,7 +32,7 @@ class AirQualityPurifierPageRouterData {
   final String deviceName;
   final String roomName;
   final bool isOn;
-  final int filterLifePercent;
+  final int lifePercent;
   final EnumPurifierMode initModel;
   final EnumPurifierFanSpeed initFanSpeeds;
   final List<EnumAirQualityDataType> visibleDataTypes;
@@ -56,7 +56,7 @@ class AirQualityPurifierPageRouterData {
     required this.deviceName,
     required this.roomName,
     required this.isOn,
-    required this.filterLifePercent,
+    required this.lifePercent,
     required this.initModel,
     required this.initFanSpeeds,
     required this.visibleDataTypes,
