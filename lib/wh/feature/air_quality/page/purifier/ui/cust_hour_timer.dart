@@ -172,8 +172,11 @@ class _CustHourTimerState extends State<CustHourTimer> {
 
   void _onSelectionChanged() {
     // 索引转换为实际小时数 (1-12)
-    final hour = _selectedHourIndex + 1;
-    widget.onTimeChanged(hour);
+
+    setState(() {
+      final hour = _selectedHourIndex + 1;
+      widget.onTimeChanged(hour);
+    });
   }
 }
 
@@ -203,7 +206,7 @@ class _PickerItem extends StatelessWidget {
           child: CustTextWidget(
             text,
             size: textSize,
-            color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.engoTextPrimary.color,
+            color: isSelected ? EnumColor.engoBackgroundOrange400.color : EnumColor.engoTextPrimary.color,
           ),
         ),
       ),

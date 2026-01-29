@@ -50,7 +50,7 @@ class TimerPopup extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: 160,
-                      height: 163,
+                      height: 133,
                       child: CustHourTimer(
                         initialHour: 1,
                         onTimeChanged: (hour) {
