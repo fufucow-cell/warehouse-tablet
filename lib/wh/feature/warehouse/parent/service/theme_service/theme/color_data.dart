@@ -292,7 +292,7 @@ const Map<String, ColorData> colorDataMap = {
     dark: Color(0xF0BBBBBB),
   ),
   'engoPurifierPopupBgGradient2': ColorData(
-    light: Color(0x10FBBB84),
+    light: Color(0xF0FBBB84),
     dark: Color(0xF0000000),
   ),
 };

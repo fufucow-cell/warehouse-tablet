@@ -62,22 +62,28 @@ class AirQualityPurifierPage extends GetView<AirQualityPurifierPageController> {
                           const _LeftControlButtons(),
                           Expanded(
                             child: Stack(
-                              alignment: Alignment.bottomRight,
+                              fit: StackFit.expand,
+                              clipBehavior: Clip.none,
                               children: [
-                                const _MainDisplay(),
-                                Obx(
-                                  () {
-                                    if (controller.showModePopupRx.value) {
-                                      return const ModePopup();
-                                    }
-                                    if (controller.showFanSpeedPopupRx.value) {
-                                      return const FanSpeedPopup();
-                                    }
-                                    if (controller.showTimerPopupRx.value) {
-                                      return const TimerPopup();
-                                    }
-                                    return const SizedBox.shrink();
-                                  },
+                                const Positioned.fill(child: _MainDisplay()),
+                                Positioned.fill(
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Obx(
+                                      () {
+                                        if (controller.showModePopupRx.value) {
+                                          return const ModePopup();
+                                        }
+                                        if (controller.showFanSpeedPopupRx.value) {
+                                          return const FanSpeedPopup();
+                                        }
+                                        if (controller.showTimerPopupRx.value) {
+                                          return const TimerPopup();
+                                        }
+                                        return const SizedBox.shrink();
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),

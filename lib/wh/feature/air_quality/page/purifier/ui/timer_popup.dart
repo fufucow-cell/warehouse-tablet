@@ -1,6 +1,5 @@
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/purifier/air_quality_purifier_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/purifier/ui/cust_hour_timer.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
@@ -71,33 +70,34 @@ class TimerPopup extends StatelessWidget {
                   ],
                 ),
                 SizedBox(width: 16.0.scale),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TimerButton(
-                      text: EnumLocale.commonConfirm.tr,
-                      isConfirm: true,
-                      onTap: () {
-                        controller.interactive(EnumAirQualityPurifierPageInteractive.tapTimerConfirm, data: selectedHour);
-                      },
-                    ),
-                    SizedBox(height: 16.0.scale),
-                    TimerButton(
-                      text: EnumLocale.commonCancel.tr,
-                      isConfirm: false,
-                      onTap: () {
-                        controller.interactive(EnumAirQualityPurifierPageInteractive.tapPopupOutside);
-                      },
-                    ),
-                    SizedBox(height: 16.0.scale),
-                    TimerButton(
-                      text: EnumLocale.purifierTimerClear.tr,
-                      isConfirm: false,
-                      onTap: () {
-                        controller.interactive(EnumAirQualityPurifierPageInteractive.tapTimerClean, data: 0);
-                      },
-                    ),
-                  ],
+                IntrinsicWidth(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TimerButton(
+                        text: EnumLocale.commonConfirm.tr,
+                        onTap: () {
+                          controller.interactive(EnumAirQualityPurifierPageInteractive.tapTimerConfirm, data: selectedHour);
+                        },
+                      ),
+                      SizedBox(height: 16.0.scale),
+                      TimerButton(
+                        text: EnumLocale.commonCancel.tr,
+                        onTap: () {
+                          controller.interactive(EnumAirQualityPurifierPageInteractive.tapPopupOutside);
+                        },
+                      ),
+                      SizedBox(height: 16.0.scale),
+                      TimerButton(
+                        text: EnumLocale.purifierTimerClear.tr,
+                        onTap: () {
+                          controller.interactive(EnumAirQualityPurifierPageInteractive.tapTimerClean, data: 0);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -110,13 +110,11 @@ class TimerPopup extends StatelessWidget {
 
 class TimerButton extends StatelessWidget {
   final String text;
-  final bool isConfirm;
   final VoidCallback onTap;
 
   const TimerButton({
     super.key,
     required this.text,
-    required this.isConfirm,
     required this.onTap,
   });
 
@@ -129,22 +127,15 @@ class TimerButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: borderRadius,
         child: Container(
+          alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 35.0.scale, vertical: 20.0.scale),
           decoration: BoxDecoration(
-            color: isConfirm ? EnumColor.engoBackgroundOrange400.color : Colors.transparent,
-            border: isConfirm
-                ? null
-                : Border.all(
-                    width: 2.0.scale,
-                    color: EnumColor.engoBackgroundOrange400.color,
-                  ),
+            color: EnumColor.engoBackgroundOrange400.color,
             borderRadius: borderRadius,
           ),
           child: CustTextWidget(
             text,
             size: 32.0.scale,
-            weightType: EnumFontWeightType.regular,
-            color: isConfirm ? Colors.white : EnumColor.engoBackgroundOrange400.color,
           ),
         ),
       ),

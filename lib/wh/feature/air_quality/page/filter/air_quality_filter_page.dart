@@ -377,8 +377,10 @@ class _ResetButton extends StatelessWidget {
           },
           borderRadius: borderRadius,
           child: Container(
-            width: 493.0.scale,
-            padding: EdgeInsets.symmetric(horizontal: 88.0.scale, vertical: 16.0.scale),
+            padding: EdgeInsets.symmetric(
+              horizontal: 88.0.scale,
+              vertical: 16.0.scale,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
