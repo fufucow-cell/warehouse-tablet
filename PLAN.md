@@ -172,35 +172,35 @@
     - 普通：36-53，黄色（#FFCF21）
     - 不良：54-70，橙色（#F88125）
     - 极不良：71-150，红色（#EF4425）
-  
+
   - **温度级距**（单位：°C，参考 GB/T 18883-2022）：
     - 良好：22-26（夏季舒适范围）
     - 普通：18-22 或 26-28（可接受范围）
     - 不良：16-18 或 28-30（不舒适范围）
     - 极不良：<16 或 >30（极不舒适范围）
     - 注：冬季舒适范围为 16-24℃，可根据季节调整
-  
+
   - **湿度级距**（单位：%，参考 GB/T 18883-2022）：
     - 良好：40-60（最舒适范围）
     - 普通：30-40 或 60-70（可接受范围）
     - 不良：20-30 或 70-80（不舒适范围）
     - 极不良：<20 或 >80（极不舒适范围）
     - 注：夏季标准 40-80%，冬季标准 30-60%
-  
+
   - **甲醛级距**（单位：mg/m³，参考 GB/T 18883-2022）：
     - 良好：0-0.03（一级标准，最安全）
     - 普通：0.03-0.05（二级标准，可接受）
     - 不良：0.05-0.08（三级标准，超标）
     - 极不良：>0.08（严重超标，国家标准限值）
     - 注：GB/T 18883-2022 标准限值为 ≤0.08 mg/m³
-  
+
   - **VOC 级距**（单位：mg/m³，参考 GB/T 18883-2002）：
     - 良好：0-0.3（低于标准值 50%）
     - 普通：0.3-0.5（接近标准值）
     - 不良：0.5-0.6（接近限值）
     - 极不良：>0.6（超标，国家标准限值）
     - 注：GB/T 18883 标准限值为 ≤0.6 mg/m³
-  
+
   - **CO2 级距**（单位：%，参考 GB/T 18883-2022）：
     - 良好：0-0.05（<500 ppm，优秀）
     - 普通：0.05-0.08（500-800 ppm，可接受）
@@ -234,7 +234,7 @@
 - `isModuleMode` - 是否为模块模式（通常为 false）
 - `deviceName` - 设备名称
 - `visibleDataTypes` - 显示的数据类型列表（`List<EnumAirBoxDataType>`）
-- 数据参数：`pm25`, `temperature`, `humidity`, `formaldehyde`, `voc`, `co2`
+- 数据参数：`pm25`, `temperature`, `humidity`, `hcho`, `voc`, `co2`
 - `pm25Status` - PM2.5 状态（良好/普通/不良/极不良）
 - `onBackButtonTap` - 返回按钮 callback
 - `onSettingButtonTap` - 设置按钮 callback
@@ -254,12 +254,320 @@
 - `onBackButtonTap` - 返回按钮 callback
 - `onSettingButtonTap` - 设置按钮 callback（可选）
 
+#### 4. purifier 页面（空气净化器）
+- **路径**：`lib/wh/feature/air_quality/page/purifier/`
+- **功能**：
+  - 显示空气净化器设备信息
+  - 控制空气净化器运行状态（开关）
+  - 显示当前空气质量数据（PM2.5、温度、湿度）
+  - 显示濾網壽命（可点击跳转到 filter 页面）
+  - 数据按钮（可点击跳转到 record 页面）
+  - 设置净化器运行模式（模式选择弹窗）
+  - 风量调节（风量选择弹窗）
+  - 计时功能（计时选择弹窗，使用 CupertinoPicker）
+- **UI 组件结构**（根据 Figma 设计）：
+
+  **TopBar**：
+  - 返回按钮（80x80，橙色 `EnumColor.engoBackgroundOrange400`）
+  - 标题"空氣清淨機"（40pt，粗体，`EnumColor.textPrimary`，可编辑）
+  - 编辑按钮（50x50，`EnumColor.engoTextPrimary`）
+  - 数据按钮（位置待确认，点击跳转到 `air_quality_record_page.dart`）
+  - 设置按钮（62x62，`EnumColor.engoTextPrimary`）
+
+  **设备位置显示**：
+  - 位置名称（32pt，`EnumColor.textPrimary`，居中）
+  - 例如："中山區-臥室1"
+
+  **中心 PM2.5 显示区域**：
+  - PM2.5 标签（40pt，`EnumColor.accentGreen` - `#40CE5F`）
+  - 绿色圆点指示器（33x33，`EnumColor.accentGreen`）
+  - PM2.5 大数字（180pt，粗体，`EnumColor.accentBlue` - `#96B7E3`）
+  - 状态文字（40pt，`EnumColor.accentBlue`，根据级距显示）
+  - 右下角开关按钮（116x116，圆形）
+    - 开启状态：橙色背景（`EnumColor.engoBackgroundOrange400`）+ 电源图标
+    - 关闭状态：灰色背景（`#D9D9D9`）+ 关闭图标
+
+  **底部信息栏**（横向排列）：
+  - 温度显示（带图标，32pt，regular，`EnumColor.accentBlue`）
+    - 例如："32°C"
+  - 湿度显示（带图标，32pt，regular，`EnumColor.accentBlue`）
+    - 例如："65%"
+  - 濾網壽命（带图标，32pt，regular，`EnumColor.textLink` - `#366FB6`，可点击）
+    - 例如："濾網壽命:82%"
+    - 点击可跳转到 filter 页面
+
+  **背景装饰**：
+  - 主背景：`EnumColor.backgroundSecondary`（日间 `#F6F6F6`，夜间 `#2F333F`）
+  - 装饰性圆形元素（多个不同颜色和位置）
+
+- **颜色规范**（从 Figma 代码提取）：
+
+  **日间模式（Light Mode）**：
+  - 背景色：`#F6F6F6`（`EnumColor.backgroundSecondary`）
+  - 主要文字：`#292929`（`EnumColor.textPrimary`）
+  - PM2.5 标签：`#40CE5F`（`EnumColor.accentGreen`）
+  - PM2.5 数字/状态：`#96B7E3`（`EnumColor.accentBlue`）
+  - 温度/湿度：`#96B7E3`（`EnumColor.accentBlue`）
+  - 濾網壽命：`#366FB6`（`EnumColor.textLink` 或需要新增颜色）
+  - 开关按钮（关闭）：`#D9D9D9`（灰色）
+  - 开关按钮（开启）：橙色（`EnumColor.engoBackgroundOrange400`）
+
+  **夜间模式（Dark Mode）**：
+  - 背景色：`#2F333F`（`EnumColor.backgroundSecondary`）
+  - 主要文字：`Colors.white`（`EnumColor.textPrimary`）
+  - PM2.5 标签：`#40CE5F`（`EnumColor.accentGreen`，与日间相同）
+  - PM2.5 数字/状态：`#96B7E3`（`EnumColor.accentBlue`，与日间相同）
+  - 温度/湿度：`#96B7E3`（`EnumColor.accentBlue`，与日间相同）
+  - 濾網壽命：`#2791F3`（`EnumColor.textLink`）
+  - 开关按钮：与日间相同
+
+- **模式选择弹窗**（点击模式后弹出）：
+
+  **弹窗样式**：
+  - 位置：中心区域左侧（`left: 90, top: 311`，相对于中心容器）
+  - 宽度：409px
+  - 内边距：`horizontal: 24, vertical: 32`
+  - 背景：径向渐变（RadialGradient）
+    - 起始色：白色 60% 透明度（`Colors.white.withValues(alpha: 0.60)`）
+    - 结束色：透明橙色（`Color(0x00FBBB84)`）
+  - 圆角：8px
+  - 选项间距：38px
+
+  **边框样式**（根据主题切换）：
+  - **日间模式**：1px，颜色 `#FDB874`（`EnumColor.engoBackgroundOrange400` 或类似）
+  - **夜间模式**：1px，颜色 `Colors.white`（白色）
+
+  **模式选项**（三个）：
+  1. **手動模式**（Manual Mode）
+  2. **自動模式**（Auto Mode）
+  3. **睡眠模式**（Sleep Mode）
+
+  **选项样式**（根据主题切换）：
+  - **日间模式**：
+    - 文字：32pt，regular（FontWeight.w400），`EnumColor.textPrimary`（`#292929`）
+    - 分隔线：1px，颜色 `EnumColor.textPrimary`（`#292929`）
+  - **夜间模式**：
+    - 文字：32pt，regular（FontWeight.w400），`Colors.white`（白色）
+    - 分隔线：1px，颜色 `Colors.white`（白色）
+  - 分隔线对齐：居中（`strokeAlign: BorderSide.strokeAlignCenter`）
+
+  **交互行为**：
+  - 点击模式按钮（位置待确认）→ 弹出模式选择菜单
+  - 点击某个模式选项 → 关闭弹窗并切换模式
+  - 点击弹窗外部 → 关闭弹窗（使用 GestureDetector 包裹弹窗，点击外部区域关闭）
+
+- **待讨论的功能**：
+  - **模式按钮位置**：在主页面上的显示位置和样式
+    - 可能的位置：底部信息栏、中心区域、或其他位置
+    - 显示当前模式名称（如"手動模式"）还是只显示"模式"按钮
+  - **模式选中状态**：当前选中模式的视觉反馈（高亮、图标等）
+  - **计时选择弹窗**（点击计时后弹出）：
+
+  **弹窗样式**：
+  - 位置：中心区域左侧（`left: 90, top: 311`，相对于中心容器）
+  - 宽度：735px
+  - 高度：662px
+  - 背景：径向渐变（RadialGradient）
+    - 起始色：白色 60% 透明度（`Colors.white.withValues(alpha: 0.60)`）
+    - 结束色：透明橙色（`Color(0x00FBBB84)`）
+  - 圆角：8px
+
+  **边框样式**（根据主题切换）：
+  - **日间模式**：1px，颜色 `#FB9B51`（`EnumColor.engoBackgroundOrange400` 或类似）
+  - **夜间模式**：1px，颜色 `#FDB874`（橙色，与日间模式相同）
+
+  **内容实现**：
+  - **使用 `CupertinoPicker`**（参考 `cust_timer.dart` 的实现）
+  - 小时选择范围：0-12 小时
+  - 使用 `FixedExtentScrollController` 控制滚动
+  - 显示格式：数字 + "h"（如 "2h"）
+  - 当前选中值居中显示（大号，橙色 `#FB9B51`）
+  - 显示文字："小時"（32pt，橙色）
+
+  **Picker 文字样式**（根据主题切换）：
+  - **日间模式**：40pt，regular，`EnumColor.textPrimary`（`#292929`）
+  - **夜间模式**：40pt，regular，`Colors.white`（白色）
+  - "h" 后缀：24pt，regular，与数字颜色相同
+
+  **底部按钮**：
+  - **取消按钮**：
+    - 位置：左侧（`left: 398, top: 463`）
+    - 样式：边框按钮（2px，橙色边框，透明背景）
+    - 边框颜色：`#FDB874`（`EnumColor.engoBackgroundOrange400` 或类似）
+    - 文字："取消"（32pt，橙色 `#FB9B51`）
+    - 内边距：`horizontal: 35, vertical: 20`
+  - **確認按钮**：
+    - 位置：左侧（`left: 215, top: 463`）
+    - 样式：填充按钮（橙色背景，白色文字）
+    - 背景颜色：`#FDB874`（`EnumColor.engoBackgroundOrange400` 或类似）
+    - 文字："確認"（32pt，白色）
+    - 内边距：`horizontal: 35, vertical: 20`
+
+  **交互行为**：
+  - 点击计时按钮（位置待确认）→ 弹出计时选择菜单
+  - 使用 `CupertinoPicker` 滚动选择小时数（0-12）
+  - 点击"確認"按钮 → 关闭弹窗并设置计时
+  - 点击"取消"按钮 → 关闭弹窗，不保存设置
+  - 点击弹窗外部 → 关闭弹窗（使用 GestureDetector 包裹弹窗，点击外部区域关闭）
+
+  **待确认**：
+  - **计时按钮位置**：在主页面上的显示位置和样式
+    - 可能的位置：底部信息栏、中心区域、或其他位置
+    - 显示当前计时状态（如"2小時"）还是只显示"计时"按钮
+  - **风量选择弹窗**（点击风量后弹出）：
+
+  **弹窗样式**：
+  - 位置：中心区域左侧（`left: 90, top: 464`，相对于中心容器，比模式弹窗稍低）
+  - 宽度：409px
+  - 内边距：`horizontal: 24, vertical: 32`
+  - 背景：径向渐变（RadialGradient）
+    - 起始色：白色 60% 透明度（`Colors.white.withValues(alpha: 0.60)`）
+    - 结束色：透明橙色（`Color(0x00FBBB84)`）
+  - 圆角：8px
+  - 选项间距：38px
+
+  **边框样式**（根据主题切换）：
+  - **日间模式**：1px，颜色 `#FDB874`（`EnumColor.engoBackgroundOrange400` 或类似）
+  - **夜间模式**：1px，颜色 `Colors.white`（白色）
+
+  **风量选项**（三个）：
+  1. **微風**（Light/Breeze）
+  2. **弱風**（Weak/Low）
+  3. **強風**（Strong/High）
+
+  **选项样式**（根据主题切换）：
+  - **日间模式**：
+    - 文字：32pt，regular（FontWeight.w400），`EnumColor.textPrimary`（`#292929`）
+    - 分隔线：1px，颜色 `EnumColor.textPrimary`（`#292929`）
+  - **夜间模式**：
+    - 文字：32pt，regular（FontWeight.w400），`Colors.white`（白色）
+    - 分隔线：1px，颜色 `Colors.white`（白色）
+  - 分隔线对齐：居中（`strokeAlign: BorderSide.strokeAlignCenter`）
+
+  **交互行为**：
+  - 点击风量按钮（位置待确认）→ 弹出风量选择菜单
+  - 点击某个风量选项 → 关闭弹窗并切换风量
+  - 点击弹窗外部 → 关闭弹窗（使用 GestureDetector 包裹弹窗，点击外部区域关闭）
+
+  **待确认**：
+  - **风量按钮位置**：在主页面上的显示位置和样式
+    - 可能的位置：底部信息栏、中心区域、或其他位置
+    - 显示当前风量名称（如"微風"）还是只显示"风量"按钮
+  - **风量选中状态**：当前选中风量的视觉反馈（高亮、图标等）
+
+- **数据按钮导航**：
+  - **功能**：点击数据按钮跳转到 `air_quality_record_page.dart`
+  - **实现方式**：
+    - 在 `RouterData` 中添加 `onDataButtonTap` callback
+    - callback 返回 `AirQualityRecordPageRouterData`
+    - 使用 `Navigator.push` 导航到记录页面
+  - **RouterData 参数**（参考 `air_quality_record_page.dart`）：
+    - 需要传递设备相关的数据筛选参数
+    - 时间范围筛选参数
+    - 数据类型显示参数
+
+#### 5. filter 页面（空气过滤器）
+- **路径**：`lib/wh/feature/air_quality/page/filter/`
+- **功能**：
+  - 显示空气过滤器设备信息
+  - 显示过滤器使用状态和剩余寿命（圆形进度条）
+  - 过滤器更换重置功能
+- **UI 组件结构**（根据 Figma 设计）：
+
+  **TopBar**：
+  - 返回按钮（80x80，橙色 `EnumColor.engoBackgroundOrange400`）
+  - 标题"濾網設定"（40pt，粗体，`EnumColor.textPrimary`）
+
+  **中心圆形进度条区域**：
+  - 位置：右侧居中（`left: 757, top: 175`）
+  - 尺寸：830.90x830.90
+  - **外层圆形**：
+    - 尺寸：828x828
+    - 颜色：`#96B7E3`（`EnumColor.accentBlue`）
+    - 形状：圆形（OvalBorder）
+    - 旋转：-90度（`rotateZ(-1.57)`）
+    - 用途：显示进度条背景
+  - **内层内容**：
+    - 尺寸：740x740
+    - 位置：居中（`left: 45.45, top: 45.45`）
+    - 内容：图片或图标（746x746）
+
+  **左侧信息区域**（`left: 123, top: 467`）：
+  - **濾網壽命天数输入**（位于濾網壽命显示上方）：
+    - 使用 `CustTextField` 组件
+    - 限制输入：大于0的整数（使用自定义 `_PositiveIntegerFormatter`）
+    - 输入框类型：`EnumTextFieldType.integer`
+    - 输入框右侧显示单位："天"（32pt，regular，`EnumColor.textPrimary`）
+    - 编辑按钮：
+      - 默认显示"編輯"（32pt，regular，白色文字，橙色背景）
+      - 点击后输入框变为可编辑状态
+      - 编辑时按钮文字变为"確認"
+    - 取消按钮（仅在编辑模式下显示）：
+      - 显示"取消"（32pt，regular，橙色文字，透明背景，橙色边框）
+      - 点击后恢复原值并退出编辑模式
+    - 确认逻辑：
+      - 点击"確認"后验证输入值（必须大于0）
+      - 保存值并退出编辑模式
+      - 如果输入无效，自动恢复原值
+  - **濾網壽命显示**：
+    - 文字："濾網壽命:82%"（32pt，粗体，`EnumColor.textPrimary`）
+    - 宽度：493px
+    - 对齐：居中
+  - **重置按钮**：
+    - 宽度：493px
+    - 内边距：`horizontal: 88, vertical: 16`
+    - 背景：径向渐变（RadialGradient）
+      - 起始色：白色 60% 透明度（`Colors.white.withValues(alpha: 0.60)`）
+      - 结束色：透明橙色（`Color(0x00FBBB84)`）
+    - 边框：1px，颜色 `#FB9B51`（`EnumColor.engoBackgroundOrange400` 或类似）
+    - 圆角：12px
+    - 内容：横向排列
+      - 图标（70x70）
+      - 文字："濾網更換重置"（32pt，regular，`EnumColor.textPrimary`）
+      - 间距：16px
+
+- **颜色规范**（从 Figma 代码提取）：
+
+  **日间模式（Light Mode）**：
+  - 背景色：`#F6F6F6`（`EnumColor.backgroundSecondary`）
+  - 主要文字：`#292929`（`EnumColor.textPrimary`）
+  - 进度条颜色：`#96B7E3`（`EnumColor.accentBlue`）
+  - 按钮边框：`#FB9B51`（`EnumColor.engoBackgroundOrange400`）
+  - 按钮文字：`#292929`（`EnumColor.textPrimary`）
+
+  **夜间模式（Dark Mode）**：
+  - 背景色：`#2F333F`（`EnumColor.backgroundSecondary`）
+  - 主要文字：`Colors.white`（`EnumColor.textPrimary`）
+  - 进度条颜色：`#96B7E3`（`EnumColor.accentBlue`，与日间相同）
+  - 按钮边框：`#FDB874`（`EnumColor.engoBackgroundOrange400`，与日间相同）
+  - 按钮文字：`Colors.white`（`EnumColor.textPrimary`，与日间不同）
+
+- **RouterData**：
+  - `filterLifeDays` - 濾網壽命天数（int）
+  - `onBackButtonTap` - 返回按钮 callback
+  - `onFilterLifeDaysChanged` - 天数变更 callback（`void Function(int days)`）
+  - `onFilterReset` - 重置按钮 callback
+
+- **实现要点**：
+  - 使用 `CustomPaint` 或 `CircularProgressIndicator` 实现圆形进度条
+  - 进度条根据 `filterLifePercent` 值动态显示（0-100%）
+  - 重置按钮点击后调用 `onFilterReset` callback
+  - 参考其他页面的实现方式，使用 `AirBackgroundCard` 作为页面容器
+  - **濾網壽命天数输入功能**：
+    - Model 管理编辑状态、输入值和临时值
+    - Controller 管理 `TextEditingController` 和交互逻辑
+    - Interactive 处理编辑、确认、取消事件
+    - 自定义 `_PositiveIntegerFormatter` 限制输入大于0的整数
+    - 编辑状态切换：编辑 ↔ 确认/取消
+    - 天数变更通过 `onFilterLifeDaysChanged` callback 向外传递
+    - 重置功能通过 `onFilterReset` callback 向外传递
+
 **数据结构：**
 - **数据类型枚举**（`EnumAirBoxDataType`）：
   - `pm25` - PM 2.5（单纯数字，无单位）
   - `temperature` - 温度（摄氏度 °C）
   - `humidity` - 湿度（百分比 %，公定单位）
-  - `formaldehyde` - 甲醛（数值类型）
+  - `hcho` - 甲醛（数值类型）
   - `voc` - VOC（数值类型）
   - `co2` - CO2（数值类型）
 - **数据显示控制**：
@@ -314,7 +622,9 @@
 1. 使用 `dart script/mvcir_create.dart air_box main` 创建 main 页面
 2. 使用 `dart script/mvcir_create.dart air_box record` 创建 record 页面
 3. 使用 `dart script/mvcir_create.dart air_box reference` 创建 reference 页面
-3. 参考 `FirstBackgroundCard` 和 `gateway_main_page` 实现 UI 结构
+4. 使用 `dart script/mvcir_create.dart air_quality purifier` 创建 purifier 页面
+5. 使用 `dart script/mvcir_create.dart air_quality filter` 创建 filter 页面
+6. 参考 `FirstBackgroundCard` 和 `gateway_main_page` 实现 UI 结构
 4. 实现数据类型枚举（`EnumAirBoxDataType`：PM2.5、温度、湿度、甲醛、VOC、CO2）
 5. 实现数据模型（包含所有数据类型，由外部参数决定显示哪些）
 6. 实现 RouterData callback 机制（参考 circuit_breaker_main_page_model.dart）
@@ -344,6 +654,10 @@
 20. 实现级距参考表显示（PM2.5、温度、湿度、甲醛、VOC、CO2）
 21. 实现级距标准数据模型（包含数值范围、颜色、状态文字）
 22. 实现级距参考表组件（可复用的级距列表组件）
+23. 实现 purifier 页面 UI 结构（参考 air_quality_box_page）
+24. 实现 purifier 页面设备控制功能
+25. 实现 filter 页面 UI 结构（参考 air_quality_box_page）
+26. 实现 filter 页面过滤器状态显示和更换提醒功能
 
 ## 功能规划
 
@@ -355,6 +669,9 @@
   - 页面规划：
     - `main` - 主页面（显示当前空气数据，PM 2.5 大数字展示）
     - `record` - 记录页面（查看历史数据）
+    - `reference` - 参考页面（级距参考表）
+    - `purifier` - 净化器页面（空气净化器控制）
+    - `filter` - 过滤器页面（空气过滤器状态）
 
 ### 进行中功能
 
@@ -375,6 +692,8 @@
   - [ ] 创建 main 页面（MVCIR 结构）
   - [ ] 创建 record 页面（MVCIR 结构）
   - [ ] 创建 reference 页面（MVCIR 结构）
+  - [ ] 创建 purifier 页面（MVCIR 结构）
+  - [ ] 创建 filter 页面（MVCIR 结构）
   - [ ] 实现数据类型枚举（`EnumAirBoxDataType`）
   - [ ] 实现数据模型（由外部参数决定显示哪些数据类型）
   - [ ] 实现 RouterData callback 机制（参考 circuit_breaker）
@@ -420,6 +739,8 @@
 - [ ] 使用 `mvcir_create.dart` 脚本创建 air_box/main 页面
 - [ ] 使用 `mvcir_create.dart` 脚本创建 air_box/record 页面
 - [ ] 使用 `mvcir_create.dart` 脚本创建 air_box/reference 页面
+- [ ] 使用 `mvcir_create.dart` 脚本创建 air_quality/purifier 页面
+- [ ] 使用 `mvcir_create.dart` 脚本创建 air_quality/filter 页面
 
 ### 中优先级
 
@@ -444,24 +765,24 @@
      - 英文（en_us.dart）：'Air Box'
      - 日文（ja_jp.dart）：'エアボックス'
      - 韩文（ko_kr.dart）：'에어박스'
-   
+
    - `airBoxPm25`
      - 所有语言：'PM2.5'（统一）
-   
+
    - `airBoxStatusGood`
      - 繁体中文：'良好'
      - 简体中文：'良好'
      - 英文：'Good'
      - 日文：'良好'
      - 韩文：'양호'
-   
+
    - `airBoxStatusModerate`（可选，用于其他状态）
      - 繁体中文：'普通'
      - 简体中文：'普通'
      - 英文：'Moderate'
      - 日文：'普通'
      - 韩文：'보통'
-   
+
    - `airBoxStatusBad`（可选，用于其他状态）
      - 繁体中文：'不良'
      - 简体中文：'不良'
@@ -476,28 +797,28 @@
      - 英文：'Current Temperature'
      - 日文：'現在の温度'
      - 韩文：'현재 온도'
-   
+
    - `airBoxCurrentHumidity`
      - 繁体中文：'當前濕度'
      - 简体中文：'当前湿度'
      - 英文：'Current Humidity'
      - 日文：'現在の湿度'
      - 韩文：'현재 습도'
-   
-   - `airBoxFormaldehydeValue`
+
+   - `airBoxhchoValue`
      - 繁体中文：'甲醛測試值'
      - 简体中文：'甲醛测试值'
-     - 英文：'Formaldehyde Value'
+     - 英文：'hcho Value'
      - 日文：'ホルムアルデヒド測定値'
      - 韩文：'포름알데히드 측정값'
-   
+
    - `airBoxVocValue`
      - 繁体中文：'VOC偵測值'
      - 简体中文：'VOC 检测值'
      - 英文：'VOC Value'
      - 日文：'VOC検出値'
      - 韩文：'VOC 측정값'
-   
+
    - `airBoxCo2Value`
      - 繁体中文：'CO2偵測值'
      - 简体中文：'CO2 检测值'
@@ -512,7 +833,7 @@
      - 英文：'Data Record'
      - 日文：'データ記録'
      - 韩文：'데이터 기록'
-   
+
    - `airBoxSmartLinkage`
      - 繁体中文：'智能連動'
      - 简体中文：'智能联动'
@@ -527,14 +848,14 @@
      - 英文：'Temperature'
      - 日文：'温度'
      - 韩文：'온도'
-   
+
    - `airBoxRecordTabHumidity`
      - 繁体中文：'濕度'
      - 简体中文：'湿度'
      - 英文：'Humidity'
      - 日文：'湿度'
      - 韩文：'습도'
-   
+
    - `airBoxRecordTabPm25`
      - 所有语言：'PM2.5'（统一）
 
@@ -545,70 +866,70 @@
      - 英文：'Reference Standards'
      - 日文：'基準値'
      - 韩文：'기준값'
-   
+
    - `airBoxReferencePm25Title`
      - 繁体中文：'微粒物質(PM2.5)'
      - 简体中文：'微粒物质(PM2.5)'
      - 英文：'Particulate Matter (PM2.5)'
      - 日文：'粒子状物質(PM2.5)'
      - 韩文：'미세먼지(PM2.5)'
-   
+
    - `airBoxReferencePm25Description`
      - 繁体中文：'小於2.5微米的微粒，這包含煙霧、工業排放廢氣和燃燒的蠟燭。'
      - 简体中文：'小于2.5微米的微粒，这包含烟雾、工业排放废气和燃烧的蜡烛。'
      - 英文：'Particles smaller than 2.5 micrometers, including smoke, industrial emissions, and burning candles.'
      - 日文：'2.5マイクロメートル未満の粒子。煙、工業排出ガス、燃えるろうそくなどが含まれます。'
      - 韩文：'2.5마이크로미터 미만의 미세입자. 연기, 산업 배출 가스, 타는 양초 등이 포함됩니다.'
-   
+
    - `airBoxReferenceTemperatureTitle`
      - 繁体中文：'溫度'
      - 简体中文：'温度'
      - 英文：'Temperature'
      - 日文：'温度'
      - 韩文：'온도'
-   
+
    - `airBoxReferenceTemperatureDescription`
      - 繁体中文：'適宜的室內溫度有助於維持人體舒適度和健康。'
      - 简体中文：'适宜的室内温度有助于维持人体舒适度和健康。'
      - 英文：'Appropriate indoor temperature helps maintain human comfort and health.'
      - 日文：'適切な室内温度は、人体の快適さと健康を維持するのに役立ちます。'
      - 韩文：'적절한 실내 온도는 인체의 쾌적함과 건강을 유지하는 데 도움이 됩니다.'
-   
+
    - `airBoxReferenceHumidityTitle`
      - 繁体中文：'濕度'
      - 简体中文：'湿度'
      - 英文：'Humidity'
      - 日文：'湿度'
      - 韩文：'습도'
-   
+
    - `airBoxReferenceHumidityDescription`
      - 繁体中文：'適宜的室內濕度可以防止呼吸道疾病和皮膚問題。'
      - 简体中文：'适宜的室内湿度可以防止呼吸道疾病和皮肤问题。'
      - 英文：'Appropriate indoor humidity can prevent respiratory diseases and skin problems.'
      - 日文：'適切な室内湿度は、呼吸器疾患や皮膚の問題を防ぐことができます。'
      - 韩文：'적절한 실내 습도는 호흡기 질환과 피부 문제를 예방할 수 있습니다.'
-   
-   - `airBoxReferenceFormaldehydeTitle`
+
+   - `airBoxReferencehchoTitle`
      - 繁体中文：'甲醛'
      - 简体中文：'甲醛'
-     - 英文：'Formaldehyde'
+     - 英文：'hcho'
      - 日文：'ホルムアルデヒド'
      - 韩文：'포름알데히드'
-   
-   - `airBoxReferenceFormaldehydeDescription`
+
+   - `airBoxReferencehchoDescription`
      - 繁体中文：'甲醛是一種常見的室內空氣污染物，主要來自裝修材料和家具。'
      - 简体中文：'甲醛是一种常见的室内空气污染物，主要来自装修材料和家具。'
-     - 英文：'Formaldehyde is a common indoor air pollutant, mainly from decoration materials and furniture.'
+     - 英文：'hcho is a common indoor air pollutant, mainly from decoration materials and furniture.'
      - 日文：'ホルムアルデヒドは、主に装飾材料や家具から発生する一般的な室内空気汚染物質です。'
      - 韩文：'포름알데히드는 주로 인테리어 재료와 가구에서 발생하는 일반적인 실내 공기 오염물질입니다.'
-   
+
    - `airBoxReferenceVocTitle`
      - 繁体中文：'揮發性有機化合物(VOC)'
      - 简体中文：'挥发性有机化合物(VOC)'
      - 英文：'Volatile Organic Compounds (VOC)'
      - 日文：'揮発性有機化合物(VOC)'
      - 韩文：'휘발성 유기 화합물(VOC)'
-   
+
    - `airBoxReferenceVocDescription`
      - 繁体中文：'VOC 包括多種化學物質，可能對健康造成影響。'
      - 简体中文：'VOC 包括多种化学物质，可能对健康造成影响。'
@@ -621,53 +942,53 @@
      - 英文：'Carbon Dioxide (CO2)'
      - 日文：'二酸化炭素(CO2)'
      - 韩文：'이산화탄소(CO2)'
-   
+
    - `airBoxReferenceCo2Description`
      - 繁体中文：'室內二氧化碳濃度過高會導致頭痛、嗜睡、注意力不集中等症狀。'
      - 简体中文：'室内二氧化碳浓度过高会导致头痛、嗜睡、注意力不集中等症状。'
      - 英文：'High indoor CO2 concentration can cause headaches, drowsiness, and difficulty concentrating.'
      - 日文：'室内の二酸化炭素濃度が高いと、頭痛、眠気、集中力の低下などの症状が現れます。'
      - 韩文：'실내 이산화탄소 농도가 높으면 두통, 졸음, 집중력 저하 등의 증상이 나타납니다.'
-   
-   - `airBoxReferenceUnitFormaldehyde`
+
+   - `airBoxReferenceUnithcho`
      - 所有语言：'mg/m³'（统一）
-   
+
    - `airBoxReferenceUnitVoc`
      - 所有语言：'mg/m³'（统一）
-   
+
    - `airBoxReferenceUnitCo2`
      - 所有语言：'%'（统一，或使用 ppm）
-   
+
    - `airBoxReferenceUnitPm25`
      - 所有语言：'µg/m³'（统一）
-   
+
    - `airBoxReferenceUnitTemperature`
      - 所有语言：'°C'（统一）
-   
+
    - `airBoxReferenceUnitHumidity`
      - 所有语言：'%'（统一）
-   
+
    - `airBoxReferenceStatusGood`
      - 繁体中文：'良好'
      - 简体中文：'良好'
      - 英文：'Good'
      - 日文：'良好'
      - 韩文：'양호'
-   
+
    - `airBoxReferenceStatusModerate`
      - 繁体中文：'普通'
      - 简体中文：'普通'
      - 英文：'Moderate'
      - 日文：'普通'
      - 韩文：'보통'
-   
+
    - `airBoxReferenceStatusBad`
      - 繁体中文：'不良'
      - 简体中文：'不良'
      - 英文：'Bad'
      - 日文：'不良'
      - 韩文：'나쁨'
-   
+
    - `airBoxReferenceStatusVeryBad`
      - 繁体中文：'極不良'
      - 简体中文：'极不良'
@@ -765,7 +1086,7 @@ enum EnumAppMainRouter {
   waterValue,
   airBox,  // 新增
   setting;
-  
+
   Widget Function() get page => () => switch (this) {
     // ... 其他页面
     airBox => const SmartHomeAirBoxPage(),  // 新增
@@ -775,7 +1096,7 @@ enum EnumAppMainRouter {
 enum EnumAppMainTabItem {
   // ... 其他项目
   airBox(Icons.air),  // 新增，需要合适的图标
-  
+
   EnumLocale get titleLocale => switch (this) {
     // ... 其他项目
     airBox => EnumLocale.smartHomeTabAirBox,  // 新增
@@ -832,7 +1153,7 @@ AirBoxMainPageRouterData get getAirBoxMainPageRouterData {
     pm25Status: '良好',
     temperature: '26.6',
     humidity: '60',
-    formaldehyde: '0.02',
+    hcho: '0.02',
     voc: '0.3',
     co2: '0.05',
     onBackButtonTap: () {

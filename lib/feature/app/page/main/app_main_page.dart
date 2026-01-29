@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:engo_terminal_app3/feature/app/service/app_service.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/air_box/smart_home_air_box_page.dart';
+import 'package:engo_terminal_app3/feature/smart_home/page/air_purifier/smart_home_air_purifier_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/circuit_breaker/smart_home_circuit_breaker_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/gateway/smart_home_gateway_page.dart';
 import 'package:engo_terminal_app3/feature/smart_home/page/household/smart_home_household_page.dart';
