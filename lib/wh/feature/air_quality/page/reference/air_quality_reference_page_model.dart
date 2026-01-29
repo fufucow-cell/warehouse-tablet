@@ -102,7 +102,7 @@ enum EnumAirQualityDataType {
         EnumAirQualityDataType.temperature => 40.0,
         EnumAirQualityDataType.humidity => 100.0,
         EnumAirQualityDataType.hcho => 0.1,
-        EnumAirQualityDataType.voc => 0.6,
+        EnumAirQualityDataType.voc => 0.8,
         EnumAirQualityDataType.co2 => 0.15,
       };
 

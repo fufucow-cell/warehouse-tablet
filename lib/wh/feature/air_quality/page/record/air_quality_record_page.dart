@@ -11,7 +11,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_dropdown_
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_empty_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_shimmer_widget.dart' show ShimmerWidget;
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/ui/air_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +26,7 @@ class AirQualityRecordPage extends GetView<AirQualityRecordPageController> {
       init: AirQualityRecordPageController(routerData),
       builder: (controller) {
         return Scaffold(
-          body: AirBackgroundCard(
+          body: FirstBackgroundCard(
             child: Column(
               children: [
                 _TopBar(),
@@ -386,11 +386,9 @@ class _ChartSection extends StatelessWidget {
 
         final timeFilter = controller.selectedTimeFilterRx.value;
         final dataType = controller.selectedDataTypeRx.value;
-        final yAxisTicks = controller.getYAxisTickValues;
-        final yAxisMin = yAxisTicks.first;
-        final yAxisMax = yAxisTicks.last;
-        final yAxisInterval = controller.getYAxisIntervalByReferenceLevels;
-        final yAxisEpsilon = (yAxisInterval == 0 ? 0.000001 : yAxisInterval / 20);
+        final yAxisMax = controller.getMaxYAxisValue;
+        final yAxisMin = controller.getMinYAxisValue;
+        final yAxisInterval = (yAxisMax - yAxisMin) / 5;
         final unit = controller.getUnit;
 
         return Row(
@@ -479,10 +477,6 @@ class _ChartSection extends StatelessWidget {
                         reservedSize: 60.0.scale,
                         interval: yAxisInterval,
                         getTitlesWidget: (value, meta) {
-                          final shouldShow = yAxisTicks.any((t) => (value - t).abs() <= yAxisEpsilon);
-                          if (!shouldShow) {
-                            return const SizedBox.shrink();
-                          }
                           // 根據數據類型決定小數位數
                           final displayValue = dataType.isIntegerType ? value.toInt().toString() : value.toStringAsFixed(2);
                           return Padding(
@@ -502,15 +496,9 @@ class _ChartSection extends StatelessWidget {
                     show: true,
                     drawVerticalLine: false,
                     horizontalInterval: yAxisInterval,
-                    checkToShowHorizontalLine: (value) {
-                      return yAxisTicks.any((t) => (value - t).abs() <= yAxisEpsilon);
-                    },
                     getDrawingHorizontalLine: (value) {
-                      // 根據刻度值找到對應的 ReferenceLevel，使用其顏色
-                      final referenceLevel = controller.getReferenceLevelForYAxisValue(value);
-                      final lineColor = referenceLevel?.color ?? EnumColor.lineDivider.color;
                       return FlLine(
-                        color: lineColor,
+                        color: EnumColor.lineDivider.color,
                         strokeWidth: 1.0.scale,
                       );
                     },

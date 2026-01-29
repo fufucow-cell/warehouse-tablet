@@ -248,14 +248,9 @@ class _LevelItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 48.0.scale),
-                  Text(
+                  CustTextWidget(
                     level.range,
-                    style: TextStyle(
-                      fontSize: 32.0.scale,
-                      fontWeight: FontWeight.w400,
-                      color: EnumColor.textPrimary.color,
-                      letterSpacing: 10.0,
-                    ),
+                    size: 32.0.scale,
                   ),
                 ],
               ),
