@@ -6,6 +6,7 @@ import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/alert_setting
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/data_record/circuit_breaker_data_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/main/circuit_breaker_main_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/notification_record/circuit_breaker_notification_record_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -81,6 +82,7 @@ class SmartHomeCircuitBreakerPageController extends GetxController {
           EnumTimeFilter.day => (chartData: _getDayChartData),
           EnumTimeFilter.month => (chartData: _getMonthChartData),
           EnumTimeFilter.year => (chartData: _getYearChartData),
+          _ => (chartData: _getDayChartData),
         };
       },
       onSettingButtonTap: () {

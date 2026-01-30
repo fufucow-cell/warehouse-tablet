@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/data_record/circuit_breaker_data_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/service/circuit_breaker_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 part 'circuit_breaker_data_record_page_interactive.dart';
 part 'circuit_breaker_data_record_page_route.dart';
@@ -49,12 +49,14 @@ class CircuitBreakerDataRecordPageController extends GetxController {
     final timeFilter = selectedTimeFilterRx.value;
 
     if (timeFilter == EnumTimeFilter.day) {
-      return DateFormat('yyyy/MM/dd').format(selectedDate);
+      return EnumTimeFilter.hourMinute.dateFormat.format(selectedDate);
     } else if (timeFilter == EnumTimeFilter.month) {
-      return DateFormat('yyyy/MM').format(selectedDate);
-    } else {
-      return DateFormat('yyyy').format(selectedDate);
+      return EnumTimeFilter.day.dateFormat.format(selectedDate);
+    } else if (timeFilter == EnumTimeFilter.year) {
+      return EnumTimeFilter.month.dateFormat.format(selectedDate);
     }
+
+    return '';
   }
 
   double? get getMaxYAxisValue {
@@ -90,14 +92,8 @@ class CircuitBreakerDataRecordPageController extends GetxController {
 
   // MARK: - Private Method
 
-  Future<void> _updateTimeFilter(String newFilter) async {
-    final newFilterEnum = EnumTimeFilter.fromString(newFilter);
-
-    if (_model.selectedTimeFilter.value == newFilterEnum) {
-      return;
-    }
-
-    _model.selectedTimeFilter.value = newFilterEnum;
+  Future<void> _updateTimeFilter(EnumTimeFilter newItem) async {
+    _model.selectedTimeFilter.value = newItem;
     await _fetchChartData();
   }
 

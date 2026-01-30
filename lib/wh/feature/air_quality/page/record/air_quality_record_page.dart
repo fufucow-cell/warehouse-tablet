@@ -2,6 +2,7 @@ import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_qualit
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_quality_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
@@ -94,6 +95,9 @@ class _TimeFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<AirQualityRecordPageController>();
+    const eDay = EnumTimeFilter.day;
+    const eMonth = EnumTimeFilter.month;
+    const eYear = EnumTimeFilter.year;
     return Obx(
       () {
         final selectedFilter = controller.selectedTimeFilterRx.value;
@@ -110,12 +114,12 @@ class _TimeFilter extends StatelessWidget {
             children: [
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabDay.tr,
-                  isSelected: selectedFilter == EnumTimeFilter.day,
+                  title: eDay.title,
+                  isSelected: selectedFilter == eDay,
                   onTap: () {
                     controller.interactive(
                       EnumAirQualityRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabDay.tr,
+                      data: eDay,
                     );
                   },
                 ),
@@ -123,12 +127,12 @@ class _TimeFilter extends StatelessWidget {
               SizedBox(width: 48.0.scale),
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabMonth.tr,
-                  isSelected: selectedFilter == EnumTimeFilter.month,
+                  title: eMonth.title,
+                  isSelected: selectedFilter == eMonth,
                   onTap: () {
                     controller.interactive(
                       EnumAirQualityRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabMonth.tr,
+                      data: eMonth,
                     );
                   },
                 ),
@@ -136,12 +140,12 @@ class _TimeFilter extends StatelessWidget {
               SizedBox(width: 48.0.scale),
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabYear.tr,
-                  isSelected: selectedFilter == EnumTimeFilter.year,
+                  title: eYear.title,
+                  isSelected: selectedFilter == eYear,
                   onTap: () {
                     controller.interactive(
                       EnumAirQualityRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabYear.tr,
+                      data: eYear,
                     );
                   },
                 ),
@@ -390,6 +394,12 @@ class _ChartSection extends StatelessWidget {
         final yAxisMin = controller.getMinYAxisValue;
         final yAxisInterval = (yAxisMax - yAxisMin) / 5;
         final unit = controller.getUnit;
+        // 橫軸以整數為單位：日=每4小時、月=每5天、年=每1月
+        final xAxisInterval = timeFilter == EnumTimeFilter.day
+            ? 4.0
+            : timeFilter == EnumTimeFilter.month
+                ? 5.0
+                : 1.0;
 
         return Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -407,7 +417,54 @@ class _ChartSection extends StatelessWidget {
                 LineChartData(
                   maxY: yAxisMax,
                   minY: yAxisMin,
-                  lineTouchData: const LineTouchData(enabled: false),
+                  lineTouchData: LineTouchData(
+                    enabled: true,
+                    touchTooltipData: LineTouchTooltipData(
+                      getTooltipItems: (touchedSpots) {
+                        return touchedSpots.map((spot) {
+                          final idx = spot.x.toInt();
+                          if (idx < 0 || idx >= chartData.length) {
+                            return LineTooltipItem(
+                              '${spot.y.toStringAsFixed(dataType.isIntegerType ? 0 : 2)} $unit',
+                              TextStyle(
+                                color: EnumColor.textPrimary.color,
+                                fontSize: 24.0.scale,
+                              ),
+                            );
+                          }
+                          final item = chartData[idx];
+                          final valueStr = dataType.isIntegerType ? item.number.toInt().toString() : item.number.toStringAsFixed(2);
+                          String dateStr = '';
+
+                          if (timeFilter == EnumTimeFilter.day) {
+                            dateStr = EnumTimeFilter.hourMinute.dateFormat.format(item.date);
+                            dateStr += ' - $valueStr $unit';
+                          } else if (timeFilter == EnumTimeFilter.month) {
+                            const timeUnit = EnumTimeFilter.day;
+                            dateStr = timeUnit.dateFormat.format(item.date);
+                            dateStr += '${timeUnit.title} - $valueStr $unit';
+                          } else if (timeFilter == EnumTimeFilter.year) {
+                            const timeUnit = EnumTimeFilter.month;
+                            dateStr = timeUnit.dateFormat.format(item.date);
+                            dateStr += '${timeUnit.title} - $valueStr $unit';
+                          }
+
+                          return LineTooltipItem(
+                            dateStr,
+                            TextStyle(
+                              color: EnumColor.textPrimary.color,
+                              fontSize: 24.0.scale,
+                            ),
+                          );
+                        }).toList();
+                      },
+                      tooltipPadding: EdgeInsets.symmetric(horizontal: 12.0.scale, vertical: 8.0.scale),
+                      tooltipMargin: 8.0.scale,
+                      getTooltipColor: (_) => EnumColor.backgroundPrimary.color,
+                      tooltipBorder: BorderSide(color: EnumColor.lineBorder.color, width: 1.0.scale),
+                      tooltipRoundedRadius: 8.0.scale,
+                    ),
+                  ),
                   titlesData: FlTitlesData(
                     show: true,
                     rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -417,10 +474,10 @@ class _ChartSection extends StatelessWidget {
                         padding: EdgeInsets.only(top: 8.0.scale),
                         child: CustTextWidget(
                           timeFilter == EnumTimeFilter.day
-                              ? EnumLocale.airBoxChartAxisUnitHour.tr
+                              ? EnumTimeFilter.hourMinute.title
                               : timeFilter == EnumTimeFilter.month
-                                  ? EnumLocale.engoTabDay.tr
-                                  : EnumLocale.engoTabMonth.tr,
+                                  ? EnumTimeFilter.day.title
+                                  : EnumTimeFilter.month.title,
                           size: 24.0.scale,
                           color: EnumColor.textSecondary.color,
                           align: TextAlign.center,
@@ -428,6 +485,7 @@ class _ChartSection extends StatelessWidget {
                       ),
                       sideTitles: SideTitles(
                         showTitles: true,
+                        interval: xAxisInterval,
                         getTitlesWidget: (value, meta) {
                           if (timeFilter == EnumTimeFilter.day) {
                             final hour = value.toInt();
@@ -453,7 +511,7 @@ class _ChartSection extends StatelessWidget {
                                 ),
                               );
                             }
-                          } else {
+                          } else if (timeFilter == EnumTimeFilter.year) {
                             final month = value.toInt() + 1;
                             if (month >= 1 && month <= 12) {
                               return Padding(
@@ -466,6 +524,7 @@ class _ChartSection extends StatelessWidget {
                               );
                             }
                           }
+
                           return const SizedBox.shrink();
                         },
                         reservedSize: 40.0.scale,

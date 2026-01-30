@@ -4,6 +4,7 @@ import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_qualit
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/service/air_quality_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -36,7 +37,16 @@ class AirQualityRecordPageController extends GetxController {
   String get getDateText {
     final selectedDate = selectedDateRx.value;
     final timeFilter = selectedTimeFilterRx.value;
-    return timeFilter.dateFormat.format(selectedDate);
+
+    if (timeFilter == EnumTimeFilter.day) {
+      return EnumTimeFilter.yearMonthDay.dateFormat.format(selectedDate);
+    } else if (timeFilter == EnumTimeFilter.month) {
+      return EnumTimeFilter.yearMonth.dateFormat.format(selectedDate);
+    } else if (timeFilter == EnumTimeFilter.year) {
+      return EnumTimeFilter.year.dateFormat.format(selectedDate);
+    }
+
+    return '';
   }
 
   double get getMaxYAxisValue {
@@ -65,7 +75,7 @@ class AirQualityRecordPageController extends GetxController {
   /// 根據 Y 軸刻度值取得對應的 ReferenceLevel（用於決定網格線顏色）
   ReferenceLevel? getReferenceLevelForYAxisValue(double value) {
     final dataType = selectedDataTypeRx.value;
-    final epsilon = 0.0001;
+    const epsilon = 0.0001;
 
     double parseNum(String raw) {
       return double.tryParse(raw.trim()) ?? 0.0;

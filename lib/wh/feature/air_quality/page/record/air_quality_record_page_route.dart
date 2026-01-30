@@ -33,17 +33,7 @@ extension AirQualityRecordPageRouteExtension on AirQualityRecordPageController {
             firstDate: DateTime(2000),
             lastDate: DateTime(2100),
           );
-        } else if (timeFilter == EnumTimeFilter.month) {
-          // 月份选择器需要自定义实现
-          pickedDate = await showDatePicker(
-            context: context,
-            initialDate: selectedDate,
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2100),
-            initialDatePickerMode: DatePickerMode.year,
-          );
         } else {
-          // 年份选择器需要自定义实现
           pickedDate = await showDatePicker(
             context: context,
             initialDate: selectedDate,

@@ -6,6 +6,7 @@ import 'package:engo_terminal_app3/wh/feature/air_quality/page/filter/air_qualit
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/purifier/air_quality_purifier_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_quality_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -154,6 +155,8 @@ class SmartHomeAirPurifierPageController extends GetxController {
             number: baseValue.clamp(min, max),
           );
         });
+      default:
+        return [];
     }
   }
 }

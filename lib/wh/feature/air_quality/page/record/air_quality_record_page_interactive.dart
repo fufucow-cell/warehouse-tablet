@@ -12,12 +12,9 @@ extension AirQualityRecordPageInteractiveExtension on AirQualityRecordPageContro
   Future<void> interactive(EnumAirQualityRecordPageInteractive type, {dynamic data}) async {
     switch (type) {
       case EnumAirQualityRecordPageInteractive.tapTimeFilter:
-        if (data is String) {
-          final newFilterEnum = EnumTimeFilter.fromString(data);
-          if (_model.selectedTimeFilter.value != newFilterEnum) {
-            _model.selectedTimeFilter.value = newFilterEnum;
-            await _fetchChartData();
-          }
+        if (data is EnumTimeFilter && _model.selectedTimeFilter.value != data) {
+          _model.selectedTimeFilter.value = data;
+          await _fetchChartData();
         }
       case EnumAirQualityRecordPageInteractive.tapDataTypeFilter:
         if (data is String && data.isNotEmpty) {
