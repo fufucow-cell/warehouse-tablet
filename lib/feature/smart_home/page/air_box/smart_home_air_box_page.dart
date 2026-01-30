@@ -1,5 +1,5 @@
 import 'package:engo_terminal_app3/feature/smart_home/page/air_box/smart_home_air_box_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/air_box/page/main/air_box_main_page.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/page/box/air_quality_box_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,7 @@ class SmartHomeAirBoxPage extends GetView<SmartHomeAirBoxPageController> {
       init: SmartHomeAirBoxPageController(),
       builder: (controller) {
         controller.setContext(context);
-        return AirBoxMainPage(routerData: controller.getAirBoxMainPageRouterData);
+        return AirQualityBoxPage(routerData: controller.getAirBoxMainPageRouterData);
       },
     );
   }

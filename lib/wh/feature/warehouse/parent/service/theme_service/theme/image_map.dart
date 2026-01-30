@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-27T16:39:48.087869
+/// 生成时间: 2026-01-29T16:57:58.696696
 library;
 
 import 'package:flutter/material.dart';
@@ -8,6 +8,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 
 enum EnumImage {
   cAdd,
+  cAirFilter,
   cArrowDown,
   cArrowDown2,
   cArrowLeft,
@@ -20,10 +21,12 @@ enum EnumImage {
   cCamera,
   cCategory,
   cChangeImage,
+  cChart,
   cCheckboxOff,
   cCheckboxOn,
   cCircuit,
   cClock,
+  cCo2,
   cCow,
   cEditNormal,
   cEditPosition,
@@ -35,25 +38,34 @@ enum EnumImage {
   cGatewayMore,
   cGatewayStatusOff,
   cGatewayStatusOn,
+  cHcho,
   cHelp,
   cHistory,
   cHouse,
+  cHumidity,
   cInfo,
   cItem,
+  cMenu,
   cMinus,
   cPencilLine,
   cPhoto,
   cPlus,
   cPlus2,
+  cPm25,
+  cPurifierFliter,
   cRecover,
   cRefresh,
+  cReset,
   cSearch,
   cSearch2,
   cSetting,
   cStockItem,
+  cTemperature,
   cTrash,
   cTrash2,
   cTrash3,
+  cVoc,
+  cWind,
   tBgContent,
   tCow,
   tWaterValueOff,

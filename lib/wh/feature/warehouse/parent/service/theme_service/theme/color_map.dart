@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-27T21:35:18.218137
+/// 生成时间: 2026-01-29T17:03:16.872837
 library;
 
 import 'package:flutter/material.dart';
@@ -37,6 +37,7 @@ enum EnumColor {
   engoBackgroundOrange400,
   engoBottomSheetBackground,
   engoButtonBackground,
+  engoButtonBorder,
   engoButtonBorderReverse,
   engoCircuitBreakerAlertCardBorder,
   engoCircuitBreakerAlertCardGradient,
@@ -44,6 +45,7 @@ enum EnumColor {
   engoCircuitBreakerSwitchBackgroundGradient,
   engoCircuitBreakerSwitchOffThumbBackground,
   engoDeviceCardBackgroundGradient,
+  engoPurifierPopupBgGradient,
   engoTabBarBackground,
   engoTextPrimary,
   engoTextSecondary,
@@ -63,6 +65,7 @@ enum EnumColor {
   menuBgFocused,
   menuIconDefault,
   menuIconFocused,
+  progressTrack,
   shadowCard,
   textLink,
   textPrimary,

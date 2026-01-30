@@ -2,9 +2,10 @@ import 'dart:math';
 
 import 'package:engo_terminal_app3/feature/smart_home/page/air_box/smart_home_air_box_page_model.dart';
 import 'package:engo_terminal_app3/feature/smart_home/service/smart_home_service.dart';
-import 'package:engo_terminal_app3/wh/feature/air_box/page/main/air_box_main_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/air_box/page/record/air_box_record_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/air_box/page/reference/air_box_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/page/box/air_quality_box_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_quality_record_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,34 +20,20 @@ class SmartHomeAirBoxPageController extends GetxController {
 
   SmartHomeAirBoxPageController();
 
-  AirBoxSensorDataModel _generateRandomData() {
-    double generateValue(EnumAirBoxDataType dataType) {
+  AirQualityDataItem _generateRandomData() {
+    double generateValue(EnumAirQualityDataType dataType) {
       final min = dataType.defaultMin;
       final max = dataType.defaultMax;
       return min + _random.nextDouble() * (max - min);
     }
 
-    String formatValue(EnumAirBoxDataType dataType, double value) {
-      if (dataType.isIntegerType) {
-        return value.toInt().toString();
-      } else {
-        // 根據不同類型決定小數位數
-        return switch (dataType) {
-          EnumAirBoxDataType.formaldehyde => value.toStringAsFixed(3),
-          EnumAirBoxDataType.voc => value.toStringAsFixed(2),
-          EnumAirBoxDataType.co2 => value.toStringAsFixed(3),
-          _ => value.toStringAsFixed(1),
-        };
-      }
-    }
-
-    return AirBoxSensorDataModel(
-      pm25: formatValue(EnumAirBoxDataType.pm25, generateValue(EnumAirBoxDataType.pm25)),
-      temperature: formatValue(EnumAirBoxDataType.temperature, generateValue(EnumAirBoxDataType.temperature)),
-      humidity: formatValue(EnumAirBoxDataType.humidity, generateValue(EnumAirBoxDataType.humidity)),
-      formaldehyde: formatValue(EnumAirBoxDataType.formaldehyde, generateValue(EnumAirBoxDataType.formaldehyde)),
-      voc: formatValue(EnumAirBoxDataType.voc, generateValue(EnumAirBoxDataType.voc)),
-      co2: formatValue(EnumAirBoxDataType.co2, generateValue(EnumAirBoxDataType.co2)),
+    return AirQualityDataItem(
+      pm25: generateValue(EnumAirQualityDataType.pm25),
+      temperature: generateValue(EnumAirQualityDataType.temperature),
+      humidity: generateValue(EnumAirQualityDataType.humidity),
+      hcho: generateValue(EnumAirQualityDataType.hcho),
+      voc: generateValue(EnumAirQualityDataType.voc),
+      co2: generateValue(EnumAirQualityDataType.co2),
     );
   }
 
@@ -54,19 +41,20 @@ class SmartHomeAirBoxPageController extends GetxController {
     _model.context = context;
   }
 
-  AirBoxMainPageRouterData get getAirBoxMainPageRouterData {
-    return AirBoxMainPageRouterData(
+  AirQualityBoxPageRouterData get getAirBoxMainPageRouterData {
+    return AirQualityBoxPageRouterData(
       language: _service.getCurrentLocaleCode,
       theme: _service.getCurrentThemeName,
       isModuleMode: false,
+      roomName: '廚房',
       deviceName: '空氣盒',
       visibleDataTypes: [
-        EnumAirBoxDataType.pm25,
-        EnumAirBoxDataType.temperature,
-        EnumAirBoxDataType.humidity,
-        EnumAirBoxDataType.formaldehyde,
-        EnumAirBoxDataType.voc,
-        EnumAirBoxDataType.co2,
+        EnumAirQualityDataType.pm25,
+        EnumAirQualityDataType.temperature,
+        EnumAirQualityDataType.humidity,
+        EnumAirQualityDataType.hcho,
+        EnumAirQualityDataType.voc,
+        EnumAirQualityDataType.co2,
       ],
       onBackButtonTap: () {
         routerHandle(EnumSmartHomeAirBoxPageRoute.showSnackBar, data: SnackBarData('點擊返回'));
@@ -87,9 +75,9 @@ class SmartHomeAirBoxPageController extends GetxController {
     );
   }
 
-  AirBoxRecordPageRouterData get getAirBoxRecordPageRouterData {
-    return AirBoxRecordPageRouterData(
-      onDataFilterChanged: (EnumTimeFilter timeFilter, EnumAirBoxDataType dataType, DateTime selectedDate) async {
+  AirQualityRecordPageRouterData get getAirBoxRecordPageRouterData {
+    return AirQualityRecordPageRouterData(
+      onDataFilterChanged: (EnumTimeFilter timeFilter, EnumAirQualityDataType dataType, DateTime selectedDate) async {
         return (chartData: _getChartData(timeFilter, dataType));
       },
       onHelpButtonTap: () async {
@@ -98,12 +86,12 @@ class SmartHomeAirBoxPageController extends GetxController {
     );
   }
 
-  EnumAirBoxDataType? get getAirBoxReferencePageRouterData {
+  EnumAirQualityDataType? get getAirBoxReferencePageRouterData {
     // 返回 null 表示使用預設類型，或可以返回特定類型
     return null;
   }
 
-  List<ChartDataModel> _getChartData(EnumTimeFilter timeFilter, EnumAirBoxDataType dataType) {
+  List<ChartDataModel> _getChartData(EnumTimeFilter timeFilter, EnumAirQualityDataType dataType) {
     final random = Random();
     final now = DateTime.now();
     final min = dataType.defaultMin;
@@ -148,6 +136,8 @@ class SmartHomeAirBoxPageController extends GetxController {
             number: baseValue.clamp(min, max),
           );
         });
+      default:
+        return [];
     }
   }
 }

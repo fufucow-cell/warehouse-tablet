@@ -14,7 +14,8 @@ extension StringExtension on String {
 
     for (int i = 0; i < length; i++) {
       final char = this[i];
-      if (char == char.toUpperCase() && i > 0) {
+      // 只有當字符是字母且是大寫時才添加下劃線，數字不觸發下劃線
+      if (char != char.toLowerCase() && char.toUpperCase() != char.toLowerCase() && i > 0) {
         buffer.write('_');
       }
       buffer.write(char.toLowerCase());

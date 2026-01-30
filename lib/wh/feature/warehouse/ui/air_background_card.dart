@@ -6,10 +6,14 @@ import 'package:flutter/material.dart';
 
 class AirBackgroundCard extends StatelessWidget {
   final Widget child;
+  final bool isBox;
+  final bool isPurifier;
 
   const AirBackgroundCard({
     super.key,
     required this.child,
+    this.isBox = false,
+    this.isPurifier = false,
   });
 
   @override
@@ -46,6 +50,33 @@ class AirBackgroundCard extends StatelessWidget {
                 ),
               ),
             ),
+            if (isBox)
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: Container(
+                    width: 1000.0.scale,
+                    height: 1000.0.scale,
+                    decoration: BoxDecoration(
+                      image: EnumImage.cBackgroundWind2.decorationImage,
+                    ),
+                  ),
+                ),
+              ),
+            if (isPurifier)
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  width: 1100.0.scale,
+                  height: 1100.0.scale,
+                  decoration: BoxDecoration(
+                    image: EnumImage.cBackgroundWind2.decorationImage,
+                  ),
+                ),
+              ),
             Positioned.fill(
               child: Container(
                 padding: EdgeInsets.only(

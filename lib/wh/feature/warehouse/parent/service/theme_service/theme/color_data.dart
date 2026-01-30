@@ -163,6 +163,10 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x4DF1D0AD),
     dark: Color(0x4DF1D0AD),
   ),
+  'progressTrack': ColorData(
+    light: Color(0xFFD9D9D9),
+    dark: Color(0xFFD9D9D9),
+  ),
   'shadowCard': ColorData(
     light: Color(0x1F292929),
     dark: Color(0x1F292929),
@@ -190,6 +194,10 @@ const Map<String, ColorData> colorDataMap = {
   'engoBottomSheetBackground': ColorData(
     light: Color(0xFFEFEFEF),
     dark: Color(0xFF7C7C7C),
+  ),
+  'engoButtonBorder': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFFFFFF),
   ),
   'engoButtonBorderReverse': ColorData(
     light: Color(0xFFFB9B51),
@@ -278,5 +286,13 @@ const Map<String, ColorData> colorDataMap = {
   'airBoxStatusVeryBad': ColorData(
     light: Color(0xFFEF4425),
     dark: Color(0xFFEF4425),
+  ),
+  'engoPurifierPopupBgGradient1': ColorData(
+    light: Color(0xF0EEEEEE),
+    dark: Color(0xF0BBBBBB),
+  ),
+  'engoPurifierPopupBgGradient2': ColorData(
+    light: Color(0xF0FBBB84),
+    dark: Color(0xF0000000),
   ),
 };

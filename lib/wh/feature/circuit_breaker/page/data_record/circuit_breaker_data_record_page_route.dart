@@ -52,11 +52,7 @@ extension CircuitBreakerDataRecordPageRouteExtension on CircuitBreakerDataRecord
       initialDate: selectedDate,
       firstDate: DateTime(currentDate.year - 3),
       lastDate: currentDate,
-      initialDatePickerMode: timeFilter == EnumTimeFilter.year
-          ? DatePickerMode.year
-          : timeFilter == EnumTimeFilter.month
-              ? DatePickerMode.year
-              : DatePickerMode.day,
+      initialDatePickerMode: timeFilter == EnumTimeFilter.day ? DatePickerMode.day : DatePickerMode.year,
     );
 
     unawaited(_updateDate(picked));

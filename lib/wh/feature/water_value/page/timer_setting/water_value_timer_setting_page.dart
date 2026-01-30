@@ -7,7 +7,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_list/water_value_timer_list_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_timer.dart';
+import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_apm_timer.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/ui/cust_toggle_switch.dart';
 import 'package:engo_terminal_app3/wh/feature/water_value/page/timer_setting/water_value_timer_setting_page_controller.dart';
 import 'package:flutter/material.dart';
@@ -192,7 +192,7 @@ class _TimePickerSection extends StatelessWidget {
           child: SizedBox(
             width: 593.0.scale,
             height: 250.0.scale,
-            child: CustTimer(
+            child: CustAPMTimer(
               time: controller.timeRx.value,
               onTimeChanged: (time) {
                 controller.interactive(

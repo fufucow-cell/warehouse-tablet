@@ -1,4 +1,4 @@
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,20 +31,4 @@ class ChartDataModel {
     required this.date,
     required this.number,
   });
-}
-
-enum EnumTimeFilter {
-  day,
-  month,
-  year;
-
-  String get title => switch (this) {
-        EnumTimeFilter.day => EnumLocale.engoTabDay.tr,
-        EnumTimeFilter.month => EnumLocale.engoTabMonth.tr,
-        EnumTimeFilter.year => EnumLocale.engoTabYear.tr,
-      };
-
-  static EnumTimeFilter fromString(String? value) {
-    return EnumTimeFilter.values.firstWhereOrNull((e) => e.title == value) ?? EnumTimeFilter.day;
-  }
 }
