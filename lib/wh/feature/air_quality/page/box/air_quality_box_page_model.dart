@@ -18,6 +18,7 @@ class AirQualityBoxPageRouterData {
   final bool? isModuleMode;
   final String? roomName;
   final String deviceName;
+  final int updateFrequency;
   final List<EnumAirQualityDataType> visibleDataTypes;
   final VoidCallback onBackButtonTap;
   final Future<String?> Function(String oldName) onEditButtonTap;
@@ -31,6 +32,7 @@ class AirQualityBoxPageRouterData {
     this.isModuleMode,
     required this.roomName,
     required this.deviceName,
+    required this.updateFrequency,
     required this.visibleDataTypes,
     required this.onBackButtonTap,
     required this.onEditButtonTap,

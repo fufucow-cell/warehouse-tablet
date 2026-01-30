@@ -46,6 +46,7 @@ class SmartHomeAirBoxPageController extends GetxController {
       language: _service.getCurrentLocaleCode,
       theme: _service.getCurrentThemeName,
       isModuleMode: false,
+      updateFrequency: 5,
       roomName: '廚房',
       deviceName: '空氣盒',
       visibleDataTypes: [

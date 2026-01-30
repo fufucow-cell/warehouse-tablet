@@ -159,9 +159,9 @@ class AirQualityPurifierPageController extends GetxController {
 
   void _startSensorUpdate() {
     _stopSensorUpdate();
-    _model.dataUpdateTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      final data = _model.routerData?.onDataUpdate();
-      _model.sensorData.value = data;
+    _model.sensorData.value = _model.routerData?.onDataUpdate();
+    _model.dataUpdateTimer = Timer.periodic(Duration(seconds: _model.routerData?.updateFrequency ?? 5), (timer) {
+      _model.sensorData.value = _model.routerData?.onDataUpdate();
     });
   }
 

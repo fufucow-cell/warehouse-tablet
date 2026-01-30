@@ -12,7 +12,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_dropdown_
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_empty_widget.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_shimmer_widget.dart' show ShimmerWidget;
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/ui/first_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/ui/air_background_card.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +27,7 @@ class AirQualityRecordPage extends GetView<AirQualityRecordPageController> {
       init: AirQualityRecordPageController(routerData),
       builder: (controller) {
         return Scaffold(
-          body: FirstBackgroundCard(
+          body: AirBackgroundCard(
             child: Column(
               children: [
                 _TopBar(),

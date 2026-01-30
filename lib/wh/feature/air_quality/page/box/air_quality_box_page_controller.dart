@@ -89,7 +89,8 @@ class AirQualityBoxPageController extends GetxController {
 
   void _listenSensorData() {
     _model.dataUpdateTimer?.cancel();
-    _model.dataUpdateTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _model.sensorData.value = _model.routerData?.onDataUpdate();
+    _model.dataUpdateTimer = Timer.periodic(Duration(seconds: _model.routerData?.updateFrequency ?? 5), (timer) {
       _model.sensorData.value = _model.routerData?.onDataUpdate();
     });
   }
