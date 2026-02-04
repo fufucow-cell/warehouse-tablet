@@ -19,6 +19,8 @@ class DeviceService extends GetxService {
 
   final _model = DeviceServiceModel();
   bool get getIsSupportedDevice => _model.isSupportedDevice;
+  bool get getIsMobile => _model.isMobile;
+  bool get getIsTablet => _model.isTablet;
   double get getMinScale => _model.minScale;
   double get getScaleWidthValue => _model.scaleWidth;
   double get getScaleHeightValue => _model.scaleHeight;

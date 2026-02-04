@@ -36,34 +36,77 @@ class AppMainPage extends GetView<AppMainPageController> {
     return GetBuilder<AppMainPageController>(
       init: AppMainPageController(),
       builder: (controller) {
-        return const Scaffold(
-          body: Row(
-            children: [
-              _LeftMenuWidget(),
-              VerticalDivider(width: 1),
-              Expanded(child: _RightContentWidget()),
-            ],
+        return Scaffold(
+          body: Builder(
+            builder: (context) {
+              return Stack(
+                children: [
+                  const _RightContentWidget(),
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top,
+                    left: 0,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: IconButton(
+                        icon: const Icon(Icons.menu),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
+          drawer: const _MainDrawer(),
         );
       },
     );
   }
 }
 
-class _LeftMenuWidget extends StatelessWidget {
-  const _LeftMenuWidget();
+/// 選單最小寬度，避免 scale 異常或 Drawer 首幀約束過小導致 ListTile layout 崩潰
+const double _kMenuMinWidth = 240.0;
+
+class _MainDrawer extends StatelessWidget {
+  const _MainDrawer();
 
   @override
   Widget build(BuildContext context) {
+    return Drawer(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minWidth: _kMenuMinWidth),
+        child: _LeftMenuWidget(
+          onItemSelected: () => Navigator.of(context).pop(),
+          useFullWidth: true,
+        ),
+      ),
+    );
+  }
+}
+
+class _LeftMenuWidget extends StatelessWidget {
+  const _LeftMenuWidget({
+    this.onItemSelected,
+    this.useFullWidth = false,
+  });
+
+  final VoidCallback? onItemSelected;
+  final bool useFullWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final width = useFullWidth ? null : (267.0.scale).clamp(_kMenuMinWidth, double.infinity);
     return Container(
-      width: 267.0.scale,
+      width: width,
       color: Theme.of(context).colorScheme.surface,
-      child: const Column(
+      child: Column(
         children: [
-          _TitleWidget(),
-          Expanded(child: _TabListWidget()),
-          _LogoutButton(),
-          CustTextWidget('Version: 1.0.0'),
+          const _TitleWidget(),
+          Expanded(
+            child: _TabListWidget(onItemSelected: onItemSelected),
+          ),
+          const _LogoutButton(),
+          const CustTextWidget('Version: 1.0.0'),
         ],
       ),
     );
@@ -86,7 +129,9 @@ class _TitleWidget extends StatelessWidget {
 }
 
 class _TabListWidget extends StatelessWidget {
-  const _TabListWidget();
+  const _TabListWidget({this.onItemSelected});
+
+  final VoidCallback? onItemSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +154,13 @@ class _TabListWidget extends StatelessWidget {
                 color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
               ),
             ),
-            onTap: () => controller.interactive(
-              EnumAppMainPageInteractive.selectItem,
-              data: item,
-            ),
+            onTap: () {
+              controller.interactive(
+                EnumAppMainPageInteractive.selectItem,
+                data: item,
+              );
+              onItemSelected?.call();
+            },
           );
         }).toList(),
       );
