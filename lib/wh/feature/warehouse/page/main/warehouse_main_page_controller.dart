@@ -70,6 +70,12 @@ class WarehouseMainPageController extends GetxController {
     _service.setContext(context);
   }
 
+  void resetRouterData(WarehouseMainPageRouterData routerData) {
+    _model.routerData = routerData;
+    WarehouseService.register().registerServices(routerData);
+    update();
+  }
+
   void initTabController(TickerProvider vsync) {
     _disposeTabController();
     final selectedTabItem = _service.mainPageSelectedTabItemRx.value;
@@ -79,7 +85,11 @@ class WarehouseMainPageController extends GetxController {
       initialIndex: EnumWarehouseTabItem.values.indexOf(selectedTabItem),
     );
     _tabController!.addListener(_onTabChanged);
-    _model.isTabControllerReady.value = true;
+    Future.microtask(() {
+      if (!isClosed) {
+        _model.isTabControllerReady.value = true;
+      }
+    });
   }
 
   // MARK: - Private Method
@@ -131,7 +141,11 @@ class WarehouseMainPageController extends GetxController {
         );
       }
       _tabController = null;
-      _model.isTabControllerReady.value = false;
+      Future.microtask(() {
+        if (!isClosed) {
+          _model.isTabControllerReady.value = false;
+        }
+      });
     }
   }
 

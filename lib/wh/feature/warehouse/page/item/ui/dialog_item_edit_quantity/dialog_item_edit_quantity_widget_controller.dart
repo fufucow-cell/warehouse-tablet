@@ -97,6 +97,15 @@ class DialogItemEditQuantityWidgetController extends GetxController {
 
       if (newName != oldName) {
         final cabinetCount = getVisibleCabinetNameList(newName).length;
+
+        if (cabinetCount == 0) {
+          routerHandle(
+            EnumDialogItemEditQuantityWidgetRoute.showSnackBar,
+            data: EnumLocale.warehouseNoCabinetInRoom.tr,
+          );
+          return;
+        }
+
         final newPosition = ItemPositionModel(
           roomId: model.position.id ?? '',
           roomName: model.position.name ?? '',
@@ -223,6 +232,7 @@ class DialogItemEditQuantityWidgetController extends GetxController {
         result.add(
           DisplayPositionModel(
             roomName: room.roomName,
+            roomId: room.roomId,
             cabinetName: cabinet.name,
             quantity: cabinet.quantity,
           ),
@@ -238,6 +248,14 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     final oldCabinets = getOldPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
     final newCabinets = getNewPositions.expand<ItemPositionCabinetModel>((position) => position.cabinets).toList();
 
+    if (newCabinets.any((cab) => cab.id.isEmpty)) {
+      routerHandle(
+        EnumDialogItemEditQuantityWidgetRoute.showSnackBar,
+        data: EnumLocale.warehouseCabinetNotSelected.tr,
+      );
+      return null;
+    }
+
     // 取得所有 oldCabinets 的 ID 集合
     final oldCabinetIds = oldCabinets.map((cabinet) => cabinet.id).where((id) => id.isNotEmpty).toSet();
 
@@ -249,8 +267,8 @@ class DialogItemEditQuantityWidgetController extends GetxController {
     // 如果有重複的 ID，顯示錯誤並返回 null
     if (duplicateCabinet != null) {
       routerHandle(
-        EnumDialogItemEditQuantityWidgetRoute.showDuplicateCabinetNameSnackBar,
-        data: duplicateCabinet.name,
+        EnumDialogItemEditQuantityWidgetRoute.showSnackBar,
+        data: EnumLocale.warehouseDuplicateRoomCabinet.tr,
       );
       return null;
     }

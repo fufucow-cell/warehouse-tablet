@@ -119,10 +119,6 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFF6F6F6),
     dark: Color(0xFF444651),
   ),
-  'backgroundButtonFill': ColorData(
-    light: Color(0xFFFB9B51),
-    dark: Color(0xFFFB9B51),
-  ),
   'lineDivider': ColorData(
     light: Color(0xFF7C7C7C),
     dark: Color(0xFFDCDCDC),
@@ -167,13 +163,13 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0x4DF1D0AD),
     dark: Color(0x4DF1D0AD),
   ),
+  'progressTrack': ColorData(
+    light: Color(0xFFD9D9D9),
+    dark: Color(0xFFD9D9D9),
+  ),
   'shadowCard': ColorData(
     light: Color(0x1F292929),
     dark: Color(0x1F292929),
-  ),
-  'engoIconBackButton': ColorData(
-    light: Color(0xFFFB9B51),
-    dark: Color(0xFFFB9B51),
   ),
   'engoTextPrimary': ColorData(
     light: Color(0xFF292929),
@@ -197,6 +193,106 @@ const Map<String, ColorData> colorDataMap = {
   ),
   'engoBottomSheetBackground': ColorData(
     light: Color(0xFFEFEFEF),
-    dark: Color(0xFFBDBDBD),
+    dark: Color(0xFF7C7C7C),
+  ),
+  'engoButtonBorder': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFFFFFF),
+  ),
+  'engoButtonBorderReverse': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFDB874),
+  ),
+  'engoCircuitBreakerSwitchOffThumbBackground': ColorData(
+    light: Color(0xFFDCDCDC),
+    dark: Color(0xFFDCDCDC),
+  ),
+  'engoCircuitBreakerSwitchBackgroundGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99FFFFFF),
+  ),
+  'engoCircuitBreakerSwitchBackgroundGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoCircuitBreakerAlertCardBorder': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFFB880),
+  ),
+  'engoCircuitBreakerAlertCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99424242),
+  ),
+  'engoCircuitBreakerAlertCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FFC28A),
+  ),
+  'engoCircuitBreakerInputValue': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFFA86B),
+  ),
+  'engoBackgroundOrange400': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoBackgroundButton': ColorData(
+    light: Color(0xFFFDB874),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoWaterValueFunctionCardBorder': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFDB874),
+  ),
+  'engoWaterValueFunctionCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x99FFFFFF),
+  ),
+  'engoWaterValueFunctionCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoWaterValueButtonBorder': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoWaterValueStatusOpening': ColorData(
+    light: Color(0xFFFB9B51),
+    dark: Color(0xFFFB9B51),
+  ),
+  'engoWaterValueStatusClosing': ColorData(
+    light: Color(0xFF7C7C7C),
+    dark: Color(0xFFDCDCDC),
+  ),
+  'airBoxDataCardGradient1': ColorData(
+    light: Color(0x99FFFFFF),
+    dark: Color(0x4DFFFFFF),
+  ),
+  'airBoxDataCardGradient2': ColorData(
+    light: Color(0x00FBBB84),
+    dark: Color(0x00FBBB84),
+  ),
+  'engoTabBarBackground': ColorData(
+    light: Color(0x80FFFFFF),
+    dark: Color(0x80FFFFFF),
+  ),
+  'airBoxStatusGood': ColorData(
+    light: Color(0xFF40CE5F),
+    dark: Color(0xFF40CE5F),
+  ),
+  'airBoxStatusBad': ColorData(
+    light: Color(0xFFF88125),
+    dark: Color(0xFFF88125),
+  ),
+  'airBoxStatusVeryBad': ColorData(
+    light: Color(0xFFEF4425),
+    dark: Color(0xFFEF4425),
+  ),
+  'engoPurifierPopupBgGradient1': ColorData(
+    light: Color(0xF0EEEEEE),
+    dark: Color(0xF0BBBBBB),
+  ),
+  'engoPurifierPopupBgGradient2': ColorData(
+    light: Color(0xF0FBBB84),
+    dark: Color(0xF0000000),
   ),
 };

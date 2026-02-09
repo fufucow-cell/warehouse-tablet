@@ -85,10 +85,8 @@ class WarehouseMainPageRouterData {
       domain: env.domainUrl,
       environment: env.name,
       isModuleMode: isModuleMode ?? true,
-      accessToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzEwZTliNmEtNGEwOC00ZjUyLWEwNzEtZjIwMDFjMTRmZDIyIiwiZXhwIjoxNzY1NTI1NjkyLCJ0eXBlIjoiYWNjZXNzIn0.ygWKs1dgE085D-v7AH8QlowrOn_dPu-VlDW0t1fD-Bg',
-      refreshToken:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiYzEwZTliNmEtNGEwOC00ZjUyLWEwNzEtZjIwMDFjMTRmZDIyIiwiZXhwIjoxNzY2MTI4NjkyLCJ0eXBlIjoicmVmcmVzaCJ9.8jvVyRQteWLqR6Lnz1mI0HHabXKnd_CBaIcf6gCvyg8',
+      accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.Lbr3YauR2Fbm_IS4YqqVuLS853Dn8xKQP6lTH3PDx5k',
+      refreshToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.FlG1RDLUyt8CBb0TKmuvzHAb8R7wL5U2Uyhhw0YTXTw',
       household: WarehouseHomeRouterData(
         id: '47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b',
         name: '牛窩',

@@ -9,6 +9,10 @@ enum EnumAppMainRouter {
   household,
   gateway,
   warehouse,
+  circuitBreaker,
+  waterValue,
+  airBox,
+  airPurifier,
   setting;
 
   static EnumAppMainRouter get defaultRouter => EnumAppMainRouter.household;
@@ -18,6 +22,10 @@ enum EnumAppMainRouter {
         household => const SmartHomeHouseholdPage(),
         gateway => const SmartHomeGatewayPage(),
         warehouse => const SmartHomeWarehousePage(),
+        circuitBreaker => const SmartHomeCircuitBreakerPage(),
+        waterValue => const SmartHomeWaterValuePage(),
+        airBox => const SmartHomeAirBoxPage(),
+        airPurifier => const SmartHomeAirPurifierPage(),
         setting => const SmartHomeSettingPage(),
       };
 }
@@ -26,6 +34,10 @@ enum EnumAppMainTabItem {
   household(Icons.home),
   gateway(Icons.gas_meter),
   warehouse(Icons.warehouse),
+  circuitBreaker(Icons.power_settings_new),
+  waterValue(Icons.water_drop),
+  airBox(Icons.air),
+  airPurifier(Icons.filter_alt),
   setting(Icons.settings);
 
   const EnumAppMainTabItem(this.icon);
@@ -36,6 +48,10 @@ enum EnumAppMainTabItem {
         household => EnumLocale.smartHomeTabHousehold,
         gateway => EnumLocale.smartHomeTabGateway,
         warehouse => EnumLocale.smartHomeTabWarehouse,
+        circuitBreaker => EnumLocale.smartHomeTabCircuitBreaker,
+        waterValue => EnumLocale.smartHomeTabWaterValue,
+        airBox => EnumLocale.smartHomeTabAirBox,
+        airPurifier => EnumLocale.smartHomeTabAirPurifier,
         setting => EnumLocale.smartHomeTabSetting,
       };
 
@@ -45,6 +61,10 @@ enum EnumAppMainTabItem {
         household => EnumAppMainRouter.household,
         gateway => EnumAppMainRouter.gateway,
         warehouse => EnumAppMainRouter.warehouse,
+        circuitBreaker => EnumAppMainRouter.circuitBreaker,
+        waterValue => EnumAppMainRouter.waterValue,
+        airBox => EnumAppMainRouter.airBox,
+        airPurifier => EnumAppMainRouter.airPurifier,
         setting => EnumAppMainRouter.setting,
       };
 }

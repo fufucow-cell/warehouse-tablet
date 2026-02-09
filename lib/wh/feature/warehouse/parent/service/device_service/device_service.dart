@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/device_service/device_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/router_service/router_service.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -62,7 +67,7 @@ class DeviceService extends GetxService {
     return false;
   }
 
-  Future<String?> openCamera() async {
+  Future<String?> openCameraChoise() async {
     // 如果是模擬器，顯示提示並返回
     if (isSimulator) {
       CustSnackBar.show(
@@ -72,18 +77,113 @@ class DeviceService extends GetxService {
       return null;
     }
 
+    // 如果是 Android 平板，顯示選擇器讓用戶選擇相機或相簿
+    if (_model.isAndroid) {
+      final context = RouterService.instance.getRootNavigatorContext;
+      if (context != null) {
+        final ImageSource? selectedSource = await showModalBottomSheet<ImageSource>(
+          context: context,
+          backgroundColor: Colors.transparent,
+          builder: (context) => _ImageSourceBottomSheet(),
+        );
+
+        if (selectedSource == ImageSource.camera) {
+          final result = await _takePhoto();
+          return result?.path;
+        } else if (selectedSource == ImageSource.gallery) {
+          return await _pickImage(ImageSource.gallery);
+        }
+
+        return null;
+      }
+    }
+
+    // 非 Android 平板直接打開相機
+    return await _pickImage(ImageSource.camera);
+  }
+
+  Future<XFile?> _takePhoto() async {
+    final context = RouterService.instance.getRootNavigatorContext;
+    try {
+      final cameras = await _availableCameras();
+
+      if (cameras.isEmpty) {
+        CustSnackBar.show(
+          title: EnumLocale.deviceCameraNotAvailable.tr,
+          message: '',
+        );
+        return null;
+      }
+
+      final camera = cameras.firstWhere(
+        (camera) => camera.lensDirection == CameraLensDirection.back,
+        orElse: () => cameras.first,
+      );
+
+      final result = await Navigator.push<XFile>(
+        context!,
+        MaterialPageRoute(
+          builder: (context) => _CameraPage(camera: camera),
+        ),
+      );
+
+      return result;
+    } on Object catch (e) {
+      CustSnackBar.show(
+        title: EnumLocale.deviceCameraFailed.tr,
+        message: e.toString(),
+      );
+      return null;
+    }
+  }
+
+  Future<String?> _pickImage(ImageSource source) async {
     try {
       final ImagePicker picker = ImagePicker();
       final XFile? image = await picker.pickImage(
-        source: ImageSource.camera,
+        source: source,
         imageQuality: 85,
         maxWidth: 1920,
         maxHeight: 1920,
       );
-      return image?.path;
-    } on Object catch (e) {
+
+      if (image == null) {
+        return null;
+      }
+
+      // 確保文件路徑有效
+      final String imagePath = image.path;
+      if (imagePath.isEmpty) {
+        return null;
+      }
+
+      // 使用 microtask 確保相機界面完全關閉後再繼續
+      // 這可以確保相機資源釋放的時序正確，避免在拍照後立即處理圖片時出現相機停止運作的問題
+      await Future.microtask(() {});
+
+      // 等待一小段時間，確保相機資源完全釋放
+      // 特別是在 iOS 設備或 Release 模式下，相機資源釋放可能需要更多時間
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      // 驗證文件是否存在（確保文件已完全寫入）
+      final File file = File(imagePath);
+      if (!file.existsSync()) {
+        return null;
+      }
+
+      return imagePath;
+    } on PlatformException catch (e) {
+      // 處理平台特定的異常（如權限被拒絕）
+      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
       CustSnackBar.show(
-        title: EnumLocale.deviceCameraFailed.tr,
+        title: errorMessage,
+        message: e.message ?? e.toString(),
+      );
+      return null;
+    } on Object catch (e) {
+      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
+      CustSnackBar.show(
+        title: errorMessage,
         message: e.toString(),
       );
       return null;
@@ -134,6 +234,15 @@ class DeviceService extends GetxService {
         Platform.environment.containsKey('SIMULATOR_ROOT') ||
         Platform.environment.containsKey('SIMULATOR_UDID') ||
         _model.systemVersion.toLowerCase().contains('simulator');
+  }
+
+  /// 獲取可用的相機列表
+  Future<List<CameraDescription>> _availableCameras() async {
+    try {
+      return await availableCameras();
+    } on Object catch (_) {
+      return [];
+    }
   }
 
   void _initDeviceInfo(BuildContext context) {
@@ -189,5 +298,258 @@ class DeviceService extends GetxService {
     scaleMin = _model.minScale;
     scaleWidth = _model.scaleWidth; // Top-level variable from extension_double.dart
     scaleHeight = _model.scaleHeight; // Top-level variable from extension_double.dart
+  }
+}
+
+/// 圖片來源選擇底部選擇器（用於 Android 平板）
+class _ImageSourceBottomSheet extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: 24.0.scale,
+        right: 24.0.scale,
+        top: 24.0.scale,
+        bottom: 32.0.scale,
+      ),
+      decoration: BoxDecoration(
+        color: EnumColor.engoBottomSheetBackground.color,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24.0.scale),
+          topRight: Radius.circular(24.0.scale),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustTextWidget(
+            EnumLocale.commonReminder.tr,
+            size: 40.0.scale,
+            weightType: EnumFontWeightType.bold,
+            color: EnumColor.engoTextPrimary.color,
+            align: TextAlign.center,
+          ),
+          SizedBox(height: 32.0.scale),
+          _OptionItem(
+            text: EnumLocale.deviceOpenCamera.tr,
+            onTap: () {
+              Navigator.of(context).pop(ImageSource.camera);
+            },
+          ),
+          SizedBox(height: 16.0.scale),
+          Divider(
+            height: 1.0.scale,
+            thickness: 1.0.scale,
+            color: EnumColor.textSecondary.color,
+          ),
+          SizedBox(height: 16.0.scale),
+          _OptionItem(
+            text: EnumLocale.deviceOpenGallery.tr,
+            onTap: () {
+              Navigator.of(context).pop(ImageSource.gallery);
+            },
+          ),
+          SizedBox(height: 32.0.scale),
+          Material(
+            color: EnumColor.engoButtonBackground.color,
+            borderRadius: BorderRadius.circular(12.0.scale),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              borderRadius: BorderRadius.circular(12.0.scale),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 24.0.scale,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1.0.scale,
+                    color: Colors.black,
+                  ),
+                  borderRadius: BorderRadius.circular(12.0.scale),
+                ),
+                child: Center(
+                  child: CustTextWidget(
+                    EnumLocale.commonCancel.tr,
+                    size: 32.0.scale,
+                    weightType: EnumFontWeightType.regular,
+                    color: EnumColor.engoTextPrimary.color,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OptionItem extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+
+  const _OptionItem({
+    required this.text,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child: Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.0.scale),
+            child: CustTextWidget(
+              text,
+              size: 32.0.scale,
+              weightType: EnumFontWeightType.regular,
+              color: EnumColor.engoTextPrimary.color,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CameraPage extends StatefulWidget {
+  final CameraDescription camera;
+
+  const _CameraPage({required this.camera});
+
+  @override
+  State<_CameraPage> createState() => _CameraPageState();
+}
+
+class _CameraPageState extends State<_CameraPage> {
+  late CameraController _controller;
+  late Future<void> _initializeControllerFuture;
+  bool _isTakingPicture = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(
+      widget.camera,
+      ResolutionPreset.high,
+      imageFormatGroup: ImageFormatGroup.jpeg,
+    );
+    _initializeControllerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  Future<void> _takePicture() async {
+    if (_isTakingPicture) {
+      return;
+    }
+
+    try {
+      setState(() => _isTakingPicture = true);
+
+      await _initializeControllerFuture;
+
+      final image = await _controller.takePicture();
+
+      if (mounted) {
+        Navigator.pop(context, image);
+      }
+    } on Object catch (e) {
+      if (mounted) {
+        CustSnackBar.show(
+          title: EnumLocale.deviceTakePhotoFailed.tr,
+          message: e.toString(),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isTakingPicture = false);
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: FutureBuilder<void>(
+        future: _initializeControllerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Stack(
+              fit: StackFit.expand,
+              children: [
+                CameraPreview(_controller),
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 16,
+                  left: 16,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                Positioned(
+                  bottom: 40,
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: GestureDetector(
+                      onTap: _isTakingPicture ? null : _takePicture,
+                      child: Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 4,
+                          ),
+                        ),
+                        child: _isTakingPicture
+                            ? const Padding(
+                                padding: EdgeInsets.all(15),
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            : Container(
+                                margin: const EdgeInsets.all(4),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            );
+          }
+        },
+      ),
+    );
   }
 }
