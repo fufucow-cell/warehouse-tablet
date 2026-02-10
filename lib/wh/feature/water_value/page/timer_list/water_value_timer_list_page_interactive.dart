@@ -20,10 +20,12 @@ extension WaterValueTimerListPageInteractiveExtension on WaterValueTimerListPage
       case EnumWaterValueTimerListPageInteractive.tapSettingButton:
         _model.isEditMode.value = !_model.isEditMode.value;
       case EnumWaterValueTimerListPageInteractive.tapAddTimerButton:
-        unawaited(_routerHandle(
-          EnumWaterValueTimerListPageRoute.goToTimerSettingPage,
-          data: WaterValueTimerInfo(),
-        ));
+        unawaited(
+          _routerHandle(
+            EnumWaterValueTimerListPageRoute.goToTimerSettingPage,
+            data: WaterValueTimerInfo(),
+          ),
+        );
       case EnumWaterValueTimerListPageInteractive.tapDeleteButton:
         if (data is WaterValueTimerInfo) {
           final isSuccess = await _model.routerData?.itemDelete.call(data) ?? false;
