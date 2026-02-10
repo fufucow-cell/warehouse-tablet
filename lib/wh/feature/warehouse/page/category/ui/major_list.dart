@@ -105,11 +105,13 @@ class MajorListWidget extends StatelessWidget {
 }
 
 class _MajorHeader extends SliverPersistentHeaderDelegate {
-  @override
-  double get minExtent => 78.0.scale;
+  static double get _headerHeight => (78.0.scale).clamp(48.0, double.infinity);
 
   @override
-  double get maxExtent => 78.0.scale;
+  double get minExtent => _headerHeight;
+
+  @override
+  double get maxExtent => _headerHeight;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) => false;
@@ -123,6 +125,7 @@ class _MajorHeader extends SliverPersistentHeaderDelegate {
     final controller = Get.find<WarehouseCategoryPageController>();
     return Container(
       width: double.infinity,
+      height: _headerHeight,
       padding: EdgeInsets.only(
         left: 32.0.scale,
         right: controller.rowRightGap,
@@ -193,7 +196,7 @@ class _MajorRowWithChildren extends StatelessWidget {
                     ? Padding(
                         padding: EdgeInsets.only(top: 24.0.scale),
                         child: MinorListWidget(
-                          children: category.children!,
+                          children: category.children ?? [],
                         ),
                       )
                     : const SizedBox.shrink(),

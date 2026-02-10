@@ -337,8 +337,9 @@ class _DropdownSection extends StatelessWidget {
     final controller = Get.find<DialogItemEditPositionWidgetController>();
     return Obx(
       () {
-        final changeRooms = controller.changeRoomsRx.value;
-        final changeCabinets = controller.changeCabinetsRx.value;
+        final changePositions = controller.changePositionsRx.value;
+        final changeRooms = changePositions.map((e) => e.room).toList();
+        final changeCabinets = changePositions.map((e) => e.cabinet).toList();
         final selectedRoomName = changeRooms[model.index].name!;
         final selectedCabinetName = changeCabinets[model.index].name!;
 

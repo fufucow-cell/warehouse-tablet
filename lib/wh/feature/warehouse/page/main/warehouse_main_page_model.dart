@@ -88,28 +88,28 @@ class WarehouseMainPageRouterData {
       accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.Lbr3YauR2Fbm_IS4YqqVuLS853Dn8xKQP6lTH3PDx5k',
       refreshToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.FlG1RDLUyt8CBb0TKmuvzHAb8R7wL5U2Uyhhw0YTXTw',
       household: WarehouseHomeRouterData(
-        id: '47e2a9b1-8c3d-4e5f-9a2b-1c0d5e6f7a8b',
+        id: '1',
         name: '牛窩',
       ),
       rooms: [
         WarehouseHomeRouterData(
-          id: 'b92f3a4c-d5e6-4172-8394-a5b6c7d8e9f0',
+          id: '1',
           name: '客廳',
         ),
         WarehouseHomeRouterData(
-          id: '1a2b3c4d-5e6f-4001-9123-456789abcdef',
+          id: '2',
           name: '廚房',
         ),
         WarehouseHomeRouterData(
-          id: 'f8e7d6c5-b4a3-4210-9988-776655443322',
+          id: '3',
           name: '主臥',
         ),
         WarehouseHomeRouterData(
-          id: 'c0a80101-3b2a-4c5d-8e9f-0123456789ab',
+          id: '4',
           name: '客房',
         ),
         WarehouseHomeRouterData(
-          id: 'd9b8a7c6-e5f4-4321-b0a1-9c8d7e6f5a4b',
+          id: '5',
           name: '浴室',
         ),
       ],
