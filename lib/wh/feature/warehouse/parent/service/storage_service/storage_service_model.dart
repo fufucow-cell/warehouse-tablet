@@ -13,7 +13,8 @@ enum EnumStorageKey {
   account,
   accessToken,
   refreshToken,
-  isRememberLogin;
+  isRememberLogin,
+  airConditionerSettings;
 
   /// 存儲鍵
   String get key => name.toSnakeCase();
@@ -26,5 +27,6 @@ enum EnumStorageKey {
         EnumStorageKey.accessToken => '訪問令牌',
         EnumStorageKey.refreshToken => '刷新令牌',
         EnumStorageKey.isRememberLogin => '記住登入狀態',
+        EnumStorageKey.airConditionerSettings => '空調設定',
       };
 }

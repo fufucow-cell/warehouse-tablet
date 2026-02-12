@@ -195,6 +195,18 @@ const Map<String, ColorData> colorDataMap = {
     light: Color(0xFFEFEFEF),
     dark: Color(0xFF7C7C7C),
   ),
+  'airConditionerDecorationEllipse1': ColorData(
+    light: Color(0xFFFFFAEA),
+    dark: Color(0xFFA35927),
+  ),
+  'airConditionerDecorationEllipse2': ColorData(
+    light: Color(0xFFFAF0DE),
+    dark: Color(0x66BA7E4C),
+  ),
+  'airConditionerBottomSheetBackground': ColorData(
+    light: Color(0xFFEFEFEF),
+    dark: Color(0xFFBDBDBD),
+  ),
   'engoButtonBorder': ColorData(
     light: Color(0xFFFDB874),
     dark: Color(0xFFFFFFFF),
@@ -234,6 +246,14 @@ const Map<String, ColorData> colorDataMap = {
   'engoBackgroundOrange400': ColorData(
     light: Color(0xFFFB9B51),
     dark: Color(0xFFFB9B51),
+  ),
+  'engoBackgroundBlue300': ColorData(
+    light: Color(0xFF96B7E3),
+    dark: Color(0xFF96B7E3),
+  ),
+  'engoBackgroundBlue500': ColorData(
+    light: Color(0xFF366FB6),
+    dark: Color(0xFF366FB6),
   ),
   'engoBackgroundButton': ColorData(
     light: Color(0xFFFDB874),

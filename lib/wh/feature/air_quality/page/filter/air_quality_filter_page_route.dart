@@ -5,7 +5,7 @@ enum EnumAirQualityFilterPageRoute {
 }
 
 extension AirQualityFilterPageRouteExtension on AirQualityFilterPageController {
-  Future<void> _routerHandle(EnumAirQualityFilterPageRoute type, {dynamic data}) async {
+  Future<void> _routerHandle(EnumAirQualityFilterPageRoute type) async {
     switch (type) {
       case EnumAirQualityFilterPageRoute.goBack:
         Navigator.of(_service.getNestedNavigatorContext!).pop();

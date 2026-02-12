@@ -1,6 +1,5 @@
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_quality_record_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/record/air_quality_record_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
@@ -226,103 +225,6 @@ class _StatisticsSection extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _DataTypeFilter extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<AirQualityRecordPageController>();
-    return Obx(
-      () {
-        final selectedType = controller.selectedDataTypeRx.value;
-        return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              width: 1.0.scale,
-              color: EnumColor.engoButtonBorderReverse.color,
-            ),
-            borderRadius: BorderRadius.circular(8.0.scale),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: _DataTypeTab(
-                  title: EnumLocale.airBoxRecordTabTemperature.tr,
-                  isSelected: selectedType == EnumAirQualityDataType.temperature,
-                  onTap: () {
-                    controller.interactive(
-                      EnumAirQualityRecordPageInteractive.tapDataTypeFilter,
-                      data: EnumAirQualityDataType.temperature,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(width: 48.0.scale),
-              Expanded(
-                child: _DataTypeTab(
-                  title: EnumLocale.airBoxRecordTabHumidity.tr,
-                  isSelected: selectedType == EnumAirQualityDataType.humidity,
-                  onTap: () {
-                    controller.interactive(
-                      EnumAirQualityRecordPageInteractive.tapDataTypeFilter,
-                      data: EnumAirQualityDataType.humidity,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(width: 48.0.scale),
-              Expanded(
-                child: _DataTypeTab(
-                  title: EnumLocale.airBoxRecordTabPm25.tr,
-                  isSelected: selectedType == EnumAirQualityDataType.pm25,
-                  onTap: () {
-                    controller.interactive(
-                      EnumAirQualityRecordPageInteractive.tapDataTypeFilter,
-                      data: EnumAirQualityDataType.pm25,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _DataTypeTab extends StatelessWidget {
-  final String title;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _DataTypeTab({
-    required this.title,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(15.0.scale),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected ? EnumColor.engoBackgroundOrange400.color : Colors.transparent,
-          borderRadius: BorderRadius.circular(8.0.scale),
-        ),
-        child: CustTextWidget(
-          title,
-          size: 32.0.scale,
-          weightType: EnumFontWeightType.regular,
-          color: isSelected ? EnumColor.textWhite.color : EnumColor.textSecondary.color,
-        ),
-      ),
     );
   }
 }
