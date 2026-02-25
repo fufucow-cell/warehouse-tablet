@@ -17,6 +17,7 @@ class ApiService extends GetxService {
   final _model = ApiServiceModel();
   EnvironmentService get _envService => EnvironmentService.instance;
   static const String _tagName = 'warehouse';
+  String get getAccessToken => _model.accessToken ?? '';
   static ApiService get instance => Get.find<ApiService>(tag: _tagName);
   String get getDomain => _model.dio.options.baseUrl;
 
@@ -103,7 +104,7 @@ class ApiService extends GetxService {
       final queryParams = isGet && reqData != null ? _removeNullValues(reqData) : null;
 
       final response = await dio.request<dynamic>(
-        '/${apiInfo.path}',
+        '/${apiInfo.path}/',
         data: isGet ? null : reqData,
         queryParameters: isGet ? queryParams : null,
         options: options,
@@ -438,6 +439,7 @@ class ApiService extends GetxService {
         options.headers['Content-Type'] = 'application/json';
         options.headers['App-Code'] = 'APP_MEMBER';
         options.headers['Authorization'] = _model.accessToken;
+        options.headers['current-member-id'] = 1;
         final isGet = options.method.toUpperCase() == 'GET';
 
         // Only apply cache mechanism for GET requests and when cache is enabled

@@ -1,5 +1,10 @@
 include: package:flutter_lints/flutter.yaml
 
+# STRUCTURE.md 程式碼風格規範整合說明：
+# - if/for 必須使用大括號：已通過 curly_braces_in_flow_control_structures 規則強制執行
+# - if/for 區塊上下空行：需手動檢查或使用 dart format 格式化工具
+#   詳細規範請參考 STRUCTURE.md 第 12 條規則
+
 analyzer:
   errors:
     avoid_web_libraries_in_flutter: ignore
@@ -42,6 +47,8 @@ linter:
     - cancel_subscriptions
     - collection_methods_unrelated_type
     - control_flow_in_finally
+    # STRUCTURE.md 規則 12: 所有 if/for 必須使用大括號
+    # 對應規範: if (condition) { ... } 而非 if (condition) doSomething();
     - curly_braces_in_flow_control_structures
     - empty_catches
     - empty_constructor_bodies

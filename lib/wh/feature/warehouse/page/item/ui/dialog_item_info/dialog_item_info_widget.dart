@@ -52,7 +52,7 @@ class _PhotoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<DialogItemInfoWidgetController>();
     return CustNetworkImage(
-      url: controller.getPhoto,
+      url: controller.assembleImageUrl(controller.getPhoto),
       width: 320.0.scale,
       height: 225.0.scale,
       fit: BoxFit.cover,

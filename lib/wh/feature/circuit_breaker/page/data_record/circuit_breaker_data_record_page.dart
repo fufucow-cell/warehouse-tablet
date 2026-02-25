@@ -1,6 +1,7 @@
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/data_record/circuit_breaker_data_record_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/circuit_breaker/page/data_record/circuit_breaker_data_record_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/gateway/page/children/ui/icon_button.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/data_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
@@ -108,12 +109,12 @@ class _TimeFilter extends StatelessWidget {
             children: [
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabDay.tr,
+                  title: EnumTimeFilter.day.title,
                   isSelected: selectedFilter == EnumTimeFilter.day,
                   onTap: () {
                     controller.interactive(
                       EnumCircuitBreakerDataRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabDay.tr,
+                      data: EnumTimeFilter.day,
                     );
                   },
                 ),
@@ -121,12 +122,12 @@ class _TimeFilter extends StatelessWidget {
               SizedBox(width: 48.0.scale),
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabMonth.tr,
+                  title: EnumTimeFilter.month.title,
                   isSelected: selectedFilter == EnumTimeFilter.month,
                   onTap: () {
                     controller.interactive(
                       EnumCircuitBreakerDataRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabMonth.tr,
+                      data: EnumTimeFilter.month,
                     );
                   },
                 ),
@@ -134,12 +135,12 @@ class _TimeFilter extends StatelessWidget {
               SizedBox(width: 48.0.scale),
               Expanded(
                 child: _FilterTab(
-                  title: EnumLocale.engoTabYear.tr,
+                  title: EnumTimeFilter.year.title,
                   isSelected: selectedFilter == EnumTimeFilter.year,
                   onTap: () {
                     controller.interactive(
                       EnumCircuitBreakerDataRecordPageInteractive.tapTimeFilter,
-                      data: EnumLocale.engoTabYear.tr,
+                      data: EnumTimeFilter.year,
                     );
                   },
                 ),
@@ -301,104 +302,178 @@ class _ChartSection extends StatelessWidget {
         final timeFilter = controller.selectedTimeFilterRx.value;
         final yAxisMax = controller.getMaxYAxisValue ?? 0.0;
         final yAxisInterval = yAxisMax / 5;
+        final unit = EnumLocale.engoKWhUnit.tr;
 
-        return SizedBox(
-          child: BarChart(
-            BarChartData(
-              alignment: BarChartAlignment.spaceAround,
-              maxY: yAxisMax,
-              minY: 0,
-              barTouchData: BarTouchData(enabled: false),
-              titlesData: FlTitlesData(
-                show: true,
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    getTitlesWidget: (value, meta) {
-                      if (timeFilter == EnumTimeFilter.day) {
-                        final hour = value.toInt();
-                        if (hour >= 0 && hour < 24 && hour % 4 == 0) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 8.0.scale),
-                            child: CustTextWidget(
-                              '${hour.toString().padLeft(2, '0')}:00',
-                              size: 24.0.scale,
-                              color: EnumColor.textSecondary.color,
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              child: CustTextWidget(
+                unit,
+                size: 24.0.scale,
+                color: EnumColor.textSecondary.color,
+                align: TextAlign.center,
+              ),
+            ),
+            Expanded(
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: yAxisMax,
+                  minY: 0,
+                  barTouchData: BarTouchData(
+                    enabled: true,
+                    touchTooltipData: BarTouchTooltipData(
+                      getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                        final idx = group.x.toInt();
+                        if (idx < 0 || idx >= chartData.length) {
+                          return BarTooltipItem(
+                            '${rod.toY.toStringAsFixed(2)} $unit',
+                            TextStyle(
+                              color: EnumColor.textPrimary.color,
+                              fontSize: 24.0.scale,
                             ),
                           );
                         }
-                      } else if (timeFilter == EnumTimeFilter.month) {
-                        final day = value.toInt() + 1;
-                        if (day >= 1 && day <= 31 && day % 5 == 1) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 8.0.scale),
-                            child: CustTextWidget(
-                              day.toString(),
-                              size: 24.0.scale,
-                              color: EnumColor.textSecondary.color,
-                            ),
-                          );
+                        final item = chartData[idx];
+                        final valueStr = rod.toY.toStringAsFixed(2);
+                        String dateStr = '';
+
+                        if (timeFilter == EnumTimeFilter.day) {
+                          dateStr = EnumTimeFilter.hourMinute.dateFormat.format(item.date);
+                          dateStr += ' - $valueStr $unit';
+                        } else if (timeFilter == EnumTimeFilter.month) {
+                          dateStr = EnumTimeFilter.monthDay.dateFormat.format(item.date);
+                          dateStr += ' - $valueStr $unit';
+                        } else if (timeFilter == EnumTimeFilter.year) {
+                          dateStr = EnumTimeFilter.yearMonth.dateFormat.format(item.date);
+                          dateStr += ' - $valueStr $unit';
                         }
-                      } else {
-                        final month = value.toInt() + 1;
-                        if (month >= 1 && month <= 12) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 8.0.scale),
-                            child: CustTextWidget(
-                              month.toString(),
-                              size: 24.0.scale,
-                              color: EnumColor.textSecondary.color,
-                            ),
-                          );
-                        }
-                      }
-                      return const SizedBox.shrink();
-                    },
-                    reservedSize: 40.0.scale,
+
+                        return BarTooltipItem(
+                          dateStr,
+                          TextStyle(
+                            color: EnumColor.textPrimary.color,
+                            fontSize: 24.0.scale,
+                          ),
+                        );
+                      },
+                      tooltipPadding: EdgeInsets.symmetric(horizontal: 12.0.scale, vertical: 8.0.scale),
+                      tooltipMargin: 8.0.scale,
+                      getTooltipColor: (_) => EnumColor.backgroundPrimary.color,
+                      tooltipBorder: BorderSide(color: EnumColor.lineBorder.color, width: 1.0.scale),
+                      tooltipRoundedRadius: 8.0.scale,
+                    ),
                   ),
-                ),
-                leftTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    reservedSize: 60.0.scale,
-                    interval: yAxisInterval,
-                    getTitlesWidget: (value, meta) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: 8.0.scale),
+                  titlesData: FlTitlesData(
+                    show: true,
+                    rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                    bottomTitles: AxisTitles(
+                      axisNameWidget: Padding(
+                        padding: EdgeInsets.only(top: 8.0.scale),
                         child: CustTextWidget(
-                          value.toInt().toString(),
+                          timeFilter == EnumTimeFilter.day
+                              ? EnumTimeFilter.hourMinute.title
+                              : timeFilter == EnumTimeFilter.month
+                                  ? EnumTimeFilter.day.title
+                                  : EnumTimeFilter.month.title,
                           size: 24.0.scale,
                           color: EnumColor.textSecondary.color,
-                          align: TextAlign.right,
+                          align: TextAlign.center,
                         ),
+                      ),
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          if (timeFilter == EnumTimeFilter.day) {
+                            final hour = value.toInt();
+
+                            if (hour >= 0 && hour < 24 && hour % 4 == 0) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  '${hour.toString().padLeft(2, '0')}:00',
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          } else if (timeFilter == EnumTimeFilter.month) {
+                            final day = value.toInt() + 1;
+
+                            if (day >= 1 && day <= 31 && day % 5 == 1) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  day.toString(),
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          } else if (timeFilter == EnumTimeFilter.year) {
+                            final month = value.toInt() + 1;
+
+                            if (month >= 1 && month <= 12) {
+                              return Padding(
+                                padding: EdgeInsets.only(top: 8.0.scale),
+                                child: CustTextWidget(
+                                  month.toString(),
+                                  size: 24.0.scale,
+                                  color: EnumColor.textSecondary.color,
+                                ),
+                              );
+                            }
+                          }
+
+                          return const SizedBox.shrink();
+                        },
+                        reservedSize: 40.0.scale,
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 60.0.scale,
+                        interval: yAxisInterval,
+                        getTitlesWidget: (value, meta) {
+                          return Padding(
+                            padding: EdgeInsets.only(right: 8.0.scale),
+                            child: CustTextWidget(
+                              value.toInt().toString(),
+                              size: 24.0.scale,
+                              color: EnumColor.textSecondary.color,
+                              align: TextAlign.right,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  gridData: FlGridData(
+                    show: true,
+                    drawVerticalLine: false,
+                    horizontalInterval: yAxisInterval,
+                    getDrawingHorizontalLine: (value) {
+                      return FlLine(
+                        color: EnumColor.lineDivider.color,
+                        strokeWidth: 1.0.scale,
                       );
                     },
                   ),
+                  borderData: FlBorderData(
+                    show: true,
+                    border: Border.all(
+                      color: EnumColor.lineBorder.color,
+                      width: 1.0.scale,
+                    ),
+                  ),
+                  barGroups: controller.getBarGroups,
                 ),
               ),
-              gridData: FlGridData(
-                show: true,
-                drawVerticalLine: false,
-                horizontalInterval: yAxisInterval,
-                getDrawingHorizontalLine: (value) {
-                  return FlLine(
-                    color: EnumColor.lineDivider.color,
-                    strokeWidth: 1.0.scale,
-                  );
-                },
-              ),
-              borderData: FlBorderData(
-                show: true,
-                border: Border.all(
-                  color: EnumColor.lineBorder.color,
-                  width: 1.0.scale,
-                ),
-              ),
-              barGroups: controller.getBarGroups,
             ),
-          ),
+          ],
         );
       },
     );

@@ -151,7 +151,7 @@ class _PhotoSection extends StatelessWidget {
             imageWidget = controller.convertFileToImage;
           } else if (photoUrl?.isNotEmpty ?? false) {
             imageWidget = CustNetworkImage(
-              url: photoUrl!,
+              url: controller.assembleImageUrl(photoUrl!),
               height: 200.0.scale,
             );
           }

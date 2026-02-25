@@ -17,6 +17,7 @@ class CustDropdownMenuButton {
     double? menuMaxHeight,
     VoidCallback? onMenuOpened,
     bool isShowOnDialog = false,
+    bool enable = true,
   }) {
     if (isShowOnDialog) {
       return _TextDropdownButton(
@@ -29,6 +30,7 @@ class CustDropdownMenuButton {
         buttonTextColor: buttonTextColor,
         menuMaxHeight: menuMaxHeight,
         onMenuOpened: onMenuOpened,
+        enable: enable,
       );
     } else {
       final btnWidth = width ?? 280.0.scale;
@@ -42,6 +44,7 @@ class CustDropdownMenuButton {
         fontSize: fontSize,
         buttonTextColor: buttonTextColor,
         onOpened: onMenuOpened,
+        enable: enable,
       );
     }
   }
@@ -57,6 +60,7 @@ class _TextDropdownButton extends StatefulWidget {
   final Color? buttonTextColor;
   final double? menuMaxHeight;
   final VoidCallback? onMenuOpened;
+  final bool enable;
 
   const _TextDropdownButton({
     required this.selectedValue,
@@ -68,6 +72,7 @@ class _TextDropdownButton extends StatefulWidget {
     this.buttonTextColor,
     this.menuMaxHeight,
     this.onMenuOpened,
+    this.enable = true,
   });
 
   @override
@@ -170,38 +175,174 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
     final btnHeight = widget.height ?? 70.0.scale;
     final textSize = widget.fontSize ?? 32.0.scale;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth;
-        final btnWidth = widget.width ?? availableWidth;
-        Color btnTextColor;
+    return AbsorbPointer(
+      absorbing: !widget.enable,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final availableWidth = constraints.maxWidth;
+          final btnWidth = widget.width ?? availableWidth;
+          Color btnTextColor;
 
-        if (widget.buttonTextColor != null) {
-          btnTextColor = widget.buttonTextColor!;
-        } else {
-          if (widget.values.isEmpty || widget.selectedValue == null || !widget.values.contains(widget.selectedValue)) {
-            btnTextColor = EnumColor.textSecondary.color;
+          if (widget.buttonTextColor != null) {
+            btnTextColor = widget.buttonTextColor!;
           } else {
-            btnTextColor = EnumColor.textPrimary.color;
+            if (widget.values.isEmpty || widget.selectedValue == null || !widget.values.contains(widget.selectedValue)) {
+              btnTextColor = EnumColor.textSecondary.color;
+            } else {
+              btnTextColor = EnumColor.textPrimary.color;
+            }
           }
-        }
 
-        return GestureDetector(
-          onTap: () {
-            if (!_isMenuOpen && widget.values.isNotEmpty) {
-              _showMenu(context);
+          return GestureDetector(
+            onTap: () {
+              if (!_isMenuOpen && widget.values.isNotEmpty && widget.enable) {
+                _showMenu(context);
+              }
+            },
+            child: Container(
+              key: _buttonKey,
+              width: btnWidth,
+              height: btnHeight,
+              padding: EdgeInsets.symmetric(
+                horizontal: 32.0.scale,
+              ),
+              clipBehavior: Clip.antiAlias,
+              decoration: ShapeDecoration(
+                color: (widget.values.isEmpty || !widget.enable) ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
+                shape: RoundedRectangleBorder(
+                  side: BorderSide(
+                    width: 1.0.scale,
+                    color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
+                  ),
+                  borderRadius: BorderRadius.circular(16.0.scale),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: CustTextWidget(
+                      widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
+                      size: textSize,
+                      color: btnTextColor,
+                    ),
+                  ),
+                  SizedBox(width: 16.0.scale),
+                  EnumImage.cArrowDown.image(
+                    size: Size.square(38.0.scale),
+                    color: EnumColor.iconSecondary.color,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _PopupMenuButtonWidget extends StatefulWidget {
+  final String? selectedValue;
+  final List<String> values;
+  final Function(String?) onSelected;
+  final double width;
+  final double height;
+  final double? fontSize;
+  final Color? buttonTextColor;
+  final VoidCallback? onOpened;
+  final bool enable;
+
+  const _PopupMenuButtonWidget({
+    required this.selectedValue,
+    required this.values,
+    required this.onSelected,
+    required this.width,
+    required this.height,
+    this.buttonTextColor,
+    this.fontSize,
+    this.onOpened,
+    this.enable = true,
+  });
+
+  @override
+  State<_PopupMenuButtonWidget> createState() => _PopupMenuButtonWidgetState();
+}
+
+class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
+  bool _isMenuOpen = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final textSize = widget.fontSize ?? 32.0.scale;
+
+    return AbsorbPointer(
+      absorbing: !widget.enable,
+      child: Opacity(
+        opacity: widget.enable ? 1.0 : 0.5,
+        child: PopupMenuButton<String?>(
+          enabled: widget.enable,
+          offset: Offset(0, widget.height + 10.0.scale),
+          constraints: BoxConstraints(
+            minWidth: widget.width,
+            maxWidth: widget.width,
+          ),
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              width: 1.0.scale,
+              color: EnumColor.lineProduct.color,
+            ),
+            borderRadius: BorderRadius.circular(16.0.scale),
+          ),
+          color: EnumColor.backgroundPrimary.color,
+          padding: EdgeInsets.all(16.0.scale),
+          onOpened: () {
+            setState(() {
+              _isMenuOpen = true;
+            });
+            widget.onOpened?.call();
+          },
+          onCanceled: () {
+            setState(() {
+              _isMenuOpen = false;
+            });
+          },
+          onSelected: (value) {
+            setState(() {
+              _isMenuOpen = false;
+            });
+            if (value != null) {
+              widget.onSelected(value);
             }
           },
+          itemBuilder: (context) => widget.values.map((value) {
+            final isSelected = widget.selectedValue == value;
+            return PopupMenuItem<String?>(
+              value: value,
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
+                  borderRadius: BorderRadius.circular(12.0.scale),
+                ),
+                padding: EdgeInsets.all(16.0.scale),
+                child: CustTextWidget(
+                  value,
+                  size: textSize,
+                  color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+                ),
+              ),
+            );
+          }).toList(),
           child: Container(
-            key: _buttonKey,
-            width: btnWidth,
-            height: btnHeight,
-            padding: EdgeInsets.symmetric(
-              horizontal: 32.0.scale,
-            ),
+            width: widget.width,
+            height: widget.height,
+            padding: EdgeInsets.symmetric(horizontal: 32.0.scale),
             clipBehavior: Clip.antiAlias,
             decoration: ShapeDecoration(
-              color: widget.values.isEmpty ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
+              color: EnumColor.backgroundPrimary.color,
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.0.scale,
@@ -219,7 +360,7 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
                   child: CustTextWidget(
                     widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
                     size: textSize,
-                    color: btnTextColor,
+                    color: widget.buttonTextColor ?? EnumColor.textPrimary.color,
                   ),
                 ),
                 SizedBox(width: 16.0.scale),
@@ -230,130 +371,6 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
               ],
             ),
           ),
-        );
-      },
-    );
-  }
-}
-
-class _PopupMenuButtonWidget extends StatefulWidget {
-  final String? selectedValue;
-  final List<String> values;
-  final Function(String?) onSelected;
-  final double width;
-  final double height;
-  final double? fontSize;
-  final Color? buttonTextColor;
-  final VoidCallback? onOpened;
-
-  const _PopupMenuButtonWidget({
-    required this.selectedValue,
-    required this.values,
-    required this.onSelected,
-    required this.width,
-    required this.height,
-    this.buttonTextColor,
-    this.fontSize,
-    this.onOpened,
-  });
-
-  @override
-  State<_PopupMenuButtonWidget> createState() => _PopupMenuButtonWidgetState();
-}
-
-class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
-  bool _isMenuOpen = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final textSize = widget.fontSize ?? 32.0.scale;
-
-    return PopupMenuButton<String?>(
-      offset: Offset(0, widget.height + 10.0.scale),
-      constraints: BoxConstraints(
-        minWidth: widget.width,
-        maxWidth: widget.width,
-      ),
-      shape: RoundedRectangleBorder(
-        side: BorderSide(
-          width: 1.0.scale,
-          color: EnumColor.lineProduct.color,
-        ),
-        borderRadius: BorderRadius.circular(16.0.scale),
-      ),
-      color: EnumColor.backgroundPrimary.color,
-      padding: EdgeInsets.all(16.0.scale),
-      onOpened: () {
-        setState(() {
-          _isMenuOpen = true;
-        });
-        widget.onOpened?.call();
-      },
-      onCanceled: () {
-        setState(() {
-          _isMenuOpen = false;
-        });
-      },
-      onSelected: (value) {
-        setState(() {
-          _isMenuOpen = false;
-        });
-        if (value != null) {
-          widget.onSelected(value);
-        }
-      },
-      itemBuilder: (context) => widget.values.map((value) {
-        final isSelected = widget.selectedValue == value;
-        return PopupMenuItem<String?>(
-          value: value,
-          child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
-              borderRadius: BorderRadius.circular(12.0.scale),
-            ),
-            padding: EdgeInsets.all(16.0.scale),
-            child: CustTextWidget(
-              value,
-              size: textSize,
-              color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
-            ),
-          ),
-        );
-      }).toList(),
-      child: Container(
-        width: widget.width,
-        height: widget.height,
-        padding: EdgeInsets.symmetric(horizontal: 32.0.scale),
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: EnumColor.backgroundPrimary.color,
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              width: 1.0.scale,
-              color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
-            ),
-            borderRadius: BorderRadius.circular(16.0.scale),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: CustTextWidget(
-                widget.selectedValue ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
-                size: textSize,
-                color: widget.buttonTextColor ?? EnumColor.textPrimary.color,
-              ),
-            ),
-            SizedBox(width: 16.0.scale),
-            EnumImage.cArrowDown.image(
-              size: Size.square(38.0.scale),
-              color: EnumColor.iconSecondary.color,
-            ),
-          ],
         ),
       ),
     );
@@ -372,6 +389,7 @@ class CustTextDropdownButton extends StatelessWidget {
     this.buttonTextColor,
     this.menuMaxHeight,
     this.onMenuOpened,
+    this.enable = true,
   });
 
   final String? selectedValue;
@@ -383,6 +401,7 @@ class CustTextDropdownButton extends StatelessWidget {
   final Color? buttonTextColor;
   final double? menuMaxHeight;
   final VoidCallback? onMenuOpened;
+  final bool enable;
 
   @override
   Widget build(BuildContext context) {
@@ -403,6 +422,7 @@ class CustTextDropdownButton extends StatelessWidget {
       menuMaxHeight: menuMaxHeight,
       onMenuOpened: onMenuOpened,
       isShowOnDialog: isInDialog,
+      enable: enable,
     );
   }
 }

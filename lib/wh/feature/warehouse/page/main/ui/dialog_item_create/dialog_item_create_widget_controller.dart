@@ -5,6 +5,7 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/request_model/warehouse_item_create_smart_request_model/warehouse_item_create_smart_request_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_item_response_model/cabinet.dart';
+import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
@@ -22,7 +23,7 @@ class DialogItemCreateWidgetController extends GetxController {
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   final descriptionController = TextEditingController();
-  final quantityController = TextEditingController(text: '0');
+  final quantityController = TextEditingController(text: '1');
   final minStockAlertController = TextEditingController(text: '0');
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
   RxReadonly<bool> get isRecognizingRx => _model.isRecognizing.readonly;
@@ -47,7 +48,7 @@ class DialogItemCreateWidgetController extends GetxController {
       EnumLogType.debug,
       '[DialogItemCreateWidgetController] onInit - $hashCode',
     );
-    _genCabinetList();
+    _model.visibleCabinets.value = _genCabinetList();
     _genCategoryLevel1List();
   }
 
@@ -79,6 +80,7 @@ class DialogItemCreateWidgetController extends GetxController {
   // 檢查輸出資料
   Future<DialogItemCreateOutputModel?> checkOutputModel() async {
     String? imgBase64;
+    final name = nameController.text.trim();
 
     if (_model.filePath.value != null) {
       final compressedPath = await _compressImage(_model.filePath.value!);
@@ -88,8 +90,18 @@ class DialogItemCreateWidgetController extends GetxController {
       }
     }
 
+    if (name.isEmpty) {
+      _routerHandle(EnumDialogItemCreateWidgetRoute.showSnackBar, '${EnumLocale.commonInputHint.tr}${EnumLocale.createItemName.tr}');
+      return null;
+    }
+
+    if (_model.selectedRoom.value != null && _model.selectedCabinet.value == null) {
+      _routerHandle(EnumDialogItemCreateWidgetRoute.showSnackBar, EnumLocale.warehouseCabinetNotSelected.tr);
+      return null;
+    }
+
     return DialogItemCreateOutputModel(
-      name: nameController.text.trim(),
+      name: name,
       quantity: int.tryParse(quantityController.text.trim()) ?? 0,
       minStockAlert: int.tryParse(minStockAlertController.text.trim()) ?? 0,
       description: descriptionController.text.trim().isEmpty ? null : descriptionController.text.trim(),
@@ -125,7 +137,13 @@ class DialogItemCreateWidgetController extends GetxController {
 
     if (filePath != null) {
       _model.filePath.value = filePath;
-      unawaited(_startRecognition());
+      // 使用 microtask 將圖片處理延遲到下一個事件循環
+      // 並額外等待一段時間，確保相機資源完全釋放後再開始處理圖片
+      // 這可以避免在 Release 模式下或集成到其他項目時出現相機停止運作的問題
+      await Future.microtask(() async {
+        await Future.delayed(const Duration(milliseconds: 300));
+        await _startRecognition();
+      });
     }
   }
 
@@ -156,8 +174,15 @@ class DialogItemCreateWidgetController extends GetxController {
   // 選擇房間
   void _changeSelectedRoom(String? roomName) {
     final room = _service.rooms.firstWhereOrNull((room) => room.name == roomName);
-    _model.selectedRoom.value = room;
-    _genCabinetList();
+    final cabinets = _genCabinetList(room: room);
+
+    if (cabinets.isNotEmpty) {
+      _model.selectedRoom.value = room;
+      _model.selectedCabinet.value = null;
+      _model.visibleCabinets.value = cabinets;
+    } else {
+      _routerHandle(EnumDialogItemCreateWidgetRoute.showSnackBar, EnumLocale.warehouseNoCabinetInRoom.tr);
+    }
   }
 
   // 選擇櫃位
@@ -167,20 +192,20 @@ class DialogItemCreateWidgetController extends GetxController {
   }
 
   // 生成櫃位列表
-  void _genCabinetList() {
-    _model.selectedCabinet.value = null;
+  List<WarehouseNameIdModel> _genCabinetList({WarehouseNameIdModel? room}) {
     List<Cabinet> cabinets = [];
+    final selectedRoom = room ?? _model.selectedRoom.value;
 
-    if (_model.selectedRoom.value == null) {
+    if (selectedRoom == null) {
       cabinets = _flattenAllCabinets();
     } else {
       final room = _service.getAllRoomCabinets.firstWhereOrNull(
-        (room) => room.roomId == _model.selectedRoom.value?.id,
+        (room) => room.roomId == selectedRoom.id,
       );
       cabinets = room?.cabinets ?? [];
     }
 
-    _model.visibleCabinets.value = cabinets
+    return cabinets
         .map(
           (cabinet) => WarehouseNameIdModel(
             id: cabinet.id ?? '',

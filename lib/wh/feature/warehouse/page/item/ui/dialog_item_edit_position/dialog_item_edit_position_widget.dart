@@ -220,6 +220,9 @@ class _ChangeQuantitySection extends StatelessWidget {
                 maxLength: 7,
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
+                additionalInputFormatters: [
+                  MaxValueTextInputFormatter(model.quantity),
+                ],
               ),
             ),
             SizedBox(width: 16.0.scale),
@@ -334,8 +337,9 @@ class _DropdownSection extends StatelessWidget {
     final controller = Get.find<DialogItemEditPositionWidgetController>();
     return Obx(
       () {
-        final changeRooms = controller.changeRoomsRx.value;
-        final changeCabinets = controller.changeCabinetsRx.value;
+        final changePositions = controller.changePositionsRx.value;
+        final changeRooms = changePositions.map((e) => e.room).toList();
+        final changeCabinets = changePositions.map((e) => e.cabinet).toList();
         final selectedRoomName = changeRooms[model.index].name!;
         final selectedCabinetName = changeCabinets[model.index].name!;
 
@@ -369,6 +373,7 @@ class _DropdownSection extends StatelessWidget {
                 title: EnumLocale.warehouseChangeCabinet.tr,
                 values: controller.getVisibleCabinetNameList(selectedRoomName),
                 selectedValue: selectedCabinetName,
+                enable: selectedRoomName != EnumLocale.optionPleaseSelect.tr,
                 onValueSelected: (str) {
                   final cabinet = controller.getCabinetByName(str);
                   if (cabinet != null) {
@@ -398,12 +403,14 @@ class _ChangePositionField extends StatelessWidget {
   final List<String> values;
   final String selectedValue;
   final Function(String?) onValueSelected;
+  final bool enable;
 
   const _ChangePositionField({
     required this.title,
     required this.values,
     required this.selectedValue,
     required this.onValueSelected,
+    this.enable = true,
   });
 
   @override
@@ -422,6 +429,7 @@ class _ChangePositionField extends StatelessWidget {
           selectedValue: selectedValue,
           values: values,
           onValueSelected: onValueSelected,
+          enable: enable,
           onMenuOpened: () => controller.interactive(
             EnumDialogItemEditPositionWidgetInteractive.tapDropdownButton,
           ),

@@ -13,6 +13,7 @@ class EnvironmentService extends GetxService {
   bool get isPrd => _model.currentEnvironment == EnumEnvironment.prd;
   bool get getEnableMockApi => !isPrd;
   bool get getIsModuleMode => _model.isModuleMode;
+  String get getServerBaseUrl => _model.serverBaseUrl;
   String get getDomainUrl => _model.domainUrl;
   static EnvironmentService get instance => Get.find<EnvironmentService>();
 
@@ -21,13 +22,13 @@ class EnvironmentService extends GetxService {
   EnvironmentService._internal();
 
   /// 註冊
-  static EnvironmentService register([EnumEnvironment? env]) {
+  static EnvironmentService register() {
     if (Get.isRegistered<EnvironmentService>()) {
       return Get.find<EnvironmentService>();
     }
 
     final EnvironmentService service = EnvironmentService._internal();
-    final environment = env ?? service._getLaunchEnvironment();
+    final environment = service._getLaunchEnvironment();
     service._model.currentEnvironment = environment;
 
     Get.put<EnvironmentService>(
@@ -57,30 +58,35 @@ class EnvironmentService extends GetxService {
 
   void initData({required bool isModuleMode, String? domainUrl, String? environment}) {
     _model.isModuleMode = isModuleMode;
-    _model.currentEnvironment = EnumEnvironment.fromString(environment);
-    _model.domainUrl = domainUrl ?? _model.currentEnvironment.domainUrl;
+
+    if (environment != null) {
+      _model.currentEnvironment = EnumEnvironment.fromString(environment);
+    }
+
+    if (domainUrl != null) {
+      _model.serverBaseUrl = domainUrl;
+      _model.domainUrl = _appendWarehousePath(domainUrl);
+    } else if (_model.domainUrl.isEmpty) {
+      final url = _model.currentEnvironment.domainUrl;
+      _model.serverBaseUrl = url;
+      _model.domainUrl = _appendWarehousePath(url);
+    }
   }
 
   // MARK: - Private Method
 
   /// 取得啟動環境
   EnumEnvironment _getLaunchEnvironment() {
-    final envString = String.fromEnvironment(
-      _model.launchEnvironmentKey,
-      defaultValue: 'dev',
-    ).toLowerCase();
+    const envString = String.fromEnvironment(
+      'ENVIRONMENT',
+      defaultValue: 'DEV',
+    );
 
-    return _parseEnvironment(envString);
+    return EnumEnvironment.fromString(envString);
   }
 
-  /// 解析環境字串為 EnumEnvironment
-  /// 如果無法解析，預設返回 dev
-  EnumEnvironment _parseEnvironment(
-    String envString,
-  ) {
-    return EnumEnvironment.values.firstWhere(
-      (e) => e.name == envString,
-      orElse: () => EnumEnvironment.dev,
-    );
+  String _appendWarehousePath(String domainUrl) {
+    final base = domainUrl.endsWith('/') ? domainUrl.substring(0, domainUrl.length - 1) : domainUrl;
+    return '$base/${_model.warehousePath}';
   }
 }

@@ -21,8 +21,7 @@ void main() async {
 Future<void> _registerServices() async {
   LogService.register();
   final envService = EnvironmentService.register();
-  const strEnv = String.fromEnvironment('ENVIRONMENT', defaultValue: 'DEV');
-  envService.initData(isModuleMode: false, environment: strEnv);
+  envService.initData(isModuleMode: false);
   ApiService.register();
   await StorageService.register();
   await LocaleService.register();
