@@ -356,4 +356,6 @@ const Map<String, String> zhTW = {
   'engoRemoveDevice': '기기 제거',
   'engoTemperatureUnit': '도',
   'engoKWhUnit': 'kWh',
+  'airConditionerFilterReplacementRuntime': '필터 남은 시간',
+  'airConditionerFilterRemainingTimeFormat': '@para1일@para2시간',
 };

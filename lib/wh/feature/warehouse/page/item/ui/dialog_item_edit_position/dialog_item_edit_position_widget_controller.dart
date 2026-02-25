@@ -22,8 +22,7 @@ class DialogItemEditPositionWidgetController extends GetxController {
   List<DisplayPositionModel> get getPositions => _model.positions;
   List<RoomCabinetInfo> get getRoomCabinetInfos => _service.getRoomCabinetInfos;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<List<WarehouseNameIdModel>> get changeRoomsRx => _model.changeRooms.readonly;
-  RxReadonly<List<WarehouseNameIdModel>> get changeCabinetsRx => _model.changeCabinets.readonly;
+  RxReadonly<List<NewPositionModel>> get changePositionsRx => _model.changePositions.readonly;
   List<TextEditingController> get getQuantityControllers => _model.quantityControllers;
 
   /// 獲取指定 controller 索引對應的最大數量（DisplayPositionModel 的 quantity）
@@ -46,10 +45,6 @@ class DialogItemEditPositionWidgetController extends GetxController {
         roomName,
         includeUnboundRoom: true,
       );
-  List<WarehouseNameIdModel> getCabinetsFromRoomNameId(
-    WarehouseNameIdModel? room,
-  ) =>
-      CabinetUtil.getCabinetsFromRoomNameId(room);
 
   // MARK: - Init
 
@@ -78,18 +73,17 @@ class DialogItemEditPositionWidgetController extends GetxController {
 
   // MARK: - Public Methods
 
-  void updatePositionRoom(UpdatePositionModel model) {
+  void updatePositionRoom(UpdatePositionModel roomModel) {
     final list = _model.positions;
-    final changeRooms = List<WarehouseNameIdModel>.from(_model.changeRooms.value);
-    final changeCabinets = List<WarehouseNameIdModel>.from(_model.changeCabinets.value);
+    final changePositions = List<NewPositionModel>.from(_model.changePositions.value);
 
-    if (model.index < list.length) {
-      final newName = model.position.name ?? '';
-      final oldName = changeRooms[model.index].name!;
+    if (roomModel.index < list.length) {
+      final newName = roomModel.position.name ?? '';
+      final oldName = changePositions[roomModel.index].room.name!;
 
       if (newName != oldName) {
-        changeRooms[model.index] = model.position;
-        final availableCabinets = getCabinetsFromRoomNameId(model.position);
+        changePositions[roomModel.index].room = roomModel.position;
+        final availableCabinets = CabinetUtil.getAllCabinetsFromRoom(roomId: roomModel.position.id);
 
         if (availableCabinets.isEmpty) {
           _routerHandle(
@@ -99,27 +93,26 @@ class DialogItemEditPositionWidgetController extends GetxController {
           return;
         }
 
-        changeCabinets[model.index] = WarehouseNameIdModel(
+        changePositions[roomModel.index].cabinet = WarehouseNameIdModel(
           id: '',
           name: availableCabinets.isNotEmpty ? EnumLocale.optionPleaseSelect.tr : EnumLocale.optionNoData.tr,
         );
-        _model.changeRooms.value = changeRooms;
-        _model.changeCabinets.value = changeCabinets;
+        _model.changePositions.value = changePositions;
       }
     }
   }
 
-  void updatePositionCabinet(UpdatePositionModel model) {
+  void updatePositionCabinet(UpdatePositionModel cabinetModel) {
     final list = _model.positions;
-    final changeCabinets = List<WarehouseNameIdModel>.from(_model.changeCabinets.value);
+    final changePositions = List<NewPositionModel>.from(_model.changePositions.value);
 
-    if (model.index < list.length) {
-      final newName = model.position.name ?? '';
-      final oldName = changeCabinets[model.index].name!;
+    if (cabinetModel.index < list.length) {
+      final newName = cabinetModel.position.name ?? '';
+      final oldName = changePositions[cabinetModel.index].cabinet.name!;
 
       if (newName != oldName) {
-        changeCabinets[model.index] = model.position;
-        _model.changeCabinets.value = changeCabinets;
+        changePositions[cabinetModel.index].cabinet = cabinetModel.position;
+        _model.changePositions.value = changePositions;
       }
     }
   }
@@ -137,11 +130,12 @@ class DialogItemEditPositionWidgetController extends GetxController {
   List<DialogItemEditPositionOutputModel>? checkOutputData() {
     final outputData = <DialogItemEditPositionOutputModel>[];
     final oldList = _model.positions;
-    final newList = _model.changeCabinets.value;
+    final newList = _model.changePositions.value;
 
     for (var idx = 0; idx < newList.length; idx++) {
       final oldCabinetModel = oldList[idx];
-      final newCabinet = newList[idx];
+      final newRoom = newList[idx].room;
+      final newCabinet = newList[idx].cabinet;
       final newQuantity = int.tryParse(_model.quantityControllers[idx].text) ?? 0;
 
       if (oldCabinetModel.isDelete) {
@@ -161,7 +155,11 @@ class DialogItemEditPositionWidgetController extends GetxController {
             ),
           );
         }
-      } else if (newQuantity > 0) {
+      } else if (newRoom.id?.isNotEmpty ?? false) {
+        if (newQuantity <= 0) {
+          continue;
+        }
+
         if (newCabinet.id?.isEmpty ?? true) {
           _routerHandle(
             EnumDialogItemEditPositionWidgetRoute.showSnackBar,
@@ -254,19 +252,19 @@ class DialogItemEditPositionWidgetController extends GetxController {
             );
 
             positions.add(positionModel);
-            _model.changeRooms.value.add(
-              WarehouseNameIdModel(
-                id: '',
-                name: EnumLocale.optionPleaseSelect.tr,
+            _model.changePositions.value.add(
+              NewPositionModel(
+                room: WarehouseNameIdModel(
+                  id: '',
+                  name: EnumLocale.optionPleaseSelect.tr,
+                ),
+                cabinet: WarehouseNameIdModel(
+                  id: '',
+                  name: EnumLocale.optionPleaseSelect.tr,
+                ),
               ),
             );
-            _model.changeCabinets.value.add(
-              WarehouseNameIdModel(
-                id: '',
-                name: EnumLocale.optionPleaseSelect.tr,
-              ),
-            );
-            _model.quantityControllers.add(TextEditingController(text: '0'));
+            _model.quantityControllers.add(TextEditingController(text: matchItem.quantity?.toString() ?? '0'));
           }
         }
       }

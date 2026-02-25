@@ -7,10 +7,19 @@ class DialogItemEditPositionWidgetModel {
   final isLoading = false.obs;
   String itemId = '';
   Item? combineItem;
-  final changeRooms = Rx<List<WarehouseNameIdModel>>([]);
-  final changeCabinets = Rx<List<WarehouseNameIdModel>>([]);
+  final changePositions = Rx<List<NewPositionModel>>([]);
   final List<TextEditingController> quantityControllers = [];
   final List<DisplayPositionModel> positions = [];
+}
+
+class NewPositionModel {
+  WarehouseNameIdModel room;
+  WarehouseNameIdModel cabinet;
+
+  NewPositionModel({
+    required this.room,
+    required this.cabinet,
+  });
 }
 
 class UpdatePositionModel {

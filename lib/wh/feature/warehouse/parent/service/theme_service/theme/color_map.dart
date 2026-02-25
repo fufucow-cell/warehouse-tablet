@@ -1,6 +1,6 @@
 /// 颜色 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-29T17:03:16.872837
+/// 生成时间: 2026-02-11T14:56:54.122387
 library;
 
 import 'package:flutter/material.dart';
@@ -17,6 +17,9 @@ enum EnumColor {
   airBoxStatusBad,
   airBoxStatusGood,
   airBoxStatusVeryBad,
+  airConditionerBottomSheetBackground,
+  airConditionerDecorationEllipse1,
+  airConditionerDecorationEllipse2,
   backgroundAccentBlue,
   backgroundAccentGreen,
   backgroundAccentRed,
@@ -33,6 +36,8 @@ enum EnumColor {
   backgroundSecondary,
   backgroundTertiary,
   brand,
+  engoBackgroundBlue300,
+  engoBackgroundBlue500,
   engoBackgroundButton,
   engoBackgroundOrange400,
   engoBottomSheetBackground,

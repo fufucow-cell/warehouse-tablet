@@ -188,38 +188,6 @@ class _LevelList extends StatelessWidget {
   }
 }
 
-class _UnitDisplay extends StatelessWidget {
-  final String unit;
-  final String parameterName;
-
-  const _UnitDisplay({
-    required this.unit,
-    required this.parameterName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 227.0.scale,
-      height: 74.0.scale,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            top: 18,
-            child: CustTextWidget(
-              '$parameterName($unit)',
-              size: 32.0.scale,
-              weightType: EnumFontWeightType.regular,
-              color: EnumColor.textPrimary.color,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _LevelItem extends StatelessWidget {
   final ReferenceLevel level;
 

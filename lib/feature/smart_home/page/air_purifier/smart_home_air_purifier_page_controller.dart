@@ -46,6 +46,7 @@ class SmartHomeAirPurifierPageController extends GetxController {
       isModuleMode: false,
       deviceName: '空氣清淨機',
       roomName: '客廳',
+      updateFrequency: 5,
       isOn: true,
       lifePercent: 75,
       initModel: EnumPurifierMode.auto,

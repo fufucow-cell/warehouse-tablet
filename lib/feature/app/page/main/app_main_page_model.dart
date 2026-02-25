@@ -13,6 +13,7 @@ enum EnumAppMainRouter {
   waterValue,
   airBox,
   airPurifier,
+  airConditioner,
   setting;
 
   static EnumAppMainRouter get defaultRouter => EnumAppMainRouter.household;
@@ -26,6 +27,7 @@ enum EnumAppMainRouter {
         waterValue => const SmartHomeWaterValuePage(),
         airBox => const SmartHomeAirBoxPage(),
         airPurifier => const SmartHomeAirPurifierPage(),
+        airConditioner => const SmartHomeAirConditionerPage(),
         setting => const SmartHomeSettingPage(),
       };
 }
@@ -38,6 +40,7 @@ enum EnumAppMainTabItem {
   waterValue(Icons.water_drop),
   airBox(Icons.air),
   airPurifier(Icons.filter_alt),
+  airConditioner(Icons.ac_unit),
   setting(Icons.settings);
 
   const EnumAppMainTabItem(this.icon);
@@ -52,6 +55,7 @@ enum EnumAppMainTabItem {
         waterValue => EnumLocale.smartHomeTabWaterValue,
         airBox => EnumLocale.smartHomeTabAirBox,
         airPurifier => EnumLocale.smartHomeTabAirPurifier,
+        airConditioner => EnumLocale.smartHomeTabAirConditioner,
         setting => EnumLocale.smartHomeTabSetting,
       };
 
@@ -65,6 +69,7 @@ enum EnumAppMainTabItem {
         waterValue => EnumAppMainRouter.waterValue,
         airBox => EnumAppMainRouter.airBox,
         airPurifier => EnumAppMainRouter.airPurifier,
+        airConditioner => EnumAppMainRouter.airConditioner,
         setting => EnumAppMainRouter.setting,
       };
 }

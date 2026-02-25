@@ -146,7 +146,7 @@ class _MinorRowWithChildren extends StatelessWidget {
                 alignment: Alignment.topLeft,
                 child: isExpanded
                     ? PatchListWidget(
-                        children: category.children!,
+                        children: category.children ?? [],
                       )
                     : const SizedBox.shrink(),
               ),

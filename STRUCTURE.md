@@ -479,6 +479,11 @@ class WarehouseItemRequestModel with _$WarehouseItemRequestModel {
 - 定义页面的数据模型和状态
 - 使用 GetX 的响应式变量（`Rx`, `Rxn`）管理状态
 
+**Page Model 與 RouterData 的關係：**
+- **Page Model 的狀態應為可監控的 Rx**（如 `final currentMode = '自動'.obs;`），讓 View 透過 Controller 取得後，可用 `Obx` 綁定並在狀態變化時自動刷新畫面。
+- **RouterData 只負責傳入 Page Model 的初始值**；進入頁面時由 Controller 從 RouterData 讀取並寫入 Model（例如 `_model.currentMode.value = routerData.initialCurrentMode`），之後所有變更都寫入 Model 的 Rx，不再依賴 RouterData。
+- Controller 對外提供 **getter**（讀取 `.value`）與 **RxReadonly getter**（例如 `currentModeRx => _model.currentMode.readonly`），供 View 用 `Obx(() => ... controller.xxxRx.value ...)` 綁定並自動更新。
+
 **示例：**
 ```dart
 class WarehouseMainPageModel {
@@ -836,34 +841,35 @@ case EnumWarehouseMainPageRoute.showCreateItemDialog:
 ## 注意事项
 
 1. **View 只能与 Controller 交互**，不能直接调用 Service
-2. **所有点击事件**必须通过 `Interactive` 的 `_interactive()` 方法处理，该方法是 private async func
-3. **所有 context 相关操作**（弹窗、导航）必须在 `Route` 中处理
-4. **Service 是数据中介**，负责从外部获取数据后传递给 Controller
-5. **Model 使用响应式变量**（`Rx`, `Rxn`）管理状态
-6. **Interactive 和 Route 使用 `part of`** 引入到 Controller 中
-7. **优先使用脚本创建页面**，确保结构一致性和规范性
-8. **Controller 和 Service 必须使用 MARK 注释**：
+2. **Page Model 狀態用 Rx、RouterData 只傳初始值**：Model 內會影響畫面的狀態一律用 Rx 管理，RouterData 僅在進入頁面時提供這些狀態的初始值；View 透過 Controller 的 getter / RxReadonly 取得並用 Obx 綁定，即可在狀態變化時自動刷新畫面
+3. **所有点击事件**必须通过 `Interactive` 的 `_interactive()` 方法处理，该方法是 private async func
+4. **所有 context 相关操作**（弹窗、导航）必须在 `Route` 中处理
+5. **Service 是数据中介**，负责从外部获取数据后传递给 Controller
+6. **Model 使用响应式变量**（`Rx`, `Rxn`）管理状态
+7. **Interactive 和 Route 使用 `part of`** 引入到 Controller 中
+8. **优先使用脚本创建页面**，确保结构一致性和规范性
+9. **Controller 和 Service 必须使用 MARK 注释**：
    - `// MARK: - Properties` - 属性部分
    - `// MARK: - Init` - 初始化部分
    - `// MARK: - Public Method` - 公共方法部分
    - `// MARK: - Private Method` - 私有方法部分
-9. **Interactive 方法规范**：
+10. **Interactive 方法规范**：
    - `_interactive()` 必须是 **private async func**：`Future<void> _interactive(...) async`
    - 方法名使用下划线前缀表示私有方法
    - 调用时使用 `await _interactive(...)` 或 `_interactive(...)`（如果不需要等待结果）
 
-10. **Route 方法规范**：
+11. **Route 方法规范**：
    - `_routerHandle()` 必须是 **private async func**：`Future<void> _routerHandle(...) async`
    - 方法名使用下划线前缀表示私有方法
    - 调用时使用 `await _routerHandle(...)` 或 `_routerHandle(...)`（如果不需要等待结果）
 
-11. **Interactive 和 Route 的 Switch Case 代码行数规则**：
+12. **Interactive 和 Route 的 Switch Case 代码行数规则**：
    - **单个 switch case 内的代码超过十行**：必须移到 page controller 的私有方法（func）中处理
    - **单个 switch case 内的代码未超过十行**：可以在 case 内直接处理
    - Interactive 和 Route 只负责简单的分发和调用，复杂的数据处理、业务逻辑都在 Controller 中处理
    - **例外**：Route 中 `showDialog` 需要传入较多参数（如多个 callback、复杂配置等）的情况不算复杂逻辑，可以保留在 Route 中
 
-12. **if / for 程式碼風格規範**：
+13. **if / for 程式碼風格規範**：
    - 所有 `if` 條件必須使用大括號：
      - ✅ `if (condition) { ... }`
      - ❌ `if (condition) doSomething();`

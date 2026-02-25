@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-01-29T16:57:58.696696
+/// 生成时间: 2026-02-11T12:07:02.626495
 library;
 
 import 'package:flutter/material.dart';
@@ -8,6 +8,23 @@ import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_ser
 
 enum EnumImage {
   cAdd,
+  cAirConditioner,
+  cAirConditionerAbnormal,
+  cAirConditionerAntiHairdryer,
+  cAirConditionerDry,
+  cAirConditionerEco,
+  cAirConditionerGear,
+  cAirConditionerHeating,
+  cAirConditionerLed,
+  cAirConditionerLeftAndRight,
+  cAirConditionerRapidly,
+  cAirConditionerSelfCleaning,
+  cAirConditionerSleep,
+  cAirConditionerStrongCold,
+  cAirConditionerSupplyWind,
+  cAirConditionerTiming,
+  cAirConditionerUpAndDown,
+  cAirConditionerWindDirection,
   cAirFilter,
   cArrowDown,
   cArrowDown2,

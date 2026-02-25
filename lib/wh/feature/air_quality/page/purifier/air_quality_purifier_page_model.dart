@@ -30,6 +30,7 @@ class AirQualityPurifierPageRouterData {
   final String? theme;
   final bool? isModuleMode;
   final String deviceName;
+  final int updateFrequency;
   final String roomName;
   final bool isOn;
   final int lifePercent;
@@ -54,6 +55,7 @@ class AirQualityPurifierPageRouterData {
     this.theme,
     this.isModuleMode,
     required this.deviceName,
+    required this.updateFrequency,
     required this.roomName,
     required this.isOn,
     required this.lifePercent,
