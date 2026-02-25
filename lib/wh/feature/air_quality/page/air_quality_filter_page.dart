@@ -1,4 +1,4 @@
-import 'package:engo_terminal_app3/wh/feature/warehouse/ui/air_background_card.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/ui/air_background_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -102,8 +102,8 @@ class _TopBar extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
                 'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
-                width: 80,
-                height: 80,
+                width: 40,
+                height: 40,
                 color: const Color(0xFFFDB874),
               ),
             ),
@@ -116,9 +116,9 @@ class _TopBar extends StatelessWidget {
               Text(
                 '濾網設定',
                 style: TextStyle(
-                  fontSize: 40,
+                  fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -192,7 +192,7 @@ class _CircularProgressPainter extends CustomPainter {
       ..strokeWidth = strokeWidth;
 
     final center = Offset(size.width / 2, size.height / 2);
-    final radius = 350 - strokeWidth / 2;
+    const radius = 350 - strokeWidth / 2;
 
     final progressAngle = (percent / 100) * 2 * 3.14159;
     final rect = Rect.fromCircle(center: center, radius: radius);
@@ -243,13 +243,13 @@ class _LeftInfoSection extends StatelessWidget {
           style: const TextStyle(
             fontSize: 32,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.black,
           ),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: 48),
+        const SizedBox(height: 24),
         _ResetButton(onTap: onReset),
-        const SizedBox(height: 48),
+        const SizedBox(height: 24),
         _FilterLifeDaysInput(
           textController: textController,
           isEditing: isEditing,
@@ -320,18 +320,18 @@ class _FilterLifeDaysInput extends StatelessWidget {
               FilteringTextInputFormatter.digitsOnly,
               _PositiveIntegerFormatter(),
             ],
-            style: const TextStyle(fontSize: 32, color: Colors.white),
+            style: const TextStyle(fontSize: 32, color: Colors.black),
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               filled: true,
-              fillColor: const Color(0xFF2A2A2A),
+              fillColor: Colors.white,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFF7C7C7C)),
+                borderSide: const BorderSide(color: Color(0xFFFDB874)),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(color: Color(0xFF7C7C7C)),
+                borderSide: const BorderSide(color: Color(0xFFFDB874)),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -343,7 +343,7 @@ class _FilterLifeDaysInput extends StatelessWidget {
         const SizedBox(width: 8),
         const Text(
           '日',
-          style: TextStyle(fontSize: 32, color: Colors.white),
+          style: TextStyle(fontSize: 32, color: Colors.black),
         ),
         const SizedBox(width: 32),
         _EditButton(
@@ -386,12 +386,12 @@ class _EditButton extends StatelessWidget {
           borderRadius: borderRadius,
           child: Container(
             alignment: Alignment.center,
-            height: 90,
+            height: 80,
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Text(
               isEditing ? '確認' : '編輯',
               style: const TextStyle(
-                fontSize: 32,
+                fontSize: 26,
                 color: Colors.white,
               ),
             ),
@@ -456,7 +456,7 @@ class _ResetButton extends StatelessWidget {
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF3A3A3A), Color(0xFF1A1A1A)],
+            colors: [Color(0x99FFFFFF), Color(0x00FBBB84)],
           ),
           border: Border.all(
             width: 1,
@@ -468,9 +468,9 @@ class _ResetButton extends StatelessWidget {
           onTap: onTap,
           borderRadius: borderRadius,
           child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 88,
-              vertical: 16,
+            width: 340,
+            padding: const EdgeInsets.all(
+              16,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -481,14 +481,14 @@ class _ResetButton extends StatelessWidget {
                   'lib/wh/feature/warehouse/parent/assets/images/common/reset.png',
                   width: 70,
                   height: 70,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 const SizedBox(width: 16),
                 const Text(
                   '重置濾網',
                   style: TextStyle(
-                    fontSize: 32,
-                    color: Colors.white,
+                    fontSize: 26,
+                    color: Colors.black,
                   ),
                 ),
               ],

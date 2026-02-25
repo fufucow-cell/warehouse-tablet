@@ -1,6 +1,9 @@
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/air_quality_filter_page.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/page/air_quality_record_page.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/ui/fan_speed_popup.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/ui/mode_popup.dart';
 import 'package:engo_terminal_app3/wh/feature/air_quality/ui/sensor_data_bar.dart';
+import 'package:engo_terminal_app3/wh/feature/air_quality/ui/timer_popup.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/air_background_card.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +16,12 @@ class AirQualityPurifierPage extends StatefulWidget {
 
 class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
   bool _isPowerOn = true;
+  String _currentMode = '自動';
+  String _currentFanSpeed = '中';
+  int _timerHours = 0;
+  bool _showModePopup = false;
+  bool _showFanSpeedPopup = false;
+  bool _showTimerPopup = false;
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +58,30 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                   Row(
                     children: [
                       _LeftControlButtons(
-                        currentMode: '自動',
-                        currentFanSpeed: '中',
-                        timerMinutes: 0,
-                        onModeButtonTap: () {},
-                        onFanSpeedButtonTap: () {},
-                        onTimerButtonTap: () {},
+                        currentMode: _currentMode,
+                        currentFanSpeed: _currentFanSpeed,
+                        timerHours: _timerHours,
+                        onModeButtonTap: () {
+                          setState(() {
+                            _showModePopup = true;
+                            _showFanSpeedPopup = false;
+                            _showTimerPopup = false;
+                          });
+                        },
+                        onFanSpeedButtonTap: () {
+                          setState(() {
+                            _showModePopup = false;
+                            _showFanSpeedPopup = true;
+                            _showTimerPopup = false;
+                          });
+                        },
+                        onTimerButtonTap: () {
+                          setState(() {
+                            _showModePopup = false;
+                            _showFanSpeedPopup = false;
+                            _showTimerPopup = true;
+                          });
+                        },
                         onDataButtonTap: () {
                           Navigator.push(
                             context,
@@ -68,7 +95,60 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                           );
                         },
                       ),
-                      const Expanded(child: _MainDisplay()),
+                      Expanded(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          clipBehavior: Clip.none,
+                          children: [
+                            const Positioned.fill(child: _MainDisplay()),
+                            Positioned.fill(
+                              child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: _showModePopup
+                                    ? ModePopup(
+                                        currentMode: _currentMode,
+                                        onModeSelected: (mode) {
+                                          setState(() {
+                                            _currentMode = mode;
+                                            _showModePopup = false;
+                                          });
+                                        },
+                                        onClose: () {
+                                          setState(() => _showModePopup = false);
+                                        },
+                                      )
+                                    : _showFanSpeedPopup
+                                        ? FanSpeedPopup(
+                                            currentSpeed: _currentFanSpeed,
+                                            onSpeedSelected: (speed) {
+                                              setState(() {
+                                                _currentFanSpeed = speed;
+                                                _showFanSpeedPopup = false;
+                                              });
+                                            },
+                                            onClose: () {
+                                              setState(() => _showFanSpeedPopup = false);
+                                            },
+                                          )
+                                        : _showTimerPopup
+                                            ? TimerPopup(
+                                                currentHour: _timerHours,
+                                                onConfirm: (hours) {
+                                                  setState(() {
+                                                    _timerHours = hours;
+                                                    _showTimerPopup = false;
+                                                  });
+                                                },
+                                                onClose: () {
+                                                  setState(() => _showTimerPopup = false);
+                                                },
+                                              )
+                                            : const SizedBox.shrink(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Positioned(
@@ -183,49 +263,10 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-class _DataItem extends StatelessWidget {
-  final String title;
-  final String value;
-  final String unit;
-
-  const _DataItem({
-    required this.title,
-    required this.value,
-    required this.unit,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 26, color: Colors.white),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            '$value $unit',
-            style: const TextStyle(
-              fontSize: 38,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF4CAF50),
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class _LeftControlButtons extends StatelessWidget {
   final String currentMode;
   final String currentFanSpeed;
-  final int timerMinutes;
+  final int timerHours;
   final VoidCallback onModeButtonTap;
   final VoidCallback onFanSpeedButtonTap;
   final VoidCallback onTimerButtonTap;
@@ -235,7 +276,7 @@ class _LeftControlButtons extends StatelessWidget {
   const _LeftControlButtons({
     required this.currentMode,
     required this.currentFanSpeed,
-    required this.timerMinutes,
+    required this.timerHours,
     required this.onModeButtonTap,
     required this.onFanSpeedButtonTap,
     required this.onTimerButtonTap,
@@ -265,8 +306,8 @@ class _LeftControlButtons extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           _LeftControlButton(
-            text: timerMinutes > 0 ? '$timerMinutes 分鐘' : '定時',
-            isFocused: timerMinutes > 0,
+            text: timerHours > 0 ? '$timerHours 小時' : '定時',
+            isFocused: timerHours > 0,
             iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/clock.png',
             onTap: onTimerButtonTap,
           ),
@@ -344,8 +385,6 @@ class _MainDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const value = '12.5';
-
     return Container(
       alignment: Alignment.center,
       height: 600,
@@ -378,7 +417,7 @@ class _MainDisplay extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                value,
+                '12.5',
                 style: TextStyle(
                   fontSize: 120,
                   fontWeight: FontWeight.bold,
