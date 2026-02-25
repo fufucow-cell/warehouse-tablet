@@ -241,6 +241,8 @@ class DialogItemEditNormalWidgetController extends GetxController {
     }
   }
 
+  String assembleImageUrl(String photoPath) => _service.assembleImageUrl(photoPath);
+
   // MARK: - Private Method
 
   // 設置加載狀態

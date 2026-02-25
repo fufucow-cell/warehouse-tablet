@@ -48,6 +48,8 @@ class DialogItemInfoWidgetController extends GetxController {
     super.onClose();
   }
 
+  String assembleImageUrl(String photoPath) => _service.assembleImageUrl(photoPath);
+
   // MARK: - Private Method
 
   void _loadItemData() {

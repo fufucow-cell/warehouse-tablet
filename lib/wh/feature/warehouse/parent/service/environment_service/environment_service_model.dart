@@ -3,14 +3,17 @@ import 'package:flutter/foundation.dart';
 
 /// Environment Service Model
 class EnvironmentServiceModel {
+  /// 倉儲 path
+  final warehousePath = 'api/v1/warehouse';
+
+  // 伺服器網域
+  String serverBaseUrl = '';
+
   /// 當前運行環境
   EnumEnvironment currentEnvironment = EnumEnvironment.prd;
 
   /// 是否為 Module 模式
   bool isModuleMode = false;
-
-  /// 從 launch.json 讀取環境參數的 key
-  final launchEnvironmentKey = 'ENVIRONMENT';
 
   /// 後端網域
   String domainUrl = '';
@@ -34,10 +37,10 @@ enum EnumEnvironment {
 
   String get domainUrl {
     return switch (this) {
-      EnumEnvironment.dev => 'http://localhost:8003/api/v1/warehouse',
-      EnumEnvironment.stg => '',
+      EnumEnvironment.dev => 'http://192.168.31.159:8003',
+      EnumEnvironment.stg => 'https://warehouseserver-l866q1mqn-fufucows-projects.vercel.app',
       EnumEnvironment.uat => '',
-      EnumEnvironment.prd => 'https://warehouseserver-l866q1mqn-fufucows-projects.vercel.app/api/v1/warehouse',
+      EnumEnvironment.prd => 'http://tapp.smtengo.com/v1/wh',
     };
   }
 

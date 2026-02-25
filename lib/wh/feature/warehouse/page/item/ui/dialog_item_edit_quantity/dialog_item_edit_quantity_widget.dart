@@ -403,6 +403,7 @@ class _NewPositionItem extends StatelessWidget {
               selectedValue: model.cabinetName,
               values: visibleCabinetNames,
               menuMaxHeight: 290.0.scale,
+              enable: (displayModel?.roomId?.isNotEmpty ?? false),
               onValueSelected: (str) {
                 final cabinet = controller.getCabinetByName(str);
                 if (str != null && cabinet != null) {

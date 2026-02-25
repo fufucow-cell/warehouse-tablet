@@ -54,6 +54,7 @@ class WarehouseService {
   final _model = WarehouseServiceModel();
   ThemeService get _themeService => ThemeService.instance;
   RouterService get _routerService => RouterService.instance;
+  EnvironmentService get _envService => EnvironmentService.instance;
   String get userId => _model.userId ?? '';
   String get userName => _model.userName ?? '';
   String get userAvatar => _model.userAvatar ?? '';
@@ -147,6 +148,11 @@ class WarehouseService {
     );
   }
 
+  String assembleImageUrl(String photoPath) {
+    final photoUrl = '${_envService.getServerBaseUrl}$photoPath';
+    return photoUrl.replaceAll('\\', '/');
+  }
+
   // 默认错误处理函数
   void _defaultErrorHandler(BaseApiResponseModel<void> error) {
     if (error.code == EnumErrorMap.code106.code) {
@@ -168,7 +174,7 @@ class WarehouseService {
   }
 
   Future<String?> openCamera() async {
-    return await DeviceService.instance.openCamera();
+    return await DeviceService.instance.openCameraChoise();
   }
 
   Future<String?> openGallery() async {
@@ -203,16 +209,15 @@ class WarehouseService {
 
   void registerServices(WarehouseMainPageRouterData data) {
     LogService.register();
-    final domain = data.domain.endsWith('/') ? data.domain.substring(0, data.domain.length - 1) : data.domain;
     EnvironmentService.register().initData(
       isModuleMode: data.isModuleMode,
       environment: data.environment,
-      domainUrl: domain,
+      domainUrl: data.domain,
     );
     ThemeService.register();
     LocaleService.register();
     StorageService.register();
-    ApiService.register();
+    ApiService.register().updateToken(data.accessToken);
     _model.userName = data.userName;
     _model.userAvatar = data.userAvatar;
     _model.accessToken = data.accessToken;

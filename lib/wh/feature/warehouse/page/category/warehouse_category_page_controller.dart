@@ -155,12 +155,18 @@ class WarehouseCategoryPageController extends GetxController {
   }
 
   void toggleCategoryExpanded(Category category) {
+    final id = category.id;
+
+    if (id == null) {
+      return;
+    }
+
     final expandedCategoryIds = Set<String>.from(getExpandedCategoryIds);
 
-    if (getExpandedCategoryIds.contains(category.id)) {
-      expandedCategoryIds.remove(category.id);
+    if (getExpandedCategoryIds.contains(id)) {
+      expandedCategoryIds.remove(id);
     } else {
-      expandedCategoryIds.add(category.id!);
+      expandedCategoryIds.add(id);
     }
 
     _model.expandedCategoryIds.value = expandedCategoryIds;

@@ -76,7 +76,7 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('');
   buffer.writeln('  // Get 版本');
   buffer.writeln('  String get tr {');
-  buffer.writeln('    if (_envService.isModuleMode) {');
+  buffer.writeln('    if (_envService.getIsModuleMode) {');
   buffer.writeln('      return _currentTranslation?.translationMap[key] ?? key;');
   buffer.writeln('    } else {');
   buffer.writeln('      return key.tr;');
@@ -84,7 +84,7 @@ String _generateLocaleMap(List<String> keys) {
   buffer.writeln('  }');
   buffer.writeln('');
   buffer.writeln('  String trArgs(List<String> params) {');
-  buffer.writeln('    if (_envService.isModuleMode) {');
+  buffer.writeln('    if (_envService.getIsModuleMode) {');
   buffer.writeln('      String strTr = _currentTranslation?.translationMap[key] ?? key;');
   buffer.writeln('      for (int i = 0; i < params.length; i++) {');
   buffer.writeln("        final keyPara = '@para\${i + 1}';");

@@ -13,8 +13,7 @@ enum EnumDialogItemEditPositionWidgetInteractive {
 }
 
 /// DialogItemEditPositionWidget 用户事件处理扩展
-extension DialogItemEditPositionWidgetUserEventExtension
-    on DialogItemEditPositionWidgetController {
+extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositionWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditPositionWidgetInteractive type, {
@@ -47,8 +46,14 @@ extension DialogItemEditPositionWidgetUserEventExtension
         }
       case EnumDialogItemEditPositionWidgetInteractive.tapIncrementQuantity:
         if (data is TextEditingController) {
-          final currentValue = int.tryParse(data.text.trim()) ?? 0;
-          data.text = (currentValue + 1).toString();
+          final controllerIndex = getQuantityControllers.indexOf(data);
+          if (controllerIndex >= 0) {
+            final maxQuantity = getMaxQuantityForController(controllerIndex);
+            final currentValue = int.tryParse(data.text.trim()) ?? 0;
+            if (currentValue < maxQuantity) {
+              data.text = (currentValue + 1).toString();
+            }
+          }
         }
       case EnumDialogItemEditPositionWidgetInteractive.tapDecrementQuantity:
         if (data is TextEditingController) {

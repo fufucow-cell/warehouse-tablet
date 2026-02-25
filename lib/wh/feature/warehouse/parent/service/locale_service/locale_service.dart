@@ -59,6 +59,7 @@ class LocaleService extends GetxService {
         EnumLocale.setCurrentTranslation(translation);
       } else {
         final locale = _convertLocaleFromTranslation(translation);
+        _model.currentTranslation = newTranslation;
         await Get.updateLocale(locale);
         await _writeToStorage(newTranslation);
       }

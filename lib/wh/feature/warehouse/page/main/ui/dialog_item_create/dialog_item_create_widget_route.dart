@@ -4,10 +4,10 @@ enum EnumDialogItemCreateWidgetRoute {
   openCamera,
   openGallery,
   tapDialogFooterButton,
+  showSnackBar,
 }
 
-extension DialogItemCreateWidgetRouteExtension
-    on DialogItemCreateWidgetController {
+extension DialogItemCreateWidgetRouteExtension on DialogItemCreateWidgetController {
   void _routerHandle(
     EnumDialogItemCreateWidgetRoute type,
     dynamic data,
@@ -20,6 +20,13 @@ extension DialogItemCreateWidgetRouteExtension
       case EnumDialogItemCreateWidgetRoute.tapDialogFooterButton:
         if (data is BuildContext) {
           Navigator.of(data).pop();
+        }
+      case EnumDialogItemCreateWidgetRoute.showSnackBar:
+        if (data is String) {
+          _service.showSnackBar(
+            title: EnumLocale.commonError.tr,
+            message: data,
+          );
         }
     }
   }

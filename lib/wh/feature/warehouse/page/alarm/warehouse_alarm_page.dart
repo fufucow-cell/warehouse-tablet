@@ -170,7 +170,7 @@ class _CellWidget extends StatelessWidget {
               Expanded(
                 flex: controller.columnRatio[0],
                 child: CustNetworkImage(
-                  url: item.photo.toString(),
+                  url: controller.assembleImageUrl(item.photo.toString()),
                   width: 114.0.scale,
                   height: 100.0.scale,
                   fit: BoxFit.cover,
