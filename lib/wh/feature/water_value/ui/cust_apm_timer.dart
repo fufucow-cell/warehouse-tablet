@@ -1,21 +1,15 @@
 import 'dart:async';
 
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class CustAPMTimer extends StatefulWidget {
-  // MARK: - Properties
   final TimeOfDay? time;
   final Function(TimeOfDay?) onTimeChanged;
   final double? textSize;
   final Color? selectionBackgroundColor;
 
-  // MARK: - Init
   const CustAPMTimer({
     super.key,
     this.time,
@@ -29,7 +23,6 @@ class CustAPMTimer extends StatefulWidget {
 }
 
 class _CustAPMTimerState extends State<CustAPMTimer> {
-  // MARK: - Properties
   late FixedExtentScrollController _amPmController;
   late FixedExtentScrollController _hourController;
   late FixedExtentScrollController _minuteController;
@@ -38,7 +31,6 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
   int _selectedMinuteIndex = 0;
   Timer? _scrollEndTimer;
 
-  // MARK: - Init
   @override
   void initState() {
     super.initState();
@@ -60,7 +52,6 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
       _selectedHourIndex = displayHour - 1;
       _selectedMinuteIndex = minute;
 
-      // 使用 SchedulerBinding 确保在下一帧更新，避免在构建过程中直接操作滚动控制器
       SchedulerBinding.instance.addPostFrameCallback((_) {
         if (mounted && _amPmController.hasClients) {
           _amPmController.jumpToItem(_selectedAmPmIndex);
@@ -89,23 +80,23 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final textSize = widget.textSize ?? 40.0.scale;
+    final textSize = widget.textSize ?? 28.0;
     const itemExtentToTextSizeRatio = 3;
     const diameterRatio = 2.0;
     const squeeze = 1.05;
     final itemExtent = textSize * itemExtentToTextSizeRatio;
+
     return LayoutBuilder(
       builder: (context, constraints) {
         return Stack(
           children: [
-            // 中间选中区域的灰色背景
             Center(
               child: Container(
                 width: double.infinity,
-                height: itemExtent.scale,
+                height: itemExtent,
                 decoration: BoxDecoration(
                   color: widget.selectionBackgroundColor ?? Colors.grey.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.0.scale),
+                  borderRadius: BorderRadius.circular(7.0),
                 ),
               ),
             ),
@@ -113,11 +104,10 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // 上午/下午选择
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _amPmController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
@@ -126,23 +116,22 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
                     onSelectedItemChanged: _onAmPmChanged,
                     children: [
                       _PickerItem(
-                        text: EnumLocale.waterValueTimerAM.tr,
+                        text: '上午',
                         isSelected: _selectedAmPmIndex == 0,
                         textSize: textSize,
                       ),
                       _PickerItem(
-                        text: EnumLocale.waterValueTimerPM.tr,
+                        text: '下午',
                         isSelected: _selectedAmPmIndex == 1,
                         textSize: textSize,
                       ),
                     ],
                   ),
                 ),
-                // 小时选择 (1-12)
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _hourController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
@@ -162,11 +151,10 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
                     ),
                   ),
                 ),
-                // 分钟选择 (0-59)
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _minuteController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
@@ -193,7 +181,6 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
     );
   }
 
-  // MARK: - Private Method
   void _setupScrollListeners() {
     _amPmController.addListener(_onScroll);
     _hourController.addListener(_onScroll);
@@ -201,14 +188,10 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
   }
 
   void _onScroll() {
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
 
-    // 取消之前的定时器
     _scrollEndTimer?.cancel();
 
-    // 设置新的定时器，在滚动停止后更新状态
     _scrollEndTimer = Timer(const Duration(milliseconds: 150), () {
       if (mounted) {
         _updateSelectedIndicesFromControllers();
@@ -218,9 +201,7 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
   }
 
   void _updateSelectedIndicesFromControllers() {
-    if (!mounted) {
-      return;
-    }
+    if (!mounted) return;
 
     bool needsUpdate = false;
 
@@ -291,12 +272,10 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
 }
 
 class _PickerItem extends StatelessWidget {
-  // MARK: - Properties
   final String text;
   final bool isSelected;
   final double textSize;
 
-  // MARK: - Init
   const _PickerItem({
     required this.text,
     required this.isSelected,
@@ -313,10 +292,12 @@ class _PickerItem extends StatelessWidget {
       child: Center(
         child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: CustTextWidget(
+          child: Text(
             text,
-            size: textSize,
-            color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.engoTextPrimary.color,
+            style: TextStyle(
+              fontSize: textSize,
+              color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF292929),
+            ),
           ),
         ),
       ),

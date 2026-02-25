@@ -1,5 +1,3 @@
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter/material.dart';
 
 class CustToggleSwitch extends StatelessWidget {
@@ -17,33 +15,33 @@ class CustToggleSwitch extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: SizedBox(
-        width: 101.0.scale,
-        height: 58.0.scale,
+        width: 70.7,
+        height: 40.6,
         child: Stack(
           children: [
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
-                  color: value ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.textSecondary.color,
-                  borderRadius: BorderRadius.circular(30.0.scale),
+                  color: value ? const Color(0xFFFB9B51) : const Color(0xFF666666),
+                  borderRadius: BorderRadius.circular(21.0),
                 ),
               ),
             ),
             AnimatedPositioned(
               duration: const Duration(milliseconds: 300),
-              left: value ? 50.50.scale : 7.31.scale,
-              top: 8.44.scale,
+              left: value ? 35.35 : 5.117,
+              top: 5.908,
               child: Container(
-                width: 42.08.scale,
-                height: 42.18.scale,
-                decoration: ShapeDecoration(
-                  color: EnumColor.textWhite.color,
-                  shape: const OvalBorder(),
+                width: 29.456,
+                height: 29.526,
+                decoration: const ShapeDecoration(
+                  color: Color(0xFFFFFFFF),
+                  shape: OvalBorder(),
                   shadows: [
                     BoxShadow(
-                      color: EnumColor.shadowCard.color,
-                      blurRadius: 6.0.scale,
-                      offset: Offset(0, 5.0.scale),
+                      color: Color(0x19000000),
+                      blurRadius: 4.2,
+                      offset: Offset(0, 3.5),
                       spreadRadius: 0,
                     ),
                   ],
