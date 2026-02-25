@@ -1,17 +1,65 @@
-import 'package:engo_terminal_app3/wh/feature/air_quality/page/reference/air_quality_reference_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class SensorDataBar extends StatelessWidget {
-  final List<Map<EnumAirQualityDataType, double?>> datas;
+  final List<Map<String, double?>> datas;
 
   const SensorDataBar({
     super.key,
     required this.datas,
   });
+
+  String _getTitle(Map<String, double?> data) {
+    final key = data.keys.first;
+    return key;
+  }
+
+  String _getValue(Map<String, double?> data) {
+    final value = data.values.first;
+    if (value == null) {
+      return '-';
+    }
+    return value.toStringAsFixed(1);
+  }
+
+  Widget _getImage(Map<String, double?> data) {
+    final key = data.keys.first;
+    switch (key) {
+      case '溫度':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/temperature.png');
+      case '濕度':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/humidity.png');
+      case 'CO2':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/co2.png');
+      case 'PM25':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/pm25.png');
+      case 'HCHO':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/hcho.png');
+      case 'VOC':
+        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/voc.png');
+      default:
+        return const SizedBox.shrink();
+    }
+  }
+
+  String _getUnit(Map<String, double?> data) {
+    final key = data.keys.first;
+    switch (key) {
+      case '溫度':
+        return '°C';
+      case '濕度':
+        return '%';
+      case 'CO2':
+        return 'ppm';
+      case 'PM25':
+        return 'μg/m³';
+      case 'HCHO':
+        return 'mg/m³';
+      case 'VOC':
+        return 'ppb';
+      default:
+        return '';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +74,10 @@ class SensorDataBar extends StatelessWidget {
 
       widgets.add(
         _DataItem(
-          type: mapValue.keys.first,
-          value: mapValue.values.first,
+          title: _getTitle(mapValue),
+          image: _getImage(mapValue),
+          value: _getValue(mapValue),
+          unit: _getUnit(mapValue),
         ),
       );
     }
@@ -35,26 +85,21 @@ class SensorDataBar extends StatelessWidget {
     return Container(
       width: double.infinity,
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(vertical: 16.0.scale),
-      decoration: ShapeDecoration(
-        gradient: RadialGradient(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        gradient: const RadialGradient(
           center: Alignment.topCenter,
-          radius: 15.0.scale,
-          colors: EnumColor.airBoxDataCardGradient.colors,
+          radius: 15,
+          colors: [Color(0x99FFFFFF), Color(0x00FBBB84)],
         ),
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            width: 1.0.scale,
-            color: EnumColor.engoButtonBorderReverse.color,
-          ),
-          borderRadius: BorderRadius.circular(12.0.scale),
-        ),
+        border: Border.all(width: 1, color: const Color(0xFFFB9B51)),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         physics: const ClampingScrollPhysics(),
         child: Row(
-          children: [SizedBox(width: 32.0.scale), ...widgets, SizedBox(width: 32.0.scale)],
+          children: [const SizedBox(width: 32), ...widgets, const SizedBox(width: 32)],
         ),
       ),
     );
@@ -67,68 +112,61 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 65.0.scale),
-      width: 1.0.scale,
-      height: 75.0.scale,
+      margin: const EdgeInsets.symmetric(horizontal: 65),
+      width: 1,
+      height: 75,
       color: Colors.black,
     );
   }
 }
 
 class _DataItem extends StatelessWidget {
-  final EnumAirQualityDataType type;
-  final double? value;
+  final String title;
+  final Widget image;
+  final String value;
+  final String unit;
 
   const _DataItem({
-    required this.type,
+    required this.title,
+    required this.image,
     required this.value,
+    required this.unit,
   });
 
   @override
   Widget build(BuildContext context) {
-    Color color = EnumColor.accentBlue.color;
-    String displayValue = '-';
-
-    if (value != null) {
-      final level = type.getReferenceLevelByValue(value!, null);
-
-      if (level != null) {
-        color = level.color;
-      }
-
-      displayValue = value!.toStringAsFixed(type.displayDecimal);
-    }
-
     return SizedBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              type.enumImage.image(
-                size: Size.square(36.0.scale),
-                color: EnumColor.textPrimary.color,
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: image,
               ),
-              SizedBox(width: 8.0.scale),
-              CustTextWidget(
-                type.title,
-                size: 26.0.scale,
-                weightType: EnumFontWeightType.regular,
-                color: EnumColor.textPrimary.color,
-                align: TextAlign.center,
+              const SizedBox(width: 4),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
-          SizedBox(height: 16.0.scale),
-          CustTextWidget(
-            '$displayValue ${type.unit}',
-            size: 38.0.scale,
-            weightType: EnumFontWeightType.bold,
-            color: color,
-            align: TextAlign.center,
+          const SizedBox(height: 4),
+          Text(
+            '$value $unit',
+            style: const TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF96B7E3),
+            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

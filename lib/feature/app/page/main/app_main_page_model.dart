@@ -7,8 +7,8 @@ class AppMainPageModel {
 
 enum EnumAppMainRouter {
   household,
-  gateway,
   warehouse,
+  gateway,
   circuitBreaker,
   waterValue,
   airBox,
@@ -21,8 +21,8 @@ enum EnumAppMainRouter {
 
   Widget Function() get page => () => switch (this) {
         household => const SmartHomeHouseholdPage(),
-        gateway => const SmartHomeGatewayPage(),
         warehouse => const SmartHomeWarehousePage(),
+        gateway => const SmartHomeGatewayPage(),
         circuitBreaker => const SmartHomeCircuitBreakerPage(),
         waterValue => const SmartHomeWaterValuePage(),
         airBox => const SmartHomeAirBoxPage(),
@@ -34,8 +34,8 @@ enum EnumAppMainRouter {
 
 enum EnumAppMainTabItem {
   household(Icons.home),
-  gateway(Icons.gas_meter),
   warehouse(Icons.warehouse),
+  gateway(Icons.gas_meter),
   circuitBreaker(Icons.power_settings_new),
   waterValue(Icons.water_drop),
   airBox(Icons.air),
