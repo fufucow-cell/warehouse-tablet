@@ -1,34 +1,29 @@
 import 'dart:async';
-
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-class CustTimer extends StatefulWidget {
+class CustAPMTimer extends StatefulWidget {
   // MARK: - Properties
   final TimeOfDay? time;
   final Function(TimeOfDay?) onTimeChanged;
   final double? textSize;
-  final Color? selectionOverlayColor;
+  final Color? selectionBackgroundColor;
 
   // MARK: - Init
-  const CustTimer({
+  const CustAPMTimer({
     super.key,
     this.time,
     required this.onTimeChanged,
     this.textSize,
-    this.selectionOverlayColor,
+    this.selectionBackgroundColor,
   });
 
   @override
-  State<CustTimer> createState() => _CustTimerState();
+  State<CustAPMTimer> createState() => _CustAPMTimerState();
 }
 
-class _CustTimerState extends State<CustTimer> {
+class _CustAPMTimerState extends State<CustAPMTimer> {
   // MARK: - Properties
   late FixedExtentScrollController _amPmController;
   late FixedExtentScrollController _hourController;
@@ -47,7 +42,7 @@ class _CustTimerState extends State<CustTimer> {
   }
 
   @override
-  void didUpdateWidget(CustTimer oldWidget) {
+  void didUpdateWidget(CustAPMTimer oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.time != widget.time) {
       final currentTime = widget.time ?? TimeOfDay.now();
@@ -89,7 +84,7 @@ class _CustTimerState extends State<CustTimer> {
 
   @override
   Widget build(BuildContext context) {
-    final textSize = widget.textSize ?? 40.0.scale;
+    final textSize = widget.textSize ?? 40.0;
     const itemExtentToTextSizeRatio = 3;
     const diameterRatio = 2.0;
     const squeeze = 1.05;
@@ -102,10 +97,10 @@ class _CustTimerState extends State<CustTimer> {
             Center(
               child: Container(
                 width: double.infinity,
-                height: itemExtent.scale,
+                height: itemExtent,
                 decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(10.0.scale),
+                  color: widget.selectionBackgroundColor ?? Colors.grey.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
             ),
@@ -117,25 +112,21 @@ class _CustTimerState extends State<CustTimer> {
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _amPmController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
                     squeeze: squeeze,
-                    selectionOverlay: widget.selectionOverlayColor != null
-                        ? CupertinoPickerDefaultSelectionOverlay(
-                            background: widget.selectionOverlayColor!,
-                          )
-                        : null,
+                    selectionOverlay: null,
                     onSelectedItemChanged: _onAmPmChanged,
                     children: [
                       _PickerItem(
-                        text: EnumLocale.waterValueTimerAM.tr,
+                        text: '上午',
                         isSelected: _selectedAmPmIndex == 0,
                         textSize: textSize,
                       ),
                       _PickerItem(
-                        text: EnumLocale.waterValueTimerPM.tr,
+                        text: '下午',
                         isSelected: _selectedAmPmIndex == 1,
                         textSize: textSize,
                       ),
@@ -146,16 +137,12 @@ class _CustTimerState extends State<CustTimer> {
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _hourController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
                     squeeze: squeeze,
-                    selectionOverlay: widget.selectionOverlayColor != null
-                        ? CupertinoPickerDefaultSelectionOverlay(
-                            background: widget.selectionOverlayColor!,
-                          )
-                        : null,
+                    selectionOverlay: null,
                     onSelectedItemChanged: _onHourChanged,
                     children: List.generate(
                       12,
@@ -174,16 +161,12 @@ class _CustTimerState extends State<CustTimer> {
                 Expanded(
                   child: CupertinoPicker(
                     scrollController: _minuteController,
-                    itemExtent: itemExtent.scale,
+                    itemExtent: itemExtent,
                     useMagnifier: false,
                     looping: false,
                     diameterRatio: diameterRatio,
                     squeeze: squeeze,
-                    selectionOverlay: widget.selectionOverlayColor != null
-                        ? CupertinoPickerDefaultSelectionOverlay(
-                            background: widget.selectionOverlayColor!,
-                          )
-                        : null,
+                    selectionOverlay: null,
                     onSelectedItemChanged: _onMinuteChanged,
                     children: List.generate(
                       60,
@@ -325,10 +308,15 @@ class _PickerItem extends StatelessWidget {
       child: Center(
         child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: CustTextWidget(
+          child: Text(
             text,
-            size: textSize,
-            color: isSelected ? EnumColor.engoWaterValueStatusOpening.color : EnumColor.engoTextPrimary.color,
+            style: TextStyle(
+              fontSize: textSize,
+              fontWeight: FontWeight.w400,
+              color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF292929),
+              height: 1.4,
+              letterSpacing: 0,
+            ),
           ),
         ),
       ),

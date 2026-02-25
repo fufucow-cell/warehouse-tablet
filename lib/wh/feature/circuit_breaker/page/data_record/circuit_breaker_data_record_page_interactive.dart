@@ -12,7 +12,7 @@ extension CircuitBreakerDataRecordPageInteractiveExtension on CircuitBreakerData
       case EnumCircuitBreakerDataRecordPageInteractive.tapSettingButton:
         _model.routerData?.onSettingButtonTap?.call();
       case EnumCircuitBreakerDataRecordPageInteractive.tapTimeFilter:
-        if (data is String) {
+        if (data is EnumTimeFilter && _model.selectedTimeFilter.value != data) {
           _updateTimeFilter(data);
         }
       case EnumCircuitBreakerDataRecordPageInteractive.tapDatePicker:
