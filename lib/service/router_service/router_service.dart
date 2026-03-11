@@ -1,6 +1,6 @@
 import 'package:engo_terminal_app3/service/router_service/router_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

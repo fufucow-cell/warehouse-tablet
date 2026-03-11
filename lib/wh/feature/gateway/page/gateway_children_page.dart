@@ -131,7 +131,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 width: 56.0,
                 height: 56.0,
                 color: const Color(0xFFFB9B51),
@@ -176,7 +176,7 @@ class _DeviceList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/empty.png',
+              'lib/wh/parent/assets/images/common/empty.png',
               width: 140.0,
               height: 140.0,
             ),
@@ -251,7 +251,7 @@ class _ChildDeviceCard extends StatelessWidget {
             Row(
               children: [
                 Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/gateway_device.png',
+                  'lib/wh/parent/assets/images/common/gateway_device.png',
                   width: 86.8,
                   height: 49.0,
                   color: const Color(0xFF333333),
@@ -265,7 +265,7 @@ class _ChildDeviceCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: Image.asset(
-                        'lib/wh/feature/warehouse/parent/assets/images/common/gateway_more.png',
+                        'lib/wh/parent/assets/images/common/gateway_more.png',
                         width: 49.0,
                         height: 49.0,
                         color: const Color(0xFF333333),
@@ -329,8 +329,8 @@ class _ChildDeviceCard extends StatelessWidget {
                         padding: const EdgeInsets.all(4.0),
                         child: Image.asset(
                           device.isSwitchOn!
-                              ? 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_on.png'
-                              : 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_off.png',
+                              ? 'lib/wh/parent/assets/images/common/gateway_status_on.png'
+                              : 'lib/wh/parent/assets/images/common/gateway_status_off.png',
                           width: 49.0,
                           height: 49.0,
                         ),

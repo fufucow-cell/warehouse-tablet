@@ -98,7 +98,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onBack,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 56.0,
             height: 56.0,
             color: const Color(0xFFFB9B51),
@@ -120,7 +120,7 @@ class _TopBar extends StatelessWidget {
               GestureDetector(
                 onTap: onEdit,
                 child: Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                  'lib/wh/parent/assets/images/common/pencil_line.png',
                   width: 35.0,
                   height: 35.0,
                   color: const Color(0xFF292929),
@@ -132,7 +132,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onSettings,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+            'lib/wh/parent/assets/images/common/setting.png',
             width: 43.4,
             height: 43.4,
             color: const Color(0xFF292929),
@@ -203,7 +203,7 @@ class _SwitchControl extends StatelessWidget {
                           ),
                           builder: (context, color, child) {
                             return Image.asset(
-                              'lib/wh/feature/warehouse/parent/assets/images/common/circuit.png',
+                              'lib/wh/parent/assets/images/common/circuit.png',
                               width: 63.7,
                               height: 63.7,
                               color: color ?? const Color(0xFF292929),
@@ -400,7 +400,7 @@ class _DataRecordItem extends StatelessWidget {
               ),
               const Spacer(),
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_right.png',
+                'lib/wh/parent/assets/images/common/arrow_right.png',
                 width: 40.6,
                 height: 40.6,
                 color: const Color(0xFF292929),

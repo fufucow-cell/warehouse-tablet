@@ -1,6 +1,6 @@
 // 扁平化所有櫥櫃
 import 'package:collection/collection.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
 
 class CabinetUtil {

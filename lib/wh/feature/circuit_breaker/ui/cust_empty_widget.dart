@@ -19,7 +19,7 @@ class CustEmptyWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/empty.png',
+            'lib/wh/parent/assets/images/common/empty.png',
             width: 295.4,
             height: 208.6,
           ),

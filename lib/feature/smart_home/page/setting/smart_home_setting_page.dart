@@ -1,10 +1,10 @@
 import 'package:engo_terminal_app3/feature/smart_home/service/smart_home_service.dart';
 import 'package:engo_terminal_app3/ui/cust_scaffold.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_snack_bar.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -143,7 +143,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onBack,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 56.0,
             height: 56.0,
             color: const Color(0xFFFB9B51),
@@ -164,7 +164,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onSettings,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+            'lib/wh/parent/assets/images/common/setting.png',
             width: 43.4,
             height: 43.4,
             color: const Color(0xFF292929),
@@ -350,7 +350,7 @@ class _StatisticsSection extends StatelessWidget {
                   ),
                   const Spacer(),
                   Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/arrow_down.png',
+                    'lib/wh/parent/assets/images/common/arrow_down.png',
                     width: 28.0,
                     height: 28.0,
                     color: Colors.white,

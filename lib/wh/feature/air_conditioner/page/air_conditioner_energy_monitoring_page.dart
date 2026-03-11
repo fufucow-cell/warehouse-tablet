@@ -136,7 +136,7 @@ class _TopBar extends StatelessWidget {
               height: 80,
               padding: const EdgeInsets.all(8),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 color: const Color(0xFFFB9B51),
               ),
             ),
@@ -327,7 +327,7 @@ class _DatePicker extends StatelessWidget {
             ),
             const Spacer(),
             Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/arrow_down.png',
+              'lib/wh/parent/assets/images/common/arrow_down.png',
               width: 40,
               height: 40,
               color: const Color(0xFF292929),

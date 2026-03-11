@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/cabinet/ui/dialog_cabinet_edit/dialog_cabinet_edit_widget_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_dropdown_menu_button.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_field.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/image_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_dropdown_menu_button.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_field.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/service/warehouse_service.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/dialog/ui/footer.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/dialog/ui/frame.dart';

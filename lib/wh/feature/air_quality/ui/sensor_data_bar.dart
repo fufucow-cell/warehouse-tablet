@@ -25,17 +25,17 @@ class SensorDataBar extends StatelessWidget {
     final key = data.keys.first;
     switch (key) {
       case '溫度':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/temperature.png');
+        return Image.asset('lib/wh/parent/assets/images/common/temperature.png');
       case '濕度':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/humidity.png');
+        return Image.asset('lib/wh/parent/assets/images/common/humidity.png');
       case 'CO2':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/co2.png');
+        return Image.asset('lib/wh/parent/assets/images/common/co2.png');
       case 'PM25':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/pm25.png');
+        return Image.asset('lib/wh/parent/assets/images/common/pm25.png');
       case 'HCHO':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/hcho.png');
+        return Image.asset('lib/wh/parent/assets/images/common/hcho.png');
       case 'VOC':
-        return Image.asset('lib/wh/feature/warehouse/parent/assets/images/common/voc.png');
+        return Image.asset('lib/wh/parent/assets/images/common/voc.png');
       default:
         return const SizedBox.shrink();
     }

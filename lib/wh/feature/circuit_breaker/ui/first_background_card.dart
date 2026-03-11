@@ -28,7 +28,7 @@ class FirstBackgroundCard extends StatelessWidget {
           ),
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/wh/feature/warehouse/parent/assets/images/light/bg_content.png'),
+              image: AssetImage('lib/wh/parent/assets/images/light/bg_content.png'),
               fit: BoxFit.cover,
             ),
           ),

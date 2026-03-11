@@ -6,7 +6,7 @@ import 'dart:io';
 /// - common/ 目录下的文件：c + 文件名（PascalCase），例如 cCow, cHouse
 /// - light/ 或 dark/ 目录下的文件：t + 文件名（PascalCase），例如 tCow
 void main() {
-  final imagesDir = Directory('lib/wh/feature/warehouse/parent/assets/images');
+  final imagesDir = Directory('lib/wh/parent/assets/images');
   final outputFile = File('lib/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart');
 
   if (!imagesDir.existsSync()) {

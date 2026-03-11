@@ -1,14 +1,14 @@
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/actions.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/minor_list.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/warehouse_category_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_category_response_model/category.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_empty_widget.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_shimmer_widget.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/warehouse_category_response_model/category.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_empty_widget.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_shimmer_widget.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

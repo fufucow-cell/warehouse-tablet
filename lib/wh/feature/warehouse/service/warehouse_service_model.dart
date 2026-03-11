@@ -1,6 +1,7 @@
 part of 'warehouse_service.dart';
 
 class WarehouseServiceModel {
+  final warehousePath = 'warehouse';
   String? userId;
   String? userName;
   String? userAvatar;

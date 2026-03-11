@@ -68,7 +68,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 width: 40,
                 height: 40,
                 color: const Color(0xFFFDB874),
@@ -151,43 +151,43 @@ class _ParameterInfo extends StatelessWidget {
         return {
           'title': 'PM2.5 細懸浮微粒',
           'description': '指懸浮在空氣中粒徑小於或等於2.5微米的粒子。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/pm25.png',
+          'icon': 'lib/wh/parent/assets/images/common/pm25.png',
         };
       case '溫度':
         return {
           'title': '溫度',
           'description': '環境溫度測量。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/temperature.png',
+          'icon': 'lib/wh/parent/assets/images/common/temperature.png',
         };
       case '濕度':
         return {
           'title': '濕度',
           'description': '環境相對濕度測量。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/humidity.png',
+          'icon': 'lib/wh/parent/assets/images/common/humidity.png',
         };
       case 'HCHO':
         return {
           'title': 'HCHO 甲醛',
           'description': '甲醛濃度測量。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/hcho.png',
+          'icon': 'lib/wh/parent/assets/images/common/hcho.png',
         };
       case 'VOC':
         return {
           'title': 'VOC 揮發性有機化合物',
           'description': 'VOC濃度測量。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/voc.png',
+          'icon': 'lib/wh/parent/assets/images/common/voc.png',
         };
       case 'CO2':
         return {
           'title': 'CO2 二氧化碳',
           'description': '二氧化碳濃度測量。',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/co2.png',
+          'icon': 'lib/wh/parent/assets/images/common/co2.png',
         };
       default:
         return {
           'title': dataType,
           'description': '',
-          'icon': 'lib/wh/feature/warehouse/parent/assets/images/common/pm25.png',
+          'icon': 'lib/wh/parent/assets/images/common/pm25.png',
         };
     }
   }

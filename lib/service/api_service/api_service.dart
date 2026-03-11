@@ -3,12 +3,12 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:engo_terminal_app3/service/api_service/api_service_model.dart' as home_service;
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/error_map_constant.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/base_api_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart' as warehouse_service;
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/environment_service/environment_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/log_service/log_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/error_map_constant.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/base_api_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart' as warehouse_service;
+import 'package:engo_terminal_app3/wh/parent/service/environment_service/environment_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service_model.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Response;
 
@@ -402,7 +402,7 @@ class ApiService extends GetxService {
           try {
             final mockFileName = _getMockFileName(options, apiInfo);
             final jsonString = await rootBundle.loadString(
-              'lib/wh/feature/warehouse/parent/assets/mock_data/response/$mockFileName',
+              'lib/wh/parent/assets/mock_data/response/$mockFileName',
             );
             final mockData = jsonDecode(jsonString) as Map<String, dynamic>;
             final mockResponse = Response<dynamic>(

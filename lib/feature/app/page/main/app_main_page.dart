@@ -13,14 +13,15 @@ import 'package:engo_terminal_app3/feature/smart_home/page/water_value/smart_hom
 import 'package:engo_terminal_app3/feature/smart_home/service/smart_home_service.dart';
 import 'package:engo_terminal_app3/service/api_service/api_service.dart';
 import 'package:engo_terminal_app3/service/router_service/router_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/base_api_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/storage_service/storage_service.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/storage_service/storage_service_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/ui/cust_text_widget.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/base_api_model.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/storage_service/storage_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/storage_service/storage_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/image_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -104,7 +105,7 @@ class _TabListWidget extends StatelessWidget {
               color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
-              item.title,
+              item.displayTitle,
               style: TextStyle(
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,

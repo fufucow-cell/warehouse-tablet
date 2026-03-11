@@ -86,7 +86,7 @@ class _TopBar extends StatelessWidget {
           child: InkWell(
             onTap: onBack,
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+              'lib/wh/parent/assets/images/common/arrow_left.png',
               width: 40,
               height: 40,
               color: const Color(0xFFFDB874),
@@ -111,7 +111,7 @@ class _TopBar extends StatelessWidget {
                 child: InkWell(
                   onTap: onEdit,
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                    'lib/wh/parent/assets/images/common/pencil_line.png',
                     width: 30,
                     height: 30,
                     color: Colors.black,
@@ -126,7 +126,7 @@ class _TopBar extends StatelessWidget {
           child: InkWell(
             onTap: onSettings,
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+              'lib/wh/parent/assets/images/common/setting.png',
               width: 30,
               height: 30,
               color: Colors.grey.shade700,
@@ -154,7 +154,7 @@ class _MainDisplay extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/pm25.png',
+                'lib/wh/parent/assets/images/common/pm25.png',
                 width: 50,
                 height: 50,
                 color: const Color(0xFF41CF5F),
@@ -233,7 +233,7 @@ class _DataRecordSection extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_right.png',
+                'lib/wh/parent/assets/images/common/arrow_right.png',
                 width: 30,
                 height: 30,
                 color: Colors.black,

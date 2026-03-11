@@ -74,7 +74,7 @@ class _TopBar extends StatelessWidget {
                     height: 50.0,
                     alignment: Alignment.center,
                     child: Image.asset(
-                      'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                      'lib/wh/parent/assets/images/common/pencil_line.png',
                       width: 50.0,
                       height: 50.0,
                       color: const Color(0xFF292929),
@@ -87,7 +87,7 @@ class _TopBar extends StatelessWidget {
         ),
         CustIconButton(
           icon: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+            'lib/wh/parent/assets/images/common/setting.png',
             width: 62.0,
             height: 62.0,
             color: const Color(0xFF292929),
@@ -122,7 +122,7 @@ class _LocationAndEnvironment extends StatelessWidget {
         ),
         const SizedBox(width: 48.0),
         Image.asset(
-          'lib/wh/feature/warehouse/parent/assets/images/common/temperature.png',
+          'lib/wh/parent/assets/images/common/temperature.png',
           width: 60.0,
           height: 60.0,
           color: const Color(0xFF292929),
@@ -139,7 +139,7 @@ class _LocationAndEnvironment extends StatelessWidget {
         ),
         const SizedBox(width: 48.0),
         Image.asset(
-          'lib/wh/feature/warehouse/parent/assets/images/common/humidity.png',
+          'lib/wh/parent/assets/images/common/humidity.png',
           width: 60.0,
           height: 60.0,
           color: const Color(0xFF292929),
@@ -241,7 +241,7 @@ class _ModeControlRow extends StatelessWidget {
         children: [
           Expanded(
             child: _ControlButton(
-              imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/menu.png',
+              imagePath: 'lib/wh/parent/assets/images/common/menu.png',
               text: '模式',
               onTap: () {
                 showModalBottomSheet(
@@ -258,7 +258,7 @@ class _ModeControlRow extends StatelessWidget {
           const SizedBox(width: 16.0),
           Expanded(
             child: _ControlButton(
-              imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/wind.png',
+              imagePath: 'lib/wh/parent/assets/images/common/wind.png',
               text: '風量',
               onTap: () {
                 showModalBottomSheet(
@@ -275,7 +275,7 @@ class _ModeControlRow extends StatelessWidget {
           const SizedBox(width: 16.0),
           Expanded(
             child: _ControlButton(
-              imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_wind_direction.png',
+              imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_direction.png',
               text: '風向',
               onTap: () {
                 showModalBottomSheet(
@@ -317,7 +317,7 @@ class _AirConditionerCardState extends State<_AirConditionerCard> {
             child: Stack(
               children: [
                 Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner.png',
+                  'lib/wh/parent/assets/images/common/air_conditioner.png',
                 ),
                 Positioned(
                   right: 20.0,
@@ -330,8 +330,8 @@ class _AirConditionerCardState extends State<_AirConditionerCard> {
                     },
                     child: Image.asset(
                       _isPowerOn
-                          ? 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_on.png'
-                          : 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_off.png',
+                          ? 'lib/wh/parent/assets/images/common/gateway_status_on.png'
+                          : 'lib/wh/parent/assets/images/common/gateway_status_off.png',
                       width: 50.0,
                       height: 50.0,
                     ),
@@ -548,7 +548,7 @@ class _DecreaseButton extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Center(
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/minus.png',
+              'lib/wh/parent/assets/images/common/minus.png',
               color: const Color(0xFF96B7E3),
             ),
           ),
@@ -577,7 +577,7 @@ class _IncreaseButton extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Center(
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/plus.png',
+              'lib/wh/parent/assets/images/common/plus.png',
               color: const Color(0xFF96B7E3),
             ),
           ),
@@ -679,7 +679,7 @@ class _UpRightSection extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _ScrollRowItem(
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_timing.png',
+            iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_timing.png',
             title: '定時設定',
             onTap: () {
               Navigator.push(
@@ -692,7 +692,7 @@ class _UpRightSection extends StatelessWidget {
           ),
           const SizedBox(height: 14.0),
           _ScrollRowItem(
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/chart.png',
+            iconPath: 'lib/wh/parent/assets/images/common/chart.png',
             title: '能源監測',
             onTap: () {
               Navigator.push(
@@ -705,7 +705,7 @@ class _UpRightSection extends StatelessWidget {
           ),
           const SizedBox(height: 14.0),
           _ScrollRowItem(
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/purifier_fliter.png',
+            iconPath: 'lib/wh/parent/assets/images/common/purifier_fliter.png',
             title: '濾網設定',
             onTap: () {
               Navigator.push(
@@ -772,7 +772,7 @@ class _ScrollRowItem extends StatelessWidget {
               ),
               const SizedBox(width: 16.0),
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_right.png',
+                'lib/wh/parent/assets/images/common/arrow_right.png',
                 width: 50.0,
                 height: 50.0,
                 color: const Color(0xFF292929),
@@ -872,55 +872,55 @@ class _GridItemData {
     final items = [
       const _GridItemData(
         key: 'eco',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_eco.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_eco.png',
         title: 'ECO(節能)',
         enabled: true, // Hard code
       ),
       const _GridItemData(
         key: 'rapid',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_rapidly.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_rapidly.png',
         title: '急速',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'gear',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_gear.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_gear.png',
         title: '檔位',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'selfCleaning',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_self_cleaning.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_self_cleaning.png',
         title: '自清洗',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'antiDirectWind',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_anti_hairdryer.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_anti_hairdryer.png',
         title: '防直接吹風',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'leftRightWind',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_left_and_right.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_left_and_right.png',
         title: '左右風',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'upDownWind',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_up_and_down.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_up_and_down.png',
         title: '上下風',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'led',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_led.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_led.png',
         title: 'LED',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'strongCool',
-        iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_strong_cold.png',
+        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_strong_cold.png',
         title: '強冷',
         enabled: true, // Hard code: only strongCool is enabled
       ),
@@ -971,7 +971,7 @@ class _ModeBottomSheet extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/close.png',
+                    'lib/wh/parent/assets/images/common/close.png',
                     color: const Color(0xFF292929),
                   ),
                 ),
@@ -985,7 +985,7 @@ class _ModeBottomSheet extends StatelessWidget {
             children: [
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/reset.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/reset.png',
                   text: '自動',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -996,7 +996,7 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/snow_flake.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/snow_flake.png',
                   text: '冷氣',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1007,7 +1007,7 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_dry2.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_dry2.png',
                   text: '乾燥',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1018,7 +1018,7 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_heating.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_heating.png',
                   text: '暖氣',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1029,7 +1029,7 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_supply_wind.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png',
                   text: '送風',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1167,7 +1167,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/close.png',
+                    'lib/wh/parent/assets/images/common/close.png',
                     color: const Color(0xFF292929),
                   ),
                 ),
@@ -1181,7 +1181,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
             children: [
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_wind_quiet.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_quiet.png',
                   text: '微風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1192,7 +1192,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_wind_low.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_low.png',
                   text: '弱風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1203,7 +1203,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_wind_high.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_high.png',
                   text: '強風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1214,7 +1214,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/feature/warehouse/parent/assets/images/common/reset.png',
+                  imagePath: 'lib/wh/parent/assets/images/common/reset.png',
                   text: '自動',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1259,7 +1259,7 @@ class _FanSpeedBottomSheet extends StatelessWidget {
 class _WindDirectionBottomSheet extends StatelessWidget {
   const _WindDirectionBottomSheet();
 
-  static const String _imageBase = 'lib/wh/feature/warehouse/parent/assets/images/light/air_conditioner_wind_direction';
+  static const String _imageBase = 'lib/wh/parent/assets/images/light/air_conditioner_wind_direction';
 
   @override
   Widget build(BuildContext context) {
@@ -1300,7 +1300,7 @@ class _WindDirectionBottomSheet extends StatelessWidget {
                     color: Colors.transparent,
                   ),
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/close.png',
+                    'lib/wh/parent/assets/images/common/close.png',
                     color: const Color(0xFF292929),
                   ),
                 ),

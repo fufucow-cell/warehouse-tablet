@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/record/warehouse_record_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/model/response_model/warehouse_record_response_model/item_record.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/warehouse_record_response_model/item_record.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
 
 class CombineRecord {
   EnumTagType tagType;

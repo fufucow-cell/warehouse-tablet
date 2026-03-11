@@ -139,7 +139,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onBack,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 56.0,
             height: 56.0,
             color: const Color(0xFFFB9B51),

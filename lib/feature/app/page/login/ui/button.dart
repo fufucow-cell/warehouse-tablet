@@ -1,5 +1,5 @@
 import 'package:engo_terminal_app3/feature/app/page/login/app_login_page.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/locale_service/locale/locale_map.dart';
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

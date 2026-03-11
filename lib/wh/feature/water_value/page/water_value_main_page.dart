@@ -71,7 +71,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onBack,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 56.0,
             height: 56.0,
             color: const Color(0xFFFB9B51),
@@ -93,7 +93,7 @@ class _TopBar extends StatelessWidget {
               GestureDetector(
                 onTap: onEdit,
                 child: Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                  'lib/wh/parent/assets/images/common/pencil_line.png',
                   width: 35.0,
                   height: 35.0,
                   color: const Color(0xFF292929),
@@ -105,7 +105,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onSettings,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+            'lib/wh/parent/assets/images/common/setting.png',
             width: 43.4,
             height: 43.4,
             color: const Color(0xFF292929),
@@ -136,9 +136,7 @@ class _SwitchControl extends StatelessWidget {
           child: Stack(
             children: [
               Image.asset(
-                isOn
-                    ? 'lib/wh/feature/warehouse/parent/assets/images/light/water_value_on.png'
-                    : 'lib/wh/feature/warehouse/parent/assets/images/light/water_value_off.png',
+                isOn ? 'lib/wh/parent/assets/images/light/water_value_on.png' : 'lib/wh/parent/assets/images/light/water_value_off.png',
                 fit: BoxFit.contain,
               ),
             ],
@@ -363,7 +361,7 @@ class _FunctionCards extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/clock.png',
+              'lib/wh/parent/assets/images/common/clock.png',
               width: 49.0,
               height: 49.0,
               color: const Color(0xFF292929),

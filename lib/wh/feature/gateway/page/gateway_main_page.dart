@@ -10,7 +10,7 @@ class GatewayMainPage extends StatefulWidget {
 }
 
 class _GatewayMainPageState extends State<GatewayMainPage> {
-  String _gatewayName = '智慧閘道器';
+  final String _gatewayName = '智慧閘道器';
   final int _devicesCount = 12;
 
   @override
@@ -37,7 +37,7 @@ class _GatewayMainPageState extends State<GatewayMainPage> {
                     width: 602.0,
                     height: 602.0,
                     child: Image.asset(
-                      'lib/wh/feature/warehouse/parent/assets/images/common/gateway_circle.png',
+                      'lib/wh/parent/assets/images/common/gateway_circle.png',
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -89,7 +89,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 width: 56.0,
                 height: 56.0,
                 color: const Color(0xFFFB9B51),
@@ -118,7 +118,7 @@ class _TopBar extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Image.asset(
-                      'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                      'lib/wh/parent/assets/images/common/pencil_line.png',
                       width: 35.0,
                       height: 35.0,
                       color: const Color(0xFF333333),
@@ -137,7 +137,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+                'lib/wh/parent/assets/images/common/setting.png',
                 width: 43.4,
                 height: 43.4,
                 color: const Color(0xFF333333),
@@ -230,7 +230,7 @@ class _BottomButton extends StatelessWidget {
                 ),
                 const SizedBox(width: 11.2),
                 Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/arrow_right.png',
+                  'lib/wh/parent/assets/images/common/arrow_right.png',
                   width: 31.5,
                   height: 31.5,
                   color: const Color(0xFF333333),

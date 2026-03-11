@@ -101,7 +101,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 width: 40,
                 height: 40,
                 color: const Color(0xFFFDB874),
@@ -164,7 +164,7 @@ class _CircularProgress extends StatelessWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage('lib/wh/feature/warehouse/parent/assets/images/common/air_filter.png'),
+                      image: AssetImage('lib/wh/parent/assets/images/common/air_filter.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -478,7 +478,7 @@ class _ResetButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/reset.png',
+                  'lib/wh/parent/assets/images/common/reset.png',
                   width: 70,
                   height: 70,
                   color: Colors.black,

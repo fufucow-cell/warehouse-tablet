@@ -38,7 +38,7 @@ class _TopBar extends StatelessWidget {
               height: 80,
               padding: const EdgeInsets.all(8),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 color: const Color(0xFFFB9B51),
               ),
             ),

@@ -64,7 +64,7 @@ class _TopBar extends StatelessWidget {
       children: [
         CustIconButton(
           icon: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 80.0,
             height: 80.0,
             color: const Color(0xFFFB9B51),
@@ -127,7 +127,7 @@ class _AddWeeklyTimerButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_timing.png',
+                'lib/wh/parent/assets/images/common/air_conditioner_timing.png',
                 width: 50.0,
                 height: 50.0,
                 color: const Color(0xFF292929),

@@ -1,6 +1,6 @@
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/constant/widget_constant.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatelessWidget {

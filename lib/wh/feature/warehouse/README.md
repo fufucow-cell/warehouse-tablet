@@ -31,11 +31,11 @@ find lib/feature/warehouse -type f -name "*.dart" -exec sed -i '' 's/engo_termin
 
 ```yaml
   assets:
-    - lib/wh/feature/warehouse/parent/assets/images/
-    - lib/wh/feature/warehouse/parent/assets/images/common/
-    - lib/wh/feature/warehouse/parent/assets/images/light/
-    - lib/wh/feature/warehouse/parent/assets/images/dark/
-    - lib/wh/feature/warehouse/parent/assets/mock_data/response/
+    - lib/wh/parent/assets/images/
+    - lib/wh/parent/assets/images/common/
+    - lib/wh/parent/assets/images/light/
+    - lib/wh/parent/assets/images/dark/
+    - lib/wh/parent/assets/mock_data/response/
 ```
 
 ### 3.2 新增依賴項

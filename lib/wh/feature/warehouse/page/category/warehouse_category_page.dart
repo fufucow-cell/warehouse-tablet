@@ -1,7 +1,7 @@
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/major_list.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/ui/top_info.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/page/category/warehouse_category_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/feature/warehouse/ui/second_background_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

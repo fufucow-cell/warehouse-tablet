@@ -194,7 +194,7 @@ class _TopBar extends StatelessWidget {
       children: [
         CustIconButton(
           icon: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 80.0,
             height: 80.0,
             color: const Color(0xFFFB9B51),
@@ -514,7 +514,7 @@ class _InfoRow extends StatelessWidget {
                 ),
                 const SizedBox(width: 16.0),
                 Image.asset(
-                  'lib/wh/feature/warehouse/parent/assets/images/common/arrow_right.png',
+                  'lib/wh/parent/assets/images/common/arrow_right.png',
                   width: 40.0,
                   height: 40.0,
                   color: const Color(0xFF292929),
@@ -742,11 +742,11 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
 
   Widget _buildModeSection() {
     final modes = [
-      {'name': '自動', 'image': 'lib/wh/feature/warehouse/parent/assets/images/common/reset.png'},
-      {'name': '冷氣', 'image': 'lib/wh/feature/warehouse/parent/assets/images/common/snow_flake.png'},
-      {'name': '乾燥', 'image': 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_dry2.png'},
-      {'name': '暖氣', 'image': 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_heating.png'},
-      {'name': '送風', 'image': 'lib/wh/feature/warehouse/parent/assets/images/common/air_conditioner_supply_wind.png'},
+      {'name': '自動', 'image': 'lib/wh/parent/assets/images/common/reset.png'},
+      {'name': '冷氣', 'image': 'lib/wh/parent/assets/images/common/snow_flake.png'},
+      {'name': '乾燥', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_dry2.png'},
+      {'name': '暖氣', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_heating.png'},
+      {'name': '送風', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png'},
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -1135,7 +1135,7 @@ class _SettingTopBar extends StatelessWidget {
               color: Colors.transparent,
             ),
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/close.png',
+              'lib/wh/parent/assets/images/common/close.png',
               color: const Color(0xFF292929),
             ),
           ),
@@ -1221,7 +1221,7 @@ class _TemperatureDecreaseButton extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Center(
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/minus.png',
+              'lib/wh/parent/assets/images/common/minus.png',
               color: const Color(0xFF96B7E3),
             ),
           ),
@@ -1250,7 +1250,7 @@ class _TemperatureIncreaseButton extends StatelessWidget {
           padding: const EdgeInsets.all(15.0),
           child: Center(
             child: Image.asset(
-              'lib/wh/feature/warehouse/parent/assets/images/common/plus.png',
+              'lib/wh/parent/assets/images/common/plus.png',
               color: const Color(0xFF96B7E3),
             ),
           ),

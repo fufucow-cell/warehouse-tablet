@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart';
 
 class RequestCache {
   final CancelToken cancelToken;

@@ -7,6 +7,7 @@ class AppMainPageModel {
 
 enum EnumAppMainRouter {
   household,
+  reservation,
   warehouse,
   gateway,
   circuitBreaker,
@@ -21,6 +22,7 @@ enum EnumAppMainRouter {
 
   Widget Function() get page => () => switch (this) {
         household => const SmartHomeHouseholdPage(),
+        reservation => const ReservationMainPage(),
         warehouse => const SmartHomeWarehousePage(),
         gateway => const SmartHomeGatewayPage(),
         circuitBreaker => const SmartHomeCircuitBreakerPage(),
@@ -34,6 +36,7 @@ enum EnumAppMainRouter {
 
 enum EnumAppMainTabItem {
   household(Icons.home),
+  reservation(Icons.event_available),
   warehouse(Icons.warehouse),
   gateway(Icons.gas_meter),
   circuitBreaker(Icons.power_settings_new),
@@ -49,6 +52,7 @@ enum EnumAppMainTabItem {
 
   EnumLocale get titleLocale => switch (this) {
         household => EnumLocale.smartHomeTabHousehold,
+        reservation => EnumLocale.smartHomeTabHousehold,
         gateway => EnumLocale.smartHomeTabGateway,
         warehouse => EnumLocale.smartHomeTabWarehouse,
         circuitBreaker => EnumLocale.smartHomeTabCircuitBreaker,
@@ -60,9 +64,11 @@ enum EnumAppMainTabItem {
       };
 
   String get title => titleLocale.tr;
+  String get displayTitle => this == EnumAppMainTabItem.reservation ? '預約' : title;
 
   EnumAppMainRouter get router => switch (this) {
         household => EnumAppMainRouter.household,
+        reservation => EnumAppMainRouter.reservation,
         gateway => EnumAppMainRouter.gateway,
         warehouse => EnumAppMainRouter.warehouse,
         circuitBreaker => EnumAppMainRouter.circuitBreaker,

@@ -126,7 +126,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onBack,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+            'lib/wh/parent/assets/images/common/arrow_left.png',
             width: 56.0,
             height: 56.0,
             color: const Color(0xFFFB9B51),
@@ -147,7 +147,7 @@ class _TopBar extends StatelessWidget {
         GestureDetector(
           onTap: onEdit,
           child: Image.asset(
-            'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+            'lib/wh/parent/assets/images/common/pencil_line.png',
             width: 43.4,
             height: 43.4,
             color: const Color(0xFF292929),
@@ -300,7 +300,7 @@ class _TimerItemCell extends StatelessWidget {
                 child: Ink(
                   padding: const EdgeInsets.all(10.5),
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/trash.png',
+                    'lib/wh/parent/assets/images/common/trash.png',
                     width: 28.0,
                     height: 28.0,
                     color: const Color(0xFF666666),

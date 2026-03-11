@@ -198,7 +198,7 @@ class _TopBar extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/arrow_left.png',
+                'lib/wh/parent/assets/images/common/arrow_left.png',
                 width: 40,
                 height: 40,
                 color: const Color(0xFFFDB874),
@@ -226,7 +226,7 @@ class _TopBar extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      'lib/wh/feature/warehouse/parent/assets/images/common/pencil_line.png',
+                      'lib/wh/parent/assets/images/common/pencil_line.png',
                       width: 30,
                       height: 30,
                       color: Colors.black,
@@ -248,7 +248,7 @@ class _TopBar extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    'lib/wh/feature/warehouse/parent/assets/images/common/setting.png',
+                    'lib/wh/parent/assets/images/common/setting.png',
                     width: 30,
                     height: 30,
                     color: Colors.grey.shade700,
@@ -294,33 +294,33 @@ class _LeftControlButtons extends StatelessWidget {
           _LeftControlButton(
             text: currentMode,
             isFocused: currentMode != '關閉',
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/menu.png',
+            iconPath: 'lib/wh/parent/assets/images/common/menu.png',
             onTap: onModeButtonTap,
           ),
           const SizedBox(height: 24),
           _LeftControlButton(
             text: currentFanSpeed,
             isFocused: currentFanSpeed != '關閉',
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/wind.png',
+            iconPath: 'lib/wh/parent/assets/images/common/wind.png',
             onTap: onFanSpeedButtonTap,
           ),
           const SizedBox(height: 24),
           _LeftControlButton(
             text: timerHours > 0 ? '$timerHours 小時' : '定時',
             isFocused: timerHours > 0,
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/clock.png',
+            iconPath: 'lib/wh/parent/assets/images/common/clock.png',
             onTap: onTimerButtonTap,
           ),
           const SizedBox(height: 24),
           _LeftControlButton(
             text: '數據',
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/chart.png',
+            iconPath: 'lib/wh/parent/assets/images/common/chart.png',
             onTap: onDataButtonTap,
           ),
           const SizedBox(height: 24),
           _LeftControlButton(
             text: '濾網壽命: 80%',
-            iconPath: 'lib/wh/feature/warehouse/parent/assets/images/common/purifier_fliter.png',
+            iconPath: 'lib/wh/parent/assets/images/common/purifier_fliter.png',
             onTap: onFilterLifeTap,
           ),
         ],
@@ -396,7 +396,7 @@ class _MainDisplay extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Image.asset(
-                'lib/wh/feature/warehouse/parent/assets/images/common/pm25.png',
+                'lib/wh/parent/assets/images/common/pm25.png',
                 width: 50,
                 height: 50,
                 color: const Color(0xFF4CAF50),
@@ -448,9 +448,7 @@ class _PowerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imagePath = isOn
-        ? 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_on.png'
-        : 'lib/wh/feature/warehouse/parent/assets/images/common/gateway_status_off.png';
+    final imagePath = isOn ? 'lib/wh/parent/assets/images/common/gateway_status_on.png' : 'lib/wh/parent/assets/images/common/gateway_status_off.png';
     return GestureDetector(
       onTap: onTap,
       child: Image.asset(
