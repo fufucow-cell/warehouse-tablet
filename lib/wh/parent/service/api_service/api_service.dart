@@ -438,8 +438,7 @@ class ApiService extends GetxService {
       onRequest: (options, handler) {
         options.headers['Content-Type'] = 'application/json';
         options.headers['App-Code'] = 'APP_MEMBER';
-        options.headers['Authorization'] = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.Lbr3YauR2Fbm_IS4YqqVuLS853Dn8xKQP6lTH3PDx5k';
-        //_model.accessToken;
+        options.headers['Authorization'] = _model.accessToken;
         options.headers['current-member-id'] = 1;
         final isGet = options.method.toUpperCase() == 'GET';
 
