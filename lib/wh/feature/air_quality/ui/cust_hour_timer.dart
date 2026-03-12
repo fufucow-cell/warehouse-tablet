@@ -35,7 +35,8 @@ class _CustHourTimerState extends State<CustHourTimer> {
   @override
   void didUpdateWidget(CustHourTimer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.initialHour != widget.initialHour && widget.initialHour != null) {
+    if (oldWidget.initialHour != widget.initialHour &&
+        widget.initialHour != null) {
       final hour = (widget.initialHour!).clamp(1, 12);
       _selectedHourIndex = hour - 1;
       if (_hourController.hasClients) {
@@ -142,7 +143,8 @@ class _CustHourTimerState extends State<CustHourTimer> {
   void _updateControllers() {
     final hour = (widget.initialHour ?? 1).clamp(1, 12);
     _selectedHourIndex = hour - 1;
-    _hourController = FixedExtentScrollController(initialItem: _selectedHourIndex);
+    _hourController =
+        FixedExtentScrollController(initialItem: _selectedHourIndex);
   }
 
   void _onHourChanged(int index) {
@@ -182,7 +184,9 @@ class _PickerItem extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: textSize,
-              color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF292929),
+              color: isSelected
+                  ? const Color(0xFFFB9B51)
+                  : const Color(0xFF292929),
             ),
           ),
         ),

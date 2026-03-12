@@ -73,7 +73,11 @@ class WarehouseMainPageRouterData {
 
   /// Factory method to create mock data from mock_data files
   /// Uses data from assets/mock_data/response/home_get.json
-  factory WarehouseMainPageRouterData.mock({required EnumEnvironment env, String? theme, String? locale, bool? isModuleMode}) {
+  factory WarehouseMainPageRouterData.mock(
+      {required EnumEnvironment env,
+      String? theme,
+      String? locale,
+      bool? isModuleMode}) {
     // Mock data based on home_get.json
     return WarehouseMainPageRouterData(
       userId: 'cow_test_user_Id',
@@ -85,8 +89,10 @@ class WarehouseMainPageRouterData {
       domain: env.domainUrl,
       environment: env.name,
       isModuleMode: isModuleMode ?? true,
-      accessToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.Lbr3YauR2Fbm_IS4YqqVuLS853Dn8xKQP6lTH3PDx5k',
-      refreshToken: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.FlG1RDLUyt8CBb0TKmuvzHAb8R7wL5U2Uyhhw0YTXTw',
+      accessToken:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.Lbr3YauR2Fbm_IS4YqqVuLS853Dn8xKQP6lTH3PDx5k',
+      refreshToken:
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2YWx1ZSI6MX0.FlG1RDLUyt8CBb0TKmuvzHAb8R7wL5U2Uyhhw0YTXTw',
       household: WarehouseHomeRouterData(
         id: '1',
         name: '牛窩',

@@ -95,7 +95,8 @@ class CategoryUtil {
         final parent = findCategoryById(parentLevel, parentId);
         if (parent != null) {
           // 确定下一个父级层级：level2 的父级是 level1，level1 没有父级
-          final nextParentLevel = parentLevel == level2Cats ? level1Cats : <Category>[];
+          final nextParentLevel =
+              parentLevel == level2Cats ? level1Cats : <Category>[];
           buildParentPath(parent, nextParentLevel, result);
         }
       }

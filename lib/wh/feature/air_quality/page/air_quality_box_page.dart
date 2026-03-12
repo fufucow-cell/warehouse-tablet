@@ -48,7 +48,9 @@ class _AirQualityBoxPageState extends State<AirQualityBoxPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const AirQualityRecordPage()),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AirQualityRecordPage()),
                         );
                       },
                     ),

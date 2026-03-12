@@ -474,5 +474,6 @@ enum EnumLocale {
   // Module 版本
   static LocaleTranslation? _currentTranslation;
 
-  static void setCurrentTranslation(LocaleTranslation translation) => _currentTranslation = translation;
+  static void setCurrentTranslation(LocaleTranslation translation) =>
+      _currentTranslation = translation;
 }

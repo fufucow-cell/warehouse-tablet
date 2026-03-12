@@ -80,11 +80,15 @@ class ThemeService extends GetxService {
     return false;
   }
 
-  Future<bool> switchFromString(String? strMode) async => switchFromMode(_convertThemeFromString(strMode));
+  Future<bool> switchFromString(String? strMode) async =>
+      switchFromMode(_convertThemeFromString(strMode));
 
   EnumThemeMode get getThemeFromSystem {
-    final platformBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    return platformBrightness == Brightness.dark ? EnumThemeMode.dark : EnumThemeMode.light;
+    final platformBrightness =
+        WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    return platformBrightness == Brightness.dark
+        ? EnumThemeMode.dark
+        : EnumThemeMode.light;
   }
 
   /// 取得圖片路徑
@@ -318,7 +322,8 @@ class ThemeService extends GetxService {
     }
 
     try {
-      final String? themeString = _storageService.read<String>(EnumStorageKey.theme);
+      final String? themeString =
+          _storageService.read<String>(EnumStorageKey.theme);
 
       if (themeString != null) {
         final savedTheme = _convertThemeFromString(themeString);

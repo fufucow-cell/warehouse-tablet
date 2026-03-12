@@ -23,7 +23,8 @@ class ShimmerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: EnumColor.backgroundLoadingBase.color,
-      highlightColor: highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
+      highlightColor:
+          highlightColor ?? EnumColor.backgroundLoadingHighlight.color,
       child: child ??
           Container(
             height: height,

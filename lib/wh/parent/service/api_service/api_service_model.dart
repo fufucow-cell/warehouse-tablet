@@ -27,7 +27,7 @@ class ApiServiceModel {
   final String cacheKeyExtra = 'cache_key';
 
   // Mock properties
-  static const bool isAllMock = false;
+  static const bool isAllMock = true;
   List<EnumApiInfo> get mockApiList => [];
 }
 
@@ -63,7 +63,10 @@ enum EnumApiInfo {
   // Warehouse Record
   recordCreate('warehouse/record', EnumApiMethod.post),
   recordRead('warehouse/record', EnumApiMethod.get),
-  recordDelete('warehouse/record', EnumApiMethod.delete);
+  recordDelete('warehouse/record', EnumApiMethod.delete),
+  // Reservation Item
+  reservationItemOpen('reservation/item/open', EnumApiMethod.get),
+  reservationItemRecord('reservation/item/record', EnumApiMethod.get);
 
   const EnumApiInfo(this.path, this.method);
   final String path;

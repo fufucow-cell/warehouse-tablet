@@ -37,7 +37,8 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': 'Refresh',
   'warehouseSubCategoryCount': 'Subcategory Count',
   'warehouseCategoryCount': 'Category Count',
-  'warehouseCategoryTotalCount': 'Level 1 Category: @para1, Level 2 Category: @para2, Level 3 Category: @para3',
+  'warehouseCategoryTotalCount':
+      'Level 1 Category: @para1, Level 2 Category: @para2, Level 3 Category: @para3',
   'warehouseAlarmProductPhoto': 'Product Photo',
   'warehouseAlarmProductName': 'Product Name',
   'warehouseAlarmBelowStockLevel': 'Below Stock Level',
@@ -51,20 +52,24 @@ const Map<String, String> zhTW = {
   'searchClearResult': 'Clear search results',
   'searchResultCount': 'Search results: @para1 items',
   'editCabinetTitle': 'Edit Cabinet',
-  'editCabinetDeleteMultipleMessage': 'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
+  'editCabinetDeleteMultipleMessage':
+      'Are you sure you want to delete @para1 cabinets?\nThis action cannot be undone.',
   'editCabinetMoveToNewRoom': 'Move to New Room',
   'editCabinetRoomName': 'Room Name',
   'editCabinetWillDelete': 'This cabinet will be deleted',
   'createCategoryCurrentCategory': 'Current Category: @para1',
-  'deleteCategoryMessageNoChildren': 'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
-  'deleteCategoryMessageWithChildren': 'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
+  'deleteCategoryMessageNoChildren':
+      'Are you sure you want to delete category "@para1"?\nThis action cannot be undone.',
+  'deleteCategoryMessageWithChildren':
+      'Are you sure you want to delete category "@para1" and all its subcategories?\nThis action cannot be undone.',
   'deleteItemMessage': 'Are you sure you want to delete this item?',
   'editCategoryTitle': 'Edit Category',
   'editCategoryMaxLevelReached': 'Maximum level reached',
   'createItemName': 'Item Name',
   'createCabinetName': 'Cabinet Position Name',
   'createCategoryName': 'Category Name',
-  'createCategoryParentQuestion': 'Please confirm which category level to place the category?',
+  'createCategoryParentQuestion':
+      'Please confirm which category level to place the category?',
   'createMinStockAlert': 'Minimum Stock Alert',
   'createLevel1Category': 'Level 1 Category',
   'createLevel2Category': 'Level 2 Category',
@@ -97,12 +102,14 @@ const Map<String, String> zhTW = {
   'warehouseUnnamed': 'Unnamed',
   'warehouseUndescribed': 'Undescribed',
   'warehouseUncategorized': 'Uncategorized',
-  'warehouseItemTotalQuantityChange': 'Item @para1: Total quantity from @para2 -> @para3',
+  'warehouseItemTotalQuantityChange':
+      'Item @para1: Total quantity from @para2 -> @para3',
   'warehouseMoveQuantity': 'Move Quantity',
   'warehouseRemoveItemFromCabinet': 'Remove @para2 from @para1',
   'warehouseMoveQuantityInsufficient': 'Insufficient Move Quantity',
   'warehouseMoveToSameCabinet': 'Cannot move to the same cabinet',
-  'warehouseDeleteCabinetItemMustMoveFirst': 'To delete cabinet items, you must first move the items to another cabinet',
+  'warehouseDeleteCabinetItemMustMoveFirst':
+      'To delete cabinet items, you must first move the items to another cabinet',
   'warehouseAdjustQuantity': 'Adjust Quantity',
   'warehouseNameUpdate': 'Name update: @para1 -> @para2',
   'warehouseDescriptionUpdate': 'Description update: @para1 -> @para2',
@@ -132,7 +139,8 @@ const Map<String, String> zhTW = {
   'deviceMobile': 'Mobile Device',
   'deviceTablet': 'Tablet Device',
   'deviceUnsupported': 'Unsupported Device',
-  'deviceUnsupportedMessage': 'This application does not support your device type',
+  'deviceUnsupportedMessage':
+      'This application does not support your device type',
   'environmentDev': 'Development',
   'environmentStg': 'Staging',
   'environmentUat': 'UAT',
@@ -227,12 +235,18 @@ const Map<String, String> zhTW = {
   'airBoxReferenceTitleExplainHCHO': 'HCHO (Concentration)',
   'airBoxReferenceTitleExplainVoc': 'Volatile Organic Compounds (VOC)',
   'airBoxReferenceTitleExplainCo2': 'Carbon Dioxide (CO2)',
-  'airBoxReferenceDescriptionPm25': 'Particles smaller than 2.5 micrometers, including smoke, industrial emissions, and burning candles.',
-  'airBoxReferenceDescriptionTemperature': 'Moderate temperature is ideal. Keep warm when too low, ventilate and cool down when too high.',
-  'airBoxReferenceDescriptionHumidity': 'Too low causes dry skin, too high feels sticky and promotes mold growth.',
-  'airBoxReferenceDescriptionHCHO': 'HCHO is a common indoor air pollutant, mainly from decoration materials and furniture.',
-  'airBoxReferenceDescriptionVoc': 'VOC includes various chemical substances that may affect health.',
-  'airBoxReferenceDescriptionCo2': 'High indoor carbon dioxide concentration can cause headaches, drowsiness, and difficulty concentrating.',
+  'airBoxReferenceDescriptionPm25':
+      'Particles smaller than 2.5 micrometers, including smoke, industrial emissions, and burning candles.',
+  'airBoxReferenceDescriptionTemperature':
+      'Moderate temperature is ideal. Keep warm when too low, ventilate and cool down when too high.',
+  'airBoxReferenceDescriptionHumidity':
+      'Too low causes dry skin, too high feels sticky and promotes mold growth.',
+  'airBoxReferenceDescriptionHCHO':
+      'HCHO is a common indoor air pollutant, mainly from decoration materials and furniture.',
+  'airBoxReferenceDescriptionVoc':
+      'VOC includes various chemical substances that may affect health.',
+  'airBoxReferenceDescriptionCo2':
+      'High indoor carbon dioxide concentration can cause headaches, drowsiness, and difficulty concentrating.',
   'airBoxChartAxisUnitHour': 'Hour',
   'airBoxCurrentTemperature': 'Current Temperature',
   'airBoxCurrentHumidity': 'Current Humidity',

@@ -95,7 +95,8 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
                 width: double.infinity,
                 height: itemExtent,
                 decoration: BoxDecoration(
-                  color: widget.selectionBackgroundColor ?? Colors.grey.withOpacity(0.1),
+                  color: widget.selectionBackgroundColor ??
+                      Colors.grey.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(7.0),
                 ),
               ),
@@ -245,9 +246,12 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
     _selectedHourIndex = displayHour - 1;
     _selectedMinuteIndex = minute;
 
-    _amPmController = FixedExtentScrollController(initialItem: _selectedAmPmIndex);
-    _hourController = FixedExtentScrollController(initialItem: _selectedHourIndex);
-    _minuteController = FixedExtentScrollController(initialItem: _selectedMinuteIndex);
+    _amPmController =
+        FixedExtentScrollController(initialItem: _selectedAmPmIndex);
+    _hourController =
+        FixedExtentScrollController(initialItem: _selectedHourIndex);
+    _minuteController =
+        FixedExtentScrollController(initialItem: _selectedMinuteIndex);
   }
 
   void _onAmPmChanged(int index) {
@@ -265,7 +269,9 @@ class _CustAPMTimerState extends State<CustAPMTimer> {
   void _onSelectionChanged() {
     final isAM = _selectedAmPmIndex == 0;
     final displayHour = _selectedHourIndex + 1;
-    final hour = isAM ? (displayHour == 12 ? 0 : displayHour) : (displayHour == 12 ? 12 : displayHour + 12);
+    final hour = isAM
+        ? (displayHour == 12 ? 0 : displayHour)
+        : (displayHour == 12 ? 12 : displayHour + 12);
     final minute = _selectedMinuteIndex;
     widget.onTimeChanged(TimeOfDay(hour: hour, minute: minute));
   }
@@ -296,7 +302,9 @@ class _PickerItem extends StatelessWidget {
             text,
             style: TextStyle(
               fontSize: textSize,
-              color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF292929),
+              color: isSelected
+                  ? const Color(0xFFFB9B51)
+                  : const Color(0xFF292929),
             ),
           ),
         ),

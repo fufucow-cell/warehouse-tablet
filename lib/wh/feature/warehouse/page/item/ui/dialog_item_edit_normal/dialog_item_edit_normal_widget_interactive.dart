@@ -14,7 +14,8 @@ enum EnumDialogItemEditNormalWidgetInteractive {
 }
 
 /// DialogItemEditNormalWidget 用户事件处理扩展
-extension DialogItemEditNormalWidgetUserEventExtension on DialogItemEditNormalWidgetController {
+extension DialogItemEditNormalWidgetUserEventExtension
+    on DialogItemEditNormalWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditNormalWidgetInteractive type, {

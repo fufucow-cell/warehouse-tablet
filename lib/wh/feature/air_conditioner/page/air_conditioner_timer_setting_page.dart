@@ -10,10 +10,12 @@ class AirConditionerTimerSettingPage extends StatefulWidget {
   const AirConditionerTimerSettingPage({super.key});
 
   @override
-  State<AirConditionerTimerSettingPage> createState() => _AirConditionerTimerSettingPageState();
+  State<AirConditionerTimerSettingPage> createState() =>
+      _AirConditionerTimerSettingPageState();
 }
 
-class _AirConditionerTimerSettingPageState extends State<AirConditionerTimerSettingPage> {
+class _AirConditionerTimerSettingPageState
+    extends State<AirConditionerTimerSettingPage> {
   // Hard code values
   bool isOpen = true; // 開啟, 關閉
   TimeOfDay openTime = TimeOfDay.now();
@@ -255,7 +257,9 @@ class _TabBar extends StatelessWidget {
               onTap: () => onTabChanged('開啟'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedTab == '開啟' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: selectedTab == '開啟'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12.0),
                     bottomLeft: Radius.circular(12.0),
@@ -267,7 +271,9 @@ class _TabBar extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w400,
-                    color: selectedTab == '開啟' ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: selectedTab == '開啟'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -280,7 +286,9 @@ class _TabBar extends StatelessWidget {
               onTap: () => onTabChanged('關閉'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedTab == '關閉' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: selectedTab == '關閉'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(12.0),
                     bottomRight: Radius.circular(12.0),
@@ -292,7 +300,9 @@ class _TabBar extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w400,
-                    color: selectedTab == '關閉' ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: selectedTab == '關閉'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -397,7 +407,9 @@ class _RepeatDaySection extends StatelessWidget {
               onTap: () => onRepeatDayChanged('工作日'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: repeatDay == '工作日' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: repeatDay == '工作日'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12.0),
                     bottomLeft: Radius.circular(12.0),
@@ -409,7 +421,9 @@ class _RepeatDaySection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w400,
-                    color: repeatDay == '工作日' ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: repeatDay == '工作日'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -422,7 +436,9 @@ class _RepeatDaySection extends StatelessWidget {
               onTap: () => onRepeatDayChanged('每天'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: repeatDay == '每天' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: repeatDay == '每天'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: BorderRadius.zero,
                 ),
                 alignment: Alignment.center,
@@ -431,7 +447,9 @@ class _RepeatDaySection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w400,
-                    color: repeatDay == '每天' ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: repeatDay == '每天'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -444,7 +462,9 @@ class _RepeatDaySection extends StatelessWidget {
               onTap: () => onRepeatDayChanged('自定義'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: repeatDay == '自定義' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: repeatDay == '自定義'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(12.0),
                     bottomRight: Radius.circular(12.0),
@@ -456,7 +476,9 @@ class _RepeatDaySection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.w400,
-                    color: repeatDay == '自定義' ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: repeatDay == '自定義'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -613,7 +635,9 @@ class _WeekdayList extends StatelessWidget {
               width: 60.0,
               height: 60.0,
               decoration: ShapeDecoration(
-                color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFFEFEFEF),
+                color: isSelected
+                    ? const Color(0xFFFB9B51)
+                    : const Color(0xFFEFEFEF),
                 shape: const OvalBorder(),
               ),
               child: Center(
@@ -622,7 +646,9 @@ class _WeekdayList extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 26.0,
                     fontWeight: FontWeight.w400,
-                    color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF7C7C7C),
+                    color: isSelected
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF7C7C7C),
                     height: 1.4,
                     letterSpacing: 0,
                   ),
@@ -743,10 +769,24 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
   Widget _buildModeSection() {
     final modes = [
       {'name': '自動', 'image': 'lib/wh/parent/assets/images/common/reset.png'},
-      {'name': '冷氣', 'image': 'lib/wh/parent/assets/images/common/snow_flake.png'},
-      {'name': '乾燥', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_dry2.png'},
-      {'name': '暖氣', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_heating.png'},
-      {'name': '送風', 'image': 'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png'},
+      {
+        'name': '冷氣',
+        'image': 'lib/wh/parent/assets/images/common/snow_flake.png'
+      },
+      {
+        'name': '乾燥',
+        'image': 'lib/wh/parent/assets/images/common/air_conditioner_dry2.png'
+      },
+      {
+        'name': '暖氣',
+        'image':
+            'lib/wh/parent/assets/images/common/air_conditioner_heating.png'
+      },
+      {
+        'name': '送風',
+        'image':
+            'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png'
+      },
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -797,12 +837,14 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
   Widget _buildTemperatureSection() {
     const double minTemperature = 18.0;
     const double maxTemperature = 32.0;
-    final int temperatureDivisions = ((maxTemperature - minTemperature) / 0.5).round();
+    final int temperatureDivisions =
+        ((maxTemperature - minTemperature) / 0.5).round();
 
     void decreaseTemperature() {
       if (_currentTemperature > minTemperature) {
         setState(() {
-          _currentTemperature = (_currentTemperature - 0.5).clamp(minTemperature, maxTemperature);
+          _currentTemperature =
+              (_currentTemperature - 0.5).clamp(minTemperature, maxTemperature);
         });
         widget.onTemperatureChanged(_currentTemperature.round());
       }
@@ -811,7 +853,8 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
     void increaseTemperature() {
       if (_currentTemperature < maxTemperature) {
         setState(() {
-          _currentTemperature = (_currentTemperature + 0.5).clamp(minTemperature, maxTemperature);
+          _currentTemperature =
+              (_currentTemperature + 0.5).clamp(minTemperature, maxTemperature);
         });
         widget.onTemperatureChanged(_currentTemperature.round());
       }
@@ -865,10 +908,13 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                               child: SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
                                   trackHeight: 17.0,
-                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 0),
-                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 17.0),
+                                  overlayShape: const RoundSliderOverlayShape(
+                                      overlayRadius: 0),
+                                  thumbShape: const RoundSliderThumbShape(
+                                      enabledThumbRadius: 17.0),
                                   activeTrackColor: const Color(0xFF366FB6),
-                                  inactiveTrackColor: const Color(0xFF7C7C7C).withOpacity(0.3),
+                                  inactiveTrackColor:
+                                      const Color(0xFF7C7C7C).withOpacity(0.3),
                                   thumbColor: Colors.white,
                                 ),
                                 child: Slider(
@@ -880,7 +926,8 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                                     setState(() {
                                       _currentTemperature = value;
                                     });
-                                    widget.onTemperatureChanged(_currentTemperature.round());
+                                    widget.onTemperatureChanged(
+                                        _currentTemperature.round());
                                   },
                                 ),
                               ),
@@ -893,11 +940,16 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                             child: SizedBox(
                               height: 54.0,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  _TemperatureSliderLabel(value: minTemperature.toStringAsFixed(1)),
-                                  _TemperatureSliderLabel(value: _currentTemperature.toStringAsFixed(1)),
-                                  _TemperatureSliderLabel(value: maxTemperature.toStringAsFixed(1)),
+                                  _TemperatureSliderLabel(
+                                      value: minTemperature.toStringAsFixed(1)),
+                                  _TemperatureSliderLabel(
+                                      value: _currentTemperature
+                                          .toStringAsFixed(1)),
+                                  _TemperatureSliderLabel(
+                                      value: maxTemperature.toStringAsFixed(1)),
                                 ],
                               ),
                             ),
@@ -990,10 +1042,13 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                               child: SliderTheme(
                                 data: SliderTheme.of(context).copyWith(
                                   trackHeight: 17.0,
-                                  overlayShape: const RoundSliderOverlayShape(overlayRadius: 0),
-                                  thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 17.0),
+                                  overlayShape: const RoundSliderOverlayShape(
+                                      overlayRadius: 0),
+                                  thumbShape: const RoundSliderThumbShape(
+                                      enabledThumbRadius: 17.0),
                                   activeTrackColor: const Color(0xFF366FB6),
-                                  inactiveTrackColor: const Color(0xFF7C7C7C).withOpacity(0.3),
+                                  inactiveTrackColor:
+                                      const Color(0xFF7C7C7C).withOpacity(0.3),
                                   thumbColor: Colors.white,
                                 ),
                                 child: Slider(
@@ -1006,7 +1061,8 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                                     setState(() {
                                       _currentWindSpeed = speeds[index];
                                     });
-                                    widget.onWindSpeedChanged(_currentWindSpeed);
+                                    widget
+                                        .onWindSpeedChanged(_currentWindSpeed);
                                   },
                                 ),
                               ),
@@ -1019,11 +1075,14 @@ class _SettingBottomSheetState extends State<_SettingBottomSheet> {
                             child: SizedBox(
                               height: 54.0,
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   _WindSpeedSliderLabel(value: speeds[0]),
-                                  _WindSpeedSliderLabel(value: _currentWindSpeed),
-                                  _WindSpeedSliderLabel(value: speeds[speeds.length - 1]),
+                                  _WindSpeedSliderLabel(
+                                      value: _currentWindSpeed),
+                                  _WindSpeedSliderLabel(
+                                      value: speeds[speeds.length - 1]),
                                 ],
                               ),
                             ),
@@ -1167,11 +1226,14 @@ class _ModeOption extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFFFDB874),
+            color:
+                isSelected ? const Color(0xFFFB9B51) : const Color(0xFFFDB874),
             width: 2.0,
           ),
           borderRadius: BorderRadius.circular(12.0),
-          color: isSelected ? const Color(0xFFFB9B51).withOpacity(0.1) : Colors.transparent,
+          color: isSelected
+              ? const Color(0xFFFB9B51).withOpacity(0.1)
+              : Colors.transparent,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -1322,11 +1384,15 @@ class _SpecialModeGridItem extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           decoration: BoxDecoration(
             border: Border.all(
-              color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF7C7C7C),
+              color: isSelected
+                  ? const Color(0xFFFB9B51)
+                  : const Color(0xFF7C7C7C),
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(8.0),
-            color: isSelected ? const Color(0xFFFB9B51).withOpacity(0.1) : Colors.transparent,
+            color: isSelected
+                ? const Color(0xFFFB9B51).withOpacity(0.1)
+                : Colors.transparent,
           ),
           child: Center(
             child: Text(
@@ -1334,7 +1400,9 @@ class _SpecialModeGridItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 26.0,
                 fontWeight: FontWeight.w400,
-                color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFF7C7C7C),
+                color: isSelected
+                    ? const Color(0xFFFB9B51)
+                    : const Color(0xFF7C7C7C),
                 height: 1.4,
                 letterSpacing: 0,
               ),

@@ -25,7 +25,9 @@ class LoginUIButton extends StatelessWidget {
         final onPressed = isDisabled
             ? null
             : () => controller.interactive(
-                  type == LoginActionButtonType.login ? EnumAppLoginPageInteractive.tapLogin : EnumAppLoginPageInteractive.tapRegister,
+                  type == LoginActionButtonType.login
+                      ? EnumAppLoginPageInteractive.tapLogin
+                      : EnumAppLoginPageInteractive.tapRegister,
                 );
 
         if (type == LoginActionButtonType.login) {

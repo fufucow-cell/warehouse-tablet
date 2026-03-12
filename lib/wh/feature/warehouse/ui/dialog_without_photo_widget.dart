@@ -39,7 +39,9 @@ class DialogWithoutPhotoWidget extends StatelessWidget {
               ),
               SizedBox(height: 16.0.scale),
               CustTextWidget(
-                isError ? EnumLocale.warehousePhotoReadFailed.tr : EnumLocale.warehousePhotoTapToUpload.tr,
+                isError
+                    ? EnumLocale.warehousePhotoReadFailed.tr
+                    : EnumLocale.warehousePhotoTapToUpload.tr,
                 size: 22.0.scale,
                 color: EnumColor.textSecondary.color,
               ),

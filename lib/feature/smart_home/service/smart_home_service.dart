@@ -1,6 +1,7 @@
 import 'package:engo_terminal_app3/feature/app/service/app_service.dart';
 import 'package:engo_terminal_app3/service/api_service/api_service.dart';
-import 'package:engo_terminal_app3/service/api_service/api_service_model.dart' as api_model;
+import 'package:engo_terminal_app3/service/api_service/api_service_model.dart'
+    as api_model;
 import 'package:engo_terminal_app3/service/router_service/router_service.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/base_api_model.dart';
 import 'package:engo_terminal_app3/wh/parent/model/request_model/home_household_request_model/home_household_request_model.dart';
@@ -26,14 +27,17 @@ class SmartHomeService {
   final _model = SmartHomeServiceModel();
   LocaleService get _localeService => LocaleService.instance;
   ThemeService get _themeService => ThemeService.instance;
-  LocaleTranslation get getCurrentLocale => _localeService.getCurrentTranslation;
+  LocaleTranslation get getCurrentLocale =>
+      _localeService.getCurrentTranslation;
   RouterService get _homeRouterService => RouterService.instance;
   EnvironmentService get _envService => EnvironmentService.instance;
   EnumThemeMode get getCurrentTheme => _themeService.currentTheme;
-  List<LocaleTranslation> get getAvalibleLocales => _localeService.getAvalibleLocales;
+  List<LocaleTranslation> get getAvalibleLocales =>
+      _localeService.getAvalibleLocales;
   UserLoginResponseModel? get getUserData => AppService.instance.getUserData;
   HomeHouseholdResponseModel? get getHouseholdData => _model.homeHouseholdData;
-  EnumEnvironment get getCurrentEnvironment => _envService.getCurrentEnvironment;
+  EnumEnvironment get getCurrentEnvironment =>
+      _envService.getCurrentEnvironment;
   String get getCurrentThemeName => _themeService.currentTheme.name;
   String get getCurrentLocaleCode => _localeService.getCurrentLocaleCode;
   static SmartHomeService get instance => Get.find<SmartHomeService>();
@@ -96,7 +100,8 @@ class SmartHomeService {
     return _model.allHouseholdDataMap[householdId];
   }
 
-  String get getDomain => api_model.ApiServiceModel.instance.dio.options.baseUrl;
+  String get getDomain =>
+      api_model.ApiServiceModel.instance.dio.options.baseUrl;
 
   // MARK: - API Request
 

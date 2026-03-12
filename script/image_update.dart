@@ -1,13 +1,13 @@
 import 'dart:io';
 
 /// 生成 image_map.dart 的脚本
-/// 从 warehouse/parent/assets/images/ 目录中提取所有图片，生成 EnumImage enum
+/// 从 wh/parent/assets/images/ 目录中提取所有图片，生成 EnumImage enum
 /// 命名规则：
 /// - common/ 目录下的文件：c + 文件名（PascalCase），例如 cCow, cHouse
 /// - light/ 或 dark/ 目录下的文件：t + 文件名（PascalCase），例如 tCow
 void main() {
   final imagesDir = Directory('lib/wh/parent/assets/images');
-  final outputFile = File('lib/wh/feature/warehouse/parent/service/theme_service/theme/image_map.dart');
+  final outputFile = File('lib/wh/parent/service/theme_service/theme/image_map.dart');
 
   if (!imagesDir.existsSync()) {
     print('Error: images directory not found');
@@ -144,7 +144,7 @@ String _generateImageMap(Map<String, _ImageInfo> imageMap) {
   buffer.writeln('library;');
   buffer.writeln('');
   buffer.writeln("import 'package:flutter/material.dart';");
-  buffer.writeln("import 'package:engo_terminal_app3/wh/feature/warehouse/parent/service/theme_service/theme_service.dart';");
+  buffer.writeln("import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme_service.dart';");
   buffer.writeln('');
 
   // 收集所有 enum 名称并排序

@@ -5,7 +5,8 @@ class AirQualityReferencePage extends StatefulWidget {
   const AirQualityReferencePage({super.key});
 
   @override
-  State<AirQualityReferencePage> createState() => _AirQualityReferencePageState();
+  State<AirQualityReferencePage> createState() =>
+      _AirQualityReferencePageState();
 }
 
 class _AirQualityReferencePageState extends State<AirQualityReferencePage> {
@@ -250,29 +251,65 @@ class _LevelList extends StatelessWidget {
       case 'PM2.5':
         return [
           {'range': '0 - 15', 'status': '良好', 'color': const Color(0xFF4CAF50)},
-          {'range': '16 - 35', 'status': '普通', 'color': const Color(0xFFFFC107)},
-          {'range': '36 - 54', 'status': '對敏感族群不健康', 'color': const Color(0xFFFF9800)},
-          {'range': '55 - 150', 'status': '不健康', 'color': const Color(0xFFF44336)},
-          {'range': '151 - 250', 'status': '非常不健康', 'color': const Color(0xFF9C27B0)},
+          {
+            'range': '16 - 35',
+            'status': '普通',
+            'color': const Color(0xFFFFC107)
+          },
+          {
+            'range': '36 - 54',
+            'status': '對敏感族群不健康',
+            'color': const Color(0xFFFF9800)
+          },
+          {
+            'range': '55 - 150',
+            'status': '不健康',
+            'color': const Color(0xFFF44336)
+          },
+          {
+            'range': '151 - 250',
+            'status': '非常不健康',
+            'color': const Color(0xFF9C27B0)
+          },
           {'range': '>250', 'status': '危害', 'color': const Color(0xFF880E4F)},
         ];
       case '溫度':
         return [
           {'range': '< 18°C', 'status': '偏冷', 'color': const Color(0xFF2196F3)},
-          {'range': '18 - 26°C', 'status': '舒適', 'color': const Color(0xFF4CAF50)},
+          {
+            'range': '18 - 26°C',
+            'status': '舒適',
+            'color': const Color(0xFF4CAF50)
+          },
           {'range': '> 26°C', 'status': '偏熱', 'color': const Color(0xFFF44336)},
         ];
       case '濕度':
         return [
           {'range': '< 40%', 'status': '乾燥', 'color': const Color(0xFFFFC107)},
-          {'range': '40 - 60%', 'status': '舒適', 'color': const Color(0xFF4CAF50)},
+          {
+            'range': '40 - 60%',
+            'status': '舒適',
+            'color': const Color(0xFF4CAF50)
+          },
           {'range': '> 60%', 'status': '潮濕', 'color': const Color(0xFF2196F3)},
         ];
       case 'CO₂':
         return [
-          {'range': '< 600 ppm', 'status': '良好', 'color': const Color(0xFF4CAF50)},
-          {'range': '600 - 1000 ppm', 'status': '普通', 'color': const Color(0xFFFFC107)},
-          {'range': '> 1000 ppm', 'status': '不佳', 'color': const Color(0xFFF44336)},
+          {
+            'range': '< 600 ppm',
+            'status': '良好',
+            'color': const Color(0xFF4CAF50)
+          },
+          {
+            'range': '600 - 1000 ppm',
+            'status': '普通',
+            'color': const Color(0xFFFFC107)
+          },
+          {
+            'range': '> 1000 ppm',
+            'status': '不佳',
+            'color': const Color(0xFFF44336)
+          },
         ];
       default:
         return [

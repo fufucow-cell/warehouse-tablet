@@ -136,7 +136,9 @@ class _SwitchControl extends StatelessWidget {
           child: Stack(
             children: [
               Image.asset(
-                isOn ? 'lib/wh/parent/assets/images/light/water_value_on.png' : 'lib/wh/parent/assets/images/light/water_value_off.png',
+                isOn
+                    ? 'lib/wh/parent/assets/images/light/water_value_on.png'
+                    : 'lib/wh/parent/assets/images/light/water_value_off.png',
                 fit: BoxFit.contain,
               ),
             ],
@@ -207,7 +209,9 @@ class _SwitchControl extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 33.6,
                     fontWeight: FontWeight.bold,
-                    color: isOn ? const Color(0xFFFB9B51) : const Color(0xFFAAAAAA),
+                    color: isOn
+                        ? const Color(0xFFFB9B51)
+                        : const Color(0xFFAAAAAA),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -272,7 +276,8 @@ class _AnimatedButton extends StatefulWidget {
   State<_AnimatedButton> createState() => _AnimatedButtonState();
 }
 
-class _AnimatedButtonState extends State<_AnimatedButton> with SingleTickerProviderStateMixin {
+class _AnimatedButtonState extends State<_AnimatedButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
 

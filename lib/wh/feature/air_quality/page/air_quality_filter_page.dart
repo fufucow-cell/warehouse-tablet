@@ -164,7 +164,8 @@ class _CircularProgress extends StatelessWidget {
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                      image: AssetImage('lib/wh/parent/assets/images/common/air_filter.png'),
+                      image: AssetImage(
+                          'lib/wh/parent/assets/images/common/air_filter.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -322,7 +323,8 @@ class _FilterLifeDaysInput extends StatelessWidget {
             ],
             style: const TextStyle(fontSize: 32, color: Colors.black),
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
               filled: true,
               fillColor: Colors.white,
               border: OutlineInputBorder(

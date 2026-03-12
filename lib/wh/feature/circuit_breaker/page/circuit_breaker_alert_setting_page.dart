@@ -7,10 +7,12 @@ class CircuitBreakerAlertSettingPage extends StatefulWidget {
   const CircuitBreakerAlertSettingPage({super.key});
 
   @override
-  State<CircuitBreakerAlertSettingPage> createState() => _CircuitBreakerAlertSettingPageState();
+  State<CircuitBreakerAlertSettingPage> createState() =>
+      _CircuitBreakerAlertSettingPageState();
 }
 
-class _CircuitBreakerAlertSettingPageState extends State<CircuitBreakerAlertSettingPage> {
+class _CircuitBreakerAlertSettingPageState
+    extends State<CircuitBreakerAlertSettingPage> {
   final List<AlertSettingItem> _settings = [
     AlertSettingItem(
       title: '高溫',
@@ -229,9 +231,11 @@ class _AlertSettingCard extends StatelessWidget {
                               fontSize: 18.2,
                               color: Color(0xFFFB9B51),
                             ),
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(
+                                decimal: true),
                             inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                              FilteringTextInputFormatter.allow(
+                                  RegExp(r'[0-9.]')),
                             ],
                             decoration: InputDecoration(
                               filled: true,

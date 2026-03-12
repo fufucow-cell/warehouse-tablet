@@ -8,7 +8,8 @@ class WaterValueTimerListPage extends StatefulWidget {
   const WaterValueTimerListPage({super.key});
 
   @override
-  State<WaterValueTimerListPage> createState() => _WaterValueTimerListPageState();
+  State<WaterValueTimerListPage> createState() =>
+      _WaterValueTimerListPageState();
 }
 
 class _WaterValueTimerListPageState extends State<WaterValueTimerListPage> {
@@ -55,7 +56,8 @@ class _WaterValueTimerListPageState extends State<WaterValueTimerListPage> {
                       isEditMode: _isEditMode,
                       onToggle: (index) {
                         setState(() {
-                          _timerItems[index].isEnable = !_timerItems[index].isEnable;
+                          _timerItems[index].isEnable =
+                              !_timerItems[index].isEnable;
                         });
                       },
                       onDelete: (index) {

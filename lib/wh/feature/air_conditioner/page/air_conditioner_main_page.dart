@@ -275,7 +275,8 @@ class _ModeControlRow extends StatelessWidget {
           const SizedBox(width: 16.0),
           Expanded(
             child: _ControlButton(
-              imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_direction.png',
+              imagePath:
+                  'lib/wh/parent/assets/images/common/air_conditioner_wind_direction.png',
               text: '風向',
               onTap: () {
                 showModalBottomSheet(
@@ -439,12 +440,14 @@ class _TemperatureSliderState extends State<_TemperatureSlider> {
   double minTemperature = 18.0;
   double maxTemperature = 32.0;
   double currentTemperature = 26.0;
-  int get temperatureDivisions => ((maxTemperature - minTemperature) / 0.5).round();
+  int get temperatureDivisions =>
+      ((maxTemperature - minTemperature) / 0.5).round();
 
   void _decreaseTemperature() {
     if (currentTemperature > minTemperature) {
       setState(() {
-        currentTemperature = (currentTemperature - 0.5).clamp(minTemperature, maxTemperature);
+        currentTemperature =
+            (currentTemperature - 0.5).clamp(minTemperature, maxTemperature);
       });
       // TODO: Implement temperature change action
     }
@@ -453,7 +456,8 @@ class _TemperatureSliderState extends State<_TemperatureSlider> {
   void _increaseTemperature() {
     if (currentTemperature < maxTemperature) {
       setState(() {
-        currentTemperature = (currentTemperature + 0.5).clamp(minTemperature, maxTemperature);
+        currentTemperature =
+            (currentTemperature + 0.5).clamp(minTemperature, maxTemperature);
       });
       // TODO: Implement temperature change action
     }
@@ -482,10 +486,13 @@ class _TemperatureSliderState extends State<_TemperatureSlider> {
                     child: SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 17.0,
-                        overlayShape: const RoundSliderOverlayShape(overlayRadius: 0),
-                        thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 17.0),
+                        overlayShape:
+                            const RoundSliderOverlayShape(overlayRadius: 0),
+                        thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 17.0),
                         activeTrackColor: const Color(0xFF366FB6),
-                        inactiveTrackColor: const Color(0xFF7C7C7C).withOpacity(0.3),
+                        inactiveTrackColor:
+                            const Color(0xFF7C7C7C).withOpacity(0.3),
                         thumbColor: Colors.white,
                       ),
                       child: Slider(
@@ -513,7 +520,8 @@ class _TemperatureSliderState extends State<_TemperatureSlider> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _SliderLabel(value: minTemperature.toStringAsFixed(1)),
-                        _SliderLabel(value: currentTemperature.toStringAsFixed(1)),
+                        _SliderLabel(
+                            value: currentTemperature.toStringAsFixed(1)),
                         _SliderLabel(value: maxTemperature.toStringAsFixed(1)),
                       ],
                     ),
@@ -679,7 +687,8 @@ class _UpRightSection extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _ScrollRowItem(
-            iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_timing.png',
+            iconPath:
+                'lib/wh/parent/assets/images/common/air_conditioner_timing.png',
             title: '定時設定',
             onTap: () {
               Navigator.push(
@@ -698,7 +707,8 @@ class _UpRightSection extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AirConditionerEnergyMonitoringPage(),
+                  builder: (context) =>
+                      const AirConditionerEnergyMonitoringPage(),
                 ),
               );
             },
@@ -821,11 +831,15 @@ class _GridItemState extends State<_GridItem> {
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
           decoration: BoxDecoration(
             border: Border.all(
-              color: _isEnabled ? const Color(0xFFFB9B51) : const Color(0xFF7C7C7C),
+              color: _isEnabled
+                  ? const Color(0xFFFB9B51)
+                  : const Color(0xFF7C7C7C),
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(8.0),
-            color: _isEnabled ? const Color(0xFFFB9B51).withOpacity(0.1) : Colors.transparent,
+            color: _isEnabled
+                ? const Color(0xFFFB9B51).withOpacity(0.1)
+                : Colors.transparent,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -834,7 +848,9 @@ class _GridItemState extends State<_GridItem> {
                 item.iconPath,
                 width: 50.0,
                 height: 50.0,
-                color: _isEnabled ? const Color(0xFFFB9B51) : const Color(0xFF7C7C7C),
+                color: _isEnabled
+                    ? const Color(0xFFFB9B51)
+                    : const Color(0xFF7C7C7C),
               ),
               const SizedBox(width: 8.0),
               Text(
@@ -842,7 +858,9 @@ class _GridItemState extends State<_GridItem> {
                 style: TextStyle(
                   fontSize: 26.0,
                   fontWeight: FontWeight.w400,
-                  color: _isEnabled ? const Color(0xFFFB9B51) : const Color(0xFF7C7C7C),
+                  color: _isEnabled
+                      ? const Color(0xFFFB9B51)
+                      : const Color(0xFF7C7C7C),
                   height: 1.4,
                   letterSpacing: 0,
                 ),
@@ -878,7 +896,8 @@ class _GridItemData {
       ),
       const _GridItemData(
         key: 'rapid',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_rapidly.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_rapidly.png',
         title: '急速',
         enabled: false, // Hard code
       ),
@@ -890,25 +909,29 @@ class _GridItemData {
       ),
       const _GridItemData(
         key: 'selfCleaning',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_self_cleaning.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_self_cleaning.png',
         title: '自清洗',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'antiDirectWind',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_anti_hairdryer.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_anti_hairdryer.png',
         title: '防直接吹風',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'leftRightWind',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_left_and_right.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_left_and_right.png',
         title: '左右風',
         enabled: false, // Hard code
       ),
       const _GridItemData(
         key: 'upDownWind',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_up_and_down.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_up_and_down.png',
         title: '上下風',
         enabled: false, // Hard code
       ),
@@ -920,7 +943,8 @@ class _GridItemData {
       ),
       const _GridItemData(
         key: 'strongCool',
-        iconPath: 'lib/wh/parent/assets/images/common/air_conditioner_strong_cold.png',
+        iconPath:
+            'lib/wh/parent/assets/images/common/air_conditioner_strong_cold.png',
         title: '強冷',
         enabled: true, // Hard code: only strongCool is enabled
       ),
@@ -996,7 +1020,8 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/snow_flake.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/snow_flake.png',
                   text: '冷氣',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1007,7 +1032,8 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_dry2.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_dry2.png',
                   text: '乾燥',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1018,7 +1044,8 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_heating.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_heating.png',
                   text: '暖氣',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1029,7 +1056,8 @@ class _ModeBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_supply_wind.png',
                   text: '送風',
                   onTap: () {
                     // TODO: Implement mode selection
@@ -1046,7 +1074,8 @@ class _ModeBottomSheet extends StatelessWidget {
             child: Container(
               width: double.infinity,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
               decoration: BoxDecoration(
                 color: const Color(0xFFFDB874),
                 borderRadius: BorderRadius.circular(12.0),
@@ -1181,7 +1210,8 @@ class _FanSpeedBottomSheet extends StatelessWidget {
             children: [
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_quiet.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_wind_quiet.png',
                   text: '微風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1192,7 +1222,8 @@ class _FanSpeedBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_low.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_wind_low.png',
                   text: '弱風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1203,7 +1234,8 @@ class _FanSpeedBottomSheet extends StatelessWidget {
               const SizedBox(width: 16.0),
               Expanded(
                 child: _BottomSheetOptionItem(
-                  imagePath: 'lib/wh/parent/assets/images/common/air_conditioner_wind_high.png',
+                  imagePath:
+                      'lib/wh/parent/assets/images/common/air_conditioner_wind_high.png',
                   text: '強風',
                   onTap: () {
                     // TODO: Implement fan speed selection
@@ -1231,7 +1263,8 @@ class _FanSpeedBottomSheet extends StatelessWidget {
             child: Container(
               width: double.infinity,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
               decoration: BoxDecoration(
                 color: const Color(0xFFFDB874),
                 borderRadius: BorderRadius.circular(12.0),
@@ -1259,7 +1292,8 @@ class _FanSpeedBottomSheet extends StatelessWidget {
 class _WindDirectionBottomSheet extends StatelessWidget {
   const _WindDirectionBottomSheet();
 
-  static const String _imageBase = 'lib/wh/parent/assets/images/light/air_conditioner_wind_direction';
+  static const String _imageBase =
+      'lib/wh/parent/assets/images/light/air_conditioner_wind_direction';
 
   @override
   Widget build(BuildContext context) {
@@ -1356,7 +1390,8 @@ class _WindDirectionBottomSheet extends StatelessWidget {
             child: Container(
               width: double.infinity,
               alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 5.0, vertical: 15.0),
               decoration: BoxDecoration(
                 color: const Color(0xFFFDB874),
                 borderRadius: BorderRadius.circular(12.0),

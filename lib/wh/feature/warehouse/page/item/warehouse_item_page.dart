@@ -14,7 +14,9 @@ class WarehouseItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseItemPageController>(
-      init: Get.isRegistered<WarehouseItemPageController>() ? null : WarehouseItemPageController(),
+      init: Get.isRegistered<WarehouseItemPageController>()
+          ? null
+          : WarehouseItemPageController(),
       builder: (controller) {
         return Column(
           children: [

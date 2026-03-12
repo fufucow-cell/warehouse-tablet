@@ -136,7 +136,8 @@ class AppService extends GetxService implements NavigatorObserver {
       for (int i = _model.routeStack.length - 1; i >= 0; i--) {
         final routeName = _model.routeStack[i];
         final isTop = i == _model.routeStack.length - 1;
-        final prefix = isTop ? '👉 [頂部]' : '   [${_model.routeStack.length - i}]';
+        final prefix =
+            isTop ? '👉 [頂部]' : '   [${_model.routeStack.length - i}]';
         stackInfo.writeln('$prefix $routeName');
       }
     }
@@ -191,7 +192,8 @@ class AppService extends GetxService implements NavigatorObserver {
     final newRouteName = newRoute?.settings.name ?? '未知路由';
 
     // 替換堆疊頂部的路由
-    if (_model.routeStack.isNotEmpty && _model.routeStack.last == oldRouteName) {
+    if (_model.routeStack.isNotEmpty &&
+        _model.routeStack.last == oldRouteName) {
       _model.routeStack.removeLast();
     }
     _model.routeStack.add(newRouteName);

@@ -37,7 +37,8 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '새로고침',
   'warehouseSubCategoryCount': '하위 카테고리 수',
   'warehouseCategoryCount': '카테고리 수',
-  'warehouseCategoryTotalCount': '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
+  'warehouseCategoryTotalCount':
+      '제1계 분류: @para1 개, 제2계 분류: @para2 개, 제3계 분류: @para3 개',
   'warehouseAlarmProductPhoto': '상품 사진',
   'warehouseAlarmProductName': '상품명',
   'warehouseAlarmBelowStockLevel': '재고 수위 이하',
@@ -51,13 +52,16 @@ const Map<String, String> zhTW = {
   'searchClearResult': '검색 결과 지우기',
   'searchResultCount': '검색 결과: @para1 개',
   'editCabinetTitle': '캐비닛 편집',
-  'editCabinetDeleteMultipleMessage': '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'editCabinetDeleteMultipleMessage':
+      '@para1 캐비닛을 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'editCabinetMoveToNewRoom': '새 방으로 이동',
   'editCabinetRoomName': '방 이름',
   'editCabinetWillDelete': '이 캐비닛은 삭제됩니다',
   'createCategoryCurrentCategory': '현재 카테고리: @para1',
-  'deleteCategoryMessageNoChildren': '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
-  'deleteCategoryMessageWithChildren': '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageNoChildren':
+      '카테고리 "@para1"을(를) 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
+  'deleteCategoryMessageWithChildren':
+      '카테고리 "@para1"과(와) 모든 하위 카테고리를 삭제하시겠습니까?\n이 작업은 취소할 수 없습니다.',
   'deleteItemMessage': '이 항목을 삭제하시겠습니까?',
   'editCategoryTitle': '카테고리 편집',
   'editCategoryMaxLevelReached': '최대 계층 수에 도달했습니다',
@@ -101,7 +105,8 @@ const Map<String, String> zhTW = {
   'warehouseRemoveItemFromCabinet': '@para1에서 @para2 제거',
   'warehouseMoveQuantityInsufficient': '이동 수량 부족',
   'warehouseMoveToSameCabinet': '같은 캐비닛으로 이동할 수 없습니다',
-  'warehouseDeleteCabinetItemMustMoveFirst': '캐비닛 항목을 삭제하려면 먼저 항목을 다른 캐비닛으로 이동해야 합니다',
+  'warehouseDeleteCabinetItemMustMoveFirst':
+      '캐비닛 항목을 삭제하려면 먼저 항목을 다른 캐비닛으로 이동해야 합니다',
   'warehouseAdjustQuantity': '수량 조정',
   'warehouseNameUpdate': '이름 업데이트: @para1 -> @para2',
   'warehouseDescriptionUpdate': '설명 업데이트: @para1 -> @para2',
@@ -226,12 +231,17 @@ const Map<String, String> zhTW = {
   'airBoxReferenceTitleExplainHCHO': '포름알데히드(농도)',
   'airBoxReferenceTitleExplainVoc': '휘발성 유기 화합물(VOC)',
   'airBoxReferenceTitleExplainCo2': '이산화탄소(CO2)',
-  'airBoxReferenceDescriptionPm25': '2.5마이크로미터보다 작은 입자로, 연기, 산업 배출 가스 및 양초 연소를 포함합니다.',
-  'airBoxReferenceDescriptionTemperature': '온도는 적당한 것이 좋습니다. 너무 낮으면 보온에 주의하고, 너무 높으면 환기 및 냉각이 필요합니다.',
-  'airBoxReferenceDescriptionHumidity': '너무 낮으면 피부가 건조하고, 너무 높으면 체감이 끈적거리고 곰팡이가 발생합니다.',
-  'airBoxReferenceDescriptionHCHO': '포름알데히드는 주로 인테리어 재료와 가구에서 나오는 일반적인 실내 공기 오염 물질입니다.',
+  'airBoxReferenceDescriptionPm25':
+      '2.5마이크로미터보다 작은 입자로, 연기, 산업 배출 가스 및 양초 연소를 포함합니다.',
+  'airBoxReferenceDescriptionTemperature':
+      '온도는 적당한 것이 좋습니다. 너무 낮으면 보온에 주의하고, 너무 높으면 환기 및 냉각이 필요합니다.',
+  'airBoxReferenceDescriptionHumidity':
+      '너무 낮으면 피부가 건조하고, 너무 높으면 체감이 끈적거리고 곰팡이가 발생합니다.',
+  'airBoxReferenceDescriptionHCHO':
+      '포름알데히드는 주로 인테리어 재료와 가구에서 나오는 일반적인 실내 공기 오염 물질입니다.',
   'airBoxReferenceDescriptionVoc': 'VOC는 건강에 영향을 줄 수 있는 다양한 화학 물질을 포함합니다.',
-  'airBoxReferenceDescriptionCo2': '실내 이산화탄소 농도가 너무 높으면 두통, 졸음, 집중력 저하 등의 증상을 유발할 수 있습니다.',
+  'airBoxReferenceDescriptionCo2':
+      '실내 이산화탄소 농도가 너무 높으면 두통, 졸음, 집중력 저하 등의 증상을 유발할 수 있습니다.',
   'airBoxChartAxisUnitHour': '시',
   'airBoxCurrentTemperature': '현재 온도',
   'airBoxCurrentHumidity': '현재 습도',

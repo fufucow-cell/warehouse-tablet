@@ -37,7 +37,8 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '刷新',
   'warehouseSubCategoryCount': '子类别数量',
   'warehouseCategoryCount': '分类量',
-  'warehouseCategoryTotalCount': '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
+  'warehouseCategoryTotalCount':
+      '第一階分類: @para1 筆, 第二階分類: @para2 筆, 第三階分類: @para3 筆',
   'warehouseAlarmProductPhoto': '商品照',
   'warehouseAlarmProductName': '商品名称',
   'warehouseAlarmBelowStockLevel': '低于库存水位',

@@ -1,9 +1,14 @@
-import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/en_us.dart' as en_us;
-import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/ja_jp.dart' as ja_jp;
-import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/ko_kr.dart' as ko_kr;
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/en_us.dart'
+    as en_us;
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/ja_jp.dart'
+    as ja_jp;
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/ko_kr.dart'
+    as ko_kr;
 import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/locale_map.dart';
-import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/zh_cn.dart' as zh_cn;
-import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/zh_tw.dart' as zh_tw;
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/zh_cn.dart'
+    as zh_cn;
+import 'package:engo_terminal_app3/wh/parent/service/locale_service/locale/zh_tw.dart'
+    as zh_tw;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

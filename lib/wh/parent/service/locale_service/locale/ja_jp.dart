@@ -37,7 +37,8 @@ const Map<String, String> zhTW = {
   'warehouseRefresh': '更新',
   'warehouseSubCategoryCount': 'サブカテゴリ数',
   'warehouseCategoryCount': 'カテゴリ数',
-  'warehouseCategoryTotalCount': '第1階分類: @para1 件, 第2階分類: @para2 件, 第3階分類: @para3 件',
+  'warehouseCategoryTotalCount':
+      '第1階分類: @para1 件, 第2階分類: @para2 件, 第3階分類: @para3 件',
   'warehouseAlarmProductPhoto': '商品写真',
   'warehouseAlarmProductName': '商品名',
   'warehouseAlarmBelowStockLevel': '在庫水位以下',
@@ -51,13 +52,16 @@ const Map<String, String> zhTW = {
   'searchClearResult': '検索結果をクリア',
   'searchResultCount': '検索結果: @para1 件',
   'editCabinetTitle': 'キャビネット編集',
-  'editCabinetDeleteMultipleMessage': '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
+  'editCabinetDeleteMultipleMessage':
+      '@para1のキャビネットを削除してもよろしいですか？\nこの操作は元に戻せません。',
   'editCabinetMoveToNewRoom': '新しい部屋に移動',
   'editCabinetRoomName': '部屋名',
   'editCabinetWillDelete': 'このキャビネットは削除されます',
   'createCategoryCurrentCategory': '現在のカテゴリ: @para1',
-  'deleteCategoryMessageNoChildren': 'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
-  'deleteCategoryMessageWithChildren': 'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageNoChildren':
+      'カテゴリ「@para1」を削除してもよろしいですか？\nこの操作は取り消せません。',
+  'deleteCategoryMessageWithChildren':
+      'カテゴリ「@para1」とそのすべてのサブカテゴリを削除してもよろしいですか？\nこの操作は取り消せません。',
   'deleteItemMessage': 'このアイテムを削除してもよろしいですか？',
   'editCategoryTitle': 'カテゴリ編集',
   'editCategoryMaxLevelReached': '最大階層数に達しました',
@@ -101,7 +105,8 @@ const Map<String, String> zhTW = {
   'warehouseRemoveItemFromCabinet': '@para1 から @para2 を削除',
   'warehouseMoveQuantityInsufficient': '移動数量不足',
   'warehouseMoveToSameCabinet': '同じキャビネットに移動できません',
-  'warehouseDeleteCabinetItemMustMoveFirst': 'キャビネットのアイテムを削除するには、まずアイテムを他のキャビネットに移動する必要があります',
+  'warehouseDeleteCabinetItemMustMoveFirst':
+      'キャビネットのアイテムを削除するには、まずアイテムを他のキャビネットに移動する必要があります',
   'warehouseAdjustQuantity': '調整数量',
   'warehouseNameUpdate': '名称更新: @para1 -> @para2',
   'warehouseDescriptionUpdate': '説明更新: @para1 -> @para2',
@@ -226,12 +231,15 @@ const Map<String, String> zhTW = {
   'airBoxReferenceTitleExplainHCHO': 'ホルムアルデヒド(濃度)',
   'airBoxReferenceTitleExplainVoc': '揮発性有機化合物(VOC)',
   'airBoxReferenceTitleExplainCo2': '二酸化炭素(CO2)',
-  'airBoxReferenceDescriptionPm25': '2.5マイクロメートル未満の粒子。煙、工業排出ガス、ろうそくの燃焼などが含まれます。',
-  'airBoxReferenceDescriptionTemperature': '温度は適中が理想的です。低すぎる場合は保温に注意し、高すぎる場合は換気・冷却が必要です。',
+  'airBoxReferenceDescriptionPm25':
+      '2.5マイクロメートル未満の粒子。煙、工業排出ガス、ろうそくの燃焼などが含まれます。',
+  'airBoxReferenceDescriptionTemperature':
+      '温度は適中が理想的です。低すぎる場合は保温に注意し、高すぎる場合は換気・冷却が必要です。',
   'airBoxReferenceDescriptionHumidity': '低すぎると肌が乾燥し、高すぎると体感がベタつき、カビが発生します。',
   'airBoxReferenceDescriptionHCHO': 'ホルムアルデヒドは、主に装飾材料や家具から発生する一般的な室内空気汚染物質です。',
   'airBoxReferenceDescriptionVoc': 'VOCには、健康に影響を与える可能性のあるさまざまな化学物質が含まれます。',
-  'airBoxReferenceDescriptionCo2': '室内の二酸化炭素濃度が高すぎると、頭痛、眠気、集中力の低下などの症状を引き起こす可能性があります。',
+  'airBoxReferenceDescriptionCo2':
+      '室内の二酸化炭素濃度が高すぎると、頭痛、眠気、集中力の低下などの症状を引き起こす可能性があります。',
   'airBoxChartAxisUnitHour': '時',
   'airBoxCurrentTemperature': '現在の温度',
   'airBoxCurrentHumidity': '現在の湿度',

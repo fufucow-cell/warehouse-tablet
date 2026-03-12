@@ -10,10 +10,12 @@ class WaterValueTimerSettingPage extends StatefulWidget {
   const WaterValueTimerSettingPage({super.key, this.timerItem});
 
   @override
-  State<WaterValueTimerSettingPage> createState() => _WaterValueTimerSettingPageState();
+  State<WaterValueTimerSettingPage> createState() =>
+      _WaterValueTimerSettingPageState();
 }
 
-class _WaterValueTimerSettingPageState extends State<WaterValueTimerSettingPage> {
+class _WaterValueTimerSettingPageState
+    extends State<WaterValueTimerSettingPage> {
   String _selectedTab = '開啟';
   TimeOfDay _time = const TimeOfDay(hour: 8, minute: 0);
   bool _isRepeat = false;
@@ -35,7 +37,8 @@ class _WaterValueTimerSettingPageState extends State<WaterValueTimerSettingPage>
       if (_isRepeat) {
         if (_selectedDays.length == 7) {
           _repeatType = '每天';
-        } else if (_selectedDays.length == 5 && _selectedDays.containsAll([1, 2, 3, 4, 5])) {
+        } else if (_selectedDays.length == 5 &&
+            _selectedDays.containsAll([1, 2, 3, 4, 5])) {
           _repeatType = '平日';
         } else {
           _repeatType = '自訂';
@@ -82,7 +85,8 @@ class _WaterValueTimerSettingPageState extends State<WaterValueTimerSettingPage>
                               isRepeat: _isRepeat,
                               repeatType: _repeatType,
                               selectedDays: _selectedDays,
-                              onRepeatToggle: () => setState(() => _isRepeat = !_isRepeat),
+                              onRepeatToggle: () =>
+                                  setState(() => _isRepeat = !_isRepeat),
                               onRepeatTypeChanged: (type) {
                                 setState(() {
                                   _repeatType = type;
@@ -108,7 +112,8 @@ class _WaterValueTimerSettingPageState extends State<WaterValueTimerSettingPage>
                             const SizedBox(height: 22.4),
                             _NotificationSection(
                               isNotify: _isNotify,
-                              onToggle: () => setState(() => _isNotify = !_isNotify),
+                              onToggle: () =>
+                                  setState(() => _isNotify = !_isNotify),
                             ),
                             const SizedBox(height: 22.4),
                             _SaveButton(
@@ -196,7 +201,9 @@ class _TabBar extends StatelessWidget {
               onTap: () => onTabChanged('開啟'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedTab == '開啟' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: selectedTab == '開啟'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8.4),
                     bottomLeft: Radius.circular(8.4),
@@ -207,7 +214,9 @@ class _TabBar extends StatelessWidget {
                   '開啟',
                   style: TextStyle(
                     fontSize: 22.4,
-                    color: selectedTab == '開啟' ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: selectedTab == '開啟'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                 ),
               ),
@@ -218,7 +227,9 @@ class _TabBar extends StatelessWidget {
               onTap: () => onTabChanged('關閉'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: selectedTab == '關閉' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: selectedTab == '關閉'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8.4),
                     bottomRight: Radius.circular(8.4),
@@ -229,7 +240,9 @@ class _TabBar extends StatelessWidget {
                   '關閉',
                   style: TextStyle(
                     fontSize: 22.4,
-                    color: selectedTab == '關閉' ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: selectedTab == '關閉'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                 ),
               ),
@@ -358,7 +371,9 @@ class _RepeatTabbar extends StatelessWidget {
               onTap: () => onTypeChanged('平日'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: repeatType == '平日' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: repeatType == '平日'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8.4),
                     bottomLeft: Radius.circular(8.4),
@@ -369,7 +384,9 @@ class _RepeatTabbar extends StatelessWidget {
                   '平日',
                   style: TextStyle(
                     fontSize: 22.4,
-                    color: repeatType == '平日' ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: repeatType == '平日'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                 ),
               ),
@@ -379,13 +396,17 @@ class _RepeatTabbar extends StatelessWidget {
             child: GestureDetector(
               onTap: () => onTypeChanged('每天'),
               child: Container(
-                color: repeatType == '每天' ? const Color(0xFFFB9B51) : Colors.transparent,
+                color: repeatType == '每天'
+                    ? const Color(0xFFFB9B51)
+                    : Colors.transparent,
                 alignment: Alignment.center,
                 child: Text(
                   '每天',
                   style: TextStyle(
                     fontSize: 22.4,
-                    color: repeatType == '每天' ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: repeatType == '每天'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                 ),
               ),
@@ -396,7 +417,9 @@ class _RepeatTabbar extends StatelessWidget {
               onTap: () => onTypeChanged('自訂'),
               child: Container(
                 decoration: BoxDecoration(
-                  color: repeatType == '自訂' ? const Color(0xFFFB9B51) : Colors.transparent,
+                  color: repeatType == '自訂'
+                      ? const Color(0xFFFB9B51)
+                      : Colors.transparent,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8.4),
                     bottomRight: Radius.circular(8.4),
@@ -407,7 +430,9 @@ class _RepeatTabbar extends StatelessWidget {
                   '自訂',
                   style: TextStyle(
                     fontSize: 22.4,
-                    color: repeatType == '自訂' ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: repeatType == '自訂'
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                 ),
               ),
@@ -446,7 +471,9 @@ class _WeekdayList extends StatelessWidget {
               width: 70.0,
               height: 70.0,
               decoration: ShapeDecoration(
-                color: isSelected ? const Color(0xFFFB9B51) : const Color(0xFFF5F5F5),
+                color: isSelected
+                    ? const Color(0xFFFB9B51)
+                    : const Color(0xFFF5F5F5),
                 shape: const OvalBorder(),
               ),
               child: Center(
@@ -454,7 +481,9 @@ class _WeekdayList extends StatelessWidget {
                   weekdayLabels[index],
                   style: TextStyle(
                     fontSize: 18.2,
-                    color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+                    color: isSelected
+                        ? const Color(0xFFFFFFFF)
+                        : const Color(0xFF666666),
                   ),
                   textAlign: TextAlign.center,
                 ),

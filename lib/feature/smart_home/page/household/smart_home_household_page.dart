@@ -64,7 +64,8 @@ class _Body extends StatelessWidget {
                       ),
                       _InfoRow(
                         label: 'Home Name',
-                        value: householdData.homeName ?? EnumLocale.smartHomeUnnamed.tr,
+                        value: householdData.homeName ??
+                            EnumLocale.smartHomeUnnamed.tr,
                       ),
                     ],
                   ),
@@ -83,19 +84,24 @@ class _Body extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 12),
-                      if (householdData.rooms != null && householdData.rooms!.isNotEmpty)
+                      if (householdData.rooms != null &&
+                          householdData.rooms!.isNotEmpty)
                         ...householdData.rooms!.asMap().entries.map(
                               (entry) => Padding(
                                 padding: const EdgeInsets.only(bottom: 8.0),
-                                child: _RoomInfoCard(room: entry.value, index: entry.key),
+                                child: _RoomInfoCard(
+                                    room: entry.value, index: entry.key),
                               ),
                             )
                       else
                         Text(
                           EnumLocale.smartHomeNoRoom.tr,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Theme.of(context).colorScheme.onSurfaceVariant,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurfaceVariant,
+                                  ),
                         ),
                     ],
                   ),

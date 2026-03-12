@@ -1,6 +1,6 @@
 /// 图片 Key 枚举
 /// 自动生成，请勿手动修改
-/// 生成时间: 2026-02-11T12:07:02.626495
+/// 生成时间: 2026-03-12T14:27:16.090197
 library;
 
 import 'package:flutter/material.dart';
@@ -12,6 +12,7 @@ enum EnumImage {
   cAirConditionerAbnormal,
   cAirConditionerAntiHairdryer,
   cAirConditionerDry,
+  cAirConditionerDry2,
   cAirConditionerEco,
   cAirConditionerGear,
   cAirConditionerHeating,
@@ -25,6 +26,9 @@ enum EnumImage {
   cAirConditionerTiming,
   cAirConditionerUpAndDown,
   cAirConditionerWindDirection,
+  cAirConditionerWindHigh,
+  cAirConditionerWindLow,
+  cAirConditionerWindQuiet,
   cAirFilter,
   cArrowDown,
   cArrowDown2,
@@ -43,6 +47,7 @@ enum EnumImage {
   cCheckboxOn,
   cCircuit,
   cClock,
+  cClose,
   cCo2,
   cCow,
   cEditNormal,
@@ -72,10 +77,12 @@ enum EnumImage {
   cPurifierFliter,
   cRecover,
   cRefresh,
+  cRefresh2,
   cReset,
   cSearch,
   cSearch2,
   cSetting,
+  cSnowFlake,
   cStockItem,
   cTemperature,
   cTrash,
@@ -83,6 +90,16 @@ enum EnumImage {
   cTrash3,
   cVoc,
   cWind,
+  tAirConditionerWindDirection1,
+  tAirConditionerWindDirection10,
+  tAirConditionerWindDirection2,
+  tAirConditionerWindDirection3,
+  tAirConditionerWindDirection4,
+  tAirConditionerWindDirection5,
+  tAirConditionerWindDirection6,
+  tAirConditionerWindDirection7,
+  tAirConditionerWindDirection8,
+  tAirConditionerWindDirection9,
   tBgContent,
   tCow,
   tWaterValueOff,
@@ -94,7 +111,8 @@ enum EnumImage {
   String get path => _themeService.getImagePath(this);
 
   /// 取得圖片 Widget
-  Widget image({Size? size, Color? color, BoxFit? fit}) => _themeService.getImageWidget(this, size: size, color: color, fit: fit);
+  Widget image({Size? size, Color? color, BoxFit? fit}) =>
+      _themeService.getImageWidget(this, size: size, color: color, fit: fit);
 
   /// 取得裝飾圖片
   DecorationImage get decorationImage => DecorationImage(

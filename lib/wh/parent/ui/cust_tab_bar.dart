@@ -1,11 +1,17 @@
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
+import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
+import 'package:flutter/material.dart';
+
 class CustTabBar extends StatelessWidget {
   final List<String> titles;
   final int selectedIndex;
   final Function(int) onChanged;
 
   const CustTabBar({
+    super.key,
     required this.titles,
-    required this.selectedIndex,
+    this.selectedIndex = 0,
     required this.onChanged,
   });
 
@@ -13,17 +19,17 @@ class CustTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: EnumColor.backgroundPrimary.color,
         border: Border.all(
-          width: 1,
-          color: const Color(0xFFFDB874),
+          width: 1.0.scale,
+          color: EnumColor.lineProduct.color,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.0.scale),
       ),
       child: Row(
         children: [
           for (var i = 0; i < titles.length; i++) ...[
-            if (i > 0) const SizedBox(width: 48),
+            if (i > 0) SizedBox(width: 48.0.scale),
             Expanded(
               child: _FilterTab(
                 title: titles[i],
@@ -54,18 +60,19 @@ class _FilterTab extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.all(15.0.scale),
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFDB874) : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          color: isSelected
+              ? EnumColor.backgroundButton.color
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(8.0.scale),
         ),
-        child: Text(
+        child: CustTextWidget(
           title,
-          style: TextStyle(
-            fontSize: 26,
-            color: isSelected ? Colors.white : const Color(0xFF7C7C7C),
-          ),
+          color: isSelected
+              ? EnumColor.textWhite.color
+              : EnumColor.textSecondary.color,
         ),
       ),
     );

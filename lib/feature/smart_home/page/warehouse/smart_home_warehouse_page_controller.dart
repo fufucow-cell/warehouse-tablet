@@ -16,7 +16,8 @@ class SmartHomeWarehousePageController extends GetxController {
 
   // MARK: - Public Method
 
-  WarehouseMainPageRouterData get getWarehouseMainPageRouterData => WarehouseMainPageRouterData.mock(
+  WarehouseMainPageRouterData get getWarehouseMainPageRouterData =>
+      WarehouseMainPageRouterData.mock(
         theme: _service.getCurrentThemeName,
         locale: _service.getCurrentLocaleCode,
         isModuleMode: false,

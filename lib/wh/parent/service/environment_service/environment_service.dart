@@ -56,7 +56,8 @@ class EnvironmentService extends GetxService {
     }
   }
 
-  void initData({required bool isModuleMode, String? domainUrl, String? environment}) {
+  void initData(
+      {required bool isModuleMode, String? domainUrl, String? environment}) {
     _model.isModuleMode = isModuleMode;
 
     if (environment != null) {
@@ -64,7 +65,9 @@ class EnvironmentService extends GetxService {
     }
 
     if (domainUrl != null) {
-      final url = domainUrl.endsWith('/') ? domainUrl.substring(0, domainUrl.length - 1) : domainUrl;
+      final url = domainUrl.endsWith('/')
+          ? domainUrl.substring(0, domainUrl.length - 1)
+          : domainUrl;
       _model.domainUrl = url;
     } else if (_model.domainUrl.isEmpty) {
       _model.domainUrl = _model.currentEnvironment.domainUrl;

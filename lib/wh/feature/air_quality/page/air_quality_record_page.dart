@@ -82,7 +82,8 @@ class _AirQualityRecordPageState extends State<AirQualityRecordPage> {
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2030),
-      initialDatePickerMode: _selectedTimeFilter == '日' ? DatePickerMode.day : DatePickerMode.year,
+      initialDatePickerMode:
+          _selectedTimeFilter == '日' ? DatePickerMode.day : DatePickerMode.year,
     );
 
     if (picked != null) {
@@ -407,7 +408,8 @@ class _ChartSection extends StatelessWidget {
                     return touchedSpots.map((spot) {
                       String timeStr = '';
                       if (selectedTimeFilter == '日') {
-                        timeStr = '${spot.x.toInt().toString().padLeft(2, '0')}:00';
+                        timeStr =
+                            '${spot.x.toInt().toString().padLeft(2, '0')}:00';
                       } else if (selectedTimeFilter == '月') {
                         timeStr = '${(spot.x.toInt() + 1)}日';
                       } else {
@@ -419,17 +421,21 @@ class _ChartSection extends StatelessWidget {
                       );
                     }).toList();
                   },
-                  tooltipPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  tooltipPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   tooltipMargin: 8,
                   getTooltipColor: (_) => const Color(0xFF2A2A2A),
-                  tooltipBorder: const BorderSide(color: Color(0xFF7C7C7C), width: 1),
+                  tooltipBorder:
+                      const BorderSide(color: Color(0xFF7C7C7C), width: 1),
                   tooltipRoundedRadius: 8,
                 ),
               ),
               titlesData: FlTitlesData(
                 show: true,
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 bottomTitles: AxisTitles(
                   axisNameWidget: Padding(
                     padding: const EdgeInsets.only(top: 8),
@@ -439,7 +445,8 @@ class _ChartSection extends StatelessWidget {
                           : selectedTimeFilter == '月'
                               ? '日'
                               : '月',
-                      style: const TextStyle(fontSize: 24, color: Color(0xFF7C7C7C)),
+                      style: const TextStyle(
+                          fontSize: 24, color: Color(0xFF7C7C7C)),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -454,7 +461,8 @@ class _ChartSection extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
                               '${hour.toString().padLeft(2, '0')}:00',
-                              style: const TextStyle(fontSize: 24, color: Color(0xFF7C7C7C)),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Color(0xFF7C7C7C)),
                             ),
                           );
                         }
@@ -465,7 +473,8 @@ class _ChartSection extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
                               day.toString(),
-                              style: const TextStyle(fontSize: 24, color: Color(0xFF7C7C7C)),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Color(0xFF7C7C7C)),
                             ),
                           );
                         }
@@ -476,7 +485,8 @@ class _ChartSection extends StatelessWidget {
                             padding: const EdgeInsets.only(top: 8),
                             child: Text(
                               month.toString(),
-                              style: const TextStyle(fontSize: 24, color: Color(0xFF7C7C7C)),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Color(0xFF7C7C7C)),
                             ),
                           );
                         }
@@ -496,7 +506,8 @@ class _ChartSection extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 8),
                         child: Text(
                           value.toStringAsFixed(2),
-                          style: const TextStyle(fontSize: 24, color: Color(0xFF7C7C7C)),
+                          style: const TextStyle(
+                              fontSize: 24, color: Color(0xFF7C7C7C)),
                           textAlign: TextAlign.right,
                         ),
                       );

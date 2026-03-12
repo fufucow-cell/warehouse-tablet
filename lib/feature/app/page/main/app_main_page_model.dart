@@ -64,7 +64,8 @@ enum EnumAppMainTabItem {
       };
 
   String get title => titleLocale.tr;
-  String get displayTitle => this == EnumAppMainTabItem.reservation ? '預約' : title;
+  String get displayTitle =>
+      this == EnumAppMainTabItem.reservation ? '預約' : title;
 
   EnumAppMainRouter get router => switch (this) {
         household => EnumAppMainRouter.household,

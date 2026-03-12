@@ -85,13 +85,17 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                         onDataButtonTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const AirQualityRecordPage()),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const AirQualityRecordPage()),
                           );
                         },
                         onFilterLifeTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const AirQualityFilterPage()),
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const AirQualityFilterPage()),
                           );
                         },
                       ),
@@ -114,7 +118,8 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                                           });
                                         },
                                         onClose: () {
-                                          setState(() => _showModePopup = false);
+                                          setState(
+                                              () => _showModePopup = false);
                                         },
                                       )
                                     : _showFanSpeedPopup
@@ -127,7 +132,8 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                                               });
                                             },
                                             onClose: () {
-                                              setState(() => _showFanSpeedPopup = false);
+                                              setState(() =>
+                                                  _showFanSpeedPopup = false);
                                             },
                                           )
                                         : _showTimerPopup
@@ -140,7 +146,8 @@ class _AirQualityPurifierPageState extends State<AirQualityPurifierPage> {
                                                   });
                                                 },
                                                 onClose: () {
-                                                  setState(() => _showTimerPopup = false);
+                                                  setState(() =>
+                                                      _showTimerPopup = false);
                                                 },
                                               )
                                             : const SizedBox.shrink(),
@@ -448,7 +455,9 @@ class _PowerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imagePath = isOn ? 'lib/wh/parent/assets/images/common/gateway_status_on.png' : 'lib/wh/parent/assets/images/common/gateway_status_off.png';
+    final imagePath = isOn
+        ? 'lib/wh/parent/assets/images/common/gateway_status_on.png'
+        : 'lib/wh/parent/assets/images/common/gateway_status_off.png';
     return GestureDetector(
       onTap: onTap,
       child: Image.asset(

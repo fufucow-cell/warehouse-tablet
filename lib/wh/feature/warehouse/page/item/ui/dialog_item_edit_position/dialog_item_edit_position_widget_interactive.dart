@@ -13,7 +13,8 @@ enum EnumDialogItemEditPositionWidgetInteractive {
 }
 
 /// DialogItemEditPositionWidget 用户事件处理扩展
-extension DialogItemEditPositionWidgetUserEventExtension on DialogItemEditPositionWidgetController {
+extension DialogItemEditPositionWidgetUserEventExtension
+    on DialogItemEditPositionWidgetController {
   /// 处理用户事件
   void interactive(
     EnumDialogItemEditPositionWidgetInteractive type, {

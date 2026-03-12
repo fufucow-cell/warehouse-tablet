@@ -22,7 +22,8 @@ class SmartHomeHouseholdPageController extends GetxController {
   // MARK: - Private Method
 
   Future<void> _loadHouseholdData() async {
-    final response = await _homeService.apiReqReadHomeHousehold(_model.householdId);
+    final response =
+        await _homeService.apiReqReadHomeHousehold(_model.householdId);
     _model.householdData = response;
     update();
   }

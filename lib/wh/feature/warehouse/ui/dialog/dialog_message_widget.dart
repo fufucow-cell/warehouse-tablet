@@ -27,7 +27,9 @@ class DialogMessageWidget extends StatelessWidget {
       minHeight: 385.0.scale,
       header: DialogHeader(title: title),
       footer: DialogFooter(
-        type: onCancel != null ? DialogFooterType.cancelAndConfirm : DialogFooterType.onlyConfirm,
+        type: onCancel != null
+            ? DialogFooterType.cancelAndConfirm
+            : DialogFooterType.onlyConfirm,
         onCancel: () {
           final result = onCancel?.call() ?? false;
           Navigator.of(context).pop(result);

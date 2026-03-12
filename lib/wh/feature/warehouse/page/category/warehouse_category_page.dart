@@ -12,7 +12,9 @@ class WarehouseCategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseCategoryPageController>(
-      init: Get.isRegistered<WarehouseCategoryPageController>() ? null : WarehouseCategoryPageController(),
+      init: Get.isRegistered<WarehouseCategoryPageController>()
+          ? null
+          : WarehouseCategoryPageController(),
       builder: (controller) {
         return SecondBackgroundCard(
           child: Column(

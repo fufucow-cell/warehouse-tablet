@@ -4,7 +4,8 @@ enum EnumSmartHomeHouseholdPageInteractive {
   nothing,
 }
 
-extension SmartHomeHouseholdPageUserEventExtension on SmartHomeHouseholdPageController {
+extension SmartHomeHouseholdPageUserEventExtension
+    on SmartHomeHouseholdPageController {
   void interactive(
     EnumSmartHomeHouseholdPageInteractive type, {
     dynamic data,

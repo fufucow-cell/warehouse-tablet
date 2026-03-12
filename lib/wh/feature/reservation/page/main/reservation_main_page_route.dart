@@ -1,15 +1,23 @@
 part of 'reservation_main_page_controller.dart';
 
 enum EnumReservationMainPageRoute {
-  none,
+  goReservableItemDetailPage,
 }
 
 extension ReservationMainPageRouteExtension on ReservationMainPageController {
   // ignore: unused_element
-  Future<void> _routerHandle(EnumReservationMainPageRoute type) async {
+  Future<void> _routerHandle(
+      EnumReservationMainPageRoute type, dynamic data) async {
     switch (type) {
-      case EnumReservationMainPageRoute.none:
-        break;
+      case EnumReservationMainPageRoute.goReservableItemDetailPage:
+        if (data is ReservableItemModel) {
+          await Navigator.push(
+            _service.getContext!,
+            MaterialPageRoute(
+              builder: (context) => const ReservationReservablePage(),
+            ),
+          );
+        }
     }
   }
 }

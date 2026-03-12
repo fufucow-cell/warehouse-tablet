@@ -5,7 +5,8 @@ enum EnumDialogItemEditQuantityWidgetRoute {
   showSnackBar,
 }
 
-extension DialogItemEditQuantityWidgetRouteExtension on DialogItemEditQuantityWidgetController {
+extension DialogItemEditQuantityWidgetRouteExtension
+    on DialogItemEditQuantityWidgetController {
   void routerHandle(
     EnumDialogItemEditQuantityWidgetRoute type, {
     dynamic data,

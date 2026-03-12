@@ -11,5 +11,6 @@ class ItemQuantity with _$ItemQuantity {
     List<Cabinet>? cabinets,
   }) = _ItemQuantity;
 
-  factory ItemQuantity.fromJson(Map<String, dynamic> json) => _$ItemQuantityFromJson(json);
+  factory ItemQuantity.fromJson(Map<String, dynamic> json) =>
+      _$ItemQuantityFromJson(json);
 }

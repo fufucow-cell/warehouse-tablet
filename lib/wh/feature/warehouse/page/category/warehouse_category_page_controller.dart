@@ -31,8 +31,10 @@ class WarehouseCategoryPageController extends GetxController {
   final ScrollController scrollController = ScrollController();
   final Map<GlobalKey, double> _subHeaderPositions = {};
   final _showSubHeader = Rx<bool>(false);
-  RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
-  RxReadonly<Set<String>> get expandedCategoryIdsRx => _model.expandedCategoryIds.readonly;
+  RxReadonly<List<Category>?> get allCategoriesRx =>
+      _model.allCategories.readonly;
+  RxReadonly<Set<String>> get expandedCategoryIdsRx =>
+      _model.expandedCategoryIds.readonly;
   RxReadonly<bool> get showSubHeaderRx => _showSubHeader.readonly;
   Set<String> get getExpandedCategoryIds => _model.expandedCategoryIds.value;
   double get rowActionWidth => 280.0.scale;

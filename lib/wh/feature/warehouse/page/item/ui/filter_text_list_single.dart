@@ -62,10 +62,20 @@ class FilterTextListSingleItem extends StatelessWidget {
           padding: EdgeInsets.symmetric(
             horizontal: 24.0.scale,
           ),
-          backgroundColor: isSelected ? (isFillColor ? EnumColor.engoBackgroundOrange400.color : EnumColor.menuBgFocused.color) : Colors.transparent,
-          foregroundColor: isSelected ? (isFillColor ? EnumColor.textWhite.color : EnumColor.textProduct.color) : EnumColor.textSecondary.color,
+          backgroundColor: isSelected
+              ? (isFillColor
+                  ? EnumColor.engoBackgroundOrange400.color
+                  : EnumColor.menuBgFocused.color)
+              : Colors.transparent,
+          foregroundColor: isSelected
+              ? (isFillColor
+                  ? EnumColor.textWhite.color
+                  : EnumColor.textProduct.color)
+              : EnumColor.textSecondary.color,
           side: BorderSide(
-            color: isSelected ? EnumColor.menuIconFocused.color : Colors.transparent,
+            color: isSelected
+                ? EnumColor.menuIconFocused.color
+                : Colors.transparent,
             width: 1.0,
           ),
           shape: RoundedRectangleBorder(

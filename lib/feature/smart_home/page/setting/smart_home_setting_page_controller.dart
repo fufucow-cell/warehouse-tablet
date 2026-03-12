@@ -6,7 +6,8 @@ class SmartHomeSettingPageController extends GetxController {
   final _model = SmartHomeSettingPageModel();
   final _service = SmartHomeService.instance;
   BuildContext? get getContext => _service.getContext();
-  bool isCurrentLocale(LocaleTranslation translation) => _model.currentLocale?.getLocale == translation.getLocale;
+  bool isCurrentLocale(LocaleTranslation translation) =>
+      _model.currentLocale?.getLocale == translation.getLocale;
   bool isCurrentTheme(EnumThemeMode theme) => _model.currentTheme == theme;
   List<LocaleTranslation> getAvailableLocales() => _service.getAvalibleLocales;
 

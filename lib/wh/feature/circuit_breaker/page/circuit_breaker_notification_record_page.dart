@@ -6,10 +6,12 @@ class CircuitBreakerNotificationRecordPage extends StatefulWidget {
   const CircuitBreakerNotificationRecordPage({super.key});
 
   @override
-  State<CircuitBreakerNotificationRecordPage> createState() => _CircuitBreakerNotificationRecordPageState();
+  State<CircuitBreakerNotificationRecordPage> createState() =>
+      _CircuitBreakerNotificationRecordPageState();
 }
 
-class _CircuitBreakerNotificationRecordPageState extends State<CircuitBreakerNotificationRecordPage> {
+class _CircuitBreakerNotificationRecordPageState
+    extends State<CircuitBreakerNotificationRecordPage> {
   String _selectedTab = '全部';
 
   final Map<String, List<NotificationRecord>> _allRecords = {
@@ -53,7 +55,8 @@ class _CircuitBreakerNotificationRecordPageState extends State<CircuitBreakerNot
 
     final filtered = <String, List<NotificationRecord>>{};
     _allRecords.forEach((date, records) {
-      final filteredList = records.where((r) => r.type == _selectedTab).toList();
+      final filteredList =
+          records.where((r) => r.type == _selectedTab).toList();
       if (filteredList.isNotEmpty) {
         filtered[date] = filteredList;
       }
@@ -77,7 +80,9 @@ class _CircuitBreakerNotificationRecordPageState extends State<CircuitBreakerNot
             ),
             const SizedBox(height: 33.6),
             Expanded(
-              child: _filteredRecords.isEmpty ? const CustEmptyWidget() : _RecordList(records: _filteredRecords),
+              child: _filteredRecords.isEmpty
+                  ? const CustEmptyWidget()
+                  : _RecordList(records: _filteredRecords),
             ),
           ],
         ),
@@ -200,7 +205,8 @@ class _TabItem extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 22.4,
-            color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+            color:
+                isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
           ),
         ),
       ),

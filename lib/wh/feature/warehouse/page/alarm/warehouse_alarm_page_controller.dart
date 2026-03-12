@@ -49,7 +49,8 @@ class WarehouseAlarmPageController extends GetxController {
     return item.minStockAlert! - item.quantity!;
   }
 
-  String assembleImageUrl(String photoPath) => _service.assembleImageUrl(photoPath);
+  String assembleImageUrl(String photoPath) =>
+      _service.assembleImageUrl(photoPath);
 
   // MARK: - Private Method
 

@@ -1,40 +1,108 @@
-import 'package:dio/dio.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/model/reservation_item_model.dart';
-import 'package:engo_terminal_app3/wh/parent/service/environment_service/environment_service.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/datum.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/reservation_item_open_response_model.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/datum.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/reservation_item_record_response_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart';
+import 'package:engo_terminal_app3/wh/parent/service/device_service/device_service.dart';
+import 'package:engo_terminal_app3/wh/parent/service/router_service/router_service.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+part 'reservation_service_model.dart';
 
 class ReservationService {
+  // MARK: - Properties
+
+  final _model = ReservationServiceModel();
+  RxReadonly<List<ReservableItem>?> get openItemsRx => _model.openItems.readonly;
+  RxReadonly<List<RecordItem>?> get recordItemsRx => _model.recordItems.readonly;
+  BuildContext? get getContext => _model.nestedNavigatorContext;
+
+  // MARK: - Init
+
   ReservationService._internal();
 
-  static final ReservationService instance = ReservationService._internal();
+  static ReservationService register() {
+    if (Get.isRegistered<ReservationService>()) {
+      return Get.find<ReservationService>();
+    }
+    ApiService.register();
+    final service = ReservationService._internal();
+    Get.put<ReservationService>(service, permanent: true);
+    return service;
+  }
 
-  static const String _reservationPath = '/api/v1/reservation';
-  static const String _fallbackBaseUrl = 'http://127.0.0.1:8001';
+  static void unregister() {
+    if (Get.isRegistered<ReservationService>()) {
+      Get.delete<ReservationService>(force: true);
+    }
+  }
 
-  Future<List<ReservationItemModel>> fetchOpenItems() async {
-    final Dio dio = _newDio();
+  static ReservationService get instance {
+    if (!Get.isRegistered<ReservationService>()) {
+      return register();
+    }
+    return Get.find<ReservationService>();
+  }
 
-    final Response<dynamic> response = await dio.get<dynamic>('/items');
-    final dynamic data = response.data;
+  // MARK: - Public Method
 
-    if (data is! Map<String, dynamic>) {
-      return <ReservationItemModel>[];
+  void setContext(BuildContext context) {
+    final router = RouterService.register();
+    _model.nestedNavigatorContext = router.findNestedNavigatorContext(context);
+    DeviceService.register(context);
+  }
+
+  // MARK: - Private Method
+
+  // MARK: - Api Method
+
+  Future<List<ReservableItem>> fetchOpenItems({bool isCache = true}) async {
+    if (isCache && _model.openItems.value != null) {
+      return _model.openItems.value ?? <ReservableItem>[];
     }
 
-    final dynamic itemsRaw = data['items'];
-    if (itemsRaw is! List) {
-      return <ReservationItemModel>[];
+    _model.openItems.value = null;
+    final ReservationItemOpenResponseModel? response = await ApiService.sendRequest<ReservationItemOpenResponseModel>(
+      EnumApiInfo.reservationItemOpen,
+      fromJson: (json) {
+        return ReservationItemOpenResponseModel.fromJson(json);
+      },
+    );
+
+    if (response == null) {
+      _model.openItems.value = <ReservableItem>[];
+      return <ReservableItem>[];
     }
 
-    final List<ReservationItemModel> items = <ReservationItemModel>[];
-    for (final dynamic row in itemsRaw) {
-      if (row is Map<String, dynamic>) {
-        final ReservationItemModel item = ReservationItemModel.fromJson(row);
-        if (item.isPublished) {
-          items.add(item);
-        }
-      }
+    final List<ReservableItem> list = response.data ?? <ReservableItem>[];
+    _model.openItems.value = list;
+    return list;
+  }
+
+  Future<List<RecordItem>> fetchRecordItems({bool isCache = true}) async {
+    if (isCache && _model.recordItems.value != null) {
+      return _model.recordItems.value ?? <RecordItem>[];
     }
-    return items;
+
+    _model.recordItems.value = null;
+    final ReservationItemRecordResponseModel? response = await ApiService.sendRequest<ReservationItemRecordResponseModel>(
+      EnumApiInfo.reservationItemRecord,
+      fromJson: (json) {
+        return ReservationItemRecordResponseModel.fromJson(json);
+      },
+    );
+
+    if (response == null) {
+      _model.recordItems.value = <RecordItem>[];
+      return <RecordItem>[];
+    }
+
+    final List<RecordItem> list = response.data ?? <RecordItem>[];
+    _model.recordItems.value = list;
+    return list;
   }
 
   Future<String> createBookingOrder({
@@ -44,64 +112,9 @@ class ReservationService {
     required int peopleCount,
     required String userName,
     required String userPhone,
-    String note = '',
+    required String note,
   }) async {
-    final Dio dio = _newDio();
-    final Response<dynamic> response = await dio.post<dynamic>(
-      '/user-booking-orders',
-      data: <String, dynamic>{
-        'item_id': itemId,
-        'booking_start_at': bookingStartAt,
-        'booking_end_at': bookingEndAt,
-        'people_count': peopleCount,
-        'user_id': 'app_user_demo',
-        'user_name': userName,
-        'user_phone': userPhone,
-        'note': note,
-      },
-    );
-
-    final dynamic body = response.data;
-    if (body is Map<String, dynamic>) {
-      final String orderNo = (body['order_no'] ?? '').toString();
-      if (orderNo.isNotEmpty) {
-        return orderNo;
-      }
-      final String orderId = (body['id'] ?? '').toString();
-      if (orderId.isNotEmpty) {
-        return orderId;
-      }
-    }
-    return 'created';
-  }
-
-  Dio _newDio() {
-    final String baseUrl = _buildBaseUrl();
-    return Dio(
-      BaseOptions(
-        baseUrl: '$baseUrl$_reservationPath',
-        connectTimeout: const Duration(seconds: 20),
-        receiveTimeout: const Duration(seconds: 20),
-        sendTimeout: const Duration(seconds: 20),
-        headers: <String, dynamic>{
-          'Content-Type': 'application/json',
-        },
-      ),
-    );
-  }
-
-  String _buildBaseUrl() {
-    final String envBaseUrl = EnvironmentService.instance.getBaseUrl.trim();
-    if (envBaseUrl.isNotEmpty) {
-      return _trimTrailingSlash(envBaseUrl);
-    }
-    return _fallbackBaseUrl;
-  }
-
-  String _trimTrailingSlash(String value) {
-    if (value.endsWith('/')) {
-      return value.substring(0, value.length - 1);
-    }
-    return value;
+    final ts = DateTime.now().millisecondsSinceEpoch;
+    return 'MOCK-RSV-$itemId-$ts';
   }
 }

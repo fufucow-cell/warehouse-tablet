@@ -30,11 +30,15 @@ class WarehouseMainPageController extends GetxController {
   WarehouseService get _service => WarehouseService.instance;
   TabController? _tabController;
   TabController? get tabController => _tabController;
-  RxReadonly<bool> get isTabControllerReadyRx => _model.isTabControllerReady.readonly;
+  RxReadonly<bool> get isTabControllerReadyRx =>
+      _model.isTabControllerReady.readonly;
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<EnumWarehouseTabItem> get selectedItemRx => _service.mainPageSelectedTabItemRx;
-  List<Tab> get tabs => EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
-  List<Widget> get tabViews => EnumWarehouseTabItem.values.map((item) => item.page).toList();
+  RxReadonly<EnumWarehouseTabItem> get selectedItemRx =>
+      _service.mainPageSelectedTabItemRx;
+  List<Tab> get tabs =>
+      EnumWarehouseTabItem.values.map((item) => Tab(text: item.title)).toList();
+  List<Widget> get tabViews =>
+      EnumWarehouseTabItem.values.map((item) => item.page).toList();
   Worker? _selectedItemWorker;
 
   // MARK: - Init
@@ -120,9 +124,12 @@ class WarehouseMainPageController extends GetxController {
     _selectedItemWorker = ever(
       selectedItemRx.rx,
       (value) {
-        if (_model.isTabControllerReady.value && _tabController != null && !_tabController!.indexIsChanging) {
+        if (_model.isTabControllerReady.value &&
+            _tabController != null &&
+            !_tabController!.indexIsChanging) {
           final targetIndex = EnumWarehouseTabItem.values.indexOf(value);
-          if (targetIndex >= 0 && targetIndex < EnumWarehouseTabItem.values.length) {
+          if (targetIndex >= 0 &&
+              targetIndex < EnumWarehouseTabItem.values.length) {
             _tabController!.animateTo(targetIndex);
           }
         }

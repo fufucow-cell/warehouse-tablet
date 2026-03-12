@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 /// Router Service Model
 class RouterServiceModel {
   /// Root navigator key
-  final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> rootNavigatorKey =
+      GlobalKey<NavigatorState>();
 }
 
 enum EnumRootRouter {
@@ -33,5 +34,6 @@ enum EnumRootRouter {
         },
       );
 
-  static List<GetPage<dynamic>> get pages => EnumRootRouter.values.map((e) => e.page).toList();
+  static List<GetPage<dynamic>> get pages =>
+      EnumRootRouter.values.map((e) => e.page).toList();
 }

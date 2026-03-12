@@ -65,30 +65,39 @@ class WarehouseService {
   String get getLocaleCode => LocaleService.instance.getCurrentLocaleCode;
 
   // 搜尋條件
-  DialogItemSearchOutputModel? get getSearchCondition => _model.searchCondition.value;
-  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx => _model.searchCondition.readonly;
+  DialogItemSearchOutputModel? get getSearchCondition =>
+      _model.searchCondition.value;
+  RxReadonly<DialogItemSearchOutputModel?> get searchConditionRx =>
+      _model.searchCondition.readonly;
   String get getSearchCabinetId => _model.searchCabinetId ?? '';
   // 房間
   List<WarehouseNameIdModel> get rooms => _model.rooms;
   // 櫃位
   List<Room> get getAllRoomCabinets => _model.allRoomCabinets.value ?? [];
-  RxReadonly<List<Room>?> get allRoomCabinetsRx => _model.allRoomCabinets.readonly;
+  RxReadonly<List<Room>?> get allRoomCabinetsRx =>
+      _model.allRoomCabinets.readonly;
   List<RoomCabinetInfo> get getRoomCabinetInfos => _model.roomCabinetInfos;
   // 分類
-  RxReadonly<List<Category>?> get allCategoriesRx => _model.allCategories.readonly;
-  List<Category> get getAllCategories => _model.allCategories.value ?? <Category>[];
+  RxReadonly<List<Category>?> get allCategoriesRx =>
+      _model.allCategories.readonly;
+  List<Category> get getAllCategories =>
+      _model.allCategories.value ?? <Category>[];
 
   // 物品
   List<Item> get getAllCombineItems => _model.allCombineItems ?? <Item>[];
-  List<Room> get getAllRoomCabinetItems => _model.allRoomCabinetItems.value ?? [];
-  RxReadonly<List<Room>?> get allRoomCabinetItemsRx => _model.allRoomCabinetItems.readonly;
+  List<Room> get getAllRoomCabinetItems =>
+      _model.allRoomCabinetItems.value ?? [];
+  RxReadonly<List<Room>?> get allRoomCabinetItemsRx =>
+      _model.allRoomCabinetItems.readonly;
 
   // 記錄
-  List<ItemRecord> get getAllRecords => _model.allRecords.value ?? <ItemRecord>[];
+  List<ItemRecord> get getAllRecords =>
+      _model.allRecords.value ?? <ItemRecord>[];
   RxReadonly<List<ItemRecord>?> get allRecordsRx => _model.allRecords.readonly;
 
   // Tab 選擇
-  RxReadonly<EnumWarehouseTabItem> get mainPageSelectedTabItemRx => _model.mainPageSelectedTabItem.readonly;
+  RxReadonly<EnumWarehouseTabItem> get mainPageSelectedTabItemRx =>
+      _model.mainPageSelectedTabItem.readonly;
 
   // MARK: - Init
 
@@ -149,7 +158,8 @@ class WarehouseService {
   }
 
   String assembleImageUrl(String photoPath) {
-    final photoUrl = '${_envService.getBaseUrl}/${_model.warehousePath}$photoPath';
+    final photoUrl =
+        '${_envService.getBaseUrl}/${_model.warehousePath}$photoPath';
     return photoUrl.replaceAll('\\', '/');
   }
 
@@ -241,7 +251,8 @@ class WarehouseService {
       ThemeService.instance.switchFromString(data.theme);
     }
 
-    EnvironmentService.instance.switchEnvironment(EnumEnvironment.fromString(data.environment));
+    EnvironmentService.instance
+        .switchEnvironment(EnumEnvironment.fromString(data.environment));
   }
 
   // 產出物品所在的房間與櫥櫃
@@ -265,7 +276,8 @@ class WarehouseService {
           continue;
         }
 
-        final matchItem = cabinet.items!.where((i) => i.id == item?.id).firstOrNull;
+        final matchItem =
+            cabinet.items!.where((i) => i.id == item?.id).firstOrNull;
 
         if (matchItem != null) {
           matchCabinets.add(
@@ -343,7 +355,8 @@ class WarehouseService {
 
   // 添加搜尋條件
   void addSearchCondition(DialogItemSearchOutputModel model) {
-    if ((model.searchText?.isNotEmpty ?? false) || model.categoryLevel1 != null) {
+    if ((model.searchText?.isNotEmpty ?? false) ||
+        model.categoryLevel1 != null) {
       _model.searchCondition.value = model;
       changeMainPageSelectedTabItem(EnumWarehouseTabItem.item);
     }
@@ -385,7 +398,10 @@ class WarehouseService {
 
   // 取得所有櫃位
   List<Cabinet> getAllCabinets() {
-    return _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).toList() ?? [];
+    return _model.allRoomCabinetItems.value
+            ?.expand((room) => room.cabinets ?? <Cabinet>[])
+            .toList() ??
+        [];
   }
 
   void clearSearchCabinetId() {
@@ -421,7 +437,11 @@ class WarehouseService {
       onError: onError ?? _defaultErrorHandler,
     );
 
-    if (response?.data != null && request.roomId == null && request.cabinetId == null && request.categoryId == null && request.itemId == null) {
+    if (response?.data != null &&
+        request.roomId == null &&
+        request.cabinetId == null &&
+        request.categoryId == null &&
+        request.itemId == null) {
       _model.allRoomCabinetItems.value = response?.data;
       _genAllCombineItems();
     }
@@ -448,7 +468,8 @@ class WarehouseService {
     WarehouseItemCreateSmartRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final result = await ApiService.sendRequest<WarehouseItemSmartResponseModel?>(
+    final result =
+        await ApiService.sendRequest<WarehouseItemSmartResponseModel?>(
       EnumApiInfo.itemSmartCreate,
       requestModel: request,
       fromJson: WarehouseItemSmartResponseModel.fromJson,
@@ -533,7 +554,9 @@ class WarehouseService {
       onError: onError ?? _defaultErrorHandler,
     );
 
-    if (response?.data != null && request.roomId == null && request.cabinetId == null) {
+    if (response?.data != null &&
+        request.roomId == null &&
+        request.cabinetId == null) {
       _genRoomCabinetInfo(response!.data!);
       _model.allRoomCabinets.value = response.data!;
     }
@@ -609,7 +632,8 @@ class WarehouseService {
     WarehouseCategoryReadRequestModel request, {
     ApiErrorHandler? onError,
   }) async {
-    final response = await ApiService.sendRequest<WarehouseCategoryResponseModel>(
+    final response =
+        await ApiService.sendRequest<WarehouseCategoryResponseModel>(
       EnumApiInfo.categoryRead,
       requestModel: request,
       fromJson: WarehouseCategoryResponseModel.fromJson,
@@ -687,7 +711,8 @@ class WarehouseService {
         cabinets = roomMatch.cabinets?.map<CabinetInfo>((cabinet) {
               return CabinetInfo(
                 cabinetId: cabinet.id ?? '',
-                cabinetName: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
+                cabinetName:
+                    cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
                 quantity: cabinet.quantity ?? 0,
               );
             }).toList() ??
@@ -704,7 +729,8 @@ class WarehouseService {
       );
     }
 
-    final unboundRoom = resRooms.firstWhereOrNull((r) => r.roomId?.isEmpty ?? true);
+    final unboundRoom =
+        resRooms.firstWhereOrNull((r) => r.roomId?.isEmpty ?? true);
 
     if (unboundRoom != null && (unboundRoom.cabinets?.isNotEmpty ?? false)) {
       result.add(
@@ -715,7 +741,8 @@ class WarehouseService {
           cabinets: unboundRoom.cabinets?.map<CabinetInfo>((cabinet) {
                 return CabinetInfo(
                   cabinetId: cabinet.id ?? '',
-                  cabinetName: cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
+                  cabinetName:
+                      cabinet.name ?? EnumLocale.warehouseUnboundCabinet.tr,
                   quantity: cabinet.quantity ?? 0,
                 );
               }).toList() ??
@@ -728,9 +755,11 @@ class WarehouseService {
   }
 
   void _genAllCombineItems() {
-    final flattenItems =
-        _model.allRoomCabinetItems.value?.expand((room) => room.cabinets ?? <Cabinet>[]).expand((cabinet) => cabinet.items ?? <Item>[]).toList() ??
-            [];
+    final flattenItems = _model.allRoomCabinetItems.value
+            ?.expand((room) => room.cabinets ?? <Cabinet>[])
+            .expand((cabinet) => cabinet.items ?? <Item>[])
+            .toList() ??
+        [];
     _model.allCombineItems = combineItems(flattenItems);
   }
 }

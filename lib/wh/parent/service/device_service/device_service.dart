@@ -81,7 +81,8 @@ class DeviceService extends GetxService {
     if (_model.isAndroid) {
       final context = RouterService.instance.getRootNavigatorContext;
       if (context != null) {
-        final ImageSource? selectedSource = await showModalBottomSheet<ImageSource>(
+        final ImageSource? selectedSource =
+            await showModalBottomSheet<ImageSource>(
           context: context,
           backgroundColor: Colors.transparent,
           builder: (context) => _ImageSourceBottomSheet(),
@@ -174,14 +175,18 @@ class DeviceService extends GetxService {
       return imagePath;
     } on PlatformException catch (e) {
       // 處理平台特定的異常（如權限被拒絕）
-      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
+      final errorMessage = source == ImageSource.camera
+          ? EnumLocale.deviceCameraFailed.tr
+          : EnumLocale.deviceGalleryFailed.tr;
       CustSnackBar.show(
         title: errorMessage,
         message: e.message ?? e.toString(),
       );
       return null;
     } on Object catch (e) {
-      final errorMessage = source == ImageSource.camera ? EnumLocale.deviceCameraFailed.tr : EnumLocale.deviceGalleryFailed.tr;
+      final errorMessage = source == ImageSource.camera
+          ? EnumLocale.deviceCameraFailed.tr
+          : EnumLocale.deviceGalleryFailed.tr;
       CustSnackBar.show(
         title: errorMessage,
         message: e.toString(),
@@ -268,7 +273,9 @@ class DeviceService extends GetxService {
     _model.isPortrait = mediaQuery.orientation == Orientation.portrait;
 
     // 判斷是否為平板或手機設備（平板通常最短邊 >= 600）
-    if (!_model.isWeb && !_model.isDesktop && (_model.isIOS || _model.isAndroid)) {
+    if (!_model.isWeb &&
+        !_model.isDesktop &&
+        (_model.isIOS || _model.isAndroid)) {
       _model.isTablet = _model.physicalSize.shortestSide >= 600;
       _model.isIPad = _model.isIOS && _model.isTablet;
       _model.isAndroidPad = _model.isAndroid && _model.isTablet;
@@ -289,15 +296,20 @@ class DeviceService extends GetxService {
     }
 
     // 計算最小比例
-    _model.minScale = _model.scaleWidth < _model.scaleHeight ? _model.scaleWidth : _model.scaleHeight;
+    _model.minScale = _model.scaleWidth < _model.scaleHeight
+        ? _model.scaleWidth
+        : _model.scaleHeight;
 
     // 確認產品是否支援該裝置
-    _model.isSupportedDevice = (_model.isTablet || _model.isMobile) && _model.minScale != 0.0;
+    _model.isSupportedDevice =
+        (_model.isTablet || _model.isMobile) && _model.minScale != 0.0;
 
     // double_extension.dart 參數設置
     scaleMin = _model.minScale;
-    scaleWidth = _model.scaleWidth; // Top-level variable from extension_double.dart
-    scaleHeight = _model.scaleHeight; // Top-level variable from extension_double.dart
+    scaleWidth =
+        _model.scaleWidth; // Top-level variable from extension_double.dart
+    scaleHeight =
+        _model.scaleHeight; // Top-level variable from extension_double.dart
   }
 }
 
@@ -524,7 +536,8 @@ class _CameraPageState extends State<_CameraPage> {
                             ? const Padding(
                                 padding: EdgeInsets.all(15),
                                 child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
                                   strokeWidth: 3,
                                 ),
                               )

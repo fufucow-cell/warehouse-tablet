@@ -40,7 +40,8 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -52,20 +53,23 @@ class DialogCategoryCreateWidget extends StatelessWidget {
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: true,
                   );
                   final isSuccess = await onConfirm(outputModel);
 
                   if (isSuccess) {
                     controller.interactive(
-                      EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                      EnumDialogCategoryCreateWidgetInteractive
+                          .tapDialogConfirmButton,
                       data: context,
                     );
                   }
 
                   controller.interactive(
-                    EnumDialogCategoryCreateWidgetInteractive.tapDialogConfirmButton,
+                    EnumDialogCategoryCreateWidgetInteractive
+                        .tapDialogConfirmButton,
                     data: false,
                   );
                 },
@@ -122,7 +126,8 @@ class _Body extends StatelessWidget {
                   data: str,
                 ),
                 onDelete: () => controller.interactive(
-                  EnumDialogCategoryCreateWidgetInteractive.tapClearLevel2Button,
+                  EnumDialogCategoryCreateWidgetInteractive
+                      .tapClearLevel2Button,
                 ),
               ),
             ],
@@ -176,13 +181,15 @@ class _DropdownField extends StatelessWidget {
             child: CustTextDropdownButton(
               selectedValue: selectedValue,
               values: visibleValues,
-              buttonTextColor: selectedValue == null ? EnumColor.textSecondary.color : null,
+              buttonTextColor:
+                  selectedValue == null ? EnumColor.textSecondary.color : null,
               menuMaxHeight: 290.0.scale,
               onValueSelected: onValueSelected,
             ),
           ),
         ),
-        if (selectedValue != null && selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
+        if (selectedValue != null &&
+            selectedValue != EnumLocale.optionPleaseSelect.tr) ...[
           SizedBox(width: 12.0.scale),
           ActionButton(
             eImage: EnumImage.cTrash3,

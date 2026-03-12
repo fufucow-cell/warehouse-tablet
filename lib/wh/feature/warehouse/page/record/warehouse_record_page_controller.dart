@@ -23,7 +23,8 @@ class WarehouseRecordPageController extends GetxController {
   List<int> get columnRatioRx => _model.columnRatio;
   String get avatarUrl => _service.userAvatar;
   RxReadonly<List<CombineRecord>?> get allLogsRx => _model.allLogs.readonly;
-  RxReadonly<List<CombineRecord>> get visibleLogsRx => _model.visibleLogs.readonly;
+  RxReadonly<List<CombineRecord>> get visibleLogsRx =>
+      _model.visibleLogs.readonly;
   RxReadonly<bool> get isShowFilterMenuRx => _model.isShowFilterMenu.readonly;
   RxReadonly<EnumFilterType> get filterTypeRx => _model.filterType.readonly;
 

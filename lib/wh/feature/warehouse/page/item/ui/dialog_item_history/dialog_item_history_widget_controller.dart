@@ -58,7 +58,8 @@ class DialogItemHistoryWidgetController extends GetxController {
     );
 
     if (response != null) {
-      _model.records.value = RecordUtil.combineItemRecords(response, isItemLog: true);
+      _model.records.value =
+          RecordUtil.combineItemRecords(response, isItemLog: true);
     }
   }
 }

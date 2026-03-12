@@ -107,7 +107,10 @@ enum EnumColor {
     return switch (themeService.currentTheme) {
       EnumThemeMode.light => data.light,
       EnumThemeMode.dark => data.dark,
-      EnumThemeMode.system => themeService.getThemeFromSystem == EnumThemeMode.light ? data.light : data.dark,
+      EnumThemeMode.system =>
+        themeService.getThemeFromSystem == EnumThemeMode.light
+            ? data.light
+            : data.dark,
     };
   }
 }

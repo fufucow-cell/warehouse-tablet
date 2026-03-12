@@ -1,7 +1,11 @@
-import 'package:get/get.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/model/reservation_item_model.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/reservation_reservable_page.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/datum.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/datum.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 part 'reservation_main_page_interactive.dart';
 part 'reservation_main_page_route.dart';
@@ -10,305 +14,190 @@ class ReservationMainPageController extends GetxController {
   // MARK: - Properties
 
   final _model = ReservationMainPageModel();
-  final ReservationService _service = ReservationService.instance;
+  ReservationService get _service => ReservationService.instance;
+
+  RxReadonly<List<ReservableItemModel>?> get reservableItemsRx => _model.reservableItems.readonly;
+  RxReadonly<List<RecordItemModel>?> get recordItemsRx => _model.recordItems.readonly;
+  RxReadonly<List<RecordItemModel>?> get recordFilterItemsRx => _model.recordFilterItems.readonly;
+  RxReadonly<EnumMainPageTabIndex> get selectedTabIndexRx => _model.selectedTabIndex.readonly;
+  RxReadonly<EnumOrderType> get selectedRecordTypeRx => _model.selectedRecordType.readonly;
+
+  List<String> get getTabTitles => EnumMainPageTabIndex.values.map((item) => item.title).toList();
+  List<String> get getRecordTypeTitles => EnumOrderType.values.map((item) => item.title).toList();
 
   // MARK: - Init
 
-  ReservationMainPageController();
+  ReservationMainPageController() {
+    ReservationService.register();
+  }
 
   @override
   void onInit() {
     super.onInit();
-    _interactive(EnumReservationMainPageInteractive.loadItems);
+    _addListeners();
+    _queryReservableItems();
   }
 
-  // MARK: - Methods
+  // MARK: - Public Method
 
-  bool get isLoading {
-    return _model.isLoading;
+  void setContext(BuildContext context) {
+    _service.setContext(context);
   }
 
-  String? get errorMessage {
-    return _model.errorMessage;
-  }
-
-  List<ReservationItemModel> get items {
-    return _model.items;
-  }
-
-  ReservationItemModel? get selectedItem {
-    final String? selectedId = _model.selectedItemId;
-    if (selectedId == null || selectedId.isEmpty) {
-      return null;
-    }
-    for (final ReservationItemModel item in _model.items) {
-      if (item.id == selectedId) {
-        return item;
-      }
-    }
-    return null;
-  }
-
-  int get selectedInfoTabIndex {
-    return _model.selectedInfoTabIndex;
-  }
-
-  String get selectedDateOption {
-    return _model.selectedDateOption;
-  }
-
-  String get selectedStartTime {
-    return _model.selectedStartTime;
-  }
-
-  String get selectedEndTime {
-    return _model.selectedEndTime;
-  }
-
-  String get selectedPeople {
-    return _model.selectedPeople;
-  }
-
-  List<String> get dateOptions {
-    final ReservationItemModel? item = selectedItem;
-    if (item == null) {
-      return const <String>[];
-    }
-    return item
-        .buildAvailableDates(maxDays: 45)
-        .map((DateTime date) => _dateToIso(date))
-        .toList();
-  }
-
-  List<String> get timeOptions {
-    final ReservationItemModel? item = selectedItem;
-    final DateTime? date = _safeParseIso(_model.selectedDateOption);
-    if (item == null || date == null) {
-      return const <String>[];
-    }
-    final List<ReservationTimeSlot> slots = item.buildSlotsForDate(date);
-    final Set<String> options = <String>{};
-    for (final ReservationTimeSlot slot in slots) {
-      options.add(slot.start);
-      options.add(slot.end);
-    }
-    if (options.isEmpty) {
-      return const <String>[];
-    }
-    final List<String> sorted = options.toList();
-    sorted.sort();
-    return sorted;
-  }
-
-  List<String> get peopleOptions {
-    return const <String>[
-      '1位成人 / 0位孩童',
-      '2位成人 / 0位孩童',
-      '2位成人 / 1位孩童',
-      '3位成人 / 0位孩童',
-    ];
-  }
-
-  void selectItem(String itemId) {
-    _model.selectedItemId = itemId;
-    _resetBookingSelectionForCurrentItem();
-    update();
-  }
-
-  void setInfoTabIndex(int index) {
-    _model.selectedInfoTabIndex = index;
-    update();
-  }
-
-  void setDateOption(String value) {
-    _model.selectedDateOption = value;
-    final List<String> times = timeOptions;
-    if (!times.contains(_model.selectedStartTime)) {
-      _model.selectedStartTime = times.isNotEmpty ? times.first : '';
-    }
-    if (!times.contains(_model.selectedEndTime)) {
-      if (times.length >= 2) {
-        _model.selectedEndTime = times[1];
-      } else {
-        _model.selectedEndTime = times.isNotEmpty ? times.first : '';
-      }
-    }
-    update();
-  }
-
-  void setStartTime(String value) {
-    _model.selectedStartTime = value;
-    final List<String> times = timeOptions;
-    if (times.contains(_model.selectedEndTime) && _model.selectedEndTime.compareTo(value) > 0) {
-      update();
-      return;
-    }
-    final int index = times.indexOf(value);
-    if (index >= 0 && index + 1 < times.length) {
-      _model.selectedEndTime = times[index + 1];
-    }
-    update();
-  }
-
-  void setEndTime(String value) {
-    _model.selectedEndTime = value;
-    update();
-  }
-
-  void setPeopleOption(String value) {
-    _model.selectedPeople = value;
-    update();
-  }
-
-  int get totalHours {
-    int toMinute(String value) {
-      final List<String> split = value.split(':');
-      if (split.length != 2) {
-        return 0;
-      }
-      final int hour = int.tryParse(split[0]) ?? 0;
-      final int minute = int.tryParse(split[1]) ?? 0;
-      return hour * 60 + minute;
-    }
-
-    final int startMinute = toMinute(_model.selectedStartTime);
-    final int endMinute = toMinute(_model.selectedEndTime);
-    if (endMinute <= startMinute) {
-      return 1;
-    }
-    final int diff = endMinute - startMinute;
-    return (diff / 60).ceil();
-  }
-
-  int get totalPrice {
-    final int unitPrice = selectedItem?.unitPrice ?? 0;
-    return unitPrice * totalHours;
-  }
-
-  Future<void> refreshItems() async {
-    await _interactive(EnumReservationMainPageInteractive.loadItems);
-  }
-
-  Future<void> reserveItem(ReservationItemModel item) async {
-    await _interactive(
-      EnumReservationMainPageInteractive.tapReserve,
-      data: item,
-    );
-  }
-
-  Future<void> loadItems() async {
-    _model.isLoading = true;
-    _model.errorMessage = null;
-    update();
-
-    try {
-      final List<ReservationItemModel> result = await _service.fetchOpenItems();
-      _model.items = result;
-      if (_model.items.isNotEmpty) {
-        final bool selectedStillExists = _model.items.any((ReservationItemModel e) => e.id == _model.selectedItemId);
-        if (!selectedStillExists) {
-          _model.selectedItemId = _model.items.first.id;
+  EnumDataLoadStatus get dataLoadStatus {
+    switch (selectedTabIndexRx.value) {
+      case EnumMainPageTabIndex.reservable:
+        final items = reservableItemsRx.value;
+        if (items == null) {
+          return EnumDataLoadStatus.loading;
+        } else if (items.isEmpty) {
+          return EnumDataLoadStatus.empty;
         }
-        _resetBookingSelectionForCurrentItem();
-      } else {
-        _model.selectedItemId = null;
-        _model.selectedDateOption = '';
-        _model.selectedStartTime = '';
-        _model.selectedEndTime = '';
-      }
-    } on Object catch (error) {
-      _model.errorMessage = '讀取預約項目失敗: $error';
-      _model.items = <ReservationItemModel>[];
-      _model.selectedItemId = null;
-      _model.selectedDateOption = '';
-      _model.selectedStartTime = '';
-      _model.selectedEndTime = '';
-    } finally {
-      _model.isLoading = false;
-      update();
+        return EnumDataLoadStatus.success;
+      case EnumMainPageTabIndex.record:
+        final items = _filterRecordItems();
+
+        if (items == null) {
+          return EnumDataLoadStatus.loading;
+        } else if (items.isEmpty) {
+          return EnumDataLoadStatus.empty;
+        }
+
+        return EnumDataLoadStatus.success;
     }
   }
 
-  Future<String> submitBooking() async {
-    final ReservationItemModel? item = selectedItem;
-    if (item == null) {
-      throw Exception('尚未選擇預約項目');
-    }
-    final DateTime? selectedDate = _safeParseIso(_model.selectedDateOption);
-    if (selectedDate == null) {
-      throw Exception('尚未選擇日期');
-    }
-    if (_model.selectedStartTime.isEmpty || _model.selectedEndTime.isEmpty) {
-      throw Exception('尚未選擇時段');
-    }
+  // MARK: - Private Method
 
-    final int? startMs = _toEpochMs(selectedDate, _model.selectedStartTime);
-    final int? endMs = _toEpochMs(selectedDate, _model.selectedEndTime);
-    if (startMs == null || endMs == null || endMs <= startMs) {
-      throw Exception('時段選擇不正確');
-    }
-
-    final int peopleCount = _extractPeopleCount(_model.selectedPeople);
-    return _service.createBookingOrder(
-      itemId: item.id,
-      bookingStartAt: startMs,
-      bookingEndAt: endMs,
-      peopleCount: peopleCount,
-      userName: 'App User',
-      userPhone: '0912345678',
-      note: '',
+  void _addListeners() {
+    ever<List<ReservableItem>?>(
+      _service.openItemsRx.rx,
+      _toReservableItemModel,
+    );
+    ever<List<RecordItem>?>(
+      _service.recordItemsRx.rx,
+      _toRecordItemModel,
     );
   }
 
-  void _resetBookingSelectionForCurrentItem() {
-    final List<String> dates = dateOptions;
-    _model.selectedDateOption = dates.isNotEmpty ? dates.first : '';
+  void _toReservableItemModel(List<ReservableItem>? items) {
+    final List<ReservableItem> safe = items ?? <ReservableItem>[];
+    final List<ReservableItemModel> result = safe.map((item) {
+      return ReservableItemModel(
+        name: item.name ?? '',
+        reservationKey: item.reservationKey ?? '',
+        categoryLv1Text: item.categoryLv1Text ?? '',
+        categoryLv2Text: item.categoryLv2Text ?? '',
+        categoryLv3Text: item.categoryLv3Text ?? '',
+        description: item.description ?? '',
+        specification: item.specification ?? '',
+        notice: item.notice ?? '',
+        durationMinutes: item.durationMinutes ?? 0,
+        startAt: item.startAt ?? 0,
+        endAt: item.endAt ?? 0,
+        cancelTimeRange: item.cancelTimeRange ?? 0,
+        perBookingPeopleLimit: item.perBookingPeopleLimit ?? 0,
+        totalPeopleLimit: item.totalPeopleLimit ?? 0,
+        fee: item.fee ?? 0,
+        paymentType: EnumReservationPaymentType.fromIndex(item.paymentType ?? 0),
+        dateRuleType: EnumReservationDateRuleType.fromIndex(item.dateRuleType ?? 0),
+        bookingLimitType: EnumReservationBookingLimitType.fromIndex(item.bookingLimitType ?? 0),
+        isPublished: item.isPublished ?? true,
+      );
+    }).toList();
 
-    final List<String> times = timeOptions;
-    if (times.length >= 2) {
-      _model.selectedStartTime = times.first;
-      _model.selectedEndTime = times[1];
-    } else if (times.length == 1) {
-      _model.selectedStartTime = times.first;
-      _model.selectedEndTime = times.first;
+    _model.reservableItems.value = result;
+  }
+
+  void _toRecordItemModel(List<RecordItem>? items) {
+    final List<RecordItem> safe = items ?? <RecordItem>[];
+    final List<RecordItemModel> result = safe.map((item) {
+      final itemInfo = item.itemReservableInfo;
+      final user = item.userInfo;
+      final community = item.communityInfo;
+
+      return RecordItemModel(
+        id: item.id ?? '',
+        orderId: item.orderId ?? '',
+        controlKey: item.controlKey ?? '',
+        bookingStartAt: DateTime.fromMillisecondsSinceEpoch(item.bookingStartAt ?? 0),
+        bookingEndAt: DateTime.fromMillisecondsSinceEpoch(item.bookingEndAt ?? 0),
+        createdAt: DateTime.fromMillisecondsSinceEpoch(item.createdAt ?? 0),
+        orderType: EnumOrderType.fromCustIndex(item.orderType ?? -1),
+        ticketType: EnumTicketType.fromIndex(item.ticketType ?? 0),
+        totalAmount: item.totalAmount ?? 0,
+        itemReservableInfo: ReservableItemModel(
+          name: itemInfo?.name ?? '',
+          reservationKey: itemInfo?.reservationKey ?? '',
+          categoryLv1Text: itemInfo?.categoryLv1Text ?? '',
+          categoryLv2Text: itemInfo?.categoryLv2Text ?? '',
+          categoryLv3Text: itemInfo?.categoryLv3Text ?? '',
+          description: itemInfo?.description ?? '',
+          specification: itemInfo?.specification ?? '',
+          notice: itemInfo?.notice ?? '',
+          durationMinutes: itemInfo?.durationMinutes ?? 0,
+          startAt: itemInfo?.startAt ?? 0,
+          endAt: itemInfo?.endAt ?? 0,
+          cancelTimeRange: itemInfo?.cancelTimeRange ?? 0,
+          perBookingPeopleLimit: itemInfo?.perBookingPeopleLimit ?? 0,
+          totalPeopleLimit: itemInfo?.totalPeopleLimit ?? 0,
+          fee: itemInfo?.fee ?? 0,
+          paymentType: EnumReservationPaymentType.fromIndex(
+            itemInfo?.paymentType ?? 0,
+          ),
+          dateRuleType: EnumReservationDateRuleType.fromIndex(
+            itemInfo?.dateRuleType ?? 0,
+          ),
+          bookingLimitType: EnumReservationBookingLimitType.fromIndex(
+            itemInfo?.bookingLimitType ?? 0,
+          ),
+          isPublished: itemInfo?.isPublished ?? true,
+        ),
+        userInfo: RecordUserInfoModel(
+          id: user?.id ?? '',
+          name: user?.name ?? '',
+          phone: user?.phone ?? '',
+          email: user?.email ?? '',
+        ),
+        communityInfo: RecordCommunityInfoModel(
+          communityId: community?.communityId ?? '',
+          communityName: community?.communityName ?? '',
+          householdId: community?.householdId ?? '',
+          householdName: community?.householdName ?? '',
+          address: community?.address ?? '',
+        ),
+      );
+    }).toList();
+
+    _model.recordItems.value = result;
+    _model.recordFilterItems.value = _filterRecordItems();
+  }
+
+  List<RecordItemModel>? _filterRecordItems() {
+    final items = recordItemsRx.value;
+
+    if (items == null) {
+      _model.recordFilterItems.value = null;
+    } else if (items.isEmpty) {
+      _model.recordFilterItems.value = [];
+    }
+
+    final recordType = selectedRecordTypeRx.value;
+
+    if (recordType == EnumOrderType.all) {
+      _model.recordFilterItems.value = items;
     } else {
-      _model.selectedStartTime = '';
-      _model.selectedEndTime = '';
+      _model.recordFilterItems.value = items!.where((item) => item.orderType == recordType).toList();
     }
+
+    return _model.recordFilterItems.value;
   }
 
-  String _dateToIso(DateTime date) {
-    final String y = date.year.toString().padLeft(4, '0');
-    final String m = date.month.toString().padLeft(2, '0');
-    final String d = date.day.toString().padLeft(2, '0');
-    return '$y-$m-$d';
+  void _queryReservableItems({bool isCache = true}) {
+    _service.fetchOpenItems(isCache: isCache);
   }
 
-  DateTime? _safeParseIso(String iso) {
-    final String value = iso.trim();
-    if (value.isEmpty) {
-      return null;
-    }
-    return DateTime.tryParse(value);
-  }
-
-  int _extractPeopleCount(String text) {
-    final RegExp digitReg = RegExp(r'(\d+)位成人');
-    final Match? match = digitReg.firstMatch(text);
-    return int.tryParse(match?.group(1) ?? '1') ?? 1;
-  }
-
-  int? _toEpochMs(DateTime date, String hhmm) {
-    final List<String> split = hhmm.split(':');
-    if (split.length != 2) {
-      return null;
-    }
-    final int? hour = int.tryParse(split[0]);
-    final int? minute = int.tryParse(split[1]);
-    if (hour == null || minute == null) {
-      return null;
-    }
-    final DateTime local = DateTime(date.year, date.month, date.day, hour, minute);
-    return local.millisecondsSinceEpoch;
+  void _queryRecordItems({bool isCache = true}) {
+    _service.fetchRecordItems(isCache: isCache);
   }
 }

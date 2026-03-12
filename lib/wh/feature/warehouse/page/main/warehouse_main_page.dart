@@ -22,7 +22,8 @@ class WarehouseMainPage extends StatefulWidget {
   State<WarehouseMainPage> createState() => _WarehouseMainPageState();
 }
 
-class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTickerProviderStateMixin {
+class _WarehouseMainPageState extends State<WarehouseMainPage>
+    with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -85,7 +86,8 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
           statusBarColor: EnumColor.backgroundPrimary.color,
           statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
           systemNavigationBarColor: EnumColor.backgroundPrimary.color,
-          systemNavigationBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+          systemNavigationBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark,
         ),
         child: Scaffold(
           appBar: AppBar(
@@ -105,7 +107,9 @@ class _WarehouseMainPageState extends State<WarehouseMainPage> with SingleTicker
                       ),
                     ),
                     FirstBackgroundCard(
-                      child: controller.isLoadingRx.value ? _shimmerContent : tabBarView,
+                      child: controller.isLoadingRx.value
+                          ? _shimmerContent
+                          : tabBarView,
                     ),
                   ],
                 ),

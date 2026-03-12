@@ -43,7 +43,8 @@ class DialogCabinetEditWidget extends StatelessWidget {
                 isLoading: isLoading,
                 onCancel: () {
                   controller.interactive(
-                    EnumDialogCabinetEditWidgetInteractive.tapDialogCancelButton,
+                    EnumDialogCabinetEditWidgetInteractive
+                        .tapDialogCancelButton,
                     data: context,
                   );
                 },
@@ -111,7 +112,8 @@ class _CabinetListField extends StatelessWidget {
                   return Column(
                     children: [
                       _CabinetField(editModel: model),
-                      if (index < editModels.length - 1) SizedBox(height: 12.0.scale),
+                      if (index < editModels.length - 1)
+                        SizedBox(height: 12.0.scale),
                     ],
                   );
                 },

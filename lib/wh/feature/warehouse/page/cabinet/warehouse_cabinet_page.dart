@@ -20,7 +20,9 @@ class WarehouseCabinetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WarehouseCabinetPageController>(
-      init: Get.isRegistered<WarehouseCabinetPageController>() ? null : WarehouseCabinetPageController(),
+      init: Get.isRegistered<WarehouseCabinetPageController>()
+          ? null
+          : WarehouseCabinetPageController(),
       builder: (controller) {
         return SecondBackgroundCard(
           child: Column(
@@ -36,7 +38,8 @@ class WarehouseCabinetPage extends StatelessWidget {
                         return const _RoomCardShimmer();
                       }
 
-                      final visibleCabinets = controller.allVisibleCabinetsRx.value ?? [];
+                      final visibleCabinets =
+                          controller.allVisibleCabinetsRx.value ?? [];
 
                       return Column(
                         children: [
@@ -49,7 +52,8 @@ class WarehouseCabinetPage extends StatelessWidget {
                                     12.0.scale,
                                   ), // Add padding for shadow (blurRadius + spreadRadius)
                                   physics: const ClampingScrollPhysics(),
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
                                     crossAxisSpacing: 32.0.scale,
                                     mainAxisSpacing: 32.0.scale,
@@ -178,10 +182,12 @@ class _RoomItemCountInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final roomQuantity = roomCabinetInfo.cabinets.fold(0, (sum, cabinet) => sum + (cabinet.quantity));
+    final roomQuantity = roomCabinetInfo.cabinets
+        .fold(0, (sum, cabinet) => sum + (cabinet.quantity));
     final cabinetsCount = roomCabinetInfo.cabinets.length;
     return CustTextWidget(
-      EnumLocale.warehouseTotalCabinetAndItem.trArgs(['$cabinetsCount', '$roomQuantity']),
+      EnumLocale.warehouseTotalCabinetAndItem
+          .trArgs(['$cabinetsCount', '$roomQuantity']),
       size: 22.0.scale,
     );
   }

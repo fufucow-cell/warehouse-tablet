@@ -6,10 +6,12 @@ class AirConditionerEnergyMonitoringPage extends StatefulWidget {
   const AirConditionerEnergyMonitoringPage({super.key});
 
   @override
-  State<AirConditionerEnergyMonitoringPage> createState() => _AirConditionerEnergyMonitoringPageState();
+  State<AirConditionerEnergyMonitoringPage> createState() =>
+      _AirConditionerEnergyMonitoringPageState();
 }
 
-class _AirConditionerEnergyMonitoringPageState extends State<AirConditionerEnergyMonitoringPage> {
+class _AirConditionerEnergyMonitoringPageState
+    extends State<AirConditionerEnergyMonitoringPage> {
   // Hard code values
   String selectedTimeFilter = '日'; // 日, 月, 年
   DateTime selectedDate = DateTime.now();
@@ -57,19 +59,24 @@ class _AirConditionerEnergyMonitoringPageState extends State<AirConditionerEnerg
     if (selectedTimeFilter == '日') {
       // 0 ~ 23 hr (日用電量較小，範圍 0.5-4 kWh)
       return List.generate(24, (index) {
-        final y = 1.5 + (index % 5) * 0.3 + (index % 3) * 0.2 + (index % 7) * 0.15;
+        final y =
+            1.5 + (index % 5) * 0.3 + (index % 3) * 0.2 + (index % 7) * 0.15;
         return FlSpot(index.toDouble(), y);
       });
     } else if (selectedTimeFilter == '月') {
       // 1 ~ 31 日 (月累積用電量中等，範圍 30-100 kWh)
       return List.generate(31, (index) {
-        final y = 40.0 + (index % 7) * 5.0 + (index % 4) * 4.0 + (index % 3) * 3.0;
+        final y =
+            40.0 + (index % 7) * 5.0 + (index % 4) * 4.0 + (index % 3) * 3.0;
         return FlSpot(index.toDouble(), y);
       });
     } else {
       // 1 ~ 12 月 (年累積用電量最大，範圍 800-1500 kWh)
       return List.generate(12, (index) {
-        final y = 900.0 + (index % 4) * 80.0 + (index % 3) * 60.0 + (index % 5) * 40.0;
+        final y = 900.0 +
+            (index % 4) * 80.0 +
+            (index % 3) * 60.0 +
+            (index % 5) * 40.0;
         return FlSpot(index.toDouble(), y);
       });
     }
@@ -362,7 +369,8 @@ class _ChartSection extends StatelessWidget {
       );
     }
 
-    final maxY = chartData.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+    final maxY =
+        chartData.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
     final yAxisMax = maxY;
     const yAxisMin = 0.0;
     final yAxisInterval = yAxisMax / 5;
@@ -421,17 +429,21 @@ class _ChartSection extends StatelessWidget {
                       );
                     }).toList();
                   },
-                  tooltipPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  tooltipPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                   tooltipMargin: 8,
                   getTooltipColor: (_) => Colors.white,
-                  tooltipBorder: const BorderSide(color: Color(0xFF7C7C7C), width: 1),
+                  tooltipBorder:
+                      const BorderSide(color: Color(0xFF7C7C7C), width: 1),
                   tooltipRoundedRadius: 8,
                 ),
               ),
               titlesData: FlTitlesData(
                 show: true,
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 bottomTitles: AxisTitles(
                   axisNameWidget: Padding(
                     padding: const EdgeInsets.only(top: 8),

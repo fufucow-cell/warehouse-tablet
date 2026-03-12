@@ -118,7 +118,8 @@ class AppLoginPageController extends GetxController {
   }
 
   void _updateButtonStates() {
-    final isValid = emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
+    final isValid =
+        emailController.text.isNotEmpty && passwordController.text.isNotEmpty;
     _model.isButtonEnabled.value = isValid;
   }
 }

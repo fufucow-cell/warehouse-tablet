@@ -14,5 +14,6 @@ class WarehouseItemSmartResponseModel with _$WarehouseItemSmartResponseModel {
     int? confidence,
   }) = _WarehouseItemSmartResponseModel;
 
-  factory WarehouseItemSmartResponseModel.fromJson(Map<String, dynamic> json) => _$WarehouseItemSmartResponseModelFromJson(json);
+  factory WarehouseItemSmartResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$WarehouseItemSmartResponseModelFromJson(json);
 }

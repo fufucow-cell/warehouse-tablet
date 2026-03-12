@@ -19,12 +19,18 @@ class DialogItemSearchWidgetController extends GetxController {
   DialogItemSearchWidgetModel get model => _model;
 
   RxReadonly<String> get searchTextRx => _model.searchText.readonly;
-  RxReadonly<Category?> get selectedCategoryLevel1Rx => _model.selectedCategoryLevel1.readonly;
-  RxReadonly<Category?> get selectedCategoryLevel2Rx => _model.selectedCategoryLevel2.readonly;
-  RxReadonly<Category?> get selectedCategoryLevel3Rx => _model.selectedCategoryLevel3.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel1Rx => _model.visibleCategoryLevel1.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel2Rx => _model.visibleCategoryLevel2.readonly;
-  RxReadonly<List<Category>> get visibleCategoryLevel3Rx => _model.visibleCategoryLevel3.readonly;
+  RxReadonly<Category?> get selectedCategoryLevel1Rx =>
+      _model.selectedCategoryLevel1.readonly;
+  RxReadonly<Category?> get selectedCategoryLevel2Rx =>
+      _model.selectedCategoryLevel2.readonly;
+  RxReadonly<Category?> get selectedCategoryLevel3Rx =>
+      _model.selectedCategoryLevel3.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel1Rx =>
+      _model.visibleCategoryLevel1.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel2Rx =>
+      _model.visibleCategoryLevel2.readonly;
+  RxReadonly<List<Category>> get visibleCategoryLevel3Rx =>
+      _model.visibleCategoryLevel3.readonly;
 
   // MARK: - Init
 
@@ -95,14 +101,20 @@ class DialogItemSearchWidgetController extends GetxController {
     final level1Id = _model.selectedCategoryLevel1.value?.id;
     _model.selectedCategoryLevel2.value = null;
     _model.selectedCategoryLevel3.value = null;
-    _model.visibleCategoryLevel2.value = _model.visibleCategoryLevel1.value.firstWhereOrNull((cat) => cat.id == level1Id)?.children ?? [];
+    _model.visibleCategoryLevel2.value = _model.visibleCategoryLevel1.value
+            .firstWhereOrNull((cat) => cat.id == level1Id)
+            ?.children ??
+        [];
     _model.visibleCategoryLevel3.value = [];
   }
 
   void _genCategoryLevel3List() {
     final level2Id = _model.selectedCategoryLevel2.value?.id;
     _model.selectedCategoryLevel3.value = null;
-    _model.visibleCategoryLevel3.value = _model.visibleCategoryLevel2.value.firstWhereOrNull((cat) => cat.id == level2Id)?.children ?? [];
+    _model.visibleCategoryLevel3.value = _model.visibleCategoryLevel2.value
+            .firstWhereOrNull((cat) => cat.id == level2Id)
+            ?.children ??
+        [];
   }
 
   void _changeSelectedCategoryLevel1(Category? category) {

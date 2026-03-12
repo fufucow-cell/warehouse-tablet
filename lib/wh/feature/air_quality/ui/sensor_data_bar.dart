@@ -25,7 +25,8 @@ class SensorDataBar extends StatelessWidget {
     final key = data.keys.first;
     switch (key) {
       case '溫度':
-        return Image.asset('lib/wh/parent/assets/images/common/temperature.png');
+        return Image.asset(
+            'lib/wh/parent/assets/images/common/temperature.png');
       case '濕度':
         return Image.asset('lib/wh/parent/assets/images/common/humidity.png');
       case 'CO2':
@@ -99,7 +100,11 @@ class SensorDataBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         physics: const ClampingScrollPhysics(),
         child: Row(
-          children: [const SizedBox(width: 32), ...widgets, const SizedBox(width: 32)],
+          children: [
+            const SizedBox(width: 32),
+            ...widgets,
+            const SizedBox(width: 32)
+          ],
         ),
       ),
     );

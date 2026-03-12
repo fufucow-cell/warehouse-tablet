@@ -12,11 +12,13 @@ part 'dialog_cabinet_create_widget_route.dart';
 class DialogCabinetCreateWidgetController extends GetxController {
   // MARK: - Properties
 
-  final DialogCabinetCreateWidgetModel _model = DialogCabinetCreateWidgetModel();
+  final DialogCabinetCreateWidgetModel _model =
+      DialogCabinetCreateWidgetModel();
   final _service = WarehouseService.instance;
   final nameController = TextEditingController();
   RxReadonly<bool> get isLoadingRx => _model.isLoading.readonly;
-  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx => _model.selectedRoom.readonly;
+  RxReadonly<WarehouseNameIdModel?> get selectedRoomRx =>
+      _model.selectedRoom.readonly;
 
   // MARK: - Init
 

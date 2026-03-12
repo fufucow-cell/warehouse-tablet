@@ -46,7 +46,8 @@ class _CircuitBreakerMainPageState extends State<CircuitBreakerMainPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CircuitBreakerDataRecordPage(),
+                            builder: (context) =>
+                                const CircuitBreakerDataRecordPage(),
                           ),
                         );
                       },
@@ -54,7 +55,8 @@ class _CircuitBreakerMainPageState extends State<CircuitBreakerMainPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CircuitBreakerNotificationRecordPage(),
+                            builder: (context) =>
+                                const CircuitBreakerNotificationRecordPage(),
                           ),
                         );
                       },
@@ -62,7 +64,8 @@ class _CircuitBreakerMainPageState extends State<CircuitBreakerMainPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CircuitBreakerAlertSettingPage(),
+                            builder: (context) =>
+                                const CircuitBreakerAlertSettingPage(),
                           ),
                         );
                       },
@@ -191,15 +194,21 @@ class _SwitchControl extends StatelessWidget {
                       width: 93.1,
                       height: 151.2,
                       decoration: BoxDecoration(
-                        color: isOn ? const Color(0xFFFB9B51) : const Color(0xFFE0E0E0),
+                        color: isOn
+                            ? const Color(0xFFFB9B51)
+                            : const Color(0xFFE0E0E0),
                         borderRadius: BorderRadius.circular(5.6),
                       ),
                       child: Center(
                         child: TweenAnimationBuilder<Color?>(
                           duration: const Duration(milliseconds: 300),
                           tween: ColorTween(
-                            begin: isOn ? const Color(0xFFFB9B51) : const Color(0xFF292929),
-                            end: isOn ? const Color(0xFF292929) : const Color(0xFFFB9B51),
+                            begin: isOn
+                                ? const Color(0xFFFB9B51)
+                                : const Color(0xFF292929),
+                            end: isOn
+                                ? const Color(0xFF292929)
+                                : const Color(0xFFFB9B51),
                           ),
                           builder: (context, color, child) {
                             return Image.asset(

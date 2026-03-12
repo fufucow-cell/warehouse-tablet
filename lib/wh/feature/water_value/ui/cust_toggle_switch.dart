@@ -22,7 +22,8 @@ class CustToggleSwitch extends StatelessWidget {
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(
-                  color: value ? const Color(0xFFFB9B51) : const Color(0xFF666666),
+                  color:
+                      value ? const Color(0xFFFB9B51) : const Color(0xFF666666),
                   borderRadius: BorderRadius.circular(21.0),
                 ),
               ),

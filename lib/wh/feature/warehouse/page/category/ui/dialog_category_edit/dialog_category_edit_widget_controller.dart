@@ -63,7 +63,8 @@ class DialogCategoryEditWidgetController extends GetxController {
       return null;
     }
 
-    String? parentId = _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id;
+    String? parentId =
+        _model.selectedLevel2.value?.id ?? _model.selectedLevel1.value?.id;
 
     if (parentId == null && (_model.category?.parentId?.isNotEmpty ?? false)) {
       parentId = '';
@@ -106,7 +107,8 @@ class DialogCategoryEditWidgetController extends GetxController {
   }
 
   Category? _getLevel1CategoryByName(String name) {
-    return _service.getAllCategories.firstWhereOrNull((cat) => cat.name == name);
+    return _service.getAllCategories
+        .firstWhereOrNull((cat) => cat.name == name);
   }
 
   Category? _getLevel2CategoryByName(String name) {
@@ -152,13 +154,15 @@ class DialogCategoryEditWidgetController extends GetxController {
 
     if (!level1IsMaxRx.value && selectedLevel1Rx.value != null) {
       if (!level2IsMaxRx.value && selectedLevel2Rx.value != null) {
-        resultName = '${selectedLevel1Rx.value!.name!} > ${selectedLevel2Rx.value!.name!} > ${_model.combineName}';
+        resultName =
+            '${selectedLevel1Rx.value!.name!} > ${selectedLevel2Rx.value!.name!} > ${_model.combineName}';
       } else {
         resultName = '${selectedLevel1Rx.value!.name!} > ${_model.combineName}';
       }
     }
 
-    _model.hintText.value = EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
+    _model.hintText.value =
+        EnumLocale.createCategoryCurrentCategory.trArgs([resultName]);
   }
 
   void _genCombineName() {
@@ -193,18 +197,21 @@ class DialogCategoryEditWidgetController extends GetxController {
       return;
     }
 
-    final level2Cat = CategoryUtil.getAllLevel2Categories.firstWhereOrNull((lv2Cat) => lv2Cat.id == cat.parentId);
+    final level2Cat = CategoryUtil.getAllLevel2Categories
+        .firstWhereOrNull((lv2Cat) => lv2Cat.id == cat.parentId);
 
     if (level2Cat != null) {
       _model.selectedLevel2.value = level2Cat;
 
-      final level1Cat = _service.getAllCategories.firstWhereOrNull((lv1Cat) => lv1Cat.id == level2Cat.parentId);
+      final level1Cat = _service.getAllCategories
+          .firstWhereOrNull((lv1Cat) => lv1Cat.id == level2Cat.parentId);
 
       if (level1Cat != null) {
         _model.selectedLevel1.value = level1Cat;
       }
     } else {
-      final level1Cat = _service.getAllCategories.firstWhereOrNull((lv1Cat) => lv1Cat.id == cat.parentId);
+      final level1Cat = _service.getAllCategories
+          .firstWhereOrNull((lv1Cat) => lv1Cat.id == cat.parentId);
 
       if (level1Cat != null) {
         _model.selectedLevel1.value = level1Cat;

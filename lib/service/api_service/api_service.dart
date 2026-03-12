@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:engo_terminal_app3/service/api_service/api_service_model.dart' as home_service;
+import 'package:engo_terminal_app3/service/api_service/api_service_model.dart'
+    as home_service;
 import 'package:engo_terminal_app3/wh/parent/constant/error_map_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/base_api_model.dart';
-import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart' as warehouse_service;
+import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service_model.dart'
+    as warehouse_service;
 import 'package:engo_terminal_app3/wh/parent/service/environment_service/environment_service.dart';
 import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service.dart';
 import 'package:engo_terminal_app3/wh/parent/service/log_service/log_service_model.dart';
@@ -102,7 +104,8 @@ class ApiService extends GetxService {
         },
       );
 
-      final queryParams = isGet && reqData != null ? _removeNullValues(reqData) : null;
+      final queryParams =
+          isGet && reqData != null ? _removeNullValues(reqData) : null;
 
       final response = await dio.request<dynamic>(
         '/${apiInfo.path}',
@@ -279,7 +282,8 @@ class ApiService extends GetxService {
     }
 
     int? code = raw['code'] as int? ?? raw['external_code'] as int?;
-    String? message = raw['message'] as String? ?? raw['external_message'] as String?;
+    String? message =
+        raw['message'] as String? ?? raw['external_message'] as String?;
     final rawData = raw['data'];
 
     final finalCode = code ?? EnumErrorMap.code201.code;
@@ -382,7 +386,8 @@ class ApiService extends GetxService {
         );
 
         if (apiInfo != null && _isMock(apiInfo)) {
-          final isEmptyResponse = options.extra[BaseApiResponseModel.name] as bool? ?? false;
+          final isEmptyResponse =
+              options.extra[BaseApiResponseModel.name] as bool? ?? false;
 
           if (isEmptyResponse) {
             final successResponse = Response<dynamic>(
@@ -440,7 +445,8 @@ class ApiService extends GetxService {
         options.headers['Content-Type'] = 'application/json';
         options.headers['App-Code'] = 'APP_MEMBER';
         // options.headers['Authorization'] = _envService.getAccessToken;
-        options.headers['current-member-id'] = '00000000-0000-0000-0000-000000000000';
+        options.headers['current-member-id'] =
+            '00000000-0000-0000-0000-000000000000';
         final isGet = options.method.toUpperCase() == 'GET';
 
         // Only apply cache mechanism for GET requests and when cache is enabled
@@ -464,7 +470,8 @@ class ApiService extends GetxService {
 
             if (options.headers.isNotEmpty) {
               try {
-                headerStr = const JsonEncoder.withIndent('  ').convert(options.headers);
+                headerStr =
+                    const JsonEncoder.withIndent('  ').convert(options.headers);
               } on Object {
                 headerStr = options.headers.toString();
               }
@@ -488,14 +495,18 @@ class ApiService extends GetxService {
           // Check if same request is in progress and cancel new request
           if (_model.requestCache.containsKey(cacheKey)) {
             final existingCache = _model.requestCache[cacheKey];
-            if (existingCache != null && !existingCache.cancelToken.isCancelled) {
+            if (existingCache != null &&
+                !existingCache.cancelToken.isCancelled) {
               // Cancel the new request
               final cancelToken = CancelToken();
-              cancelToken.cancel('Duplicate request cancelled - request in progress');
+              cancelToken
+                  .cancel('Duplicate request cancelled - request in progress');
 
               final method = options.method.toUpperCase();
               final url = '${options.baseUrl}${options.path}';
-              final queryParams = options.queryParameters.isNotEmpty ? '?${Uri(queryParameters: options.queryParameters).query}' : '';
+              final queryParams = options.queryParameters.isNotEmpty
+                  ? '?${Uri(queryParameters: options.queryParameters).query}'
+                  : '';
 
               LogService.instance.i(
                 EnumLogType.apiRequest,
@@ -525,14 +536,17 @@ class ApiService extends GetxService {
         }
 
         final method = options.method.toUpperCase();
-        final queryParams = options.queryParameters.isNotEmpty ? '?${Uri(queryParameters: options.queryParameters).query}' : '';
+        final queryParams = options.queryParameters.isNotEmpty
+            ? '?${Uri(queryParameters: options.queryParameters).query}'
+            : '';
         final fullUrl = '${options.baseUrl}${options.path}$queryParams';
 
         String dataStr = '';
         if (options.data != null) {
           try {
             if (options.data is Map || options.data is List) {
-              dataStr = const JsonEncoder.withIndent('  ').convert(options.data);
+              dataStr =
+                  const JsonEncoder.withIndent('  ').convert(options.data);
             } else {
               dataStr = options.data.toString();
             }
@@ -544,7 +558,8 @@ class ApiService extends GetxService {
         String headerStr = '';
         if (options.headers.isNotEmpty) {
           try {
-            headerStr = const JsonEncoder.withIndent('  ').convert(options.headers);
+            headerStr =
+                const JsonEncoder.withIndent('  ').convert(options.headers);
           } on Object {
             headerStr = options.headers.toString();
           }
@@ -574,7 +589,8 @@ class ApiService extends GetxService {
   InterceptorsWrapper _apiResponseInterceptor() {
     return InterceptorsWrapper(
       onResponse: (response, handler) {
-        final cacheKey = response.requestOptions.extra[_model.cacheKeyExtra] as String?;
+        final cacheKey =
+            response.requestOptions.extra[_model.cacheKeyExtra] as String?;
         final isGet = response.requestOptions.method.toUpperCase() == 'GET';
 
         // Only cache GET requests
@@ -592,13 +608,15 @@ class ApiService extends GetxService {
         }
 
         final statusCode = response.statusCode ?? 0;
-        final url = '${response.requestOptions.baseUrl}${response.requestOptions.path}';
+        final url =
+            '${response.requestOptions.baseUrl}${response.requestOptions.path}';
 
         String dataStr = '';
         if (response.data != null) {
           try {
             if (response.data is Map || response.data is List) {
-              dataStr = const JsonEncoder.withIndent('  ').convert(response.data);
+              dataStr =
+                  const JsonEncoder.withIndent('  ').convert(response.data);
             } else {
               dataStr = response.data.toString();
             }
@@ -616,7 +634,8 @@ class ApiService extends GetxService {
       },
       onError: (error, handler) {
         // Remove from cache if request was cancelled or failed
-        final cacheKey = error.requestOptions.extra[_model.cacheKeyExtra] as String?;
+        final cacheKey =
+            error.requestOptions.extra[_model.cacheKeyExtra] as String?;
         if (cacheKey != null) {
           _model.requestCache.remove(cacheKey);
         }
@@ -631,7 +650,8 @@ class ApiService extends GetxService {
         if (error.response?.data != null) {
           try {
             if (error.response!.data is Map || error.response!.data is List) {
-              responseDataStr = const JsonEncoder.withIndent('  ').convert(error.response!.data);
+              responseDataStr = const JsonEncoder.withIndent('  ')
+                  .convert(error.response!.data);
             } else {
               responseDataStr = error.response!.data.toString();
             }

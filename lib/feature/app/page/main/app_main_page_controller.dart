@@ -7,7 +7,8 @@ class AppMainPageController extends GetxController {
   final _appService = AppService.instance;
   EnumAppMainTabItem get getSelectedItem => _model.selectedItem.value;
   String get getInitRoutePath => AppService.rootRouter.path;
-  GlobalKey<NavigatorState> get getNavigatorKey => _appService.nestedNavigatorKey;
+  GlobalKey<NavigatorState> get getNavigatorKey =>
+      _appService.nestedNavigatorKey;
   AppService get getRouterUtil => _appService;
 
   // MARK: - Init
@@ -26,7 +27,8 @@ class AppMainPageController extends GetxController {
 
   // MARK: - Public Method
 
-  Route<dynamic> generateRoute(RouteSettings settings) => getRouterUtil.generateRoute(settings);
+  Route<dynamic> generateRoute(RouteSettings settings) =>
+      getRouterUtil.generateRoute(settings);
 
   // MARK: - Private Method
 

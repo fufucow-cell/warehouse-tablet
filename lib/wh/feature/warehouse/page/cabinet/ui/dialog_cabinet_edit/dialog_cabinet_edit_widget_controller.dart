@@ -86,7 +86,10 @@ class DialogCabinetEditWidgetController extends GetxController {
 
   List<String> getRoomNameList({bool isExcludeOldRoomName = false}) {
     if (isExcludeOldRoomName) {
-      return _service.rooms.where((room) => room.name != getRoom.roomName).map((room) => room.name ?? '').toList();
+      return _service.rooms
+          .where((room) => room.name != getRoom.roomName)
+          .map((room) => room.name ?? '')
+          .toList();
     }
 
     return _service.rooms.map((room) => room.name ?? '').toList();
@@ -97,7 +100,8 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   Future<bool> showDeleteHint() async {
-    final deleteCabnites = getEditModels.where((editModel) => editModel.isDelete).toList();
+    final deleteCabnites =
+        getEditModels.where((editModel) => editModel.isDelete).toList();
 
     if (deleteCabnites.isNotEmpty) {
       final isConfirm = await _routerHandle<bool>(
@@ -117,7 +121,8 @@ class DialogCabinetEditWidgetController extends GetxController {
   }
 
   void _checkData() {
-    final cabinets = CabinetUtil.getAllCabinetsFromRoom(roomId: _model.room?.roomId);
+    final cabinets =
+        CabinetUtil.getAllCabinetsFromRoom(roomId: _model.room?.roomId);
 
     if (cabinets.isEmpty) {
       return;
@@ -143,14 +148,18 @@ class DialogCabinetEditWidgetController extends GetxController {
     final newRoomId = getRoomIdByName(newRoomName);
 
     if (newRoomId != null) {
-      editModel.newRoom = WarehouseNameIdModel(id: newRoomId, name: newRoomName);
+      editModel.newRoom =
+          WarehouseNameIdModel(id: newRoomId, name: newRoomName);
     }
 
     _model.editModels.value = copyEditModels;
   }
 
   String _genDeleteHintMessage(List<EditModel> editModels) {
-    final names = editModels.map((editModel) => editModel.oldCabinet.name).map((e) => '「$e」').join(', ');
+    final names = editModels
+        .map((editModel) => editModel.oldCabinet.name)
+        .map((e) => '「$e」')
+        .join(', ');
     return EnumLocale.editCabinetDeleteMultipleMessage.trArgs([names]);
   }
 

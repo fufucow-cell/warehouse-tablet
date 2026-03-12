@@ -5,7 +5,8 @@ part 'warehouse_cabinet_delete_request_model.freezed.dart';
 part 'warehouse_cabinet_delete_request_model.g.dart';
 
 @freezed
-class WarehouseCabinetDeleteRequestModel with _$WarehouseCabinetDeleteRequestModel {
+class WarehouseCabinetDeleteRequestModel
+    with _$WarehouseCabinetDeleteRequestModel {
   factory WarehouseCabinetDeleteRequestModel({
     @JsonKey(name: 'household_id') String? householdId,
     @JsonKey(name: 'user_name') String? userName,

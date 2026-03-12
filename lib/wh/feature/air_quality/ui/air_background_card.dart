@@ -31,7 +31,8 @@ class AirBackgroundCard extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/wh/parent/assets/images/light/bg_content.png'),
+                    image: AssetImage(
+                        'lib/wh/parent/assets/images/light/bg_content.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -41,7 +42,8 @@ class AirBackgroundCard extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/wh/parent/assets/images/common/background_wind1.png'),
+                    image: AssetImage(
+                        'lib/wh/parent/assets/images/common/background_wind1.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -58,7 +60,8 @@ class AirBackgroundCard extends StatelessWidget {
                     height: 700.0,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('lib/wh/parent/assets/images/common/background_wind2.png'),
+                        image: AssetImage(
+                            'lib/wh/parent/assets/images/common/background_wind2.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -74,7 +77,8 @@ class AirBackgroundCard extends StatelessWidget {
                   height: 1100.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('lib/wh/parent/assets/images/common/background_wind2.png'),
+                      image: AssetImage(
+                          'lib/wh/parent/assets/images/common/background_wind2.png'),
                       fit: BoxFit.cover,
                     ),
                   ),

@@ -38,6 +38,8 @@ enum EnumTimeFilter {
       ];
 
   static EnumTimeFilter fromString(String? value) {
-    return EnumTimeFilter.getChartList.firstWhereOrNull((e) => e.title == value) ?? EnumTimeFilter.yearMonthDay;
+    return EnumTimeFilter.getChartList
+            .firstWhereOrNull((e) => e.title == value) ??
+        EnumTimeFilter.yearMonthDay;
   }
 }

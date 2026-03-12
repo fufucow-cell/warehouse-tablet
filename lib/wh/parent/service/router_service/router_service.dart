@@ -79,7 +79,8 @@ class RouterService extends GetxService {
 
       BuildContext? currentContext = context;
       while (currentContext != null) {
-        final materialApp = currentContext.findAncestorWidgetOfExactType<MaterialApp>();
+        final materialApp =
+            currentContext.findAncestorWidgetOfExactType<MaterialApp>();
         if (materialApp != null) {
           final navigator = Navigator.maybeOf(
             currentContext,

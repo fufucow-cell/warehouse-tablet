@@ -16,10 +16,13 @@ class LocaleService extends GetxService {
   StorageService get _storageService => StorageService.instance;
   LocaleTranslation get getCurrentTranslation => _model.currentTranslation;
   LocaleTranslation get getDefaultTranslation => _model.defaultTranslation;
-  Locale get getCurrentLocale => _convertLocaleFromTranslation(getCurrentTranslation);
+  Locale get getCurrentLocale =>
+      _convertLocaleFromTranslation(getCurrentTranslation);
   String get getCurrentLocaleCode => _convertCodeFromLocale(getCurrentLocale);
-  Locale get getDefaultLocale => _convertLocaleFromTranslation(getDefaultTranslation);
-  List<LocaleTranslation> get getAvalibleLocales => LocaleServiceModel.avalibleLocales;
+  Locale get getDefaultLocale =>
+      _convertLocaleFromTranslation(getDefaultTranslation);
+  List<LocaleTranslation> get getAvalibleLocales =>
+      LocaleServiceModel.avalibleLocales;
   static LocaleService get instance => Get.find<LocaleService>();
 
   // MARK: - Init
@@ -52,7 +55,8 @@ class LocaleService extends GetxService {
         return true;
       }
 
-      final translation = _convertTranslationFromLocale(newTranslation.getLocale);
+      final translation =
+          _convertTranslationFromLocale(newTranslation.getLocale);
 
       if (_envService.getIsModuleMode) {
         _model.currentTranslation = newTranslation;
@@ -88,7 +92,9 @@ class LocaleService extends GetxService {
   List<Locale> get getSupportedLocales {
     return LocaleServiceModel.avalibleLocales
         .map(
-          (e) => e.countryCode != null ? Locale(e.languageCode, e.countryCode) : Locale(e.languageCode),
+          (e) => e.countryCode != null
+              ? Locale(e.languageCode, e.countryCode)
+              : Locale(e.languageCode),
         )
         .toList();
   }
@@ -102,7 +108,8 @@ class LocaleService extends GetxService {
     }
 
     try {
-      final String? localeCode = _storageService.read<String>(EnumStorageKey.locale);
+      final String? localeCode =
+          _storageService.read<String>(EnumStorageKey.locale);
 
       if (localeCode != null && localeCode.isNotEmpty) {
         final savedTranslation = _convertTranslationfromCode(localeCode);
@@ -217,7 +224,9 @@ class LocaleService extends GetxService {
     final parts = code.split('_');
     final language = parts[0];
     final country = parts.length > 1 ? parts[1] : null;
-    final sameLanguage = LocaleServiceModel.avalibleLocales.where((e) => e.languageCode == language).toList();
+    final sameLanguage = LocaleServiceModel.avalibleLocales
+        .where((e) => e.languageCode == language)
+        .toList();
 
     if (sameLanguage.isEmpty) {
       return _model.defaultTranslation;

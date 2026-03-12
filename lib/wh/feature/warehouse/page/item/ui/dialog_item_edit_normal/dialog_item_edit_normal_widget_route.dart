@@ -8,7 +8,8 @@ enum EnumDialogItemEditNormalWidgetRoute {
   showErrorSnackBar,
 }
 
-extension DialogItemEditNormalWidgetRouteExtension on DialogItemEditNormalWidgetController {
+extension DialogItemEditNormalWidgetRouteExtension
+    on DialogItemEditNormalWidgetController {
   Future<T?> _routerHandle<T>(
     EnumDialogItemEditNormalWidgetRoute type, {
     dynamic data,

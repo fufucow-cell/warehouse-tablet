@@ -23,7 +23,9 @@ class ReservationItemModel {
       name: (json['name'] ?? '').toString(),
       category: (json['category'] ?? '').toString(),
       isPublished: json['isPublished'] == true,
-      data: (json['data'] is Map<String, dynamic>) ? json['data'] as Map<String, dynamic> : <String, dynamic>{},
+      data: (json['data'] is Map<String, dynamic>)
+          ? json['data'] as Map<String, dynamic>
+          : <String, dynamic>{},
       createdAt: _tryParseDateTime(json['createdAt']),
       updatedAt: _tryParseDateTime(json['updatedAt']),
     );
@@ -38,14 +40,19 @@ class ReservationItemModel {
     if (raw is! List) {
       return <String>[];
     }
-    return raw.map((dynamic e) => e.toString()).where((String e) => e.isNotEmpty).toList();
+    return raw
+        .map((dynamic e) => e.toString())
+        .where((String e) => e.isNotEmpty)
+        .toList();
   }
 
   String get categoryText {
     final String lv1 = (data['locationLv1'] ?? '').toString().trim();
     final String lv2 = (data['locationLv2'] ?? '').toString().trim();
     final String lv3 = (data['locationLv3'] ?? '').toString().trim();
-    final List<String> parts = <String>[lv1, lv2, lv3].where((String value) => value.isNotEmpty).toList();
+    final List<String> parts = <String>[lv1, lv2, lv3]
+        .where((String value) => value.isNotEmpty)
+        .toList();
     return parts.join(' / ');
   }
 
@@ -129,7 +136,8 @@ class ReservationItemModel {
         if (parsed == null) {
           continue;
         }
-        final DateTime dateOnly = DateTime(parsed.year, parsed.month, parsed.day);
+        final DateTime dateOnly =
+            DateTime(parsed.year, parsed.month, parsed.day);
         if (dateOnly.isBefore(today)) {
           continue;
         }
@@ -236,7 +244,8 @@ class ReservationItemModel {
     if (raw is! List) {
       return <ReservationTimeSlot>[];
     }
-    final String target = '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+    final String target =
+        '${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
     final List<ReservationTimeSlot> slots = <ReservationTimeSlot>[];
     for (final dynamic row in raw) {
       if (row is! Map<String, dynamic>) {

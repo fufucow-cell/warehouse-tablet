@@ -29,12 +29,14 @@ enum EnumFilterType {
             DateTime.now().month,
             DateTime.now().day,
           ),
-        EnumFilterType.lastWeek => DateTime.now().subtract(const Duration(days: 7)),
+        EnumFilterType.lastWeek =>
+          DateTime.now().subtract(const Duration(days: 7)),
         EnumFilterType.all => null,
       };
 
   static EnumFilterType fromString(String? value) {
-    return EnumFilterType.values.firstWhereOrNull((e) => e.title == value) ?? EnumFilterType.all;
+    return EnumFilterType.values.firstWhereOrNull((e) => e.title == value) ??
+        EnumFilterType.all;
   }
 }
 
@@ -68,7 +70,9 @@ enum EnumOperateType {
       };
 
   static EnumOperateType fromInt(int? value) {
-    return EnumOperateType.values.firstWhereOrNull((e) => e.index - 1 == value) ?? EnumOperateType.unknown;
+    return EnumOperateType.values
+            .firstWhereOrNull((e) => e.index - 1 == value) ??
+        EnumOperateType.unknown;
   }
 }
 
@@ -90,7 +94,9 @@ enum EnumEntityType {
       };
 
   static EnumEntityType fromInt(int? value) {
-    return EnumEntityType.values.firstWhereOrNull((e) => e.index - 1 == value) ?? EnumEntityType.unknown;
+    return EnumEntityType.values
+            .firstWhereOrNull((e) => e.index - 1 == value) ??
+        EnumEntityType.unknown;
   }
 }
 
@@ -111,20 +117,26 @@ enum EnumTagType {
   String get title => switch (this) {
         EnumTagType.unknown => EnumLocale.unknown.tr,
         EnumTagType.createItem => EnumLocale.createItem.tr,
-        EnumTagType.createCabinet => EnumLocale.warehouseTagTypeCreateCabinet.tr,
+        EnumTagType.createCabinet =>
+          EnumLocale.warehouseTagTypeCreateCabinet.tr,
         EnumTagType.createCategory => EnumLocale.createCategory.tr,
         EnumTagType.updateItem => EnumLocale.warehouseTagTypeUpdateItem.tr,
-        EnumTagType.updateCabinet => EnumLocale.warehouseTagTypeUpdateCabinet.tr,
-        EnumTagType.updateCategory => EnumLocale.warehouseTagTypeUpdateCategory.tr,
-        EnumTagType.updateQuantity => EnumLocale.warehouseTagTypeUpdateQuantity.tr,
+        EnumTagType.updateCabinet =>
+          EnumLocale.warehouseTagTypeUpdateCabinet.tr,
+        EnumTagType.updateCategory =>
+          EnumLocale.warehouseTagTypeUpdateCategory.tr,
+        EnumTagType.updateQuantity =>
+          EnumLocale.warehouseTagTypeUpdateQuantity.tr,
         EnumTagType.updatePosition => EnumLocale.editPosition.tr,
         EnumTagType.deleteItem => EnumLocale.warehouseTagTypeDeleteItem.tr,
-        EnumTagType.deleteCabinet => EnumLocale.warehouseTagTypeDeleteCabinet.tr,
+        EnumTagType.deleteCabinet =>
+          EnumLocale.warehouseTagTypeDeleteCabinet.tr,
         EnumTagType.deleteCategory => EnumLocale.deleteCategory.tr,
       };
 
   static EnumTagType fromInt(int? value) {
-    return EnumTagType.values.firstWhereOrNull((e) => e.index == value) ?? EnumTagType.unknown;
+    return EnumTagType.values.firstWhereOrNull((e) => e.index == value) ??
+        EnumTagType.unknown;
   }
 
   EnumOperateType get operateType => switch (this) {

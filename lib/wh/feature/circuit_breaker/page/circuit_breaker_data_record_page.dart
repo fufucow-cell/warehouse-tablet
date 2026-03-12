@@ -8,10 +8,12 @@ class CircuitBreakerDataRecordPage extends StatefulWidget {
   const CircuitBreakerDataRecordPage({super.key});
 
   @override
-  State<CircuitBreakerDataRecordPage> createState() => _CircuitBreakerDataRecordPageState();
+  State<CircuitBreakerDataRecordPage> createState() =>
+      _CircuitBreakerDataRecordPageState();
 }
 
-class _CircuitBreakerDataRecordPageState extends State<CircuitBreakerDataRecordPage> {
+class _CircuitBreakerDataRecordPageState
+    extends State<CircuitBreakerDataRecordPage> {
   String _selectedTimeFilter = '日';
   DateTime _selectedDate = DateTime.now();
 
@@ -103,7 +105,8 @@ class _CircuitBreakerDataRecordPageState extends State<CircuitBreakerDataRecordP
       initialDate: _selectedDate,
       firstDate: DateTime(2020),
       lastDate: DateTime(2030),
-      initialDatePickerMode: _selectedTimeFilter == '日' ? DatePickerMode.day : DatePickerMode.year,
+      initialDatePickerMode:
+          _selectedTimeFilter == '日' ? DatePickerMode.day : DatePickerMode.year,
     );
 
     if (picked != null) {
@@ -252,7 +255,8 @@ class _FilterTab extends StatelessWidget {
           title,
           style: TextStyle(
             fontSize: 22.4,
-            color: isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
+            color:
+                isSelected ? const Color(0xFFFFFFFF) : const Color(0xFF666666),
           ),
         ),
       ),
@@ -380,7 +384,8 @@ class _ChartSection extends StatelessWidget {
       return const Center(child: CustEmptyWidget());
     }
 
-    final maxY = chartData.map((e) => e.value).reduce((a, b) => a > b ? a : b) * 1.2;
+    final maxY =
+        chartData.map((e) => e.value).reduce((a, b) => a > b ? a : b) * 1.2;
     final yAxisInterval = maxY / 5;
 
     return Row(
@@ -404,18 +409,24 @@ class _ChartSection extends StatelessWidget {
               minY: 0,
               titlesData: FlTitlesData(
                 show: true,
-                rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                rightTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                topTitles:
+                    const AxisTitles(sideTitles: SideTitles(showTitles: false)),
                 bottomTitles: AxisTitles(
                   sideTitles: SideTitles(
                     showTitles: true,
                     getTitlesWidget: (value, meta) {
                       if (timeFilter == '日' && value.toInt() % 4 == 0) {
-                        return Text('${value.toInt()}:00', style: const TextStyle(fontSize: 16.8));
-                      } else if (timeFilter == '月' && (value.toInt() + 1) % 5 == 1) {
-                        return Text('${value.toInt() + 1}', style: const TextStyle(fontSize: 16.8));
+                        return Text('${value.toInt()}:00',
+                            style: const TextStyle(fontSize: 16.8));
+                      } else if (timeFilter == '月' &&
+                          (value.toInt() + 1) % 5 == 1) {
+                        return Text('${value.toInt() + 1}',
+                            style: const TextStyle(fontSize: 16.8));
                       } else if (timeFilter == '年') {
-                        return Text('${value.toInt() + 1}', style: const TextStyle(fontSize: 16.8));
+                        return Text('${value.toInt() + 1}',
+                            style: const TextStyle(fontSize: 16.8));
                       }
                       return const SizedBox.shrink();
                     },
@@ -430,7 +441,8 @@ class _ChartSection extends StatelessWidget {
                     getTitlesWidget: (value, meta) {
                       return Text(
                         value.toInt().toString(),
-                        style: const TextStyle(fontSize: 16.8, color: Color(0xFF666666)),
+                        style: const TextStyle(
+                            fontSize: 16.8, color: Color(0xFF666666)),
                         textAlign: TextAlign.right,
                       );
                     },
@@ -442,7 +454,8 @@ class _ChartSection extends StatelessWidget {
                 drawVerticalLine: false,
                 horizontalInterval: yAxisInterval,
                 getDrawingHorizontalLine: (value) {
-                  return const FlLine(color: Color(0xFFE0E0E0), strokeWidth: 0.7);
+                  return const FlLine(
+                      color: Color(0xFFE0E0E0), strokeWidth: 0.7);
                 },
               ),
               borderData: FlBorderData(

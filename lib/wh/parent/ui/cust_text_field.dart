@@ -57,7 +57,9 @@ class CustTextField extends StatelessWidget {
           ),
       height: height ?? 70.0.scale,
       decoration: BoxDecoration(
-        color: isReadOnly ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
+        color: isReadOnly
+            ? EnumColor.backgroundSecondary.color
+            : EnumColor.backgroundDropdown.color,
         border: Border.all(
           width: 1.0.scale,
           color: EnumColor.lineBorder.color,
@@ -89,7 +91,8 @@ class CustTextField extends StatelessWidget {
           textAlign: textAlign,
           maxLength: maxLength,
           inputFormatters: () {
-            final formatters = List<TextInputFormatter>.from(textFieldType.inputFormatters);
+            final formatters =
+                List<TextInputFormatter>.from(textFieldType.inputFormatters);
 
             if (maxLength != null) {
               formatters.add(LengthLimitingTextInputFormatter(maxLength));

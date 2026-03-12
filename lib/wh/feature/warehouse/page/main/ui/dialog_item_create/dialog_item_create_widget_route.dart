@@ -7,7 +7,8 @@ enum EnumDialogItemCreateWidgetRoute {
   showSnackBar,
 }
 
-extension DialogItemCreateWidgetRouteExtension on DialogItemCreateWidgetController {
+extension DialogItemCreateWidgetRouteExtension
+    on DialogItemCreateWidgetController {
   void _routerHandle(
     EnumDialogItemCreateWidgetRoute type,
     dynamic data,

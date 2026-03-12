@@ -5,7 +5,8 @@ enum EnumSmartHomeSettingPageInteractive {
   tapTheme,
 }
 
-extension SmartHomeSettingPageUserEventExtension on SmartHomeSettingPageController {
+extension SmartHomeSettingPageUserEventExtension
+    on SmartHomeSettingPageController {
   void interactive(
     EnumSmartHomeSettingPageInteractive type, {
     dynamic data,
