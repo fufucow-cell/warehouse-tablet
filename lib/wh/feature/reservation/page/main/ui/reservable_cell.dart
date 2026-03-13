@@ -1,7 +1,10 @@
 import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_network_image.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +19,7 @@ class ReservableCell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ReservationMainPageController>();
+    final imageUrl = item.imageUrls.firstOrNull ?? '';
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -38,22 +42,20 @@ class ReservableCell extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Left: preview image
-              Container(
-                width: 260.0.scale,
-                height: 170.0.scale,
-                decoration: BoxDecoration(
-                  color: EnumColor.backgroundSecondary.color,
-                  borderRadius: BorderRadius.circular(16.0.scale),
-                ),
-                child: Icon(
-                  Icons.image_outlined,
-                  size: 48.0.scale,
-                  color: EnumColor.iconSecondary.color,
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: EnumColor.backgroundSecondary.color,
+                    borderRadius: BorderRadius.circular(16.0.scale),
+                  ),
+                  child: CustNetworkImage(url: imageUrl, fit: BoxFit.cover),
                 ),
               ),
               SizedBox(width: 24.0.scale),
               // Right: info
               Expanded(
+                flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -117,58 +119,39 @@ class _InfoBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textSize = 36.0.scale;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustTextWidget(
           title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 30.0.scale,
-            fontWeight: FontWeight.w700,
-            color: EnumColor.textPrimary.color,
-          ),
+          size: textSize,
+          weightType: EnumFontWeightType.bold,
+          color: EnumColor.textPrimary.color,
         ),
         SizedBox(height: 8.0.scale),
-        Text(
+        CustTextWidget(
           location,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 22.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 4.0.scale),
-        Text(
+        CustTextWidget(
           description,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 22.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 8.0.scale),
-        Text(
+        CustTextWidget(
           priceLabel,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 22.0.scale,
-            color: EnumColor.textSecondary.color,
-          ),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 4.0.scale),
-        Text(
+        CustTextWidget(
           paymentLabel,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 22.0.scale,
-            color: paymentColor,
-          ),
+          size: textSize * 0.8,
+          color: paymentColor,
         ),
       ],
     );

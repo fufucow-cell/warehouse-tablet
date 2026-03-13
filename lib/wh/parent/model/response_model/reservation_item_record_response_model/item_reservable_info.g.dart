@@ -17,7 +17,7 @@ _$ItemReservableInfoImpl _$$ItemReservableInfoImplFromJson(
       description: json['description'] as String?,
       specification: json['specification'] as String?,
       notice: json['notice'] as String?,
-      durationMinutes: (json['duration_minutes'] as num?)?.toInt(),
+      hourLimit: (json['hour_limit'] as num?)?.toInt(),
       startAt: (json['start_at'] as num?)?.toInt(),
       endAt: (json['end_at'] as num?)?.toInt(),
       cancelTimeRange: (json['cancel_time_range'] as num?)?.toInt(),
@@ -29,6 +29,9 @@ _$ItemReservableInfoImpl _$$ItemReservableInfoImplFromJson(
       dateRuleType: (json['date_rule_type'] as num?)?.toInt(),
       bookingLimitType: (json['booking_limit_type'] as num?)?.toInt(),
       isPublished: json['is_published'] as bool?,
+      imageUrls: (json['image_urls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$ItemReservableInfoImplToJson(
@@ -42,7 +45,7 @@ Map<String, dynamic> _$$ItemReservableInfoImplToJson(
       'description': instance.description,
       'specification': instance.specification,
       'notice': instance.notice,
-      'duration_minutes': instance.durationMinutes,
+      'hour_limit': instance.hourLimit,
       'start_at': instance.startAt,
       'end_at': instance.endAt,
       'cancel_time_range': instance.cancelTimeRange,
@@ -53,4 +56,5 @@ Map<String, dynamic> _$$ItemReservableInfoImplToJson(
       'date_rule_type': instance.dateRuleType,
       'booking_limit_type': instance.bookingLimitType,
       'is_published': instance.isPublished,
+      'image_urls': instance.imageUrls,
     };

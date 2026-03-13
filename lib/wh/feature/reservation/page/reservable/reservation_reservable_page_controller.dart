@@ -1,7 +1,6 @@
-import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/reservation_reservable_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/ui/image_viewer.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/ui/image_viewer.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,15 +41,5 @@ class ReservationReservablePageController extends GetxController {
 
   void setDate(DateTime value) {
     _model.date.value = value;
-  }
-
-  void cancel() {
-    // API cleanup / navigation handled later
-    Get.back();
-  }
-
-  Future<void> submit() async {
-    // API wiring later
-    Get.back();
   }
 }

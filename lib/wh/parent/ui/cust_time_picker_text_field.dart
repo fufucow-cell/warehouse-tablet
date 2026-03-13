@@ -9,6 +9,7 @@ class CustTimePickerTextField extends StatefulWidget {
   final EnumTimePickerMode mode;
   final void Function(TimeOfDay) onTimeSelected;
   final String? placeholder;
+  final bool canEdit;
 
   const CustTimePickerTextField({
     super.key,
@@ -16,6 +17,7 @@ class CustTimePickerTextField extends StatefulWidget {
     this.mode = EnumTimePickerMode.hourToMinute,
     required this.onTimeSelected,
     this.placeholder,
+    this.canEdit = true,
   });
 
   @override
@@ -44,7 +46,7 @@ class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => _showTimePicker(context),
+        onTap: widget.canEdit ? () => _showTimePicker(context) : null,
         borderRadius: BorderRadius.circular(8.0.scale),
         child: Container(
           constraints: const BoxConstraints.expand(),
@@ -53,7 +55,7 @@ class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0.scale),
-            color: EnumColor.backgroundSecondary.color,
+            color: widget.canEdit ? EnumColor.backgroundPrimary.color : EnumColor.backgroundSecondary.color,
             border: Border.all(
               color: EnumColor.lineBorder.color,
               width: 1.0.scale,

@@ -1,7 +1,12 @@
-import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_network_image.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RecordCell extends StatelessWidget {
   final RecordItemModel item;
@@ -11,62 +16,62 @@ class RecordCell extends StatelessWidget {
     required this.item,
   });
 
-  String _fmt(DateTime dt) {
-    String two(int v) => v.toString().padLeft(2, '0');
-    return '${dt.year}/${two(dt.month)}/${two(dt.day)} ${two(dt.hour)}:${two(dt.minute)}';
-  }
-
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<ReservationMainPageController>();
     final info = item.itemReservableInfo;
     final locationText = [
       info.categoryLv1Text,
       info.categoryLv2Text,
       info.categoryLv3Text,
     ].where((e) => e.trim().isNotEmpty).join(' / ');
+    final imageUrl = info.imageUrls.firstOrNull ?? '';
 
     return Material(
       color: Colors.transparent,
-      child: Container(
-        padding: EdgeInsets.all(24.0.scale),
-        decoration: BoxDecoration(
-          color: EnumColor.backgroundPrimary.color,
-          borderRadius: BorderRadius.circular(20.0.scale),
-          border: Border.all(
-            width: 1.0.scale,
-            color: EnumColor.lineDividerLight.color,
+      child: InkWell(
+        onTap: () {
+          controller.interactive(EnumReservationMainPageInteractive.tapRecordItem, data: item);
+        },
+        child: Container(
+          padding: EdgeInsets.all(24.0.scale),
+          decoration: BoxDecoration(
+            color: EnumColor.backgroundPrimary.color,
+            borderRadius: BorderRadius.circular(20.0.scale),
+            border: Border.all(
+              width: 1.0.scale,
+              color: EnumColor.lineDividerLight.color,
+            ),
           ),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Left: preview image
-            Container(
-              width: 260.0.scale,
-              height: 170.0.scale,
-              decoration: BoxDecoration(
-                color: EnumColor.backgroundSecondary.color,
-                borderRadius: BorderRadius.circular(16.0.scale),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Left: preview image
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: EnumColor.backgroundSecondary.color,
+                    borderRadius: BorderRadius.circular(16.0.scale),
+                  ),
+                  child: CustNetworkImage(url: imageUrl),
+                ),
               ),
-              child: Icon(
-                Icons.image_outlined,
-                size: 48.0.scale,
-                color: EnumColor.iconSecondary.color,
+              SizedBox(width: 24.0.scale),
+              // Right: info
+              Expanded(
+                flex: 3,
+                child: _InfoBlock(
+                  title: info.name,
+                  location: locationText,
+                  startTimeText: controller.formatDateTime(item.bookingStartAt),
+                  endTimeText: controller.formatDateTime(item.bookingEndAt),
+                  orderTypeText: item.orderType.localeTitle,
+                  orderTypeColor: item.orderType.color,
+                ),
               ),
-            ),
-            SizedBox(width: 24.0.scale),
-            // Right: info
-            Expanded(
-              child: _InfoBlock(
-                title: info.name,
-                location: locationText,
-                startTimeText: _fmt(item.bookingStartAt),
-                endTimeText: _fmt(item.bookingEndAt),
-                orderTypeText: item.orderType.title,
-                orderTypeColor: item.orderType.color,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -90,58 +95,41 @@ class _InfoBlock extends StatelessWidget {
     required this.orderTypeColor,
   });
 
-  TextStyle _labelStyle() {
-    return TextStyle(
-      fontSize: 22.0.scale,
-      color: EnumColor.textSecondary.color,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final textSize = 36.0.scale;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        CustTextWidget(
           title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 30.0.scale,
-            fontWeight: FontWeight.w700,
-            color: EnumColor.textPrimary.color,
-          ),
+          size: textSize,
+          weightType: EnumFontWeightType.bold,
+          color: EnumColor.textPrimary.color,
         ),
         SizedBox(height: 8.0.scale),
-        Text(
+        CustTextWidget(
           location,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: _labelStyle(),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 8.0.scale),
-        Text(
+        CustTextWidget(
           '開始：$startTimeText',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: _labelStyle(),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 4.0.scale),
-        Text(
+        CustTextWidget(
           '結束：$endTimeText',
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: _labelStyle(),
+          size: textSize * 0.8,
+          color: EnumColor.textSecondary.color,
         ),
         SizedBox(height: 8.0.scale),
-        Text(
+        CustTextWidget(
           orderTypeText,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 22.0.scale,
-            color: orderTypeColor,
-          ),
+          size: textSize * 0.8,
+          color: orderTypeColor,
         ),
       ],
     );

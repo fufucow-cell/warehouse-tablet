@@ -12,6 +12,12 @@
       "order_type": 0,
       "ticket_type": 1,
       "total_amount": 400,
+      "updated_at": 1710140400000,
+      "payment_type": 1,
+      "ticket_created_at": 1710138600000,
+      "payment_created_at": 1710137400000,
+      "adult_count": 1,
+      "child_count": 0,
       "item_reservable_info": {
         "name": "會議室 A",
         "reservation_key": "MEETING_ROOM_A",
@@ -21,7 +27,7 @@
         "description": "適合 2~6 人的小型會議、面談，含白板與投影。",
         "specification": "桌椅 6 位、白板 1、投影 HDMI、Wi‑Fi。",
         "notice": "請於使用後將桌面復原並帶走垃圾。",
-        "duration_minutes": 60,
+        "hour_limit": 1,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 60,
@@ -31,7 +37,12 @@
         "payment_type": 1,
         "date_rule_type": 0,
         "booking_limit_type": 0,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/1/800/600",
+          "https://picsum.photos/id/2/800/600",
+          "https://picsum.photos/id/3/800/600"
+        ]
       },
       "user_info": {
         "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -57,6 +68,12 @@
       "order_type": 0,
       "ticket_type": 0,
       "total_amount": 0,
+      "updated_at": 1710226800000,
+      "payment_type": 0,
+      "ticket_created_at": null,
+      "payment_created_at": null,
+      "adult_count": 2,
+      "child_count": 1,
       "item_reservable_info": {
         "name": "游泳池",
         "reservation_key": "SWIMMING_POOL",
@@ -66,17 +83,21 @@
         "description": "室內溫水游泳池，含淋浴間。",
         "specification": "水道 4、水深 1.2m、救生員常駐。",
         "notice": "請著泳衣泳帽入場。",
-        "duration_minutes": 60,
+        "hour_limit": 2,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 60,
-        "per_booking_people_limit": 20,
+        "per_booking_people_limit": 4,
         "total_people_limit": 20,
         "fee": 0,
         "payment_type": 0,
         "date_rule_type": 0,
         "booking_limit_type": 1,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/10/800/600",
+          "https://picsum.photos/id/11/800/600"
+        ]
       },
       "user_info": {
         "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -102,6 +123,12 @@
       "order_type": 0,
       "ticket_type": 0,
       "total_amount": 150,
+      "updated_at": 1710309600000,
+      "payment_type": 2,
+      "ticket_created_at": null,
+      "payment_created_at": 1710306000000,
+      "adult_count": 1,
+      "child_count": 0,
       "item_reservable_info": {
         "name": "瑜伽教室",
         "reservation_key": "YOGA_STUDIO",
@@ -111,17 +138,23 @@
         "description": "瑜伽、伸展課程使用空間。",
         "specification": "可容納 12 人、瑜伽墊自備、音響 1。",
         "notice": "請穿著乾淨運動鞋或赤腳入場。",
-        "duration_minutes": 60,
+        "hour_limit": 1,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 180,
-        "per_booking_people_limit": 12,
+        "per_booking_people_limit": 4,
         "total_people_limit": 12,
         "fee": 150,
         "payment_type": 2,
         "date_rule_type": 0,
         "booking_limit_type": 0,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/20/800/600",
+          "https://picsum.photos/id/21/800/600",
+          "https://picsum.photos/id/22/800/600",
+          "https://picsum.photos/id/23/800/600"
+        ]
       },
       "user_info": {
         "id": "660e8400-e29b-41d4-a716-446655440001",
@@ -147,6 +180,12 @@
       "order_type": 1,
       "ticket_type": 1,
       "total_amount": 800,
+      "updated_at": 1707775200000,
+      "payment_type": 3,
+      "ticket_created_at": 1707771600000,
+      "payment_created_at": 1707770400000,
+      "adult_count": 3,
+      "child_count": 0,
       "item_reservable_info": {
         "name": "攝影棚",
         "reservation_key": "PHOTO_STUDIO",
@@ -156,7 +195,7 @@
         "description": "適合人像與商品拍攝，含基本燈具。",
         "specification": "棚燈 2、背景紙 1（白）、插座多組。",
         "notice": "道具損壞需照價賠償。",
-        "duration_minutes": 120,
+        "hour_limit": 4,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 360,
@@ -166,7 +205,11 @@
         "payment_type": 3,
         "date_rule_type": 2,
         "booking_limit_type": 1,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/30/800/600",
+          "https://picsum.photos/id/31/800/600"
+        ]
       },
       "user_info": {
         "id": "660e8400-e29b-41d4-a716-446655440001",
@@ -192,6 +235,12 @@
       "order_type": 1,
       "ticket_type": 1,
       "total_amount": 600,
+      "updated_at": 1710399600000,
+      "payment_type": 1,
+      "ticket_created_at": 1710397800000,
+      "payment_created_at": 1710397200000,
+      "adult_count": 4,
+      "child_count": 2,
       "item_reservable_info": {
         "name": "KTV 包廂",
         "reservation_key": "KTV_ROOM",
@@ -201,7 +250,7 @@
         "description": "可容納 6~10 人，含點歌機與基本音響。",
         "specification": "麥克風 2、音響 1、螢幕 1。",
         "notice": "請勿攜帶外食；離場前請確認無遺失物。",
-        "duration_minutes": 60,
+        "hour_limit": 2,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 120,
@@ -211,7 +260,12 @@
         "payment_type": 1,
         "date_rule_type": 0,
         "booking_limit_type": 0,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/40/800/600",
+          "https://picsum.photos/id/41/800/600",
+          "https://picsum.photos/id/42/800/600"
+        ]
       },
       "user_info": {
         "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -237,6 +291,12 @@
       "order_type": 2,
       "ticket_type": 0,
       "total_amount": 0,
+      "updated_at": 1710486000000,
+      "payment_type": 0,
+      "ticket_created_at": null,
+      "payment_created_at": null,
+      "adult_count": 5,
+      "child_count": 3,
       "item_reservable_info": {
         "name": "烤肉區",
         "reservation_key": "BBQ_AREA",
@@ -246,17 +306,21 @@
         "description": "提供基本烤爐與洗手台，需自備食材。",
         "specification": "烤爐 1、長桌 1、椅 8。",
         "notice": "若遇雨天可能取消，請留意公告。",
-        "duration_minutes": 60,
+        "hour_limit": 3,
         "start_at": 1773187200000,
         "end_at": 1773223200000,
         "cancel_time_range": 240,
-        "per_booking_people_limit": 8,
-        "total_people_limit": 8,
+        "per_booking_people_limit": 6,
+        "total_people_limit": 24,
         "fee": 0,
         "payment_type": 0,
         "date_rule_type": 0,
         "booking_limit_type": 1,
-        "is_published": true
+        "is_published": true,
+        "image_urls": [
+          "https://picsum.photos/id/50/800/600",
+          "https://picsum.photos/id/51/800/600"
+        ]
       },
       "user_info": {
         "id": "660e8400-e29b-41d4-a716-446655440001",

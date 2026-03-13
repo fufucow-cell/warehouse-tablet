@@ -32,8 +32,8 @@ mixin _$Datum {
   String? get description => throw _privateConstructorUsedError;
   String? get specification => throw _privateConstructorUsedError;
   String? get notice => throw _privateConstructorUsedError;
-  @JsonKey(name: 'duration_minutes')
-  int? get durationMinutes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'hour_limit')
+  int? get hourLimit => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_at')
   int? get startAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_at')
@@ -75,7 +75,7 @@ abstract class $DatumCopyWith<$Res> {
       String? description,
       String? specification,
       String? notice,
-      @JsonKey(name: 'duration_minutes') int? durationMinutes,
+      @JsonKey(name: 'hour_limit') int? hourLimit,
       @JsonKey(name: 'start_at') int? startAt,
       @JsonKey(name: 'end_at') int? endAt,
       @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,
@@ -110,7 +110,7 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
     Object? description = freezed,
     Object? specification = freezed,
     Object? notice = freezed,
-    Object? durationMinutes = freezed,
+    Object? hourLimit = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
     Object? cancelTimeRange = freezed,
@@ -156,9 +156,9 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
           ? _value.notice
           : notice // ignore: cast_nullable_to_non_nullable
               as String?,
-      durationMinutes: freezed == durationMinutes
-          ? _value.durationMinutes
-          : durationMinutes // ignore: cast_nullable_to_non_nullable
+      hourLimit: freezed == hourLimit
+          ? _value.hourLimit
+          : hourLimit // ignore: cast_nullable_to_non_nullable
               as int?,
       startAt: freezed == startAt
           ? _value.startAt
@@ -224,7 +224,7 @@ abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
       String? description,
       String? specification,
       String? notice,
-      @JsonKey(name: 'duration_minutes') int? durationMinutes,
+      @JsonKey(name: 'hour_limit') int? hourLimit,
       @JsonKey(name: 'start_at') int? startAt,
       @JsonKey(name: 'end_at') int? endAt,
       @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,
@@ -257,7 +257,7 @@ class __$$DatumImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? specification = freezed,
     Object? notice = freezed,
-    Object? durationMinutes = freezed,
+    Object? hourLimit = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
     Object? cancelTimeRange = freezed,
@@ -303,9 +303,9 @@ class __$$DatumImplCopyWithImpl<$Res>
           ? _value.notice
           : notice // ignore: cast_nullable_to_non_nullable
               as String?,
-      durationMinutes: freezed == durationMinutes
-          ? _value.durationMinutes
-          : durationMinutes // ignore: cast_nullable_to_non_nullable
+      hourLimit: freezed == hourLimit
+          ? _value.hourLimit
+          : hourLimit // ignore: cast_nullable_to_non_nullable
               as int?,
       startAt: freezed == startAt
           ? _value.startAt
@@ -367,7 +367,7 @@ class _$DatumImpl implements _Datum {
       this.description,
       this.specification,
       this.notice,
-      @JsonKey(name: 'duration_minutes') this.durationMinutes,
+      @JsonKey(name: 'hour_limit') this.hourLimit,
       @JsonKey(name: 'start_at') this.startAt,
       @JsonKey(name: 'end_at') this.endAt,
       @JsonKey(name: 'cancel_time_range') this.cancelTimeRange,
@@ -405,8 +405,8 @@ class _$DatumImpl implements _Datum {
   @override
   final String? notice;
   @override
-  @JsonKey(name: 'duration_minutes')
-  final int? durationMinutes;
+  @JsonKey(name: 'hour_limit')
+  final int? hourLimit;
   @override
   @JsonKey(name: 'start_at')
   final int? startAt;
@@ -449,7 +449,7 @@ class _$DatumImpl implements _Datum {
 
   @override
   String toString() {
-    return 'Datum(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, durationMinutes: $durationMinutes, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, imageUrls: $imageUrls)';
+    return 'Datum(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, hourLimit: $hourLimit, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, imageUrls: $imageUrls)';
   }
 
   @override
@@ -471,8 +471,8 @@ class _$DatumImpl implements _Datum {
             (identical(other.specification, specification) ||
                 other.specification == specification) &&
             (identical(other.notice, notice) || other.notice == notice) &&
-            (identical(other.durationMinutes, durationMinutes) ||
-                other.durationMinutes == durationMinutes) &&
+            (identical(other.hourLimit, hourLimit) ||
+                other.hourLimit == hourLimit) &&
             (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.endAt, endAt) || other.endAt == endAt) &&
             (identical(other.cancelTimeRange, cancelTimeRange) ||
@@ -506,7 +506,7 @@ class _$DatumImpl implements _Datum {
         description,
         specification,
         notice,
-        durationMinutes,
+        hourLimit,
         startAt,
         endAt,
         cancelTimeRange,
@@ -544,7 +544,7 @@ abstract class _Datum implements Datum {
           final String? description,
           final String? specification,
           final String? notice,
-          @JsonKey(name: 'duration_minutes') final int? durationMinutes,
+          @JsonKey(name: 'hour_limit') final int? hourLimit,
           @JsonKey(name: 'start_at') final int? startAt,
           @JsonKey(name: 'end_at') final int? endAt,
           @JsonKey(name: 'cancel_time_range') final int? cancelTimeRange,
@@ -582,8 +582,8 @@ abstract class _Datum implements Datum {
   @override
   String? get notice;
   @override
-  @JsonKey(name: 'duration_minutes')
-  int? get durationMinutes;
+  @JsonKey(name: 'hour_limit')
+  int? get hourLimit;
   @override
   @JsonKey(name: 'start_at')
   int? get startAt;

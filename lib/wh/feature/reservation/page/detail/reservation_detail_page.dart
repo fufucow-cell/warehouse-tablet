@@ -1,27 +1,26 @@
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/reservation_reservable_page_controller.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/ui/gallery_section.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/ui/info_section.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/ui/select_section.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/form_fill_section.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/gallery_section.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/info_section.dart';
+import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/image_map.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/first_background_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReservationReservablePage extends StatelessWidget {
-  final ReservableItemModel routeData;
+class ReservationDetailPage extends GetView<ReservationDetailPageController> {
+  final ReservationDetailRouteData routeData;
 
-  const ReservationReservablePage({
-    super.key,
-    required this.routeData,
-  });
+  const ReservationDetailPage({super.key, required this.routeData});
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ReservationReservablePageController>(
-      init: ReservationReservablePageController(routeData),
+    return GetBuilder<ReservationDetailPageController>(
+      init: ReservationDetailPageController(routeData),
       builder: (controller) {
         return Scaffold(
           body: FirstBackgroundCard(
@@ -49,7 +48,7 @@ class ReservationReservablePage extends StatelessWidget {
                               SizedBox(width: 18.0.scale),
                               const Expanded(
                                 flex: 1,
-                                child: SelectSection(),
+                                child: FormFillSection(),
                               ),
                             ],
                           ),
@@ -72,14 +71,14 @@ class ReservationReservablePage extends StatelessWidget {
 class _TopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ReservationReservablePageController>();
+    final controller = Get.find<ReservationDetailPageController>();
     return Row(
       children: [
         Material(
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              controller.interactive(EnumReservationReservablePageInteractive.tapBack);
+              controller.interactive(EnumReservationDetailPageInteractive.tapBack);
             },
             child: EnumImage.cArrowLeft.image(
               size: Size.square(58.0.scale),
@@ -88,18 +87,15 @@ class _TopBar extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Text(
-            controller.getReservableItem?.name ?? '',
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: 40.0.scale,
-              fontWeight: FontWeight.w700,
-              color: EnumColor.engoTextPrimary.color,
-            ),
+          child: CustTextWidget(
+            controller.getAppBarTitle,
+            size: 40.0.scale,
+            weightType: EnumFontWeightType.bold,
+            align: TextAlign.center,
+            color: EnumColor.textPrimary.color,
           ),
         ),
+        SizedBox(width: 58.0.scale),
       ],
     );
   }

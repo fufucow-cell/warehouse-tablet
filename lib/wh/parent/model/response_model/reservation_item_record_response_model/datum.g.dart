@@ -16,6 +16,12 @@ _$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
       orderType: (json['order_type'] as num?)?.toInt(),
       ticketType: (json['ticket_type'] as num?)?.toInt(),
       totalAmount: (json['total_amount'] as num?)?.toInt(),
+      updatedAt: (json['updated_at'] as num?)?.toInt(),
+      paymentType: (json['payment_type'] as num?)?.toInt(),
+      ticketCreatedAt: (json['ticket_created_at'] as num?)?.toInt(),
+      paymentCreatedAt: (json['payment_created_at'] as num?)?.toInt(),
+      adultCount: (json['adult_count'] as num?)?.toInt(),
+      childCount: (json['child_count'] as num?)?.toInt(),
       itemReservableInfo: json['item_reservable_info'] == null
           ? null
           : ItemReservableInfo.fromJson(
@@ -40,6 +46,12 @@ Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
       'order_type': instance.orderType,
       'ticket_type': instance.ticketType,
       'total_amount': instance.totalAmount,
+      'updated_at': instance.updatedAt,
+      'payment_type': instance.paymentType,
+      'ticket_created_at': instance.ticketCreatedAt,
+      'payment_created_at': instance.paymentCreatedAt,
+      'adult_count': instance.adultCount,
+      'child_count': instance.childCount,
       'item_reservable_info': instance.itemReservableInfo?.toJson(),
       'user_info': instance.userInfo?.toJson(),
       'community_info': instance.communityInfo?.toJson(),

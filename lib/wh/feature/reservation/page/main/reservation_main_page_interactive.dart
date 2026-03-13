@@ -4,6 +4,7 @@ enum EnumReservationMainPageInteractive {
   switchTabItem,
   switchRecordTypeItem,
   tapReservableItem,
+  tapRecordItem,
   tapRefresh,
 }
 
@@ -34,6 +35,8 @@ extension ReservationMainPageUserEventExtension on ReservationMainPageController
           case EnumMainPageTabIndex.record:
             _queryRecordItems(isCache: false);
         }
+      case EnumReservationMainPageInteractive.tapRecordItem:
+        await _routerHandle(EnumReservationMainPageRoute.goRecordItemDetailPage, data);
     }
   }
 }

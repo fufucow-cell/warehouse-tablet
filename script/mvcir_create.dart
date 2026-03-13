@@ -204,7 +204,7 @@ enum Enum$_featureClassName${_pageClassName}PageInteractive {
 }
 
 extension $_featureClassName${_pageClassName}PageUserEventExtension on $_featureClassName${_pageClassName}PageController {
-  Future<void> _interactive(Enum$_featureClassName${_pageClassName}PageInteractive type, {dynamic data}) async {
+  Future<void> interactive(Enum$_featureClassName${_pageClassName}PageInteractive type, {dynamic data}) async {
     switch (type) {
       case Enum$_featureClassName${_pageClassName}PageInteractive.tapSomeWidget:
         break;

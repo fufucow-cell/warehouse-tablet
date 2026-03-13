@@ -14,7 +14,7 @@ class Datum with _$Datum {
     String? description,
     String? specification,
     String? notice,
-    @JsonKey(name: 'duration_minutes') int? durationMinutes,
+    @JsonKey(name: 'hour_limit') int? hourLimit,
     @JsonKey(name: 'start_at') int? startAt,
     @JsonKey(name: 'end_at') int? endAt,
     @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,

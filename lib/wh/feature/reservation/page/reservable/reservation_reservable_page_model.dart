@@ -1,4 +1,4 @@
-import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

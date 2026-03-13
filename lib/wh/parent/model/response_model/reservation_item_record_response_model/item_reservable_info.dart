@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'item_reservable_info.freezed.dart';
@@ -15,7 +14,7 @@ class ItemReservableInfo with _$ItemReservableInfo {
     String? description,
     String? specification,
     String? notice,
-    @JsonKey(name: 'duration_minutes') int? durationMinutes,
+    @JsonKey(name: 'hour_limit') int? hourLimit,
     @JsonKey(name: 'start_at') int? startAt,
     @JsonKey(name: 'end_at') int? endAt,
     @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,
@@ -26,6 +25,7 @@ class ItemReservableInfo with _$ItemReservableInfo {
     @JsonKey(name: 'date_rule_type') int? dateRuleType,
     @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
     @JsonKey(name: 'is_published') bool? isPublished,
+    @JsonKey(name: 'image_urls') List<String>? imageUrls,
   }) = _ItemReservableInfo;
 
   factory ItemReservableInfo.fromJson(Map<String, dynamic> json) => _$ItemReservableInfoFromJson(json);

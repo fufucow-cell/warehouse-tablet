@@ -12,6 +12,7 @@ class CustDatePickerTextField extends StatefulWidget {
   final DateTime? lastDate;
   final void Function(DateTime) onDateSelected;
   final String? placeholder;
+  final bool canEdit;
 
   const CustDatePickerTextField({
     super.key,
@@ -21,6 +22,7 @@ class CustDatePickerTextField extends StatefulWidget {
     this.lastDate,
     required this.onDateSelected,
     this.placeholder,
+    this.canEdit = true,
   });
 
   @override
@@ -49,7 +51,7 @@ class _CustDatePickerTextFieldState extends State<CustDatePickerTextField> {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => _showDatePicker(context),
+        onTap: widget.canEdit ? () => _showDatePicker(context) : null,
         borderRadius: BorderRadius.circular(8.0.scale),
         child: Container(
           constraints: const BoxConstraints.expand(),
@@ -58,7 +60,7 @@ class _CustDatePickerTextFieldState extends State<CustDatePickerTextField> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0.scale),
-            color: EnumColor.backgroundSecondary.color,
+            color: widget.canEdit ? EnumColor.backgroundPrimary.color : EnumColor.backgroundSecondary.color,
             border: Border.all(
               color: EnumColor.lineBorder.color,
               width: 1.0.scale,

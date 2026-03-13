@@ -32,8 +32,8 @@ mixin _$ItemReservableInfo {
   String? get description => throw _privateConstructorUsedError;
   String? get specification => throw _privateConstructorUsedError;
   String? get notice => throw _privateConstructorUsedError;
-  @JsonKey(name: 'duration_minutes')
-  int? get durationMinutes => throw _privateConstructorUsedError;
+  @JsonKey(name: 'hour_limit')
+  int? get hourLimit => throw _privateConstructorUsedError;
   @JsonKey(name: 'start_at')
   int? get startAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'end_at')
@@ -53,6 +53,8 @@ mixin _$ItemReservableInfo {
   int? get bookingLimitType => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_published')
   bool? get isPublished => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -75,7 +77,7 @@ abstract class $ItemReservableInfoCopyWith<$Res> {
       String? description,
       String? specification,
       String? notice,
-      @JsonKey(name: 'duration_minutes') int? durationMinutes,
+      @JsonKey(name: 'hour_limit') int? hourLimit,
       @JsonKey(name: 'start_at') int? startAt,
       @JsonKey(name: 'end_at') int? endAt,
       @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,
@@ -85,7 +87,8 @@ abstract class $ItemReservableInfoCopyWith<$Res> {
       @JsonKey(name: 'payment_type') int? paymentType,
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
-      @JsonKey(name: 'is_published') bool? isPublished});
+      @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
 /// @nodoc
@@ -109,7 +112,7 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
     Object? description = freezed,
     Object? specification = freezed,
     Object? notice = freezed,
-    Object? durationMinutes = freezed,
+    Object? hourLimit = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
     Object? cancelTimeRange = freezed,
@@ -120,6 +123,7 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? imageUrls = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -154,9 +158,9 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
           ? _value.notice
           : notice // ignore: cast_nullable_to_non_nullable
               as String?,
-      durationMinutes: freezed == durationMinutes
-          ? _value.durationMinutes
-          : durationMinutes // ignore: cast_nullable_to_non_nullable
+      hourLimit: freezed == hourLimit
+          ? _value.hourLimit
+          : hourLimit // ignore: cast_nullable_to_non_nullable
               as int?,
       startAt: freezed == startAt
           ? _value.startAt
@@ -198,6 +202,10 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      imageUrls: freezed == imageUrls
+          ? _value.imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -219,7 +227,7 @@ abstract class _$$ItemReservableInfoImplCopyWith<$Res>
       String? description,
       String? specification,
       String? notice,
-      @JsonKey(name: 'duration_minutes') int? durationMinutes,
+      @JsonKey(name: 'hour_limit') int? hourLimit,
       @JsonKey(name: 'start_at') int? startAt,
       @JsonKey(name: 'end_at') int? endAt,
       @JsonKey(name: 'cancel_time_range') int? cancelTimeRange,
@@ -229,7 +237,8 @@ abstract class _$$ItemReservableInfoImplCopyWith<$Res>
       @JsonKey(name: 'payment_type') int? paymentType,
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
-      @JsonKey(name: 'is_published') bool? isPublished});
+      @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
 /// @nodoc
@@ -251,7 +260,7 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
     Object? description = freezed,
     Object? specification = freezed,
     Object? notice = freezed,
-    Object? durationMinutes = freezed,
+    Object? hourLimit = freezed,
     Object? startAt = freezed,
     Object? endAt = freezed,
     Object? cancelTimeRange = freezed,
@@ -262,6 +271,7 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? imageUrls = freezed,
   }) {
     return _then(_$ItemReservableInfoImpl(
       name: freezed == name
@@ -296,9 +306,9 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
           ? _value.notice
           : notice // ignore: cast_nullable_to_non_nullable
               as String?,
-      durationMinutes: freezed == durationMinutes
-          ? _value.durationMinutes
-          : durationMinutes // ignore: cast_nullable_to_non_nullable
+      hourLimit: freezed == hourLimit
+          ? _value.hourLimit
+          : hourLimit // ignore: cast_nullable_to_non_nullable
               as int?,
       startAt: freezed == startAt
           ? _value.startAt
@@ -340,6 +350,10 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      imageUrls: freezed == imageUrls
+          ? _value._imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -356,7 +370,7 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
       this.description,
       this.specification,
       this.notice,
-      @JsonKey(name: 'duration_minutes') this.durationMinutes,
+      @JsonKey(name: 'hour_limit') this.hourLimit,
       @JsonKey(name: 'start_at') this.startAt,
       @JsonKey(name: 'end_at') this.endAt,
       @JsonKey(name: 'cancel_time_range') this.cancelTimeRange,
@@ -366,7 +380,9 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
       @JsonKey(name: 'payment_type') this.paymentType,
       @JsonKey(name: 'date_rule_type') this.dateRuleType,
       @JsonKey(name: 'booking_limit_type') this.bookingLimitType,
-      @JsonKey(name: 'is_published') this.isPublished});
+      @JsonKey(name: 'is_published') this.isPublished,
+      @JsonKey(name: 'image_urls') final List<String>? imageUrls})
+      : _imageUrls = imageUrls;
 
   factory _$ItemReservableInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemReservableInfoImplFromJson(json);
@@ -392,8 +408,8 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
   @override
   final String? notice;
   @override
-  @JsonKey(name: 'duration_minutes')
-  final int? durationMinutes;
+  @JsonKey(name: 'hour_limit')
+  final int? hourLimit;
   @override
   @JsonKey(name: 'start_at')
   final int? startAt;
@@ -423,10 +439,20 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
   @override
   @JsonKey(name: 'is_published')
   final bool? isPublished;
+  final List<String>? _imageUrls;
+  @override
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls {
+    final value = _imageUrls;
+    if (value == null) return null;
+    if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ItemReservableInfo(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, durationMinutes: $durationMinutes, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished)';
+    return 'ItemReservableInfo(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, hourLimit: $hourLimit, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, imageUrls: $imageUrls)';
   }
 
   @override
@@ -448,8 +474,8 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
             (identical(other.specification, specification) ||
                 other.specification == specification) &&
             (identical(other.notice, notice) || other.notice == notice) &&
-            (identical(other.durationMinutes, durationMinutes) ||
-                other.durationMinutes == durationMinutes) &&
+            (identical(other.hourLimit, hourLimit) ||
+                other.hourLimit == hourLimit) &&
             (identical(other.startAt, startAt) || other.startAt == startAt) &&
             (identical(other.endAt, endAt) || other.endAt == endAt) &&
             (identical(other.cancelTimeRange, cancelTimeRange) ||
@@ -466,7 +492,9 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
             (identical(other.bookingLimitType, bookingLimitType) ||
                 other.bookingLimitType == bookingLimitType) &&
             (identical(other.isPublished, isPublished) ||
-                other.isPublished == isPublished));
+                other.isPublished == isPublished) &&
+            const DeepCollectionEquality()
+                .equals(other._imageUrls, _imageUrls));
   }
 
   @JsonKey(ignore: true)
@@ -481,7 +509,7 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
         description,
         specification,
         notice,
-        durationMinutes,
+        hourLimit,
         startAt,
         endAt,
         cancelTimeRange,
@@ -491,7 +519,8 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
         paymentType,
         dateRuleType,
         bookingLimitType,
-        isPublished
+        isPublished,
+        const DeepCollectionEquality().hash(_imageUrls)
       ]);
 
   @JsonKey(ignore: true)
@@ -519,7 +548,7 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
           final String? description,
           final String? specification,
           final String? notice,
-          @JsonKey(name: 'duration_minutes') final int? durationMinutes,
+          @JsonKey(name: 'hour_limit') final int? hourLimit,
           @JsonKey(name: 'start_at') final int? startAt,
           @JsonKey(name: 'end_at') final int? endAt,
           @JsonKey(name: 'cancel_time_range') final int? cancelTimeRange,
@@ -530,7 +559,8 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
           @JsonKey(name: 'payment_type') final int? paymentType,
           @JsonKey(name: 'date_rule_type') final int? dateRuleType,
           @JsonKey(name: 'booking_limit_type') final int? bookingLimitType,
-          @JsonKey(name: 'is_published') final bool? isPublished}) =
+          @JsonKey(name: 'is_published') final bool? isPublished,
+          @JsonKey(name: 'image_urls') final List<String>? imageUrls}) =
       _$ItemReservableInfoImpl;
 
   factory _ItemReservableInfo.fromJson(Map<String, dynamic> json) =
@@ -557,8 +587,8 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
   @override
   String? get notice;
   @override
-  @JsonKey(name: 'duration_minutes')
-  int? get durationMinutes;
+  @JsonKey(name: 'hour_limit')
+  int? get hourLimit;
   @override
   @JsonKey(name: 'start_at')
   int? get startAt;
@@ -588,6 +618,9 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
   @override
   @JsonKey(name: 'is_published')
   bool? get isPublished;
+  @override
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls;
   @override
   @JsonKey(ignore: true)
   _$$ItemReservableInfoImplCopyWith<_$ItemReservableInfoImpl> get copyWith =>

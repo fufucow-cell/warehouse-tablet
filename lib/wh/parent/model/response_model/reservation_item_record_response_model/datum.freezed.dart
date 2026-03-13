@@ -37,6 +37,18 @@ mixin _$Datum {
   int? get ticketType => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_amount')
   int? get totalAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  int? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'payment_type')
+  int? get paymentType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ticket_created_at')
+  int? get ticketCreatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'payment_created_at')
+  int? get paymentCreatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'adult_count')
+  int? get adultCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'child_count')
+  int? get childCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'item_reservable_info')
   ItemReservableInfo? get itemReservableInfo =>
       throw _privateConstructorUsedError;
@@ -65,6 +77,12 @@ abstract class $DatumCopyWith<$Res> {
       @JsonKey(name: 'order_type') int? orderType,
       @JsonKey(name: 'ticket_type') int? ticketType,
       @JsonKey(name: 'total_amount') int? totalAmount,
+      @JsonKey(name: 'updated_at') int? updatedAt,
+      @JsonKey(name: 'payment_type') int? paymentType,
+      @JsonKey(name: 'ticket_created_at') int? ticketCreatedAt,
+      @JsonKey(name: 'payment_created_at') int? paymentCreatedAt,
+      @JsonKey(name: 'adult_count') int? adultCount,
+      @JsonKey(name: 'child_count') int? childCount,
       @JsonKey(name: 'item_reservable_info')
       ItemReservableInfo? itemReservableInfo,
       @JsonKey(name: 'user_info') UserInfo? userInfo,
@@ -97,6 +115,12 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
     Object? orderType = freezed,
     Object? ticketType = freezed,
     Object? totalAmount = freezed,
+    Object? updatedAt = freezed,
+    Object? paymentType = freezed,
+    Object? ticketCreatedAt = freezed,
+    Object? paymentCreatedAt = freezed,
+    Object? adultCount = freezed,
+    Object? childCount = freezed,
     Object? itemReservableInfo = freezed,
     Object? userInfo = freezed,
     Object? communityInfo = freezed,
@@ -137,6 +161,30 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentType: freezed == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ticketCreatedAt: freezed == ticketCreatedAt
+          ? _value.ticketCreatedAt
+          : ticketCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentCreatedAt: freezed == paymentCreatedAt
+          ? _value.paymentCreatedAt
+          : paymentCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      adultCount: freezed == adultCount
+          ? _value.adultCount
+          : adultCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childCount: freezed == childCount
+          ? _value.childCount
+          : childCount // ignore: cast_nullable_to_non_nullable
               as int?,
       itemReservableInfo: freezed == itemReservableInfo
           ? _value.itemReservableInfo
@@ -208,6 +256,12 @@ abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
       @JsonKey(name: 'order_type') int? orderType,
       @JsonKey(name: 'ticket_type') int? ticketType,
       @JsonKey(name: 'total_amount') int? totalAmount,
+      @JsonKey(name: 'updated_at') int? updatedAt,
+      @JsonKey(name: 'payment_type') int? paymentType,
+      @JsonKey(name: 'ticket_created_at') int? ticketCreatedAt,
+      @JsonKey(name: 'payment_created_at') int? paymentCreatedAt,
+      @JsonKey(name: 'adult_count') int? adultCount,
+      @JsonKey(name: 'child_count') int? childCount,
       @JsonKey(name: 'item_reservable_info')
       ItemReservableInfo? itemReservableInfo,
       @JsonKey(name: 'user_info') UserInfo? userInfo,
@@ -241,6 +295,12 @@ class __$$DatumImplCopyWithImpl<$Res>
     Object? orderType = freezed,
     Object? ticketType = freezed,
     Object? totalAmount = freezed,
+    Object? updatedAt = freezed,
+    Object? paymentType = freezed,
+    Object? ticketCreatedAt = freezed,
+    Object? paymentCreatedAt = freezed,
+    Object? adultCount = freezed,
+    Object? childCount = freezed,
     Object? itemReservableInfo = freezed,
     Object? userInfo = freezed,
     Object? communityInfo = freezed,
@@ -282,6 +342,30 @@ class __$$DatumImplCopyWithImpl<$Res>
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
               as int?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentType: freezed == paymentType
+          ? _value.paymentType
+          : paymentType // ignore: cast_nullable_to_non_nullable
+              as int?,
+      ticketCreatedAt: freezed == ticketCreatedAt
+          ? _value.ticketCreatedAt
+          : ticketCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      paymentCreatedAt: freezed == paymentCreatedAt
+          ? _value.paymentCreatedAt
+          : paymentCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int?,
+      adultCount: freezed == adultCount
+          ? _value.adultCount
+          : adultCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      childCount: freezed == childCount
+          ? _value.childCount
+          : childCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       itemReservableInfo: freezed == itemReservableInfo
           ? _value.itemReservableInfo
           : itemReservableInfo // ignore: cast_nullable_to_non_nullable
@@ -311,6 +395,12 @@ class _$DatumImpl implements _Datum {
       @JsonKey(name: 'order_type') this.orderType,
       @JsonKey(name: 'ticket_type') this.ticketType,
       @JsonKey(name: 'total_amount') this.totalAmount,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'payment_type') this.paymentType,
+      @JsonKey(name: 'ticket_created_at') this.ticketCreatedAt,
+      @JsonKey(name: 'payment_created_at') this.paymentCreatedAt,
+      @JsonKey(name: 'adult_count') this.adultCount,
+      @JsonKey(name: 'child_count') this.childCount,
       @JsonKey(name: 'item_reservable_info') this.itemReservableInfo,
       @JsonKey(name: 'user_info') this.userInfo,
       @JsonKey(name: 'community_info') this.communityInfo});
@@ -345,6 +435,24 @@ class _$DatumImpl implements _Datum {
   @JsonKey(name: 'total_amount')
   final int? totalAmount;
   @override
+  @JsonKey(name: 'updated_at')
+  final int? updatedAt;
+  @override
+  @JsonKey(name: 'payment_type')
+  final int? paymentType;
+  @override
+  @JsonKey(name: 'ticket_created_at')
+  final int? ticketCreatedAt;
+  @override
+  @JsonKey(name: 'payment_created_at')
+  final int? paymentCreatedAt;
+  @override
+  @JsonKey(name: 'adult_count')
+  final int? adultCount;
+  @override
+  @JsonKey(name: 'child_count')
+  final int? childCount;
+  @override
   @JsonKey(name: 'item_reservable_info')
   final ItemReservableInfo? itemReservableInfo;
   @override
@@ -356,7 +464,7 @@ class _$DatumImpl implements _Datum {
 
   @override
   String toString() {
-    return 'Datum(id: $id, orderId: $orderId, controlKey: $controlKey, bookingStartAt: $bookingStartAt, bookingEndAt: $bookingEndAt, createdAt: $createdAt, orderType: $orderType, ticketType: $ticketType, totalAmount: $totalAmount, itemReservableInfo: $itemReservableInfo, userInfo: $userInfo, communityInfo: $communityInfo)';
+    return 'Datum(id: $id, orderId: $orderId, controlKey: $controlKey, bookingStartAt: $bookingStartAt, bookingEndAt: $bookingEndAt, createdAt: $createdAt, orderType: $orderType, ticketType: $ticketType, totalAmount: $totalAmount, updatedAt: $updatedAt, paymentType: $paymentType, ticketCreatedAt: $ticketCreatedAt, paymentCreatedAt: $paymentCreatedAt, adultCount: $adultCount, childCount: $childCount, itemReservableInfo: $itemReservableInfo, userInfo: $userInfo, communityInfo: $communityInfo)';
   }
 
   @override
@@ -380,6 +488,18 @@ class _$DatumImpl implements _Datum {
                 other.ticketType == ticketType) &&
             (identical(other.totalAmount, totalAmount) ||
                 other.totalAmount == totalAmount) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.paymentType, paymentType) ||
+                other.paymentType == paymentType) &&
+            (identical(other.ticketCreatedAt, ticketCreatedAt) ||
+                other.ticketCreatedAt == ticketCreatedAt) &&
+            (identical(other.paymentCreatedAt, paymentCreatedAt) ||
+                other.paymentCreatedAt == paymentCreatedAt) &&
+            (identical(other.adultCount, adultCount) ||
+                other.adultCount == adultCount) &&
+            (identical(other.childCount, childCount) ||
+                other.childCount == childCount) &&
             (identical(other.itemReservableInfo, itemReservableInfo) ||
                 other.itemReservableInfo == itemReservableInfo) &&
             (identical(other.userInfo, userInfo) ||
@@ -401,6 +521,12 @@ class _$DatumImpl implements _Datum {
       orderType,
       ticketType,
       totalAmount,
+      updatedAt,
+      paymentType,
+      ticketCreatedAt,
+      paymentCreatedAt,
+      adultCount,
+      childCount,
       itemReservableInfo,
       userInfo,
       communityInfo);
@@ -430,6 +556,12 @@ abstract class _Datum implements Datum {
       @JsonKey(name: 'order_type') final int? orderType,
       @JsonKey(name: 'ticket_type') final int? ticketType,
       @JsonKey(name: 'total_amount') final int? totalAmount,
+      @JsonKey(name: 'updated_at') final int? updatedAt,
+      @JsonKey(name: 'payment_type') final int? paymentType,
+      @JsonKey(name: 'ticket_created_at') final int? ticketCreatedAt,
+      @JsonKey(name: 'payment_created_at') final int? paymentCreatedAt,
+      @JsonKey(name: 'adult_count') final int? adultCount,
+      @JsonKey(name: 'child_count') final int? childCount,
       @JsonKey(name: 'item_reservable_info')
       final ItemReservableInfo? itemReservableInfo,
       @JsonKey(name: 'user_info') final UserInfo? userInfo,
@@ -464,6 +596,24 @@ abstract class _Datum implements Datum {
   @override
   @JsonKey(name: 'total_amount')
   int? get totalAmount;
+  @override
+  @JsonKey(name: 'updated_at')
+  int? get updatedAt;
+  @override
+  @JsonKey(name: 'payment_type')
+  int? get paymentType;
+  @override
+  @JsonKey(name: 'ticket_created_at')
+  int? get ticketCreatedAt;
+  @override
+  @JsonKey(name: 'payment_created_at')
+  int? get paymentCreatedAt;
+  @override
+  @JsonKey(name: 'adult_count')
+  int? get adultCount;
+  @override
+  @JsonKey(name: 'child_count')
+  int? get childCount;
   @override
   @JsonKey(name: 'item_reservable_info')
   ItemReservableInfo? get itemReservableInfo;

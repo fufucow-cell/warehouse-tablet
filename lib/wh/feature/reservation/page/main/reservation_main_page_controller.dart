@@ -1,11 +1,13 @@
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/page/main/reservation_main_page_model.dart';
-import 'package:engo_terminal_app3/wh/feature/reservation/page/reservable/reservation_reservable_page.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/datum.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/datum.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 part 'reservation_main_page_interactive.dart';
 part 'reservation_main_page_route.dart';
@@ -21,9 +23,8 @@ class ReservationMainPageController extends GetxController {
   RxReadonly<List<RecordItemModel>?> get recordFilterItemsRx => _model.recordFilterItems.readonly;
   RxReadonly<EnumMainPageTabIndex> get selectedTabIndexRx => _model.selectedTabIndex.readonly;
   RxReadonly<EnumOrderType> get selectedRecordTypeRx => _model.selectedRecordType.readonly;
-
-  List<String> get getTabTitles => EnumMainPageTabIndex.values.map((item) => item.title).toList();
-  List<String> get getRecordTypeTitles => EnumOrderType.values.map((item) => item.title).toList();
+  List<String> get getTabTitles => EnumMainPageTabIndex.values.map((item) => item.localeTitle).toList();
+  List<String> get getRecordTypeTitles => EnumOrderType.values.map((item) => item.localeTitle).toList();
 
   // MARK: - Init
 
@@ -67,6 +68,15 @@ class ReservationMainPageController extends GetxController {
     }
   }
 
+  String formatDateTime(int? epoch) {
+    if (epoch == null || epoch <= 0) {
+      return '-';
+    }
+
+    final formatter = DateFormat('yyyy/MM/dd HH:mm');
+    return formatter.format(DateTime.fromMillisecondsSinceEpoch(epoch));
+  }
+
   // MARK: - Private Method
 
   void _addListeners() {
@@ -92,7 +102,7 @@ class ReservationMainPageController extends GetxController {
         description: item.description ?? '',
         specification: item.specification ?? '',
         notice: item.notice ?? '',
-        durationMinutes: item.durationMinutes ?? 0,
+        hourLimit: item.hourLimit ?? 0,
         startAt: item.startAt ?? 0,
         endAt: item.endAt ?? 0,
         cancelTimeRange: item.cancelTimeRange ?? 0,
@@ -126,7 +136,7 @@ class ReservationMainPageController extends GetxController {
         description: info?.description ?? '',
         specification: info?.specification ?? '',
         notice: info?.notice ?? '',
-        durationMinutes: info?.durationMinutes ?? 0,
+        hourLimit: info?.hourLimit ?? 0,
         startAt: info?.startAt ?? 0,
         endAt: info?.endAt ?? 0,
         cancelTimeRange: info?.cancelTimeRange ?? 0,
@@ -137,19 +147,25 @@ class ReservationMainPageController extends GetxController {
         dateRuleType: EnumReservationDateRuleType.fromIndex(info?.dateRuleType ?? 0),
         bookingLimitType: EnumReservationBookingLimitType.fromIndex(info?.bookingLimitType ?? 0),
         isPublished: info?.isPublished ?? true,
-        imageUrls: const <String>[],
+        imageUrls: info?.imageUrls ?? const <String>[],
       );
 
       return RecordItemModel(
         id: item.id ?? '',
         orderId: item.orderId ?? '',
         controlKey: item.controlKey ?? '',
-        bookingStartAt: DateTime.fromMillisecondsSinceEpoch(item.bookingStartAt ?? 0),
-        bookingEndAt: DateTime.fromMillisecondsSinceEpoch(item.bookingEndAt ?? 0),
-        createdAt: DateTime.fromMillisecondsSinceEpoch(item.createdAt ?? 0),
+        bookingStartAt: item.bookingStartAt ?? 0,
+        bookingEndAt: item.bookingEndAt ?? 0,
+        createdAt: item.createdAt ?? 0,
+        updatedAt: item.updatedAt ?? 0,
         orderType: EnumOrderType.fromCustIndex(item.orderType ?? -1),
         ticketType: EnumTicketType.fromIndex(item.ticketType ?? 0),
+        paymentType: EnumRecordPaymentType.fromIndex(item.paymentType ?? 0),
         totalAmount: item.totalAmount ?? 0,
+        ticketCreatedAt: item.ticketCreatedAt ?? 0,
+        paymentCreatedAt: item.paymentCreatedAt ?? 0,
+        adultCount: item.adultCount ?? 0,
+        childCount: item.childCount ?? 0,
         itemReservableInfo: reservable,
         userInfo: RecordUserInfoModel(
           id: user?.id ?? '',
