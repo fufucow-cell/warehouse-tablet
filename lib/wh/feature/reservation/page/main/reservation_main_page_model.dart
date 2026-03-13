@@ -179,6 +179,7 @@ class ReservableItemModel {
   final EnumReservationDateRuleType dateRuleType;
   final EnumReservationBookingLimitType bookingLimitType;
   final bool isPublished;
+  final List<String> imageUrls;
 
   const ReservableItemModel({
     required this.name,
@@ -200,6 +201,7 @@ class ReservableItemModel {
     required this.dateRuleType,
     required this.bookingLimitType,
     required this.isPublished,
+    required this.imageUrls,
   });
 }
 

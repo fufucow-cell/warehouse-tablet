@@ -7,14 +7,18 @@ enum EnumReservationMainPageRoute {
 extension ReservationMainPageRouteExtension on ReservationMainPageController {
   // ignore: unused_element
   Future<void> _routerHandle(
-      EnumReservationMainPageRoute type, dynamic data) async {
+    EnumReservationMainPageRoute type,
+    dynamic data,
+  ) async {
     switch (type) {
       case EnumReservationMainPageRoute.goReservableItemDetailPage:
         if (data is ReservableItemModel) {
           await Navigator.push(
             _service.getContext!,
             MaterialPageRoute(
-              builder: (context) => const ReservationReservablePage(),
+              builder: (context) => ReservationReservablePage(
+                routeData: data,
+              ),
             ),
           );
         }

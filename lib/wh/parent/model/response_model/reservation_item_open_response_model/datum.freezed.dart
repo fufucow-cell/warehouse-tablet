@@ -53,6 +53,8 @@ mixin _$Datum {
   int? get bookingLimitType => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_published')
   bool? get isPublished => throw _privateConstructorUsedError;
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -83,7 +85,8 @@ abstract class $DatumCopyWith<$Res> {
       @JsonKey(name: 'payment_type') int? paymentType,
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
-      @JsonKey(name: 'is_published') bool? isPublished});
+      @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
 /// @nodoc
@@ -118,6 +121,7 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? imageUrls = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -196,6 +200,10 @@ class _$DatumCopyWithImpl<$Res, $Val extends Datum>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      imageUrls: freezed == imageUrls
+          ? _value.imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -226,7 +234,8 @@ abstract class _$$DatumImplCopyWith<$Res> implements $DatumCopyWith<$Res> {
       @JsonKey(name: 'payment_type') int? paymentType,
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
-      @JsonKey(name: 'is_published') bool? isPublished});
+      @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
 /// @nodoc
@@ -259,6 +268,7 @@ class __$$DatumImplCopyWithImpl<$Res>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? imageUrls = freezed,
   }) {
     return _then(_$DatumImpl(
       name: freezed == name
@@ -337,6 +347,10 @@ class __$$DatumImplCopyWithImpl<$Res>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      imageUrls: freezed == imageUrls
+          ? _value._imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -363,7 +377,9 @@ class _$DatumImpl implements _Datum {
       @JsonKey(name: 'payment_type') this.paymentType,
       @JsonKey(name: 'date_rule_type') this.dateRuleType,
       @JsonKey(name: 'booking_limit_type') this.bookingLimitType,
-      @JsonKey(name: 'is_published') this.isPublished});
+      @JsonKey(name: 'is_published') this.isPublished,
+      @JsonKey(name: 'image_urls') final List<String>? imageUrls})
+      : _imageUrls = imageUrls;
 
   factory _$DatumImpl.fromJson(Map<String, dynamic> json) =>
       _$$DatumImplFromJson(json);
@@ -420,10 +436,20 @@ class _$DatumImpl implements _Datum {
   @override
   @JsonKey(name: 'is_published')
   final bool? isPublished;
+  final List<String>? _imageUrls;
+  @override
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls {
+    final value = _imageUrls;
+    if (value == null) return null;
+    if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'Datum(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, durationMinutes: $durationMinutes, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished)';
+    return 'Datum(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, durationMinutes: $durationMinutes, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, imageUrls: $imageUrls)';
   }
 
   @override
@@ -463,7 +489,9 @@ class _$DatumImpl implements _Datum {
             (identical(other.bookingLimitType, bookingLimitType) ||
                 other.bookingLimitType == bookingLimitType) &&
             (identical(other.isPublished, isPublished) ||
-                other.isPublished == isPublished));
+                other.isPublished == isPublished) &&
+            const DeepCollectionEquality()
+                .equals(other._imageUrls, _imageUrls));
   }
 
   @JsonKey(ignore: true)
@@ -488,7 +516,8 @@ class _$DatumImpl implements _Datum {
         paymentType,
         dateRuleType,
         bookingLimitType,
-        isPublished
+        isPublished,
+        const DeepCollectionEquality().hash(_imageUrls)
       ]);
 
   @JsonKey(ignore: true)
@@ -507,26 +536,28 @@ class _$DatumImpl implements _Datum {
 
 abstract class _Datum implements Datum {
   factory _Datum(
-      {final String? name,
-      @JsonKey(name: 'reservation_key') final String? reservationKey,
-      @JsonKey(name: 'category_lv1_text') final String? categoryLv1Text,
-      @JsonKey(name: 'category_lv2_text') final String? categoryLv2Text,
-      @JsonKey(name: 'category_lv3_text') final String? categoryLv3Text,
-      final String? description,
-      final String? specification,
-      final String? notice,
-      @JsonKey(name: 'duration_minutes') final int? durationMinutes,
-      @JsonKey(name: 'start_at') final int? startAt,
-      @JsonKey(name: 'end_at') final int? endAt,
-      @JsonKey(name: 'cancel_time_range') final int? cancelTimeRange,
-      @JsonKey(name: 'per_booking_people_limit')
-      final int? perBookingPeopleLimit,
-      @JsonKey(name: 'total_people_limit') final int? totalPeopleLimit,
-      final int? fee,
-      @JsonKey(name: 'payment_type') final int? paymentType,
-      @JsonKey(name: 'date_rule_type') final int? dateRuleType,
-      @JsonKey(name: 'booking_limit_type') final int? bookingLimitType,
-      @JsonKey(name: 'is_published') final bool? isPublished}) = _$DatumImpl;
+          {final String? name,
+          @JsonKey(name: 'reservation_key') final String? reservationKey,
+          @JsonKey(name: 'category_lv1_text') final String? categoryLv1Text,
+          @JsonKey(name: 'category_lv2_text') final String? categoryLv2Text,
+          @JsonKey(name: 'category_lv3_text') final String? categoryLv3Text,
+          final String? description,
+          final String? specification,
+          final String? notice,
+          @JsonKey(name: 'duration_minutes') final int? durationMinutes,
+          @JsonKey(name: 'start_at') final int? startAt,
+          @JsonKey(name: 'end_at') final int? endAt,
+          @JsonKey(name: 'cancel_time_range') final int? cancelTimeRange,
+          @JsonKey(name: 'per_booking_people_limit')
+          final int? perBookingPeopleLimit,
+          @JsonKey(name: 'total_people_limit') final int? totalPeopleLimit,
+          final int? fee,
+          @JsonKey(name: 'payment_type') final int? paymentType,
+          @JsonKey(name: 'date_rule_type') final int? dateRuleType,
+          @JsonKey(name: 'booking_limit_type') final int? bookingLimitType,
+          @JsonKey(name: 'is_published') final bool? isPublished,
+          @JsonKey(name: 'image_urls') final List<String>? imageUrls}) =
+      _$DatumImpl;
 
   factory _Datum.fromJson(Map<String, dynamic> json) = _$DatumImpl.fromJson;
 
@@ -582,6 +613,9 @@ abstract class _Datum implements Datum {
   @override
   @JsonKey(name: 'is_published')
   bool? get isPublished;
+  @override
+  @JsonKey(name: 'image_urls')
+  List<String>? get imageUrls;
   @override
   @JsonKey(ignore: true)
   _$$DatumImplCopyWith<_$DatumImpl> get copyWith =>

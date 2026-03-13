@@ -8,17 +8,19 @@ class CustEmptyImage extends StatelessWidget {
     super.key,
     this.width,
     this.height,
+    this.color,
   });
 
   final double? width;
   final double? height;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: width ?? double.infinity,
       height: height ?? double.infinity,
-      color: EnumColor.backgroundSecondary.color,
+      color: color ?? EnumColor.backgroundSecondary.color,
       child: Center(
         child: EnumImage.cEmptyPhoto.image(
           size: Size.square(40.0.scale),

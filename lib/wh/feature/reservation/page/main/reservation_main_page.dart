@@ -28,10 +28,7 @@ class ReservationMainPage extends StatelessWidget {
           body: FirstBackgroundCard(
             child: Column(
               children: [
-                _TopBar(
-                  title: '預約',
-                  onBack: () => Get.back(),
-                ),
+                _TopBar(),
                 _FilterSection(),
                 Expanded(
                   child: _Body(controller: controller),
@@ -46,14 +43,6 @@ class ReservationMainPage extends StatelessWidget {
 }
 
 class _TopBar extends StatelessWidget {
-  final String title;
-  final VoidCallback onBack;
-
-  const _TopBar({
-    required this.title,
-    required this.onBack,
-  });
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ReservationMainPageController>();
@@ -61,7 +50,7 @@ class _TopBar extends StatelessWidget {
       children: [
         Expanded(
           child: CustTextWidget(
-            title,
+            '預約',
             size: 40.0.scale,
             weightType: EnumFontWeightType.bold,
             align: TextAlign.center,

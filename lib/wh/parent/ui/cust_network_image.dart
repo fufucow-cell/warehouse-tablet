@@ -32,8 +32,8 @@ class CustNetworkImage extends StatelessWidget {
       height: height,
       fit: fit ?? BoxFit.contain,
       headers: headers,
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded || frame != null) {
           return child;
         }
         return SizedBox(

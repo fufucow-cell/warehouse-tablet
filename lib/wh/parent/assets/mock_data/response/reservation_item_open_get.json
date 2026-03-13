@@ -21,7 +21,12 @@
       "payment_type": 1,
       "date_rule_type": 0,
       "booking_limit_type": 0,
-      "is_published": true
+      "is_published": true,
+      "image_urls": [
+        "https://picsum.photos/id/1/4209/2525",
+        "https://picsum.photos/id/2/4209/2525",
+        "https://picsum.photos/id/3/4209/2525"
+      ]
     },
     {
       "name": "會議室 B",
@@ -42,7 +47,11 @@
       "payment_type": 1,
       "date_rule_type": 0,
       "booking_limit_type": 1,
-      "is_published": true
+      "is_published": true,
+      "image_urls": [
+        "https://picsum.photos/1200/800?2",
+        "https://picsum.photos/1200/800?3"
+      ]
     },
     {
       "name": "教室 101",
@@ -63,7 +72,8 @@
       "payment_type": 0,
       "date_rule_type": 1,
       "booking_limit_type": 2,
-      "is_published": true
+      "is_published": true,
+      "image_urls": []
     },
     {
       "name": "瑜伽教室",
@@ -84,7 +94,10 @@
       "payment_type": 2,
       "date_rule_type": 0,
       "booking_limit_type": 0,
-      "is_published": true
+      "is_published": true,
+      "image_urls": [
+        "https://picsum.photos/1200/800?1"
+      ]
     },
     {
       "name": "攝影棚",
@@ -105,7 +118,10 @@
       "payment_type": 3,
       "date_rule_type": 2,
       "booking_limit_type": 1,
-      "is_published": true
+      "is_published": true,
+      "image_urls": [
+        "https://picsum.photos/1200/800?2"
+      ]
     },
     {
       "name": "多功能廚房",
@@ -126,7 +142,10 @@
       "payment_type": 4,
       "date_rule_type": 1,
       "booking_limit_type": 2,
-      "is_published": true
+      "is_published": true,
+      "image_urls": [
+        "https://picsum.photos/1200/800?3"
+      ]
     }
   ]
 }

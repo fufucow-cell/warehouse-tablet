@@ -72,7 +72,7 @@ class ReservationMainPageController extends GetxController {
   void _addListeners() {
     ever<List<ReservableItem>?>(
       _service.openItemsRx.rx,
-      _toReservableItemModel,
+      (items) => _model.reservableItems.value = _comvertReservableItemModel(items),
     );
     ever<List<RecordItem>?>(
       _service.recordItemsRx.rx,
@@ -80,7 +80,7 @@ class ReservationMainPageController extends GetxController {
     );
   }
 
-  void _toReservableItemModel(List<ReservableItem>? items) {
+  List<ReservableItemModel> _comvertReservableItemModel(List<ReservableItem>? items) {
     final List<ReservableItem> safe = items ?? <ReservableItem>[];
     final List<ReservableItemModel> result = safe.map((item) {
       return ReservableItemModel(
@@ -103,18 +103,42 @@ class ReservationMainPageController extends GetxController {
         dateRuleType: EnumReservationDateRuleType.fromIndex(item.dateRuleType ?? 0),
         bookingLimitType: EnumReservationBookingLimitType.fromIndex(item.bookingLimitType ?? 0),
         isPublished: item.isPublished ?? true,
+        imageUrls: item.imageUrls ?? [],
       );
     }).toList();
 
-    _model.reservableItems.value = result;
+    return result;
   }
 
   void _toRecordItemModel(List<RecordItem>? items) {
-    final List<RecordItem> safe = items ?? <RecordItem>[];
-    final List<RecordItemModel> result = safe.map((item) {
-      final itemInfo = item.itemReservableInfo;
+    final safe = items ?? <RecordItem>[];
+    final result = safe.map((item) {
+      final info = item.itemReservableInfo;
       final user = item.userInfo;
       final community = item.communityInfo;
+
+      final reservable = ReservableItemModel(
+        name: info?.name ?? '',
+        reservationKey: info?.reservationKey ?? '',
+        categoryLv1Text: info?.categoryLv1Text ?? '',
+        categoryLv2Text: info?.categoryLv2Text ?? '',
+        categoryLv3Text: info?.categoryLv3Text ?? '',
+        description: info?.description ?? '',
+        specification: info?.specification ?? '',
+        notice: info?.notice ?? '',
+        durationMinutes: info?.durationMinutes ?? 0,
+        startAt: info?.startAt ?? 0,
+        endAt: info?.endAt ?? 0,
+        cancelTimeRange: info?.cancelTimeRange ?? 0,
+        perBookingPeopleLimit: info?.perBookingPeopleLimit ?? 0,
+        totalPeopleLimit: info?.totalPeopleLimit ?? 0,
+        fee: info?.fee ?? 0,
+        paymentType: EnumReservationPaymentType.fromIndex(info?.paymentType ?? 0),
+        dateRuleType: EnumReservationDateRuleType.fromIndex(info?.dateRuleType ?? 0),
+        bookingLimitType: EnumReservationBookingLimitType.fromIndex(info?.bookingLimitType ?? 0),
+        isPublished: info?.isPublished ?? true,
+        imageUrls: const <String>[],
+      );
 
       return RecordItemModel(
         id: item.id ?? '',
@@ -126,33 +150,7 @@ class ReservationMainPageController extends GetxController {
         orderType: EnumOrderType.fromCustIndex(item.orderType ?? -1),
         ticketType: EnumTicketType.fromIndex(item.ticketType ?? 0),
         totalAmount: item.totalAmount ?? 0,
-        itemReservableInfo: ReservableItemModel(
-          name: itemInfo?.name ?? '',
-          reservationKey: itemInfo?.reservationKey ?? '',
-          categoryLv1Text: itemInfo?.categoryLv1Text ?? '',
-          categoryLv2Text: itemInfo?.categoryLv2Text ?? '',
-          categoryLv3Text: itemInfo?.categoryLv3Text ?? '',
-          description: itemInfo?.description ?? '',
-          specification: itemInfo?.specification ?? '',
-          notice: itemInfo?.notice ?? '',
-          durationMinutes: itemInfo?.durationMinutes ?? 0,
-          startAt: itemInfo?.startAt ?? 0,
-          endAt: itemInfo?.endAt ?? 0,
-          cancelTimeRange: itemInfo?.cancelTimeRange ?? 0,
-          perBookingPeopleLimit: itemInfo?.perBookingPeopleLimit ?? 0,
-          totalPeopleLimit: itemInfo?.totalPeopleLimit ?? 0,
-          fee: itemInfo?.fee ?? 0,
-          paymentType: EnumReservationPaymentType.fromIndex(
-            itemInfo?.paymentType ?? 0,
-          ),
-          dateRuleType: EnumReservationDateRuleType.fromIndex(
-            itemInfo?.dateRuleType ?? 0,
-          ),
-          bookingLimitType: EnumReservationBookingLimitType.fromIndex(
-            itemInfo?.bookingLimitType ?? 0,
-          ),
-          isPublished: itemInfo?.isPublished ?? true,
-        ),
+        itemReservableInfo: reservable,
         userInfo: RecordUserInfoModel(
           id: user?.id ?? '',
           name: user?.name ?? '',

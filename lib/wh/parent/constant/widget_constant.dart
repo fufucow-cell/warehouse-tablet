@@ -28,8 +28,7 @@ enum EnumTextFieldType {
     return switch (this) {
       EnumTextFieldType.normal => TextInputType.text,
       EnumTextFieldType.integer => TextInputType.number,
-      EnumTextFieldType.decimal =>
-        const TextInputType.numberWithOptions(decimal: true),
+      EnumTextFieldType.decimal => const TextInputType.numberWithOptions(decimal: true),
     };
   }
 

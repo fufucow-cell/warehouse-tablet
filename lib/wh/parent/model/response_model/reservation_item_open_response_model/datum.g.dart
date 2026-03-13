@@ -27,6 +27,9 @@ _$DatumImpl _$$DatumImplFromJson(Map<String, dynamic> json) => _$DatumImpl(
       dateRuleType: (json['date_rule_type'] as num?)?.toInt(),
       bookingLimitType: (json['booking_limit_type'] as num?)?.toInt(),
       isPublished: json['is_published'] as bool?,
+      imageUrls: (json['image_urls'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
@@ -50,4 +53,5 @@ Map<String, dynamic> _$$DatumImplToJson(_$DatumImpl instance) =>
       'date_rule_type': instance.dateRuleType,
       'booking_limit_type': instance.bookingLimitType,
       'is_published': instance.isPublished,
+      'image_urls': instance.imageUrls,
     };

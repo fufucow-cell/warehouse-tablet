@@ -25,6 +25,7 @@ class Datum with _$Datum {
     @JsonKey(name: 'date_rule_type') int? dateRuleType,
     @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
     @JsonKey(name: 'is_published') bool? isPublished,
+    @JsonKey(name: 'image_urls') List<String>? imageUrls,
   }) = _Datum;
 
   factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
