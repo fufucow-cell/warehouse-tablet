@@ -35,7 +35,10 @@ class InfoSection extends StatelessWidget {
             ),
             _spaceH,
             Expanded(
-              child: controller.infoTabTypeRx.value == EnumReservationInfoTabType.order ? const RecordInfoSection() : const BookingInfoSection(),
+              child: controller.infoTabTypeRx.value ==
+                      EnumReservationInfoTabType.order
+                  ? const RecordInfoSection()
+                  : const BookingInfoSection(),
             ),
           ],
         );

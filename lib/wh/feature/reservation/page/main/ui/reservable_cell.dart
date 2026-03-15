@@ -63,15 +63,21 @@ class ReservableCell extends StatelessWidget {
                     Builder(
                       builder: (context) {
                         final priceLabel = switch (item.paymentType) {
-                          EnumReservationPaymentType.points => '${item.fee}點/小時',
+                          EnumReservationPaymentType.points =>
+                            '${item.fee}點/小時',
                           _ => '${item.fee}\$/小時',
                         };
                         final paymentColor = switch (item.paymentType) {
-                          EnumReservationPaymentType.free => EnumColor.textSecondary.color,
-                          EnumReservationPaymentType.manual => EnumColor.accentYellow.color,
-                          EnumReservationPaymentType.points => EnumColor.accentGreen.color,
-                          EnumReservationPaymentType.bankTransfer => EnumColor.accentBlue.color,
-                          EnumReservationPaymentType.card => EnumColor.accentRed.color,
+                          EnumReservationPaymentType.free =>
+                            EnumColor.textSecondary.color,
+                          EnumReservationPaymentType.manual =>
+                            EnumColor.accentYellow.color,
+                          EnumReservationPaymentType.points =>
+                            EnumColor.accentGreen.color,
+                          EnumReservationPaymentType.bankTransfer =>
+                            EnumColor.accentBlue.color,
+                          EnumReservationPaymentType.card =>
+                            EnumColor.accentRed.color,
                         };
                         final locationText = [
                           item.categoryLv1Text,

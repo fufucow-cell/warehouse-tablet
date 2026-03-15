@@ -30,17 +30,24 @@ class RecordInfoSection extends StatelessWidget {
           _spaceH,
           InfoLine(title: '訂單狀態', value: item.orderType.localeTitle),
           _spaceH,
-          InfoLine(title: '生成日期', value: controller.formatDateTime(item.createdAt)),
+          InfoLine(
+              title: '生成日期', value: controller.formatDateTime(item.createdAt)),
           _spaceH,
           InfoLine(title: '付款狀態', value: item.paymentType.localeTitle),
           _spaceH,
-          InfoLine(title: '付款日期', value: controller.formatDateTime(item.paymentCreatedAt)),
+          InfoLine(
+              title: '付款日期',
+              value: controller.formatDateTime(item.paymentCreatedAt)),
           _spaceH,
           InfoLine(title: '開票狀態', value: item.ticketType.localeTitle),
           _spaceH,
-          InfoLine(title: '開票日期', value: controller.formatDateTime(item.ticketCreatedAt)),
+          InfoLine(
+              title: '開票日期',
+              value: controller.formatDateTime(item.ticketCreatedAt)),
           _spaceH,
-          InfoLine(title: '最後修改日期', value: controller.formatDateTime(item.updatedAt)),
+          InfoLine(
+              title: '最後修改日期',
+              value: controller.formatDateTime(item.updatedAt)),
           _spaceH,
           InfoLine(title: '使用密碼', value: item.controlKey),
         ],

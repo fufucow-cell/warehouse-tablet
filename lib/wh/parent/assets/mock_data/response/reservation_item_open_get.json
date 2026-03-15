@@ -22,6 +22,8 @@
       "date_rule_type": 0,
       "booking_limit_type": 0,
       "is_published": true,
+      "weekly_repeat": [],
+      "specific_date": [],
       "image_urls": [
         "https://picsum.photos/id/1/4209/2525",
         "https://picsum.photos/id/2/4209/2525",
@@ -48,6 +50,8 @@
       "date_rule_type": 0,
       "booking_limit_type": 1,
       "is_published": true,
+      "weekly_repeat": [],
+      "specific_date": [],
       "image_urls": [
         "https://picsum.photos/1200/800?2",
         "https://picsum.photos/1200/800?3"
@@ -73,6 +77,16 @@
       "date_rule_type": 1,
       "booking_limit_type": 2,
       "is_published": true,
+      "weekly_repeat": [
+        { "day": 1, "is_enable": true, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 2, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 3, "is_enable": true, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }, { "start_time": "14:00", "end_time": "16:00" }] },
+        { "day": 4, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 5, "is_enable": true, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 6, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 7, "is_enable": true, "is_all_day": true, "period": [{ "start_time": "09:00", "end_time": "17:00" }] }
+      ],
+      "specific_date": [],
       "image_urls": []
     },
     {
@@ -95,6 +109,8 @@
       "date_rule_type": 0,
       "booking_limit_type": 0,
       "is_published": true,
+      "weekly_repeat": [],
+      "specific_date": [],
       "image_urls": [
         "https://picsum.photos/1200/800?1"
       ]
@@ -119,6 +135,12 @@
       "date_rule_type": 2,
       "booking_limit_type": 1,
       "is_published": true,
+      "weekly_repeat": [],
+      "specific_date": [
+        { "booking_date": 1773964800000, "is_all_day": false, "start_time": "09:00", "end_time": "17:00" },
+        { "booking_date": 1774051200000, "is_all_day": false, "start_time": "10:00", "end_time": "18:00" },
+        { "booking_date": 1774483200000, "is_all_day": true, "start_time": "09:00", "end_time": "17:00" }
+      ],
       "image_urls": [
         "https://picsum.photos/1200/800?2"
       ]
@@ -143,6 +165,16 @@
       "date_rule_type": 1,
       "booking_limit_type": 2,
       "is_published": true,
+      "weekly_repeat": [
+        { "day": 1, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 2, "is_enable": true, "is_all_day": false, "period": [{ "start_time": "10:00", "end_time": "18:00" }] },
+        { "day": 3, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 4, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 5, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 6, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] },
+        { "day": 7, "is_enable": false, "is_all_day": false, "period": [{ "start_time": "09:00", "end_time": "17:00" }] }
+      ],
+      "specific_date": [],
       "image_urls": [
         "https://picsum.photos/1200/800?3"
       ]

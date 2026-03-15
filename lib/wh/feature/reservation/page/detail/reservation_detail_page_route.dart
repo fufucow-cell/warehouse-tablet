@@ -5,8 +5,10 @@ enum EnumReservationDetailPageRoute {
   openImageViewer,
 }
 
-extension ReservationDetailPageRouteExtension on ReservationDetailPageController {
-  Future<void> _routerHandle(EnumReservationDetailPageRoute type, {dynamic data}) async {
+extension ReservationDetailPageRouteExtension
+    on ReservationDetailPageController {
+  Future<void> _routerHandle(EnumReservationDetailPageRoute type,
+      {dynamic data}) async {
     switch (type) {
       case EnumReservationDetailPageRoute.goBack:
         Navigator.of(_service.getContext!).pop();

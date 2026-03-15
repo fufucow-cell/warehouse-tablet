@@ -18,13 +18,20 @@ class ReservationMainPageController extends GetxController {
   final _model = ReservationMainPageModel();
   ReservationService get _service => ReservationService.instance;
 
-  RxReadonly<List<ReservableItemModel>?> get reservableItemsRx => _model.reservableItems.readonly;
-  RxReadonly<List<RecordItemModel>?> get recordItemsRx => _model.recordItems.readonly;
-  RxReadonly<List<RecordItemModel>?> get recordFilterItemsRx => _model.recordFilterItems.readonly;
-  RxReadonly<EnumMainPageTabIndex> get selectedTabIndexRx => _model.selectedTabIndex.readonly;
-  RxReadonly<EnumOrderType> get selectedRecordTypeRx => _model.selectedRecordType.readonly;
-  List<String> get getTabTitles => EnumMainPageTabIndex.values.map((item) => item.localeTitle).toList();
-  List<String> get getRecordTypeTitles => EnumOrderType.values.map((item) => item.localeTitle).toList();
+  RxReadonly<List<ReservableItemModel>?> get reservableItemsRx =>
+      _model.reservableItems.readonly;
+  RxReadonly<List<RecordItemModel>?> get recordItemsRx =>
+      _model.recordItems.readonly;
+  RxReadonly<List<RecordItemModel>?> get recordFilterItemsRx =>
+      _model.recordFilterItems.readonly;
+  RxReadonly<EnumMainPageTabIndex> get selectedTabIndexRx =>
+      _model.selectedTabIndex.readonly;
+  RxReadonly<EnumOrderType> get selectedRecordTypeRx =>
+      _model.selectedRecordType.readonly;
+  List<String> get getTabTitles =>
+      EnumMainPageTabIndex.values.map((item) => item.localeTitle).toList();
+  List<String> get getRecordTypeTitles =>
+      EnumOrderType.values.map((item) => item.localeTitle).toList();
 
   // MARK: - Init
 
@@ -82,7 +89,8 @@ class ReservationMainPageController extends GetxController {
   void _addListeners() {
     ever<List<ReservableItem>?>(
       _service.openItemsRx.rx,
-      (items) => _model.reservableItems.value = _comvertReservableItemModel(items),
+      (items) =>
+          _model.reservableItems.value = _comvertReservableItemModel(items),
     );
     ever<List<RecordItem>?>(
       _service.recordItemsRx.rx,
@@ -90,7 +98,8 @@ class ReservationMainPageController extends GetxController {
     );
   }
 
-  List<ReservableItemModel> _comvertReservableItemModel(List<ReservableItem>? items) {
+  List<ReservableItemModel> _comvertReservableItemModel(
+      List<ReservableItem>? items) {
     final List<ReservableItem> safe = items ?? <ReservableItem>[];
     final List<ReservableItemModel> result = safe.map((item) {
       return ReservableItemModel(
@@ -109,10 +118,15 @@ class ReservationMainPageController extends GetxController {
         perBookingPeopleLimit: item.perBookingPeopleLimit ?? 0,
         totalPeopleLimit: item.totalPeopleLimit ?? 0,
         fee: item.fee ?? 0,
-        paymentType: EnumReservationPaymentType.fromIndex(item.paymentType ?? 0),
-        dateRuleType: EnumReservationDateRuleType.fromIndex(item.dateRuleType ?? 0),
-        bookingLimitType: EnumReservationBookingLimitType.fromIndex(item.bookingLimitType ?? 0),
+        paymentType:
+            EnumReservationPaymentType.fromIndex(item.paymentType ?? 0),
+        dateRuleType:
+            EnumReservationDateRuleType.fromIndex(item.dateRuleType ?? 0),
+        bookingLimitType: EnumReservationBookingLimitType.fromIndex(
+            item.bookingLimitType ?? 0),
         isPublished: item.isPublished ?? true,
+        weeklyRepeat: item.weeklyRepeat ?? const [],
+        specificDate: item.specificDate ?? const [],
         imageUrls: item.imageUrls ?? [],
       );
     }).toList();
@@ -143,10 +157,15 @@ class ReservationMainPageController extends GetxController {
         perBookingPeopleLimit: info?.perBookingPeopleLimit ?? 0,
         totalPeopleLimit: info?.totalPeopleLimit ?? 0,
         fee: info?.fee ?? 0,
-        paymentType: EnumReservationPaymentType.fromIndex(info?.paymentType ?? 0),
-        dateRuleType: EnumReservationDateRuleType.fromIndex(info?.dateRuleType ?? 0),
-        bookingLimitType: EnumReservationBookingLimitType.fromIndex(info?.bookingLimitType ?? 0),
+        paymentType:
+            EnumReservationPaymentType.fromIndex(info?.paymentType ?? 0),
+        dateRuleType:
+            EnumReservationDateRuleType.fromIndex(info?.dateRuleType ?? 0),
+        bookingLimitType: EnumReservationBookingLimitType.fromIndex(
+            info?.bookingLimitType ?? 0),
         isPublished: info?.isPublished ?? true,
+        weeklyRepeat: info?.weeklyRepeat ?? const [],
+        specificDate: info?.specificDate ?? const [],
         imageUrls: info?.imageUrls ?? const <String>[],
       );
 
@@ -201,7 +220,8 @@ class ReservationMainPageController extends GetxController {
     if (recordType == EnumOrderType.all) {
       _model.recordFilterItems.value = items;
     } else {
-      _model.recordFilterItems.value = items!.where((item) => item.orderType == recordType).toList();
+      _model.recordFilterItems.value =
+          items!.where((item) => item.orderType == recordType).toList();
     }
 
     return _model.recordFilterItems.value;

@@ -8,8 +8,10 @@ enum EnumReservationMainPageInteractive {
   tapRefresh,
 }
 
-extension ReservationMainPageUserEventExtension on ReservationMainPageController {
-  Future<void> interactive(EnumReservationMainPageInteractive type, {dynamic data}) async {
+extension ReservationMainPageUserEventExtension
+    on ReservationMainPageController {
+  Future<void> interactive(EnumReservationMainPageInteractive type,
+      {dynamic data}) async {
     switch (type) {
       case EnumReservationMainPageInteractive.switchTabItem:
         if (data is int) {
@@ -27,7 +29,8 @@ extension ReservationMainPageUserEventExtension on ReservationMainPageController
           _filterRecordItems();
         }
       case EnumReservationMainPageInteractive.tapReservableItem:
-        await _routerHandle(EnumReservationMainPageRoute.goReservableItemDetailPage, data);
+        await _routerHandle(
+            EnumReservationMainPageRoute.goReservableItemDetailPage, data);
       case EnumReservationMainPageInteractive.tapRefresh:
         switch (_model.selectedTabIndex.value) {
           case EnumMainPageTabIndex.reservable:
@@ -36,7 +39,8 @@ extension ReservationMainPageUserEventExtension on ReservationMainPageController
             _queryRecordItems(isCache: false);
         }
       case EnumReservationMainPageInteractive.tapRecordItem:
-        await _routerHandle(EnumReservationMainPageRoute.goRecordItemDetailPage, data);
+        await _routerHandle(
+            EnumReservationMainPageRoute.goRecordItemDetailPage, data);
     }
   }
 }

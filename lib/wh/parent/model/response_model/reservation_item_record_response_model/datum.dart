@@ -24,7 +24,8 @@ class Datum with _$Datum {
     @JsonKey(name: 'payment_created_at') int? paymentCreatedAt,
     @JsonKey(name: 'adult_count') int? adultCount,
     @JsonKey(name: 'child_count') int? childCount,
-    @JsonKey(name: 'item_reservable_info') ItemReservableInfo? itemReservableInfo,
+    @JsonKey(name: 'item_reservable_info')
+    ItemReservableInfo? itemReservableInfo,
     @JsonKey(name: 'user_info') UserInfo? userInfo,
     @JsonKey(name: 'community_info') CommunityInfo? communityInfo,
   }) = _Datum;

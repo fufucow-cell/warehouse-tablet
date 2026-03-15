@@ -1,6 +1,8 @@
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/datum.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_open_response_model/reservation_item_open_response_model.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/specific_date_response_model/specific_date_response_model.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/weekly_repeat_response_model/weekly_repeat_response_model.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/datum.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/reservation_item_record_response_model/reservation_item_record_response_model.dart';
 import 'package:engo_terminal_app3/wh/parent/service/api_service/api_service.dart';
@@ -17,8 +19,10 @@ class ReservationService {
   // MARK: - Properties
 
   final _model = ReservationServiceModel();
-  RxReadonly<List<ReservableItem>?> get openItemsRx => _model.openItems.readonly;
-  RxReadonly<List<RecordItem>?> get recordItemsRx => _model.recordItems.readonly;
+  RxReadonly<List<ReservableItem>?> get openItemsRx =>
+      _model.openItems.readonly;
+  RxReadonly<List<RecordItem>?> get recordItemsRx =>
+      _model.recordItems.readonly;
   BuildContext? get getContext => _model.nestedNavigatorContext;
 
   // MARK: - Init
@@ -66,7 +70,8 @@ class ReservationService {
     }
 
     _model.openItems.value = null;
-    final ReservationItemOpenResponseModel? response = await ApiService.sendRequest<ReservationItemOpenResponseModel>(
+    final ReservationItemOpenResponseModel? response =
+        await ApiService.sendRequest<ReservationItemOpenResponseModel>(
       EnumApiInfo.reservationItemOpen,
       fromJson: (json) {
         return ReservationItemOpenResponseModel.fromJson(json);
@@ -89,7 +94,8 @@ class ReservationService {
     }
 
     _model.recordItems.value = null;
-    final ReservationItemRecordResponseModel? response = await ApiService.sendRequest<ReservationItemRecordResponseModel>(
+    final ReservationItemRecordResponseModel? response =
+        await ApiService.sendRequest<ReservationItemRecordResponseModel>(
       EnumApiInfo.reservationItemRecord,
       fromJson: (json) {
         return ReservationItemRecordResponseModel.fromJson(json);

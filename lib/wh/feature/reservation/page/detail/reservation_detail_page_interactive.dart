@@ -10,13 +10,16 @@ enum EnumReservationDetailPageInteractive {
   tapInfoTabItem,
 }
 
-extension ReservationDetailPageUserEventExtension on ReservationDetailPageController {
-  Future<void> interactive(EnumReservationDetailPageInteractive type, {dynamic data}) async {
+extension ReservationDetailPageUserEventExtension
+    on ReservationDetailPageController {
+  Future<void> interactive(EnumReservationDetailPageInteractive type,
+      {dynamic data}) async {
     switch (type) {
       case EnumReservationDetailPageInteractive.tapBack:
         await _routerHandle(EnumReservationDetailPageRoute.goBack);
       case EnumReservationDetailPageInteractive.tapImage:
-        await _routerHandle(EnumReservationDetailPageRoute.openImageViewer, data: data);
+        await _routerHandle(EnumReservationDetailPageRoute.openImageViewer,
+            data: data);
       case EnumReservationDetailPageInteractive.tapConfirm:
         break;
       case EnumReservationDetailPageInteractive.dateChanged:

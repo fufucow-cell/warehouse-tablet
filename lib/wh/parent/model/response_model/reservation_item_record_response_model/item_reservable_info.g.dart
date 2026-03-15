@@ -29,6 +29,14 @@ _$ItemReservableInfoImpl _$$ItemReservableInfoImplFromJson(
       dateRuleType: (json['date_rule_type'] as num?)?.toInt(),
       bookingLimitType: (json['booking_limit_type'] as num?)?.toInt(),
       isPublished: json['is_published'] as bool?,
+      weeklyRepeat: (json['weekly_repeat'] as List<dynamic>?)
+          ?.map((e) =>
+              WeeklyRepeatResponseModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      specificDate: (json['specific_date'] as List<dynamic>?)
+          ?.map((e) =>
+              SpecificDateResponseModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       imageUrls: (json['image_urls'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
@@ -56,5 +64,7 @@ Map<String, dynamic> _$$ItemReservableInfoImplToJson(
       'date_rule_type': instance.dateRuleType,
       'booking_limit_type': instance.bookingLimitType,
       'is_published': instance.isPublished,
+      'weekly_repeat': instance.weeklyRepeat?.map((e) => e.toJson()).toList(),
+      'specific_date': instance.specificDate?.map((e) => e.toJson()).toList(),
       'image_urls': instance.imageUrls,
     };

@@ -1,6 +1,8 @@
 import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/ui/image_viewer.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/weekly_repeat_response_model/period.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/weekly_repeat_response_model/weekly_repeat_response_model.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,9 +38,19 @@ class ReservationDetailPageController extends GetxController {
     _checkTotalBillingText();
 
     if (!isReservableDetail) {
-      _model.date.value = DateTime.fromMillisecondsSinceEpoch(getRecordItem?.bookingStartAt ?? 0);
-      _model.startTime.value = TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(getRecordItem?.bookingStartAt ?? 0));
-      _model.endTime.value = TimeOfDay.fromDateTime(DateTime.fromMillisecondsSinceEpoch(getRecordItem?.bookingEndAt ?? 0));
+      _model.date.value = DateTime.fromMillisecondsSinceEpoch(
+        getRecordItem?.bookingStartAt ?? 0,
+      );
+      _model.startTime.value = TimeOfDay.fromDateTime(
+        DateTime.fromMillisecondsSinceEpoch(
+          getRecordItem?.bookingStartAt ?? 0,
+        ),
+      );
+      _model.endTime.value = TimeOfDay.fromDateTime(
+        DateTime.fromMillisecondsSinceEpoch(
+          getRecordItem?.bookingEndAt ?? 0,
+        ),
+      );
       adultTextController.text = getRecordItem?.adultCount.toString() ?? '-';
       childTextController.text = getRecordItem?.childCount.toString() ?? '-';
     }
@@ -73,6 +85,26 @@ class ReservationDetailPageController extends GetxController {
 
   bool get isShowReservationDateRuleTypeText => getReservableItem?.dateRuleType != EnumReservationDateRuleType.unlimited;
 
+  bool get isShowWeeklyRepeatInfo => getReservableItem?.dateRuleType == EnumReservationDateRuleType.weekly;
+
+  List<WeeklyRepeatResponseModel> getEnableWeekDayList() {
+    final list = getReservableItem?.weeklyRepeat ?? const [];
+    return list.where((e) => e.isEnable == true).toList();
+  }
+
+  /// 1=週一 .. 7=週日，之後可改為多語系
+  String getWeekDayDisplayText(int? day) {
+    if (day == null || day < 1 || day > 7) return '';
+    const labels = ['', '週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+    return labels[day];
+  }
+
+  String formatPeriod(Period p) {
+    final start = p.startTime ?? '--:--';
+    final end = p.endTime ?? '--:--';
+    return '$start - $end';
+  }
+
   String get getReservationDateRuleTypeText {
     final type = getReservableItem?.dateRuleType ?? EnumReservationDateRuleType.unlimited;
     return type.localeTitle;
@@ -85,6 +117,11 @@ class ReservationDetailPageController extends GetxController {
 
     final formatter = DateFormat('yyyy/MM/dd HH:mm');
     return formatter.format(DateTime.fromMillisecondsSinceEpoch(epoch));
+  }
+
+  String formatDate(int? epoch) {
+    if (epoch == null) return '--/--/--';
+    return DateFormat('yyyy/MM/dd').format(DateTime.fromMillisecondsSinceEpoch(epoch));
   }
 
   String get getTotalPeopleLimitText {

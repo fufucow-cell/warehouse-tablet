@@ -53,6 +53,12 @@ mixin _$ItemReservableInfo {
   int? get bookingLimitType => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_published')
   bool? get isPublished => throw _privateConstructorUsedError;
+  @JsonKey(name: 'weekly_repeat')
+  List<WeeklyRepeatResponseModel>? get weeklyRepeat =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: 'specific_date')
+  List<SpecificDateResponseModel>? get specificDate =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'image_urls')
   List<String>? get imageUrls => throw _privateConstructorUsedError;
 
@@ -88,6 +94,10 @@ abstract class $ItemReservableInfoCopyWith<$Res> {
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
       @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'weekly_repeat')
+      List<WeeklyRepeatResponseModel>? weeklyRepeat,
+      @JsonKey(name: 'specific_date')
+      List<SpecificDateResponseModel>? specificDate,
       @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
@@ -123,6 +133,8 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? weeklyRepeat = freezed,
+    Object? specificDate = freezed,
     Object? imageUrls = freezed,
   }) {
     return _then(_value.copyWith(
@@ -202,6 +214,14 @@ class _$ItemReservableInfoCopyWithImpl<$Res, $Val extends ItemReservableInfo>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      weeklyRepeat: freezed == weeklyRepeat
+          ? _value.weeklyRepeat
+          : weeklyRepeat // ignore: cast_nullable_to_non_nullable
+              as List<WeeklyRepeatResponseModel>?,
+      specificDate: freezed == specificDate
+          ? _value.specificDate
+          : specificDate // ignore: cast_nullable_to_non_nullable
+              as List<SpecificDateResponseModel>?,
       imageUrls: freezed == imageUrls
           ? _value.imageUrls
           : imageUrls // ignore: cast_nullable_to_non_nullable
@@ -238,6 +258,10 @@ abstract class _$$ItemReservableInfoImplCopyWith<$Res>
       @JsonKey(name: 'date_rule_type') int? dateRuleType,
       @JsonKey(name: 'booking_limit_type') int? bookingLimitType,
       @JsonKey(name: 'is_published') bool? isPublished,
+      @JsonKey(name: 'weekly_repeat')
+      List<WeeklyRepeatResponseModel>? weeklyRepeat,
+      @JsonKey(name: 'specific_date')
+      List<SpecificDateResponseModel>? specificDate,
       @JsonKey(name: 'image_urls') List<String>? imageUrls});
 }
 
@@ -271,6 +295,8 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
     Object? dateRuleType = freezed,
     Object? bookingLimitType = freezed,
     Object? isPublished = freezed,
+    Object? weeklyRepeat = freezed,
+    Object? specificDate = freezed,
     Object? imageUrls = freezed,
   }) {
     return _then(_$ItemReservableInfoImpl(
@@ -350,6 +376,14 @@ class __$$ItemReservableInfoImplCopyWithImpl<$Res>
           ? _value.isPublished
           : isPublished // ignore: cast_nullable_to_non_nullable
               as bool?,
+      weeklyRepeat: freezed == weeklyRepeat
+          ? _value._weeklyRepeat
+          : weeklyRepeat // ignore: cast_nullable_to_non_nullable
+              as List<WeeklyRepeatResponseModel>?,
+      specificDate: freezed == specificDate
+          ? _value._specificDate
+          : specificDate // ignore: cast_nullable_to_non_nullable
+              as List<SpecificDateResponseModel>?,
       imageUrls: freezed == imageUrls
           ? _value._imageUrls
           : imageUrls // ignore: cast_nullable_to_non_nullable
@@ -381,8 +415,14 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
       @JsonKey(name: 'date_rule_type') this.dateRuleType,
       @JsonKey(name: 'booking_limit_type') this.bookingLimitType,
       @JsonKey(name: 'is_published') this.isPublished,
+      @JsonKey(name: 'weekly_repeat')
+      final List<WeeklyRepeatResponseModel>? weeklyRepeat,
+      @JsonKey(name: 'specific_date')
+      final List<SpecificDateResponseModel>? specificDate,
       @JsonKey(name: 'image_urls') final List<String>? imageUrls})
-      : _imageUrls = imageUrls;
+      : _weeklyRepeat = weeklyRepeat,
+        _specificDate = specificDate,
+        _imageUrls = imageUrls;
 
   factory _$ItemReservableInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ItemReservableInfoImplFromJson(json);
@@ -439,6 +479,28 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
   @override
   @JsonKey(name: 'is_published')
   final bool? isPublished;
+  final List<WeeklyRepeatResponseModel>? _weeklyRepeat;
+  @override
+  @JsonKey(name: 'weekly_repeat')
+  List<WeeklyRepeatResponseModel>? get weeklyRepeat {
+    final value = _weeklyRepeat;
+    if (value == null) return null;
+    if (_weeklyRepeat is EqualUnmodifiableListView) return _weeklyRepeat;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<SpecificDateResponseModel>? _specificDate;
+  @override
+  @JsonKey(name: 'specific_date')
+  List<SpecificDateResponseModel>? get specificDate {
+    final value = _specificDate;
+    if (value == null) return null;
+    if (_specificDate is EqualUnmodifiableListView) return _specificDate;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   final List<String>? _imageUrls;
   @override
   @JsonKey(name: 'image_urls')
@@ -452,7 +514,7 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
 
   @override
   String toString() {
-    return 'ItemReservableInfo(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, hourLimit: $hourLimit, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, imageUrls: $imageUrls)';
+    return 'ItemReservableInfo(name: $name, reservationKey: $reservationKey, categoryLv1Text: $categoryLv1Text, categoryLv2Text: $categoryLv2Text, categoryLv3Text: $categoryLv3Text, description: $description, specification: $specification, notice: $notice, hourLimit: $hourLimit, startAt: $startAt, endAt: $endAt, cancelTimeRange: $cancelTimeRange, perBookingPeopleLimit: $perBookingPeopleLimit, totalPeopleLimit: $totalPeopleLimit, fee: $fee, paymentType: $paymentType, dateRuleType: $dateRuleType, bookingLimitType: $bookingLimitType, isPublished: $isPublished, weeklyRepeat: $weeklyRepeat, specificDate: $specificDate, imageUrls: $imageUrls)';
   }
 
   @override
@@ -494,6 +556,10 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
             (identical(other.isPublished, isPublished) ||
                 other.isPublished == isPublished) &&
             const DeepCollectionEquality()
+                .equals(other._weeklyRepeat, _weeklyRepeat) &&
+            const DeepCollectionEquality()
+                .equals(other._specificDate, _specificDate) &&
+            const DeepCollectionEquality()
                 .equals(other._imageUrls, _imageUrls));
   }
 
@@ -520,6 +586,8 @@ class _$ItemReservableInfoImpl implements _ItemReservableInfo {
         dateRuleType,
         bookingLimitType,
         isPublished,
+        const DeepCollectionEquality().hash(_weeklyRepeat),
+        const DeepCollectionEquality().hash(_specificDate),
         const DeepCollectionEquality().hash(_imageUrls)
       ]);
 
@@ -560,6 +628,10 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
           @JsonKey(name: 'date_rule_type') final int? dateRuleType,
           @JsonKey(name: 'booking_limit_type') final int? bookingLimitType,
           @JsonKey(name: 'is_published') final bool? isPublished,
+          @JsonKey(name: 'weekly_repeat')
+          final List<WeeklyRepeatResponseModel>? weeklyRepeat,
+          @JsonKey(name: 'specific_date')
+          final List<SpecificDateResponseModel>? specificDate,
           @JsonKey(name: 'image_urls') final List<String>? imageUrls}) =
       _$ItemReservableInfoImpl;
 
@@ -618,6 +690,12 @@ abstract class _ItemReservableInfo implements ItemReservableInfo {
   @override
   @JsonKey(name: 'is_published')
   bool? get isPublished;
+  @override
+  @JsonKey(name: 'weekly_repeat')
+  List<WeeklyRepeatResponseModel>? get weeklyRepeat;
+  @override
+  @JsonKey(name: 'specific_date')
+  List<SpecificDateResponseModel>? get specificDate;
   @override
   @JsonKey(name: 'image_urls')
   List<String>? get imageUrls;

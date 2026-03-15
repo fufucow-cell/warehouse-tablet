@@ -1,5 +1,7 @@
 import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_controller.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/info_section.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/specific_date_info.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/ui/weekly_repeat_info.dart';
 import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
@@ -28,25 +30,40 @@ class BookingInfoSection extends StatelessWidget {
           _spaceH,
           InfoLine(title: '位置', value: controller.getPositionText),
           _spaceH,
-          InfoLine(title: '預約開放日期', value: controller.formatDateTime(item.startAt)),
+          InfoLine(
+            title: '預約開放日期',
+            value: controller.formatDateTime(item.startAt),
+          ),
           _spaceH,
-          InfoLine(title: '預約截止日期', value: controller.formatDateTime(item.endAt)),
+          InfoLine(
+            title: '預約截止日期',
+            value: controller.formatDateTime(item.endAt),
+          ),
           _spaceH,
           if (controller.isShowHourLimitText) ...[
             InfoLine(title: '預約時長限制', value: controller.getHourLimitText),
             _spaceH,
           ],
           if (controller.isShowReservationDateRuleTypeText) ...[
-            InfoLine(title: '日期規則', value: controller.getReservationDateRuleTypeText),
+            InfoLine(
+              title: '日期規則',
+              value: controller.getReservationDateRuleTypeText,
+            ),
             _spaceH,
-            const InfoLine(title: '可預約時段', value: '(需要改內容)'),
+            if (controller.isShowWeeklyRepeatInfo) const WeeklyRepeatInfo() else const SpecificDateInfo(),
             _spaceH,
           ],
           if (controller.isShowReservationBookingLimitTypeText) ...[
-            InfoLine(title: '預約規則', value: controller.getReservationBookingLimitTypeText),
+            InfoLine(
+              title: '預約規則',
+              value: controller.getReservationBookingLimitTypeText,
+            ),
             _spaceH,
           ],
-          InfoLine(title: '單次預約人數限制', value: controller.getPerBookingPeopleLimitText),
+          InfoLine(
+            title: '單次預約人數限制',
+            value: controller.getPerBookingPeopleLimitText,
+          ),
           _spaceH,
           InfoLine(title: '預約總人數限制', value: controller.getTotalPeopleLimitText),
           _spaceH,

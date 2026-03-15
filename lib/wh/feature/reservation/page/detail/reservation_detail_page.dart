@@ -78,7 +78,8 @@ class _TopBar extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              controller.interactive(EnumReservationDetailPageInteractive.tapBack);
+              controller
+                  .interactive(EnumReservationDetailPageInteractive.tapBack);
             },
             child: EnumImage.cArrowLeft.image(
               size: Size.square(58.0.scale),

@@ -31,7 +31,9 @@ class RecordCell extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          controller.interactive(EnumReservationMainPageInteractive.tapRecordItem, data: item);
+          controller.interactive(
+              EnumReservationMainPageInteractive.tapRecordItem,
+              data: item);
         },
         child: Container(
           padding: EdgeInsets.all(24.0.scale),

@@ -5,7 +5,8 @@ part 'reservation_item_record_response_model.freezed.dart';
 part 'reservation_item_record_response_model.g.dart';
 
 @freezed
-class ReservationItemRecordResponseModel with _$ReservationItemRecordResponseModel {
+class ReservationItemRecordResponseModel
+    with _$ReservationItemRecordResponseModel {
   factory ReservationItemRecordResponseModel({
     int? code,
     String? message,

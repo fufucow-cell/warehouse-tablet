@@ -21,7 +21,8 @@ class CustTimePickerTextField extends StatefulWidget {
   });
 
   @override
-  State<CustTimePickerTextField> createState() => _CustTimePickerTextFieldState();
+  State<CustTimePickerTextField> createState() =>
+      _CustTimePickerTextFieldState();
 }
 
 class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
@@ -55,7 +56,9 @@ class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0.scale),
-            color: widget.canEdit ? EnumColor.backgroundPrimary.color : EnumColor.backgroundSecondary.color,
+            color: widget.canEdit
+                ? EnumColor.backgroundPrimary.color
+                : EnumColor.backgroundSecondary.color,
             border: Border.all(
               color: EnumColor.lineBorder.color,
               width: 1.0.scale,
@@ -65,15 +68,20 @@ class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
             children: [
               Expanded(
                 child: CustTextWidget(
-                  widget.mode.convertTimeToText(_selectedTime, placeholder: widget.placeholder),
+                  widget.mode.convertTimeToText(_selectedTime,
+                      placeholder: widget.placeholder),
                   size: 32.0.scale,
-                  color: _selectedTime != null ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+                  color: _selectedTime != null
+                      ? EnumColor.textPrimary.color
+                      : EnumColor.textSecondary.color,
                 ),
               ),
               SizedBox(width: 8.0.scale),
               EnumImage.cArrowDown.image(
                 size: Size.square(32.0.scale),
-                color: _selectedTime != null ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
+                color: _selectedTime != null
+                    ? EnumColor.textPrimary.color
+                    : EnumColor.textSecondary.color,
               ),
             ],
           ),
@@ -94,7 +102,8 @@ class _CustTimePickerTextFieldState extends State<CustTimePickerTextField> {
     if (picked != null) {
       final result = switch (widget.mode) {
         EnumTimePickerMode.hourOnly => TimeOfDay(hour: picked.hour, minute: 0),
-        EnumTimePickerMode.minuteOnly => TimeOfDay(hour: 0, minute: picked.minute),
+        EnumTimePickerMode.minuteOnly =>
+          TimeOfDay(hour: 0, minute: picked.minute),
         _ => picked,
       };
       setState(() {

@@ -62,7 +62,8 @@ class _TopBar extends StatelessWidget {
           color: Colors.transparent,
           child: InkWell(
             onTap: () {
-              controller.interactive(EnumReservationMainPageInteractive.tapRefresh);
+              controller
+                  .interactive(EnumReservationMainPageInteractive.tapRefresh);
             },
             child: EnumImage.cRefresh2.image(
               size: Size.square(48.0.scale),
@@ -93,7 +94,9 @@ class _FilterSection extends StatelessWidget {
                   titles: controller.getTabTitles,
                   selectedIndex: controller.selectedTabIndexRx.value.index,
                   onChanged: (index) {
-                    controller.interactive(EnumReservationMainPageInteractive.switchTabItem, data: index);
+                    controller.interactive(
+                        EnumReservationMainPageInteractive.switchTabItem,
+                        data: index);
                   },
                 ),
               ),
@@ -105,7 +108,10 @@ class _FilterSection extends StatelessWidget {
                     titles: controller.getRecordTypeTitles,
                     selectedIndex: controller.selectedRecordTypeRx.value.index,
                     onChanged: (index) {
-                      controller.interactive(EnumReservationMainPageInteractive.switchRecordTypeItem, data: index);
+                      controller.interactive(
+                          EnumReservationMainPageInteractive
+                              .switchRecordTypeItem,
+                          data: index);
                     },
                   ),
                 ),
@@ -137,7 +143,8 @@ class _Body extends StatelessWidget {
       }
 
       if (selectedTab == EnumMainPageTabIndex.reservable) {
-        final items = controller.reservableItemsRx.value ?? <ReservableItemModel>[];
+        final items =
+            controller.reservableItemsRx.value ?? <ReservableItemModel>[];
         return CustGridView(
           itemCount: items.length,
           crossAxisCount: 2,
@@ -152,7 +159,8 @@ class _Body extends StatelessWidget {
           },
         );
       } else if (selectedTab == EnumMainPageTabIndex.record) {
-        final items = controller.recordFilterItemsRx.value ?? <RecordItemModel>[];
+        final items =
+            controller.recordFilterItemsRx.value ?? <RecordItemModel>[];
         return CustGridView(
           itemCount: items.length,
           crossAxisCount: 2,

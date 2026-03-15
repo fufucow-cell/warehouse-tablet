@@ -30,7 +30,8 @@ class GallerySection extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          controller.interactive(EnumReservationDetailPageInteractive.tapImage, data: urls);
+          controller.interactive(EnumReservationDetailPageInteractive.tapImage,
+              data: urls);
         },
         borderRadius: BorderRadius.circular(12.0.scale),
         child: ClipRRect(

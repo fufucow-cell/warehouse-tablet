@@ -102,7 +102,9 @@ class _ImageViewerState extends State<ImageViewer> {
                         margin: EdgeInsets.symmetric(horizontal: 4.0.scale),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _currentIndex == index ? Colors.white : Colors.white.withOpacity(0.4),
+                          color: _currentIndex == index
+                              ? Colors.white
+                              : Colors.white.withOpacity(0.4),
                         ),
                       ),
                     ),

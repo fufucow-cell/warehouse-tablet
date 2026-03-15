@@ -13,5 +13,6 @@ class CommunityInfo with _$CommunityInfo {
     String? address,
   }) = _CommunityInfo;
 
-  factory CommunityInfo.fromJson(Map<String, dynamic> json) => _$CommunityInfoFromJson(json);
+  factory CommunityInfo.fromJson(Map<String, dynamic> json) =>
+      _$CommunityInfoFromJson(json);
 }

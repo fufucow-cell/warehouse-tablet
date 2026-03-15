@@ -26,6 +26,8 @@ class ReservableItemModel {
   final EnumReservationDateRuleType dateRuleType;
   final EnumReservationBookingLimitType bookingLimitType;
   final bool isPublished;
+  final List<WeeklyRepeatResponseModel> weeklyRepeat;
+  final List<SpecificDateResponseModel> specificDate;
   final List<String> imageUrls;
 
   const ReservableItemModel({
@@ -48,6 +50,8 @@ class ReservableItemModel {
     required this.dateRuleType,
     required this.bookingLimitType,
     required this.isPublished,
+    required this.weeklyRepeat,
+    required this.specificDate,
     required this.imageUrls,
   });
 }
@@ -200,7 +204,9 @@ enum EnumRecordPaymentType {
       };
 
   static EnumRecordPaymentType fromIndex(int? index) {
-    if (index == null || index < 0 || index >= EnumRecordPaymentType.values.length) {
+    if (index == null ||
+        index < 0 ||
+        index >= EnumRecordPaymentType.values.length) {
       return EnumRecordPaymentType.free;
     }
 

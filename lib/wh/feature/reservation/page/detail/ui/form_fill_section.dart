@@ -47,7 +47,9 @@ class FormFillSection extends StatelessWidget {
                 firstDate: controller.firstDate,
                 lastDate: controller.lastDate,
                 onDateSelected: (date) {
-                  controller.interactive(EnumReservationDetailPageInteractive.dateChanged, data: date);
+                  controller.interactive(
+                      EnumReservationDetailPageInteractive.dateChanged,
+                      data: date);
                 },
               ),
             ),
@@ -61,7 +63,9 @@ class FormFillSection extends StatelessWidget {
                 canEdit: canEdit,
                 selectedTime: controller.startTimeRx.value,
                 onTimeSelected: (time) {
-                  controller.interactive(EnumReservationDetailPageInteractive.startTimeChanged, data: time);
+                  controller.interactive(
+                      EnumReservationDetailPageInteractive.startTimeChanged,
+                      data: time);
                 },
               ),
             ),
@@ -75,7 +79,9 @@ class FormFillSection extends StatelessWidget {
                 canEdit: canEdit,
                 selectedTime: controller.endTimeRx.value,
                 onTimeSelected: (time) {
-                  controller.interactive(EnumReservationDetailPageInteractive.endTimeChanged, data: time);
+                  controller.interactive(
+                      EnumReservationDetailPageInteractive.endTimeChanged,
+                      data: time);
                 },
               ),
             ),
@@ -88,7 +94,8 @@ class FormFillSection extends StatelessWidget {
               controller: controller.adultTextController,
               hintText: '請輸入整數',
               keyboardType: EnumTextFieldType.integer.keyboardType,
-              additionalInputFormatters: EnumTextFieldType.integer.inputFormatters,
+              additionalInputFormatters:
+                  EnumTextFieldType.integer.inputFormatters,
             ),
           ),
           _spaceH,
@@ -99,7 +106,8 @@ class FormFillSection extends StatelessWidget {
               controller: controller.childTextController,
               hintText: '請輸入整數',
               keyboardType: EnumTextFieldType.integer.keyboardType,
-              additionalInputFormatters: EnumTextFieldType.integer.inputFormatters,
+              additionalInputFormatters:
+                  EnumTextFieldType.integer.inputFormatters,
             ),
           ),
           _spaceH,
@@ -121,7 +129,8 @@ class FormFillSection extends StatelessWidget {
             height: 100.0.scale,
             child: CustBorderButton(
               text: '預約',
-              onTap: () => controller.interactive(EnumReservationDetailPageInteractive.tapConfirm),
+              onTap: () => controller
+                  .interactive(EnumReservationDetailPageInteractive.tapConfirm),
             ),
           ),
         ],
