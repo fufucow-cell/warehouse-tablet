@@ -49,14 +49,27 @@ extension ReservationDetailPageUserEventExtension
           }
         }
       case EnumReservationDetailPageInteractive.startTimeChanged:
+        _model.endTime.value = null;
         if (data is TimeOfDay) {
           _model.startTime.value = data;
           _checkTotalBillingText();
+        } else if (data is String) {
+          final t = slotToTimeOfDay(data);
+          if (t != null) {
+            _model.startTime.value = t;
+            _checkTotalBillingText();
+          }
         }
       case EnumReservationDetailPageInteractive.endTimeChanged:
         if (data is TimeOfDay) {
           _model.endTime.value = data;
           _checkTotalBillingText();
+        } else if (data is String) {
+          final t = slotToTimeOfDay(data);
+          if (t != null) {
+            _model.endTime.value = t;
+            _checkTotalBillingText();
+          }
         }
       case EnumReservationDetailPageInteractive.tapInfoTabItem:
         if (data is int) {

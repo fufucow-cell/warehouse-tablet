@@ -8,7 +8,6 @@ import 'package:engo_terminal_app3/wh/parent/ui/cust_date_picker_text_field.dart
 import 'package:engo_terminal_app3/wh/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_text_field.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
-import 'package:engo_terminal_app3/wh/parent/ui/cust_time_picker_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,14 +50,35 @@ class FormFillSection extends StatelessWidget {
             title: '開始時間',
             child: SizedBox(
               height: 70.0.scale,
-              child: CustTimePickerTextField(
-                canEdit: canEdit,
-                selectedTime: controller.startTimeRx.value,
-                onTimeSelected: (time) {
-                  controller.interactive(
-                    EnumReservationDetailPageInteractive.startTimeChanged,
-                    data: time,
-                  );
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final w = constraints.maxWidth.isFinite
+                      ? constraints.maxWidth
+                      : null;
+                  return Obx(() {
+                    final values = controller.getStartTimeOptions();
+                    final selected = controller.timeOfDayToSlot(
+                        controller.startTimeRx.value);
+                    return CustDropdownMenuButton.popupMenuButton(
+                      selectedValue:
+                          values.contains(selected) ? selected : null,
+                      values: values,
+                      placeholder: '請選擇時間',
+                      placeholderColor: EnumColor.textSecondary.color,
+                      onValueSelected: (v) {
+                        if (v != null) {
+                          controller.interactive(
+                            EnumReservationDetailPageInteractive
+                                .startTimeChanged,
+                            data: v,
+                          );
+                        }
+                      },
+                      height: 70.0.scale,
+                      width: w,
+                      enable: canEdit,
+                    );
+                  });
                 },
               ),
             ),
@@ -68,14 +88,35 @@ class FormFillSection extends StatelessWidget {
             title: '結束時間',
             child: SizedBox(
               height: 70.0.scale,
-              child: CustTimePickerTextField(
-                canEdit: canEdit,
-                selectedTime: controller.endTimeRx.value,
-                onTimeSelected: (time) {
-                  controller.interactive(
-                    EnumReservationDetailPageInteractive.endTimeChanged,
-                    data: time,
-                  );
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  final w = constraints.maxWidth.isFinite
+                      ? constraints.maxWidth
+                      : null;
+                  return Obx(() {
+                    final values = controller.getEndTimeOptions();
+                    final selected =
+                        controller.timeOfDayToSlot(controller.endTimeRx.value);
+                    return CustDropdownMenuButton.popupMenuButton(
+                      selectedValue:
+                          values.contains(selected) ? selected : null,
+                      values: values,
+                      placeholder: '請選擇時間',
+                      placeholderColor: EnumColor.textSecondary.color,
+                      onValueSelected: (v) {
+                        if (v != null) {
+                          controller.interactive(
+                            EnumReservationDetailPageInteractive
+                                .endTimeChanged,
+                            data: v,
+                          );
+                        }
+                      },
+                      height: 70.0.scale,
+                      width: w,
+                      enable: canEdit,
+                    );
+                  });
                 },
               ),
             ),
@@ -107,13 +148,15 @@ class FormFillSection extends StatelessWidget {
             () {
               controller.startTimeRx.value;
               controller.endTimeRx.value;
+              final totalBilling = controller.totalBillingRx.value;
+              final totalDuration = controller.totalDurationRx.value;
               return Row(
                 children: [
                   Expanded(
                     child: _MetaLine(
                       title: '支付總額',
                       child: CustTextWidget(
-                        controller.totalBillingRx.value,
+                        totalBilling,
                         size: 28.0.scale,
                         weightType: EnumFontWeightType.semibold,
                         color: EnumColor.textPrimary.color,
@@ -124,13 +167,11 @@ class FormFillSection extends StatelessWidget {
                   Expanded(
                     child: _MetaLine(
                       title: '預約時長',
-                      child: Obx(
-                        () => CustTextWidget(
-                          controller.totalDurationRx.value,
-                          size: 28.0.scale,
-                          weightType: EnumFontWeightType.semibold,
-                          color: EnumColor.textPrimary.color,
-                        ),
+                      child: CustTextWidget(
+                        totalDuration,
+                        size: 28.0.scale,
+                        weightType: EnumFontWeightType.semibold,
+                        color: EnumColor.textPrimary.color,
                       ),
                     ),
                   ),

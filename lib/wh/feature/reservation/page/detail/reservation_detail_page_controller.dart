@@ -90,11 +90,9 @@ class ReservationDetailPageController extends GetxController {
 
   bool get isShowWeeklyRepeatInfo => getReservableItem?.dateRuleType == EnumReservationDateRuleType.weekly;
 
-  EnumReservationDateRuleType get dateRuleType =>
-      getReservableItem?.dateRuleType ?? EnumReservationDateRuleType.unlimited;
+  EnumReservationDateRuleType get dateRuleType => getReservableItem?.dateRuleType ?? EnumReservationDateRuleType.unlimited;
 
-  List<SpecificDateResponseModel> get getSpecificDateList =>
-      getReservableItem?.specificDate ?? const [];
+  List<SpecificDateResponseModel> get getSpecificDateList => getReservableItem?.specificDate ?? const [];
 
   List<WeeklyRepeatResponseModel> getEnableWeekDayList() {
     final list = getReservableItem?.weeklyRepeat ?? const [];
@@ -110,17 +108,11 @@ class ReservationDetailPageController extends GetxController {
 
   /// 特定日期下拉選單的目前顯示值（selectedDate 或由 date 格式化成日期字串）
   String? get selectedDateDisplayForSpecificDate =>
-      _model.selectedDate.value ??
-      (_model.date.value != null
-          ? formatDate(_model.date.value!.millisecondsSinceEpoch)
-          : null);
+      _model.selectedDate.value ?? (_model.date.value != null ? formatDate(_model.date.value!.millisecondsSinceEpoch) : null);
 
   /// 每週重複下拉選單的目前顯示值（selectedDate 或由 date 對應的星期）
   String? get selectedDateDisplayForWeekly =>
-      _model.selectedDate.value ??
-      (_model.date.value != null
-          ? getWeekDayDisplayText(_model.date.value!.weekday)
-          : null);
+      _model.selectedDate.value ?? (_model.date.value != null ? getWeekDayDisplayText(_model.date.value!.weekday) : null);
 
   /// 在 [firstDate, lastDate] 區間內，該星期幾的第一次出現日期。day 1=週一..7=週日。
   DateTime? getFirstDateForWeekday(int day) {
@@ -186,6 +178,134 @@ class ReservationDetailPageController extends GetxController {
     return hours <= 0 ? '無限制' : '$hours 小時';
   }
 
+  /// 00:00 ～ 23:30，每半小時一檔（共 48 個）
+  static List<String> get allTimeSlots => [
+        for (var i = 0; i < 48; i++) '${(i ~/ 2).toString().padLeft(2, '0')}:${(i % 2 * 30).toString().padLeft(2, '0')}',
+      ];
+
+  /// 依目前選擇的日期與日期規則，回傳可選時間區段 [startMinutes, endMinutes]（含頭含尾，minute 為 0 或 30）。無限制或無日期時回傳 null 表示全天可選。
+  ({int startMin, int endMin})? getAllowedTimeRangeMinutes() {
+    final item = getReservableItem;
+    if (item == null) return null;
+    final ruleType = dateRuleType;
+    final selectedDate = _model.date.value;
+
+    if (ruleType == EnumReservationDateRuleType.unlimited) {
+      final startAt = item.startAt;
+      final endAt = item.endAt;
+      if (startAt <= 0 || endAt <= 0) return null;
+      final startDt = DateTime.fromMillisecondsSinceEpoch(startAt);
+      final endDt = DateTime.fromMillisecondsSinceEpoch(endAt);
+      final startMin = startDt.hour * 60 + startDt.minute;
+      var endMin = endDt.hour * 60 + endDt.minute;
+      if (endMin <= startMin) endMin += 24 * 60;
+      return (startMin: startMin, endMin: endMin);
+    }
+
+    if (ruleType == EnumReservationDateRuleType.none) {
+      if (selectedDate == null) return null;
+      final dateStr = formatDate(selectedDate.millisecondsSinceEpoch);
+      final matched = getSpecificDateList.where((d) => formatDate(d.bookingDate) == dateStr).toList();
+      if (matched.isEmpty) return null;
+      final d = matched.first;
+      if (d.isAllDay == true) return null;
+      final startMin = _parseTimeToMinutes(d.startTime ?? '00:00');
+      final endMin = _parseTimeToMinutes(d.endTime ?? '23:30');
+      return (startMin: startMin, endMin: endMin);
+    }
+
+    if (ruleType == EnumReservationDateRuleType.weekly) {
+      if (selectedDate == null) return null;
+      final day = selectedDate.weekday;
+      final weekList = getEnableWeekDayList();
+      final dayItem = weekList.where((e) => e.day == day).toList();
+      if (dayItem.isEmpty) return null;
+      final w = dayItem.first;
+      if (w.isAllDay == true) return null;
+      final periods = w.period ?? [];
+      if (periods.isEmpty) return null;
+      int rangeStart = 24 * 60;
+      int rangeEnd = 0;
+      for (final p in periods) {
+        final s = _parseTimeToMinutes(p.startTime ?? '00:00');
+        final e = _parseTimeToMinutes(p.endTime ?? '23:30');
+        if (s < rangeStart) rangeStart = s;
+        if (e > rangeEnd) rangeEnd = e;
+      }
+      return (startMin: rangeStart, endMin: rangeEnd);
+    }
+
+    return null;
+  }
+
+  int _parseTimeToMinutes(String timeStr) {
+    final parts = timeStr.split(':');
+    if (parts.length < 2) return 0;
+    final h = int.tryParse(parts[0]) ?? 0;
+    final m = int.tryParse(parts[1]) ?? 0;
+    return h * 60 + m;
+  }
+
+  /// 開始時間可選項目（落在日期規則區段內）
+  List<String> getStartTimeOptions() {
+    final range = getAllowedTimeRangeMinutes();
+    if (range == null) return allTimeSlots;
+    final slots = <String>[];
+    for (var i = 0; i < 48; i++) {
+      final min = i * 30;
+      if (min >= range.startMin && min < range.endMin) {
+        slots.add(allTimeSlots[i]);
+      }
+    }
+    return slots.isEmpty ? allTimeSlots : slots;
+  }
+
+  /// 結束時間可選項目（落在日期規則區段內、晚於已選開始時間，且不超過預約時長限制）
+  List<String> getEndTimeOptions() {
+    final range = getAllowedTimeRangeMinutes();
+    final startMin = _model.startTime.value != null ? (_model.startTime.value!.hour * 60 + _model.startTime.value!.minute) : 0;
+    final hourLimit = getReservableItem?.hourLimit ?? 0;
+    final maxDurationMin = hourLimit > 0 ? hourLimit * 60 : 24 * 60;
+    final maxEndMinByLimit = startMin + maxDurationMin;
+
+    if (range == null) {
+      if (startMin == 0 && _model.startTime.value == null) return allTimeSlots;
+      return allTimeSlots.where((s) {
+        final min = _parseTimeToMinutes(s);
+        return min > startMin && min <= maxEndMinByLimit;
+      }).toList();
+    }
+    final effectiveEndMin = maxEndMinByLimit < range.endMin ? maxEndMinByLimit : range.endMin;
+    final slots = <String>[];
+    for (var i = 0; i < 48; i++) {
+      final min = i * 30;
+      if (min > startMin && min <= effectiveEndMin) {
+        slots.add(allTimeSlots[i]);
+      }
+    }
+    return slots.isEmpty ? allTimeSlots : slots;
+  }
+
+  String? timeOfDayToSlot(TimeOfDay? t) {
+    if (t == null) {
+      return null;
+    }
+    var min = t.hour * 60 + t.minute;
+    min = ((min + 15) ~/ 30) * 30;
+    if (min >= 24 * 60) {
+      min = 24 * 60 - 30;
+    }
+    return allTimeSlots[min ~/ 30];
+  }
+
+  TimeOfDay? slotToTimeOfDay(String? slot) {
+    if (slot == null || slot.isEmpty) {
+      return null;
+    }
+    final min = _parseTimeToMinutes(slot);
+    return TimeOfDay(hour: min ~/ 60, minute: min % 60);
+  }
+
   // MARK: - Private Methods
 
   void _checkTotalBillingText() {
@@ -204,7 +324,7 @@ class ReservationDetailPageController extends GetxController {
       return;
     }
 
-    if (startTime == null || endTime == null || fee <= 0) {
+    if (startTime == null || endTime == null) {
       _model.totalBilling.value = '-';
       _model.totalDuration.value = '-';
       return;
@@ -229,8 +349,12 @@ class ReservationDetailPageController extends GetxController {
     double minuteValue = (remainingMinutes >= 30) ? 0.5 : 0.0;
     double hourResult = hours + minuteValue;
 
-    _model.totalBilling.value = '${(hourResult * fee).toStringAsFixed(0)} $unit';
     _model.totalDuration.value = _formatDuration(hourResult);
+    if (fee <= 0) {
+      _model.totalBilling.value = '0 $unit';
+    } else {
+      _model.totalBilling.value = '${(hourResult * fee).toStringAsFixed(0)} $unit';
+    }
   }
 
   void _setTotalDurationFromEpoch(int? startEpoch, int? endEpoch) {
