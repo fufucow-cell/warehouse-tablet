@@ -1,9 +1,11 @@
 import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_controller.dart';
+import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
 import 'package:engo_terminal_app3/wh/parent/constant/widget_constant.dart';
 import 'package:engo_terminal_app3/wh/parent/inherit/extension_double.dart';
 import 'package:engo_terminal_app3/wh/parent/service/theme_service/theme/color_map.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_border_button.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_date_picker_text_field.dart';
+import 'package:engo_terminal_app3/wh/parent/ui/cust_dropdown_menu_button.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_text_field.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_text_widget.dart';
 import 'package:engo_terminal_app3/wh/parent/ui/cust_time_picker_text_field.dart';
@@ -41,17 +43,7 @@ class FormFillSection extends StatelessWidget {
             title: '預約日期',
             child: SizedBox(
               height: 70.0.scale,
-              child: CustDatePickerTextField(
-                canEdit: canEdit,
-                selectedDate: controller.dateRx.value,
-                firstDate: controller.firstDate,
-                lastDate: controller.lastDate,
-                onDateSelected: (date) {
-                  controller.interactive(
-                      EnumReservationDetailPageInteractive.dateChanged,
-                      data: date);
-                },
-              ),
+              child: _buildDateSelector(controller, canEdit),
             ),
           ),
           _spaceH,
@@ -64,8 +56,9 @@ class FormFillSection extends StatelessWidget {
                 selectedTime: controller.startTimeRx.value,
                 onTimeSelected: (time) {
                   controller.interactive(
-                      EnumReservationDetailPageInteractive.startTimeChanged,
-                      data: time);
+                    EnumReservationDetailPageInteractive.startTimeChanged,
+                    data: time,
+                  );
                 },
               ),
             ),
@@ -80,8 +73,9 @@ class FormFillSection extends StatelessWidget {
                 selectedTime: controller.endTimeRx.value,
                 onTimeSelected: (time) {
                   controller.interactive(
-                      EnumReservationDetailPageInteractive.endTimeChanged,
-                      data: time);
+                    EnumReservationDetailPageInteractive.endTimeChanged,
+                    data: time,
+                  );
                 },
               ),
             ),
@@ -94,8 +88,7 @@ class FormFillSection extends StatelessWidget {
               controller: controller.adultTextController,
               hintText: '請輸入整數',
               keyboardType: EnumTextFieldType.integer.keyboardType,
-              additionalInputFormatters:
-                  EnumTextFieldType.integer.inputFormatters,
+              additionalInputFormatters: EnumTextFieldType.integer.inputFormatters,
             ),
           ),
           _spaceH,
@@ -106,21 +99,42 @@ class FormFillSection extends StatelessWidget {
               controller: controller.childTextController,
               hintText: '請輸入整數',
               keyboardType: EnumTextFieldType.integer.keyboardType,
-              additionalInputFormatters:
-                  EnumTextFieldType.integer.inputFormatters,
+              additionalInputFormatters: EnumTextFieldType.integer.inputFormatters,
             ),
           ),
           _spaceH,
           Obx(
             () {
-              return _MetaLine(
-                title: '支付總額',
-                child: CustTextWidget(
-                  controller.totalBillingRx.value,
-                  size: 28.0.scale,
-                  weightType: EnumFontWeightType.semibold,
-                  color: EnumColor.textPrimary.color,
-                ),
+              controller.startTimeRx.value;
+              controller.endTimeRx.value;
+              return Row(
+                children: [
+                  Expanded(
+                    child: _MetaLine(
+                      title: '支付總額',
+                      child: CustTextWidget(
+                        controller.totalBillingRx.value,
+                        size: 28.0.scale,
+                        weightType: EnumFontWeightType.semibold,
+                        color: EnumColor.textPrimary.color,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 12.0.scale),
+                  Expanded(
+                    child: _MetaLine(
+                      title: '預約時長',
+                      child: Obx(
+                        () => CustTextWidget(
+                          controller.totalDurationRx.value,
+                          size: 28.0.scale,
+                          weightType: EnumFontWeightType.semibold,
+                          color: EnumColor.textPrimary.color,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               );
             },
           ),
@@ -129,11 +143,113 @@ class FormFillSection extends StatelessWidget {
             height: 100.0.scale,
             child: CustBorderButton(
               text: '預約',
-              onTap: () => controller
-                  .interactive(EnumReservationDetailPageInteractive.tapConfirm),
+              onTap: () => controller.interactive(EnumReservationDetailPageInteractive.tapConfirm),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDateSelector(
+    ReservationDetailPageController controller,
+    bool canEdit,
+  ) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final availableWidth = constraints.maxWidth.isFinite ? constraints.maxWidth : null;
+
+        final ruleType = controller.dateRuleType;
+
+        if (ruleType == EnumReservationDateRuleType.unlimited) {
+          return CustDatePickerTextField(
+            canEdit: canEdit,
+            selectedDate: controller.dateRx.value,
+            firstDate: controller.firstDate,
+            lastDate: controller.lastDate,
+            onDateSelected: (date) {
+              controller.interactive(
+                EnumReservationDetailPageInteractive.dateChanged,
+                data: date,
+              );
+            },
+          );
+        }
+
+        if (ruleType == EnumReservationDateRuleType.none) {
+          final list = controller.getSpecificDateList;
+
+          if (list.isEmpty) {
+            return _dateDropdownPlaceholder();
+          }
+
+          final values = list.map((d) => controller.formatDate(d.bookingDate)).toList();
+          return Obx(() {
+            final selected = controller.selectedDateDisplayForSpecificDate;
+            return CustDropdownMenuButton.popupMenuButton(
+              selectedValue: values.contains(selected) ? selected : null,
+              values: values,
+              placeholder: '請選擇日期',
+              placeholderColor: EnumColor.textSecondary.color,
+              onValueSelected: (v) {
+                if (v != null) {
+                  controller.interactive(
+                    EnumReservationDetailPageInteractive.dateChanged,
+                    data: v,
+                  );
+                }
+              },
+              height: 70.0.scale,
+              width: availableWidth,
+              enable: canEdit,
+            );
+          });
+        }
+
+        // 每週重複：下拉選單為有 enable 的星期
+        final dayList = controller.getEnableWeekDayList();
+        if (dayList.isEmpty) {
+          return _dateDropdownPlaceholder();
+        }
+        final values = dayList.map((e) => controller.getWeekDayDisplayText(e.day)).toList();
+        return Obx(() {
+          final selected = controller.selectedDateDisplayForWeekly;
+          return CustDropdownMenuButton.popupMenuButton(
+            selectedValue: values.contains(selected) ? selected : null,
+            values: values,
+            placeholder: '請選擇日期',
+            placeholderColor: EnumColor.textSecondary.color,
+            onValueSelected: (v) {
+              if (v != null) {
+                controller.interactive(
+                  EnumReservationDetailPageInteractive.dateChanged,
+                  data: v,
+                );
+              }
+            },
+            height: 70.0.scale,
+            width: availableWidth,
+            enable: canEdit,
+          );
+        });
+      },
+    );
+  }
+
+  Widget _dateDropdownPlaceholder() {
+    return Container(
+      height: 70.0.scale,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.symmetric(horizontal: 16.0.scale),
+      decoration: BoxDecoration(
+        color: EnumColor.backgroundSecondary.color,
+        borderRadius: BorderRadius.circular(8.0.scale),
+        border: Border.all(color: EnumColor.lineBorder.color),
+      ),
+      child: CustTextWidget(
+        '無可選日期',
+        size: 14.0.scale,
+        color: EnumColor.textSecondary.color,
       ),
     );
   }

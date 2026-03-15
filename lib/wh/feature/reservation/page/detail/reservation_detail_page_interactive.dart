@@ -25,6 +25,28 @@ extension ReservationDetailPageUserEventExtension
       case EnumReservationDetailPageInteractive.dateChanged:
         if (data is DateTime) {
           _model.date.value = data;
+        } else if (data is String) {
+          _model.selectedDate.value = data;
+          final ruleType = dateRuleType;
+          if (ruleType == EnumReservationDateRuleType.none) {
+            final matched = getSpecificDateList
+                .where((d) => formatDate(d.bookingDate) == data)
+                .toList();
+            if (matched.isNotEmpty) {
+              final epoch = matched.first.bookingDate;
+              if (epoch != null) {
+                _model.date.value =
+                    DateTime.fromMillisecondsSinceEpoch(epoch);
+              }
+            }
+          } else if (ruleType == EnumReservationDateRuleType.weekly) {
+            const labels = ['', '週一', '週二', '週三', '週四', '週五', '週六', '週日'];
+            final day = labels.indexOf(data);
+            if (day >= 1 && day <= 7) {
+              final resolved = getFirstDateForWeekday(day);
+              if (resolved != null) _model.date.value = resolved;
+            }
+          }
         }
       case EnumReservationDetailPageInteractive.startTimeChanged:
         if (data is TimeOfDay) {

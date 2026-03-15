@@ -14,6 +14,8 @@ class CustDropdownMenuButton {
     double? height,
     double? fontSize,
     Color? buttonTextColor,
+    String? placeholder,
+    Color? placeholderColor,
     double? menuMaxHeight,
     VoidCallback? onMenuOpened,
     bool isShowOnDialog = false,
@@ -28,6 +30,8 @@ class CustDropdownMenuButton {
         height: height,
         fontSize: fontSize,
         buttonTextColor: buttonTextColor,
+        placeholder: placeholder,
+        placeholderColor: placeholderColor,
         menuMaxHeight: menuMaxHeight,
         onMenuOpened: onMenuOpened,
         enable: enable,
@@ -43,6 +47,8 @@ class CustDropdownMenuButton {
         height: btnHeight,
         fontSize: fontSize,
         buttonTextColor: buttonTextColor,
+        placeholder: placeholder,
+        placeholderColor: placeholderColor,
         onOpened: onMenuOpened,
         enable: enable,
       );
@@ -58,6 +64,8 @@ class _TextDropdownButton extends StatefulWidget {
   final double? height;
   final double? fontSize;
   final Color? buttonTextColor;
+  final String? placeholder;
+  final Color? placeholderColor;
   final double? menuMaxHeight;
   final VoidCallback? onMenuOpened;
   final bool enable;
@@ -70,6 +78,8 @@ class _TextDropdownButton extends StatefulWidget {
     this.height,
     this.fontSize,
     this.buttonTextColor,
+    this.placeholder,
+    this.placeholderColor,
     this.menuMaxHeight,
     this.onMenuOpened,
     this.enable = true,
@@ -89,22 +99,18 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
     final primaryFocus = FocusManager.instance.primaryFocus;
     final hasKeyboard = primaryFocus != null &&
         primaryFocus.context != null &&
-        (primaryFocus.context!.widget is TextField ||
-            primaryFocus.context!.findAncestorWidgetOfExactType<TextField>() !=
-                null);
+        (primaryFocus.context!.widget is TextField || primaryFocus.context!.findAncestorWidgetOfExactType<TextField>() != null);
 
     widget.onMenuOpened?.call();
 
-    final delayDuration =
-        hasKeyboard ? const Duration(milliseconds: 400) : Duration.zero;
+    final delayDuration = hasKeyboard ? const Duration(milliseconds: 400) : Duration.zero;
 
     Future.delayed(delayDuration, () {
       if (!mounted) {
         return;
       }
 
-      final RenderBox? renderBox =
-          _buttonKey.currentContext?.findRenderObject() as RenderBox?;
+      final RenderBox? renderBox = _buttonKey.currentContext?.findRenderObject() as RenderBox?;
       if (renderBox == null) {
         return;
       }
@@ -143,18 +149,14 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: isSelected
-                    ? EnumColor.menuBgFocused.color
-                    : Colors.transparent,
+                color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
                 borderRadius: BorderRadius.circular(12.0.scale),
               ),
               padding: EdgeInsets.all(16.0.scale),
               child: CustTextWidget(
                 value,
                 size: textSize,
-                color: isSelected
-                    ? EnumColor.textPrimary.color
-                    : EnumColor.textSecondary.color,
+                color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
               ),
             ),
           );
@@ -189,19 +191,19 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
         builder: (context, constraints) {
           final availableWidth = constraints.maxWidth;
           final btnWidth = widget.width ?? availableWidth;
+          final hasSelection = widget.selectedValue != null && widget.values.contains(widget.selectedValue);
           Color btnTextColor;
-
           if (widget.buttonTextColor != null) {
             btnTextColor = widget.buttonTextColor!;
           } else {
-            if (widget.values.isEmpty ||
-                widget.selectedValue == null ||
-                !widget.values.contains(widget.selectedValue)) {
-              btnTextColor = EnumColor.textSecondary.color;
-            } else {
+            if (hasSelection) {
               btnTextColor = EnumColor.textPrimary.color;
+            } else {
+              btnTextColor = widget.placeholderColor ?? EnumColor.textSecondary.color;
             }
           }
+          final displayText =
+              widget.selectedValue ?? widget.placeholder ?? (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr);
 
           return GestureDetector(
             onTap: () {
@@ -218,15 +220,11 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
               ),
               clipBehavior: Clip.antiAlias,
               decoration: ShapeDecoration(
-                color: (widget.values.isEmpty || !widget.enable)
-                    ? EnumColor.backgroundSecondary.color
-                    : EnumColor.backgroundDropdown.color,
+                color: (widget.values.isEmpty || !widget.enable) ? EnumColor.backgroundSecondary.color : EnumColor.backgroundDropdown.color,
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 1.0.scale,
-                    color: _isMenuOpen
-                        ? EnumColor.lineProduct.color
-                        : EnumColor.lineBorder.color,
+                    color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
                   ),
                   borderRadius: BorderRadius.circular(16.0.scale),
                 ),
@@ -238,10 +236,7 @@ class _TextDropdownButtonState extends State<_TextDropdownButton> {
                 children: [
                   Expanded(
                     child: CustTextWidget(
-                      widget.selectedValue ??
-                          (widget.values.isEmpty
-                              ? EnumLocale.optionNoData.tr
-                              : EnumLocale.optionPleaseSelect.tr),
+                      displayText,
                       size: textSize,
                       color: btnTextColor,
                     ),
@@ -269,6 +264,8 @@ class _PopupMenuButtonWidget extends StatefulWidget {
   final double height;
   final double? fontSize;
   final Color? buttonTextColor;
+  final String? placeholder;
+  final Color? placeholderColor;
   final VoidCallback? onOpened;
   final bool enable;
 
@@ -280,6 +277,8 @@ class _PopupMenuButtonWidget extends StatefulWidget {
     required this.height,
     this.buttonTextColor,
     this.fontSize,
+    this.placeholder,
+    this.placeholderColor,
     this.onOpened,
     this.enable = true,
   });
@@ -341,18 +340,14 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? EnumColor.menuBgFocused.color
-                      : Colors.transparent,
+                  color: isSelected ? EnumColor.menuBgFocused.color : Colors.transparent,
                   borderRadius: BorderRadius.circular(12.0.scale),
                 ),
                 padding: EdgeInsets.all(16.0.scale),
                 child: CustTextWidget(
                   value,
                   size: textSize,
-                  color: isSelected
-                      ? EnumColor.textPrimary.color
-                      : EnumColor.textSecondary.color,
+                  color: isSelected ? EnumColor.textPrimary.color : EnumColor.textSecondary.color,
                 ),
               ),
             );
@@ -367,9 +362,7 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 1.0.scale,
-                  color: _isMenuOpen
-                      ? EnumColor.lineProduct.color
-                      : EnumColor.lineBorder.color,
+                  color: _isMenuOpen ? EnumColor.lineProduct.color : EnumColor.lineBorder.color,
                 ),
                 borderRadius: BorderRadius.circular(16.0.scale),
               ),
@@ -382,12 +375,12 @@ class _PopupMenuButtonWidgetState extends State<_PopupMenuButtonWidget> {
                 Expanded(
                   child: CustTextWidget(
                     widget.selectedValue ??
-                        (widget.values.isEmpty
-                            ? EnumLocale.optionNoData.tr
-                            : EnumLocale.optionPleaseSelect.tr),
+                        widget.placeholder ??
+                        (widget.values.isEmpty ? EnumLocale.optionNoData.tr : EnumLocale.optionPleaseSelect.tr),
                     size: textSize,
-                    color:
-                        widget.buttonTextColor ?? EnumColor.textPrimary.color,
+                    color: (widget.selectedValue != null && widget.values.contains(widget.selectedValue))
+                        ? (widget.buttonTextColor ?? EnumColor.textPrimary.color)
+                        : (widget.placeholderColor ?? EnumColor.textSecondary.color),
                   ),
                 ),
                 SizedBox(width: 16.0.scale),
@@ -433,10 +426,9 @@ class CustTextDropdownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 检测是否在弹窗中
-    final isInDialog =
-        context.findAncestorWidgetOfExactType<Dialog>() != null ||
-            context.findAncestorWidgetOfExactType<AlertDialog>() != null ||
-            context.findAncestorWidgetOfExactType<SimpleDialog>() != null;
+    final isInDialog = context.findAncestorWidgetOfExactType<Dialog>() != null ||
+        context.findAncestorWidgetOfExactType<AlertDialog>() != null ||
+        context.findAncestorWidgetOfExactType<SimpleDialog>() != null;
 
     // 在弹窗或页面中，使用 popupMenuButton
     return CustDropdownMenuButton.popupMenuButton(

@@ -5,11 +5,13 @@ import 'package:get/get.dart';
 class ReservationDetailPageModel {
   ReservationDetailRouteData? routeData;
   final Rxn<DateTime> date = Rxn<DateTime>();
+  final Rxn<String> selectedDate = Rxn<String>();
   final DateTime firstDate = DateTime.now();
   final DateTime lastDate = DateTime.now().add(const Duration(days: 30));
   final Rxn<TimeOfDay> startTime = Rxn<TimeOfDay>();
   final Rxn<TimeOfDay> endTime = Rxn<TimeOfDay>();
   final totalBilling = '-'.obs;
+  final totalDuration = '-'.obs;
   final infoTabType = EnumReservationInfoTabType.order.obs;
 }
 

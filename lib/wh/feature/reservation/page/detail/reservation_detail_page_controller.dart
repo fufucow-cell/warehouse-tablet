@@ -1,9 +1,10 @@
 import 'package:engo_terminal_app3/wh/feature/reservation/page/detail/reservation_detail_page_model.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/service/reservation_service.dart';
 import 'package:engo_terminal_app3/wh/feature/reservation/ui/image_viewer.dart';
+import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
+import 'package:engo_terminal_app3/wh/parent/model/response_model/specific_date_response_model/specific_date_response_model.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/weekly_repeat_response_model/period.dart';
 import 'package:engo_terminal_app3/wh/parent/model/response_model/weekly_repeat_response_model/weekly_repeat_response_model.dart';
-import 'package:engo_terminal_app3/wh/parent/inherit/extension_rx.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,9 +20,11 @@ class ReservationDetailPageController extends GetxController {
   ReservableItemModel? get getReservableItem => _model.routeData?.reservableItem ?? _model.routeData?.recordItem?.itemReservableInfo;
   RecordItemModel? get getRecordItem => _model.routeData?.recordItem;
   RxReadonly<DateTime?> get dateRx => _model.date.readonly;
+  RxReadonly<String?> get selectedDateRx => _model.selectedDate.readonly;
   RxReadonly<TimeOfDay?> get startTimeRx => _model.startTime.readonly;
   RxReadonly<TimeOfDay?> get endTimeRx => _model.endTime.readonly;
   RxReadonly<String> get totalBillingRx => _model.totalBilling.readonly;
+  RxReadonly<String> get totalDurationRx => _model.totalDuration.readonly;
   RxReadonly<EnumReservationInfoTabType> get infoTabTypeRx => _model.infoTabType.readonly;
   List<String> get getInfoTabTitles => EnumReservationInfoTabType.values.map((item) => item.title).toList();
   DateTime get firstDate => _model.firstDate;
@@ -87,6 +90,12 @@ class ReservationDetailPageController extends GetxController {
 
   bool get isShowWeeklyRepeatInfo => getReservableItem?.dateRuleType == EnumReservationDateRuleType.weekly;
 
+  EnumReservationDateRuleType get dateRuleType =>
+      getReservableItem?.dateRuleType ?? EnumReservationDateRuleType.unlimited;
+
+  List<SpecificDateResponseModel> get getSpecificDateList =>
+      getReservableItem?.specificDate ?? const [];
+
   List<WeeklyRepeatResponseModel> getEnableWeekDayList() {
     final list = getReservableItem?.weeklyRepeat ?? const [];
     return list.where((e) => e.isEnable == true).toList();
@@ -97,6 +106,31 @@ class ReservationDetailPageController extends GetxController {
     if (day == null || day < 1 || day > 7) return '';
     const labels = ['', '週一', '週二', '週三', '週四', '週五', '週六', '週日'];
     return labels[day];
+  }
+
+  /// 特定日期下拉選單的目前顯示值（selectedDate 或由 date 格式化成日期字串）
+  String? get selectedDateDisplayForSpecificDate =>
+      _model.selectedDate.value ??
+      (_model.date.value != null
+          ? formatDate(_model.date.value!.millisecondsSinceEpoch)
+          : null);
+
+  /// 每週重複下拉選單的目前顯示值（selectedDate 或由 date 對應的星期）
+  String? get selectedDateDisplayForWeekly =>
+      _model.selectedDate.value ??
+      (_model.date.value != null
+          ? getWeekDayDisplayText(_model.date.value!.weekday)
+          : null);
+
+  /// 在 [firstDate, lastDate] 區間內，該星期幾的第一次出現日期。day 1=週一..7=週日。
+  DateTime? getFirstDateForWeekday(int day) {
+    var d = DateTime(firstDate.year, firstDate.month, firstDate.day);
+    final last = DateTime(lastDate.year, lastDate.month, lastDate.day);
+    while (!d.isAfter(last)) {
+      if (d.weekday == day) return d;
+      d = d.add(const Duration(days: 1));
+    }
+    return null;
   }
 
   String formatPeriod(Period p) {
@@ -163,11 +197,16 @@ class ReservationDetailPageController extends GetxController {
     if (!isReservableDetail) {
       final totalAmount = getRecordItem?.totalAmount ?? 0;
       _model.totalBilling.value = '$totalAmount $unit';
+      _setTotalDurationFromEpoch(
+        getRecordItem?.bookingStartAt,
+        getRecordItem?.bookingEndAt,
+      );
       return;
     }
 
     if (startTime == null || endTime == null || fee <= 0) {
       _model.totalBilling.value = '-';
+      _model.totalDuration.value = '-';
       return;
     }
 
@@ -191,5 +230,27 @@ class ReservationDetailPageController extends GetxController {
     double hourResult = hours + minuteValue;
 
     _model.totalBilling.value = '${(hourResult * fee).toStringAsFixed(0)} $unit';
+    _model.totalDuration.value = _formatDuration(hourResult);
+  }
+
+  void _setTotalDurationFromEpoch(int? startEpoch, int? endEpoch) {
+    if (startEpoch == null || endEpoch == null || startEpoch <= 0 || endEpoch <= 0) {
+      _model.totalDuration.value = '-';
+      return;
+    }
+    final diffMs = endEpoch - startEpoch;
+    final diffMinutes = diffMs ~/ (60 * 1000);
+    final hours = diffMinutes ~/ 60;
+    final remainingMinutes = diffMinutes % 60;
+    final minuteValue = (remainingMinutes >= 30) ? 0.5 : 0.0;
+    final hourResult = hours + minuteValue;
+    _model.totalDuration.value = _formatDuration(hourResult);
+  }
+
+  String _formatDuration(double hourResult) {
+    if (hourResult == hourResult.truncate()) {
+      return '${hourResult.toInt()} 小時';
+    }
+    return '$hourResult 小時';
   }
 }

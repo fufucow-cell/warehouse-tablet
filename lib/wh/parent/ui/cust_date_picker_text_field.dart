@@ -53,14 +53,12 @@ class _CustDatePickerTextFieldState extends State<CustDatePickerTextField> {
       color: Colors.transparent,
       child: InkWell(
         onTap: widget.canEdit ? () => _showDatePicker(context) : null,
-        borderRadius: BorderRadius.circular(8.0.scale),
+        borderRadius: BorderRadius.circular(16.0.scale),
         child: Container(
           constraints: const BoxConstraints.expand(),
-          padding: EdgeInsets.symmetric(
-            horizontal: 16.0.scale,
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 32.0.scale),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0.scale),
+            borderRadius: BorderRadius.circular(16.0.scale),
             color: widget.canEdit
                 ? EnumColor.backgroundPrimary.color
                 : EnumColor.backgroundSecondary.color,
@@ -70,6 +68,8 @@ class _CustDatePickerTextFieldState extends State<CustDatePickerTextField> {
             ),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Expanded(
                 child: CustTextWidget(
@@ -81,9 +81,9 @@ class _CustDatePickerTextFieldState extends State<CustDatePickerTextField> {
                       : EnumColor.textSecondary.color,
                 ),
               ),
-              SizedBox(width: 8.0.scale),
+              SizedBox(width: 16.0.scale),
               EnumImage.cArrowDown.image(
-                size: Size.square(32.0.scale),
+                size: Size.square(38.0.scale),
                 color: _selectedDate != null
                     ? EnumColor.textPrimary.color
                     : EnumColor.textSecondary.color,
